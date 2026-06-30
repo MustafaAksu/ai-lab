@@ -76,3 +76,24 @@ def test_auto_comparison_path_uses_next_id_and_slug(tmp_path: Path):
     path = auto_comparison_path("Edge Immutability", tmp_path)
 
     assert path == tmp_path / "COMP-0003-edge-immutability.md"
+
+def test_build_markdown_artifact_records_extra_metadata():
+    artifact = build_markdown_artifact(
+        prompt="Prompt",
+        responses={
+            "OpenAI": {
+                "model": "gpt-5",
+                "response": "Answer",
+            }
+        },
+        created_at="2026-06-30T00:00:00Z",
+        command="command",
+        comparison_id="COMP-0004",
+        title="Re-Ask",
+        extra_metadata={
+            "source_synthesis": "docs/comparisons/syntheses/SYNCOMP-0001-example.md",
+        },
+    )
+
+    assert "- source_synthesis: `docs/comparisons/syntheses/SYNCOMP-0001-example.md`" in artifact
+

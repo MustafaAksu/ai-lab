@@ -74,6 +74,7 @@ def build_markdown_artifact(
     command: str,
     comparison_id: str | None = None,
     title: str | None = None,
+    extra_metadata: dict[str, str] | None = None,
 ) -> str:
     """Build a Markdown artifact containing one provider comparison run."""
     heading = "# Provider Comparison"
@@ -97,6 +98,10 @@ def build_markdown_artifact(
 
     if title:
         lines.append(f"- title: `{title}`")
+
+    if extra_metadata:
+        for key, value in extra_metadata.items():
+            lines.append(f"- {key}: `{value}`")
 
     lines.extend(
         [
