@@ -16,9 +16,13 @@ class ArtifactRecord:
     created_at: str | None = None
     source_comparison: str | None = None
     source_synthesis: str | None = None
+    source_artifacts: str | None = None
 
 
 def artifact_kind_from_path(path: Path) -> str:
+    if path.name.startswith("ABS-"):
+        return "ABS"
+
     if path.name.startswith("SYNCOMP-"):
         return "SYNCOMP"
 
@@ -29,7 +33,7 @@ def artifact_kind_from_path(path: Path) -> str:
 
 
 def artifact_id_from_path(path: Path) -> str:
-    match = re.match(r"(SYNCOMP-\d{4}|COMP-\d{4})", path.name)
+    match = re.match(r"(ABS-\d{4}|SYNCOMP-\d{4}|COMP-\d{4})", path.name)
 
     if match:
         return match.group(1)
@@ -68,6 +72,7 @@ def artifact_record_from_file(path: Path) -> ArtifactRecord:
     artifact_id = (
         metadata.get("comparison_id")
         or metadata.get("synthesis_id")
+        or metadata.get("abstraction_id")
         or artifact_id_from_path(path)
     )
 
@@ -81,17 +86,27 @@ def artifact_record_from_file(path: Path) -> ArtifactRecord:
         created_at=metadata.get("created_at"),
         source_comparison=metadata.get("source_comparison"),
         source_synthesis=metadata.get("source_synthesis"),
+        source_artifacts=metadata.get("source_artifacts"),
     )
 
 
-def discover_artifacts(comparison_dir: Path = Path("docs/comparisons")) -> list[ArtifactRecord]:
+def discover_artifacts(
+    comparison_dir: Path = Path("docs/comparisons"),
+    abstraction_dir: Path | None = None,
+) -> list[ArtifactRecord]:
     records: list[ArtifactRecord] = []
+
+    if abstraction_dir is None:
+        abstraction_dir = comparison_dir.parent / "abstractions"
 
     for path in sorted(comparison_dir.glob("COMP-*.md")):
         records.append(artifact_record_from_file(path))
 
     synthesis_dir = comparison_dir / "syntheses"
     for path in sorted(synthesis_dir.glob("SYNCOMP-*.md")):
+        records.append(artifact_record_from_file(path))
+
+    for path in sorted(abstraction_dir.glob("ABS-*.md")):
         records.append(artifact_record_from_file(path))
 
     return sorted(records, key=lambda record: (record.created_at or "", record.artifact_id))
@@ -107,7 +122,12 @@ def format_artifact_history(records: list[ArtifactRecord]) -> str:
     ]
 
     for record in records:
-        source = record.source_synthesis or record.source_comparison or ""
+        source = (
+            record.source_synthesis
+            or record.source_comparison
+            or record.source_artifacts
+            or ""
+        )
         lines.append(
             f"{record.artifact_id} | {record.kind} | {record.title} | {source}"
         )

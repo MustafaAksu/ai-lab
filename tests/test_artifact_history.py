@@ -14,12 +14,14 @@ from ai_lab.documentation.artifact_history import (
 def test_artifact_kind_from_path_detects_comp_and_syncomp():
     assert artifact_kind_from_path(Path("COMP-0001-example.md")) == "COMP"
     assert artifact_kind_from_path(Path("SYNCOMP-0001-example.md")) == "SYNCOMP"
+    assert artifact_kind_from_path(Path("ABS-0001-example.md")) == "ABS"
     assert artifact_kind_from_path(Path("notes.md")) == "UNKNOWN"
 
 
 def test_artifact_id_from_path_extracts_known_ids():
     assert artifact_id_from_path(Path("COMP-0004-re-ask.md")) == "COMP-0004"
     assert artifact_id_from_path(Path("SYNCOMP-0002-synthesis.md")) == "SYNCOMP-0002"
+    assert artifact_id_from_path(Path("ABS-0001-abstraction.md")) == "ABS-0001"
 
 
 def test_parse_metadata_extracts_backticked_values():
@@ -66,10 +68,12 @@ def test_artifact_record_from_file_uses_metadata(tmp_path: Path):
     assert record.source_synthesis == "docs/comparisons/syntheses/SYNCOMP-0001-example.md"
 
 
-def test_discover_artifacts_finds_comparisons_and_syntheses(tmp_path: Path):
+def test_discover_artifacts_finds_comparisons_syntheses_and_abstractions(tmp_path: Path):
     comparison_dir = tmp_path / "docs" / "comparisons"
     synthesis_dir = comparison_dir / "syntheses"
+    abstraction_dir = tmp_path / "docs" / "abstractions"
     synthesis_dir.mkdir(parents=True)
+    abstraction_dir.mkdir(parents=True)
 
     (comparison_dir / "COMP-0001-example.md").write_text(
         """# COMP-0001
@@ -96,9 +100,27 @@ def test_discover_artifacts_finds_comparisons_and_syntheses(tmp_path: Path):
         encoding="utf-8",
     )
 
+    (abstraction_dir / "ABS-0001-example.md").write_text(
+        """# ABS-0001
+
+## Metadata
+
+- abstraction_id: `ABS-0001`
+- title: `Example Abstraction`
+- abstraction_level: `1`
+- created_at: `2026-06-30T00:02:00+00:00`
+- source_artifacts: `docs/comparisons/COMP-0001-example.md, docs/comparisons/syntheses/SYNCOMP-0001-example.md`
+""",
+        encoding="utf-8",
+    )
+
     records = discover_artifacts(comparison_dir)
 
-    assert [record.artifact_id for record in records] == ["COMP-0001", "SYNCOMP-0001"]
+    assert [record.artifact_id for record in records] == [
+        "COMP-0001",
+        "SYNCOMP-0001",
+        "ABS-0001",
+    ]
 
 
 def test_format_artifact_history_renders_table():
