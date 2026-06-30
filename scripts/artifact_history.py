@@ -12,12 +12,13 @@ from ai_lab.documentation.artifact_history import (
     discover_artifacts,
     format_artifact_history,
     format_artifact_lineage,
+    format_artifact_source_tree,
 )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Show AI-Lab comparison and synthesis artifact history."
+        description="Show AI-Lab comparison, synthesis, and abstraction artifact history."
     )
     parser.add_argument(
         "--comparison-dir",
@@ -26,19 +27,38 @@ def main() -> int:
         help="Directory containing COMP artifacts.",
     )
     parser.add_argument(
+        "--abstraction-dir",
+        type=Path,
+        default=Path("docs/abstractions"),
+        help="Directory containing ABS artifacts.",
+    )
+    parser.add_argument(
         "--lineage",
-        help="Show source-to-target lineage for a specific artifact ID.",
+        help="Show single-chain lineage for a specific artifact ID.",
+    )
+    parser.add_argument(
+        "--source-tree",
+        help="Show recursive source tree for a specific artifact ID.",
     )
 
     args = parser.parse_args()
 
-    records = discover_artifacts(args.comparison_dir)
+    records = discover_artifacts(args.comparison_dir, args.abstraction_dir)
 
     if args.lineage:
         try:
             print(format_artifact_lineage(records, args.lineage))
         except ArtifactHistoryError as error:
             print(f"Could not show lineage: {error}")
+            return 1
+
+        return 0
+
+    if args.source_tree:
+        try:
+            print(format_artifact_source_tree(records, args.source_tree))
+        except ArtifactHistoryError as error:
+            print(f"Could not show source tree: {error}")
             return 1
 
         return 0

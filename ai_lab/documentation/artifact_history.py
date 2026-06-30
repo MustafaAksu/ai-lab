@@ -139,8 +139,25 @@ class ArtifactHistoryError(ValueError):
 
 
 def source_path_for_record(record: ArtifactRecord) -> str | None:
-    """Return the source artifact path recorded by an artifact, if any."""
+    """Return the primary source artifact path recorded by an artifact, if any."""
     return record.source_synthesis or record.source_comparison
+
+
+def source_paths_for_record(record: ArtifactRecord) -> list[str]:
+    """Return all source artifact paths recorded by an artifact."""
+    if record.source_artifacts:
+        return [
+            source.strip()
+            for source in record.source_artifacts.split(",")
+            if source.strip()
+        ]
+
+    primary_source = source_path_for_record(record)
+
+    if primary_source:
+        return [primary_source]
+
+    return []
 
 
 def records_by_id(records: list[ArtifactRecord]) -> dict[str, ArtifactRecord]:
@@ -186,6 +203,9 @@ def lineage_for_artifact(
 
 def relation_label_for_child(record: ArtifactRecord) -> str:
     """Return a readable relation label from a parent artifact to this child."""
+    if record.source_artifacts:
+        return "abstracted into"
+
     if record.source_comparison:
         return "synthesized into"
 
@@ -217,6 +237,47 @@ def format_artifact_lineage(
         lines.append(
             f"{indent}{record.artifact_id} [{record.kind}] {record.title}"
         )
+
+    return "\n".join(lines)
+
+def format_artifact_source_tree(
+    records: list[ArtifactRecord],
+    target_id: str,
+) -> str:
+    """Format recursive source dependencies for an artifact."""
+    index = records_by_id(records)
+
+    if target_id not in index:
+        raise ArtifactHistoryError(f"Artifact not found: {target_id}")
+
+    lines = [f"Source tree for {target_id}", ""]
+
+    def walk(artifact_id: str, depth: int, seen: set[str]) -> None:
+        if artifact_id in seen:
+            lines.append(f"{'  ' * depth}{artifact_id} [cycle]")
+            return
+
+        record = index[artifact_id]
+        lines.append(
+            f"{'  ' * depth}{record.artifact_id} [{record.kind}] {record.title}"
+        )
+
+        source_paths = source_paths_for_record(record)
+        if not source_paths:
+            return
+
+        relation = relation_label_for_child(record)
+
+        for source_path in source_paths:
+            source_id = artifact_id_from_path(Path(source_path))
+            lines.append(f"{'  ' * (depth + 1)}↑ source for {relation}")
+
+            if source_id in index:
+                walk(source_id, depth + 2, seen | {artifact_id})
+            else:
+                lines.append(f"{'  ' * (depth + 2)}{source_path} [not indexed]")
+
+    walk(target_id, 0, set())
 
     return "\n".join(lines)
 
