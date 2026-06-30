@@ -17,6 +17,7 @@ class ArtifactRecord:
     source_comparison: str | None = None
     source_synthesis: str | None = None
     source_artifacts: str | None = None
+    abstraction_level: str | None = None
 
 
 def artifact_kind_from_path(path: Path) -> str:
@@ -87,6 +88,7 @@ def artifact_record_from_file(path: Path) -> ArtifactRecord:
         source_comparison=metadata.get("source_comparison"),
         source_synthesis=metadata.get("source_synthesis"),
         source_artifacts=metadata.get("source_artifacts"),
+        abstraction_level=metadata.get("abstraction_level"),
     )
 
 
@@ -278,6 +280,72 @@ def format_artifact_source_tree(
                 lines.append(f"{'  ' * (depth + 2)}{source_path} [not indexed]")
 
     walk(target_id, 0, set())
+
+    return "\n".join(lines)
+
+def context_level_for_record(record: ArtifactRecord) -> str:
+    """Return the context level bucket for an artifact."""
+    if record.kind == "ABS" and record.abstraction_level:
+        return f"ABS-L{record.abstraction_level}"
+
+    return record.kind
+
+
+def _record_sort_key(record: ArtifactRecord) -> tuple[str, str]:
+    """Sort records by creation time, then artifact ID."""
+    return (record.created_at or "", record.artifact_id)
+
+
+def latest_records_by_context_level(
+    records: list[ArtifactRecord],
+) -> dict[str, ArtifactRecord]:
+    """Return the latest artifact for each context level."""
+    latest: dict[str, ArtifactRecord] = {}
+
+    for record in records:
+        level = context_level_for_record(record)
+
+        if level not in latest or _record_sort_key(record) > _record_sort_key(latest[level]):
+            latest[level] = record
+
+    return latest
+
+
+def _context_level_display_order(level: str) -> tuple[int, int, str]:
+    """Sort higher abstraction first, then synthesis, then raw comparison."""
+    if level.startswith("ABS-L"):
+        try:
+            number = int(level.removeprefix("ABS-L"))
+        except ValueError:
+            number = 0
+
+        return (0, -number, level)
+
+    if level == "SYNCOMP":
+        return (1, 0, level)
+
+    if level == "COMP":
+        return (2, 0, level)
+
+    return (3, 0, level)
+
+
+def format_latest_context(records: list[ArtifactRecord]) -> str:
+    """Format the latest artifact from each context level."""
+    latest = latest_records_by_context_level(records)
+
+    if not latest:
+        return "No context artifacts found."
+
+    lines = [
+        "Level | ID | Kind | Title | Path",
+        "--- | --- | --- | --- | ---",
+    ]
+
+    for level, record in sorted(latest.items(), key=lambda item: _context_level_display_order(item[0])):
+        lines.append(
+            f"{level} | {record.artifact_id} | {record.kind} | {record.title} | {record.path.as_posix()}"
+        )
 
     return "\n".join(lines)
 

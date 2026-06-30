@@ -13,6 +13,7 @@ from ai_lab.documentation.artifact_history import (
     format_artifact_history,
     format_artifact_lineage,
     format_artifact_source_tree,
+    format_latest_context,
 )
 
 
@@ -40,10 +41,19 @@ def main() -> int:
         "--source-tree",
         help="Show recursive source tree for a specific artifact ID.",
     )
+    parser.add_argument(
+        "--latest-context",
+        action="store_true",
+        help="Show the latest artifact from each context level.",
+    )
 
     args = parser.parse_args()
 
     records = discover_artifacts(args.comparison_dir, args.abstraction_dir)
+
+    if args.latest_context:
+        print(format_latest_context(records))
+        return 0
 
     if args.lineage:
         try:
