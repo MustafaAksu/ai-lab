@@ -3,3 +3,7 @@ api_key.txt
 venv/
 __pycache__/
 *.pyc
+
+# Local API keys
+claude_api_key.txt
+*_api_key.txt
