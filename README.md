@@ -19,6 +19,8 @@ Its first major purpose is to support RTG research by combining:
 4. Main branch should remain working.
 5. Secrets must never be committed.
 6. RTG support is first-class, but implemented as a modular research layer.
+7. Ontology precedes implementation.
+8. AI-Lab should converge toward the underlying structure of the domain rather than inventing one.
 
 ## Current Status
 
