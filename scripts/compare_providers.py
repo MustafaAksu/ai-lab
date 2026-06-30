@@ -30,7 +30,7 @@ def markdown_escape_fence(text: str) -> str:
 
 def build_markdown_artifact(
     prompt: str,
-    responses: dict[str, str],
+    responses: dict[str, dict[str, str]],
     created_at: str,
     command: str,
 ) -> str:
@@ -44,17 +44,31 @@ def build_markdown_artifact(
         f"- command: `{command}`",
         f"- providers: `{', '.join(responses.keys())}`",
         "",
-        "## Prompt",
-        "",
-        prompt,
+        "### Models",
         "",
     ]
 
-    for provider_name, response in responses.items():
+    for provider_name, data in responses.items():
+        lines.append(f"- {provider_name}: `{data['model']}`")
+
+    lines.extend(
+        [
+            "",
+            "## Prompt",
+            "",
+            prompt,
+            "",
+        ]
+    )
+
+    for provider_name, data in responses.items():
+        response = data["response"]
         fence = markdown_escape_fence(response)
         lines.extend(
             [
                 f"## {provider_name} Response",
+                "",
+                f"- model: `{data['model']}`",
                 "",
                 fence,
                 response,
@@ -85,16 +99,20 @@ def main() -> int:
         ClaudeProvider(),
     ]
 
-    responses: dict[str, str] = {}
+    responses: dict[str, dict[str, str]] = {}
 
     print("Prompt:")
     print(prompt)
     print()
 
     for provider in providers:
-        print(f"=== {provider.name} ===")
+        model = getattr(provider, "model", "unknown")
+        print(f"=== {provider.name} ({model}) ===")
         answer = provider.ask(prompt)
-        responses[provider.name] = answer
+        responses[provider.name] = {
+            "model": model,
+            "response": answer,
+        }
         print(answer)
         print()
 
