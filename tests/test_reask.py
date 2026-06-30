@@ -86,3 +86,22 @@ No re-ask here.
 
     with pytest.raises(ReaskPromptError):
         extract_suggested_reask_prompt(artifact)
+
+def test_extract_suggested_reask_prompt_accepts_parenthesized_numbering():
+    artifact = """# SYNCOMP-0002: Comparison Synthesis
+
+## Synthesis
+
+~~~text
+1) Shared agreement
+- Both agree.
+
+7) Suggested re-ask prompt
+“Design a minimal viable implementation plan.”
+~~~
+"""
+
+    prompt = extract_suggested_reask_prompt(artifact)
+
+    assert prompt == "“Design a minimal viable implementation plan.”"
+

@@ -64,7 +64,7 @@ def strip_markdown_fence(text: str) -> str:
 def _is_reask_heading(line: str) -> bool:
     normalized = line.strip().lower()
     normalized = re.sub(r"^#+\s*", "", normalized)
-    normalized = re.sub(r"^\d+\.\s*", "", normalized)
+    normalized = re.sub(r"^\d+[\.)]\s*", "", normalized)
     return normalized in {
         "suggested re-ask prompt",
         "suggested reask prompt",
@@ -74,7 +74,7 @@ def _is_reask_heading(line: str) -> bool:
 
 
 def _is_next_numbered_heading(line: str) -> bool:
-    return bool(re.match(r"^\s*\d+\.\s+\S+", line))
+    return bool(re.match(r"^\s*\d+[\.)]\s+\S+", line))
 
 
 def _clean_prompt_line(line: str) -> str:
