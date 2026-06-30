@@ -95,3 +95,126 @@ Validate bootstrap EDGE records:
 If no EDGE records exist yet, the script reports:
 
     No EDGE records found.
+
+## Cognitive comparison workflow
+
+AI-Lab now supports a small but complete reasoning loop over provider outputs.
+
+The loop is:
+
+    prompt
+      -> provider comparison
+      -> COMP artifact
+      -> synthesis
+      -> SYNCOMP artifact
+      -> suggested re-ask prompt
+      -> new provider comparison
+      -> lineage/history inspection
+
+The important discipline is that raw provider responses remain preserved.
+Synthesis and re-ask outputs are derived artifacts, not replacements for the
+original comparison.
+
+### 1. Compare providers
+
+Run the same prompt against OpenAI and Claude:
+
+    python scripts/compare_providers.py \
+      "In one sentence, explain why automatic comparison IDs improve artifact discipline." \
+      --title "Automatic Comparison IDs"
+
+This creates an artifact such as:
+
+    docs/comparisons/COMP-0003-automatic-comparison-ids.md
+
+### 2. Synthesize a comparison
+
+Create a synthesis artifact from a saved comparison:
+
+    python scripts/synthesize_comparison.py \
+      docs/comparisons/COMP-0003-automatic-comparison-ids.md \
+      --provider openai \
+      --title "Automatic Comparison IDs"
+
+This creates an artifact such as:
+
+    docs/comparisons/syntheses/SYNCOMP-0001-automatic-comparison-ids.md
+
+The synthesis records:
+
+    synthesis_id
+    source_comparison
+    synthesizer_provider
+    synthesizer_model
+    synthesis response
+    original source comparison
+
+### 3. Re-ask from a synthesis
+
+Extract the suggested re-ask prompt from a synthesis artifact and run a new
+provider comparison:
+
+    python scripts/reask_from_synthesis.py \
+      docs/comparisons/syntheses/SYNCOMP-0001-automatic-comparison-ids.md \
+      --title "Re-Ask Automatic Comparison IDs"
+
+This creates a new comparison artifact such as:
+
+    docs/comparisons/COMP-0004-re-ask-automatic-comparison-ids.md
+
+The new comparison records:
+
+    source_synthesis
+
+so the reasoning chain is explicit.
+
+To preview the extracted prompt without calling providers:
+
+    python scripts/reask_from_synthesis.py \
+      docs/comparisons/syntheses/SYNCOMP-0001-automatic-comparison-ids.md \
+      --print-only
+
+### 4. Inspect artifact history
+
+Show all comparison and synthesis artifacts:
+
+    python scripts/artifact_history.py
+
+Show the lineage for a specific artifact:
+
+    python scripts/artifact_history.py --lineage COMP-0004
+
+Example lineage:
+
+    COMP-0003 [COMP] Automatic Comparison IDs
+      ↓ synthesized into
+      SYNCOMP-0001 [SYNCOMP] Automatic Comparison IDs
+        ↓ re-asked into
+        COMP-0004 [COMP] Re-Ask Automatic Comparison IDs
+
+### Design note: history must not become the prompt
+
+The artifact history is expected to grow quickly. AI-Lab should not solve this
+by loading all previous artifacts into every prompt.
+
+Instead, history should be treated as indexed evidence. Future abstraction
+artifacts should summarize selected sets of lower-level artifacts:
+
+    raw artifacts
+      -> abstraction level 1
+      -> abstraction level 2
+      -> ...
+      -> abstraction level n
+
+These levels do not need fixed cognitive names. They are generic compression,
+summarization, and selection layers over prior artifacts.
+
+A future prompt should retrieve only:
+
+    relevant raw artifacts when needed
+    nearest useful abstraction artifact
+    lineage chain
+    current task prompt
+
+This keeps reasoning traceable without making every provider call slow,
+expensive, or overloaded.
