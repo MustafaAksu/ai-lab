@@ -113,3 +113,90 @@ def format_artifact_history(records: list[ArtifactRecord]) -> str:
         )
 
     return "\n".join(lines)
+
+class ArtifactHistoryError(ValueError):
+    """Raised when artifact history cannot be resolved."""
+
+
+def source_path_for_record(record: ArtifactRecord) -> str | None:
+    """Return the source artifact path recorded by an artifact, if any."""
+    return record.source_synthesis or record.source_comparison
+
+
+def records_by_id(records: list[ArtifactRecord]) -> dict[str, ArtifactRecord]:
+    """Index artifact records by artifact ID."""
+    return {record.artifact_id: record for record in records}
+
+
+def lineage_for_artifact(
+    records: list[ArtifactRecord],
+    target_id: str,
+) -> list[ArtifactRecord]:
+    """Return the source-to-target lineage chain for an artifact."""
+    index = records_by_id(records)
+
+    if target_id not in index:
+        raise ArtifactHistoryError(f"Artifact not found: {target_id}")
+
+    chain: list[ArtifactRecord] = []
+    seen: set[str] = set()
+    current_id: str | None = target_id
+
+    while current_id:
+        if current_id in seen:
+            raise ArtifactHistoryError(f"Cycle detected at artifact: {current_id}")
+
+        seen.add(current_id)
+
+        current = index[current_id]
+        chain.append(current)
+
+        source_path = source_path_for_record(current)
+        if not source_path:
+            break
+
+        source_id = artifact_id_from_path(Path(source_path))
+        if source_id not in index:
+            break
+
+        current_id = source_id
+
+    return list(reversed(chain))
+
+
+def relation_label_for_child(record: ArtifactRecord) -> str:
+    """Return a readable relation label from a parent artifact to this child."""
+    if record.source_comparison:
+        return "synthesized into"
+
+    if record.source_synthesis:
+        return "re-asked into"
+
+    return "derived into"
+
+
+def format_artifact_lineage(
+    records: list[ArtifactRecord],
+    target_id: str,
+) -> str:
+    """Format a source-to-target lineage chain as readable text."""
+    chain = lineage_for_artifact(records, target_id)
+
+    lines = [
+        f"Lineage for {target_id}",
+        "",
+    ]
+
+    for index, record in enumerate(chain):
+        indent = "  " * index
+
+        if index > 0:
+            relation = relation_label_for_child(record)
+            lines.append(f"{indent}↓ {relation}")
+
+        lines.append(
+            f"{indent}{record.artifact_id} [{record.kind}] {record.title}"
+        )
+
+    return "\n".join(lines)
+
