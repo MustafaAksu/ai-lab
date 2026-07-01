@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from ai_lab.documentation.artifact_history import discover_artifacts
 from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
+from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
 
 
 def main() -> int:
@@ -54,6 +55,12 @@ def main() -> int:
         default=None,
         help="Optional pipeline run ID.",
     )
+    parser.add_argument(
+        "--format",
+        choices=["json", "markdown"],
+        default="json",
+        help="Output format.",
+    )
 
     args = parser.parse_args()
 
@@ -73,7 +80,11 @@ def main() -> int:
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")
 
-    print(json.dumps(manifest.to_dict(), indent=2, sort_keys=True))
+    if args.format == "markdown":
+        print(render_context_pack_markdown(manifest), end="")
+    else:
+        print(json.dumps(manifest.to_dict(), indent=2, sort_keys=True))
+
     return 0
 
 
