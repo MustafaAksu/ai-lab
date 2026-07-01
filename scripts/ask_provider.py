@@ -66,6 +66,11 @@ def main() -> int:
         default=None,
         help="Optional rendered context pack Markdown file.",
     )
+    parser.add_argument(
+        "--print-prompt",
+        action="store_true",
+        help="Print the final prompt and do not call the provider.",
+    )
 
     args = parser.parse_args()
 
@@ -75,8 +80,13 @@ def main() -> int:
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
 
-    provider = provider_from_name(args.provider)
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)
+
+    if args.print_prompt:
+        print(final_prompt)
+        return 0
+
+    provider = provider_from_name(args.provider)
 
     print(f"Provider: {provider.name}")
     print()
