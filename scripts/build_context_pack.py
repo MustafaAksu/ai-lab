@@ -61,6 +61,12 @@ def main() -> int:
         default="json",
         help="Output format.",
     )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Optional output file. Prints to stdout when omitted.",
+    )
 
     args = parser.parse_args()
 
@@ -81,9 +87,15 @@ def main() -> int:
         raise ValueError(f"Unsupported policy: {args.policy}")
 
     if args.format == "markdown":
-        print(render_context_pack_markdown(manifest), end="")
+        output = render_context_pack_markdown(manifest)
     else:
-        print(json.dumps(manifest.to_dict(), indent=2, sort_keys=True))
+        output = json.dumps(manifest.to_dict(), indent=2, sort_keys=True) + "\n"
+
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(output, encoding="utf-8")
+    else:
+        print(output, end="")
 
     return 0
 
