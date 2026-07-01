@@ -7,6 +7,9 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from ai_lab.documentation.artifact_history import discover_artifacts
+from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
+from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
 from ai_lab.providers.claude_provider import ClaudeProvider
 from ai_lab.providers.openai_provider import OpenAIProvider
 
@@ -26,6 +29,25 @@ def provider_from_name(name: str):
 def read_context_pack(path: Path) -> str:
     """Read a rendered context pack from disk."""
     return path.read_text(encoding="utf-8")
+
+
+def build_latest_context_pack_text(
+    task: str,
+    token_budget: int | None = None,
+    model_target: str | None = None,
+) -> str:
+    """Build and render a latest-context pack from repository artifacts."""
+    records = discover_artifacts(
+        comparison_dir=Path("docs/comparisons"),
+        abstraction_dir=Path("docs/abstractions"),
+    )
+    manifest = build_latest_context_manifest(
+        task=task,
+        records=records,
+        token_budget=token_budget,
+        model_target=model_target,
+    )
+    return render_context_pack_markdown(manifest)
 
 
 def build_prompt(prompt: str, context_pack: str | None = None) -> str:
@@ -71,14 +93,40 @@ def main() -> int:
         action="store_true",
         help="Print the final prompt and do not call the provider.",
     )
+    parser.add_argument(
+        "--latest-context",
+        action="store_true",
+        help="Build and include a latest-context pack from repository artifacts.",
+    )
+    parser.add_argument(
+        "--token-budget",
+        type=int,
+        default=None,
+        help="Optional token budget when using --latest-context.",
+    )
+    parser.add_argument(
+        "--model-target",
+        default=None,
+        help="Optional model target when using --latest-context.",
+    )
 
     args = parser.parse_args()
 
     prompt = " ".join(args.prompt)
     context_pack = None
 
+    if args.context_pack and args.latest_context:
+        parser.error("Use either --context-pack or --latest-context, not both.")
+
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
+
+    if args.latest_context:
+        context_pack = build_latest_context_pack_text(
+            task=prompt,
+            token_budget=args.token_budget,
+            model_target=args.model_target,
+        )
 
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)
 

@@ -57,3 +57,45 @@ def test_main_print_prompt_does_not_call_provider(tmp_path, monkeypatch, capsys)
     assert "END CONTEXT PACK" in output
     assert "User task:" in output
     assert output.rstrip().endswith("Do the next step.")
+
+
+def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None):
+        assert task == "Do the next step."
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "the",
+            "next",
+            "step.",
+            "--latest-context",
+            "--token-budget",
+            "8000",
+            "--model-target",
+            "gpt-5",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in output
+    assert "# Generated Context Pack" in output
+    assert "END CONTEXT PACK" in output
+    assert output.rstrip().endswith("Do the next step.")
