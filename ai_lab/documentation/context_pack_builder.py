@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from pathlib import Path
 
 from ai_lab.documentation.artifact_history import (
     ArtifactRecord,
@@ -8,6 +9,8 @@ from ai_lab.documentation.artifact_history import (
     latest_records_by_context_level,
 )
 from ai_lab.documentation.context_pack import (
+    ContextPackError,
+    ContextPackExclusion,
     ContextPackItem,
     ContextPackManifest,
 )
@@ -21,6 +24,28 @@ def _shorten(value: str, max_length: int = 240) -> str:
         return value
 
     return value[: max_length - 3].rstrip() + "..."
+
+
+def estimate_tokens_for_text(text: str) -> int:
+    """Estimate token count using a simple chars/4 approximation."""
+    if not text:
+        return 0
+
+    return max(1, (len(text) + 3) // 4)
+
+
+def estimate_tokens_for_path(path: Path) -> int:
+    """Estimate token count for a text artifact path.
+
+    Missing or unreadable files return 0 so manifest construction remains robust.
+    """
+    try:
+        if not path.is_file():
+            return 0
+
+        return estimate_tokens_for_text(path.read_text(encoding="utf-8", errors="ignore"))
+    except OSError:
+        return 0
 
 
 def item_type_for_record(record: ArtifactRecord) -> str:
@@ -40,11 +65,14 @@ def item_type_for_record(record: ArtifactRecord) -> str:
 def context_item_from_record(
     record: ArtifactRecord,
     relevance_score: float = 0.8,
-    token_estimate: int = 0,
+    token_estimate: int | None = None,
 ) -> ContextPackItem:
     """Create a context-pack item from one artifact-history record."""
     level = context_level_for_record(record) or record.kind
     reason = _shorten(f"{level} context seed: {record.title}")
+
+    if token_estimate is None:
+        token_estimate = estimate_tokens_for_path(record.path)
 
     return ContextPackItem(
         item_type=item_type_for_record(record),
@@ -72,6 +100,43 @@ def _context_level_sort_key(level: str) -> tuple[int, str]:
     return (999, level)
 
 
+def select_items_with_budget(
+    items: tuple[ContextPackItem, ...],
+    token_budget: int | None,
+) -> tuple[tuple[ContextPackItem, ...], tuple[ContextPackExclusion, ...]]:
+    """Select context items within token budget and record exclusions."""
+    if token_budget is None:
+        return items, ()
+
+    selected: list[ContextPackItem] = []
+    exclusions: list[ContextPackExclusion] = []
+    used_tokens = 0
+
+    for item in items:
+        would_use = used_tokens + item.token_estimate
+
+        if would_use <= token_budget:
+            selected.append(item)
+            used_tokens = would_use
+            continue
+
+        exclusions.append(
+            ContextPackExclusion(
+                item_id=item.item_id,
+                reason="too_large",
+                note=(
+                    f"Estimated {item.token_estimate} tokens would exceed "
+                    f"budget {token_budget}."
+                ),
+            )
+        )
+
+    if not selected and items:
+        raise ContextPackError("No context items fit within token_budget.")
+
+    return tuple(selected), tuple(exclusions)
+
+
 def build_latest_context_manifest(
     task: str,
     records: Iterable[ArtifactRecord],
@@ -93,20 +158,25 @@ def build_latest_context_manifest(
         for level in sorted(latest_by_level, key=_context_level_sort_key)
     )
 
-    items = tuple(
+    candidate_items = tuple(
         context_item_from_record(
             record=record,
             relevance_score=0.9,
-            token_estimate=0,
         )
         for record in ordered_records
+    )
+
+    selected_items, exclusions = select_items_with_budget(
+        items=candidate_items,
+        token_budget=token_budget,
     )
 
     return ContextPackManifest(
         task=task,
         assembly_policy="latest_context",
-        items=items,
+        items=selected_items,
         token_budget=token_budget,
+        exclusions=exclusions,
         model_target=model_target,
         pipeline_run_id=pipeline_run_id,
     )
