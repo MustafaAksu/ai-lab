@@ -229,10 +229,10 @@ def main() -> int:
         if args.model_target:
             extra_metadata["model_target"] = args.model_target
 
-    prompt = build_prompt(raw_prompt, context_pack=context_pack)
+    provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
 
     if args.print_prompt:
-        print(prompt)
+        print(provider_prompt)
         return 0
 
     save_path: Path | None = args.save
@@ -251,13 +251,13 @@ def main() -> int:
     responses: dict[str, dict[str, str]] = {}
 
     print("Prompt:")
-    print(prompt)
+    print(raw_prompt)
     print()
 
     for provider in providers:
         model = getattr(provider, "model", "unknown")
         print(f"=== {provider.name} ({model}) ===")
-        answer = provider.ask(prompt)
+        answer = provider.ask(provider_prompt)
         responses[provider.name] = {
             "model": model,
             "response": answer,
@@ -271,7 +271,7 @@ def main() -> int:
         comparison_id = save_path.name.split("-")[0] + "-" + save_path.name.split("-")[1]
 
         artifact = build_markdown_artifact(
-            prompt=prompt,
+            prompt=raw_prompt,
             responses=responses,
             created_at=created_at,
             command=command,

@@ -137,3 +137,68 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
     assert "# Generated Context Pack" in output
     assert "END CONTEXT PACK" in output
     assert output.rstrip().endswith("Compare next step.")
+
+
+def test_main_context_comparison_saves_raw_prompt_not_context_pack(
+    tmp_path,
+    monkeypatch,
+):
+    from scripts import compare_providers
+
+    class FakeProvider:
+        def __init__(self, name):
+            self.name = name
+            self.model = f"{name.lower()}-model"
+            self.prompts = []
+
+        def ask(self, prompt):
+            self.prompts.append(prompt)
+            assert "BEGIN CONTEXT PACK" in prompt
+            assert "# Generated Context Pack" in prompt
+            return f"{self.name} answer"
+
+    fake_openai = FakeProvider("OpenAI")
+    fake_claude = FakeProvider("Claude")
+
+    monkeypatch.setattr(
+        compare_providers,
+        "OpenAIProvider",
+        lambda: fake_openai,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "ClaudeProvider",
+        lambda: fake_claude,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_text",
+        lambda task, token_budget=None, model_target=None: "# Generated Context Pack",
+    )
+
+    save_path = tmp_path / "COMP-0001-context-test.md"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "next",
+            "step.",
+            "--latest-context",
+            "--save",
+            str(save_path),
+            "--title",
+            "Context Test",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    artifact = save_path.read_text(encoding="utf-8")
+
+    assert "## Prompt" in artifact
+    assert "Compare next step." in artifact
+    assert "BEGIN CONTEXT PACK" not in artifact
+    assert "# Generated Context Pack" not in artifact
+    assert "- context_policy: `latest_context`" in artifact
