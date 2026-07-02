@@ -1,0 +1,22 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T12:54:35.475864+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "ef71fce",
+    "a3f2460"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-memory-refresh.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh was created after inspecting the implementation burst and confirming that latest-context selected it as the first context item.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-memory-refresh",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-7f3fe0be0ba5",
+  "warrant_state": "supported"
+}
