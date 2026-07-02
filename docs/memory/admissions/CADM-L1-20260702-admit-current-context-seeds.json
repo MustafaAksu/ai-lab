@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T15:55:37.639797+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "15f3f18"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-admit-current-context-seeds.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 seed-admission refresh was created after adding admit_with_warning verdicts for ABS-0003, SYNCOMP-0005, and COMP-0009 and confirming gated context is enriched.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-admit-current-context-seeds",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-7503a10cd157",
+  "warrant_state": "supported"
+}

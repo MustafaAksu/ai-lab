@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added admission verdict for ABS-0003.",
+    "Added admission verdict for SYNCOMP-0005.",
+    "Added admission verdict for COMP-0009."
+  ],
+  "content_hash": "afa435c4c5539291211621364b22981f5edca634aad27310f592405b0858bda0",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T15:55:37.531565+00:00",
+  "episode_id": "EP-20260702-admit-current-context-seeds",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Use admit_with_warning for useful but partly superseded older context seeds.",
+    "Preserve admission-gated strictness while avoiding overly sparse context."
+  ],
+  "l1_id": "L1-20260702-admit-current-context-seeds",
+  "namespace": "public",
+  "next_actions": [
+    "Run provider comparison with scoped, admission-gated context to evaluate whether enriched gated context improves next-step reasoning."
+  ],
+  "open_questions": [
+    "Should future seed admissions distinguish stale-but-useful from unknown freshness more precisely?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Warning-admitted older artifacts can still influence models unless their warning metadata is clearly interpreted."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-admit-current-context-seeds"
+  ],
+  "summary_text": "AI-Lab admitted the current non-L1 latest-context seeds for optional admission-gated context. ABS-0003, SYNCOMP-0005, and COMP-0009 now have ContextAdmissionVerdict records with decision admit_with_warning, freshness_state unknown, and warrant_state supported. This enriches --require-admission context beyond the latest admitted L1 while preserving warnings that these older artifacts predate later scoped-stream, task-label, and admission-gating implementation work. Admission-gated context can now include these seeds when token budget allows, rather than excluding them solely for missing verdicts.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "context-seeds"
+  ],
+  "ttl_until": null
+}
