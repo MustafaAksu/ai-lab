@@ -121,3 +121,64 @@ def test_episode_l1_summary_rejects_duplicate_source_events():
             source_event_ids=["EVT-0001", "EVT-0001"],
             citations=[],
         )
+
+
+def test_interaction_log_event_json_round_trip(tmp_path):
+    event = InteractionLogEvent.from_text(
+        event_id="EVT-JSON-0001",
+        episode_id="EP-JSON-0001",
+        turn_id=1,
+        created_at="2026-07-02T12:30:00+00:00",
+        event_type="assistant_message",
+        role="assistant",
+        actor="gpt-5",
+        summary="Proposed JSON serialization helpers.",
+        response_text="raw response",
+        artifact_ids=["7cbc303"],
+        topics=["memory", "serialization"],
+    )
+
+    target = tmp_path / "event.json"
+    event.write_json(target)
+    loaded = InteractionLogEvent.read_json(target)
+
+    assert loaded == event
+    assert loaded.artifact_ids == ("7cbc303",)
+    assert loaded.topics == ("memory", "serialization")
+
+
+def test_episode_l1_summary_json_round_trip(tmp_path):
+    summary = EpisodeL1Summary(
+        l1_id="L1-JSON-0001",
+        episode_id="EP-JSON-0001",
+        created_at="2026-07-02T12:35:00+00:00",
+        summary_version="v1",
+        summary_text="JSON serialization keeps L1 summaries durable.",
+        source_event_ids=["EVT-JSON-0001"],
+        citations=["3ac9f2b1d0af@a1c2d3e|b:1024-2047"],
+        key_decisions=["Persist memory schema objects as JSON."],
+        completed_work=["Added schema objects."],
+        open_questions=["When should manual writer CLI be added?"],
+        risks=["Persistence without validation would be unsafe."],
+        next_actions=["Add manual writer CLI."],
+        topics=["memory", "serialization"],
+        coverage_score=1.0,
+        freshness_state="fresh",
+    )
+
+    target = tmp_path / "l1.json"
+    summary.write_json(target)
+    loaded = EpisodeL1Summary.read_json(target)
+
+    assert loaded == summary
+    assert loaded.source_event_ids == ("EVT-JSON-0001",)
+    assert loaded.citations == ("3ac9f2b1d0af@a1c2d3e|b:1024-2047",)
+    assert loaded.topics == ("memory", "serialization")
+
+
+def test_read_json_rejects_non_object_payload(tmp_path):
+    target = tmp_path / "bad.json"
+    target.write_text("[]")
+
+    with pytest.raises(InteractionLogError, match="JSON payload must be an object"):
+        InteractionLogEvent.read_json(target)

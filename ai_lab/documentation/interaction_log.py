@@ -10,9 +10,11 @@ without losing citation or source-event information.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 import hashlib
+import json
+from pathlib import Path
 import re
 from typing import Any
 
@@ -143,6 +145,27 @@ def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _coerce_tuple_fields(payload: dict[str, Any], fields: tuple[str, ...]) -> dict[str, Any]:
+    normalized = dict(payload)
+    for field_name in fields:
+        if field_name in normalized and isinstance(normalized[field_name], list):
+            normalized[field_name] = tuple(normalized[field_name])
+    return normalized
+
+
+def _write_json(path: str | Path, payload: dict[str, Any]) -> None:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+
+def _read_json(path: str | Path) -> dict[str, Any]:
+    payload = json.loads(Path(path).read_text())
+    if not isinstance(payload, dict):
+        raise InteractionLogError("JSON payload must be an object.")
+    return payload
+
+
 @dataclass(frozen=True)
 class InteractionLogEvent:
     """Append-only record of one interaction or process event."""
@@ -219,6 +242,30 @@ class InteractionLogEvent:
             value = getattr(self, field_name)
             if value is not None and (not isinstance(value, int) or value < 0):
                 raise InteractionLogError(f"{field_name} must be a non-negative integer.")
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serializable representation."""
+
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "InteractionLogEvent":
+        """Load an event from a JSON-style dictionary."""
+
+        if not isinstance(payload, dict):
+            raise InteractionLogError("InteractionLogEvent payload must be a dictionary.")
+        return cls(**_coerce_tuple_fields(payload, ("artifact_ids", "topics")))
+
+    def write_json(self, path: str | Path) -> None:
+        """Write this event as stable, human-readable JSON."""
+
+        _write_json(path, self.to_dict())
+
+    @classmethod
+    def read_json(cls, path: str | Path) -> "InteractionLogEvent":
+        """Read an event from JSON."""
+
+        return cls.from_dict(_read_json(path))
 
     @classmethod
     def from_text(
@@ -344,6 +391,44 @@ class EpisodeL1Summary:
                 f"redaction_level must be one of {sorted(VALID_REDACTION_LEVELS)}."
             )
         _validate_optional_hash(self.content_hash, "content_hash")
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serializable representation."""
+
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "EpisodeL1Summary":
+        """Load an L1 summary from a JSON-style dictionary."""
+
+        if not isinstance(payload, dict):
+            raise InteractionLogError("EpisodeL1Summary payload must be a dictionary.")
+        return cls(
+            **_coerce_tuple_fields(
+                payload,
+                (
+                    "source_event_ids",
+                    "citations",
+                    "key_decisions",
+                    "completed_work",
+                    "open_questions",
+                    "risks",
+                    "next_actions",
+                    "topics",
+                ),
+            )
+        )
+
+    def write_json(self, path: str | Path) -> None:
+        """Write this L1 summary as stable, human-readable JSON."""
+
+        _write_json(path, self.to_dict())
+
+    @classmethod
+    def read_json(cls, path: str | Path) -> "EpisodeL1Summary":
+        """Read an L1 summary from JSON."""
+
+        return cls.from_dict(_read_json(path))
 
     def stable_content_hash(self) -> str:
         """Return a deterministic content hash for idempotent refresh checks."""
