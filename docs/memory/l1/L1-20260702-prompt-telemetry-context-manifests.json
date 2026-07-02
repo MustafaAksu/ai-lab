@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added optional ContextPackManifest task_label and full_prompt_hash metadata.",
+    "Populated prompt telemetry in latest-context provider paths.",
+    "Verified with full pytest suite: 169 passed."
+  ],
+  "content_hash": "43d4eb988a775ef10825de992ed92ef7a035b1da903bb27a09c1cbce8cfae2bb",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T17:06:51.167316+00:00",
+  "episode_id": "EP-20260702-prompt-telemetry-context-manifests",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep task_label and full_prompt_hash optional for backward compatibility.",
+    "Do not change manifest_id computation; telemetry is audit metadata, not identity input."
+  ],
+  "l1_id": "L1-20260702-prompt-telemetry-context-manifests",
+  "namespace": "public",
+  "next_actions": [
+    "Start C ergonomics: add admission warning/cap telemetry for admit_with_warning context items."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The prompt hash is audit metadata and must be interpreted against the exact prompt rendering path used by the script."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-prompt-telemetry-context-manifests"
+  ],
+  "summary_text": "AI-Lab implemented the B-min telemetry shim chosen by SYNCOMP-0006. ContextPackManifest gained optional task_label and full_prompt_hash fields. task_label is validated as lowercase kebab-case, full_prompt_hash as a 64-character lowercase SHA-256 digest, and both serialize only when present. prompt_context.py now provides context_task_slug and prompt_sha256 helpers and passes telemetry through latest-context manifest assembly. ask_provider.py and compare_providers.py now populate telemetry on latest-context paths; compare_providers.py saves the telemetry in sibling .context.json manifests. Tests were expanded for schema validation, serialization, builder passthrough, helper behavior, and provider wiring. The full suite passed with 169 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "manifest-telemetry",
+    "prompt-audit",
+    "latest-context"
+  ],
+  "ttl_until": null
+}

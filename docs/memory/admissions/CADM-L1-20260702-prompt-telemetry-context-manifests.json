@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T17:06:51.287078+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "f406d45"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-prompt-telemetry-context-manifests.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed B-min prompt telemetry implementation with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-prompt-telemetry-context-manifests",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-03a31a333288",
+  "warrant_state": "supported"
+}
