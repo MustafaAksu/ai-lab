@@ -67,6 +67,12 @@ def main() -> int:
         default=None,
         help="Optional output file. Prints to stdout when omitted.",
     )
+    parser.add_argument(
+        "--manifest-output",
+        type=Path,
+        default=None,
+        help="Optional JSON manifest output file.",
+    )
 
     args = parser.parse_args()
 
@@ -86,16 +92,22 @@ def main() -> int:
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")
 
+    manifest_json = json.dumps(manifest.to_dict(), indent=2, sort_keys=True) + "\n"
+
     if args.format == "markdown":
         output = render_context_pack_markdown(manifest)
     else:
-        output = json.dumps(manifest.to_dict(), indent=2, sort_keys=True) + "\n"
+        output = manifest_json
 
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(output, encoding="utf-8")
     else:
         print(output, end="")
+
+    if args.manifest_output:
+        args.manifest_output.parent.mkdir(parents=True, exist_ok=True)
+        args.manifest_output.write_text(manifest_json, encoding="utf-8")
 
     return 0
 
