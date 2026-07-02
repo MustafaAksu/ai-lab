@@ -125,3 +125,36 @@ def test_render_context_pack_includes_admission_metadata(tmp_path):
     assert "Admission decision: admit" in rendered
     assert "Freshness state: fresh" in rendered
     assert "Warrant state: supported" in rendered
+
+
+def test_render_context_pack_includes_admission_summary(tmp_path):
+    source = tmp_path / "l1.json"
+    source.write_text('{"summary_text": "Admitted L1 summary."}', encoding="utf-8")
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+        token_estimate=100,
+        source_path=str(source),
+        admission_decision="admit",
+    )
+
+    manifest = ContextPackManifest(
+        task="Render admission summary.",
+        assembly_policy="latest_context",
+        items=(item,),
+        admission_summary={
+            "admit": 1,
+            "admit_with_warning": 0,
+            "excluded_by_policy": 2,
+        },
+    )
+
+    rendered = render_context_pack_markdown(manifest)
+
+    assert "Admission summary:" in rendered
+    assert "- admit: 1" in rendered
+    assert "- admit_with_warning: 0" in rendered
+    assert "- excluded_by_policy: 2" in rendered

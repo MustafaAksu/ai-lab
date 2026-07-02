@@ -157,6 +157,31 @@ def filter_items_by_admission_requirement(
     return tuple(selected), tuple(exclusions)
 
 
+def admission_summary_for_manifest(
+    items: tuple[ContextPackItem, ...],
+    exclusions: tuple[ContextPackExclusion, ...] = (),
+) -> dict[str, int]:
+    """Return manifest-level admission telemetry counts."""
+
+    summary = {
+        "admit": 0,
+        "admit_with_warning": 0,
+        "excluded_by_policy": 0,
+    }
+
+    for item in items:
+        if item.admission_decision == "admit":
+            summary["admit"] += 1
+        elif item.admission_decision == "admit_with_warning":
+            summary["admit_with_warning"] += 1
+
+    for exclusion in exclusions:
+        if exclusion.reason == "policy":
+            summary["excluded_by_policy"] += 1
+
+    return summary
+
+
 def context_item_from_l1_summary(
     summary: EpisodeL1Summary,
     path: Path,
@@ -358,14 +383,20 @@ def build_latest_context_manifest(
         token_budget=token_budget,
     )
 
+    exclusions = (*admission_exclusions, *budget_exclusions)
+
     return ContextPackManifest(
         task=task,
         assembly_policy="latest_context",
         items=selected_items,
         token_budget=token_budget,
-        exclusions=(*admission_exclusions, *budget_exclusions),
+        exclusions=exclusions,
         model_target=model_target,
         pipeline_run_id=pipeline_run_id,
         task_label=task_label,
         full_prompt_hash=full_prompt_hash,
+        admission_summary=admission_summary_for_manifest(
+            items=selected_items,
+            exclusions=exclusions,
+        ),
     )

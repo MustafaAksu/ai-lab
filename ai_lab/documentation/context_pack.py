@@ -91,6 +91,18 @@ def _validate_sha256_hex(value: str, field_name: str) -> None:
         raise ContextPackError(f"{field_name} must be a lowercase SHA-256 hex digest.")
 
 
+def _validate_telemetry_counts(
+    value: dict[str, int],
+    field_name: str,
+) -> None:
+    for key, count in value.items():
+        if not re.fullmatch(r"[a-z][a-z0-9_]*", key):
+            raise ContextPackError(f"{field_name} contains an unsupported key.")
+
+        if not isinstance(count, int) or count < 0:
+            raise ContextPackError(f"{field_name} counts must be non-negative integers.")
+
+
 def compute_manifest_id(
     task: str,
     assembly_policy: str,
@@ -228,6 +240,7 @@ class ContextPackManifest:
     pipeline_run_id: str | None = None
     task_label: str | None = None
     full_prompt_hash: str | None = None
+    admission_summary: dict[str, int] | None = None
 
     def __post_init__(self) -> None:
         _validate_short_text(self.task, "task", max_length=500)
@@ -252,6 +265,9 @@ class ContextPackManifest:
 
         if self.full_prompt_hash:
             _validate_sha256_hex(self.full_prompt_hash, "full_prompt_hash")
+
+        if self.admission_summary is not None:
+            _validate_telemetry_counts(self.admission_summary, "admission_summary")
 
         expected_manifest_id = compute_manifest_id(
             task=self.task,
@@ -292,6 +308,9 @@ class ContextPackManifest:
 
         if self.full_prompt_hash:
             data["full_prompt_hash"] = self.full_prompt_hash
+
+        if self.admission_summary is not None:
+            data["admission_summary"] = dict(self.admission_summary)
 
         if self.pipeline_run_id:
             data["provenance"] = {

@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from ai_lab.documentation.context_pack import ContextPackExclusion, ContextPackItem
+
 from ai_lab.documentation.artifact_history import ArtifactRecord
 from ai_lab.documentation.context_pack_builder import (
     build_latest_context_manifest,
@@ -602,3 +604,91 @@ def test_build_latest_context_manifest_records_prompt_telemetry(tmp_path):
     assert manifest.full_prompt_hash == "b" * 64
     assert manifest.to_dict()["task_label"] == "prepare-context"
     assert manifest.to_dict()["full_prompt_hash"] == "b" * 64
+
+
+def test_admission_summary_for_manifest_counts_selected_and_policy_exclusions():
+    admitted = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMIT",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+        admission_decision="admit",
+    )
+    warning = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-WARN",
+        reason="Warning abstraction.",
+        relevance_score=0.9,
+        admission_decision="admit_with_warning",
+    )
+    policy_exclusion = ContextPackExclusion(
+        item_id="COMP-UNREVIEWED",
+        reason="policy",
+        note="No admission verdict.",
+    )
+    size_exclusion = ContextPackExclusion(
+        item_id="SYNCOMP-LARGE",
+        reason="too_large",
+        note="Too large.",
+    )
+
+    from ai_lab.documentation.context_pack_builder import admission_summary_for_manifest
+
+    assert admission_summary_for_manifest(
+        items=(admitted, warning),
+        exclusions=(policy_exclusion, size_exclusion),
+    ) == {
+        "admit": 1,
+        "admit_with_warning": 1,
+        "excluded_by_policy": 1,
+    }
+
+
+def test_build_latest_context_manifest_records_admission_summary(tmp_path):
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    verdict_dir = tmp_path / "admissions"
+    verdict_dir.mkdir()
+    (verdict_dir / "CADM-ABS-0003.json").write_text(
+        """{
+  "verdict_id": "CADM-ABS-0003",
+  "target_item_id": "ABS-0003",
+  "target_item_type": "abstraction",
+  "decision": "admit_with_warning",
+  "freshness_state": "unknown",
+  "warrant_state": "supported",
+  "reason": "Legacy abstraction admitted with warning.",
+  "author": "mustafa",
+  "substrate": "human",
+  "created_at": "2026-07-02T00:00:00+00:00"
+}
+""",
+        encoding="utf-8",
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context.",
+        records=records,
+        l1_dir=tmp_path / "empty-l1",
+        admission_dir=verdict_dir,
+        require_admission=True,
+    )
+
+    assert manifest.admission_summary == {
+        "admit": 0,
+        "admit_with_warning": 1,
+        "excluded_by_policy": 0,
+    }
+    assert manifest.to_dict()["admission_summary"] == manifest.admission_summary

@@ -287,3 +287,63 @@ def test_context_pack_manifest_rejects_invalid_full_prompt_hash():
             items=(item,),
             full_prompt_hash="not-a-hash",
         )
+
+
+def test_context_pack_manifest_serializes_admission_summary():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    manifest = ContextPackManifest(
+        task="Prepare context.",
+        assembly_policy="latest_context",
+        items=(item,),
+        admission_summary={
+            "admit": 1,
+            "admit_with_warning": 2,
+            "excluded_by_policy": 3,
+        },
+    )
+
+    assert manifest.to_dict()["admission_summary"] == {
+        "admit": 1,
+        "admit_with_warning": 2,
+        "excluded_by_policy": 3,
+    }
+
+
+def test_context_pack_manifest_rejects_invalid_admission_summary_key():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="admission_summary contains an unsupported key"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            admission_summary={"Admit": 1},
+        )
+
+
+def test_context_pack_manifest_rejects_invalid_admission_summary_count():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="admission_summary counts must be non-negative integers"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            admission_summary={"admit": -1},
+        )
