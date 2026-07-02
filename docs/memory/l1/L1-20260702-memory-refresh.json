@@ -1,0 +1,47 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added InteractionLogEvent and EpisodeL1Summary schemas.",
+    "Added JSON serialization for interaction memory objects.",
+    "Added manual writer CLIs for events and L1 summaries.",
+    "Integrated latest EpisodeL1Summary into latest-context selection."
+  ],
+  "content_hash": "d5ed565961fb55a31029519f3bdb4d74ed838adc504212ae8e056d5053480cf0",
+  "coverage_score": 0.9,
+  "created_at": "2026-07-02T12:29:26.456978+00:00",
+  "episode_id": "EP-20260702-memory-refresh",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Use A-first rolling memory with an explicit bridge to future WarrantEdge/MemoryEdge.",
+    "Include episode_l1 as a first-class latest-context item type."
+  ],
+  "l1_id": "L1-20260702-memory-refresh",
+  "namespace": "public",
+  "next_actions": [
+    "Verify latest-context includes L1-20260702-memory-refresh, then decide whether to add freshness/admission verdict edges or L1 context rendering improvements."
+  ],
+  "open_questions": [
+    "When should WarrantEdge/MemoryEdge become persistent rather than future edge seed records?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "L1 summaries can become stale or unwarranted if not later guarded by freshness and warrant/admission edges."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-rolling-memory-schema",
+    "EVT-20260702-manual-memory-writers",
+    "EVT-20260702-l1-latest-context"
+  ],
+  "summary_text": "AI-Lab completed the first rolling-memory implementation slice. The system now has InteractionLogEvent and EpisodeL1Summary schemas, JSON serialization, manual event and L1 writer CLIs, and latest-context support for episode_l1 JSON artifacts. This creates a manual memory refresh path: durable interaction events can be summarized into an L1 artifact, and latest-context can include that L1 before older ABS/SYNCOMP/COMP artifacts. The design intentionally does not implement graph persistence, automatic L1 generation, topological packing, provider-requested code execution, or autonomy. The L1 schema preserves future edge seed records so later WarrantEdge/MemoryEdge records can be derived from source events and citations.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "latest-context",
+    "warrant-bridge"
+  ],
+  "ttl_until": null
+}

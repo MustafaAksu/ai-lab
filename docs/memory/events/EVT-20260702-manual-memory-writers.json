@@ -1,0 +1,35 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "0fe0d75",
+    "89b69b7"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-02T12:29:26.252516+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-memory-refresh",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-manual-memory-writers",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Added manual writer CLIs for InteractionLogEvent and EpisodeL1Summary JSON artifacts.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "manual-writeback"
+  ],
+  "turn_id": 2
+}
