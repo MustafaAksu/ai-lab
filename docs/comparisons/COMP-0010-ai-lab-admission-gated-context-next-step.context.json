@@ -1,0 +1,54 @@
+{
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-02T15:56:36.989035+00:00",
+  "exclusions": [
+    {
+      "item_id": "COMP-0009",
+      "note": "Estimated 3472 tokens would exceed budget 8000.",
+      "reason": "too_large"
+    }
+  ],
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-7503a10cd157",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260702-admit-current-context-seeds",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260702-admit-current-context-seeds (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260702-admit-current-context-seeds.json",
+      "token_estimate": 530,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-4589706fb054",
+      "freshness_state": "unknown",
+      "item_id": "SYNCOMP-0005",
+      "item_type": "synthesis",
+      "reason": "SYNCOMP context seed: AI-Lab Capability Map Beyond Memory Next Step",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/syntheses/SYNCOMP-0005-ai-lab-capability-map-beyond-memory-next-step.md",
+      "token_estimate": 5436,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "e34db84a6444fb64",
+  "model_target": "gpt-5",
+  "task": "Given the current AI-Lab memory/context implementation, choose the next safest implementation step. Options: (A) topic-aware routing inside scope, (B) manifest task_label/full_prompt_hash metadata, (C) admission-verdict ergonomics for older seeds, (D) topological context packing. Use the current scoped admission-gated context and justify ordering, tests, non-goals, and risks.",
+  "token_budget": 8000,
+  "total_token_estimate": 7903
+}
