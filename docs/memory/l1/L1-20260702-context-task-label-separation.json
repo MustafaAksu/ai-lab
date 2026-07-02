@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added context_task_label helper.",
+    "Updated ask_provider.py to use a task label for latest-context assembly.",
+    "Updated compare_providers.py to use a task label for latest-context assembly.",
+    "Added tests proving long prompts are shortened for context assembly but preserved for provider prompts."
+  ],
+  "content_hash": "6edd7eec6e5ce046178bc58e2293c2836f928df64a0a4b529aa94ba3693167fb",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T14:58:33.749012+00:00",
+  "episode_id": "EP-20260702-context-task-label-separation",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Separate context selection labels from provider-facing prompt content.",
+    "Do not relax the ContextPackManifest.task length limit; instead, derive a safe task label."
+  ],
+  "l1_id": "L1-20260702-context-task-label-separation",
+  "namespace": "public",
+  "next_actions": [
+    "Consider optional admission gating after the context task-label separation is safely recorded."
+  ],
+  "open_questions": [
+    "Should context manifests later store both task_label and full_prompt_hash explicitly?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "The shortened task label may lose some semantic detail for context assembly unless later paired with prompt hashing or richer task metadata."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-context-task-label-separation"
+  ],
+  "summary_text": "AI-Lab fixed the latest-context prompt-length failure mode by separating context manifest task labels from full provider prompts. A new context_task_label helper normalizes and truncates long prompts to a manifest-safe label of at most 500 characters. ask_provider.py and compare_providers.py now use this short label for latest-context manifest assembly while preserving the full raw prompt in the provider-facing User task section. The fix was verified with a 1200-character prompt, passed the full test suite, and was committed as ce67a92. This preserves provider intent while preventing ContextPackManifest.task validation failures on long prompts.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "latest-context",
+    "prompt-handling",
+    "task-label"
+  ],
+  "ttl_until": null
+}

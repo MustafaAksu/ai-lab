@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "ce67a92"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-02T14:58:33.646821+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-context-task-label-separation",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-context-task-label-separation",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Separated context manifest task labels from full provider prompts. Long prompts are shortened only for context pack manifest assembly while the full prompt remains in the provider-facing User task section.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "latest-context",
+    "prompt-handling",
+    "task-label"
+  ],
+  "turn_id": 1
+}
