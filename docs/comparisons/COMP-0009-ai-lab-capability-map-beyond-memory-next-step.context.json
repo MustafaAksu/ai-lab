@@ -1,0 +1,36 @@
+{
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-02T12:00:07.890662+00:00",
+  "exclusions": [],
+  "items": [
+    {
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937
+    },
+    {
+      "item_id": "SYNCOMP-0004",
+      "item_type": "synthesis",
+      "reason": "SYNCOMP context seed: AI-Lab Memory Next Step",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/syntheses/SYNCOMP-0004-ai-lab-memory-next-step.md",
+      "token_estimate": 2038
+    },
+    {
+      "item_id": "COMP-0008",
+      "item_type": "comparison",
+      "reason": "COMP context seed: AI-Lab Memory Next Step",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/COMP-0008-ai-lab-memory-next-step.md",
+      "token_estimate": 942
+    }
+  ],
+  "manifest_id": "87bb876937ec78e1",
+  "model_target": "gpt-5",
+  "task": "Decide the next AI-Lab implementation step after the capability-map discussion. Options: (A) InteractionLog/L1 summaries, (B) predicate vocabulary plus WarrantEdge/MemoryEdge schema, (C) topological context packing. Given current code and development_directions.md, choose one, justify ordering, and give plan, tests, non-goals, risks.",
+  "token_budget": 8000,
+  "total_token_estimate": 4917
+}
