@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T14:45:58.404212+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "ea5da57"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-scoped-memory-streams.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 scoped-memory-streams refresh was created after confirming scoped latest-context selection works, tests pass, and commit ea5da57 was pushed.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-scoped-memory-streams",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-369cc5778336",
+  "warrant_state": "supported"
+}

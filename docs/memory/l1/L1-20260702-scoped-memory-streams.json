@@ -1,0 +1,45 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added scope filtering to latest L1 summary discovery.",
+    "Added l1_scope passthrough to latest-context manifest assembly.",
+    "Added --scope support to build_context_pack.py, ask_provider.py, and compare_providers.py.",
+    "Updated tests for scoped latest-context wiring."
+  ],
+  "content_hash": "1dedd0c4f41b030014ddadc8225556edd7d3319fdec88e3c84b508d0ecb215c6",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T14:45:22.840623+00:00",
+  "episode_id": "EP-20260702-scoped-memory-streams",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Use scope as the first stream boundary instead of introducing a new stream schema.",
+    "Keep global latest-context behavior unchanged when no scope is provided."
+  ],
+  "l1_id": "L1-20260702-scoped-memory-streams",
+  "namespace": "public",
+  "next_actions": [
+    "Implement task-label/full-prompt separation before adding stricter admission gates."
+  ],
+  "open_questions": [
+    "Should the next memory slice add task-label/full-prompt separation, admission gating, or topic-aware stream routing?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Scope-based stream selection is explicit and safe, but not yet automatic; users must choose the correct scope manually."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-scoped-l1-context-selection"
+  ],
+  "summary_text": "AI-Lab added the first operational multi-stream context mechanism. The existing scope field is now used as the stream boundary for latest L1 memory selection. By default, latest-context still selects the newest L1 globally; with --scope, build_context_pack.py, ask_provider.py, and compare_providers.py can select the newest EpisodeL1Summary inside a requested stream such as ai-lab-memory. The implementation preserves admission verdict metadata and rendered warrant metadata. Tests passed and the change was committed as ea5da57. This does not yet implement topic-aware retrieval, graph traversal, topological context packing, admission gating, or automatic stream routing.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "scoped-context",
+    "stream-selection"
+  ],
+  "ttl_until": null
+}
