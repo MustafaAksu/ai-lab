@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "f2ad4f1",
+    "5f47f8d"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-02T13:09:08.125977+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-warranted-memory-refresh",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-context-admission-writer-and-verdict",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Added manual context admission writer and created the first admission verdict for L1-20260702-memory-refresh.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-verdict",
+    "manual-writeback"
+  ],
+  "turn_id": 2
+}

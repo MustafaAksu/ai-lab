@@ -1,0 +1,50 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added ContextAdmissionVerdict schema.",
+    "Added manual context admission writer.",
+    "Created first real admission verdict for the manual L1 refresh.",
+    "Annotated latest-context manifest items with admission verdict metadata.",
+    "Rendered admission verdict metadata into provider-facing context packs."
+  ],
+  "content_hash": "622effd3f5f659d0e9f822a1424f61fad3d9eba30e6bbfdd3d5572bf80c1e575",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T13:09:08.398445+00:00",
+  "episode_id": "EP-20260702-warranted-memory-refresh",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Treat warranted memory freshness as the current memory milestone: selected context should carry admission and warrant metadata.",
+    "Keep admission verdicts annotation-only for now; do not yet block unreviewed items."
+  ],
+  "l1_id": "L1-20260702-warranted-memory-refresh",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether the next slice should be admission gating, context task-label/full-prompt separation, or automated/manual L1 refresh ergonomics."
+  ],
+  "open_questions": [
+    "When should admission verdicts become mandatory gates rather than annotation-only metadata?",
+    "When should WarrantEdge/MemoryEdge persistence replace or extend admission verdict records?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Annotation-only admission metadata can still allow unreviewed context unless a future admission gate is added."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-context-admission-schema",
+    "EVT-20260702-context-admission-writer-and-verdict",
+    "EVT-20260702-context-admission-manifest",
+    "EVT-20260702-rendered-context-admission"
+  ],
+  "summary_text": "AI-Lab completed the first warranted-memory freshness slice. After implementing manual L1 memory refresh, the system now has ContextAdmissionVerdict records, a manual admission writer, a real admission verdict for L1-20260702-memory-refresh, latest-context manifest annotation with admission_verdict_id/admission_decision/freshness_state/warrant_state, and rendered provider context that exposes those warrant fields. This closes the first loop where fresh memory is not only selected but also carries explicit admission and warrant metadata into the provider-facing context. The system still does not enforce admission gates, automatic L1 generation, graph persistence, topological context packing, provider-requested code execution, or autonomy.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-verdict",
+    "warranted-memory"
+  ],
+  "ttl_until": null
+}

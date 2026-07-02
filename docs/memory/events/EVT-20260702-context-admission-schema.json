@@ -1,0 +1,35 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "de0e11a"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-02T13:09:08.024990+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-warranted-memory-refresh",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-context-admission-schema",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Added ContextAdmissionVerdict schema for durable context admission decisions with freshness and warrant states.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-verdict",
+    "warrant"
+  ],
+  "turn_id": 1
+}
