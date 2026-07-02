@@ -56,6 +56,11 @@ def main() -> int:
         help="Optional L1 memory scope/stream to select from.",
     )
     parser.add_argument(
+        "--require-admission",
+        action="store_true",
+        help="Require selected context items to have an admitting admission verdict.",
+    )
+    parser.add_argument(
         "--pipeline-run-id",
         default=None,
         help="Optional pipeline run ID.",
@@ -94,6 +99,7 @@ def main() -> int:
             model_target=args.model_target,
             pipeline_run_id=args.pipeline_run_id,
             l1_scope=args.scope,
+            require_admission=args.require_admission,
         )
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")

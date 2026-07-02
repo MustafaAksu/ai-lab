@@ -36,11 +36,13 @@ def test_build_context_pack_writes_output_and_manifest(tmp_path, monkeypatch):
         model_target=None,
         pipeline_run_id=None,
         l1_scope=None,
+        require_admission=False,
     ):
         assert task == "Prepare context."
         assert records == ("record",)
         assert token_budget == 8000
         assert model_target == "gpt-5"
+        assert require_admission is False
         return manifest
 
     monkeypatch.setattr(
@@ -86,3 +88,72 @@ def test_build_context_pack_writes_output_and_manifest(tmp_path, monkeypatch):
     assert manifest_data["token_budget"] == 8000
     assert manifest_data["model_target"] == "gpt-5"
     assert manifest_data["items"][0]["item_id"] == "ABS-0003"
+
+
+def test_build_context_pack_passes_require_admission(tmp_path, monkeypatch):
+    from scripts import build_context_pack
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMITTED",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+        token_estimate=100,
+        admission_verdict_id="CADM-1",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+
+    manifest = ContextPackManifest(
+        task="Prepare admitted context.",
+        assembly_policy="latest_context",
+        items=(item,),
+        token_budget=8000,
+        model_target="gpt-5",
+    )
+
+    monkeypatch.setattr(
+        build_context_pack,
+        "discover_artifacts",
+        lambda comparison_dir, abstraction_dir: ("record",),
+    )
+
+    def fake_build_latest_context_manifest(
+        task,
+        records,
+        token_budget=None,
+        model_target=None,
+        pipeline_run_id=None,
+        l1_scope=None,
+        require_admission=False,
+    ):
+        assert task == "Prepare admitted context."
+        assert records == ("record",)
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        assert l1_scope == "ai-lab-memory"
+        assert require_admission is True
+        return manifest
+
+    monkeypatch.setattr(
+        build_context_pack,
+        "build_latest_context_manifest",
+        fake_build_latest_context_manifest,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare admitted context.",
+            "--scope",
+            "ai-lab-memory",
+            "--require-admission",
+            "--token-budget",
+            "8000",
+            "--model-target",
+            "gpt-5",
+        ],
+    )
+
+    assert build_context_pack.main() == 0

@@ -489,3 +489,86 @@ def test_build_latest_context_manifest_records_l1_admission_verdict(tmp_path):
     assert manifest.items[0].item_id == "L1-0001"
     assert manifest.items[0].admission_verdict_id == verdict.verdict_id
     assert manifest.to_dict()["items"][0]["admission_decision"] == "admit"
+
+
+def test_filter_items_by_admission_requirement_keeps_admitted_items():
+    from ai_lab.documentation.context_pack import ContextPackItem
+    from ai_lab.documentation.context_pack_builder import (
+        filter_items_by_admission_requirement,
+    )
+
+    admitted = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMITTED",
+        reason="Admitted.",
+        relevance_score=0.92,
+        admission_verdict_id="CADM-1",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+    unreviewed = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Unreviewed.",
+        relevance_score=0.9,
+    )
+
+    selected, exclusions = filter_items_by_admission_requirement(
+        items=(admitted, unreviewed),
+    )
+
+    assert selected == (admitted,)
+    assert len(exclusions) == 1
+    assert exclusions[0].item_id == "ABS-0003"
+    assert exclusions[0].reason == "policy"
+    assert exclusions[0].note == "No admission verdict; require_admission is enabled."
+
+
+def test_filter_items_by_admission_requirement_keeps_admit_with_warning():
+    from ai_lab.documentation.context_pack import ContextPackItem
+    from ai_lab.documentation.context_pack_builder import (
+        filter_items_by_admission_requirement,
+    )
+
+    warned = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-WARNED",
+        reason="Admitted with warning.",
+        relevance_score=0.92,
+        admission_verdict_id="CADM-2",
+        admission_decision="admit_with_warning",
+        freshness_state="fresh",
+        warrant_state="unreviewed",
+    )
+
+    selected, exclusions = filter_items_by_admission_requirement(items=(warned,))
+
+    assert selected == (warned,)
+    assert exclusions == ()
+
+
+def test_filter_items_by_admission_requirement_rejects_excluded_items():
+    import pytest
+
+    from ai_lab.documentation.context_pack import ContextPackError, ContextPackItem
+    from ai_lab.documentation.context_pack_builder import (
+        filter_items_by_admission_requirement,
+    )
+
+    excluded = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-EXCLUDED",
+        reason="Excluded.",
+        relevance_score=0.92,
+        admission_verdict_id="CADM-3",
+        admission_decision="exclude",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+
+    with pytest.raises(
+        ContextPackError,
+        match="No context items passed the admission requirement.",
+    ):
+        filter_items_by_admission_requirement(items=(excluded,))

@@ -122,6 +122,41 @@ def annotate_items_with_admission_verdicts(
     )
 
 
+def filter_items_by_admission_requirement(
+    items: tuple[ContextPackItem, ...],
+) -> tuple[tuple[ContextPackItem, ...], tuple[ContextPackExclusion, ...]]:
+    """Keep only items explicitly admitted by an admission verdict."""
+
+    selected: list[ContextPackItem] = []
+    exclusions: list[ContextPackExclusion] = []
+
+    for item in items:
+        if item.admission_decision in {"admit", "admit_with_warning"}:
+            selected.append(item)
+            continue
+
+        if item.admission_decision is None:
+            note = "No admission verdict; require_admission is enabled."
+        else:
+            note = (
+                f"Admission decision {item.admission_decision!r}; "
+                "require_admission is enabled."
+            )
+
+        exclusions.append(
+            ContextPackExclusion(
+                item_id=item.item_id,
+                reason="policy",
+                note=note,
+            )
+        )
+
+    if not selected and items:
+        raise ContextPackError("No context items passed the admission requirement.")
+
+    return tuple(selected), tuple(exclusions)
+
+
 def context_item_from_l1_summary(
     summary: EpisodeL1Summary,
     path: Path,
@@ -276,6 +311,7 @@ def build_latest_context_manifest(
     l1_dir: Path = Path("docs/memory/l1"),
     admission_dir: Path = Path("docs/memory/admissions"),
     l1_scope: str | None = None,
+    require_admission: bool = False,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -308,7 +344,14 @@ def build_latest_context_manifest(
         admission_dir=admission_dir,
     )
 
-    selected_items, exclusions = select_items_with_budget(
+    admission_exclusions: tuple[ContextPackExclusion, ...] = ()
+
+    if require_admission:
+        candidate_items, admission_exclusions = filter_items_by_admission_requirement(
+            items=candidate_items,
+        )
+
+    selected_items, budget_exclusions = select_items_with_budget(
         items=candidate_items,
         token_budget=token_budget,
     )
@@ -318,7 +361,7 @@ def build_latest_context_manifest(
         assembly_policy="latest_context",
         items=selected_items,
         token_budget=token_budget,
-        exclusions=exclusions,
+        exclusions=(*admission_exclusions, *budget_exclusions),
         model_target=model_target,
         pipeline_run_id=pipeline_run_id,
     )
