@@ -3,14 +3,16 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from pathlib import Path
 import argparse
+import json
 import re
 import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
 from ai_lab.documentation.prompt_context import (
-    build_latest_context_pack_text,
+    build_latest_context_pack_manifest,
     build_prompt,
     read_context_pack,
 )
@@ -206,6 +208,8 @@ def main() -> int:
     raw_prompt = " ".join(args.prompt)
     title = args.title
     context_pack = None
+    context_manifest = None
+    context_manifest_path: Path | None = None
     extra_metadata: dict[str, str] = {}
 
     if args.context_pack and args.latest_context:
@@ -216,11 +220,12 @@ def main() -> int:
         extra_metadata["context_pack"] = str(args.context_pack)
 
     if args.latest_context:
-        context_pack = build_latest_context_pack_text(
+        context_manifest = build_latest_context_pack_manifest(
             task=raw_prompt,
             token_budget=args.token_budget,
             model_target=args.model_target,
         )
+        context_pack = render_context_pack_markdown(context_manifest)
         extra_metadata["context_policy"] = "latest_context"
 
         if args.token_budget is not None:
@@ -242,6 +247,10 @@ def main() -> int:
 
     if save_path is not None and title is None:
         title = title_from_prompt(raw_prompt)
+
+    if save_path is not None and context_manifest is not None:
+        context_manifest_path = save_path.with_suffix(".context.json")
+        extra_metadata["context_manifest"] = str(context_manifest_path)
 
     providers = [
         OpenAIProvider(),
@@ -283,6 +292,14 @@ def main() -> int:
         save_path.parent.mkdir(parents=True, exist_ok=True)
         save_path.write_text(artifact, encoding="utf-8")
         print(f"Saved comparison artifact: {save_path}")
+
+        if context_manifest is not None and context_manifest_path is not None:
+            context_manifest_json = (
+                json.dumps(context_manifest.to_dict(), indent=2, sort_keys=True)
+                + "\n"
+            )
+            context_manifest_path.write_text(context_manifest_json, encoding="utf-8")
+            print(f"Saved context manifest: {context_manifest_path}")
 
     return 0
 

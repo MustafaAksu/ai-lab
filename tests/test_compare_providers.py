@@ -100,18 +100,39 @@ def test_build_markdown_artifact_records_extra_metadata():
 
 
 def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
     from scripts import compare_providers
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None):
+    item = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Latest abstraction.",
+        relevance_score=0.9,
+        token_estimate=100,
+    )
+    manifest = ContextPackManifest(
+        task="Compare next step.",
+        assembly_policy="latest_context",
+        items=(item,),
+        token_budget=8000,
+        model_target="gpt-5",
+    )
+
+    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None):
         assert task == "Compare next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
-        return "# Generated Context Pack"
+        return manifest
 
     monkeypatch.setattr(
         compare_providers,
-        "build_latest_context_pack_text",
-        fake_build_latest_context_pack_text,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         "sys.argv",
@@ -139,10 +160,11 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
     assert output.rstrip().endswith("Compare next step.")
 
 
-def test_main_context_comparison_saves_raw_prompt_not_context_pack(
+def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     tmp_path,
     monkeypatch,
 ):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
     from scripts import compare_providers
 
     class FakeProvider:
@@ -160,6 +182,19 @@ def test_main_context_comparison_saves_raw_prompt_not_context_pack(
     fake_openai = FakeProvider("OpenAI")
     fake_claude = FakeProvider("Claude")
 
+    item = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Latest abstraction.",
+        relevance_score=0.9,
+        token_estimate=100,
+    )
+    manifest = ContextPackManifest(
+        task="Compare next step.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
     monkeypatch.setattr(
         compare_providers,
         "OpenAIProvider",
@@ -172,11 +207,17 @@ def test_main_context_comparison_saves_raw_prompt_not_context_pack(
     )
     monkeypatch.setattr(
         compare_providers,
-        "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None: "# Generated Context Pack",
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
     )
 
     save_path = tmp_path / "COMP-0001-context-test.md"
+    manifest_path = tmp_path / "COMP-0001-context-test.context.json"
 
     monkeypatch.setattr(
         "sys.argv",
@@ -196,9 +237,14 @@ def test_main_context_comparison_saves_raw_prompt_not_context_pack(
     assert compare_providers.main() == 0
 
     artifact = save_path.read_text(encoding="utf-8")
+    manifest_json = manifest_path.read_text(encoding="utf-8")
 
     assert "## Prompt" in artifact
     assert "Compare next step." in artifact
     assert "BEGIN CONTEXT PACK" not in artifact
     assert "# Generated Context Pack" not in artifact
     assert "- context_policy: `latest_context`" in artifact
+    assert f"- context_manifest: `{manifest_path}`" in artifact
+
+    assert "\"manifest_id\"" in manifest_json
+    assert "\"item_id\": \"ABS-0003\"" in manifest_json
