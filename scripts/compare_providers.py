@@ -14,6 +14,7 @@ from ai_lab.documentation.context_pack_renderer import render_context_pack_markd
 from ai_lab.documentation.prompt_context import (
     build_latest_context_pack_manifest,
     build_prompt,
+    context_task_label,
     read_context_pack,
 )
 from ai_lab.providers.claude_provider import ClaudeProvider
@@ -226,7 +227,7 @@ def main() -> int:
 
     if args.latest_context:
         context_manifest = build_latest_context_pack_manifest(
-            task=raw_prompt,
+            task=context_task_label(raw_prompt),
             token_budget=args.token_budget,
             model_target=args.model_target,
             scope=args.scope,

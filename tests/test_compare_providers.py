@@ -248,3 +248,62 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
 
     assert "\"manifest_id\"" in manifest_json
     assert "\"item_id\": \"ABS-0003\"" in manifest_json
+
+
+def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_prompt(
+    monkeypatch,
+    capsys,
+):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    long_prompt = "x" * 600
+
+    item = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Latest abstraction.",
+        relevance_score=0.9,
+        token_estimate=100,
+    )
+    manifest = ContextPackManifest(
+        task=("x" * 497) + "...",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    def fake_build_latest_context_pack_manifest(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+    ):
+        assert len(task) == 500
+        assert task.endswith("...")
+        return manifest
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            long_prompt,
+            "--latest-context",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+    assert long_prompt in output
+    assert "# Generated Context Pack" in output

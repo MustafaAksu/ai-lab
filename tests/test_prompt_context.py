@@ -63,3 +63,24 @@ def test_build_latest_context_pack_text_uses_manifest_helper(monkeypatch):
         )
         == "# Rendered Context"
     )
+
+
+def test_context_task_label_normalizes_whitespace():
+    from ai_lab.documentation.prompt_context import context_task_label
+
+    assert context_task_label("  Compare   next\n\nstep.  ") == "Compare next step."
+
+
+def test_context_task_label_truncates_long_prompt():
+    from ai_lab.documentation.prompt_context import context_task_label
+
+    label = context_task_label("x" * 100, max_length=20)
+
+    assert len(label) == 20
+    assert label.endswith("...")
+
+
+def test_context_task_label_returns_fallback_for_empty_prompt():
+    from ai_lab.documentation.prompt_context import context_task_label
+
+    assert context_task_label("   \n\t  ") == "Untitled task"

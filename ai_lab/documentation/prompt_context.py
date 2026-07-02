@@ -13,6 +13,27 @@ def read_context_pack(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def context_task_label(prompt: str, max_length: int = 500) -> str:
+    """Return a compact manifest-safe task label for a longer provider prompt."""
+
+    if max_length < 1:
+        raise ValueError("max_length must be positive")
+
+    label = " ".join(prompt.split())
+
+    if not label:
+        return "Untitled task"
+
+    if len(label) <= max_length:
+        return label
+
+    suffix = "..."
+    if max_length <= len(suffix):
+        return suffix[:max_length]
+
+    return label[: max_length - len(suffix)].rstrip() + suffix
+
+
 def build_latest_context_pack_manifest(
     task: str,
     token_budget: int | None = None,

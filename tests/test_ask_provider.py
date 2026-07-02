@@ -99,3 +99,36 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
     assert "# Generated Context Pack" in output
     assert "END CONTEXT PACK" in output
     assert output.rstrip().endswith("Do the next step.")
+
+
+def test_main_latest_context_uses_short_task_label_but_keeps_full_prompt(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    long_prompt = "x" * 600
+
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None):
+        assert len(task) == 500
+        assert task.endswith("...")
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            long_prompt,
+            "--latest-context",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert long_prompt in output
+    assert "# Generated Context Pack" in output
