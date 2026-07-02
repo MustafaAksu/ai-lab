@@ -64,6 +64,18 @@ def render_context_pack_markdown(manifest: ContextPackManifest) -> str:
         if item.citation:
             lines.append(f"Citation: {item.citation}")
 
+        if item.admission_verdict_id:
+            lines.append(f"Admission verdict: {item.admission_verdict_id}")
+
+        if item.admission_decision:
+            lines.append(f"Admission decision: {item.admission_decision}")
+
+        if item.freshness_state:
+            lines.append(f"Freshness state: {item.freshness_state}")
+
+        if item.warrant_state:
+            lines.append(f"Warrant state: {item.warrant_state}")
+
         lines.extend(
             [
                 "",

@@ -91,3 +91,37 @@ def test_render_context_pack_markdown_handles_missing_source():
     markdown = render_context_pack_markdown(manifest)
 
     assert "[source file not found: missing/path.md]" in markdown
+
+
+def test_render_context_pack_includes_admission_metadata(tmp_path):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
+
+    source = tmp_path / "l1.json"
+    source.write_text('{"summary_text": "Admitted L1 summary."}', encoding="utf-8")
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+        token_estimate=100,
+        source_path=str(source),
+        admission_verdict_id="CADM-0001",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+
+    manifest = ContextPackManifest(
+        task="Render admitted L1.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    rendered = render_context_pack_markdown(manifest)
+
+    assert "Admission verdict: CADM-0001" in rendered
+    assert "Admission decision: admit" in rendered
+    assert "Freshness state: fresh" in rendered
+    assert "Warrant state: supported" in rendered
