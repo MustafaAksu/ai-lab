@@ -126,6 +126,7 @@ def test_build_latest_context_manifest_selects_latest_per_context_level():
         token_budget=8000,
         model_target="gpt-5",
         pipeline_run_id="run_001",
+        l1_dir=Path("does-not-exist-test-l1"),
     )
 
     assert manifest.assembly_policy == "latest_context"
@@ -225,6 +226,7 @@ def test_build_latest_context_manifest_records_budget_exclusions(tmp_path):
         task="Prepare budgeted context.",
         records=records,
         token_budget=500,
+        l1_dir=tmp_path / "empty-l1",
     )
 
     assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
