@@ -47,7 +47,7 @@ def test_build_latest_context_pack_text_uses_manifest_helper(monkeypatch):
     monkeypatch.setattr(
         prompt_context,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False: manifest,
     )
     monkeypatch.setattr(
         prompt_context,
@@ -84,3 +84,58 @@ def test_context_task_label_returns_fallback_for_empty_prompt():
     from ai_lab.documentation.prompt_context import context_task_label
 
     assert context_task_label("   \n\t  ") == "Untitled task"
+
+
+def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from ai_lab.documentation import prompt_context
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMITTED",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+        admission_verdict_id="CADM-1",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+    manifest = ContextPackManifest(
+        task="Prepare admitted context.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    monkeypatch.setattr(prompt_context, "discover_artifacts", lambda **kwargs: ("record",))
+
+    def fake_build_latest_context_manifest(
+        task,
+        records,
+        token_budget=None,
+        model_target=None,
+        l1_scope=None,
+        require_admission=False,
+    ):
+        assert task == "Prepare admitted context."
+        assert records == ("record",)
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        assert l1_scope == "ai-lab-memory"
+        assert require_admission is True
+        return manifest
+
+    monkeypatch.setattr(
+        prompt_context,
+        "build_latest_context_manifest",
+        fake_build_latest_context_manifest,
+    )
+
+    result = prompt_context.build_latest_context_pack_manifest(
+        task="Prepare admitted context.",
+        token_budget=8000,
+        model_target="gpt-5",
+        scope="ai-lab-memory",
+        require_admission=True,
+    )
+
+    assert result is manifest

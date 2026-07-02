@@ -74,6 +74,11 @@ def main() -> int:
         default=None,
         help="Optional L1 memory scope/stream when using --latest-context.",
     )
+    parser.add_argument(
+        "--require-admission",
+        action="store_true",
+        help="Require latest-context items to have an admitting admission verdict.",
+    )
 
     args = parser.parse_args()
 
@@ -92,6 +97,7 @@ def main() -> int:
             token_budget=args.token_budget,
             model_target=args.model_target,
             scope=args.scope,
+            require_admission=args.require_admission,
         )
 
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)

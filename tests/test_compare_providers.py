@@ -118,7 +118,7 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
         model_target="gpt-5",
     )
 
-    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None):
+    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None, require_admission=False):
         assert task == "Compare next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -208,7 +208,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -277,9 +277,11 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_pro
         token_budget=None,
         model_target=None,
         scope=None,
+        require_admission=False,
     ):
         assert len(task) == 500
         assert task.endswith("...")
+        assert require_admission is False
         return manifest
 
     monkeypatch.setattr(
@@ -307,3 +309,74 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_pro
     output = capsys.readouterr().out
     assert long_prompt in output
     assert "# Generated Context Pack" in output
+
+
+def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMITTED",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+        token_estimate=100,
+        admission_verdict_id="CADM-1",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+    manifest = ContextPackManifest(
+        task="Compare admitted step.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    def fake_build_latest_context_pack_manifest(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+    ):
+        assert task == "Compare admitted step."
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        assert scope == "ai-lab-memory"
+        assert require_admission is True
+        return manifest
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Admitted Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "admitted",
+            "step.",
+            "--latest-context",
+            "--scope",
+            "ai-lab-memory",
+            "--require-admission",
+            "--token-budget",
+            "8000",
+            "--model-target",
+            "gpt-5",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+    assert "# Admitted Context Pack" in output
+    assert "Compare admitted step." in output

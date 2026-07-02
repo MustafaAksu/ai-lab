@@ -62,7 +62,7 @@ def test_main_print_prompt_does_not_call_provider(tmp_path, monkeypatch, capsys)
 def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
     from scripts import ask_provider
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None):
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False):
         assert task == "Do the next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -106,7 +106,7 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_prompt(monkeyp
 
     long_prompt = "x" * 600
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None):
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False):
         assert len(task) == 500
         assert task.endswith("...")
         return "# Generated Context Pack"
@@ -132,3 +132,53 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_prompt(monkeyp
     output = capsys.readouterr().out
     assert long_prompt in output
     assert "# Generated Context Pack" in output
+
+
+def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+    ):
+        assert task == "Do the admitted step."
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        assert scope == "ai-lab-memory"
+        assert require_admission is True
+        return "# Admitted Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "the",
+            "admitted",
+            "step.",
+            "--latest-context",
+            "--scope",
+            "ai-lab-memory",
+            "--require-admission",
+            "--token-budget",
+            "8000",
+            "--model-target",
+            "gpt-5",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert "# Admitted Context Pack" in output
+    assert "Do the admitted step." in output
