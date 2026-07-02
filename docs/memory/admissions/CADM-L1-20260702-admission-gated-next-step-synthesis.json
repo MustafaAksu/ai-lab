@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T16:34:28.012811+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "379ec96"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-admission-gated-next-step-synthesis.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 next-step synthesis refresh was created after committing COMP-0010 and SYNCOMP-0006 and deciding to implement manifest telemetry next.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-admission-gated-next-step-synthesis",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-9427158e51a5",
+  "warrant_state": "supported"
+}

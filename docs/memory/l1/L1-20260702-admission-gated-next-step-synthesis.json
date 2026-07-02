@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Ran COMP-0010 with scoped admission-gated context.",
+    "Synthesized COMP-0010 into SYNCOMP-0006."
+  ],
+  "content_hash": "5211943be1a8bd03c071f995a64396b8aabe3d32ed71cb6cc542f084ed2af040",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T16:34:27.904015+00:00",
+  "episode_id": "EP-20260702-admission-gated-next-step-synthesis",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Next implementation direction is C-first admission ergonomics with a minimal B telemetry shim.",
+    "Start with backward-compatible manifest task_label/full_prompt_hash metadata before larger policy changes."
+  ],
+  "l1_id": "L1-20260702-admission-gated-next-step-synthesis",
+  "namespace": "public",
+  "next_actions": [
+    "Implement backward-compatible ContextPackManifest task_label and full_prompt_hash metadata."
+  ],
+  "open_questions": [
+    "Should full_prompt_hash be optional for backward compatibility first, then required later?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Changing admission policy before prompt/manifest telemetry could make future behavior harder to audit."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-admission-gated-next-step-synthesis"
+  ],
+  "summary_text": "AI-Lab ran an admission-gated provider comparison using scoped admitted context to choose the next implementation step. OpenAI chose admission-verdict ergonomics for older seeds, while Claude chose manifest task_label/full_prompt_hash metadata. The synthesis selected a hybrid: implement C-first with a minimal B telemetry shim. The safe next micro-increment is to add manifest telemetry fields task_label and full_prompt_hash in a backward-compatible way before adding larger warning-admission policies, caps, penalties, topic routing, or topological packing. The comparison was saved as COMP-0010 and the synthesis as SYNCOMP-0006.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "manifest-telemetry"
+  ],
+  "ttl_until": null
+}
