@@ -14,6 +14,7 @@ from ai_lab.documentation.context_pack import (
     ContextPackItem,
     ContextPackManifest,
 )
+from ai_lab.documentation.interaction_log import EpisodeL1Summary, InteractionLogError
 
 
 def _shorten(value: str, max_length: int = 240) -> str:
@@ -46,6 +47,58 @@ def estimate_tokens_for_path(path: Path) -> int:
         return estimate_tokens_for_text(path.read_text(encoding="utf-8", errors="ignore"))
     except OSError:
         return 0
+
+
+def context_item_from_l1_summary(
+    summary: EpisodeL1Summary,
+    path: Path,
+    relevance_score: float = 0.92,
+    token_estimate: int | None = None,
+) -> ContextPackItem:
+    """Create a context-pack item from one EpisodeL1Summary JSON artifact."""
+
+    if token_estimate is None:
+        token_estimate = estimate_tokens_for_path(path)
+
+    reason = _shorten(
+        f"Episode L1 context seed: {summary.episode_id} "
+        f"({summary.freshness_state})"
+    )
+
+    return ContextPackItem(
+        item_type="episode_l1",
+        item_id=summary.l1_id,
+        reason=reason,
+        relevance_score=relevance_score,
+        token_estimate=token_estimate,
+        source_path=str(path),
+    )
+
+
+def discover_latest_l1_summary_item(
+    l1_dir: Path = Path("docs/memory/l1"),
+) -> ContextPackItem | None:
+    """Return the newest valid EpisodeL1Summary context item, if one exists."""
+
+    if not l1_dir.is_dir():
+        return None
+
+    candidates: list[tuple[str, str, Path, EpisodeL1Summary]] = []
+
+    for path in sorted(l1_dir.glob("*.json")):
+        try:
+            summary = EpisodeL1Summary.read_json(path)
+        except (InteractionLogError, OSError, ValueError):
+            continue
+
+        candidates.append((summary.created_at, summary.l1_id, path, summary))
+
+    if not candidates:
+        return None
+
+    _created_at, _l1_id, path, summary = max(candidates)
+
+    return context_item_from_l1_summary(summary=summary, path=path)
 
 
 def item_type_for_record(record: ArtifactRecord) -> str:
@@ -143,6 +196,7 @@ def build_latest_context_manifest(
     token_budget: int | None = None,
     model_target: str | None = None,
     pipeline_run_id: str | None = None,
+    l1_dir: Path = Path("docs/memory/l1"),
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -165,6 +219,10 @@ def build_latest_context_manifest(
         )
         for record in ordered_records
     )
+
+    latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir)
+    if latest_l1_item is not None:
+        candidate_items = (latest_l1_item, *candidate_items)
 
     selected_items, exclusions = select_items_with_budget(
         items=candidate_items,

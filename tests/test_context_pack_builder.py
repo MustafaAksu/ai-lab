@@ -232,3 +232,158 @@ def test_build_latest_context_manifest_records_budget_exclusions(tmp_path):
     assert len(manifest.exclusions) == 1
     assert manifest.exclusions[0].item_id == "SYNCOMP-0003"
     assert manifest.exclusions[0].reason == "too_large"
+
+
+def test_context_item_from_l1_summary_preserves_identity_and_path(tmp_path):
+    from ai_lab.documentation.context_pack_builder import context_item_from_l1_summary
+    from ai_lab.documentation.interaction_log import EpisodeL1Summary
+
+    path = tmp_path / "L1-0001.json"
+    summary = EpisodeL1Summary(
+        l1_id="L1-0001",
+        episode_id="EP-0001",
+        created_at="2026-07-02T13:00:00+00:00",
+        summary_version="v1",
+        summary_text="Latest episode summary for memory freshness.",
+        source_event_ids=["EVT-0001"],
+        citations=[],
+        freshness_state="fresh",
+    )
+    summary.write_json(path)
+
+    item = context_item_from_l1_summary(
+        summary=summary,
+        path=path,
+        token_estimate=123,
+    )
+
+    assert item.item_type == "episode_l1"
+    assert item.item_id == "L1-0001"
+    assert item.source_path == str(path)
+    assert item.token_estimate == 123
+    assert "Episode L1 context seed" in item.reason
+
+
+def test_discover_latest_l1_summary_item_uses_newest_valid_summary(tmp_path):
+    from ai_lab.documentation.context_pack_builder import discover_latest_l1_summary_item
+    from ai_lab.documentation.interaction_log import EpisodeL1Summary
+
+    l1_dir = tmp_path / "l1"
+    l1_dir.mkdir()
+
+    old_summary = EpisodeL1Summary(
+        l1_id="L1-OLD",
+        episode_id="EP-OLD",
+        created_at="2026-07-02T12:00:00+00:00",
+        summary_version="v1",
+        summary_text="Old summary.",
+        source_event_ids=["EVT-OLD"],
+        citations=[],
+    )
+    old_summary.write_json(l1_dir / "old.json")
+
+    new_summary = EpisodeL1Summary(
+        l1_id="L1-NEW",
+        episode_id="EP-NEW",
+        created_at="2026-07-02T13:00:00+00:00",
+        summary_version="v1",
+        summary_text="New summary.",
+        source_event_ids=["EVT-NEW"],
+        citations=[],
+        freshness_state="fresh",
+    )
+    new_summary.write_json(l1_dir / "new.json")
+
+    (l1_dir / "invalid.json").write_text("[]", encoding="utf-8")
+
+    item = discover_latest_l1_summary_item(l1_dir=l1_dir)
+
+    assert item is not None
+    assert item.item_id == "L1-NEW"
+    assert item.item_type == "episode_l1"
+
+
+def test_build_latest_context_manifest_includes_latest_l1_first(tmp_path):
+    from ai_lab.documentation.interaction_log import EpisodeL1Summary
+
+    l1_dir = tmp_path / "l1"
+    l1_dir.mkdir()
+
+    summary = EpisodeL1Summary(
+        l1_id="L1-0001",
+        episode_id="EP-0001",
+        created_at="2026-07-02T13:00:00+00:00",
+        summary_version="v1",
+        summary_text="L1 should seed latest context before artifact records.",
+        source_event_ids=["EVT-0001"],
+        citations=[],
+        freshness_state="fresh",
+    )
+    summary.write_json(l1_dir / "L1-0001.json")
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("x" * 400, encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context with L1.",
+        records=records,
+        token_budget=8000,
+        l1_dir=l1_dir,
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("L1-0001", "ABS-0003")
+    assert manifest.items[0].item_type == "episode_l1"
+
+
+def test_build_latest_context_manifest_budget_can_exclude_l1(tmp_path):
+    from ai_lab.documentation.interaction_log import EpisodeL1Summary
+
+    l1_dir = tmp_path / "l1"
+    l1_dir.mkdir()
+
+    summary = EpisodeL1Summary(
+        l1_id="L1-LARGE",
+        episode_id="EP-LARGE",
+        created_at="2026-07-02T13:00:00+00:00",
+        summary_version="v1",
+        summary_text="x" * 4000,
+        source_event_ids=["EVT-0001"],
+        citations=[],
+    )
+    summary.write_json(l1_dir / "L1-LARGE.json")
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("x" * 400, encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare budgeted context with L1.",
+        records=records,
+        token_budget=500,
+        l1_dir=l1_dir,
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
+    assert manifest.exclusions[0].item_id == "L1-LARGE"
+    assert manifest.exclusions[0].reason == "too_large"

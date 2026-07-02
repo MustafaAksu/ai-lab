@@ -19,6 +19,7 @@ VALID_CONTEXT_ITEM_TYPES = {
     "abstraction",
     "synthesis",
     "comparison",
+    "episode_l1",
 }
 
 VALID_ASSEMBLY_POLICIES = {
