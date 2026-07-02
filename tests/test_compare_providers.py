@@ -118,7 +118,7 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
         model_target="gpt-5",
     )
 
-    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None):
+    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None):
         assert task == "Compare next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -208,7 +208,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None: manifest,
     )
     monkeypatch.setattr(
         compare_providers,

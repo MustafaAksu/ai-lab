@@ -51,6 +51,11 @@ def main() -> int:
         help="Optional target model for the context pack.",
     )
     parser.add_argument(
+        "--scope",
+        default=None,
+        help="Optional L1 memory scope/stream to select from.",
+    )
+    parser.add_argument(
         "--pipeline-run-id",
         default=None,
         help="Optional pipeline run ID.",
@@ -88,6 +93,7 @@ def main() -> int:
             token_budget=args.token_budget,
             model_target=args.model_target,
             pipeline_run_id=args.pipeline_run_id,
+            l1_scope=args.scope,
         )
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")

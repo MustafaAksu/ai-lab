@@ -17,6 +17,7 @@ def build_latest_context_pack_manifest(
     task: str,
     token_budget: int | None = None,
     model_target: str | None = None,
+    scope: str | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
@@ -28,6 +29,7 @@ def build_latest_context_pack_manifest(
         records=records,
         token_budget=token_budget,
         model_target=model_target,
+        l1_scope=scope,
     )
 
 
@@ -35,12 +37,14 @@ def build_latest_context_pack_text(
     task: str,
     token_budget: int | None = None,
     model_target: str | None = None,
+    scope: str | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
     manifest = build_latest_context_pack_manifest(
         task=task,
         token_budget=token_budget,
         model_target=model_target,
+        scope=scope,
     )
     return render_context_pack_markdown(manifest)
 

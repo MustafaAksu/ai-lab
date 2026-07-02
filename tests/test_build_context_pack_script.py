@@ -35,6 +35,7 @@ def test_build_context_pack_writes_output_and_manifest(tmp_path, monkeypatch):
         token_budget=None,
         model_target=None,
         pipeline_run_id=None,
+        l1_scope=None,
     ):
         assert task == "Prepare context."
         assert records == ("record",)

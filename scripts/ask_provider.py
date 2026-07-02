@@ -68,6 +68,11 @@ def main() -> int:
         default=None,
         help="Optional model target when using --latest-context.",
     )
+    parser.add_argument(
+        "--scope",
+        default=None,
+        help="Optional L1 memory scope/stream when using --latest-context.",
+    )
 
     args = parser.parse_args()
 
@@ -85,6 +90,7 @@ def main() -> int:
             task=prompt,
             token_budget=args.token_budget,
             model_target=args.model_target,
+            scope=args.scope,
         )
 
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)

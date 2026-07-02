@@ -62,7 +62,7 @@ def test_main_print_prompt_does_not_call_provider(tmp_path, monkeypatch, capsys)
 def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
     from scripts import ask_provider
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None):
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None):
         assert task == "Do the next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"

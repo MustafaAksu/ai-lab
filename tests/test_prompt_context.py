@@ -47,7 +47,7 @@ def test_build_latest_context_pack_text_uses_manifest_helper(monkeypatch):
     monkeypatch.setattr(
         prompt_context,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None: manifest,
     )
     monkeypatch.setattr(
         prompt_context,

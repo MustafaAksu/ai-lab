@@ -150,8 +150,9 @@ def context_item_from_l1_summary(
 
 def discover_latest_l1_summary_item(
     l1_dir: Path = Path("docs/memory/l1"),
+    scope: str | None = None,
 ) -> ContextPackItem | None:
-    """Return the newest valid EpisodeL1Summary context item, if one exists."""
+    """Return the newest valid EpisodeL1Summary context item, optionally by scope."""
 
     if not l1_dir.is_dir():
         return None
@@ -162,6 +163,9 @@ def discover_latest_l1_summary_item(
         try:
             summary = EpisodeL1Summary.read_json(path)
         except (InteractionLogError, OSError, ValueError):
+            continue
+
+        if scope is not None and summary.scope != scope:
             continue
 
         candidates.append((summary.created_at, summary.l1_id, path, summary))
@@ -271,6 +275,7 @@ def build_latest_context_manifest(
     pipeline_run_id: str | None = None,
     l1_dir: Path = Path("docs/memory/l1"),
     admission_dir: Path = Path("docs/memory/admissions"),
+    l1_scope: str | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -294,7 +299,7 @@ def build_latest_context_manifest(
         for record in ordered_records
     )
 
-    latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir)
+    latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir, scope=l1_scope)
     if latest_l1_item is not None:
         candidate_items = (latest_l1_item, *candidate_items)
 

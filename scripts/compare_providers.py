@@ -199,6 +199,11 @@ def main() -> int:
         help="Optional model target when using --latest-context.",
     )
     parser.add_argument(
+        "--scope",
+        default=None,
+        help="Optional L1 memory scope/stream when using --latest-context.",
+    )
+    parser.add_argument(
         "--print-prompt",
         action="store_true",
         help="Print the final comparison prompt and do not call providers.",
@@ -224,6 +229,7 @@ def main() -> int:
             task=raw_prompt,
             token_budget=args.token_budget,
             model_target=args.model_target,
+            scope=args.scope,
         )
         context_pack = render_context_pack_markdown(context_manifest)
         extra_metadata["context_policy"] = "latest_context"
