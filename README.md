@@ -218,3 +218,130 @@ A future prompt should retrieve only:
 
 This keeps reasoning traceable without making every provider call slow,
 expensive, or overloaded.
+
+## Memory-aware context workflow
+
+AI-Lab now supports budget-aware context packs for provider prompts and provider
+comparisons.
+
+The core flow is:
+
+    artifact history
+      -> latest-context selection
+      -> token-budget filtering
+      -> exclusion recording
+      -> context pack manifest
+      -> prompt-ready Markdown
+      -> provider ask or provider comparison
+
+The context pack system is designed to avoid loading all project history into
+every prompt. It selects the latest useful abstraction, synthesis, and
+comparison artifacts, then keeps only the items that fit within the requested
+token budget.
+
+Build a latest-context pack as JSON:
+
+    python scripts/build_context_pack.py \
+      "Prepare context for the next AI-Lab memory implementation step." \
+      --token-budget 8000 \
+      --model-target gpt-5
+
+Build a prompt-ready Markdown context pack:
+
+    python scripts/build_context_pack.py \
+      "Prepare context for the next AI-Lab memory implementation step." \
+      --token-budget 8000 \
+      --model-target gpt-5 \
+      --format markdown
+
+Save a rendered context pack to a file:
+
+    python scripts/build_context_pack.py \
+      "Prepare context for the next AI-Lab memory implementation step." \
+      --token-budget 8000 \
+      --model-target gpt-5 \
+      --format markdown \
+      --output /tmp/ai_lab_context_pack.md
+
+## Context-aware provider prompts
+
+Ask one provider with a generated latest-context pack:
+
+    python scripts/ask_provider.py openai \
+      "What is the next safest implementation step for AI-Lab memory?" \
+      --latest-context \
+      --token-budget 8000 \
+      --model-target gpt-5
+
+Preview the final prompt without calling the provider:
+
+    python scripts/ask_provider.py openai \
+      "What is the next safest implementation step for AI-Lab memory?" \
+      --latest-context \
+      --token-budget 8000 \
+      --model-target gpt-5 \
+      --print-prompt
+
+Ask one provider with a previously rendered context pack:
+
+    python scripts/ask_provider.py openai \
+      "What is the next safest implementation step for AI-Lab memory?" \
+      --context-pack /tmp/ai_lab_context_pack.md
+
+## Context-aware provider comparisons
+
+Run a provider comparison with generated latest context:
+
+    python scripts/compare_providers.py \
+      "What is the next safest implementation step for AI-Lab memory?" \
+      --latest-context \
+      --token-budget 8000 \
+      --model-target gpt-5 \
+      --title "Next AI-Lab Memory Step"
+
+Preview the final comparison prompt without calling providers:
+
+    python scripts/compare_providers.py \
+      "What is the next safest implementation step for AI-Lab memory?" \
+      --latest-context \
+      --token-budget 8000 \
+      --model-target gpt-5 \
+      --print-prompt
+
+### Anti-bloat rule
+
+Context-aware comparisons send the full rendered context pack to providers, but
+saved comparison artifacts store only:
+
+    raw user prompt
+    context metadata
+    provider responses
+
+They do not save the full rendered context pack inside the comparison artifact.
+This prevents recursive prompt/history growth.
+
+## Memory implementation primitives
+
+The current memory-related software primitives are:
+
+    Citation
+      exact evidence pointer in cid@version|span format
+
+    ChunkReference
+      deterministic span-bounded chunk identity
+
+    L0ChunkSummary
+      compact chunk-level retrieval summary
+
+    ArtifactSummary
+      artifact-level discovery record
+
+    ContextPackManifest
+      selected context items, scores, token estimates, and exclusions
+
+    ContextPackRenderer
+      prompt-ready Markdown rendering
+
+These are intentionally small, testable building blocks. They provide a
+foundation for future retrieval, indexing, summary refresh, and write-back
+pipelines.
