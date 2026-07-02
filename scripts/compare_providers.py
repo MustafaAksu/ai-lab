@@ -9,6 +9,11 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from ai_lab.documentation.prompt_context import (
+    build_latest_context_pack_text,
+    build_prompt,
+    read_context_pack,
+)
 from ai_lab.providers.claude_provider import ClaudeProvider
 from ai_lab.providers.openai_provider import OpenAIProvider
 
@@ -169,10 +174,66 @@ def main() -> int:
         default=DEFAULT_COMPARISON_DIR,
         help="Directory for auto-saved comparison artifacts.",
     )
+    parser.add_argument(
+        "--context-pack",
+        type=Path,
+        default=None,
+        help="Optional rendered context pack Markdown file.",
+    )
+    parser.add_argument(
+        "--latest-context",
+        action="store_true",
+        help="Build and include a latest-context pack from repository artifacts.",
+    )
+    parser.add_argument(
+        "--token-budget",
+        type=int,
+        default=None,
+        help="Optional token budget when using --latest-context.",
+    )
+    parser.add_argument(
+        "--model-target",
+        default=None,
+        help="Optional model target when using --latest-context.",
+    )
+    parser.add_argument(
+        "--print-prompt",
+        action="store_true",
+        help="Print the final comparison prompt and do not call providers.",
+    )
 
     args = parser.parse_args()
-    prompt = " ".join(args.prompt)
+    raw_prompt = " ".join(args.prompt)
     title = args.title
+    context_pack = None
+    extra_metadata: dict[str, str] = {}
+
+    if args.context_pack and args.latest_context:
+        parser.error("Use either --context-pack or --latest-context, not both.")
+
+    if args.context_pack:
+        context_pack = read_context_pack(args.context_pack)
+        extra_metadata["context_pack"] = str(args.context_pack)
+
+    if args.latest_context:
+        context_pack = build_latest_context_pack_text(
+            task=raw_prompt,
+            token_budget=args.token_budget,
+            model_target=args.model_target,
+        )
+        extra_metadata["context_policy"] = "latest_context"
+
+        if args.token_budget is not None:
+            extra_metadata["token_budget"] = str(args.token_budget)
+
+        if args.model_target:
+            extra_metadata["model_target"] = args.model_target
+
+    prompt = build_prompt(raw_prompt, context_pack=context_pack)
+
+    if args.print_prompt:
+        print(prompt)
+        return 0
 
     save_path: Path | None = args.save
 
@@ -180,7 +241,7 @@ def main() -> int:
         save_path = auto_comparison_path(title, args.out_dir)
 
     if save_path is not None and title is None:
-        title = title_from_prompt(prompt)
+        title = title_from_prompt(raw_prompt)
 
     providers = [
         OpenAIProvider(),
@@ -216,6 +277,7 @@ def main() -> int:
             command=command,
             comparison_id=comparison_id,
             title=title,
+            extra_metadata=extra_metadata or None,
         )
 
         save_path.parent.mkdir(parents=True, exist_ok=True)

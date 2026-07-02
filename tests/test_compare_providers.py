@@ -97,3 +97,43 @@ def test_build_markdown_artifact_records_extra_metadata():
 
     assert "- source_synthesis: `docs/comparisons/syntheses/SYNCOMP-0001-example.md`" in artifact
 
+
+
+def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
+    from scripts import compare_providers
+
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None):
+        assert task == "Compare next step."
+        assert token_budget == 8000
+        assert model_target == "gpt-5"
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "next",
+            "step.",
+            "--latest-context",
+            "--token-budget",
+            "8000",
+            "--model-target",
+            "gpt-5",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in output
+    assert "# Generated Context Pack" in output
+    assert "END CONTEXT PACK" in output
+    assert output.rstrip().endswith("Compare next step.")
