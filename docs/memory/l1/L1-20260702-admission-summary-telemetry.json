@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added optional ContextPackManifest admission_summary metadata.",
+    "Computed admission summary telemetry in latest-context manifest assembly.",
+    "Rendered admission summary in context-pack Markdown.",
+    "Verified with full pytest suite: 175 passed."
+  ],
+  "content_hash": "c96aa92fe0b542673354a64f05238a8e9b2bd4e8312d55f739b46af8d4de3cc7",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T20:13:03.703622+00:00",
+  "episode_id": "EP-20260702-admission-summary-telemetry",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Admission summary telemetry is manifest metadata only; no selection or cap behavior changed yet.",
+    "Track admit, admit_with_warning, and excluded_by_policy counts as the first C ergonomics baseline."
+  ],
+  "l1_id": "L1-20260702-admission-summary-telemetry",
+  "namespace": "public",
+  "next_actions": [
+    "Add admit_with_warning cap/demotion policy for latest-context assembly."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Admission telemetry is now visible, but warning-admitted items are not capped or demoted yet."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-admission-summary-telemetry"
+  ],
+  "summary_text": "AI-Lab completed the first C ergonomics micro-slice after the B-min prompt telemetry shim. ContextPackManifest now has optional admission_summary telemetry. The schema validates telemetry keys and non-negative integer counts, serializes the summary, and keeps it optional for backward compatibility. context_pack_builder.py now computes manifest-level counts for admit, admit_with_warning, and excluded_by_policy using selected items and policy exclusions. context_pack_renderer.py now renders the admission summary in prompt-ready Markdown. Tests cover schema validation, serialization, builder computation, and renderer output. The full suite passed with 175 tests. No retrieval, cap, or selection behavior was changed in this slice.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "admission-telemetry",
+    "latest-context"
+  ],
+  "ttl_until": null
+}
