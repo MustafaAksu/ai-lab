@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from hashlib import sha256
 from pathlib import Path
+import re
 
 from ai_lab.documentation.artifact_history import discover_artifacts
 from ai_lab.documentation.context_pack import ContextPackManifest
@@ -34,12 +36,39 @@ def context_task_label(prompt: str, max_length: int = 500) -> str:
     return label[: max_length - len(suffix)].rstrip() + suffix
 
 
+def context_task_slug(prompt: str, max_length: int = 80) -> str:
+    """Return a compact lowercase kebab-case task label."""
+
+    if max_length < 1:
+        raise ValueError("max_length must be positive")
+
+    label = context_task_label(prompt, max_length=500).lower()
+    slug = re.sub(r"[^a-z0-9]+", "-", label).strip("-")
+    slug = re.sub(r"-+", "-", slug)
+
+    if not slug:
+        slug = "untitled-task"
+
+    if len(slug) <= max_length:
+        return slug
+
+    return slug[:max_length].rstrip("-") or "untitled-task"
+
+
+def prompt_sha256(prompt: str) -> str:
+    """Return a lowercase SHA-256 hex digest for provider prompt text."""
+
+    return sha256(prompt.encode("utf-8")).hexdigest()
+
+
 def build_latest_context_pack_manifest(
     task: str,
     token_budget: int | None = None,
     model_target: str | None = None,
     scope: str | None = None,
     require_admission: bool = False,
+    task_label: str | None = None,
+    full_prompt_hash: str | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
@@ -53,6 +82,8 @@ def build_latest_context_pack_manifest(
         model_target=model_target,
         l1_scope=scope,
         require_admission=require_admission,
+        task_label=task_label,
+        full_prompt_hash=full_prompt_hash,
     )
 
 
@@ -62,6 +93,8 @@ def build_latest_context_pack_text(
     model_target: str | None = None,
     scope: str | None = None,
     require_admission: bool = False,
+    task_label: str | None = None,
+    full_prompt_hash: str | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
     manifest = build_latest_context_pack_manifest(
@@ -70,6 +103,8 @@ def build_latest_context_pack_text(
         model_target=model_target,
         scope=scope,
         require_admission=require_admission,
+        task_label=task_label,
+        full_prompt_hash=full_prompt_hash,
     )
     return render_context_pack_markdown(manifest)
 

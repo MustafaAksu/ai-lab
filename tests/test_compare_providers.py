@@ -118,7 +118,7 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
         model_target="gpt-5",
     )
 
-    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None, require_admission=False):
+    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None):
         assert task == "Compare next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -208,7 +208,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -248,6 +248,8 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
 
     assert "\"manifest_id\"" in manifest_json
     assert "\"item_id\": \"ABS-0003\"" in manifest_json
+    assert "\"task_label\": \"compare-next-step\"" in manifest_json
+    assert "\"full_prompt_hash\": \"" in manifest_json
 
 
 def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_prompt(
@@ -278,10 +280,14 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_pro
         model_target=None,
         scope=None,
         require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
     ):
         assert len(task) == 500
         assert task.endswith("...")
         assert require_admission is False
+        assert task_label == "x" * 80
+        assert full_prompt_hash is None
         return manifest
 
     monkeypatch.setattr(
@@ -338,12 +344,16 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
         model_target=None,
         scope=None,
         require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
     ):
         assert task == "Compare admitted step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
         assert scope == "ai-lab-memory"
         assert require_admission is True
+        assert task_label == "compare-admitted-step"
+        assert full_prompt_hash is None
         return manifest
 
     monkeypatch.setattr(

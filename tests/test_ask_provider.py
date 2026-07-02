@@ -62,7 +62,7 @@ def test_main_print_prompt_does_not_call_provider(tmp_path, monkeypatch, capsys)
 def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, capsys):
     from scripts import ask_provider
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False):
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None):
         assert task == "Do the next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -106,7 +106,7 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_prompt(monkeyp
 
     long_prompt = "x" * 600
 
-    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False):
+    def fake_build_latest_context_pack_text(task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None):
         assert len(task) == 500
         assert task.endswith("...")
         return "# Generated Context Pack"
@@ -143,6 +143,8 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
         model_target=None,
         scope=None,
         require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
     ):
         assert task == "Do the admitted step."
         assert token_budget == 8000

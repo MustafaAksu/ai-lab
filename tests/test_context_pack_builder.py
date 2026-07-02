@@ -572,3 +572,33 @@ def test_filter_items_by_admission_requirement_rejects_excluded_items():
         match="No context items passed the admission requirement.",
     ):
         filter_items_by_admission_requirement(items=(excluded,))
+
+
+def test_build_latest_context_manifest_records_prompt_telemetry(tmp_path):
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context.",
+        records=records,
+        task_label="prepare-context",
+        full_prompt_hash="b" * 64,
+        l1_dir=tmp_path / "empty-l1",
+        admission_dir=tmp_path / "empty-admissions",
+    )
+
+    assert manifest.task_label == "prepare-context"
+    assert manifest.full_prompt_hash == "b" * 64
+    assert manifest.to_dict()["task_label"] == "prepare-context"
+    assert manifest.to_dict()["full_prompt_hash"] == "b" * 64

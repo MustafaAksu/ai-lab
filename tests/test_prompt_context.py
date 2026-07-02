@@ -47,7 +47,7 @@ def test_build_latest_context_pack_text_uses_manifest_helper(monkeypatch):
     monkeypatch.setattr(
         prompt_context,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None: manifest,
     )
     monkeypatch.setattr(
         prompt_context,
@@ -115,6 +115,8 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         model_target=None,
         l1_scope=None,
         require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
     ):
         assert task == "Prepare admitted context."
         assert records == ("record",)
@@ -122,6 +124,8 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         assert model_target == "gpt-5"
         assert l1_scope == "ai-lab-memory"
         assert require_admission is True
+        assert task_label == "prepare-admitted-context"
+        assert full_prompt_hash == "c" * 64
         return manifest
 
     monkeypatch.setattr(
@@ -136,6 +140,31 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         model_target="gpt-5",
         scope="ai-lab-memory",
         require_admission=True,
+        task_label="prepare-admitted-context",
+        full_prompt_hash="c" * 64,
     )
 
     assert result is manifest
+
+
+def test_context_task_slug_returns_kebab_case():
+    from ai_lab.documentation.prompt_context import context_task_slug
+
+    assert context_task_slug("  Compare NEXT step!!  ") == "compare-next-step"
+
+
+def test_context_task_slug_truncates_safely():
+    from ai_lab.documentation.prompt_context import context_task_slug
+
+    slug = context_task_slug("Alpha Beta Gamma Delta", max_length=12)
+
+    assert slug == "alpha-beta-g"
+    assert len(slug) <= 12
+
+
+def test_prompt_sha256_returns_lowercase_digest():
+    from ai_lab.documentation.prompt_context import prompt_sha256
+
+    digest = prompt_sha256("hello")
+
+    assert digest == "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"

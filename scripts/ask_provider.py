@@ -11,6 +11,8 @@ from ai_lab.documentation.prompt_context import (
     build_latest_context_pack_text,
     build_prompt,
     context_task_label,
+    context_task_slug,
+    prompt_sha256,
     read_context_pack,
 )
 from ai_lab.providers.claude_provider import ClaudeProvider
@@ -92,15 +94,29 @@ def main() -> int:
         context_pack = read_context_pack(args.context_pack)
 
     if args.latest_context:
+        task_label = context_task_slug(prompt)
         context_pack = build_latest_context_pack_text(
             task=context_task_label(prompt),
             token_budget=args.token_budget,
             model_target=args.model_target,
             scope=args.scope,
             require_admission=args.require_admission,
+            task_label=task_label,
         )
 
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)
+
+    if args.latest_context:
+        context_pack = build_latest_context_pack_text(
+            task=context_task_label(prompt),
+            token_budget=args.token_budget,
+            model_target=args.model_target,
+            scope=args.scope,
+            require_admission=args.require_admission,
+            task_label=context_task_slug(prompt),
+            full_prompt_hash=prompt_sha256(final_prompt),
+        )
+        final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)
 
     if args.print_prompt:
         print(final_prompt)

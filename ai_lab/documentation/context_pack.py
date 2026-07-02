@@ -79,6 +79,18 @@ def _validate_short_text(value: str, field_name: str, max_length: int = 500) -> 
         raise ContextPackError(f"{field_name} must be <= {max_length} characters.")
 
 
+def _validate_task_label(value: str, field_name: str = "task_label") -> None:
+    _validate_short_text(value, field_name, max_length=120)
+
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", value):
+        raise ContextPackError(f"{field_name} must be lowercase kebab-case.")
+
+
+def _validate_sha256_hex(value: str, field_name: str) -> None:
+    if not re.fullmatch(r"[a-f0-9]{64}", value):
+        raise ContextPackError(f"{field_name} must be a lowercase SHA-256 hex digest.")
+
+
 def compute_manifest_id(
     task: str,
     assembly_policy: str,
@@ -214,6 +226,8 @@ class ContextPackManifest:
     created_at: str = field(default_factory=utc_now_iso)
     model_target: str | None = None
     pipeline_run_id: str | None = None
+    task_label: str | None = None
+    full_prompt_hash: str | None = None
 
     def __post_init__(self) -> None:
         _validate_short_text(self.task, "task", max_length=500)
@@ -232,6 +246,12 @@ class ContextPackManifest:
 
         if self.pipeline_run_id:
             _validate_identifier(self.pipeline_run_id, "pipeline_run_id")
+
+        if self.task_label:
+            _validate_task_label(self.task_label)
+
+        if self.full_prompt_hash:
+            _validate_sha256_hex(self.full_prompt_hash, "full_prompt_hash")
 
         expected_manifest_id = compute_manifest_id(
             task=self.task,
@@ -266,6 +286,12 @@ class ContextPackManifest:
 
         if self.model_target:
             data["model_target"] = self.model_target
+
+        if self.task_label:
+            data["task_label"] = self.task_label
+
+        if self.full_prompt_hash:
+            data["full_prompt_hash"] = self.full_prompt_hash
 
         if self.pipeline_run_id:
             data["provenance"] = {

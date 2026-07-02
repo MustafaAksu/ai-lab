@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 import argparse
@@ -15,6 +16,8 @@ from ai_lab.documentation.prompt_context import (
     build_latest_context_pack_manifest,
     build_prompt,
     context_task_label,
+    context_task_slug,
+    prompt_sha256,
     read_context_pack,
 )
 from ai_lab.providers.claude_provider import ClaudeProvider
@@ -231,13 +234,16 @@ def main() -> int:
         extra_metadata["context_pack"] = str(args.context_pack)
 
     if args.latest_context:
+        task_label = context_task_slug(raw_prompt)
         context_manifest = build_latest_context_pack_manifest(
             task=context_task_label(raw_prompt),
             token_budget=args.token_budget,
             model_target=args.model_target,
             scope=args.scope,
             require_admission=args.require_admission,
+            task_label=task_label,
         )
+        context_manifest = replace(context_manifest, task_label=task_label)
         context_pack = render_context_pack_markdown(context_manifest)
         extra_metadata["context_policy"] = "latest_context"
 
@@ -248,6 +254,14 @@ def main() -> int:
             extra_metadata["model_target"] = args.model_target
 
     provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
+
+    if args.latest_context and context_manifest is not None:
+        context_manifest = replace(
+            context_manifest,
+            full_prompt_hash=prompt_sha256(provider_prompt),
+        )
+        context_pack = render_context_pack_markdown(context_manifest)
+        provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
 
     if args.print_prompt:
         print(provider_prompt)

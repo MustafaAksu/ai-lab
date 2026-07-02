@@ -231,3 +231,59 @@ def test_context_pack_item_rejects_invalid_admission_metadata():
             relevance_score=0.92,
             admission_decision="maybe",
         )
+
+
+def test_context_pack_manifest_serializes_prompt_telemetry():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    manifest = ContextPackManifest(
+        task="Prepare context.",
+        assembly_policy="latest_context",
+        items=(item,),
+        task_label="prepare-context",
+        full_prompt_hash="a" * 64,
+    )
+
+    data = manifest.to_dict()
+
+    assert data["task_label"] == "prepare-context"
+    assert data["full_prompt_hash"] == "a" * 64
+
+
+def test_context_pack_manifest_rejects_invalid_task_label():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="task_label must be lowercase kebab-case"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            task_label="Prepare Context",
+        )
+
+
+def test_context_pack_manifest_rejects_invalid_full_prompt_hash():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="full_prompt_hash must be a lowercase SHA-256"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            full_prompt_hash="not-a-hash",
+        )

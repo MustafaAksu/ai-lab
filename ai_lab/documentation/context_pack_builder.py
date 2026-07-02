@@ -312,6 +312,8 @@ def build_latest_context_manifest(
     admission_dir: Path = Path("docs/memory/admissions"),
     l1_scope: str | None = None,
     require_admission: bool = False,
+    task_label: str | None = None,
+    full_prompt_hash: str | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -364,4 +366,6 @@ def build_latest_context_manifest(
         exclusions=(*admission_exclusions, *budget_exclusions),
         model_target=model_target,
         pipeline_run_id=pipeline_run_id,
+        task_label=task_label,
+        full_prompt_hash=full_prompt_hash,
     )
