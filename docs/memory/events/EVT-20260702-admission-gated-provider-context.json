@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "8c4c8e8"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-02T15:50:52.571119+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-admission-gated-provider-context",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-admission-gated-provider-context",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Exposed optional admission-gated latest-context assembly to provider prompts. build_context_pack.py, ask_provider.py, and compare_providers.py now support require-admission flow so only admitted context items are selected while unreviewed items remain visible as policy exclusions.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "latest-context",
+    "admission-gating",
+    "provider-context"
+  ],
+  "turn_id": 1
+}

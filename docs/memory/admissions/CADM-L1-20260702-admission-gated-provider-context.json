@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T15:50:52.783841+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "8c4c8e8"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-admission-gated-provider-context.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 admission-gated provider context refresh was created after confirming provider prompts support --require-admission, policy exclusions are visible, tests pass, and commit 8c4c8e8 was pushed.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-admission-gated-provider-context",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-7bf616b2e4a1",
+  "warrant_state": "supported"
+}

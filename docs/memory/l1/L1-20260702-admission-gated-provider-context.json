@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added require_admission support to latest-context helper paths.",
+    "Added --require-admission to ask_provider.py.",
+    "Added --require-admission to compare_providers.py.",
+    "Verified admission-gated provider prompt contains admitted L1 context and policy exclusions for unreviewed artifacts."
+  ],
+  "content_hash": "226ea03ae4e6d8cd7091b71f121a2ef0c4dcd6139bbb7192091f09803dc5a51f",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-02T15:50:52.678519+00:00",
+  "episode_id": "EP-20260702-admission-gated-provider-context",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Admission gating is optional, not mandatory, preserving current ungated context behavior by default.",
+    "Unreviewed items excluded by the gate remain visible as policy exclusions for auditability."
+  ],
+  "l1_id": "L1-20260702-admission-gated-provider-context",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to add admission verdicts for current ABS/SYNCOMP/COMP seeds or begin topic-aware routing."
+  ],
+  "open_questions": [
+    "Should admission gating later become the default for selected L1 memory while remaining optional for older ABS/SYNCOMP/COMP artifacts?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Strict admission gating can reduce useful context until older artifacts receive admission verdicts."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-admission-gated-provider-context"
+  ],
+  "summary_text": "AI-Lab completed optional admission-gated provider context. The latest-context builder can filter candidate items by admission verdict when require_admission is enabled, keeping only admission_decision admit or admit_with_warning and excluding unreviewed or excluded items with policy reasons. build_context_pack.py exposes --require-admission, and provider paths ask_provider.py and compare_providers.py now expose the same gate. Verification showed the admitted L1 context was selected while ABS-0003, SYNCOMP-0005, and COMP-0009 appeared only as policy exclusions, not selected source context. The full test suite passed and the provider-path gate was committed as 8c4c8e8. Default context assembly remains unchanged when the gate is not requested.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "latest-context",
+    "admission-gating",
+    "provider-context"
+  ],
+  "ttl_until": null
+}
