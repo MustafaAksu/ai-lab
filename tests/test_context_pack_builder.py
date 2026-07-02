@@ -389,3 +389,103 @@ def test_build_latest_context_manifest_budget_can_exclude_l1(tmp_path):
     assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
     assert manifest.exclusions[0].item_id == "L1-LARGE"
     assert manifest.exclusions[0].reason == "too_large"
+
+
+def test_annotate_items_with_admission_verdicts_adds_matching_verdict(tmp_path):
+    from ai_lab.documentation.context_admission import ContextAdmissionVerdict
+    from ai_lab.documentation.context_pack import ContextPackItem
+    from ai_lab.documentation.context_pack_builder import annotate_items_with_admission_verdicts
+
+    admission_dir = tmp_path / "admissions"
+    admission_dir.mkdir()
+
+    verdict = ContextAdmissionVerdict.build(
+        target_item_id="L1-0001",
+        target_item_type="episode_l1",
+        decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+        author="mustafa",
+        substrate="human",
+        created_at="2026-07-02T14:00:00+00:00",
+        reason="L1 was manually inspected.",
+    )
+    verdict.write_json(admission_dir / "verdict.json")
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest L1.",
+        relevance_score=0.92,
+    )
+
+    annotated = annotate_items_with_admission_verdicts(
+        items=(item,),
+        admission_dir=admission_dir,
+    )
+
+    assert annotated[0].admission_verdict_id == verdict.verdict_id
+    assert annotated[0].admission_decision == "admit"
+    assert annotated[0].freshness_state == "fresh"
+    assert annotated[0].warrant_state == "supported"
+
+
+def test_build_latest_context_manifest_records_l1_admission_verdict(tmp_path):
+    from ai_lab.documentation.context_admission import ContextAdmissionVerdict
+    from ai_lab.documentation.interaction_log import EpisodeL1Summary
+
+    l1_dir = tmp_path / "l1"
+    admission_dir = tmp_path / "admissions"
+    l1_dir.mkdir()
+    admission_dir.mkdir()
+
+    summary = EpisodeL1Summary(
+        l1_id="L1-0001",
+        episode_id="EP-0001",
+        created_at="2026-07-02T14:00:00+00:00",
+        summary_version="v1",
+        summary_text="L1 summary with admission verdict.",
+        source_event_ids=["EVT-0001"],
+        citations=[],
+        freshness_state="fresh",
+    )
+    summary.write_json(l1_dir / "L1-0001.json")
+
+    verdict = ContextAdmissionVerdict.build(
+        target_item_id="L1-0001",
+        target_item_type="episode_l1",
+        decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+        author="mustafa",
+        substrate="human",
+        created_at="2026-07-02T14:01:00+00:00",
+        reason="Manual admission test.",
+    )
+    verdict.write_json(admission_dir / "CADM-L1-0001.json")
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("x" * 400, encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context with admitted L1.",
+        records=records,
+        token_budget=8000,
+        l1_dir=l1_dir,
+        admission_dir=admission_dir,
+    )
+
+    assert manifest.items[0].item_id == "L1-0001"
+    assert manifest.items[0].admission_verdict_id == verdict.verdict_id
+    assert manifest.to_dict()["items"][0]["admission_decision"] == "admit"

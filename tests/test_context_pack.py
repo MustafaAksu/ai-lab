@@ -200,3 +200,34 @@ def test_context_pack_item_accepts_episode_l1_type():
 
     assert item.item_type == "episode_l1"
     assert item.item_id == "L1-0001"
+
+
+def test_context_pack_item_serializes_admission_metadata():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest episode L1 summary.",
+        relevance_score=0.92,
+        token_estimate=200,
+        source_path="docs/memory/l1/L1-0001.json",
+        admission_verdict_id="CADM-0001",
+        admission_decision="admit",
+        freshness_state="fresh",
+        warrant_state="supported",
+    )
+
+    assert item.to_dict()["admission_verdict_id"] == "CADM-0001"
+    assert item.to_dict()["admission_decision"] == "admit"
+    assert item.to_dict()["freshness_state"] == "fresh"
+    assert item.to_dict()["warrant_state"] == "supported"
+
+
+def test_context_pack_item_rejects_invalid_admission_metadata():
+    with pytest.raises(ContextPackError):
+        ContextPackItem(
+            item_type="episode_l1",
+            item_id="L1-0001",
+            reason="Bad admission decision.",
+            relevance_score=0.92,
+            admission_decision="maybe",
+        )

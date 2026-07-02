@@ -8,6 +8,10 @@ from ai_lab.documentation.artifact_history import (
     context_level_for_record,
     latest_records_by_context_level,
 )
+from ai_lab.documentation.context_admission import (
+    ContextAdmissionError,
+    ContextAdmissionVerdict,
+)
 from ai_lab.documentation.context_pack import (
     ContextPackError,
     ContextPackExclusion,
@@ -47,6 +51,75 @@ def estimate_tokens_for_path(path: Path) -> int:
         return estimate_tokens_for_text(path.read_text(encoding="utf-8", errors="ignore"))
     except OSError:
         return 0
+
+
+def _latest_context_admission_verdicts(
+    admission_dir: Path = Path("docs/memory/admissions"),
+) -> dict[tuple[str, str], ContextAdmissionVerdict]:
+    """Return latest admission verdict per (target_item_id, target_item_type)."""
+
+    if not admission_dir.is_dir():
+        return {}
+
+    latest: dict[tuple[str, str], ContextAdmissionVerdict] = {}
+
+    for path in sorted(admission_dir.glob("*.json")):
+        try:
+            verdict = ContextAdmissionVerdict.read_json(path)
+        except (ContextAdmissionError, OSError, ValueError):
+            continue
+
+        key = (verdict.target_item_id, verdict.target_item_type)
+        previous = latest.get(key)
+
+        if previous is None or (verdict.created_at, verdict.verdict_id) > (
+            previous.created_at,
+            previous.verdict_id,
+        ):
+            latest[key] = verdict
+
+    return latest
+
+
+def context_item_with_admission_verdict(
+    item: ContextPackItem,
+    verdict: ContextAdmissionVerdict | None,
+) -> ContextPackItem:
+    """Return item annotated with admission verdict metadata, if provided."""
+
+    if verdict is None:
+        return item
+
+    return ContextPackItem(
+        item_type=item.item_type,
+        item_id=item.item_id,
+        reason=item.reason,
+        relevance_score=item.relevance_score,
+        token_estimate=item.token_estimate,
+        source_path=item.source_path,
+        citation=item.citation,
+        admission_verdict_id=verdict.verdict_id,
+        admission_decision=verdict.decision,
+        freshness_state=verdict.freshness_state,
+        warrant_state=verdict.warrant_state,
+    )
+
+
+def annotate_items_with_admission_verdicts(
+    items: tuple[ContextPackItem, ...],
+    admission_dir: Path = Path("docs/memory/admissions"),
+) -> tuple[ContextPackItem, ...]:
+    """Annotate context items with latest matching admission verdicts."""
+
+    verdicts = _latest_context_admission_verdicts(admission_dir=admission_dir)
+
+    return tuple(
+        context_item_with_admission_verdict(
+            item=item,
+            verdict=verdicts.get((item.item_id, item.item_type)),
+        )
+        for item in items
+    )
 
 
 def context_item_from_l1_summary(
@@ -197,6 +270,7 @@ def build_latest_context_manifest(
     model_target: str | None = None,
     pipeline_run_id: str | None = None,
     l1_dir: Path = Path("docs/memory/l1"),
+    admission_dir: Path = Path("docs/memory/admissions"),
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -223,6 +297,11 @@ def build_latest_context_manifest(
     latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir)
     if latest_l1_item is not None:
         candidate_items = (latest_l1_item, *candidate_items)
+
+    candidate_items = annotate_items_with_admission_verdicts(
+        items=candidate_items,
+        admission_dir=admission_dir,
+    )
 
     selected_items, exclusions = select_items_with_budget(
         items=candidate_items,

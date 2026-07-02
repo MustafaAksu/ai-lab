@@ -40,6 +40,26 @@ VALID_EXCLUSION_REASONS = {
     "superseded",
 }
 
+VALID_ADMISSION_DECISIONS = {
+    "admit",
+    "admit_with_warning",
+    "exclude",
+}
+
+VALID_FRESHNESS_STATES = {
+    "fresh",
+    "stale",
+    "unknown",
+}
+
+VALID_WARRANT_STATES = {
+    "supported",
+    "disputed",
+    "unreviewed",
+    "superseded",
+    "rejected",
+}
+
 
 def utc_now_iso() -> str:
     """Return current UTC time in ISO-8601 format."""
@@ -80,6 +100,10 @@ class ContextPackItem:
     token_estimate: int = 0
     source_path: str | None = None
     citation: str | None = None
+    admission_verdict_id: str | None = None
+    admission_decision: str | None = None
+    freshness_state: str | None = None
+    warrant_state: str | None = None
 
     def __post_init__(self) -> None:
         if self.item_type not in VALID_CONTEXT_ITEM_TYPES:
@@ -100,6 +124,18 @@ class ContextPackItem:
         if self.citation:
             _validate_identifier(self.citation, "citation")
 
+        if self.admission_verdict_id:
+            _validate_identifier(self.admission_verdict_id, "admission_verdict_id")
+
+        if self.admission_decision and self.admission_decision not in VALID_ADMISSION_DECISIONS:
+            raise ContextPackError("Unsupported admission_decision.")
+
+        if self.freshness_state and self.freshness_state not in VALID_FRESHNESS_STATES:
+            raise ContextPackError("Unsupported freshness_state.")
+
+        if self.warrant_state and self.warrant_state not in VALID_WARRANT_STATES:
+            raise ContextPackError("Unsupported warrant_state.")
+
     def to_dict(self) -> dict[str, object]:
         """Serialize the context item into a JSON-compatible dictionary."""
         data: dict[str, object] = {
@@ -115,6 +151,18 @@ class ContextPackItem:
 
         if self.citation:
             data["citation"] = self.citation
+
+        if self.admission_verdict_id:
+            data["admission_verdict_id"] = self.admission_verdict_id
+
+        if self.admission_decision:
+            data["admission_decision"] = self.admission_decision
+
+        if self.freshness_state:
+            data["freshness_state"] = self.freshness_state
+
+        if self.warrant_state:
+            data["warrant_state"] = self.warrant_state
 
         return data
 
