@@ -1,0 +1,19 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T15:53:53.246237+00:00",
+  "decision": "admit_with_warning",
+  "evidence_ids": [],
+  "evidence_paths": [
+    "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md"
+  ],
+  "expires_at": null,
+  "freshness_state": "unknown",
+  "note": null,
+  "reason": "ABS-0003 remains useful as a reconciled memory implementation abstraction, but it predates later scoped-stream, task-label, and admission-gating implementation work. Admit with warning for gated context.",
+  "substrate": "human",
+  "target_item_id": "ABS-0003",
+  "target_item_type": "abstraction",
+  "verdict_id": "CADM-ea8838115838",
+  "warrant_state": "supported"
+}

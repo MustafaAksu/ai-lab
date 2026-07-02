@@ -1,0 +1,19 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T15:53:53.367529+00:00",
+  "decision": "admit_with_warning",
+  "evidence_ids": [],
+  "evidence_paths": [
+    "docs/comparisons/syntheses/SYNCOMP-0005-ai-lab-capability-map-beyond-memory-next-step.md"
+  ],
+  "expires_at": null,
+  "freshness_state": "unknown",
+  "note": null,
+  "reason": "SYNCOMP-0005 remains useful as the capability-map next-step synthesis, but some recommended steps have since been implemented. Admit with warning for gated context.",
+  "substrate": "human",
+  "target_item_id": "SYNCOMP-0005",
+  "target_item_type": "synthesis",
+  "verdict_id": "CADM-4589706fb054",
+  "warrant_state": "supported"
+}

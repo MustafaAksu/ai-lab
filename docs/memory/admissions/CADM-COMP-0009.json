@@ -1,0 +1,19 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-02T15:53:53.469981+00:00",
+  "decision": "admit_with_warning",
+  "evidence_ids": [],
+  "evidence_paths": [
+    "docs/comparisons/COMP-0009-ai-lab-capability-map-beyond-memory-next-step.md"
+  ],
+  "expires_at": null,
+  "freshness_state": "unknown",
+  "note": null,
+  "reason": "COMP-0009 remains useful as the provider comparison behind the memory next-step decision, but it predates later implementation work. Admit with warning for gated context.",
+  "substrate": "human",
+  "target_item_id": "COMP-0009",
+  "target_item_type": "comparison",
+  "verdict_id": "CADM-1976440ac3ed",
+  "warrant_state": "supported"
+}
