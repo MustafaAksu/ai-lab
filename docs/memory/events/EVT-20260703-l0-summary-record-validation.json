@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "21ebb9a",
+    "ddb534d"
+  ],
+  "commit_hash": "ddb534d",
+  "created_at": "2026-07-03T16:28:29.639395+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260703-l0-summary-record-validation",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260703-l0-summary-record-validation",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Implemented L0 summary record-shape validation against the real L0ChunkSummary.to_dict JSON shape; provider L0 loading now rejects malformed records as unavailable; create_l0_chunk validates before writing; CLI fixtures were repaired after the first implementation commit exposed old partial test fixtures.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "l0-summary",
+    "record-validation",
+    "provider-context"
+  ],
+  "turn_id": 1
+}

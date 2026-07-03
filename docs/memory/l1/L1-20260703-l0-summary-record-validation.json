@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added validate_l0_summary_record and helper validators for real L0ChunkSummary.to_dict output.",
+    "Wired validation into create_l0_chunk before JSON write.",
+    "Wired validation into provider L0 record loading.",
+    "Updated prompt-context and CLI tests to use complete L0 JSON records."
+  ],
+  "content_hash": "cfd9ebde2b583fcc13c6161d7ae3f304bdc1932dbc69747846fb406a17762c7e",
+  "coverage_score": 0.94,
+  "created_at": "2026-07-03T16:28:29.738724+00:00",
+  "episode_id": "EP-20260703-l0-summary-record-validation",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Validate L0 summary JSON records at the record-shape layer instead of adding a dataclass from_dict deserializer.",
+    "Malformed L0 store entries remain unavailable/not_found for provider summaries; detailed malformed-store diagnostics are deferred to a separate slice."
+  ],
+  "l1_id": "L1-20260703-l0-summary-record-validation",
+  "namespace": "public",
+  "next_actions": [
+    "Record the next target after L0 record-shape validation, likely malformed L0 store diagnostics or guarded explicit L0 context-pack inclusion."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Commit 21ebb9a was pushed before full-suite repair; commit ddb534d restored green main."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260703-l0-summary-record-validation"
+  ],
+  "summary_text": "Added real-shape validation for L0 summary JSON records. The validator is grounded in L0ChunkSummary.to_dict and requires chunk_reference, citation, l0_summary, keyphrases, entities, claims, risks, created_at, and last_refreshed_at, with optional generator/provenance validation. create_l0_chunk validates generated records before writing. Provider L0 loading validates JSON records and treats malformed records as unavailable rather than inventing a new drop reason. CLI L0 fixtures were updated to the complete validated record shape. Full test suite passed after the repair commit.",
+  "summary_version": "v1",
+  "topics": [
+    "l0-summary",
+    "record-validation",
+    "provider-context"
+  ],
+  "ttl_until": null
+}

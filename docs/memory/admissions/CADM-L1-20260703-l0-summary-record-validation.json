@@ -1,0 +1,21 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-03T16:28:29.840407+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260703-l0-summary-record-validation",
+    "21ebb9a",
+    "ddb534d"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commits 21ebb9a and ddb534d plus passing focused and full pytest results.",
+  "substrate": "process",
+  "target_item_id": "L1-20260703-l0-summary-record-validation",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260703-l0-summary-record-validation",
+  "warrant_state": "supported"
+}
