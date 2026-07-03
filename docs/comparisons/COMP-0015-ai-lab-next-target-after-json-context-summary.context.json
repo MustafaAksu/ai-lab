@@ -1,0 +1,58 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T10:18:30.782926+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0009",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0014",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "7c08823838761d0266382deb3f137245ad86a6e2af988930487c3179a19ea289",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-801aee1cf947",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260703-json-provider-context-summary-dry-run",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260703-json-provider-context-summary-dry-run (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260703-json-provider-context-summary-dry-run.json",
+      "token_estimate": 651,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "b07e5229bff05834",
+  "model_target": "gpt-5",
+  "task": "AI-Lab has completed provider latest-context policy ergonomics, dry-run context budget preview, and JSON output for --print-context-summary. Using admitted ai-lab-memory context, decide the next smallest implementation target. Evaluate whether the Manual L0 chunk creation helper should now be implemented as the next vertical slice. Compare it against citation validation and read-only L0 inclusion. Recommend one target, exact non-goals, tests, and memory-refresh notes.",
+  "task_label": "ai-lab-has-completed-provider-latest-context-policy-ergonomics-dry-run-context-b",
+  "token_budget": 8000,
+  "total_token_estimate": 2588
+}
