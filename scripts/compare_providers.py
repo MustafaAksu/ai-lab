@@ -19,7 +19,7 @@ from ai_lab.documentation.prompt_context import (
     context_task_slug,
     format_provider_latest_context_policy,
     prompt_sha256,
-    provider_latest_context_policy,
+    provider_latest_context_metadata,
     read_context_pack,
     resolve_provider_warning_admission_cap,
 )
@@ -286,21 +286,11 @@ def main() -> int:
         context_manifest = replace(context_manifest, task_label=task_label)
         context_pack = render_context_pack_markdown(context_manifest)
 
-        resolved_context_policy = provider_latest_context_policy(
-            require_admission=args.require_admission,
-            max_warning_admissions=args.max_warning_admissions,
-        )
-        extra_metadata["context_policy"] = str(
-            resolved_context_policy["context_policy"]
-        )
-        extra_metadata["context_require_admission"] = json.dumps(
-            resolved_context_policy["require_admission"]
-        )
-        extra_metadata["context_max_warning_admissions"] = json.dumps(
-            resolved_context_policy["max_warning_admissions"]
-        )
-        extra_metadata["context_max_warning_admissions_source"] = str(
-            resolved_context_policy["max_warning_admissions_source"]
+        extra_metadata.update(
+            provider_latest_context_metadata(
+                require_admission=args.require_admission,
+                max_warning_admissions=args.max_warning_admissions,
+            )
         )
 
         if args.token_budget is not None:

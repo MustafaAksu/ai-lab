@@ -250,3 +250,17 @@ def test_format_provider_latest_context_policy_returns_stable_json():
         "max_warning_admissions": None,
         "max_warning_admissions_source": "unset",
     }
+
+
+def test_provider_latest_context_metadata_formats_comparison_values():
+    from ai_lab.documentation.prompt_context import provider_latest_context_metadata
+
+    assert provider_latest_context_metadata(
+        require_admission=True,
+        max_warning_admissions=None,
+    ) == {
+        "context_policy": "latest_context",
+        "context_require_admission": "true",
+        "context_max_warning_admissions": "1",
+        "context_max_warning_admissions_source": "provider_default",
+    }

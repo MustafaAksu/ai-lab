@@ -124,6 +124,29 @@ def format_provider_latest_context_policy(
     )
 
 
+def provider_latest_context_metadata(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+) -> dict[str, str]:
+    """Return comparison-artifact metadata for provider latest-context policy."""
+
+    policy = provider_latest_context_policy(
+        require_admission=require_admission,
+        max_warning_admissions=max_warning_admissions,
+    )
+
+    return {
+        "context_policy": str(policy["context_policy"]),
+        "context_require_admission": json.dumps(policy["require_admission"]),
+        "context_max_warning_admissions": json.dumps(
+            policy["max_warning_admissions"]
+        ),
+        "context_max_warning_admissions_source": str(
+            policy["max_warning_admissions_source"]
+        ),
+    }
+
+
 def build_latest_context_pack_manifest(
     task: str,
     token_budget: int | None = None,
