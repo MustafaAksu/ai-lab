@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import sys
 
@@ -13,7 +14,8 @@ from ai_lab.documentation.prompt_context import (
     context_task_label,
     context_task_slug,
     format_provider_context_budget_preview,
-    format_provider_context_summary_json,
+    provider_context_summary_payload,
+    validate_provider_l0_invariants,
     format_provider_latest_context_policy,
     prompt_sha256,
     read_context_pack,
@@ -112,6 +114,22 @@ def main() -> int:
         help="Directory containing L0 chunk summary JSON files.",
     )
     parser.add_argument(
+        "--validate-l0-invariants",
+        action="store_true",
+        help=(
+            "Validate provider L0 summary invariants in JSON "
+            "--print-context-summary output."
+        ),
+    )
+    parser.add_argument(
+        "--fail-on-invalid-l0",
+        action="store_true",
+        help=(
+            "Return a non-zero exit code when --validate-l0-invariants "
+            "finds invalid L0 summary output."
+        ),
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -176,6 +194,15 @@ def main() -> int:
     if args.include_l0 and args.summary_format != "json":
         parser.error("--include-l0 requires --summary-format json.")
 
+    if args.validate_l0_invariants and not args.print_context_summary:
+        parser.error("--validate-l0-invariants requires --print-context-summary.")
+
+    if args.validate_l0_invariants and args.summary_format != "json":
+        parser.error("--validate-l0-invariants requires --summary-format json.")
+
+    if args.fail_on_invalid_l0 and not args.validate_l0_invariants:
+        parser.error("--fail-on-invalid-l0 requires --validate-l0-invariants.")
+
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
 
@@ -223,15 +250,32 @@ def main() -> int:
     if args.print_prompt:
         if args.print_context_summary:
             if args.summary_format == "json":
-                print(
-                    format_provider_context_summary_json(
-                        require_admission=args.require_admission,
-                        max_warning_admissions=args.max_warning_admissions,
-                        context_window=args.context_window,
-                        include_l0=tuple(args.include_l0),
-                        l0_store=args.l0_store,
-                    )
+                summary = provider_context_summary_payload(
+                    require_admission=args.require_admission,
+                    max_warning_admissions=args.max_warning_admissions,
+                    context_window=args.context_window,
+                    include_l0=tuple(args.include_l0),
+                    l0_store=args.l0_store,
                 )
+                validation_failed = False
+
+                if args.validate_l0_invariants:
+                    try:
+                        validate_provider_l0_invariants(summary)
+                        validation = {"ok": True, "errors": []}
+                    except ValueError as exc:
+                        validation_failed = True
+                        validation = {
+                            "ok": False,
+                            "errors": [{"message": str(exc)}],
+                        }
+
+                    summary["validation"] = {"l0_invariants": validation}
+
+                print(json.dumps(summary, indent=2, sort_keys=True))
+
+                if validation_failed and args.fail_on_invalid_l0:
+                    return 1
             else:
                 print("Resolved latest-context policy:")
                 print(

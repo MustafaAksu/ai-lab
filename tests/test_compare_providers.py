@@ -892,3 +892,169 @@ def test_main_print_prompt_context_summary_json_can_include_l0(
     assert data["l0_included"][0]["cid"] == chunk_id
     assert data["l0_dropped"] == []
     assert "BEGIN CONTEXT PACK" in final_prompt
+
+
+def test_main_print_prompt_context_summary_json_can_validate_l0_invariants(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    manifest = ContextPackManifest(
+        task="Compare summary step.",
+        assembly_policy="latest_context",
+        items=(
+            ContextPackItem(
+                item_type="abstraction",
+                item_id="ABS-0003",
+                reason="Latest abstraction.",
+                relevance_score=0.9,
+            ),
+        ),
+    )
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--include-l0",
+            chunk_id,
+            "--l0-store",
+            str(tmp_path),
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    summary_text, final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert data["validation"]["l0_invariants"] == {"ok": True, "errors": []}
+    assert "BEGIN CONTEXT PACK" in final_prompt
+
+
+def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    manifest = ContextPackManifest(
+        task="Compare summary step.",
+        assembly_policy="latest_context",
+        items=(
+            ContextPackItem(
+                item_type="abstraction",
+                item_id="ABS-0003",
+                reason="Latest abstraction.",
+                relevance_score=0.9,
+            ),
+        ),
+    )
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "provider_context_summary_payload",
+        lambda require_admission, max_warning_admissions, context_window=None, include_l0=(), l0_store=None: {
+            "schema_version": "v1",
+            "l0_candidates": {},
+            "l0_included": [],
+            "l0_dropped": [],
+        },
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--fail-on-invalid-l0",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 1
+
+    data = json.loads(capsys.readouterr().out)
+
+    assert data["validation"]["l0_invariants"]["ok"] is False
+
+
+def test_main_validate_l0_invariants_requires_json_summary(monkeypatch):
+    import pytest
+
+    from scripts import compare_providers
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--validate-l0-invariants",
+            "--print-prompt",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        compare_providers.main()
+
+    assert exc_info.value.code == 2

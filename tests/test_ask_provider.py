@@ -588,3 +588,185 @@ def test_main_include_l0_requires_json_context_summary(monkeypatch):
         ask_provider.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_print_prompt_context_summary_json_can_validate_l0_invariants(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from scripts import ask_provider
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--include-l0",
+            chunk_id,
+            "--l0-store",
+            str(tmp_path),
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    summary_text, final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert data["validation"]["l0_invariants"] == {"ok": True, "errors": []}
+    assert "BEGIN CONTEXT PACK" in final_prompt
+
+
+def test_main_print_prompt_context_summary_json_validation_can_fail_without_nonzero(
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        ask_provider,
+        "provider_context_summary_payload",
+        lambda require_admission, max_warning_admissions, context_window=None, include_l0=(), l0_store=None: {
+            "schema_version": "v1",
+            "l0_candidates": {},
+            "l0_included": [],
+            "l0_dropped": [],
+        },
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    summary_text, _final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert data["validation"]["l0_invariants"]["ok"] is False
+    assert data["validation"]["l0_invariants"]["errors"][0]["message"] == (
+        "l0_candidates must be a list"
+    )
+
+
+def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        ask_provider,
+        "provider_context_summary_payload",
+        lambda require_admission, max_warning_admissions, context_window=None, include_l0=(), l0_store=None: {
+            "schema_version": "v1",
+            "l0_candidates": {},
+            "l0_included": [],
+            "l0_dropped": [],
+        },
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--fail-on-invalid-l0",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 1
+
+    data = json.loads(capsys.readouterr().out)
+
+    assert data["validation"]["l0_invariants"]["ok"] is False
+
+
+def test_main_validate_l0_invariants_requires_json_summary(monkeypatch):
+    import pytest
+
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--validate-l0-invariants",
+            "--print-prompt",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        ask_provider.main()
+
+    assert exc_info.value.code == 2
