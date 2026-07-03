@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider_latest_context_metadata to prompt_context.py.",
+    "Updated compare_providers.py to use provider_latest_context_metadata.",
+    "Added prompt_context test coverage for the shared metadata helper.",
+    "Verified with full pytest suite: 202 passed."
+  ],
+  "content_hash": "4b7365c83a80324a7ae2274ebe85450bfec8873088d93e2bf23cf3f00a3bb1be",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T08:03:50.196539+00:00",
+  "episode_id": "EP-20260702-provider-context-policy-metadata-centralization",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Centralize comparison-artifact metadata rendering for provider latest-context policy.",
+    "Keep compare_providers.py dependent on the shared helper instead of duplicating field conversion.",
+    "Preserve existing metadata field names for saved comparison artifacts."
+  ],
+  "l1_id": "L1-20260702-provider-context-policy-metadata-centralization",
+  "namespace": "public",
+  "next_actions": [
+    "Consider the next small ergonomics target: expose selected context manifest path or policy summary in dry-run/print-prompt flows."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Future policy fields should be added through provider_latest_context_metadata so CLI audit and saved comparison metadata do not drift."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-context-policy-metadata-centralization"
+  ],
+  "summary_text": "AI-Lab centralized provider latest-context policy metadata rendering. ai_lab.documentation.prompt_context now exposes provider_latest_context_metadata, which converts provider_latest_context_policy into stable comparison-artifact metadata fields. scripts/compare_providers.py now uses this helper instead of manually converting policy fields. This keeps saved comparison metadata aligned with CLI policy audit output and the shared provider policy resolver. Tests cover the shared metadata helper, and the full suite passed with 202 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "comparison-artifacts",
+    "policy-audit",
+    "refactor"
+  ],
+  "ttl_until": null
+}

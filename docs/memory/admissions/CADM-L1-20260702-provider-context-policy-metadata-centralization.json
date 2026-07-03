@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T08:04:19.936664+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "98f8a9e"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-provider-context-policy-metadata-centralization.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed provider context policy metadata centralization with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-provider-context-policy-metadata-centralization",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-5b2b191ae05b",
+  "warrant_state": "supported"
+}
