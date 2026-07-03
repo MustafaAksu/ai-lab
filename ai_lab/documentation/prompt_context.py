@@ -7,6 +7,7 @@ import re
 
 from ai_lab.documentation.artifact_history import discover_artifacts
 from ai_lab.documentation.context_pack import ContextPackManifest
+from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
 from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
 
@@ -305,6 +306,11 @@ def _load_l0_record(l0_store: Path, chunk_id: str) -> dict[str, object] | None:
     data = json.loads(path.read_text(encoding="utf-8"))
 
     if not isinstance(data, dict):
+        return None
+
+    try:
+        validate_l0_summary_record(data)
+    except L0SummaryError:
         return None
 
     return data

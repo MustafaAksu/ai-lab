@@ -24,7 +24,13 @@ from ai_lab.documentation.chunk_reference import (
     create_chunk_reference,
 )
 from ai_lab.documentation.citations import CitationSpan
-from ai_lab.documentation.l0_summary import Claim, Entity, L0ChunkSummary, Risk
+from ai_lab.documentation.l0_summary import (
+    Claim,
+    Entity,
+    L0ChunkSummary,
+    Risk,
+    validate_l0_summary_record,
+)
 
 
 def _split_prefixed(value: str, field_name: str) -> tuple[str, str]:
@@ -161,10 +167,13 @@ def main() -> int:
     args = _build_parser().parse_args()
     summary = _summary_from_args(args)
 
+    data = summary.to_dict()
+    validate_l0_summary_record(data)
+
     output = args.output or Path("docs/memory/l0") / f"{summary.chunk_reference.chunk_id}.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
-        json.dumps(summary.to_dict(), indent=2, sort_keys=True) + "\n",
+        json.dumps(data, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 

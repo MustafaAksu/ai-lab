@@ -124,3 +124,71 @@ def test_l0_summary_to_dict_serializes_reference_and_metadata():
     assert data["provenance"] == {
         "pipeline_run_id": "run_001",
     }
+
+
+def test_validate_l0_summary_record_accepts_to_dict_shape():
+    from ai_lab.documentation.l0_summary import validate_l0_summary_record
+
+    summary = L0ChunkSummary(
+        chunk_reference=make_reference(),
+        l0_summary="Defines citation format and validation rules.",
+        keyphrases=("citation", "span", "validation"),
+        entities=(Entity(type="schema", name="Citation"),),
+        claims=(Claim(text="Citations use cid@version|span.", polarity="pro"),),
+        risks=(Risk(text="Token spans require tokenizer versioning.", severity="med"),),
+        created_at="2026-06-30T00:00:00+00:00",
+        last_refreshed_at="2026-06-30T00:00:00+00:00",
+        generator_model="gpt-5",
+        generator_version="v1",
+        pipeline_run_id="run_001",
+    )
+
+    validate_l0_summary_record(summary.to_dict())
+
+
+def test_validate_l0_summary_record_rejects_missing_required_field():
+    from ai_lab.documentation.l0_summary import validate_l0_summary_record
+
+    summary = L0ChunkSummary(
+        chunk_reference=make_reference(),
+        l0_summary="Defines citation format and validation rules.",
+        keyphrases=("citation", "span", "validation"),
+    )
+    data = summary.to_dict()
+    del data["chunk_reference"]
+
+    with pytest.raises(L0SummaryError, match="Missing required L0 field: chunk_reference"):
+        validate_l0_summary_record(data)
+
+
+def test_validate_l0_summary_record_rejects_wrong_keyphrases_type():
+    from ai_lab.documentation.l0_summary import validate_l0_summary_record
+
+    summary = L0ChunkSummary(
+        chunk_reference=make_reference(),
+        l0_summary="Defines citation format and validation rules.",
+        keyphrases=("citation", "span", "validation"),
+    )
+    data = summary.to_dict()
+    data["keyphrases"] = "citation"
+
+    with pytest.raises(L0SummaryError, match=r"\$\.keyphrases must be a list"):
+        validate_l0_summary_record(data)
+
+
+def test_validate_l0_summary_record_rejects_missing_span_field():
+    from ai_lab.documentation.l0_summary import validate_l0_summary_record
+
+    summary = L0ChunkSummary(
+        chunk_reference=make_reference(),
+        l0_summary="Defines citation format and validation rules.",
+        keyphrases=("citation", "span", "validation"),
+    )
+    data = summary.to_dict()
+    del data["chunk_reference"]["span"]["end"]
+
+    with pytest.raises(
+        L0SummaryError,
+        match="Missing required chunk_reference.span field: end",
+    ):
+        validate_l0_summary_record(data)

@@ -378,10 +378,23 @@ def test_provider_context_summary_json_can_report_explicit_l0_inclusion(tmp_path
     (tmp_path / f"{chunk_id}.json").write_text(
         json.dumps(
             {
-                "chunk_reference": {"chunk_id": chunk_id},
+                "chunk_reference": {
+                    "chunk_id": chunk_id,
+                    "artifact_cid": "3ac9f2b1d0af",
+                    "version": "a1c2d3e",
+                    "span": {"unit": "b", "start": 100, "end": 200},
+                    "artifact_type": "doc",
+                    "embedding_ids": [],
+                    "redaction_level": "none",
+                },
                 "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
                 "l0_summary": "short summary",
                 "keyphrases": ["citation", "span", "validation"],
+                "entities": [],
+                "claims": [],
+                "risks": [],
+                "created_at": "2026-06-30T00:00:00+00:00",
+                "last_refreshed_at": "2026-06-30T00:00:00+00:00",
             }
         ),
         encoding="utf-8",
@@ -420,9 +433,23 @@ def test_provider_context_summary_json_dedupes_l0_and_reports_missing_or_over_bu
     (tmp_path / f"{chunk_id}.json").write_text(
         json.dumps(
             {
-                "chunk_reference": {"chunk_id": chunk_id},
+                "chunk_reference": {
+                    "chunk_id": chunk_id,
+                    "artifact_cid": "3ac9f2b1d0af",
+                    "version": "a1c2d3e",
+                    "span": {"unit": "b", "start": 100, "end": 200},
+                    "artifact_type": "doc",
+                    "embedding_ids": [],
+                    "redaction_level": "none",
+                },
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
                 "l0_summary": "one two three four five six seven eight nine ten",
                 "keyphrases": ["large", "budget", "drop"],
+                "entities": [],
+                "claims": [],
+                "risks": [],
+                "created_at": "2026-06-30T00:00:00+00:00",
+                "last_refreshed_at": "2026-06-30T00:00:00+00:00",
             }
         ),
         encoding="utf-8",
@@ -439,6 +466,8 @@ def test_provider_context_summary_json_dedupes_l0_and_reports_missing_or_over_bu
     )
 
     assert len(data["l0_candidates"]) == 1
+    assert data["l0_candidates"][0]["cid"] == chunk_id
+    assert data["l0_candidates"][0]["token_cost"] == 13
     assert data["l0_included"] == []
     assert data["l0_dropped"] == [
         {
@@ -872,3 +901,40 @@ def test_provider_l0_invariant_validation_result_does_not_duplicate_invalid_item
     assert [error["code"] for error in result["errors"]] == [
         "L0I_LIST_ITEM_NOT_OBJECT",
     ]
+
+
+def test_provider_l0_inclusion_summary_treats_malformed_l0_record_as_not_found(tmp_path):
+    import json
+
+    from ai_lab.documentation.prompt_context import provider_l0_inclusion_summary
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    summary = provider_l0_inclusion_summary(
+        include_l0=(chunk_id,),
+        l0_store=tmp_path,
+        context_window=None,
+    )
+
+    assert summary == {
+        "l0_candidates": [],
+        "l0_included": [],
+        "l0_dropped": [
+            {
+                "cid": chunk_id,
+                "dropped_reason": "not_found",
+                "token_cost": 0,
+            }
+        ],
+    }
