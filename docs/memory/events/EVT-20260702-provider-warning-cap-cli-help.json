@@ -1,0 +1,38 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "dcf3867"
+  ],
+  "commit_hash": "dcf3867",
+  "created_at": "2026-07-03T07:28:49.552327+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-provider-warning-cap-cli-help",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-provider-warning-cap-cli-help",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Updated provider CLI help text for the warning admission cap default. ask_provider.py and compare_providers.py now document that provider latest-context runs default max_warning_admissions to 1 when require_admission is enabled and no explicit cap is supplied, while explicit values including 0 are preserved. Full test suite passed with 193 tests.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-help"
+  ],
+  "turn_id": 1
+}

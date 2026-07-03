@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T07:31:30.605872+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "dcf3867"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-provider-warning-cap-cli-help.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed provider warning-cap CLI help update with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-provider-warning-cap-cli-help",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-9a30e4c8b929",
+  "warrant_state": "supported"
+}

@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Updated ask_provider.py --max-warning-admissions help text.",
+    "Updated compare_providers.py --max-warning-admissions help text.",
+    "Added provider CLI help tests for the default and override wording.",
+    "Verified with full pytest suite: 193 passed."
+  ],
+  "content_hash": "e925ab073ef7c1b3f140641873ccd765d016bf90d9aac74a192fbaae250c624a",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T07:29:22.382161+00:00",
+  "episode_id": "EP-20260702-provider-warning-cap-cli-help",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Document the conditional provider default directly in CLI help text.",
+    "Keep explicit override precedence visible to users, including --max-warning-admissions 0."
+  ],
+  "l1_id": "L1-20260702-provider-warning-cap-cli-help",
+  "namespace": "public",
+  "next_actions": [
+    "Move to the next AI-Lab ergonomics target: centralize provider latest-context policy/default display or add a compact policy audit command."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Argparse may wrap long option names in help output, so tests normalize wrapped text."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-warning-cap-cli-help"
+  ],
+  "summary_text": "AI-Lab updated provider CLI help text for the warning admission cap default. scripts/ask_provider.py and scripts/compare_providers.py now state that provider latest-context runs default max_warning_admissions to 1 when --require-admission is enabled and --max-warning-admissions is omitted. The help text also documents that explicit values, including 0, are preserved. Tests were added for both provider CLI help outputs, including normalization for argparse wrapping of --require-admission. The full suite passed with 193 tests. This closes the final UX/documentation gap after the provider warning-cap default implementation and verification.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-help"
+  ],
+  "ttl_until": null
+}
