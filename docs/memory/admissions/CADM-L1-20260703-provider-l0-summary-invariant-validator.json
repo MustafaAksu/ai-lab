@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T11:34:52.177835+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "b26e143"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-provider-l0-summary-invariant-validator.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed provider L0 summary invariant validation with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-provider-l0-summary-invariant-validator",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-3c2c1a1436f6",
+  "warrant_state": "supported"
+}

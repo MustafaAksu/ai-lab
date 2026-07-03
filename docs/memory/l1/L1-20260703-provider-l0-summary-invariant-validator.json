@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added validate_provider_l0_invariants to prompt_context.py.",
+    "Added helper validators for L0 list shape, cid uniqueness, token_cost, optional citation, candidate/included items, and dropped items.",
+    "Added tests covering valid current summary shape, required lists, duplicate cids, invalid token_cost, invalid optional citation, included-without-candidate, included/dropped overlap, invalid dropped_reason, over_budget without candidate, and cross-reason field rejection.",
+    "Verified full pytest suite: 235 passed."
+  ],
+  "content_hash": "1561f39465dfca60944106ff1ef75ac30d40c4540a4504ea9e4b98d6cf64d3ed",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T11:34:07.331481+00:00",
+  "episode_id": "EP-20260703-provider-l0-summary-invariant-validator",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep this slice pure/read-only and summary-layer only.",
+    "Validate actual current provider summary fields: cid, citation, inclusion_reason, token_cost, and dropped_reason.",
+    "Allow not_found drops outside l0_candidates, while requiring over_budget drops to refer to l0_candidates."
+  ],
+  "l1_id": "L1-20260703-provider-l0-summary-invariant-validator",
+  "namespace": "public",
+  "next_actions": [
+    "Consider either wiring the invariant validator into optional CLI validation, validating L0 chunk JSON at create/load time, or proceeding toward guarded explicit L0 context-pack inclusion."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Future dropped_reason values will require validator and test updates.",
+    "The validator is not automatically invoked by CLI or production summary formatting yet.",
+    "This does not validate L0 chunk JSON files or citation format semantics."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-provider-l0-summary-invariant-validator"
+  ],
+  "summary_text": "AI-Lab added a pure read-only provider L0 summary invariant validator. validate_provider_l0_invariants checks the current provider summary l0_candidates, l0_included, and l0_dropped structure using actual implemented fields: cid, citation, inclusion_reason, token_cost, and dropped_reason. The validator enforces list/object shape, non-empty cid, non-negative integer token_cost, optional non-empty citation, inclusion/dropped reason exclusivity, duplicate cid detection, included subset of candidates, included/dropped disjointness, over_budget drops tied to candidates, and current dropped_reason values not_found and over_budget. This does not alter provider summary output, prompt assembly, context packs, L0 store loading, L0 creation, or CLI behavior. Full suite passed with 235 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "provider-context-summary",
+    "validation",
+    "invariants",
+    "dry-run"
+  ],
+  "ttl_until": null
+}
