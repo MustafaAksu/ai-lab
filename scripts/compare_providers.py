@@ -19,6 +19,7 @@ from ai_lab.documentation.prompt_context import (
     context_task_slug,
     prompt_sha256,
     read_context_pack,
+    resolve_provider_warning_admission_cap,
 )
 from ai_lab.providers.claude_provider import ClaudeProvider
 from ai_lab.providers.openai_provider import OpenAIProvider
@@ -242,6 +243,11 @@ def main() -> int:
         context_pack = read_context_pack(args.context_pack)
         extra_metadata["context_pack"] = str(args.context_pack)
 
+    resolved_max_warning_admissions = resolve_provider_warning_admission_cap(
+        require_admission=args.require_admission,
+        max_warning_admissions=args.max_warning_admissions,
+    )
+
     if args.latest_context:
         task_label = context_task_slug(raw_prompt)
         context_manifest = build_latest_context_pack_manifest(
@@ -250,7 +256,7 @@ def main() -> int:
             model_target=args.model_target,
             scope=args.scope,
             require_admission=args.require_admission,
-            max_warning_admissions=args.max_warning_admissions,
+            max_warning_admissions=resolved_max_warning_admissions,
             task_label=task_label,
         )
         context_manifest = replace(context_manifest, task_label=task_label)

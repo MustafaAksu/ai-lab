@@ -352,6 +352,7 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
         assert model_target == "gpt-5"
         assert scope == "ai-lab-memory"
         assert require_admission is True
+        assert max_warning_admissions == 1
         assert task_label == "compare-admitted-step"
         assert full_prompt_hash is None
         return manifest
@@ -390,3 +391,67 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
     output = capsys.readouterr().out
     assert "# Admitted Context Pack" in output
     assert "Compare admitted step." in output
+
+
+def test_main_latest_context_preserves_explicit_zero_warning_cap(
+    monkeypatch,
+    capsys,
+):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMITTED",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+    )
+    manifest = ContextPackManifest(
+        task="Compare strict step.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    def fake_build_latest_context_pack_manifest(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
+        max_warning_admissions=None,
+    ):
+        assert require_admission is True
+        assert max_warning_admissions == 0
+        return manifest
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Strict Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "strict",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--max-warning-admissions",
+            "0",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+    assert "# Strict Context Pack" in output

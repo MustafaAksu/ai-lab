@@ -61,6 +61,26 @@ def prompt_sha256(prompt: str) -> str:
     return sha256(prompt.encode("utf-8")).hexdigest()
 
 
+def resolve_provider_warning_admission_cap(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+) -> int | None:
+    """
+    Resolve the provider latest-context warning-admission cap.
+
+    Explicit values always win. If admission is required and no explicit cap
+    is provided, use the provider default of one warning-admitted item.
+    """
+
+    if max_warning_admissions is not None:
+        return max_warning_admissions
+
+    if require_admission:
+        return 1
+
+    return None
+
+
 def build_latest_context_pack_manifest(
     task: str,
     token_budget: int | None = None,

@@ -171,3 +171,34 @@ def test_prompt_sha256_returns_lowercase_digest():
     digest = prompt_sha256("hello")
 
     assert digest == "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+
+
+def test_resolve_provider_warning_admission_cap_defaults_to_one_when_required():
+    from ai_lab.documentation.prompt_context import resolve_provider_warning_admission_cap
+
+    assert resolve_provider_warning_admission_cap(
+        require_admission=True,
+        max_warning_admissions=None,
+    ) == 1
+
+
+def test_resolve_provider_warning_admission_cap_preserves_explicit_values():
+    from ai_lab.documentation.prompt_context import resolve_provider_warning_admission_cap
+
+    assert resolve_provider_warning_admission_cap(
+        require_admission=True,
+        max_warning_admissions=0,
+    ) == 0
+    assert resolve_provider_warning_admission_cap(
+        require_admission=True,
+        max_warning_admissions=2,
+    ) == 2
+
+
+def test_resolve_provider_warning_admission_cap_no_default_without_required_admission():
+    from ai_lab.documentation.prompt_context import resolve_provider_warning_admission_cap
+
+    assert resolve_provider_warning_admission_cap(
+        require_admission=False,
+        max_warning_admissions=None,
+    ) is None

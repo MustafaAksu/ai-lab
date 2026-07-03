@@ -151,6 +151,7 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
         assert model_target == "gpt-5"
         assert scope == "ai-lab-memory"
         assert require_admission is True
+        assert max_warning_admissions == 1
         return "# Admitted Context Pack"
 
     monkeypatch.setattr(
@@ -184,3 +185,47 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
     output = capsys.readouterr().out
     assert "# Admitted Context Pack" in output
     assert "Do the admitted step." in output
+
+
+def test_main_latest_context_preserves_explicit_zero_warning_cap(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
+        max_warning_admissions=None,
+    ):
+        assert require_admission is True
+        assert max_warning_admissions == 0
+        return "# Strict Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "strict",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--max-warning-admissions",
+            "0",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert "# Strict Context Pack" in output
