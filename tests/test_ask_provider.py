@@ -414,3 +414,90 @@ def test_main_print_prompt_context_summary_can_include_budget_window(monkeypatch
     assert "  - L1: 10% -> 600" in output
     assert "  - L0: 5% -> 300" in output
     assert "Final prompt:" in output
+
+
+
+def test_main_print_prompt_context_summary_can_emit_json(monkeypatch, capsys):
+    import json
+
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
+        max_warning_admissions=None,
+    ):
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--context-window",
+            "8000",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    summary_text, final_prompt = output.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert data["schema_version"] == "v1"
+    assert data["latest_context_policy"]["max_warning_admissions"] == 1
+    assert data["latest_context_policy"][
+        "max_warning_admissions_source"
+    ] == "provider_default"
+    assert data["context_budget_preview"]["system"]["tokens"] == 1200
+    assert data["context_budget_preview"]["context"]["children"]["l0"][
+        "tokens"
+    ] == 300
+    assert "BEGIN CONTEXT PACK" in final_prompt
+    assert final_prompt.rstrip().endswith("Do summary step.")
+
+
+def test_main_summary_format_json_requires_context_summary(monkeypatch):
+    import pytest
+
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--summary-format",
+            "json",
+            "--print-prompt",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        ask_provider.main()
+
+    assert exc_info.value.code == 2

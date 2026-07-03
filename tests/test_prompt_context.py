@@ -309,3 +309,61 @@ def test_provider_context_budget_preview_requires_positive_window():
 
     with pytest.raises(ValueError, match="context_window must be positive"):
         provider_context_budget_preview(context_window=0)
+
+
+
+def test_format_provider_context_summary_json_is_stable_and_parseable():
+    import json
+
+    from ai_lab.documentation.prompt_context import (
+        format_provider_context_summary_json,
+    )
+
+    output = format_provider_context_summary_json(
+        require_admission=True,
+        max_warning_admissions=None,
+        context_window=8000,
+    )
+
+    data = json.loads(output)
+
+    assert data["schema_version"] == "v1"
+    assert data["latest_context_policy"] == {
+        "context_policy": "latest_context",
+        "require_admission": True,
+        "max_warning_admissions": 1,
+        "max_warning_admissions_source": "provider_default",
+    }
+    assert data["context_budget_preview"]["system"] == {
+        "percentage": 15,
+        "tokens": 1200,
+    }
+    assert data["context_budget_preview"]["answer"] == {
+        "percentage": 10,
+        "tokens": 800,
+    }
+    assert data["context_budget_preview"]["context"]["percentage"] == 75
+    assert data["context_budget_preview"]["context"]["tokens"] == 6000
+    assert data["context_budget_preview"]["context"]["children"]["explicit"] == {
+        "percentage": 40,
+        "tokens": 2400,
+    }
+    assert data["context_budget_preview"]["context"]["children"][
+        "dependencies"
+    ] == {
+        "percentage": 45,
+        "tokens": 2700,
+    }
+    assert data["context_budget_preview"]["context"]["children"]["l1"] == {
+        "percentage": 10,
+        "tokens": 600,
+    }
+    assert data["context_budget_preview"]["context"]["children"]["l0"] == {
+        "percentage": 5,
+        "tokens": 300,
+    }
+    assert output == format_provider_context_summary_json(
+        require_admission=True,
+        max_warning_admissions=None,
+        context_window=8000,
+    )

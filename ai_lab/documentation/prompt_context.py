@@ -255,6 +255,44 @@ def format_provider_context_budget_preview(
     return "\n".join(lines)
 
 
+
+def provider_context_summary_payload(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+    context_window: int | None = None,
+) -> dict[str, object]:
+    """Return a machine-readable provider latest-context summary payload."""
+
+    return {
+        "schema_version": "v1",
+        "latest_context_policy": provider_latest_context_policy(
+            require_admission=require_admission,
+            max_warning_admissions=max_warning_admissions,
+        ),
+        "context_budget_preview": provider_context_budget_preview(
+            context_window=context_window
+        ),
+    }
+
+
+def format_provider_context_summary_json(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+    context_window: int | None = None,
+) -> str:
+    """Return stable JSON for the provider latest-context summary."""
+
+    return json.dumps(
+        provider_context_summary_payload(
+            require_admission=require_admission,
+            max_warning_admissions=max_warning_admissions,
+            context_window=context_window,
+        ),
+        indent=2,
+        sort_keys=True,
+    )
+
+
 def provider_latest_context_metadata(
     require_admission: bool,
     max_warning_admissions: int | None,

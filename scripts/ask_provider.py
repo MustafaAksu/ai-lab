@@ -13,6 +13,7 @@ from ai_lab.documentation.prompt_context import (
     context_task_label,
     context_task_slug,
     format_provider_context_budget_preview,
+    format_provider_context_summary_json,
     format_provider_latest_context_policy,
     prompt_sha256,
     read_context_pack,
@@ -88,6 +89,14 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--summary-format",
+        choices=("text", "json"),
+        default="text",
+        help=(
+            "Output format for --print-context-summary. Defaults to text."
+        ),
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -143,6 +152,9 @@ def main() -> int:
     if args.context_window is not None and not args.print_context_summary:
         parser.error("--context-window requires --print-context-summary.")
 
+    if args.summary_format == "json" and not args.print_context_summary:
+        parser.error("--summary-format json requires --print-context-summary.")
+
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
 
@@ -189,19 +201,28 @@ def main() -> int:
 
     if args.print_prompt:
         if args.print_context_summary:
-            print("Resolved latest-context policy:")
-            print(
-                format_provider_latest_context_policy(
-                    require_admission=args.require_admission,
-                    max_warning_admissions=args.max_warning_admissions,
+            if args.summary_format == "json":
+                print(
+                    format_provider_context_summary_json(
+                        require_admission=args.require_admission,
+                        max_warning_admissions=args.max_warning_admissions,
+                        context_window=args.context_window,
+                    )
                 )
-            )
-            print()
-            print(
-                format_provider_context_budget_preview(
-                    context_window=args.context_window
+            else:
+                print("Resolved latest-context policy:")
+                print(
+                    format_provider_latest_context_policy(
+                        require_admission=args.require_admission,
+                        max_warning_admissions=args.max_warning_admissions,
+                    )
                 )
-            )
+                print()
+                print(
+                    format_provider_context_budget_preview(
+                        context_window=args.context_window
+                    )
+                )
             print()
             print("Final prompt:")
         print(final_prompt)
