@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from hashlib import sha256
 from pathlib import Path
+import json
 import re
 
 from ai_lab.documentation.artifact_history import discover_artifacts
@@ -79,6 +80,48 @@ def resolve_provider_warning_admission_cap(
         return 1
 
     return None
+
+
+def provider_latest_context_policy(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+) -> dict[str, object]:
+    """Return the resolved provider latest-context admission policy."""
+
+    resolved_max_warning_admissions = resolve_provider_warning_admission_cap(
+        require_admission=require_admission,
+        max_warning_admissions=max_warning_admissions,
+    )
+
+    if max_warning_admissions is not None:
+        cap_source = "explicit"
+    elif require_admission:
+        cap_source = "provider_default"
+    else:
+        cap_source = "unset"
+
+    return {
+        "context_policy": "latest_context",
+        "require_admission": require_admission,
+        "max_warning_admissions": resolved_max_warning_admissions,
+        "max_warning_admissions_source": cap_source,
+    }
+
+
+def format_provider_latest_context_policy(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+) -> str:
+    """Return a stable JSON display of the resolved provider latest-context policy."""
+
+    return json.dumps(
+        provider_latest_context_policy(
+            require_admission=require_admission,
+            max_warning_admissions=max_warning_admissions,
+        ),
+        indent=2,
+        sort_keys=True,
+    )
 
 
 def build_latest_context_pack_manifest(

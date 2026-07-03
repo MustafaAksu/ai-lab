@@ -202,3 +202,51 @@ def test_resolve_provider_warning_admission_cap_no_default_without_required_admi
         require_admission=False,
         max_warning_admissions=None,
     ) is None
+
+
+def test_provider_latest_context_policy_records_provider_default():
+    from ai_lab.documentation.prompt_context import provider_latest_context_policy
+
+    assert provider_latest_context_policy(
+        require_admission=True,
+        max_warning_admissions=None,
+    ) == {
+        "context_policy": "latest_context",
+        "require_admission": True,
+        "max_warning_admissions": 1,
+        "max_warning_admissions_source": "provider_default",
+    }
+
+
+def test_provider_latest_context_policy_records_explicit_zero():
+    from ai_lab.documentation.prompt_context import provider_latest_context_policy
+
+    assert provider_latest_context_policy(
+        require_admission=True,
+        max_warning_admissions=0,
+    ) == {
+        "context_policy": "latest_context",
+        "require_admission": True,
+        "max_warning_admissions": 0,
+        "max_warning_admissions_source": "explicit",
+    }
+
+
+def test_format_provider_latest_context_policy_returns_stable_json():
+    import json
+
+    from ai_lab.documentation.prompt_context import format_provider_latest_context_policy
+
+    data = json.loads(
+        format_provider_latest_context_policy(
+            require_admission=False,
+            max_warning_admissions=None,
+        )
+    )
+
+    assert data == {
+        "context_policy": "latest_context",
+        "require_admission": False,
+        "max_warning_admissions": None,
+        "max_warning_admissions_source": "unset",
+    }

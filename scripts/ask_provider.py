@@ -12,6 +12,7 @@ from ai_lab.documentation.prompt_context import (
     build_prompt,
     context_task_label,
     context_task_slug,
+    format_provider_latest_context_policy,
     prompt_sha256,
     read_context_pack,
     resolve_provider_warning_admission_cap,
@@ -62,6 +63,14 @@ def main() -> int:
         help="Build and include a latest-context pack from repository artifacts.",
     )
     parser.add_argument(
+        "--print-context-policy",
+        action="store_true",
+        help=(
+            "Print the resolved provider latest-context policy and do not call "
+            "the provider."
+        ),
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -102,6 +111,9 @@ def main() -> int:
     if args.context_pack and args.latest_context:
         parser.error("Use either --context-pack or --latest-context, not both.")
 
+    if args.print_context_policy and not args.latest_context:
+        parser.error("--print-context-policy requires --latest-context.")
+
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
 
@@ -109,6 +121,15 @@ def main() -> int:
         require_admission=args.require_admission,
         max_warning_admissions=args.max_warning_admissions,
     )
+
+    if args.print_context_policy:
+        print(
+            format_provider_latest_context_policy(
+                require_admission=args.require_admission,
+                max_warning_admissions=args.max_warning_admissions,
+            )
+        )
+        return 0
 
     if args.latest_context:
         task_label = context_task_slug(prompt)

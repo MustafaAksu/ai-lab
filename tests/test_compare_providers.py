@@ -472,3 +472,50 @@ def test_main_help_documents_provider_warning_cap_default(monkeypatch, capsys):
     output = output.replace("--require- admission", "--require-admission")
     assert "Defaults to 1 when --require-admission is enabled" in output
     assert "Explicit values, including 0, are preserved" in output
+
+
+def test_main_print_context_policy_shows_explicit_zero(monkeypatch, capsys):
+    from scripts import compare_providers
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "strict",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--max-warning-admissions",
+            "0",
+            "--print-context-policy",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+    assert '"context_policy": "latest_context"' in output
+    assert '"require_admission": true' in output
+    assert '"max_warning_admissions": 0' in output
+    assert '"max_warning_admissions_source": "explicit"' in output
+
+
+def test_main_print_context_policy_requires_latest_context(monkeypatch):
+    from scripts import compare_providers
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "next",
+            "step.",
+            "--print-context-policy",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        compare_providers.main()
+
+    assert exc_info.value.code == 2

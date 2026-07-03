@@ -246,3 +246,52 @@ def test_main_help_documents_provider_warning_cap_default(monkeypatch, capsys):
     output = output.replace("--require- admission", "--require-admission")
     assert "Defaults to 1 when --require-admission is enabled" in output
     assert "Explicit values, including 0, are preserved" in output
+
+
+def test_main_print_context_policy_shows_resolved_provider_default(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "the",
+            "next",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--print-context-policy",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert '"context_policy": "latest_context"' in output
+    assert '"require_admission": true' in output
+    assert '"max_warning_admissions": 1' in output
+    assert '"max_warning_admissions_source": "provider_default"' in output
+
+
+def test_main_print_context_policy_requires_latest_context(monkeypatch):
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "the",
+            "next",
+            "step.",
+            "--print-context-policy",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        ask_provider.main()
+
+    assert exc_info.value.code == 2
