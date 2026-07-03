@@ -1,0 +1,58 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T11:11:13.424931+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0011",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0015",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "3e10b908708559fb6368c65aa8bf4dccaddf12c3fd857303415e7b220fe75ad9",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-5422478f806d",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260703-readonly-l0-summary-inclusion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260703-readonly-l0-summary-inclusion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260703-readonly-l0-summary-inclusion.json",
+      "token_estimate": 742,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "6ca8e951e3410549",
+  "model_target": "gpt-5",
+  "task": "AI-Lab has completed Manual L0 chunk creation and read-only explicit L0 visibility in provider latest-context dry-run JSON summaries. Using admitted ai-lab-memory context, choose the next smallest implementation target. Compare actual explicit L0 context-pack inclusion, L0 JSON/schema validation hardening, citation validation, and provider summary UX/docs. Recommend one target, exact non-goals, tests, risks, and memory-refresh notes.",
+  "task_label": "ai-lab-has-completed-manual-l0-chunk-creation-and-read-only-explicit-l0-visibili",
+  "token_budget": 8000,
+  "total_token_estimate": 2679
+}
