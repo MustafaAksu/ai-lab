@@ -1,0 +1,47 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Updated build_synthesis_prompt rules in ai_lab/documentation/comparison_synthesis.py.",
+    "Added AI-reader orientation and no-chatty-prose guidance to synthesis prompts.",
+    "Added completion and output-priority rules for synthesis sections.",
+    "Verified focused synthesis tests: 6 passed.",
+    "Verified full pytest suite: 216 passed."
+  ],
+  "content_hash": "595d92a7f344442d8bb362975b56e98bab3efaab1f090274c2f3ee202f229016",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T10:41:27.727300+00:00",
+  "episode_id": "EP-20260703-ai-reader-synthesis-prompt",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Treat synthesis artifacts as AI-readable decision inputs rather than chat-style explanations.",
+    "Require complete synthesis sections and prioritize decision-critical sections under output pressure.",
+    "Require actionable re-ask prompts that can be reused directly with compare_providers.py."
+  ],
+  "l1_id": "L1-20260703-ai-reader-synthesis-prompt",
+  "namespace": "public",
+  "next_actions": [
+    "Re-run or continue next-target decision work with the improved synthesis prompt, then proceed toward the Manual L0 chunk creation helper unless a stronger admitted comparison changes the order."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "This changes future synthesis style and may make outputs denser; human readers may find them less conversational, but AI-Lab artifacts benefit from compact completeness."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-ai-reader-synthesis-prompt"
+  ],
+  "summary_text": "AI-Lab clarified the comparison synthesis prompt for future AI agents and automation. The synthesis prompt now asks for compact but complete structured output, avoids chatty prose, requires every section to be complete, prioritizes Combined answer/Risks/Suggested re-ask when output space is limited, and asks for actionable re-ask prompts suitable for compare_providers.py. This change responds to an observed incomplete Claude synthesis artifact and improves future decision artifacts. Full test suite passed with 216 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "provider-comparison",
+    "synthesis",
+    "prompt-engineering",
+    "ai-reader"
+  ],
+  "ttl_until": null
+}
