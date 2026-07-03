@@ -1,4 +1,5 @@
 from pathlib import Path
+import pytest
 
 from scripts.compare_providers import (
     auto_comparison_path,
@@ -455,3 +456,19 @@ def test_main_latest_context_preserves_explicit_zero_warning_cap(
 
     output = capsys.readouterr().out
     assert "# Strict Context Pack" in output
+
+
+def test_main_help_documents_provider_warning_cap_default(monkeypatch, capsys):
+    from scripts import compare_providers
+
+    monkeypatch.setattr("sys.argv", ["compare_providers.py", "--help"])
+
+    with pytest.raises(SystemExit) as exc_info:
+        compare_providers.main()
+
+    assert exc_info.value.code == 0
+
+    output = " ".join(capsys.readouterr().out.split())
+    output = output.replace("--require- admission", "--require-admission")
+    assert "Defaults to 1 when --require-admission is enabled" in output
+    assert "Explicit values, including 0, are preserved" in output

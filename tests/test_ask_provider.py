@@ -1,4 +1,5 @@
 from pathlib import Path
+import pytest
 
 from scripts.ask_provider import build_prompt, read_context_pack
 
@@ -229,3 +230,19 @@ def test_main_latest_context_preserves_explicit_zero_warning_cap(monkeypatch, ca
 
     output = capsys.readouterr().out
     assert "# Strict Context Pack" in output
+
+
+def test_main_help_documents_provider_warning_cap_default(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    monkeypatch.setattr("sys.argv", ["ask_provider.py", "--help"])
+
+    with pytest.raises(SystemExit) as exc_info:
+        ask_provider.main()
+
+    assert exc_info.value.code == 0
+
+    output = " ".join(capsys.readouterr().out.split())
+    output = output.replace("--require- admission", "--require-admission")
+    assert "Defaults to 1 when --require-admission is enabled" in output
+    assert "Explicit values, including 0, are preserved" in output

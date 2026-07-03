@@ -88,7 +88,9 @@ def main() -> int:
         default=None,
         help=(
             "Optional cap for admit_with_warning items when using latest-context "
-            "assembly. Defaults to no cap."
+            "assembly. Defaults to 1 when --require-admission is enabled "
+                "and this option is omitted. Explicit values, including 0, "
+                "are preserved."
         ),
     )
 
