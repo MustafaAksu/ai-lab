@@ -2,15 +2,20 @@ from anthropic import Anthropic
 
 from ai_lab.config import read_claude_api_key
 from ai_lab.providers.provider import Provider
-from ai_lab.providers.settings import CLAUDE_MODEL
+from ai_lab.providers.settings import CLAUDE_MAX_TOKENS, CLAUDE_MODEL
 
 
 class ClaudeProvider(Provider):
     """Claude implementation of the Provider interface."""
 
-    def __init__(self, model: str = CLAUDE_MODEL):
+    def __init__(
+        self,
+        model: str = CLAUDE_MODEL,
+        max_tokens: int = CLAUDE_MAX_TOKENS,
+    ):
         self._client = Anthropic(api_key=read_claude_api_key())
         self._model = model
+        self._max_tokens = max_tokens
 
     @property
     def name(self) -> str:
@@ -23,7 +28,7 @@ class ClaudeProvider(Provider):
     def ask(self, prompt: str) -> str:
         response = self._client.messages.create(
             model=self._model,
-            max_tokens=1024,
+            max_tokens=self._max_tokens,
             messages=[
                 {
                     "role": "user",
