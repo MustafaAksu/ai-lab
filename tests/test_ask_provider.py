@@ -363,3 +363,54 @@ def test_main_print_context_summary_requires_print_prompt(monkeypatch):
         ask_provider.main()
 
     assert exc_info.value.code == 2
+
+
+
+def test_main_print_prompt_context_summary_can_include_budget_window(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
+        max_warning_admissions=None,
+    ):
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--context-window",
+            "8000",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert "Context budget preview (context window: 8000):" in output
+    assert "- System: 15% -> 1200" in output
+    assert "- Answer: 10% -> 800" in output
+    assert "- Context: 75% -> 6000" in output
+    assert "  - Explicit: 40% -> 2400" in output
+    assert "  - Dependencies: 45% -> 2700" in output
+    assert "  - L1: 10% -> 600" in output
+    assert "  - L0: 5% -> 300" in output
+    assert "Final prompt:" in output

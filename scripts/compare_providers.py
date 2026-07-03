@@ -17,6 +17,7 @@ from ai_lab.documentation.prompt_context import (
     build_prompt,
     context_task_label,
     context_task_slug,
+    format_provider_context_budget_preview,
     format_provider_latest_context_policy,
     prompt_sha256,
     provider_latest_context_metadata,
@@ -211,6 +212,14 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--context-window",
+        type=int,
+        help=(
+            "Optional context window size for --print-context-summary budget "
+            "preview token counts."
+        ),
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -267,6 +276,12 @@ def main() -> int:
 
     if args.print_context_summary and not args.print_prompt:
         parser.error("--print-context-summary requires --print-prompt.")
+
+    if args.context_window is not None and args.context_window < 1:
+        parser.error("--context-window must be positive.")
+
+    if args.context_window is not None and not args.print_context_summary:
+        parser.error("--context-window requires --print-context-summary.")
 
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
@@ -330,6 +345,12 @@ def main() -> int:
                 format_provider_latest_context_policy(
                     require_admission=args.require_admission,
                     max_warning_admissions=args.max_warning_admissions,
+                )
+            )
+            print()
+            print(
+                format_provider_context_budget_preview(
+                    context_window=args.context_window
                 )
             )
             print()

@@ -264,3 +264,48 @@ def test_provider_latest_context_metadata_formats_comparison_values():
         "context_max_warning_admissions": "1",
         "context_max_warning_admissions_source": "provider_default",
     }
+
+
+
+def test_format_provider_context_budget_preview_percentages_only():
+    from ai_lab.documentation.prompt_context import (
+        format_provider_context_budget_preview,
+    )
+
+    output = format_provider_context_budget_preview()
+
+    assert "Context budget preview:" in output
+    assert "- System: 15%" in output
+    assert "- Answer: 10%" in output
+    assert "- Context: 75%" in output
+    assert "  - Explicit: 40%" in output
+    assert "  - Dependencies: 45%" in output
+    assert "  - L1: 10%" in output
+    assert "  - L0: 5%" in output
+    assert "->" not in output
+
+
+def test_format_provider_context_budget_preview_with_context_window():
+    from ai_lab.documentation.prompt_context import (
+        format_provider_context_budget_preview,
+    )
+
+    output = format_provider_context_budget_preview(context_window=8000)
+
+    assert "Context budget preview (context window: 8000):" in output
+    assert "- System: 15% -> 1200" in output
+    assert "- Answer: 10% -> 800" in output
+    assert "- Context: 75% -> 6000" in output
+    assert "  - Explicit: 40% -> 2400" in output
+    assert "  - Dependencies: 45% -> 2700" in output
+    assert "  - L1: 10% -> 600" in output
+    assert "  - L0: 5% -> 300" in output
+
+
+def test_provider_context_budget_preview_requires_positive_window():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import provider_context_budget_preview
+
+    with pytest.raises(ValueError, match="context_window must be positive"):
+        provider_context_budget_preview(context_window=0)

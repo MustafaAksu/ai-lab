@@ -124,6 +124,137 @@ def format_provider_latest_context_policy(
     )
 
 
+DEFAULT_PROVIDER_CONTEXT_BUDGET_PERCENTAGES = {
+    "system": 15,
+    "answer": 10,
+    "context": 75,
+}
+
+DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES = {
+    "explicit": 40,
+    "dependencies": 45,
+    "l1": 10,
+    "l0": 5,
+}
+
+
+def _allocate_percent_budget(
+    total: int,
+    percentages: list[tuple[str, int]],
+) -> dict[str, int]:
+    """Allocate integer tokens by percentage, assigning remainder to the last item."""
+
+    if total < 1:
+        raise ValueError("total must be positive")
+
+    if not percentages:
+        return {}
+
+    allocated: dict[str, int] = {}
+    used = 0
+
+    for name, percentage in percentages[:-1]:
+        value = total * percentage // 100
+        allocated[name] = value
+        used += value
+
+    last_name, _last_percentage = percentages[-1]
+    allocated[last_name] = total - used
+
+    return allocated
+
+
+def provider_context_budget_preview(
+    context_window: int | None = None,
+) -> dict[str, object]:
+    """Return the default provider context budget preview."""
+
+    if context_window is not None and context_window < 1:
+        raise ValueError("context_window must be positive")
+
+    preview: dict[str, object] = {
+        "system": {"percentage": DEFAULT_PROVIDER_CONTEXT_BUDGET_PERCENTAGES["system"]},
+        "answer": {"percentage": DEFAULT_PROVIDER_CONTEXT_BUDGET_PERCENTAGES["answer"]},
+        "context": {
+            "percentage": DEFAULT_PROVIDER_CONTEXT_BUDGET_PERCENTAGES["context"],
+            "children": {
+                "explicit": {
+                    "percentage": DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES["explicit"]
+                },
+                "dependencies": {
+                    "percentage": DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES[
+                        "dependencies"
+                    ]
+                },
+                "l1": {"percentage": DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES["l1"]},
+                "l0": {"percentage": DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES["l0"]},
+            },
+        },
+    }
+
+    if context_window is None:
+        return preview
+
+    top_tokens = _allocate_percent_budget(
+        context_window,
+        list(DEFAULT_PROVIDER_CONTEXT_BUDGET_PERCENTAGES.items()),
+    )
+    context_tokens = _allocate_percent_budget(
+        top_tokens["context"],
+        list(DEFAULT_PROVIDER_CONTEXT_DETAIL_PERCENTAGES.items()),
+    )
+
+    preview["system"]["tokens"] = top_tokens["system"]  # type: ignore[index]
+    preview["answer"]["tokens"] = top_tokens["answer"]  # type: ignore[index]
+    preview["context"]["tokens"] = top_tokens["context"]  # type: ignore[index]
+
+    children = preview["context"]["children"]  # type: ignore[index]
+    for name, tokens in context_tokens.items():
+        children[name]["tokens"] = tokens  # type: ignore[index]
+
+    return preview
+
+
+def _format_budget_line(
+    label: str,
+    section: dict[str, object],
+    indent: str = "- ",
+) -> str:
+    percentage = section["percentage"]
+
+    if "tokens" in section:
+        return f"{indent}{label}: {percentage}% -> {section['tokens']}"
+
+    return f"{indent}{label}: {percentage}%"
+
+
+def format_provider_context_budget_preview(
+    context_window: int | None = None,
+) -> str:
+    """Return a stable text display of the default provider context budget preview."""
+
+    preview = provider_context_budget_preview(context_window=context_window)
+
+    if context_window is None:
+        lines = ["Context budget preview:"]
+    else:
+        lines = [f"Context budget preview (context window: {context_window}):"]
+
+    lines.append(_format_budget_line("System", preview["system"]))  # type: ignore[arg-type]
+    lines.append(_format_budget_line("Answer", preview["answer"]))  # type: ignore[arg-type]
+    lines.append(_format_budget_line("Context", preview["context"]))  # type: ignore[arg-type]
+
+    children = preview["context"]["children"]  # type: ignore[index]
+    lines.append(_format_budget_line("Explicit", children["explicit"], indent="  - "))
+    lines.append(
+        _format_budget_line("Dependencies", children["dependencies"], indent="  - ")
+    )
+    lines.append(_format_budget_line("L1", children["l1"], indent="  - "))
+    lines.append(_format_budget_line("L0", children["l0"], indent="  - "))
+
+    return "\n".join(lines)
+
+
 def provider_latest_context_metadata(
     require_admission: bool,
     max_warning_admissions: int | None,
