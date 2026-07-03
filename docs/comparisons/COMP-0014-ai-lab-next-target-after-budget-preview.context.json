@@ -1,0 +1,58 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T10:02:56.694117+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0008",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0013",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "9a70b0ef667b9bbdedaf72ffc7495dc583bffbc19c899072606f98d4d91c99e6",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-69951386b45a",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260703-provider-context-budget-preview-dry-run",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260703-provider-context-budget-preview-dry-run (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260703-provider-context-budget-preview-dry-run.json",
+      "token_estimate": 668,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "13117d344333827b",
+  "model_target": "gpt-5",
+  "task": "AI-Lab has closed the provider latest-context context-policy ergonomics chain and the dry-run Context Budget Preview implementation. Using admitted ai-lab-memory context, recommend the next smallest implementation target. Compare at least these candidates: JSON output for --print-context-summary, citation validation utility, manual L0 chunk creation helper, and read-only L0 inclusion in context packs. Choose one small vertical slice that is testable, low-risk, and suitable for one implementat...",
+  "task_label": "ai-lab-has-closed-the-provider-latest-context-context-policy-ergonomics-chain-an",
+  "token_budget": 8000,
+  "total_token_estimate": 2605
+}
