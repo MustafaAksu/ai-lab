@@ -70,11 +70,17 @@ Produce a structured synthesis with these sections:
 7. Suggested re-ask prompt
 
 Rules:
+- Audience: future AI agents and automation, not a human chat reader.
+- Be compact but complete: prefer dense bullets over conversational prose.
+- Do not be chatty, motivational, or rhetorical.
 - Preserve disagreements.
 - Do not claim consensus where there is only overlap.
 - Treat the provider responses as primary artifacts.
 - Treat your synthesis as a derived artifact.
-- Keep the synthesis concise but useful.
+- Every section must be complete; do not stop mid-section.
+- If output space is limited, prioritize sections 5, 6, and 7 over introductory explanation.
+- In section 5, state a concrete recommendation or state the exact unresolved gating assumption.
+- In section 7, provide an actionable re-ask prompt that can be pasted directly into compare_providers.py.
 
 COMPARISON ARTIFACT:
 ---
