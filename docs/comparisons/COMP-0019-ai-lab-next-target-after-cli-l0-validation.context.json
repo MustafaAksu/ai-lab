@@ -1,0 +1,58 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T15:06:34.676911+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0011",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0018",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "7e039d2a54e61fd12258d1ec4873ad31fea326f6971e01927eb3e952434b2ba5",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-e8994c3e27a6",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260703-cli-l0-summary-validation",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260703-cli-l0-summary-validation (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260703-cli-l0-summary-validation.json",
+      "token_estimate": 642,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "896dc00c08e8c4ac",
+  "model_target": "gpt-5",
+  "task": "AI-Lab has completed manual L0 chunk creation, read-only explicit L0 visibility in provider latest-context JSON summaries, a pure provider L0 summary invariant validator, and optional CLI validation for that validator. Using admitted ai-lab-memory context, choose the next smallest implementation target. Compare: A) structured validation error codes/fields for validation.l0_invariants, B) L0 chunk JSON validation at create/load time using actual L0ChunkSummary.to_dict shape, C) malformed L0 st...",
+  "task_label": "ai-lab-has-completed-manual-l0-chunk-creation-read-only-explicit-l0-visibility-i",
+  "token_budget": 8000,
+  "total_token_estimate": 2579
+}
