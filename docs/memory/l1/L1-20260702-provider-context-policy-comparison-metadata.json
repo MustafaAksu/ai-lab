@@ -1,0 +1,48 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Updated compare_providers.py to add resolved context policy metadata to extra_metadata.",
+    "Updated the existing saved-context comparison test to assert provider default policy metadata.",
+    "Added explicit zero-cap comparison metadata coverage.",
+    "Verified with full pytest suite: 201 passed."
+  ],
+  "content_hash": "9ef73ef578aadf9cc5c59737438362ab0e4134a678fd84e0cc820e9a8400876f",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T07:57:19.300270+00:00",
+  "episode_id": "EP-20260702-provider-context-policy-comparison-metadata",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Persist resolved provider latest-context policy metadata in saved comparison artifacts.",
+    "Reuse provider_latest_context_policy so comparison metadata stays aligned with CLI audit output.",
+    "Record warning-cap source explicitly as provider_default, explicit, or unset."
+  ],
+  "l1_id": "L1-20260702-provider-context-policy-comparison-metadata",
+  "namespace": "public",
+  "next_actions": [
+    "Consider the next small ergonomics target: expose selected context manifest path or policy summary in dry-run/print-prompt flows."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Comparison artifact metadata must stay aligned with provider_latest_context_policy if policy fields evolve."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-context-policy-comparison-metadata"
+  ],
+  "summary_text": "AI-Lab recorded resolved provider latest-context policy metadata in saved provider comparison artifacts. scripts/compare_providers.py now writes context_require_admission, context_max_warning_admissions, and context_max_warning_admissions_source alongside context_policy when --latest-context is used. The metadata is derived from provider_latest_context_policy, so saved comparison artifacts now show whether warning-admission caps came from an explicit CLI value, the provider default, or unset policy. Tests cover provider default metadata and explicit zero-cap metadata. Full test suite passed with 201 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "comparison-artifacts",
+    "policy-audit"
+  ],
+  "ttl_until": null
+}

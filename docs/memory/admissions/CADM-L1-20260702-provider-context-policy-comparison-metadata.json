@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T07:57:47.144755+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "b693de0"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-provider-context-policy-comparison-metadata.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed provider comparison context policy metadata with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-provider-context-policy-comparison-metadata",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-8aa8ad83e835",
+  "warrant_state": "supported"
+}
