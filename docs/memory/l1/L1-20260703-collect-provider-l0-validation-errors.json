@@ -1,0 +1,51 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider L0 invariant error collection for structured validation results.",
+    "Preserved first-error behavior in validate_provider_l0_invariants.",
+    "Updated CLI validation output indirectly through provider_l0_invariant_validation_result without adding flags.",
+    "Added tests for collecting multiple invariant errors, preserving first-error exception behavior, collecting list-shape errors, avoiding duplicate malformed-item errors, and CLI JSON multiple-error output.",
+    "Verified full pytest suite: 251 passed."
+  ],
+  "content_hash": "c010556d0eebfcf8cb59f693d94d7f953173b037cd78390bb8dd3a957f90821c",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T15:39:37.073880+00:00",
+  "episode_id": "EP-20260703-collect-provider-l0-validation-errors",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep validate_provider_l0_invariants as the first-error raising API for backward compatibility.",
+    "Use provider_l0_invariant_validation_result as the collect-all structured result API.",
+    "Do not change validation.l0_invariants schema version; continue using v1 with multiple errors."
+  ],
+  "l1_id": "L1-20260703-collect-provider-l0-validation-errors",
+  "namespace": "public",
+  "next_actions": [
+    "Consider L0 chunk JSON validation using the actual L0ChunkSummary.to_dict shape, malformed L0 store diagnostics, or guarded explicit L0 context-pack inclusion."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Structured error mapping remains message-derived, so future ValueError message changes can affect code/path mapping.",
+    "The collector still covers only provider summary-layer invariants, not L0 chunk-file schema or citation/span validation.",
+    "The collector intentionally skips deeper checks for items whose cid/object shape is already invalid to avoid duplicate or cascading errors."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-collect-provider-l0-validation-errors"
+  ],
+  "summary_text": "AI-Lab added collect-all structured provider L0 invariant validation errors. provider_l0_invariant_validation_result now collects all detectable provider L0 summary invariant failures and returns version v1 with ok/errors, where errors preserve structured code, message, path, and optional chunk_id. validate_provider_l0_invariants remains unchanged as the first-error raising API. CLI JSON validation output now benefits from complete error lists without new flags or schema-version changes. This does not add new validation rules, does not validate L0 chunk files, and does not change prompt assembly, context packs, L0 creation/loading, or provider calls. Full suite passed with 251 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "provider-context-summary",
+    "validation",
+    "structured-errors",
+    "collect-all",
+    "cli"
+  ],
+  "ttl_until": null
+}

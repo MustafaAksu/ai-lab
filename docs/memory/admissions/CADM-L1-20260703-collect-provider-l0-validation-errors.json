@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T15:40:39.082617+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "3e0616f"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-collect-provider-l0-validation-errors.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed collect-all provider L0 validation errors with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-collect-provider-l0-validation-errors",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-663a487fa917",
+  "warrant_state": "supported"
+}
