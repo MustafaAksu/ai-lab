@@ -1,0 +1,50 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider_context_summary_payload and format_provider_context_summary_json helpers.",
+    "Added --summary-format text|json to ask_provider.py.",
+    "Added --summary-format text|json to compare_providers.py.",
+    "Added deterministic JSON helper tests.",
+    "Added parseable JSON CLI tests for both provider scripts.",
+    "Verified full pytest suite: 216 passed.",
+    "Verified real CLI smoke tests parse JSON successfully for both provider scripts."
+  ],
+  "content_hash": "0a2db66760c48e95d3f3d56f159ff888d14f0550e215cef17411b4e7013d9ea5",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T10:15:53.940510+00:00",
+  "episode_id": "EP-20260703-json-provider-context-summary-dry-run",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Expose machine-readable provider context summaries through explicit --summary-format json.",
+    "Keep default --print-context-summary output as text for backward compatibility.",
+    "Use schema_version v1 and include resolved latest-context policy plus context budget preview."
+  ],
+  "l1_id": "L1-20260703-json-provider-context-summary-dry-run",
+  "namespace": "public",
+  "next_actions": [
+    "Run an AI-Lab provider comparison to choose the next smallest target, with Manual L0 chunk creation helper as the leading sequenced follow-up from SYNCOMP-0009."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The JSON summary schema is now versioned as v1; future additions should be additive or versioned to avoid breaking consumers."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-json-provider-context-summary-dry-run"
+  ],
+  "summary_text": "AI-Lab added JSON output for provider latest-context dry-run summaries. scripts/ask_provider.py and scripts/compare_providers.py now support --summary-format json with --print-context-summary and --print-prompt, emitting a stable schema_version v1 payload containing the resolved latest-context policy and context budget preview. Default text output remains unchanged. Tests cover stable JSON formatting, parseable CLI output for both provider scripts, and gating that --summary-format json requires --print-context-summary. Full test suite passed with 216 tests, and smoke tests parsed JSON successfully for both CLIs.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "provider-context",
+    "dry-run",
+    "budget-preview",
+    "json-summary",
+    "cli-ergonomics"
+  ],
+  "ttl_until": null
+}
