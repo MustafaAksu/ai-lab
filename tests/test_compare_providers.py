@@ -228,6 +228,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
             "next",
             "step.",
             "--latest-context",
+            "--require-admission",
             "--save",
             str(save_path),
             "--title",
@@ -245,6 +246,9 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     assert "BEGIN CONTEXT PACK" not in artifact
     assert "# Generated Context Pack" not in artifact
     assert "- context_policy: `latest_context`" in artifact
+    assert "- context_require_admission: `true`" in artifact
+    assert "- context_max_warning_admissions: `1`" in artifact
+    assert "- context_max_warning_admissions_source: `provider_default`" in artifact
     assert f"- context_manifest: `{manifest_path}`" in artifact
 
     assert "\"manifest_id\"" in manifest_json
@@ -519,3 +523,72 @@ def test_main_print_context_policy_requires_latest_context(monkeypatch):
         compare_providers.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_context_comparison_records_explicit_zero_policy_metadata(
+    tmp_path,
+    monkeypatch,
+):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    class FakeProvider:
+        def __init__(self, name):
+            self.name = name
+            self.model = f"{name.lower()}-model"
+
+        def ask(self, prompt):
+            return f"{self.name} answer"
+
+    manifest = ContextPackManifest(
+        task="Compare strict step.",
+        assembly_policy="latest_context",
+        items=(
+            ContextPackItem(
+                item_type="episode_l1",
+                item_id="L1-ADMITTED",
+                reason="Admitted L1.",
+                relevance_score=0.92,
+            ),
+        ),
+    )
+
+    monkeypatch.setattr(compare_providers, "OpenAIProvider", lambda: FakeProvider("OpenAI"))
+    monkeypatch.setattr(compare_providers, "ClaudeProvider", lambda: FakeProvider("Claude"))
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+
+    save_path = tmp_path / "COMP-0002-strict-context-test.md"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "strict",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--max-warning-admissions",
+            "0",
+            "--save",
+            str(save_path),
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    artifact = save_path.read_text(encoding="utf-8")
+
+    assert "- context_policy: `latest_context`" in artifact
+    assert "- context_require_admission: `true`" in artifact
+    assert "- context_max_warning_admissions: `0`" in artifact
+    assert "- context_max_warning_admissions_source: `explicit`" in artifact
