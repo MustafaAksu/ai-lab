@@ -938,3 +938,58 @@ def test_provider_l0_inclusion_summary_treats_malformed_l0_record_as_not_found(t
             }
         ],
     }
+
+
+def test_load_l0_record_with_diagnostics_preserves_malformed_drop_semantics(tmp_path):
+    import json
+
+    from ai_lab.documentation.prompt_context import (
+        _load_l0_record_with_diagnostics,
+        provider_l0_inclusion_summary,
+    )
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    record, diagnostics = _load_l0_record_with_diagnostics(tmp_path, chunk_id)
+
+    assert record is None
+    assert diagnostics is not None
+    assert diagnostics["schema_version"] == "v1"
+    assert diagnostics["validator_version"] == "v1"
+    assert diagnostics["source"] == "provider_load"
+    assert diagnostics["record_id"] == chunk_id
+    assert diagnostics["ok"] is False
+    assert any(
+        diagnostic["code"] == "MISSING_FIELD"
+        and diagnostic["field_path"] == "$.created_at"
+        for diagnostic in diagnostics["diagnostics"]
+    )
+
+    summary = provider_l0_inclusion_summary(
+        include_l0=(chunk_id,),
+        l0_store=tmp_path,
+        context_window=None,
+    )
+
+    assert summary == {
+        "l0_candidates": [],
+        "l0_included": [],
+        "l0_dropped": [
+            {
+                "cid": chunk_id,
+                "dropped_reason": "not_found",
+                "token_cost": 0,
+            }
+        ],
+    }

@@ -192,3 +192,90 @@ def test_validate_l0_summary_record_rejects_missing_span_field():
         match="Missing required chunk_reference.span field: end",
     ):
         validate_l0_summary_record(data)
+
+
+def test_l0_summary_record_diagnostics_collects_multiple_errors():
+    from ai_lab.documentation.l0_summary import l0_summary_record_diagnostics
+
+    result = l0_summary_record_diagnostics(
+        {
+            "chunk_reference": {
+                "chunk_id": "chunk-a",
+                "artifact_cid": "3ac9f2b1d0af",
+                "version": "a1c2d3e",
+                "span": {"unit": "b", "start": "bad", "end": 200},
+                "artifact_type": "doc",
+                "embedding_ids": [],
+                "redaction_level": "none",
+            },
+            "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+            "l0_summary": "short summary",
+            "keyphrases": "citation",
+            "entities": [],
+            "claims": [],
+            "risks": [],
+            "last_refreshed_at": "2026-06-30T00:00:00+00:00",
+        },
+        source="provider_load",
+        record_id="chunk-a",
+    )
+
+    assert result["schema_version"] == "v1"
+    assert result["validator_version"] == "v1"
+    assert result["source"] == "provider_load"
+    assert result["record_id"] == "chunk-a"
+    assert result["ok"] is False
+
+    errors = result["diagnostics"]
+    assert {
+        (error["code"], error["severity"], error["field_path"])
+        for error in errors
+    } >= {
+        ("MISSING_FIELD", "error", "$.created_at"),
+        ("TYPE_MISMATCH", "error", "$.keyphrases"),
+        ("TYPE_MISMATCH", "error", "$.chunk_reference.span.start"),
+    }
+
+
+def test_l0_summary_record_diagnostics_reports_unknown_field_as_warning():
+    from ai_lab.documentation.l0_summary import l0_summary_record_diagnostics
+
+    summary = L0ChunkSummary(
+        chunk_reference=make_reference(),
+        l0_summary="Defines citation format and validation rules.",
+        keyphrases=("citation", "span", "validation"),
+    )
+    data = summary.to_dict()
+    data["debug"] = "not part of the record contract"
+
+    result = l0_summary_record_diagnostics(data)
+
+    assert result["ok"] is True
+    assert result["diagnostics"] == [
+        {
+            "code": "UNKNOWN_FIELD",
+            "severity": "warning",
+            "field_path": "$.debug",
+            "message": "Unknown L0 field: debug",
+        }
+    ]
+
+
+def test_l0_summary_record_diagnostics_does_not_include_raw_l0_summary_text():
+    from ai_lab.documentation.l0_summary import l0_summary_record_diagnostics
+
+    secret_text = "sensitive-" * 100
+    result = l0_summary_record_diagnostics(
+        {
+            "chunk_reference": {"chunk_id": "chunk-a"},
+            "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+            "l0_summary": secret_text,
+            "keyphrases": ["citation", "span", "validation"],
+        }
+    )
+
+    serialized = str(result)
+    assert secret_text[200:300] not in serialized
+    for diagnostic in result["diagnostics"]:
+        for value in diagnostic.values():
+            assert len(str(value)) <= 256

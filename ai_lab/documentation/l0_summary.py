@@ -40,6 +40,350 @@ REQUIRED_CHUNK_SPAN_FIELDS = {
 }
 
 
+L0_RECORD_DIAGNOSTIC_SCHEMA_VERSION = "v1"
+L0_RECORD_VALIDATOR_VERSION = "v1"
+
+
+def l0_summary_record_diagnostics(
+    record: object,
+    *,
+    source: str = "validation",
+    record_id: str | None = None,
+) -> dict[str, object]:
+    """Return non-interfering diagnostics for an L0 summary JSON record.
+
+    Diagnostics are observational only. They do not define provider drop
+    semantics, change validation behavior, or include raw field values.
+    """
+
+    diagnostics: list[dict[str, str]] = []
+
+    def add(
+        code: str,
+        field_path: str,
+        message: str,
+        *,
+        severity: str = "error",
+    ) -> None:
+        diagnostics.append(
+            {
+                "code": code,
+                "severity": severity,
+                "field_path": field_path,
+                "message": message,
+            }
+        )
+
+    if not isinstance(record, dict):
+        add("TYPE_MISMATCH", "$", "$ must be an object.")
+        return _l0_diagnostic_result(
+            diagnostics,
+            source=source,
+            record_id=record_id,
+        )
+
+    for field_name in sorted(REQUIRED_L0_RECORD_FIELDS):
+        if field_name not in record:
+            add(
+                "MISSING_FIELD",
+                f"$.{field_name}",
+                f"Missing required L0 field: {field_name}",
+            )
+
+    if "chunk_reference" in record:
+        _diagnose_chunk_reference_record(record["chunk_reference"], add)
+
+    if "citation" in record:
+        _diagnose_non_empty_string(record["citation"], "$.citation", add)
+
+    if "l0_summary" in record:
+        _diagnose_non_empty_string(record["l0_summary"], "$.l0_summary", add)
+
+    if "keyphrases" in record:
+        keyphrases = record["keyphrases"]
+        if not isinstance(keyphrases, list):
+            add("TYPE_MISMATCH", "$.keyphrases", "$.keyphrases must be a list.")
+        else:
+            if not (3 <= len(keyphrases) <= 10):
+                add(
+                    "INVALID_LIST_LENGTH",
+                    "$.keyphrases",
+                    "$.keyphrases must contain between 3 and 10 items.",
+                )
+            for index, keyphrase in enumerate(keyphrases):
+                _diagnose_non_empty_string(
+                    keyphrase,
+                    f"$.keyphrases[{index}]",
+                    add,
+                )
+
+    if "entities" in record:
+        _diagnose_entity_records(record["entities"], add)
+
+    if "claims" in record:
+        _diagnose_claim_records(record["claims"], add)
+
+    if "risks" in record:
+        _diagnose_risk_records(record["risks"], add)
+
+    if "created_at" in record:
+        _diagnose_non_empty_string(record["created_at"], "$.created_at", add)
+
+    if "last_refreshed_at" in record:
+        _diagnose_non_empty_string(
+            record["last_refreshed_at"],
+            "$.last_refreshed_at",
+            add,
+        )
+
+    if "generator" in record:
+        _diagnose_generator_record(record["generator"], add)
+
+    if "provenance" in record:
+        _diagnose_provenance_record(record["provenance"], add)
+
+    for field_name in sorted(set(record) - REQUIRED_L0_RECORD_FIELDS - {"generator", "provenance"}):
+        add(
+            "UNKNOWN_FIELD",
+            f"$.{field_name}",
+            f"Unknown L0 field: {field_name}",
+            severity="warning",
+        )
+
+    return _l0_diagnostic_result(
+        diagnostics,
+        source=source,
+        record_id=record_id,
+    )
+
+
+def _l0_diagnostic_result(
+    diagnostics: list[dict[str, str]],
+    *,
+    source: str,
+    record_id: str | None,
+) -> dict[str, object]:
+    errors = [
+        diagnostic
+        for diagnostic in diagnostics
+        if diagnostic["severity"] == "error"
+    ]
+    result: dict[str, object] = {
+        "schema_version": L0_RECORD_DIAGNOSTIC_SCHEMA_VERSION,
+        "validator_version": L0_RECORD_VALIDATOR_VERSION,
+        "source": source,
+        "ok": not errors,
+        "diagnostics": diagnostics,
+    }
+
+    if record_id is not None:
+        result["record_id"] = record_id
+
+    return result
+
+
+def _diagnose_chunk_reference_record(value: object, add) -> None:
+    if not isinstance(value, dict):
+        add(
+            "TYPE_MISMATCH",
+            "$.chunk_reference",
+            "$.chunk_reference must be an object.",
+        )
+        return
+
+    for field_name in sorted(REQUIRED_CHUNK_REFERENCE_FIELDS):
+        if field_name not in value:
+            add(
+                "MISSING_FIELD",
+                f"$.chunk_reference.{field_name}",
+                f"Missing required chunk_reference field: {field_name}",
+            )
+
+    for field_name in (
+        "chunk_id",
+        "artifact_cid",
+        "version",
+        "artifact_type",
+        "redaction_level",
+    ):
+        if field_name in value:
+            _diagnose_non_empty_string(
+                value[field_name],
+                f"$.chunk_reference.{field_name}",
+                add,
+            )
+
+    if "span" in value:
+        _diagnose_chunk_span_record(value["span"], add)
+
+    if "embedding_ids" in value:
+        embedding_ids = value["embedding_ids"]
+        if not isinstance(embedding_ids, list):
+            add(
+                "TYPE_MISMATCH",
+                "$.chunk_reference.embedding_ids",
+                "$.chunk_reference.embedding_ids must be a list.",
+            )
+        else:
+            for index, embedding_id in enumerate(embedding_ids):
+                _diagnose_non_empty_string(
+                    embedding_id,
+                    f"$.chunk_reference.embedding_ids[{index}]",
+                    add,
+                )
+
+    if "path" in value:
+        _diagnose_non_empty_string(value["path"], "$.chunk_reference.path", add)
+
+    if "language" in value:
+        _diagnose_non_empty_string(
+            value["language"],
+            "$.chunk_reference.language",
+            add,
+        )
+
+
+def _diagnose_chunk_span_record(value: object, add) -> None:
+    if not isinstance(value, dict):
+        add(
+            "TYPE_MISMATCH",
+            "$.chunk_reference.span",
+            "$.chunk_reference.span must be an object.",
+        )
+        return
+
+    for field_name in sorted(REQUIRED_CHUNK_SPAN_FIELDS):
+        if field_name not in value:
+            add(
+                "MISSING_FIELD",
+                f"$.chunk_reference.span.{field_name}",
+                f"Missing required chunk_reference.span field: {field_name}",
+            )
+
+    if "unit" in value:
+        _diagnose_non_empty_string(value["unit"], "$.chunk_reference.span.unit", add)
+
+    for field_name in ("start", "end"):
+        if field_name in value and not isinstance(value[field_name], int):
+            add(
+                "TYPE_MISMATCH",
+                f"$.chunk_reference.span.{field_name}",
+                f"$.chunk_reference.span.{field_name} must be an int.",
+            )
+
+    if "tokenizer" in value:
+        _diagnose_non_empty_string(
+            value["tokenizer"],
+            "$.chunk_reference.span.tokenizer",
+            add,
+        )
+
+
+def _diagnose_entity_records(value: object, add) -> None:
+    if not isinstance(value, list):
+        add("TYPE_MISMATCH", "$.entities", "$.entities must be a list.")
+        return
+
+    for index, entity in enumerate(value):
+        path = f"$.entities[{index}]"
+        if not isinstance(entity, dict):
+            add("TYPE_MISMATCH", path, f"{path} must be an object.")
+            continue
+        _diagnose_non_empty_string(entity.get("type"), f"{path}.type", add)
+        _diagnose_non_empty_string(entity.get("name"), f"{path}.name", add)
+
+
+def _diagnose_claim_records(value: object, add) -> None:
+    if not isinstance(value, list):
+        add("TYPE_MISMATCH", "$.claims", "$.claims must be a list.")
+        return
+
+    for index, claim in enumerate(value):
+        path = f"$.claims[{index}]"
+        if not isinstance(claim, dict):
+            add("TYPE_MISMATCH", path, f"{path} must be an object.")
+            continue
+        _diagnose_non_empty_string(claim.get("text"), f"{path}.text", add)
+        _diagnose_non_empty_string(claim.get("polarity"), f"{path}.polarity", add)
+
+
+def _diagnose_risk_records(value: object, add) -> None:
+    if not isinstance(value, list):
+        add("TYPE_MISMATCH", "$.risks", "$.risks must be a list.")
+        return
+
+    for index, risk in enumerate(value):
+        path = f"$.risks[{index}]"
+        if not isinstance(risk, dict):
+            add("TYPE_MISMATCH", path, f"{path} must be an object.")
+            continue
+        _diagnose_non_empty_string(risk.get("text"), f"{path}.text", add)
+        _diagnose_non_empty_string(risk.get("severity"), f"{path}.severity", add)
+
+
+def _diagnose_generator_record(value: object, add) -> None:
+    if not isinstance(value, dict):
+        add(
+            "OPTIONAL_SECTION_INVALID",
+            "$.generator",
+            "$.generator must be an object.",
+            severity="warning",
+        )
+        return
+
+    if "model" not in value:
+        add(
+            "OPTIONAL_SECTION_INVALID",
+            "$.generator.model",
+            "$.generator.model must be a non-empty string.",
+            severity="warning",
+        )
+    elif not isinstance(value["model"], str) or not value["model"].strip():
+        add(
+            "OPTIONAL_SECTION_INVALID",
+            "$.generator.model",
+            "$.generator.model must be a non-empty string.",
+            severity="warning",
+        )
+
+    if "version" in value and value["version"] is not None:
+        if not isinstance(value["version"], str) or not value["version"].strip():
+            add(
+                "OPTIONAL_SECTION_INVALID",
+                "$.generator.version",
+                "$.generator.version must be a non-empty string.",
+                severity="warning",
+            )
+
+
+def _diagnose_provenance_record(value: object, add) -> None:
+    if not isinstance(value, dict):
+        add(
+            "OPTIONAL_SECTION_INVALID",
+            "$.provenance",
+            "$.provenance must be an object.",
+            severity="warning",
+        )
+        return
+
+    if not isinstance(value.get("pipeline_run_id"), str) or not value.get("pipeline_run_id", "").strip():
+        add(
+            "OPTIONAL_SECTION_INVALID",
+            "$.provenance.pipeline_run_id",
+            "$.provenance.pipeline_run_id must be a non-empty string.",
+            severity="warning",
+        )
+
+
+def _diagnose_non_empty_string(value: object, path: str, add) -> None:
+    if not isinstance(value, str) or not value.strip():
+        add(
+            "TYPE_MISMATCH",
+            path,
+            f"{path} must be a non-empty string.",
+        )
+
+
 def validate_l0_summary_record(record: dict[str, object]) -> None:
     """Validate the JSON shape emitted by L0ChunkSummary.to_dict."""
 

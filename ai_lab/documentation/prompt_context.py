@@ -7,7 +7,11 @@ import re
 
 from ai_lab.documentation.artifact_history import discover_artifacts
 from ai_lab.documentation.context_pack import ContextPackManifest
-from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
+from ai_lab.documentation.l0_summary import (
+    L0SummaryError,
+    l0_summary_record_diagnostics,
+    validate_l0_summary_record,
+)
 from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
 from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
 
@@ -298,22 +302,35 @@ def _l0_budget_tokens(context_window: int | None) -> int | None:
 
 
 def _load_l0_record(l0_store: Path, chunk_id: str) -> dict[str, object] | None:
+    return _load_l0_record_with_diagnostics(l0_store, chunk_id)[0]
+
+
+def _load_l0_record_with_diagnostics(
+    l0_store: Path,
+    chunk_id: str,
+) -> tuple[dict[str, object] | None, dict[str, object] | None]:
     path = l0_store / f"{chunk_id}.json"
 
     if not path.exists():
-        return None
+        return None, None
 
     data = json.loads(path.read_text(encoding="utf-8"))
 
+    diagnostics = l0_summary_record_diagnostics(
+        data,
+        source="provider_load",
+        record_id=chunk_id,
+    )
+
     if not isinstance(data, dict):
-        return None
+        return None, diagnostics
 
     try:
         validate_l0_summary_record(data)
     except L0SummaryError:
-        return None
+        return None, diagnostics
 
-    return data
+    return data, diagnostics
 
 
 def provider_l0_inclusion_summary(
