@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added resolve_provider_warning_admission_cap.",
+    "Wired ask_provider.py and compare_providers.py through the resolver.",
+    "Added tests for defaulting and explicit zero override.",
+    "Verified with full pytest suite: 191 passed."
+  ],
+  "content_hash": "dc3a078415091cda0da51959d82f327dcef738c8c908b485a01f48b253c7bd81",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T06:48:43.455569+00:00",
+  "episode_id": "EP-20260702-provider-warning-cap-default",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Centralize provider warning-cap default resolution in prompt_context.py.",
+    "Apply the default only to provider latest-context paths when require_admission=True and no explicit cap is provided.",
+    "Preserve explicit override precedence, including --max-warning-admissions 0."
+  ],
+  "l1_id": "L1-20260702-provider-warning-cap-default",
+  "namespace": "public",
+  "next_actions": [
+    "Run one admission-gated provider comparison without explicitly passing --max-warning-admissions to verify the default appears in the saved context manifest."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The default now changes provider admission-gated behavior when callers omit the warning cap; manifests make the resolved policy auditable."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-warning-cap-default"
+  ],
+  "summary_text": "AI-Lab implemented the synthesized provider latest-context warning-cap default. prompt_context.py now exposes resolve_provider_warning_admission_cap, which returns explicit max_warning_admissions values unchanged, defaults to 1 when require_admission=True and no cap is set, and returns None when require_admission=False and no cap is set. ask_provider.py and compare_providers.py use this resolver, keeping the behavior scoped to provider latest-context paths. build_context_pack.py remains explicit. Tests cover resolver behavior, provider defaulting, and explicit zero-cap override. The full suite passed with 191 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context"
+  ],
+  "ttl_until": null
+}
