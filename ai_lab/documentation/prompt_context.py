@@ -69,6 +69,7 @@ def build_latest_context_pack_manifest(
     require_admission: bool = False,
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
+    max_warning_admissions: int | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
@@ -84,6 +85,7 @@ def build_latest_context_pack_manifest(
         require_admission=require_admission,
         task_label=task_label,
         full_prompt_hash=full_prompt_hash,
+        max_warning_admissions=max_warning_admissions,
     )
 
 
@@ -95,6 +97,7 @@ def build_latest_context_pack_text(
     require_admission: bool = False,
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
+    max_warning_admissions: int | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
     manifest = build_latest_context_pack_manifest(
@@ -105,6 +108,7 @@ def build_latest_context_pack_text(
         require_admission=require_admission,
         task_label=task_label,
         full_prompt_hash=full_prompt_hash,
+        max_warning_admissions=max_warning_admissions,
     )
     return render_context_pack_markdown(manifest)
 

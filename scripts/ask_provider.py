@@ -81,6 +81,15 @@ def main() -> int:
         action="store_true",
         help="Require latest-context items to have an admitting admission verdict.",
     )
+    parser.add_argument(
+        "--max-warning-admissions",
+        type=int,
+        default=None,
+        help=(
+            "Optional cap for admit_with_warning items when using latest-context "
+            "assembly. Defaults to no cap."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -101,6 +110,7 @@ def main() -> int:
             model_target=args.model_target,
             scope=args.scope,
             require_admission=args.require_admission,
+            max_warning_admissions=args.max_warning_admissions,
             task_label=task_label,
         )
 
@@ -113,6 +123,7 @@ def main() -> int:
             model_target=args.model_target,
             scope=args.scope,
             require_admission=args.require_admission,
+            max_warning_admissions=args.max_warning_admissions,
             task_label=context_task_slug(prompt),
             full_prompt_hash=prompt_sha256(final_prompt),
         )

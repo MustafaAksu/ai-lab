@@ -47,7 +47,7 @@ def test_build_latest_context_pack_text_uses_manifest_helper(monkeypatch):
     monkeypatch.setattr(
         prompt_context,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
     )
     monkeypatch.setattr(
         prompt_context,
@@ -117,6 +117,7 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         require_admission=False,
         task_label=None,
         full_prompt_hash=None,
+        max_warning_admissions=None,
     ):
         assert task == "Prepare admitted context."
         assert records == ("record",)
@@ -126,6 +127,7 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         assert require_admission is True
         assert task_label == "prepare-admitted-context"
         assert full_prompt_hash == "c" * 64
+        assert max_warning_admissions == 1
         return manifest
 
     monkeypatch.setattr(
@@ -142,6 +144,7 @@ def test_build_latest_context_pack_manifest_passes_require_admission(monkeypatch
         require_admission=True,
         task_label="prepare-admitted-context",
         full_prompt_hash="c" * 64,
+        max_warning_admissions=1,
     )
 
     assert result is manifest

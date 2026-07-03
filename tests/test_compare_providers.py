@@ -118,7 +118,7 @@ def test_main_latest_context_print_prompt_uses_generated_context(monkeypatch, ca
         model_target="gpt-5",
     )
 
-    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None):
+    def fake_build_latest_context_pack_manifest(task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None):
         assert task == "Compare next step."
         assert token_budget == 8000
         assert model_target == "gpt-5"
@@ -208,7 +208,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -281,7 +281,7 @@ def test_main_latest_context_uses_short_task_label_but_keeps_full_comparison_pro
         scope=None,
         require_admission=False,
         task_label=None,
-        full_prompt_hash=None,
+        full_prompt_hash=None, max_warning_admissions=None
     ):
         assert len(task) == 500
         assert task.endswith("...")
@@ -345,7 +345,7 @@ def test_main_latest_context_passes_require_admission(monkeypatch, capsys):
         scope=None,
         require_admission=False,
         task_label=None,
-        full_prompt_hash=None,
+        full_prompt_hash=None, max_warning_admissions=None
     ):
         assert task == "Compare admitted step."
         assert token_budget == 8000

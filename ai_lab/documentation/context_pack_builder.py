@@ -182,6 +182,46 @@ def admission_summary_for_manifest(
     return summary
 
 
+def cap_admit_with_warning_items(
+    items: tuple[ContextPackItem, ...],
+    max_warning_admissions: int | None,
+) -> tuple[tuple[ContextPackItem, ...], tuple[ContextPackExclusion, ...]]:
+    """Cap admit_with_warning items without changing admit items."""
+
+    if max_warning_admissions is None:
+        return items, ()
+
+    if max_warning_admissions < 0:
+        raise ContextPackError("max_warning_admissions must be >= 0.")
+
+    selected: list[ContextPackItem] = []
+    exclusions: list[ContextPackExclusion] = []
+    warning_count = 0
+
+    for item in items:
+        if item.admission_decision != "admit_with_warning":
+            selected.append(item)
+            continue
+
+        if warning_count < max_warning_admissions:
+            selected.append(item)
+            warning_count += 1
+            continue
+
+        exclusions.append(
+            ContextPackExclusion(
+                item_id=item.item_id,
+                reason="policy",
+                note=f"admit_with_warning cap {max_warning_admissions} exceeded.",
+            )
+        )
+
+    if not selected and items:
+        raise ContextPackError("No context items passed the warning admission cap.")
+
+    return tuple(selected), tuple(exclusions)
+
+
 def context_item_from_l1_summary(
     summary: EpisodeL1Summary,
     path: Path,
@@ -339,6 +379,7 @@ def build_latest_context_manifest(
     require_admission: bool = False,
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
+    max_warning_admissions: int | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -378,12 +419,20 @@ def build_latest_context_manifest(
             items=candidate_items,
         )
 
+    warning_cap_exclusions: tuple[ContextPackExclusion, ...] = ()
+
+    if max_warning_admissions is not None:
+        candidate_items, warning_cap_exclusions = cap_admit_with_warning_items(
+            items=candidate_items,
+            max_warning_admissions=max_warning_admissions,
+        )
+
     selected_items, budget_exclusions = select_items_with_budget(
         items=candidate_items,
         token_budget=token_budget,
     )
 
-    exclusions = (*admission_exclusions, *budget_exclusions)
+    exclusions = (*admission_exclusions, *warning_cap_exclusions, *budget_exclusions)
 
     return ContextPackManifest(
         task=task,

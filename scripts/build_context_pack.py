@@ -61,6 +61,15 @@ def main() -> int:
         help="Require selected context items to have an admitting admission verdict.",
     )
     parser.add_argument(
+        "--max-warning-admissions",
+        type=int,
+        default=None,
+        help=(
+            "Optional cap for admit_with_warning items when using latest-context "
+            "assembly. Defaults to no cap."
+        ),
+    )
+    parser.add_argument(
         "--pipeline-run-id",
         default=None,
         help="Optional pipeline run ID.",
@@ -100,6 +109,7 @@ def main() -> int:
             pipeline_run_id=args.pipeline_run_id,
             l1_scope=args.scope,
             require_admission=args.require_admission,
+            max_warning_admissions=args.max_warning_admissions,
         )
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")

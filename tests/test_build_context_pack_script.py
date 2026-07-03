@@ -38,7 +38,7 @@ def test_build_context_pack_writes_output_and_manifest(tmp_path, monkeypatch):
         l1_scope=None,
         require_admission=False,
         task_label=None,
-        full_prompt_hash=None,
+        full_prompt_hash=None, max_warning_admissions=None
     ):
         assert task == "Prepare context."
         assert records == ("record",)
@@ -130,7 +130,7 @@ def test_build_context_pack_passes_require_admission(tmp_path, monkeypatch):
         l1_scope=None,
         require_admission=False,
         task_label=None,
-        full_prompt_hash=None,
+        full_prompt_hash=None, max_warning_admissions=None
     ):
         assert task == "Prepare admitted context."
         assert records == ("record",)

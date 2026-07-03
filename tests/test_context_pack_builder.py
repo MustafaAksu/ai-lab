@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ai_lab.documentation.context_pack import ContextPackExclusion, ContextPackItem
+from ai_lab.documentation.context_pack import ContextPackError, ContextPackExclusion, ContextPackItem
 
 from ai_lab.documentation.artifact_history import ArtifactRecord
 from ai_lab.documentation.context_pack_builder import (
@@ -692,3 +692,148 @@ def test_build_latest_context_manifest_records_admission_summary(tmp_path):
         "excluded_by_policy": 0,
     }
     assert manifest.to_dict()["admission_summary"] == manifest.admission_summary
+
+
+def test_cap_admit_with_warning_items_keeps_first_warnings_and_excludes_extra():
+    from ai_lab.documentation.context_pack_builder import cap_admit_with_warning_items
+
+    admitted = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-ADMIT",
+        reason="Admitted L1.",
+        relevance_score=0.92,
+        admission_decision="admit",
+    )
+    first_warning = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-WARN-1",
+        reason="Warning abstraction 1.",
+        relevance_score=0.9,
+        admission_decision="admit_with_warning",
+    )
+    second_warning = ContextPackItem(
+        item_type="synthesis",
+        item_id="SYNCOMP-WARN-2",
+        reason="Warning synthesis 2.",
+        relevance_score=0.8,
+        admission_decision="admit_with_warning",
+    )
+
+    selected, exclusions = cap_admit_with_warning_items(
+        items=(admitted, first_warning, second_warning),
+        max_warning_admissions=1,
+    )
+
+    assert tuple(item.item_id for item in selected) == ("L1-ADMIT", "ABS-WARN-1")
+    assert len(exclusions) == 1
+    assert exclusions[0].item_id == "SYNCOMP-WARN-2"
+    assert exclusions[0].reason == "policy"
+    assert exclusions[0].note == "admit_with_warning cap 1 exceeded."
+
+
+def test_cap_admit_with_warning_items_none_preserves_items():
+    from ai_lab.documentation.context_pack_builder import cap_admit_with_warning_items
+
+    warning = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-WARN",
+        reason="Warning abstraction.",
+        relevance_score=0.9,
+        admission_decision="admit_with_warning",
+    )
+
+    selected, exclusions = cap_admit_with_warning_items(
+        items=(warning,),
+        max_warning_admissions=None,
+    )
+
+    assert selected == (warning,)
+    assert exclusions == ()
+
+
+def test_cap_admit_with_warning_items_rejects_negative_cap():
+    from ai_lab.documentation.context_pack_builder import cap_admit_with_warning_items
+
+    warning = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-WARN",
+        reason="Warning abstraction.",
+        relevance_score=0.9,
+        admission_decision="admit_with_warning",
+    )
+
+    import pytest
+
+    with pytest.raises(ContextPackError, match="max_warning_admissions must be >= 0"):
+        cap_admit_with_warning_items(
+            items=(warning,),
+            max_warning_admissions=-1,
+        )
+
+
+def test_build_latest_context_manifest_applies_warning_cap(tmp_path):
+    first_path = tmp_path / "ABS-0003.md"
+    first_path.write_text("Warning abstraction.", encoding="utf-8")
+    second_path = tmp_path / "SYNCOMP-0003.md"
+    second_path.write_text("Warning synthesis.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            first_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+        make_record(
+            "SYNCOMP-0003",
+            "SYNCOMP",
+            "Memory Synthesis",
+            second_path,
+            "2026-07-01T00:00:00+00:00",
+        ),
+    )
+
+    verdict_dir = tmp_path / "admissions"
+    verdict_dir.mkdir()
+
+    for item_id, item_type in (
+        ("ABS-0003", "abstraction"),
+        ("SYNCOMP-0003", "synthesis"),
+    ):
+        (verdict_dir / f"CADM-{item_id}.json").write_text(
+            f"""{{
+  "verdict_id": "CADM-{item_id}",
+  "target_item_id": "{item_id}",
+  "target_item_type": "{item_type}",
+  "decision": "admit_with_warning",
+  "freshness_state": "unknown",
+  "warrant_state": "supported",
+  "reason": "Legacy item admitted with warning.",
+  "author": "mustafa",
+  "substrate": "human",
+  "created_at": "2026-07-02T00:00:00+00:00"
+}}
+""",
+            encoding="utf-8",
+        )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare capped warning context.",
+        records=records,
+        l1_dir=tmp_path / "empty-l1",
+        admission_dir=verdict_dir,
+        require_admission=True,
+        max_warning_admissions=1,
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
+    assert tuple(exclusion.item_id for exclusion in manifest.exclusions) == (
+        "SYNCOMP-0003",
+    )
+    assert manifest.admission_summary == {
+        "admit": 0,
+        "admit_with_warning": 1,
+        "excluded_by_policy": 1,
+    }
