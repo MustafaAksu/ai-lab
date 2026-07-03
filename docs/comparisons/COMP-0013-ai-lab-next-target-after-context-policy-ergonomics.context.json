@@ -1,0 +1,58 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T08:18:02.087149+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0007",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0012",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "4f09a5b663cde723f93680e7bc965e70fcf15f4916533933285817c7306c3b17",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-f8534f255eff",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260702-provider-context-summary-dry-run",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260702-provider-context-summary-dry-run (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260702-provider-context-summary-dry-run.json",
+      "token_estimate": 631,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "90084a7141e40874",
+  "model_target": "gpt-5",
+  "task": "AI-Lab has closed the provider latest-context warning-cap and context-policy ergonomics chain through CLI help, policy audit output, comparison metadata, metadata centralization, and dry-run context summaries. Using the admitted ai-lab-memory context, recommend the next smallest implementation target. Prefer a vertical slice that is testable, improves the memory/context workflow, and can be completed in one small commit plus memory refresh. Compare at least three candidate targets and choose...",
+  "task_label": "ai-lab-has-closed-the-provider-latest-context-warning-cap-and-context-policy-erg",
+  "token_budget": 8000,
+  "total_token_estimate": 2568
+}
