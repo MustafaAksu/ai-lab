@@ -367,3 +367,88 @@ def test_format_provider_context_summary_json_is_stable_and_parseable():
         max_warning_admissions=None,
         context_window=8000,
     )
+
+
+def test_provider_context_summary_json_can_report_explicit_l0_inclusion(tmp_path):
+    import json
+
+    from ai_lab.documentation.prompt_context import format_provider_context_summary_json
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    data = json.loads(
+        format_provider_context_summary_json(
+            require_admission=True,
+            max_warning_admissions=None,
+            context_window=100,
+            include_l0=(chunk_id,),
+            l0_store=tmp_path,
+        )
+    )
+
+    assert data["l0_candidates"] == [
+        {
+            "cid": chunk_id,
+            "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+            "inclusion_reason": "explicit",
+            "token_cost": 5,
+        }
+    ]
+    assert data["l0_included"] == data["l0_candidates"]
+    assert data["l0_dropped"] == []
+
+
+def test_provider_context_summary_json_dedupes_l0_and_reports_missing_or_over_budget(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.prompt_context import format_provider_context_summary_json
+
+    chunk_id = "chunk-large"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "l0_summary": "one two three four five six seven eight nine ten",
+                "keyphrases": ["large", "budget", "drop"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    data = json.loads(
+        format_provider_context_summary_json(
+            require_admission=False,
+            max_warning_admissions=None,
+            context_window=100,
+            include_l0=(chunk_id, chunk_id, "missing-chunk"),
+            l0_store=tmp_path,
+        )
+    )
+
+    assert len(data["l0_candidates"]) == 1
+    assert data["l0_included"] == []
+    assert data["l0_dropped"] == [
+        {
+            "cid": "missing-chunk",
+            "dropped_reason": "not_found",
+            "token_cost": 0,
+        },
+        {
+            "cid": chunk_id,
+            "dropped_reason": "over_budget",
+            "token_cost": 13,
+        },
+    ]

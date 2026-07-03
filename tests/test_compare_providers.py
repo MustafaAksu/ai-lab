@@ -814,3 +814,81 @@ def test_main_summary_format_json_requires_context_summary(monkeypatch):
         compare_providers.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_print_prompt_context_summary_json_can_include_l0(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    chunk_id = "chunk-a"
+    (tmp_path / f"{chunk_id}.json").write_text(
+        json.dumps(
+            {
+                "chunk_reference": {"chunk_id": chunk_id},
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "short summary",
+                "keyphrases": ["citation", "span", "validation"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    manifest = ContextPackManifest(
+        task="Compare summary step.",
+        assembly_policy="latest_context",
+        items=(
+            ContextPackItem(
+                item_type="abstraction",
+                item_id="ABS-0003",
+                reason="Latest abstraction.",
+                relevance_score=0.9,
+            ),
+        ),
+    )
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--context-window",
+            "100",
+            "--include-l0",
+            chunk_id,
+            "--l0-store",
+            str(tmp_path),
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    summary_text, final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert data["l0_candidates"][0]["cid"] == chunk_id
+    assert data["l0_included"][0]["cid"] == chunk_id
+    assert data["l0_dropped"] == []
+    assert "BEGIN CONTEXT PACK" in final_prompt

@@ -97,6 +97,21 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--include-l0",
+        action="append",
+        default=[],
+        help=(
+            "Explicit L0 chunk id to surface in JSON --print-context-summary. "
+            "Repeatable."
+        ),
+    )
+    parser.add_argument(
+        "--l0-store",
+        type=Path,
+        default=Path("docs/memory/l0"),
+        help="Directory containing L0 chunk summary JSON files.",
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -155,6 +170,12 @@ def main() -> int:
     if args.summary_format == "json" and not args.print_context_summary:
         parser.error("--summary-format json requires --print-context-summary.")
 
+    if args.include_l0 and not args.print_context_summary:
+        parser.error("--include-l0 requires --print-context-summary.")
+
+    if args.include_l0 and args.summary_format != "json":
+        parser.error("--include-l0 requires --summary-format json.")
+
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
 
@@ -207,6 +228,8 @@ def main() -> int:
                         require_admission=args.require_admission,
                         max_warning_admissions=args.max_warning_admissions,
                         context_window=args.context_window,
+                        include_l0=tuple(args.include_l0),
+                        l0_store=args.l0_store,
                     )
                 )
             else:

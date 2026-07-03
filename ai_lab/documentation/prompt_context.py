@@ -255,15 +255,148 @@ def format_provider_context_budget_preview(
     return "\n".join(lines)
 
 
+def _estimate_l0_token_cost(record: dict[str, object]) -> int:
+    """Return a deterministic rough token estimate for an L0 summary record."""
+
+    parts: list[str] = []
+
+    summary = record.get("l0_summary")
+    if isinstance(summary, str):
+        parts.append(summary)
+
+    keyphrases = record.get("keyphrases")
+    if isinstance(keyphrases, list):
+        parts.extend(str(item) for item in keyphrases)
+
+    for collection_name in ("entities", "claims", "risks"):
+        collection = record.get(collection_name)
+        if not isinstance(collection, list):
+            continue
+
+        for item in collection:
+            if not isinstance(item, dict):
+                continue
+
+            for value in item.values():
+                if isinstance(value, str):
+                    parts.append(value)
+
+    text = " ".join(parts).strip()
+    if not text:
+        return 0
+
+    return max(1, len(text.split()))
+
+
+def _l0_budget_tokens(context_window: int | None) -> int | None:
+    if context_window is None:
+        return None
+
+    preview = provider_context_budget_preview(context_window=context_window)
+    return preview["context"]["children"]["l0"]["tokens"]  # type: ignore[index]
+
+
+def _load_l0_record(l0_store: Path, chunk_id: str) -> dict[str, object] | None:
+    path = l0_store / f"{chunk_id}.json"
+
+    if not path.exists():
+        return None
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+
+    if not isinstance(data, dict):
+        return None
+
+    return data
+
+
+def provider_l0_inclusion_summary(
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path | None = None,
+    context_window: int | None = None,
+) -> dict[str, list[dict[str, object]]]:
+    """Return explicit read-only L0 inclusion status for provider summaries."""
+
+    store = l0_store or Path("docs/memory/l0")
+    seen: set[str] = set()
+    candidates: list[dict[str, object]] = []
+    dropped: list[dict[str, object]] = []
+
+    for chunk_id in include_l0:
+        if chunk_id in seen:
+            continue
+
+        seen.add(chunk_id)
+        record = _load_l0_record(store, chunk_id)
+
+        if record is None:
+            dropped.append(
+                {
+                    "cid": chunk_id,
+                    "dropped_reason": "not_found",
+                    "token_cost": 0,
+                }
+            )
+            continue
+
+        reference = record.get("chunk_reference")
+        resolved_cid = chunk_id
+
+        if isinstance(reference, dict) and isinstance(reference.get("chunk_id"), str):
+            resolved_cid = str(reference["chunk_id"])
+
+        candidate: dict[str, object] = {
+            "cid": resolved_cid,
+            "inclusion_reason": "explicit",
+            "token_cost": _estimate_l0_token_cost(record),
+        }
+
+        citation = record.get("citation")
+        if isinstance(citation, str):
+            candidate["citation"] = citation
+
+        candidates.append(candidate)
+
+    budget = _l0_budget_tokens(context_window)
+    included: list[dict[str, object]] = []
+    used = 0
+
+    for candidate in candidates:
+        token_cost = int(candidate["token_cost"])
+
+        if budget is not None and used + token_cost > budget:
+            dropped.append(
+                {
+                    "cid": candidate["cid"],
+                    "dropped_reason": "over_budget",
+                    "token_cost": token_cost,
+                }
+            )
+            continue
+
+        included.append(candidate)
+        used += token_cost
+
+    return {
+        "l0_candidates": candidates,
+        "l0_included": included,
+        "l0_dropped": dropped,
+    }
+
+
+
+
 
 def provider_context_summary_payload(
     require_admission: bool,
     max_warning_admissions: int | None,
     context_window: int | None = None,
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path | None = None,
 ) -> dict[str, object]:
     """Return a machine-readable provider latest-context summary payload."""
 
-    return {
+    payload: dict[str, object] = {
         "schema_version": "v1",
         "latest_context_policy": provider_latest_context_policy(
             require_admission=require_admission,
@@ -273,12 +406,23 @@ def provider_context_summary_payload(
             context_window=context_window
         ),
     }
+    payload.update(
+        provider_l0_inclusion_summary(
+            include_l0=include_l0,
+            l0_store=l0_store,
+            context_window=context_window,
+        )
+    )
+
+    return payload
 
 
 def format_provider_context_summary_json(
     require_admission: bool,
     max_warning_admissions: int | None,
     context_window: int | None = None,
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path | None = None,
 ) -> str:
     """Return stable JSON for the provider latest-context summary."""
 
@@ -287,6 +431,8 @@ def format_provider_context_summary_json(
             require_admission=require_admission,
             max_warning_admissions=max_warning_admissions,
             context_window=context_window,
+            include_l0=include_l0,
+            l0_store=l0_store,
         ),
         indent=2,
         sort_keys=True,
