@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider_context_budget_preview and format_provider_context_budget_preview helpers.",
+    "Added --context-window to ask_provider.py for --print-context-summary dry runs.",
+    "Added --context-window to compare_providers.py for --print-context-summary dry runs.",
+    "Added deterministic tests for percentage-only and context-window token-count output.",
+    "Verified focused tests: 53 passed.",
+    "Verified full pytest suite: 211 passed."
+  ],
+  "content_hash": "905d778be60a983329fb27a150bd7b03677ab1c945f00698c8096a920d8fa4e7",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T08:41:52.595254+00:00",
+  "episode_id": "EP-20260703-provider-context-budget-preview-dry-run",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Expose context budget preview only in provider prompt dry-run summaries.",
+    "Use ABS-0003 defaults: System 15%, Answer 10%, Context 75%; Context split Explicit 40%, Dependencies 45%, L1 10%, L0 5%.",
+    "Keep the feature non-runtime: no provider request or context packing behavior changes."
+  ],
+  "l1_id": "L1-20260703-provider-context-budget-preview-dry-run",
+  "namespace": "public",
+  "next_actions": [
+    "Run an AI-Lab provider comparison or synthesis to choose the next smallest target, likely JSON summary output, citation validation, or L0 memory primitives."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Human-readable dry-run summaries now include a budget preview block; scripts parsing --print-prompt output should avoid --print-context-summary unless they expect the preamble."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-provider-context-budget-preview-dry-run"
+  ],
+  "summary_text": "AI-Lab added a dry-run context budget preview for provider latest-context prompt summaries. scripts/ask_provider.py and scripts/compare_providers.py now support --context-window with --print-context-summary and --print-prompt, rendering ABS-0003 budget percentages and deterministic token counts before the final prompt. The preview is dry-run only and does not change runtime provider requests or context packing behavior. Tests cover helper formatting, positive context-window validation, ask_provider.py output, and compare_providers.py output. Focused tests passed with 53 tests and the full suite passed with 211 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "provider-context",
+    "dry-run",
+    "budget-preview",
+    "cli-ergonomics"
+  ],
+  "ttl_until": null
+}
