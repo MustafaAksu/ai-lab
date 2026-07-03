@@ -1,0 +1,39 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "e55b5c1"
+  ],
+  "commit_hash": "e55b5c1",
+  "created_at": "2026-07-03T07:46:33.390567+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-provider-context-policy-audit",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-provider-context-policy-audit",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Added compact provider latest-context policy audit output. ask_provider.py and compare_providers.py now support --print-context-policy with --latest-context, showing the resolved provider latest-context policy before building prompts or calling providers. The output records require_admission, resolved max_warning_admissions, and whether the warning cap came from an explicit value, provider default, or unset policy. Full test suite passed with 200 tests.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-ergonomics",
+    "policy-audit"
+  ],
+  "turn_id": 1
+}

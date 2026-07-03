@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider_latest_context_policy and format_provider_latest_context_policy helpers.",
+    "Added --print-context-policy to ask_provider.py.",
+    "Added --print-context-policy to compare_providers.py.",
+    "Added tests for provider default, explicit zero, stable JSON formatting, and requiring --latest-context.",
+    "Verified smoke CLI output and full pytest suite: 200 passed."
+  ],
+  "content_hash": "3068d176944a37647c4255736b538e0bdd4e6bb95c2a0a79c21fe31a4afe05d9",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T07:49:05.538318+00:00",
+  "episode_id": "EP-20260702-provider-context-policy-audit",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Expose resolved provider latest-context policy as a compact CLI audit output.",
+    "Keep the audit scoped to provider CLIs and require --latest-context.",
+    "Represent the warning-cap source explicitly as explicit, provider_default, or unset."
+  ],
+  "l1_id": "L1-20260702-provider-context-policy-audit",
+  "namespace": "public",
+  "next_actions": [
+    "Consider whether context policy metadata should also be saved into provider comparison artifacts when --latest-context is used."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Policy audit output must stay aligned with resolve_provider_warning_admission_cap if provider default rules change."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-context-policy-audit"
+  ],
+  "summary_text": "AI-Lab added compact provider latest-context policy audit output. scripts/ask_provider.py and scripts/compare_providers.py now support --print-context-policy when --latest-context is enabled. The audit output prints stable JSON showing context_policy=latest_context, require_admission, resolved max_warning_admissions, and max_warning_admissions_source. The source field distinguishes explicit CLI values, the provider default used when --require-admission is enabled and the cap is omitted, and unset policy when admission is not required and no cap is supplied. This lets operators inspect provider latest-context admission policy before prompt construction or provider calls. Full test suite passed with 200 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-ergonomics",
+    "policy-audit"
+  ],
+  "ttl_until": null
+}

@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T07:49:49.461081+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "e55b5c1"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-provider-context-policy-audit.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed provider context policy audit output with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-provider-context-policy-audit",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-8e75505585ff",
+  "warrant_state": "supported"
+}
