@@ -643,7 +643,7 @@ def test_main_print_prompt_context_summary_json_can_validate_l0_invariants(
     summary_text, final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
     data = json.loads(summary_text)
 
-    assert data["validation"]["l0_invariants"] == {"ok": True, "errors": []}
+    assert data["validation"]["l0_invariants"] == {"version": "v1", "ok": True, "errors": []}
     assert "BEGIN CONTEXT PACK" in final_prompt
 
 
@@ -693,9 +693,11 @@ def test_main_print_prompt_context_summary_json_validation_can_fail_without_nonz
     data = json.loads(summary_text)
 
     assert data["validation"]["l0_invariants"]["ok"] is False
-    assert data["validation"]["l0_invariants"]["errors"][0]["message"] == (
-        "l0_candidates must be a list"
-    )
+    assert data["validation"]["l0_invariants"]["errors"][0] == {
+        "code": "L0I_L0_CANDIDATES_NOT_LIST",
+        "message": "l0_candidates must be a list",
+        "path": "$.l0_candidates",
+    }
 
 
 def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(

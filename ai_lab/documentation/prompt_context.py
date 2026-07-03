@@ -426,6 +426,117 @@ def validate_provider_l0_invariants(summary: dict[str, object]) -> None:
         raise ValueError(f"over_budget cid not in l0_candidates: {missing}")
 
 
+
+def provider_l0_invariant_validation_result(
+    summary: dict[str, object],
+) -> dict[str, object]:
+    """Return structured validation status for provider L0 summary invariants."""
+
+    try:
+        validate_provider_l0_invariants(summary)
+    except ValueError as exc:
+        return {
+            "version": "v1",
+            "ok": False,
+            "errors": [_provider_l0_invariant_error(str(exc))],
+        }
+
+    return {
+        "version": "v1",
+        "ok": True,
+        "errors": [],
+    }
+
+
+def _provider_l0_invariant_error(message: str) -> dict[str, object]:
+    code = "L0I_UNKNOWN"
+    path = "$.validation.l0_invariants"
+    chunk_id = _extract_l0_error_chunk_id(message)
+
+    if message == "l0_candidates must be a list":
+        code = "L0I_L0_CANDIDATES_NOT_LIST"
+        path = "$.l0_candidates"
+    elif message == "l0_included must be a list":
+        code = "L0I_L0_INCLUDED_NOT_LIST"
+        path = "$.l0_included"
+    elif message == "l0_dropped must be a list":
+        code = "L0I_L0_DROPPED_NOT_LIST"
+        path = "$.l0_dropped"
+    elif "must be an object" in message:
+        code = "L0I_LIST_ITEM_NOT_OBJECT"
+        path = _field_path_from_error_message(message)
+    elif "must contain non-empty cid" in message:
+        code = "L0I_INVALID_CID"
+        path = _field_path_from_error_message(message, suffix="cid")
+    elif "contains duplicate cid" in message:
+        code = "L0I_DUPLICATE_CID"
+        path = _field_path_from_error_message(message, suffix="cid")
+    elif "token_cost must be a non-negative int" in message:
+        code = "L0I_INVALID_TOKEN_COST"
+        path = _field_path_from_error_message(message, suffix="token_cost")
+    elif "citation must be a non-empty string" in message:
+        code = "L0I_INVALID_CITATION"
+        path = _field_path_from_error_message(message, suffix="citation")
+    elif "inclusion_reason must be a non-empty string" in message:
+        code = "L0I_INVALID_INCLUSION_REASON"
+        path = _field_path_from_error_message(message, suffix="inclusion_reason")
+    elif "must not contain dropped_reason" in message:
+        code = "L0I_UNEXPECTED_DROPPED_REASON"
+        path = _field_path_from_error_message(message, suffix="dropped_reason")
+    elif message.startswith("l0_included has cid not in l0_candidates"):
+        code = "L0I_INCLUDED_NOT_CANDIDATE"
+        path = "$.l0_included"
+    elif message.startswith("cid present in both l0_included and l0_dropped"):
+        code = "L0I_INCLUDED_DROPPED_OVERLAP"
+        path = "$.l0_included"
+    elif "dropped_reason must be one of" in message:
+        code = "L0I_INVALID_DROPPED_REASON"
+        path = "$.l0_dropped[*].dropped_reason"
+    elif message.startswith("over_budget cid not in l0_candidates"):
+        code = "L0I_OVER_BUDGET_NOT_CANDIDATE"
+        path = "$.l0_dropped"
+    elif "must not contain inclusion_reason" in message:
+        code = "L0I_UNEXPECTED_INCLUSION_REASON"
+        path = "$.l0_dropped[*].inclusion_reason"
+
+    error: dict[str, object] = {
+        "code": code,
+        "message": message,
+        "path": path,
+    }
+
+    if chunk_id is not None:
+        error["chunk_id"] = chunk_id
+
+    return error
+
+
+def _field_path_from_error_message(message: str, suffix: str | None = None) -> str:
+    field = message.split()[0]
+    path = f"$.{field}[*]"
+
+    if suffix:
+        path = f"{path}.{suffix}"
+
+    return path
+
+
+def _extract_l0_error_chunk_id(message: str) -> str | None:
+    markers = (
+        "contains duplicate cid: ",
+        "l0_included has cid not in l0_candidates: ",
+        "cid present in both l0_included and l0_dropped: ",
+        "over_budget cid not in l0_candidates: ",
+    )
+
+    for marker in markers:
+        if marker in message:
+            value = message.split(marker, 1)[1].strip()
+            return value.split(",", 1)[0].strip() or None
+
+    return None
+
+
 def _summary_l0_list(
     summary: dict[str, object],
     field_name: str,

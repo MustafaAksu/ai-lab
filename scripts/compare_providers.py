@@ -19,7 +19,7 @@ from ai_lab.documentation.prompt_context import (
     context_task_slug,
     format_provider_context_budget_preview,
     provider_context_summary_payload,
-    validate_provider_l0_invariants,
+    provider_l0_invariant_validation_result,
     format_provider_latest_context_policy,
     prompt_sha256,
     provider_latest_context_metadata,
@@ -410,16 +410,8 @@ def main() -> int:
                 validation_failed = False
 
                 if args.validate_l0_invariants:
-                    try:
-                        validate_provider_l0_invariants(summary)
-                        validation = {"ok": True, "errors": []}
-                    except ValueError as exc:
-                        validation_failed = True
-                        validation = {
-                            "ok": False,
-                            "errors": [{"message": str(exc)}],
-                        }
-
+                    validation = provider_l0_invariant_validation_result(summary)
+                    validation_failed = not bool(validation["ok"])
                     summary["validation"] = {"l0_invariants": validation}
 
                 print(json.dumps(summary, indent=2, sort_keys=True))

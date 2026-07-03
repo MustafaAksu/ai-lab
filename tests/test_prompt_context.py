@@ -700,3 +700,67 @@ def test_validate_provider_l0_invariants_rejects_cross_reason_fields():
                 "l0_dropped": [],
             }
         )
+
+
+def test_provider_l0_invariant_validation_result_returns_structured_success():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": [
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1}
+            ],
+            "l0_included": [
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1}
+            ],
+            "l0_dropped": [],
+        }
+    )
+
+    assert result == {"version": "v1", "ok": True, "errors": []}
+
+
+def test_provider_l0_invariant_validation_result_returns_structured_error():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": [
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+            ],
+            "l0_included": [],
+            "l0_dropped": [],
+        }
+    )
+
+    assert result == {
+        "version": "v1",
+        "ok": False,
+        "errors": [
+            {
+                "code": "L0I_DUPLICATE_CID",
+                "message": "l0_candidates contains duplicate cid: A",
+                "path": "$.l0_candidates[*].cid",
+                "chunk_id": "A",
+            }
+        ],
+    }
+
+
+def test_provider_l0_invariant_validation_result_codes_list_shape_error():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": {},
+            "l0_included": [],
+            "l0_dropped": [],
+        }
+    )
+
+    assert result["errors"][0] == {
+        "code": "L0I_L0_CANDIDATES_NOT_LIST",
+        "message": "l0_candidates must be a list",
+        "path": "$.l0_candidates",
+    }
