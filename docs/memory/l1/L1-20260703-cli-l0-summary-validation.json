@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added --validate-l0-invariants and --fail-on-invalid-l0 to ask_provider.py.",
+    "Added --validate-l0-invariants and --fail-on-invalid-l0 to compare_providers.py.",
+    "Added additive validation.l0_invariants JSON output with ok/errors.",
+    "Added tests for valid validation output, invalid validation output with exit 0, invalid validation output with exit 1, and flag gating.",
+    "Verified full pytest suite: 242 passed."
+  ],
+  "content_hash": "9a33777f6b1c9018f720aff8f926f6e05ff2f5edec63fe5c0e0137d08158e58b",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T15:03:23.605421+00:00",
+  "episode_id": "EP-20260703-cli-l0-summary-validation",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep CLI validation optional and limited to --print-context-summary --summary-format json.",
+    "Keep default JSON output unchanged unless --validate-l0-invariants is explicitly used.",
+    "Use --fail-on-invalid-l0 as the opt-in nonzero failure mode."
+  ],
+  "l1_id": "L1-20260703-cli-l0-summary-validation",
+  "namespace": "public",
+  "next_actions": [
+    "Consider either structured validation error codes, L0 chunk JSON validation at create/load time, malformed L0 store diagnostics, or guarded explicit L0 context-pack inclusion."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Validation errors currently expose message-only entries, not structured codes or fields.",
+    "Validation is still summary-layer only; it does not validate L0 chunk files."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-cli-l0-summary-validation"
+  ],
+  "summary_text": "AI-Lab wired provider L0 summary invariant validation into CLI dry-run JSON summary paths. ask_provider.py and compare_providers.py now support --validate-l0-invariants for --print-context-summary --summary-format json, adding an additive validation.l0_invariants object with ok/errors. They also support --fail-on-invalid-l0 to return non-zero when validation fails. Without --validate-l0-invariants, default JSON output is unchanged. The feature reuses validate_provider_l0_invariants, remains read-only, and does not change prompt assembly, context packs, L0 creation/loading, or provider calls. Full suite passed with 242 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "provider-context-summary",
+    "validation",
+    "cli",
+    "dry-run"
+  ],
+  "ttl_until": null
+}

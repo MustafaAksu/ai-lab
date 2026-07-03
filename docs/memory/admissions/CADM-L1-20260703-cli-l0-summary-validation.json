@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T15:04:17.128329+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "66e10bc"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-cli-l0-summary-validation.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed CLI wiring for provider L0 summary validation with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-cli-l0-summary-validation",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-e8994c3e27a6",
+  "warrant_state": "supported"
+}
