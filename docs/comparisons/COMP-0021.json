@@ -1,0 +1,405 @@
+# COMP-0021.json: Provider Comparison — COMP-0021
+
+## Metadata
+
+- comparison_id: `COMP-0021.json`
+- title: `COMP-0021`
+- context_policy: `latest_context`
+- context_require_admission: `true`
+- context_max_warning_admissions: `1`
+- context_max_warning_admissions_source: `provider_default`
+- context_manifest: `docs/comparisons/COMP-0021.context.json`
+- created_at: `2026-07-03T20:56:39.264073+00:00`
+- command: `scripts/compare_providers.py We just completed L0 summary record-shape validation. The current main branch validates real L0ChunkSummary.to_dict JSON records at create_l0_chunk write time and provider L0 load time. Malformed provider L0 records are treated as unavailable/not_found; detailed malformed-store diagnostics were explicitly deferred. The next target should be one small vertical slice. Compare these options: A) add malformed L0 store diagnostics without changing existing provider-summary drop reasons, B) guarded explicit L0 context-pack inclusion/rendering, C) L0 store listing/index command, D) stop L0 work and move back to admission/ranking policy. Choose the safest next target for AI-Lab's ontology-first design, explain risks, and recommend exact acceptance tests. --latest-context --require-admission --save docs/comparisons/COMP-0021.json --title COMP-0021`
+- providers: `OpenAI, Claude`
+
+### Models
+
+- OpenAI: `gpt-5`
+- Claude: `claude-sonnet-4-5`
+
+## Prompt
+
+We just completed L0 summary record-shape validation. The current main branch validates real L0ChunkSummary.to_dict JSON records at create_l0_chunk write time and provider L0 load time. Malformed provider L0 records are treated as unavailable/not_found; detailed malformed-store diagnostics were explicitly deferred. The next target should be one small vertical slice. Compare these options: A) add malformed L0 store diagnostics without changing existing provider-summary drop reasons, B) guarded explicit L0 context-pack inclusion/rendering, C) L0 store listing/index command, D) stop L0 work and move back to admission/ranking policy. Choose the safest next target for AI-Lab's ontology-first design, explain risks, and recommend exact acceptance tests.
+
+## OpenAI Response
+
+- model: `gpt-5`
+
+```
+Recommendation: Option A — add malformed L0 store diagnostics without changing existing provider-summary drop reasons
+
+Why A is the safest ontology-first slice
+- Small, vertical, and reversible: Adds observability around the validator we just shipped, without altering selection, manifests, or provider-visible semantics. If something goes wrong, disabling the diagnostics sink restores current behavior.
+- Advances the ontology: Forces us to name and stabilize failure modes (codes, severities, field paths) for L0 records, which will later support refresh triggers and pipeline health (per ABS-0003’s validation/refresh loop) without prematurely constraining manifest/admission policy.
+- Minimal blast radius: Touches only validation and logging/metrics; does not change retrieval, ranking, budgeting, or prompt assembly.
+- Aligns with prior decision: We explicitly deferred malformed-store diagnostics; delivering them now closes that loop with the least coupling.
+
+Key risks and mitigations
+- A) Diagnostics taxonomy churn:
+  - Risk: Prematurely freezing code names/messages could cause rework.
+  - Mitigation: Version the diagnostics schema; constrain to a small initial set of codes tied to the current validator; treat messages as non-contractual and assert only on codes, paths, and severity.
+- A) Overhead and noise:
+  - Risk: Per-record diagnostics could add latency or log volume.
+  - Mitigation: Emit diagnostics only on validation failure; cap aggregated error count per record; add a config flag to disable persistence; expose lightweight counters for steady-state monitoring.
+- A) Redaction/PII leakage:
+  - Risk: Including raw values in diagnostics could leak content.
+  - Mitigation: Do not include raw l0_summary text or large fields; include only field paths, codes, and short normalized snippets (e.g., first 64 chars) where essential; mark diagnostics as internal-only.
+
+- B) Guarded explicit L0 inclusion/rendering:
+  - Risks: Touches manifest assembly, budgeting, ranking interplay, and redaction. Increases risk of accidental leakage and non-determinism. Requires admission/ranking policy clarity to avoid regressions.
+- C) L0 store listing/index:
+  - Risks: Seems safe, but creates a user-facing surface (API/CLI UX, pagination, filters, ACL/redaction) that we may need to support long-term. Lower ontology value than A; can mask validator issues if not coupled with diagnostics.
+- D) Switch back to admission/ranking:
+  - Risks: Context switch while L0 observability is still thin; selection/ranking work depends on trustworthy L0 inventory and health signals. Larger scope and higher integration risk.
+
+Scope of Option A (deliverables)
+- A structured diagnostics emitter integrated into:
+  - create_l0_chunk write path (on validation failure).
+  - provider L0 load path (on validation failure).
+- A minimal, versioned diagnostics schema (internal):
+  - { record_id, source: write|provider_load, code, severity: error|warning, field_path, message, first_seen_at, sample_value_hash?, validator_version }
+- A small, fixed set of diagnostic codes mapped to current validator:
+  - MISSING_FIELD, TYPE_MISMATCH, INVALID_CITATION_FORMAT, INVALID_CHUNK_REFERENCE, INVALID_TIMESTAMP, INVALID_LIST_ITEM, UNKNOWN_FIELD (warn), OPTIONAL_SECTION_INVALID (warn)
+- Emission sinks:
+  - Structured log line per failure (JSON).
+  - In-memory counters by code and source; optional persistence to a diagnostics sidecar file behind a flag.
+- Strict non-interference:
+  - No change to pass/fail criteria, provider drop reasons, ranking, or selection outputs.
+
+Acceptance tests (exact)
+1) Diagnostics on write-time failure
+- Given: create_l0_chunk is called with a record missing chunk_reference.
+- Expect:
+  - The write is rejected (as today).
+  - One diagnostic is emitted with:
+    - code = MISSING_FIELD
+    - field_path = "chunk_reference"
+    - severity = "error"
+    - source = "write"
+  - No changes to provider drop reasons anywhere.
+
+2) Diagnostics on provider-load failure
+- Given: L0 store contains a JSON record with invalid citation string format.
+- When: Provider L0 loader enumerates records.
+- Expect:
+  - The record is treated as unavailable/not_found (exactly as before).
+  - One diagnostic is emitted with:
+    - code = INVALID_CITATION_FORMAT
+    - field_path = "citation"
+    - severity = "error"
+    - source = "provider_load"
+
+3) Multi-error aggregation per record
+- Given: A record with multiple issues (missing created_at and invalid keyphrases type).
+- Expect:
+  - Two diagnostics emitted:
+    - {code: MISSING_FIELD, field_path: "created_at", severity: "error"}
+    - {code: TYPE_MISMATCH, field_path: "keyphrases", severity: "error"}
+  - Diagnostics order is not asserted; count and codes are.
+
+4) Optional section invalid is a warning
+- Given: A record that otherwise validates, but has malformed optional generator/provenance section per current validator.
+- Expect:
+  - A single diagnostic with:
+    - code = OPTIONAL_SECTION_INVALID
+    - severity = "warning"
+  - The record’s validation outcome remains exactly what it is today (if previously passing, still passes; if previously failing, still fails). This test asserts non-interference.
+
+5) Unknown fields are warnings, not errors
+- Given: A valid record with an extra unexpected top-level field "debug".
+- Expect:
+  - Diagnostic with code = UNKNOWN_FIELD, severity = "warning", field_path = "debug".
+  - Record remains valid/available.
+
+6) No change in provider drop semantics
+- Baseline: Run existing provider L0 load on a mixed corpus and snapshot:
+  - Count of available vs unavailable/not_found summaries per provider.
+- After enabling diagnostics: Re-run on the same corpus.
+- Expect: Identical availability counts and identical drop reasons; only additional diagnostics/logs/counters appear.
+
+7) Metrics and counters
+- Given: Three invalid records (codes: MISSING_FIELD, INVALID_CITATION_FORMAT, TYPE_MISMATCH) and two valid records.
+- Expect:
+  - Counters reflect totals by code and by source (write vs provider_load), and a global malformed total of 3.
+  - Counter names/namespaces stable and documented.
+
+8) Redaction discipline in diagnostics
+- Given: A record whose l0_summary contains a 1,000-character string.
+- Expect:
+  - Diagnostics never include raw l0_summary text; any value sampling is either omitted or truncated to <= 64 chars with a hash suffix.
+  - A test asserts no diagnostic field exceeds 256 characters and that no diagnostic contains the substring from positions 200–300 of l0_summary.
+
+9) Performance guardrail
+- Given: Batch provider-load of 10,000 records with 2% malformed.
+- Expect:
+  - Additional wall-clock overhead from diagnostics < 5% compared to diagnostics disabled (measured in CI perf test or benchmark mode).
+  - Skipped if perf infra unavailable; otherwise must pass to accept.
+
+10) Diagnostics schema versioning
+- Given: Emitted diagnostic includes validator_version and schema_version fields.
+- Expect:
+  - Both present and non-empty; schema_version equals "v1".
+
+Notes on Options B–D if/when revisited
+- B) Guarded explicit L0 inclusion/rendering should come after admission/ranking policy is clearer and redaction is proven; otherwise risk of leakage and budget distortions is high.
+- C) L0 listing can follow A quickly, reusing diagnostics to annotate health status in listings; prioritize ACL-safe columns and pagination first.
+- D) Admission/ranking policy should resume once L0 observability is in place, so selection decisions rest on a healthy, well-instrumented L0 base.
+
+Bottom line
+Ship Option A next. It is the smallest, safest, ontology-strengthening slice that finishes the validation story we started, adds valuable observability, and doesn’t perturb current provider behavior.
+```
+
+## Claude Response
+
+- model: `claude-sonnet-4-5`
+
+````
+# Next Target Recommendation: Option B (Guarded Explicit L0 Context-Pack Inclusion)
+
+## Analysis
+
+### Option Comparison
+
+**A) Malformed L0 Store Diagnostics**
+- **Scope**: Add detailed diagnostics for malformed records without changing drop reasons
+- **Risks**: 
+  - Purely operational/debugging feature with no user-facing value
+  - Defers validation of the actual L0→context-pack pipeline
+  - May encourage diagnostic complexity before proving the core inclusion path works
+- **Ontology alignment**: Low – focuses on error reporting rather than core memory loop
+
+**B) Guarded Explicit L0 Context-Pack Inclusion** ✅
+- **Scope**: Enable explicit L0 chunk references in context packs with validation
+- **Risks**: 
+  - Requires citation format implementation (cid@version|span per ABS-0003)
+  - Must handle missing/malformed L0 gracefully during pack assembly
+  - Token budget allocation needs basic policy
+- **Ontology alignment**: High – directly implements the "explicit refs" seed step from the reconciled memory loop (ABS-0003 minimal loop: "seed with explicit refs and dependencies")
+
+**C) L0 Store Listing/Index Command**
+- **Scope**: CLI/API to browse stored L0 records
+- **Risks**:
+  - Pure tooling; doesn't validate L0's role in the memory loop
+  - May encourage premature index complexity
+- **Ontology alignment**: Low – operational tooling, not core loop
+
+**D) Stop L0 Work and Move to Admission/Ranking**
+- **Scope**: Return to context-pack assembly policy
+- **Risks**:
+  - Leaves L0 work incomplete and unvalidated in the actual prompt path
+  - Creates disconnected work streams
+- **Ontology alignment**: Medium – admission is part of the loop, but skipping L0 inclusion creates a gap
+
+### Recommendation: **Option B**
+
+**Rationale:**
+1. **Smallest vertical slice through the memory loop**: L0 is validated at write/load time, but has never been **included in a prompt**. Option B closes this gap with minimal scope.
+2. **Ontology-first safety**: Per ABS-0003, the reconciled loop explicitly starts selection with "seed with explicit refs and dependencies." This is the natural next step after record validation.
+3. **Deferred L0 summary now has next_actions**: L1-20260703 explicitly lists "guarded explicit L0 context-pack inclusion" as a candidate next target.
+4. **Guards risk**: By requiring explicit opt-in (not auto-retrieval), you validate the L0→prompt path without prematurely building retrieval/ranking.
+
+---
+
+## Implementation Design
+
+### Scope Definition
+
+**In scope:**
+- Accept L0 chunk IDs in context pack request (e.g., `--include-l0 L0-xyz-abc`)
+- Load, validate, and render L0 summaries into context pack output
+- Handle missing/malformed L0 gracefully (skip with warning, not fatal error)
+- Respect existing token budgets (treat explicit L0 as part of "explicit refs" budget from ABS-0003)
+
+**Out of scope (deferred):**
+- Automatic L0 retrieval/ranking
+- Citation format validation in prompts (accept placeholder format initially)
+- Dependency graph traversal
+- Redaction/ACL filtering (assume public namespace for now)
+
+### Core Changes
+
+1. **Context pack request schema** (e.g., `ContextPackRequest` dataclass or CLI args):
+   ```python
+   @dataclass
+   class ContextPackRequest:
+       # ... existing fields ...
+       explicit_l0_ids: list[str] = field(default_factory=list)
+   ```
+
+2. **Context pack item type** extension:
+   ```python
+   # Add L0_CHUNK to existing admission types (L1_EPISODE, ABSTRACTION, etc.)
+   class ContextItemType(Enum):
+       L1_EPISODE = "episode_l1"
+       L0_CHUNK = "l0_chunk"  # NEW
+       # ...
+   ```
+
+3. **L0 loading in pack assembly**:
+   ```python
+   def _load_explicit_l0_chunks(
+       l0_ids: list[str],
+       provider: L0Provider
+   ) -> list[ContextPackItem]:
+       items = []
+       for l0_id in l0_ids:
+           try:
+               record = provider.load_l0_summary(l0_id)
+               # validate_l0_summary_record already wired in provider
+               items.append(ContextPackItem(
+                   item_type=ContextItemType.L0_CHUNK,
+                   item_id=l0_id,
+                   content=_render_l0_chunk(record),
+                   token_estimate=estimate_tokens(record),
+                   inclusion_reason="explicit_request"
+               ))
+           except (FileNotFoundError, ValidationError) as e:
+               logger.warning(f"Skipping L0 {l0_id}: {e}")
+               # Do NOT fail pack assembly
+       return items
+   ```
+
+4. **L0 chunk rendering** (minimal):
+   ```python
+   def _render_l0_chunk(record: dict) -> str:
+       return f"""### {record['chunk_reference']['chunk_id']} (l0_chunk)
+
+   Citation: {record['chunk_reference']['citation_id']}@{record['chunk_reference'].get('version', 'latest')}
+   Span: {record['chunk_reference'].get('span_start')}-{record['chunk_reference'].get('span_end')} {record['chunk_reference'].get('span_unit', 'unknown')}
+
+   {record['l0_summary']}
+
+   Keyphrases: {', '.join(record.get('keyphrases', []))}
+   """
+   ```
+
+5. **Token budget handling**:
+   - Explicit L0 draws from the same budget as other explicit refs
+   - If over budget, apply existing pack assembly truncation policy
+
+### Key Risks and Mitigations
+
+| Risk | Mitigation |
+|------|------------|
+| **L0 ID format ambiguity** | Require L0 IDs match pattern `L0-{date}-{slug}` or `{cid}` from validation; reject malformed IDs early |
+| **Citation format premature** | Use placeholder citation rendering (`cid@version\|span`); defer validation to future citation-integrity slice |
+| **Missing L0 breaks pack** | **Critical guard**: Missing/malformed L0 logs warning and skips item; pack assembly continues |
+| **Token budget overflow** | Fail fast with clear error if explicit L0 alone exceeds total budget; otherwise truncate lowest-priority items per existing policy |
+| **No L0 namespace/ACL** | **Explicit limitation**: Only load L0 from public namespace; log warning if namespace field present but non-public |
+
+---
+
+## Acceptance Tests
+
+### Test 1: Successful Explicit L0 Inclusion
+```python
+def test_explicit_l0_in_context_pack():
+    """L0 chunk requested by ID appears in assembled pack."""
+    # Setup: create valid L0 record in store
+    l0_id = create_test_l0_chunk(
+        chunk_id="test-chunk-001",
+        citation_id="TEST-DOC",
+        summary="Test L0 summary content"
+    )
+    
+    # Request pack with explicit L0
+    pack = assemble_context_pack(
+        request=ContextPackRequest(explicit_l0_ids=[l0_id])
+    )
+    
+    # Assert
+    assert any(item.item_type == ContextItemType.L0_CHUNK for item in pack.items)
+    l0_item = next(i for i in pack.items if i.item_id == l0_id)
+    assert "test-chunk-001" in l0_item.content
+    assert l0_item.inclusion_reason == "explicit_request"
+```
+
+### Test 2: Missing L0 Graceful Degradation
+```python
+def test_missing_l0_does_not_break_pack():
+    """Context pack assembly succeeds even if requested L0 missing."""
+    pack = assemble_context_pack(
+        request=ContextPackRequest(explicit_l0_ids=["L0-nonexistent"])
+    )
+    
+    # Pack succeeds with warning, L0 omitted
+    assert pack is not None
+    assert not any(i.item_id == "L0-nonexistent" for i in pack.items)
+    # Check logs for warning (implementation-dependent)
+```
+
+### Test 3: Malformed L0 Record Skipped
+```python
+def test_malformed_l0_record_skipped():
+    """Malformed L0 JSON treated as unavailable per existing policy."""
+    # Write invalid JSON to L0 store
+    l0_id = "L0-20260703-malformed"
+    write_raw_l0_json(l0_id, '{"incomplete": "record"}')  # missing required fields
+    
+    pack = assemble_context_pack(
+        request=ContextPackRequest(explicit_l0_ids=[l0_id])
+    )
+    
+    # Validation fails during load; item skipped
+    assert not any(i.item_id == l0_id for i in pack.items)
+```
+
+### Test 4: L0 Token Budget Respected
+```python
+def test_l0_respects_token_budget():
+    """Explicit L0 chunks count toward token budget."""
+    large_l0_id = create_test_l0_chunk(
+        summary="X" * 5000  # ~1250 tokens
+    )
+    
+    pack = assemble_context_pack(
+        request=ContextPackRequest(
+            explicit_l0_ids=[large_l0_id],
+            token_budget=1000  # Smaller than L0 content
+        )
+    )
+    
+    # Either: pack fails with budget error, or L0 truncated per policy
+    # (Choose based on existing pack assembly behavior)
+    assert pack.total_tokens <= 1000 or pack.has_errors
+```
+
+### Test 5: L0 Rendering Contains Required Fields
+```python
+def test_l0_rendering_format():
+    """Rendered L0 includes citation, span, summary, keyphrases."""
+    l0_id = create_test_l0_chunk(
+        chunk_id="render-test",
+        citation_id="CID-123",
+        version="v2",
+        span_start=100,
+        span_end=250,
+        span_unit="token",
+        summary="Rendering test summary",
+        keyphrases=["test", "rendering"]
+    )
+    
+    pack = assemble_context_pack(
+        request=ContextPackRequest(explicit_l0_ids=[l0_id])
+    )
+    
+    l0_content = next(i.content for i in pack.items if i.item_id == l0_id)
+    assert "CID-123@v2" in l0_content
+    assert "100-250 token" in l0_content
+    assert "Rendering test summary" in l0_content
+    assert "test, rendering" in l0_content
+```
+
+---
+
+## Success Criteria
+
+1. **End-to-end L0 path validated**: L0 record written → stored → validated → loaded → rendered in context pack
+2. **Graceful degradation proven**: Missing/malformed L0 does not crash pack assembly
+3. **Ontology alignment**: Implements "explicit refs" seeding from ABS-0003 reconciled loop
+4. **No scope creep**: Defers retrieval, ranking, citation validation, ACL to future slices
+5. **Green test suite**: All five acceptance tests pass
+
+**Next slice after B**: Citation integrity validation or dependency graph traversal (both build on proven L0 inclusion).
+````

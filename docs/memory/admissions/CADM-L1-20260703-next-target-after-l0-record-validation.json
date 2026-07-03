@@ -1,0 +1,23 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-03T20:58:54.869021+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260703-next-target-after-l0-record-validation",
+    "COMP-0021"
+  ],
+  "evidence_paths": [
+    "docs/comparisons/COMP-0021.json",
+    "docs/comparisons/COMP-0021.context.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The next-target decision is grounded in COMP-0021 and current repo state after L0 record-shape validation.",
+  "substrate": "process",
+  "target_item_id": "L1-20260703-next-target-after-l0-record-validation",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260703-next-target-after-l0-record-validation",
+  "warrant_state": "supported"
+}

@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "COMP-0021",
+    "docs/comparisons/COMP-0021.json",
+    "docs/comparisons/COMP-0021.context.json"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-03T20:58:54.664221+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260703-next-target-after-l0-record-validation",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260703-next-target-after-l0-record-validation",
+  "event_type": "decision",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "selected-option-a",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Compared next targets after L0 record-shape validation in COMP-0021. Selected malformed L0 store diagnostics as the safest next small vertical slice because it closes the deferred validation-observability loop without changing provider-summary drop reasons, context-pack rendering, admission, ranking, or selection semantics.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "l0-summary",
+    "diagnostics",
+    "provider-context"
+  ],
+  "turn_id": 1
+}

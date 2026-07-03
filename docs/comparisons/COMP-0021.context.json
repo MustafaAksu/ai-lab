@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-03T20:54:49.323099+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0011",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0020",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "445a2a90d7b8658057f9faf279ca7aab2333aa4f62a9dff181cb4f2e5d77e1a6",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-L1-20260703-l0-summary-record-validation",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260703-l0-summary-record-validation",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260703-l0-summary-record-validation (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260703-l0-summary-record-validation.json",
+      "token_estimate": 563,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "db34888d63db0c81",
+  "task": "We just completed L0 summary record-shape validation. The current main branch validates real L0ChunkSummary.to_dict JSON records at create_l0_chunk write time and provider L0 load time. Malformed provider L0 records are treated as unavailable/not_found; detailed malformed-store diagnostics were explicitly deferred. The next target should be one small vertical slice. Compare these options: A) add malformed L0 store diagnostics without changing existing provider-summary drop reasons, B) guarded...",
+  "task_label": "we-just-completed-l0-summary-record-shape-validation-the-current-main-branch-val",
+  "total_token_estimate": 2500
+}
