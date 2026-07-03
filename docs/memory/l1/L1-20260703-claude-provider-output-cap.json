@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added CLAUDE_MAX_TOKENS = 4096 to provider settings.",
+    "Updated ClaudeProvider to accept max_tokens and pass self._max_tokens to Anthropic messages.create.",
+    "Added tests for default 4096 max_tokens and custom 2048 max_tokens.",
+    "Verified full pytest suite at commit time: 225 passed."
+  ],
+  "content_hash": "53e22c2c6152c090a5b7c6241c00311a98119bd820fd057680add5be374c6a7a",
+  "coverage_score": 0.94,
+  "created_at": "2026-07-03T11:37:06.264928+00:00",
+  "episode_id": "EP-20260703-claude-provider-output-cap",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Use a code-level CLAUDE_MAX_TOKENS default rather than a secret or environment-dependent setting.",
+    "Keep ClaudeProvider backwards compatible by defaulting max_tokens to CLAUDE_MAX_TOKENS."
+  ],
+  "l1_id": "L1-20260703-claude-provider-output-cap",
+  "namespace": "public",
+  "next_actions": [
+    "Use the larger Claude cap for synthesis tasks and revisit provider output configuration only if truncation recurs."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "4096 is still a finite provider output cap; very long syntheses may require future tuning.",
+    "OpenAI provider still has no explicit analogous output cap in the local wrapper."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-claude-provider-output-cap"
+  ],
+  "summary_text": "AI-Lab raised Claude provider output capacity by replacing hard-coded max_tokens=1024 with configurable CLAUDE_MAX_TOKENS=4096. ClaudeProvider now accepts an optional max_tokens constructor argument and passes self._max_tokens to Anthropic messages.create. Tests cover the default 4096 cap and a custom 2048 cap. This addressed truncated Claude synthesis artifacts while keeping provider configuration code-level and non-secret. Full suite passed with 225 tests at commit time.",
+  "summary_version": "v1",
+  "topics": [
+    "provider",
+    "claude",
+    "synthesis",
+    "output-cap",
+    "comparison"
+  ],
+  "ttl_until": null
+}
