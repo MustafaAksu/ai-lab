@@ -295,3 +295,71 @@ def test_main_print_context_policy_requires_latest_context(monkeypatch):
         ask_provider.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_print_prompt_can_include_context_summary(monkeypatch, capsys):
+    from scripts import ask_provider
+
+    def fake_build_latest_context_pack_text(
+        task,
+        token_budget=None,
+        model_target=None,
+        scope=None,
+        require_admission=False,
+        task_label=None,
+        full_prompt_hash=None,
+        max_warning_admissions=None,
+    ):
+        return "# Generated Context Pack"
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--print-context-summary",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    output = capsys.readouterr().out
+    assert "Resolved latest-context policy:" in output
+    assert '"max_warning_admissions": 1' in output
+    assert '"max_warning_admissions_source": "provider_default"' in output
+    assert "Final prompt:" in output
+    assert "BEGIN CONTEXT PACK" in output
+    assert output.rstrip().endswith("Do summary step.")
+
+
+def test_main_print_context_summary_requires_print_prompt(monkeypatch):
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        ask_provider.main()
+
+    assert exc_info.value.code == 2

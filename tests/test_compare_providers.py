@@ -592,3 +592,76 @@ def test_main_context_comparison_records_explicit_zero_policy_metadata(
     assert "- context_require_admission: `true`" in artifact
     assert "- context_max_warning_admissions: `0`" in artifact
     assert "- context_max_warning_admissions_source: `explicit`" in artifact
+
+
+def test_main_print_prompt_can_include_context_summary(monkeypatch, capsys):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from scripts import compare_providers
+
+    manifest = ContextPackManifest(
+        task="Compare summary step.",
+        assembly_policy="latest_context",
+        items=(
+            ContextPackItem(
+                item_type="abstraction",
+                item_id="ABS-0003",
+                reason="Latest abstraction.",
+                relevance_score=0.9,
+            ),
+        ),
+    )
+
+    monkeypatch.setattr(
+        compare_providers,
+        "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+    )
+    monkeypatch.setattr(
+        compare_providers,
+        "render_context_pack_markdown",
+        lambda manifest: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--require-admission",
+            "--print-context-summary",
+            "--print-prompt",
+        ],
+    )
+
+    assert compare_providers.main() == 0
+
+    output = capsys.readouterr().out
+    assert "Resolved latest-context policy:" in output
+    assert '"max_warning_admissions": 1' in output
+    assert '"max_warning_admissions_source": "provider_default"' in output
+    assert "Final prompt:" in output
+    assert "BEGIN CONTEXT PACK" in output
+    assert output.rstrip().endswith("Compare summary step.")
+
+
+def test_main_print_context_summary_requires_print_prompt(monkeypatch):
+    from scripts import compare_providers
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "Compare",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        compare_providers.main()
+
+    assert exc_info.value.code == 2

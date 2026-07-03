@@ -203,6 +203,14 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--print-context-summary",
+        action="store_true",
+        help=(
+            "Print the resolved latest-context policy before --print-prompt "
+            "dry-run output."
+        ),
+    )
+    parser.add_argument(
         "--token-budget",
         type=int,
         default=None,
@@ -253,6 +261,12 @@ def main() -> int:
 
     if args.print_context_policy and not args.latest_context:
         parser.error("--print-context-policy requires --latest-context.")
+
+    if args.print_context_summary and not args.latest_context:
+        parser.error("--print-context-summary requires --latest-context.")
+
+    if args.print_context_summary and not args.print_prompt:
+        parser.error("--print-context-summary requires --print-prompt.")
 
     if args.context_pack:
         context_pack = read_context_pack(args.context_pack)
@@ -310,6 +324,16 @@ def main() -> int:
         provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
 
     if args.print_prompt:
+        if args.print_context_summary:
+            print("Resolved latest-context policy:")
+            print(
+                format_provider_latest_context_policy(
+                    require_admission=args.require_admission,
+                    max_warning_admissions=args.max_warning_admissions,
+                )
+            )
+            print()
+            print("Final prompt:")
         print(provider_prompt)
         return 0
 
