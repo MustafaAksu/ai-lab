@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added cap_admit_with_warning_items helper.",
+    "Added max_warning_admissions to latest-context manifest assembly.",
+    "Exposed --max-warning-admissions in latest-context CLIs.",
+    "Verified with full pytest suite: 179 passed."
+  ],
+  "content_hash": "1e9ee720829063d1f893c26ef01c9d116b9619d0d144f62f2ea0b2296e1ca478",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T06:16:27.723664+00:00",
+  "episode_id": "EP-20260702-warning-admission-cap",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep max_warning_admissions optional and default it to None so current behavior remains unchanged.",
+    "Represent capped warning-admitted items as policy exclusions and count them in admission_summary.excluded_by_policy."
+  ],
+  "l1_id": "L1-20260702-warning-admission-cap",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether provider latest-context commands should use a default warning cap for admission-gated runs, or keep requiring explicit --max-warning-admissions."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The cap is opt-in; callers must choose a cap value before warning-admitted context is limited."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-warning-admission-cap"
+  ],
+  "summary_text": "AI-Lab implemented the next C ergonomics slice: an optional admit_with_warning cap for latest-context assembly. context_pack_builder.py now has cap_admit_with_warning_items and build_latest_context_manifest accepts max_warning_admissions. By default the value is None, so existing behavior is unchanged. When a cap is set, only the first N admit_with_warning items are retained and later warning-admitted items are policy-excluded with a note explaining that the cap was exceeded. The manifest admission_summary reflects capped warning exclusions through excluded_by_policy. prompt_context.py passes the option through, and build_context_pack.py, ask_provider.py, and compare_providers.py expose --max-warning-admissions. Tests were updated for helper behavior, manifest integration, prompt-context passthrough, and CLI/provider wiring. The full suite passed with 179 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "latest-context"
+  ],
+  "ttl_until": null
+}

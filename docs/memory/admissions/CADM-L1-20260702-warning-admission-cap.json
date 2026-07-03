@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T06:16:27.823918+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "24d2ee1"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-warning-admission-cap.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed optional warning admission cap implementation with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-warning-admission-cap",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-eb058ce83c43",
+  "warrant_state": "supported"
+}
