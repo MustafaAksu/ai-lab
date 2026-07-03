@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added optional ContextPackManifest admission_policy metadata.",
+    "Recorded require_admission and max_warning_admissions in latest-context manifests.",
+    "Rendered admission policy in context-pack Markdown.",
+    "Verified with full pytest suite: 186 passed."
+  ],
+  "content_hash": "4ca4137544adaa56e6607eb6c74736f6897349f01372959cd1c08e4588090c31",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T06:26:26.505598+00:00",
+  "episode_id": "EP-20260702-admission-policy-manifest",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Record admission policy separately from admission_summary so the manifest shows both the settings and the outcome.",
+    "Keep admission_policy optional for backward compatibility."
+  ],
+  "l1_id": "L1-20260702-admission-policy-manifest",
+  "namespace": "public",
+  "next_actions": [
+    "Run an admission-gated provider comparison with --max-warning-admissions 1 to decide whether this should become the default for provider latest-context commands."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Admission policy is recorded but not yet used to automatically choose defaults; callers still decide cap values."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-admission-policy-manifest"
+  ],
+  "summary_text": "AI-Lab implemented admission-policy manifest recording. ContextPackManifest now has optional admission_policy metadata with schema validation. The policy records require_admission and, when set, max_warning_admissions. context_pack_builder.py now attaches this policy to latest-context manifests, and context_pack_renderer.py renders it in prompt-ready context Markdown. Tests cover schema validation, serialization, builder policy computation, and renderer output. The full suite passed with 186 tests. This makes admission-gated context auditable by showing both the policy settings and resulting admission_summary telemetry in the manifest and rendered context.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "admission-policy",
+    "latest-context"
+  ],
+  "ttl_until": null
+}
