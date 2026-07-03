@@ -1,0 +1,50 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added scripts/create_l0_chunk.py.",
+    "Added tests/test_create_l0_chunk_script.py.",
+    "Implemented default output path docs/memory/l0/<chunk_id>.json.",
+    "Implemented explicit --output override.",
+    "Implemented CLI support for artifact cid/version/span, path/type/language, embedding ids, redaction level, L0 summary, keyphrases, entities, claims, risks, generator metadata, and pipeline run id.",
+    "Verified focused L0 helper tests: 16 passed.",
+    "Verified full pytest suite: 219 passed."
+  ],
+  "content_hash": "935c230ae96dbaa17d7fe22ec74ee14c688aa6f2ca86a8210c2c45f047c0a4cd",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T10:55:46.819222+00:00",
+  "episode_id": "EP-20260703-manual-l0-chunk-helper",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Implement Manual L0 chunk creation helper before read-only L0 inclusion because no docs/memory/l0 substrate existed yet.",
+    "Reuse existing CitationSpan, create_chunk_reference, and L0ChunkSummary primitives rather than inventing a new L0 schema.",
+    "Keep the helper manual and write-only: no provider calls, embeddings, retrieval, context assembly, or broader citation validation."
+  ],
+  "l1_id": "L1-20260703-manual-l0-chunk-helper",
+  "namespace": "public",
+  "next_actions": [
+    "Implement read-only L0 inclusion in provider dry-run JSON summaries using these generated L0 artifacts as the substrate."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The helper creates manual L0 JSON but does not yet integrate L0 artifacts into provider latest-context summaries or context packing.",
+    "Embedding IDs remain manual metadata only; no vector generation or embedding store linkage exists in this slice."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-manual-l0-chunk-helper"
+  ],
+  "summary_text": "AI-Lab added scripts/create_l0_chunk.py, a manual L0 chunk summary writer that bootstraps concrete chunk-level L0 memory artifacts using existing CitationSpan, create_chunk_reference, and L0ChunkSummary primitives. The helper writes canonical JSON to docs/memory/l0/<chunk_id>.json by default or to an explicit --output path, prints chunk_id and citation, validates summary/keyphrase/entity/claim/risk schema through existing dataclasses, and avoids providers, embeddings, retrieval, context assembly, and broader citation validation. Tests cover valid output, default output location, and schema validation failure. Smoke run produced valid JSON, and the full suite passed with 219 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "chunk-reference",
+    "context-substrate",
+    "cli"
+  ],
+  "ttl_until": null
+}

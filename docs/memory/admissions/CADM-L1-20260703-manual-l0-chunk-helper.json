@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T10:56:29.901322+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "5c1b6cd"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-manual-l0-chunk-helper.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed Manual L0 chunk creation helper with smoke validation and full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-manual-l0-chunk-helper",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-d64f1571d2a8",
+  "warrant_state": "supported"
+}
