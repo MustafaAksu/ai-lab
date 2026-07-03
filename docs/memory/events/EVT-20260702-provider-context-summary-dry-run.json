@@ -1,0 +1,40 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "4b7a82d"
+  ],
+  "commit_hash": "4b7a82d",
+  "created_at": "2026-07-03T08:12:29.043427+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-provider-context-summary-dry-run",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-provider-context-summary-dry-run",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Added optional latest-context summary output to provider prompt dry runs. ask_provider.py and compare_providers.py now support --print-context-summary with --latest-context and --print-prompt, printing the resolved latest-context policy before the final prompt while preserving default prompt-only dry-run behavior. Full test suite passed with 206 tests.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-ergonomics",
+    "dry-run",
+    "policy-audit"
+  ],
+  "turn_id": 1
+}

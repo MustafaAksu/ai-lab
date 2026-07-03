@@ -1,0 +1,50 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added --print-context-summary to ask_provider.py.",
+    "Added --print-context-summary to compare_providers.py.",
+    "Added tests for context summary dry-run output in both provider CLIs.",
+    "Added tests requiring --print-context-summary to be paired with --print-prompt.",
+    "Verified with full pytest suite: 206 passed."
+  ],
+  "content_hash": "02debabf4d22c48a89cd7e7bcfe9ae4f2c1377eae4d55120a126dc40bc91c72e",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T08:12:56.272203+00:00",
+  "episode_id": "EP-20260702-provider-context-summary-dry-run",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Expose latest-context policy summary in prompt dry-run flows only through an explicit flag.",
+    "Preserve existing --print-prompt behavior unless --print-context-summary is supplied.",
+    "Require --print-context-summary to be used with both --latest-context and --print-prompt."
+  ],
+  "l1_id": "L1-20260702-provider-context-summary-dry-run",
+  "namespace": "public",
+  "next_actions": [
+    "Run an AI-Lab provider comparison to decide the next smallest implementation target now that the warning-cap/context-policy ergonomics chain is closed."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Dry-run output now has an optional preamble mode; scripts that parse --print-prompt output should avoid --print-context-summary unless they expect the summary header."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-context-summary-dry-run"
+  ],
+  "summary_text": "AI-Lab added optional latest-context summary output to provider prompt dry runs. scripts/ask_provider.py and scripts/compare_providers.py now support --print-context-summary when --latest-context and --print-prompt are both enabled. The summary prints the resolved latest-context policy before the final prompt, including resolved max_warning_admissions and its source, while preserving default prompt-only dry-run behavior unless the summary flag is explicitly used. Tests cover both provider CLIs and require --print-context-summary to be paired with --print-prompt. Full test suite passed with 206 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context",
+    "cli-ergonomics",
+    "dry-run",
+    "policy-audit"
+  ],
+  "ttl_until": null
+}
