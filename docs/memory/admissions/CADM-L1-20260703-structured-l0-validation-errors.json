@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T15:18:15.123549+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "394a03f"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-structured-l0-validation-errors.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed structured provider L0 invariant validation errors with full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-structured-l0-validation-errors",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-cb0ec45d6fc7",
+  "warrant_state": "supported"
+}

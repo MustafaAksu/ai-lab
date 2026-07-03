@@ -1,0 +1,51 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added provider_l0_invariant_validation_result.",
+    "Mapped current provider L0 invariant ValueError messages into structured code, message, path, and optional chunk_id entries.",
+    "Updated ask_provider.py to emit structured validation.l0_invariants results.",
+    "Updated compare_providers.py to emit structured validation.l0_invariants results.",
+    "Added tests for structured success, structured duplicate-cid failure, list-shape error coding, and CLI JSON output.",
+    "Verified full pytest suite: 245 passed."
+  ],
+  "content_hash": "e03ca5f7d8621dd809e658dbf04712656acae86f258ccc2fd39d7d31a51c01e5",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T15:17:11.504753+00:00",
+  "episode_id": "EP-20260703-structured-l0-validation-errors",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep structured validation output additive and limited to the existing --validate-l0-invariants JSON surface.",
+    "Do not introduce new validation semantics while adding structured error fields.",
+    "Version the validation result as v1 and expose machine-readable code/path fields alongside the existing message."
+  ],
+  "l1_id": "L1-20260703-structured-l0-validation-errors",
+  "namespace": "public",
+  "next_actions": [
+    "Consider collecting all validation failures, adding L0 chunk JSON validation using the actual L0ChunkSummary.to_dict shape, malformed L0 store diagnostics, or guarded explicit L0 context-pack inclusion."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Structured error mapping is message-derived, so future ValueError message changes can affect code/path mapping.",
+    "Only the first validation failure is reported because validate_provider_l0_invariants still raises on first violation.",
+    "The structured codes cover current summary-layer checks only, not L0 chunk-file schema or citation/span validation."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-structured-l0-validation-errors"
+  ],
+  "summary_text": "AI-Lab added structured provider L0 invariant validation result output. Existing summary-layer validator behavior remains unchanged, but provider_l0_invariant_validation_result now wraps validation status as version v1 with ok/errors and structured error entries containing code, message, path, and optional chunk_id. ask_provider.py and compare_providers.py use this structured result for --validate-l0-invariants JSON output. This does not add new validation rules, does not validate citation/span formats, does not validate L0 chunk files, and does not change prompt assembly, context packs, L0 creation/loading, or provider calls. Full suite passed with 245 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "provider-context-summary",
+    "validation",
+    "structured-errors",
+    "cli"
+  ],
+  "ttl_until": null
+}
