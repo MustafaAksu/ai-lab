@@ -764,3 +764,111 @@ def test_provider_l0_invariant_validation_result_codes_list_shape_error():
         "message": "l0_candidates must be a list",
         "path": "$.l0_candidates",
     }
+
+
+def test_provider_l0_invariant_validation_result_collects_all_errors():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": [
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": -1},
+            ],
+            "l0_included": [
+                {"cid": "B", "inclusion_reason": "explicit", "token_cost": 1}
+            ],
+            "l0_dropped": [
+                {"cid": "B", "dropped_reason": "over_budget", "token_cost": 1},
+                {"cid": "C", "dropped_reason": "over_budget", "token_cost": 1},
+                {
+                    "cid": "D",
+                    "dropped_reason": "not_found",
+                    "token_cost": 1,
+                    "inclusion_reason": "unexpected",
+                },
+            ],
+        }
+    )
+
+    errors = result["errors"]
+
+    assert result["ok"] is False
+    assert [error["code"] for error in errors] == [
+        "L0I_DUPLICATE_CID",
+        "L0I_INVALID_TOKEN_COST",
+        "L0I_UNEXPECTED_INCLUSION_REASON",
+        "L0I_INCLUDED_NOT_CANDIDATE",
+        "L0I_INCLUDED_DROPPED_OVERLAP",
+        "L0I_OVER_BUDGET_NOT_CANDIDATE",
+    ]
+
+
+def test_validate_provider_l0_invariants_still_raises_first_error_only():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(ValueError) as exc_info:
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": -1},
+                ],
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
+
+    assert str(exc_info.value) == "l0_candidates contains duplicate cid: A"
+
+
+def test_provider_l0_invariant_validation_result_collects_list_shape_errors():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": {},
+            "l0_included": {},
+            "l0_dropped": {},
+        }
+    )
+
+    assert result == {
+        "version": "v1",
+        "ok": False,
+        "errors": [
+            {
+                "code": "L0I_L0_CANDIDATES_NOT_LIST",
+                "message": "l0_candidates must be a list",
+                "path": "$.l0_candidates",
+            },
+            {
+                "code": "L0I_L0_INCLUDED_NOT_LIST",
+                "message": "l0_included must be a list",
+                "path": "$.l0_included",
+            },
+            {
+                "code": "L0I_L0_DROPPED_NOT_LIST",
+                "message": "l0_dropped must be a list",
+                "path": "$.l0_dropped",
+            },
+        ],
+    }
+
+
+def test_provider_l0_invariant_validation_result_does_not_duplicate_invalid_item_errors():
+    from ai_lab.documentation.prompt_context import provider_l0_invariant_validation_result
+
+    result = provider_l0_invariant_validation_result(
+        {
+            "l0_candidates": ["bad-item"],
+            "l0_included": [],
+            "l0_dropped": [],
+        }
+    )
+
+    assert [error["code"] for error in result["errors"]] == [
+        "L0I_LIST_ITEM_NOT_OBJECT",
+    ]

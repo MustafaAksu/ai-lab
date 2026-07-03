@@ -700,6 +700,64 @@ def test_main_print_prompt_context_summary_json_validation_can_fail_without_nonz
     }
 
 
+
+def test_main_print_prompt_context_summary_json_validation_collects_all_errors(
+    monkeypatch,
+    capsys,
+):
+    import json
+
+    from scripts import ask_provider
+
+    monkeypatch.setattr(
+        ask_provider,
+        "build_latest_context_pack_text",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+    )
+    monkeypatch.setattr(
+        ask_provider,
+        "provider_context_summary_payload",
+        lambda require_admission, max_warning_admissions, context_window=None, include_l0=(), l0_store=None: {
+            "schema_version": "v1",
+            "l0_candidates": [
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                {"cid": "A", "inclusion_reason": "explicit", "token_cost": -1},
+            ],
+            "l0_included": [
+                {"cid": "B", "inclusion_reason": "explicit", "token_cost": 1}
+            ],
+            "l0_dropped": [],
+        },
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "Do",
+            "summary",
+            "step.",
+            "--latest-context",
+            "--print-context-summary",
+            "--summary-format",
+            "json",
+            "--validate-l0-invariants",
+            "--print-prompt",
+        ],
+    )
+
+    assert ask_provider.main() == 0
+
+    summary_text, _final_prompt = capsys.readouterr().out.split("\n\nFinal prompt:\n", 1)
+    data = json.loads(summary_text)
+
+    assert [error["code"] for error in data["validation"]["l0_invariants"]["errors"]] == [
+        "L0I_DUPLICATE_CID",
+        "L0I_INVALID_TOKEN_COST",
+        "L0I_INCLUDED_NOT_CANDIDATE",
+    ]
+
+
 def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(
     monkeypatch,
     capsys,

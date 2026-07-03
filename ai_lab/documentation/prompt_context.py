@@ -432,20 +432,154 @@ def provider_l0_invariant_validation_result(
 ) -> dict[str, object]:
     """Return structured validation status for provider L0 summary invariants."""
 
-    try:
-        validate_provider_l0_invariants(summary)
-    except ValueError as exc:
-        return {
-            "version": "v1",
-            "ok": False,
-            "errors": [_provider_l0_invariant_error(str(exc))],
-        }
+    errors = _collect_provider_l0_invariant_errors(summary)
 
     return {
         "version": "v1",
-        "ok": True,
-        "errors": [],
+        "ok": not errors,
+        "errors": errors,
     }
+
+
+def _collect_provider_l0_invariant_errors(
+    summary: dict[str, object],
+) -> list[dict[str, object]]:
+    errors: list[dict[str, object]] = []
+    lists: dict[str, list[object]] = {}
+
+    for field_name in ("l0_candidates", "l0_included", "l0_dropped"):
+        try:
+            lists[field_name] = list(_summary_l0_list(summary, field_name))
+        except ValueError as exc:
+            errors.append(_provider_l0_invariant_error(str(exc)))
+            lists[field_name] = []
+
+    candidate_cids = _collect_unique_l0_cids(
+        lists["l0_candidates"],
+        "l0_candidates",
+        errors,
+    )
+    included_cids = _collect_unique_l0_cids(
+        lists["l0_included"],
+        "l0_included",
+        errors,
+    )
+    dropped_cids = _collect_unique_l0_cids(
+        lists["l0_dropped"],
+        "l0_dropped",
+        errors,
+    )
+
+    for item in _valid_l0_dict_items(lists["l0_candidates"], "l0_candidates"):
+        _append_l0_validation_error(
+            errors,
+            _validate_l0_candidate_or_included_item,
+            item,
+            "l0_candidates",
+        )
+
+    for item in _valid_l0_dict_items(lists["l0_included"], "l0_included"):
+        _append_l0_validation_error(
+            errors,
+            _validate_l0_candidate_or_included_item,
+            item,
+            "l0_included",
+        )
+
+    for item in _valid_l0_dict_items(lists["l0_dropped"], "l0_dropped"):
+        _append_l0_validation_error(errors, _validate_l0_dropped_item, item)
+
+    missing_included = included_cids - candidate_cids
+    if missing_included:
+        missing = ", ".join(sorted(missing_included))
+        errors.append(
+            _provider_l0_invariant_error(
+                f"l0_included has cid not in l0_candidates: {missing}"
+            )
+        )
+
+    overlap = included_cids & dropped_cids
+    if overlap:
+        duplicated = ", ".join(sorted(overlap))
+        errors.append(
+            _provider_l0_invariant_error(
+                f"cid present in both l0_included and l0_dropped: {duplicated}"
+            )
+        )
+
+    invalid_over_budget = {
+        str(item["cid"])
+        for item in lists["l0_dropped"]
+        if isinstance(item, dict)
+        and item.get("dropped_reason") == "over_budget"
+        and isinstance(item.get("cid"), str)
+        and item["cid"]
+        and str(item["cid"]) not in candidate_cids
+    }
+    if invalid_over_budget:
+        missing = ", ".join(sorted(invalid_over_budget))
+        errors.append(
+            _provider_l0_invariant_error(
+                f"over_budget cid not in l0_candidates: {missing}"
+            )
+        )
+
+    return errors
+
+
+def _collect_unique_l0_cids(
+    items: list[object],
+    field_name: str,
+    errors: list[dict[str, object]],
+) -> set[str]:
+    cids: set[str] = set()
+
+    for item in items:
+        try:
+            cid = _l0_item_cid(item, field_name)
+        except ValueError as exc:
+            errors.append(_provider_l0_invariant_error(str(exc)))
+            continue
+
+        if cid in cids:
+            errors.append(
+                _provider_l0_invariant_error(
+                    f"{field_name} contains duplicate cid: {cid}"
+                )
+            )
+        else:
+            cids.add(cid)
+
+    return cids
+
+
+
+def _valid_l0_dict_items(
+    items: list[object],
+    field_name: str,
+) -> list[dict[str, object]]:
+    valid_items: list[dict[str, object]] = []
+
+    for item in items:
+        try:
+            _l0_item_cid(item, field_name)
+        except ValueError:
+            continue
+
+        valid_items.append(item)
+
+    return valid_items
+
+
+def _append_l0_validation_error(
+    errors: list[dict[str, object]],
+    validator,
+    *args: object,
+) -> None:
+    try:
+        validator(*args)
+    except ValueError as exc:
+        errors.append(_provider_l0_invariant_error(str(exc)))
 
 
 def _provider_l0_invariant_error(message: str) -> dict[str, object]:
