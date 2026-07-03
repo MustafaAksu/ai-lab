@@ -829,13 +829,26 @@ def test_main_print_prompt_context_summary_json_can_include_l0(
     chunk_id = "chunk-a"
     (tmp_path / f"{chunk_id}.json").write_text(
         json.dumps(
-            {
-                "chunk_reference": {"chunk_id": chunk_id},
-                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
-                "l0_summary": "short summary",
-                "keyphrases": ["citation", "span", "validation"],
-            }
-        ),
+                {
+                    "chunk_reference": {
+                        "chunk_id": chunk_id,
+                        "artifact_cid": "3ac9f2b1d0af",
+                        "version": "a1c2d3e",
+                        "span": {"unit": "b", "start": 100, "end": 200},
+                        "artifact_type": "doc",
+                        "embedding_ids": [],
+                        "redaction_level": "none",
+                    },
+                    "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                    "l0_summary": "short summary",
+                    "keyphrases": ["citation", "span", "validation"],
+                    "entities": [],
+                    "claims": [],
+                    "risks": [],
+                    "created_at": "2026-06-30T00:00:00+00:00",
+                    "last_refreshed_at": "2026-06-30T00:00:00+00:00",
+                }
+            ),
         encoding="utf-8",
     )
 
