@@ -1,0 +1,35 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "32f526e"
+  ],
+  "commit_hash": "32f526e",
+  "created_at": "2026-07-03T21:04:46.525314+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260703-l0-record-diagnostics",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260703-l0-record-diagnostics",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Implemented non-interfering structured diagnostics for malformed L0 summary records. Added l0_summary_record_diagnostics with schema and validator version metadata, multi-error collection, unknown-field warnings, optional-section warnings, and redaction-safe messages. Provider L0 loading now has an internal diagnostics path while preserving existing not_found drop semantics.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "l0-summary",
+    "diagnostics",
+    "provider-context"
+  ],
+  "turn_id": 1
+}

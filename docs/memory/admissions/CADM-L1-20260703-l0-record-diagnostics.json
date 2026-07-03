@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-03T21:04:46.719168+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260703-l0-record-diagnostics",
+    "32f526e"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 32f526e and passing focused/full pytest results for the diagnostics slice.",
+  "substrate": "process",
+  "target_item_id": "L1-20260703-l0-record-diagnostics",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260703-l0-record-diagnostics",
+  "warrant_state": "supported"
+}

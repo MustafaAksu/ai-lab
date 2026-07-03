@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added l0_summary_record_diagnostics and helper diagnostic collectors.",
+    "Added provider-load diagnostics path without changing _load_l0_record public behavior.",
+    "Added tests for multi-error diagnostics, unknown-field warnings, redaction discipline, and preserved malformed drop semantics."
+  ],
+  "content_hash": "df5dc4678fcea63a301907de91701b1dd086dde1dd020617e4532512954a19cc",
+  "coverage_score": 0.94,
+  "created_at": "2026-07-03T21:04:46.619609+00:00",
+  "episode_id": "EP-20260703-l0-record-diagnostics",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep diagnostics non-interfering: malformed provider L0 records remain unavailable/not_found.",
+    "Use a small v1 diagnostics schema grounded in current validate_l0_summary_record failures."
+  ],
+  "l1_id": "L1-20260703-l0-record-diagnostics",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to add a small CLI/read-only surface for L0 diagnostics or move to guarded explicit L0 context-pack inclusion after repo-grounding."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Diagnostics taxonomy can grow too quickly; keep future changes schema-versioned and grounded in real validator behavior."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260703-l0-record-diagnostics"
+  ],
+  "summary_text": "Added internal structured diagnostics for malformed L0 summary records. The diagnostics API is observational only and does not change validation behavior, provider-summary drop reasons, ranking, selection, or rendering. Diagnostics include schema_version, validator_version, source, ok, optional record_id, and diagnostic entries with code, severity, field_path, and message. Provider L0 loading now exposes _load_l0_record_with_diagnostics while provider_l0_inclusion_summary continues to treat malformed records as not_found. Full test suite passed before commit.",
+  "summary_version": "v1",
+  "topics": [
+    "l0-summary",
+    "diagnostics",
+    "provider-context"
+  ],
+  "ttl_until": null
+}
