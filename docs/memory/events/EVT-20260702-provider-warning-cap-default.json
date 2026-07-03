@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "3a1c3fe"
+  ],
+  "commit_hash": "3a1c3fe",
+  "created_at": "2026-07-03T06:50:33.603565+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-provider-warning-cap-default",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-provider-warning-cap-default",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Implemented and memory-refreshed the provider latest-context warning admission cap default. resolve_provider_warning_admission_cap defaults max_warning_admissions to 1 only when require_admission is true and no explicit cap is provided. ask_provider.py and compare_providers.py use the resolver, explicit cap values are preserved, and the memory L1/CADM were committed in 3a1c3fe.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context"
+  ],
+  "turn_id": 1
+}
