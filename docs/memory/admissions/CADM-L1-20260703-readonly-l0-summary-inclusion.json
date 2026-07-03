@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T11:09:18.200056+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "301087b"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260703-readonly-l0-summary-inclusion.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records committed read-only L0 summary inclusion with smoke validation and full test-suite verification.",
+  "substrate": "human",
+  "target_item_id": "L1-20260703-readonly-l0-summary-inclusion",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-5422478f806d",
+  "warrant_state": "supported"
+}

@@ -1,0 +1,52 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added L0 store loading and deterministic rough token-cost estimation in prompt_context.py.",
+    "Added explicit L0 deduplication and not_found/over_budget dropped reasons.",
+    "Extended provider_context_summary_payload and format_provider_context_summary_json with include_l0 and l0_store.",
+    "Added --include-l0 and --l0-store to scripts/ask_provider.py.",
+    "Added --include-l0 and --l0-store to scripts/compare_providers.py.",
+    "Added focused tests for prompt_context, ask_provider, and compare_providers.",
+    "Verified focused tests: 63 passed.",
+    "Verified full pytest suite: 224 passed."
+  ],
+  "content_hash": "4216a07e12fa508928b13a57942735fde532f974089c9870948e94f370287858",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-03T11:08:44.851112+00:00",
+  "episode_id": "EP-20260703-readonly-l0-summary-inclusion",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Keep this slice read-only and dry-run JSON only; do not alter rendered context packs or final prompts.",
+    "Expose explicit L0 records through l0_candidates, l0_included, and l0_dropped in schema_version v1 summary JSON.",
+    "Use --include-l0 and --l0-store only with --print-context-summary --summary-format json."
+  ],
+  "l1_id": "L1-20260703-readonly-l0-summary-inclusion",
+  "namespace": "public",
+  "next_actions": [
+    "Consider the next smallest slice: either actual explicit L0 context-pack inclusion or L0 JSON/schema validation hardening, depending on provider comparison."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Token cost is a deterministic rough word-count estimate, not tokenizer-exact accounting.",
+    "L0 visibility is not yet actual context-pack or prompt inclusion."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260703-readonly-l0-summary-inclusion"
+  ],
+  "summary_text": "AI-Lab added read-only explicit L0 inclusion visibility to provider latest-context dry-run JSON summaries. prompt_context now loads L0 chunk summary JSON records from an L0 store, estimates rough token cost deterministically, deduplicates explicit chunk ids, reports missing chunks as not_found, admits chunks against the L0 budget bucket when --context-window is provided, and emits l0_candidates, l0_included, and l0_dropped in schema_version v1 JSON summaries. ask_provider.py and compare_providers.py now support --include-l0 and --l0-store for --print-context-summary --summary-format json. This is read-only summary visibility only and does not alter rendered context packs or final prompts. Smoke test using create_l0_chunk.py produced valid l0_* JSON output; full suite passed with 224 tests.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "l0",
+    "provider-context-summary",
+    "latest-context",
+    "dry-run",
+    "cli"
+  ],
+  "ttl_until": null
+}
