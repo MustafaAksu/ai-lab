@@ -347,3 +347,61 @@ def test_context_pack_manifest_rejects_invalid_admission_summary_count():
             items=(item,),
             admission_summary={"admit": -1},
         )
+
+
+def test_context_pack_manifest_serializes_admission_policy():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    manifest = ContextPackManifest(
+        task="Prepare context.",
+        assembly_policy="latest_context",
+        items=(item,),
+        admission_policy={
+            "require_admission": True,
+            "max_warning_admissions": 1,
+        },
+    )
+
+    assert manifest.to_dict()["admission_policy"] == {
+        "require_admission": True,
+        "max_warning_admissions": 1,
+    }
+
+
+def test_context_pack_manifest_rejects_invalid_admission_policy_key():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="admission_policy contains an unsupported key"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            admission_policy={"unknown": True},
+        )
+
+
+def test_context_pack_manifest_rejects_invalid_admission_policy_cap():
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+    )
+
+    with pytest.raises(ContextPackError, match="admission_policy.max_warning_admissions"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            admission_policy={"max_warning_admissions": -1},
+        )

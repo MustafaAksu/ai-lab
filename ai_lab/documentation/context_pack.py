@@ -103,6 +103,33 @@ def _validate_telemetry_counts(
             raise ContextPackError(f"{field_name} counts must be non-negative integers.")
 
 
+def _validate_admission_policy(
+    value: dict[str, object],
+    field_name: str,
+) -> None:
+    allowed_keys = {"require_admission", "max_warning_admissions"}
+
+    for key in value:
+        if key not in allowed_keys:
+            raise ContextPackError(f"{field_name} contains an unsupported key.")
+
+    require_admission = value.get("require_admission")
+    if require_admission is not None and not isinstance(require_admission, bool):
+        raise ContextPackError(f"{field_name}.require_admission must be a boolean.")
+
+    max_warning_admissions = value.get("max_warning_admissions")
+    if (
+        max_warning_admissions is not None
+        and (
+            not isinstance(max_warning_admissions, int)
+            or max_warning_admissions < 0
+        )
+    ):
+        raise ContextPackError(
+            f"{field_name}.max_warning_admissions must be a non-negative integer."
+        )
+
+
 def compute_manifest_id(
     task: str,
     assembly_policy: str,
@@ -241,6 +268,7 @@ class ContextPackManifest:
     task_label: str | None = None
     full_prompt_hash: str | None = None
     admission_summary: dict[str, int] | None = None
+    admission_policy: dict[str, object] | None = None
 
     def __post_init__(self) -> None:
         _validate_short_text(self.task, "task", max_length=500)
@@ -268,6 +296,9 @@ class ContextPackManifest:
 
         if self.admission_summary is not None:
             _validate_telemetry_counts(self.admission_summary, "admission_summary")
+
+        if self.admission_policy is not None:
+            _validate_admission_policy(self.admission_policy, "admission_policy")
 
         expected_manifest_id = compute_manifest_id(
             task=self.task,
@@ -311,6 +342,9 @@ class ContextPackManifest:
 
         if self.admission_summary is not None:
             data["admission_summary"] = dict(self.admission_summary)
+
+        if self.admission_policy is not None:
+            data["admission_policy"] = dict(self.admission_policy)
 
         if self.pipeline_run_id:
             data["provenance"] = {

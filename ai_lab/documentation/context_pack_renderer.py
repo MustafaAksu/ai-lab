@@ -37,6 +37,11 @@ def render_context_pack_markdown(manifest: ContextPackManifest) -> str:
     if manifest.model_target:
         lines.append(f"Model target: {manifest.model_target}")
 
+    if manifest.admission_policy is not None:
+        lines.append("Admission policy:")
+        for key, value in manifest.admission_policy.items():
+            lines.append(f"- {key}: {value}")
+
     if manifest.admission_summary is not None:
         lines.append("Admission summary:")
         for key, value in manifest.admission_summary.items():

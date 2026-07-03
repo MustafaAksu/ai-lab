@@ -157,6 +157,23 @@ def filter_items_by_admission_requirement(
     return tuple(selected), tuple(exclusions)
 
 
+
+def admission_policy_for_manifest(
+    require_admission: bool,
+    max_warning_admissions: int | None,
+) -> dict[str, object]:
+    """Return manifest-level admission policy settings."""
+
+    policy: dict[str, object] = {
+        "require_admission": require_admission,
+    }
+
+    if max_warning_admissions is not None:
+        policy["max_warning_admissions"] = max_warning_admissions
+
+    return policy
+
+
 def admission_summary_for_manifest(
     items: tuple[ContextPackItem, ...],
     exclusions: tuple[ContextPackExclusion, ...] = (),
@@ -447,5 +464,9 @@ def build_latest_context_manifest(
         admission_summary=admission_summary_for_manifest(
             items=selected_items,
             exclusions=exclusions,
+        ),
+        admission_policy=admission_policy_for_manifest(
+            require_admission=require_admission,
+            max_warning_admissions=max_warning_admissions,
         ),
     )

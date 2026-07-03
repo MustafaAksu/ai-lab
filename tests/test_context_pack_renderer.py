@@ -158,3 +158,34 @@ def test_render_context_pack_includes_admission_summary(tmp_path):
     assert "- admit: 1" in rendered
     assert "- admit_with_warning: 0" in rendered
     assert "- excluded_by_policy: 2" in rendered
+
+
+def test_render_context_pack_includes_admission_policy(tmp_path):
+    source = tmp_path / "l1.json"
+    source.write_text('{"summary_text": "Admitted L1 summary."}', encoding="utf-8")
+
+    item = ContextPackItem(
+        item_type="episode_l1",
+        item_id="L1-0001",
+        reason="Latest admitted L1.",
+        relevance_score=0.92,
+        token_estimate=100,
+        source_path=str(source),
+        admission_decision="admit",
+    )
+
+    manifest = ContextPackManifest(
+        task="Render admission policy.",
+        assembly_policy="latest_context",
+        items=(item,),
+        admission_policy={
+            "require_admission": True,
+            "max_warning_admissions": 1,
+        },
+    )
+
+    rendered = render_context_pack_markdown(manifest)
+
+    assert "Admission policy:" in rendered
+    assert "- require_admission: True" in rendered
+    assert "- max_warning_admissions: 1" in rendered

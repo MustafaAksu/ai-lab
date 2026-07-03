@@ -837,3 +837,57 @@ def test_build_latest_context_manifest_applies_warning_cap(tmp_path):
         "admit_with_warning": 1,
         "excluded_by_policy": 1,
     }
+
+
+def test_admission_policy_for_manifest_records_require_and_cap():
+    from ai_lab.documentation.context_pack_builder import admission_policy_for_manifest
+
+    assert admission_policy_for_manifest(
+        require_admission=True,
+        max_warning_admissions=1,
+    ) == {
+        "require_admission": True,
+        "max_warning_admissions": 1,
+    }
+
+
+def test_admission_policy_for_manifest_omits_unset_cap():
+    from ai_lab.documentation.context_pack_builder import admission_policy_for_manifest
+
+    assert admission_policy_for_manifest(
+        require_admission=False,
+        max_warning_admissions=None,
+    ) == {
+        "require_admission": False,
+    }
+
+
+def test_build_latest_context_manifest_records_admission_policy(tmp_path):
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare policy context.",
+        records=records,
+        l1_dir=tmp_path / "empty-l1",
+        admission_dir=tmp_path / "empty-admissions",
+        require_admission=False,
+        max_warning_admissions=1,
+    )
+
+    assert manifest.admission_policy == {
+        "require_admission": False,
+        "max_warning_admissions": 1,
+    }
+    assert manifest.to_dict()["admission_policy"] == manifest.admission_policy
