@@ -385,6 +385,142 @@ def provider_l0_inclusion_summary(
 
 
 
+def validate_provider_l0_invariants(summary: dict[str, object]) -> None:
+    """Validate current read-only L0 provider-summary invariants."""
+
+    candidates = _summary_l0_list(summary, "l0_candidates")
+    included = _summary_l0_list(summary, "l0_included")
+    dropped = _summary_l0_list(summary, "l0_dropped")
+
+    candidate_cids = _unique_l0_cids(candidates, "l0_candidates")
+    included_cids = _unique_l0_cids(included, "l0_included")
+    dropped_cids = _unique_l0_cids(dropped, "l0_dropped")
+
+    for item in candidates:
+        _validate_l0_candidate_or_included_item(item, "l0_candidates")
+
+    for item in included:
+        _validate_l0_candidate_or_included_item(item, "l0_included")
+
+    for item in dropped:
+        _validate_l0_dropped_item(item)
+
+    missing_included = included_cids - candidate_cids
+    if missing_included:
+        missing = ", ".join(sorted(missing_included))
+        raise ValueError(f"l0_included has cid not in l0_candidates: {missing}")
+
+    overlap = included_cids & dropped_cids
+    if overlap:
+        duplicated = ", ".join(sorted(overlap))
+        raise ValueError(f"cid present in both l0_included and l0_dropped: {duplicated}")
+
+    invalid_over_budget = {
+        str(item["cid"])
+        for item in dropped
+        if item.get("dropped_reason") == "over_budget"
+        and str(item["cid"]) not in candidate_cids
+    }
+    if invalid_over_budget:
+        missing = ", ".join(sorted(invalid_over_budget))
+        raise ValueError(f"over_budget cid not in l0_candidates: {missing}")
+
+
+def _summary_l0_list(
+    summary: dict[str, object],
+    field_name: str,
+) -> list[dict[str, object]]:
+    value = summary.get(field_name)
+
+    if not isinstance(value, list):
+        raise ValueError(f"{field_name} must be a list")
+
+    for index, item in enumerate(value):
+        if not isinstance(item, dict):
+            raise ValueError(f"{field_name}[{index}] must be an object")
+
+    return value
+
+
+def _unique_l0_cids(
+    items: list[dict[str, object]],
+    field_name: str,
+) -> set[str]:
+    seen: set[str] = set()
+
+    for item in items:
+        cid = _l0_item_cid(item, field_name)
+
+        if cid in seen:
+            raise ValueError(f"{field_name} contains duplicate cid: {cid}")
+
+        seen.add(cid)
+
+    return seen
+
+
+def _l0_item_cid(item: dict[str, object], field_name: str) -> str:
+    cid = item.get("cid")
+
+    if not isinstance(cid, str) or not cid:
+        raise ValueError(f"{field_name} item must contain non-empty cid")
+
+    return cid
+
+
+def _validate_l0_token_cost(item: dict[str, object], field_name: str) -> None:
+    token_cost = item.get("token_cost")
+
+    if not isinstance(token_cost, int) or token_cost < 0:
+        raise ValueError(f"{field_name} item token_cost must be a non-negative int")
+
+
+def _validate_optional_l0_citation(
+    item: dict[str, object],
+    field_name: str,
+) -> None:
+    if "citation" not in item:
+        return
+
+    citation = item["citation"]
+    if not isinstance(citation, str) or not citation:
+        raise ValueError(f"{field_name} item citation must be a non-empty string")
+
+
+def _validate_l0_candidate_or_included_item(
+    item: dict[str, object],
+    field_name: str,
+) -> None:
+    _l0_item_cid(item, field_name)
+    _validate_l0_token_cost(item, field_name)
+    _validate_optional_l0_citation(item, field_name)
+
+    inclusion_reason = item.get("inclusion_reason")
+    if not isinstance(inclusion_reason, str) or not inclusion_reason:
+        raise ValueError(
+            f"{field_name} item inclusion_reason must be a non-empty string"
+        )
+
+    if "dropped_reason" in item:
+        raise ValueError(f"{field_name} item must not contain dropped_reason")
+
+
+def _validate_l0_dropped_item(item: dict[str, object]) -> None:
+    _l0_item_cid(item, "l0_dropped")
+    _validate_l0_token_cost(item, "l0_dropped")
+    _validate_optional_l0_citation(item, "l0_dropped")
+
+    dropped_reason = item.get("dropped_reason")
+    if dropped_reason not in {"not_found", "over_budget"}:
+        raise ValueError(
+            "l0_dropped item dropped_reason must be one of: not_found, over_budget"
+        )
+
+    if "inclusion_reason" in item:
+        raise ValueError("l0_dropped item must not contain inclusion_reason")
+
+
+
 
 
 def provider_context_summary_payload(

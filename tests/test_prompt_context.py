@@ -452,3 +452,251 @@ def test_provider_context_summary_json_dedupes_l0_and_reports_missing_or_over_bu
             "token_cost": 13,
         },
     ]
+
+
+def test_validate_provider_l0_invariants_accepts_current_summary_shape():
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    validate_provider_l0_invariants(
+        {
+            "l0_candidates": [
+                {
+                    "cid": "chunk-a",
+                    "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                    "inclusion_reason": "explicit",
+                    "token_cost": 5,
+                },
+                {
+                    "cid": "chunk-b",
+                    "inclusion_reason": "explicit",
+                    "token_cost": 13,
+                },
+            ],
+            "l0_included": [
+                {
+                    "cid": "chunk-a",
+                    "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                    "inclusion_reason": "explicit",
+                    "token_cost": 5,
+                }
+            ],
+            "l0_dropped": [
+                {
+                    "cid": "missing-chunk",
+                    "dropped_reason": "not_found",
+                    "token_cost": 0,
+                },
+                {
+                    "cid": "chunk-b",
+                    "dropped_reason": "over_budget",
+                    "token_cost": 13,
+                },
+            ],
+        }
+    )
+
+
+def test_validate_provider_l0_invariants_requires_l0_lists():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(ValueError, match="l0_candidates must be a list"):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": {},
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_duplicate_cids():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(ValueError, match="l0_candidates contains duplicate cid: A"):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1},
+                ],
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_invalid_token_cost():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="l0_candidates item token_cost must be a non-negative int",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": -1}
+                ],
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_invalid_optional_citation():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="l0_candidates item citation must be a non-empty string",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {
+                        "cid": "A",
+                        "citation": "",
+                        "inclusion_reason": "explicit",
+                        "token_cost": 1,
+                    }
+                ],
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_included_without_candidate():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="l0_included has cid not in l0_candidates: A",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [],
+                "l0_included": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1}
+                ],
+                "l0_dropped": [],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_included_dropped_overlap():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="cid present in both l0_included and l0_dropped: A",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1}
+                ],
+                "l0_included": [
+                    {"cid": "A", "inclusion_reason": "explicit", "token_cost": 1}
+                ],
+                "l0_dropped": [
+                    {"cid": "A", "dropped_reason": "over_budget", "token_cost": 1}
+                ],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_invalid_dropped_reason():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="l0_dropped item dropped_reason must be one of: not_found, over_budget",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [],
+                "l0_included": [],
+                "l0_dropped": [
+                    {"cid": "A", "dropped_reason": "invalid_schema", "token_cost": 1}
+                ],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_over_budget_without_candidate():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="over_budget cid not in l0_candidates: A",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [],
+                "l0_included": [],
+                "l0_dropped": [
+                    {"cid": "A", "dropped_reason": "over_budget", "token_cost": 1}
+                ],
+            }
+        )
+
+
+def test_validate_provider_l0_invariants_rejects_cross_reason_fields():
+    import pytest
+
+    from ai_lab.documentation.prompt_context import validate_provider_l0_invariants
+
+    with pytest.raises(
+        ValueError,
+        match="l0_dropped item must not contain inclusion_reason",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [],
+                "l0_included": [],
+                "l0_dropped": [
+                    {
+                        "cid": "A",
+                        "dropped_reason": "not_found",
+                        "inclusion_reason": "explicit",
+                        "token_cost": 0,
+                    }
+                ],
+            }
+        )
+
+    with pytest.raises(
+        ValueError,
+        match="l0_candidates item must not contain dropped_reason",
+    ):
+        validate_provider_l0_invariants(
+            {
+                "l0_candidates": [
+                    {
+                        "cid": "A",
+                        "dropped_reason": "not_found",
+                        "inclusion_reason": "explicit",
+                        "token_cost": 0,
+                    }
+                ],
+                "l0_included": [],
+                "l0_dropped": [],
+            }
+        )
