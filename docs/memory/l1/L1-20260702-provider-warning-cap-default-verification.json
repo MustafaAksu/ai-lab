@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Ran provider comparison without --max-warning-admissions.",
+    "Verified saved context manifest admission_policy records max_warning_admissions=1.",
+    "Committed COMP-0012 verification artifact and context manifest."
+  ],
+  "content_hash": "8466cbdaa97d6de0531f2a8241dcdf0aa16e96a535b1de6fefb5d0f04535a9d1",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T06:57:34.953921+00:00",
+  "episode_id": "EP-20260702-provider-warning-cap-default-verification",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Treat COMP-0012 as the closing verification for provider warning-cap default behavior.",
+    "No further resolver implementation is needed after the saved manifest confirmed max_warning_admissions=1 without an explicit CLI cap."
+  ],
+  "l1_id": "L1-20260702-provider-warning-cap-default-verification",
+  "namespace": "public",
+  "next_actions": [
+    "Update provider CLI help text to document the conditional default and explicit override precedence."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Provider CLI help text may still say the option defaults to no cap even though provider paths now compute a conditional default."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-provider-warning-cap-default-verification"
+  ],
+  "summary_text": "AI-Lab completed live verification of the provider latest-context warning admission cap default. COMP-0012 ran compare_providers.py with --latest-context and --require-admission but without --max-warning-admissions. The saved context manifest recorded admission_policy require_admission=true and max_warning_admissions=1, proving the resolver applied the default. The admission_summary showed admit=1, admit_with_warning=1, and excluded_by_policy=2, confirming the cap allowed exactly one warning-admitted item. Both provider responses agreed that no further implementation is needed for the resolver behavior. This closes the warning-cap/default chain: optional cap implemented, policy recorded, default synthesized, default implemented, memory refreshed, and live default verified.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context"
+  ],
+  "ttl_until": null
+}

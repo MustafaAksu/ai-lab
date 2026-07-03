@@ -1,0 +1,38 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "69811be",
+    "COMP-0012"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-03T06:57:34.863004+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-provider-warning-cap-default-verification",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-provider-warning-cap-default-verification",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Verified the provider latest-context warning admission cap default with COMP-0012. The comparison intentionally enabled require_admission without passing max_warning_admissions, and the saved context manifest recorded max_warning_admissions=1 with require_admission=true. The admission summary showed one admitted item, one admit_with_warning item, and two policy exclusions, confirming the default cap behavior.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy",
+    "provider-context"
+  ],
+  "turn_id": 1
+}
