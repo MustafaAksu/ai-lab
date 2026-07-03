@@ -1,0 +1,38 @@
+{
+  "access_level": "public",
+  "actor": "ai-lab",
+  "artifact_ids": [
+    "8f5174c",
+    "COMP-0011",
+    "SYNCOMP-0007"
+  ],
+  "commit_hash": null,
+  "created_at": "2026-07-03T06:34:52.513932+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260702-warning-cap-default-synthesis",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260702-warning-cap-default-synthesis",
+  "event_type": "artifact_created",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "committed",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "process",
+  "scope": "ai-lab-memory",
+  "selected_context_manifest_id": null,
+  "summary": "Compared and synthesized whether max_warning_admissions=1 should become the default for provider latest-context runs when require_admission is enabled. COMP-0011 and SYNCOMP-0007 converged on a shared resolver: default to 1 only for provider latest-context runs with require_admission true and no explicit cap, while preserving explicit overrides.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy"
+  ],
+  "turn_id": 1
+}

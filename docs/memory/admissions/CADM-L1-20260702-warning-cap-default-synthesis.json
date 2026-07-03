@@ -1,0 +1,21 @@
+{
+  "author": "mustafa",
+  "citations": [],
+  "created_at": "2026-07-03T06:34:52.741943+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "8f5174c"
+  ],
+  "evidence_paths": [
+    "docs/memory/l1/L1-20260702-warning-cap-default-synthesis.json"
+  ],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "Manual L1 memory refresh records COMP-0011 and SYNCOMP-0007 default-policy decision before implementation.",
+  "substrate": "human",
+  "target_item_id": "L1-20260702-warning-cap-default-synthesis",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-6cc84a3a86ec",
+  "warrant_state": "supported"
+}

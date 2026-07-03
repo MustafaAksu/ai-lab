@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Saved COMP-0011 warning admission cap default comparison.",
+    "Saved SYNCOMP-0007 synthesis of the default decision."
+  ],
+  "content_hash": "590e67f12159d180128ba5ad15684476c13d06da8021979c9c18872edba8e8e6",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-03T06:34:52.621233+00:00",
+  "episode_id": "EP-20260702-warning-cap-default-synthesis",
+  "freshness_state": "fresh",
+  "generation_model": "manual",
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Default max_warning_admissions to 1 only when provider latest-context uses require_admission=True and no cap is explicitly set.",
+    "Preserve explicit override precedence: 0, 1, 2, etc. must all pass through unchanged.",
+    "Keep build_context_pack.py explicit for now unless later intentionally included; this default is scoped to provider latest-context runs."
+  ],
+  "l1_id": "L1-20260702-warning-cap-default-synthesis",
+  "namespace": "public",
+  "next_actions": [
+    "Implement shared provider warning-cap default resolver and wire it into ask_provider.py and compare_providers.py."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Silent behavior changes are possible if the resolver is applied too broadly; centralize it and test scope carefully."
+  ],
+  "scope": "ai-lab-memory",
+  "source_event_ids": [
+    "EVT-20260702-warning-cap-default-synthesis"
+  ],
+  "summary_text": "AI-Lab ran COMP-0011 and SYNCOMP-0007 to decide whether max_warning_admissions=1 should become the default. The synthesis chose a shared policy-resolution helper: when a provider latest-context command has require_admission=True and max_warning_admissions is unset, resolve the cap to 1. Explicit values still win: 0 remains strict, values greater than 1 remain permissive, and unset with require_admission=False remains uncapped. The manifest already records admission_policy and admission_summary, so the resolved policy will remain auditable. Scope is provider latest-context runs only; do not change warning definitions, detectors, admission criteria, or historical manifests. Next implementation should centralize the resolver and wire ask_provider.py and compare_providers.py to use it.",
+  "summary_version": "v1",
+  "topics": [
+    "memory",
+    "admission-gating",
+    "warning-cap",
+    "default-policy"
+  ],
+  "ttl_until": null
+}
