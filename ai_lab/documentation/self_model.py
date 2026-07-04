@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -65,6 +66,16 @@ def read_json(path: Path) -> dict[str, object]:
     if not isinstance(data, dict):
         raise SelfModelError(f"{path} must contain a JSON object")
     return data
+
+
+def file_sha256(path: Path) -> str:
+    """Return the lowercase SHA-256 hash of a file's bytes."""
+
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _validate_recorded_by(recorded_by: object) -> None:
@@ -374,7 +385,8 @@ def audit_self_model(
                     )
                 )
 
-            if item.get("content_hash") is None:
+            content_hash = item.get("content_hash")
+            if content_hash is None:
                 findings.append(
                     _finding(
                         "warn",
@@ -383,6 +395,26 @@ def audit_self_model(
                         f"Evidence path has no content_hash yet: {item_path}",
                     )
                 )
+            elif isinstance(item_path, str) and (repo_root / item_path).exists():
+                actual_hash = file_sha256(repo_root / item_path)
+                if actual_hash != content_hash:
+                    findings.append(
+                        _finding(
+                            "warn",
+                            "SELF_MODEL_CONTENT_HASH_MISMATCH",
+                            target,
+                            f"Evidence path content_hash mismatch: {item_path}",
+                        )
+                    )
+                else:
+                    findings.append(
+                        _finding(
+                            "info",
+                            "SELF_MODEL_CONTENT_HASH_MATCH",
+                            target,
+                            f"Evidence path content_hash matches: {item_path}",
+                        )
+                    )
 
         for field_name in ("memory_records", "admissions"):
             for item in evidence.get(field_name, []):

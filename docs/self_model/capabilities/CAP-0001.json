@@ -30,62 +30,62 @@
     ],
     "files": [
       {
-        "content_hash": null,
+        "content_hash": "b8fe906c26af03db2cc9237249190e74df82b96741776a9f55cf2a31e0c33ea1",
         "path": "ai_lab/documentation/context_pack_builder.py",
         "role": "mechanism"
       },
       {
-        "content_hash": null,
+        "content_hash": "c074e88a15c872ec0b00c611a1c31c0a1d2215c4dcd8ead50739d232117b3aae",
         "path": "ai_lab/documentation/context_pack_renderer.py",
         "role": "mechanism"
       },
       {
-        "content_hash": null,
+        "content_hash": "281efda7c0f0b19c7e0a29a8d8170b893cc417919edecde9c7e9f41a0ba0f5b0",
         "path": "ai_lab/documentation/prompt_context.py",
         "role": "mechanism"
       },
       {
-        "content_hash": null,
+        "content_hash": "548787130fa3470c9cfdfb429cd0767572282ab276f84bbbcb33a3c877e6255e",
         "path": "scripts/build_context_pack.py",
         "role": "interface"
       },
       {
-        "content_hash": null,
+        "content_hash": "da492a9bf94fd8b88b91021574a51d84224d507acb0489f83204b1ebc3a63ee5",
         "path": "scripts/ask_provider.py",
         "role": "interface"
       },
       {
-        "content_hash": null,
+        "content_hash": "ca793018e75bf4cf38cc3fd39c1f375caeba26012be89e44b7f26c37334651e6",
         "path": "scripts/compare_providers.py",
         "role": "interface"
       },
       {
-        "content_hash": null,
+        "content_hash": "2b2798c4cfaa9634ac9a84d80fc304d153eadce986500f77325c8e36ee82c765",
         "path": "tests/test_context_pack_builder.py",
         "role": "test"
       },
       {
-        "content_hash": null,
+        "content_hash": "b2a2d289a144a0b628f475c2d316605d3e57f032af4459d1610766229905d574",
         "path": "tests/test_context_pack_renderer.py",
         "role": "test"
       },
       {
-        "content_hash": null,
+        "content_hash": "139f998ff5db2bd0a1c9b31f5b9dc5a57ba5883f40b0648e75bd87418b710d85",
         "path": "tests/test_build_context_pack_script.py",
         "role": "test"
       },
       {
-        "content_hash": null,
+        "content_hash": "a99af1e7162ede5db0f5fb4d460e67e04b625764ce593897c46e6aa38105efcc",
         "path": "tests/test_ask_provider.py",
         "role": "test"
       },
       {
-        "content_hash": null,
+        "content_hash": "bf2d162959f43b9a4abfc758f45b62984ccd7d0a21b5229c1f6f61bee5bad3ae",
         "path": "tests/test_compare_providers.py",
         "role": "test"
       },
       {
-        "content_hash": null,
+        "content_hash": "cd2713a6ce13212ecaf1a6fd64d760df0e05bee3e918067e6213e3ca927052c9",
         "path": "tests/test_prompt_context.py",
         "role": "test"
       }

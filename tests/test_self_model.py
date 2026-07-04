@@ -6,6 +6,7 @@ import pytest
 from ai_lab.documentation.self_model import (
     SelfModelError,
     audit_self_model,
+    file_sha256,
     read_json,
     validate_capability_record,
     validate_gap_record,
@@ -51,11 +52,144 @@ def test_audit_seed_self_model_has_no_errors():
     ]
 
 
-def test_audit_warns_when_content_hash_is_missing():
+def test_audit_reports_content_hash_matches_for_seed_capability():
     result = audit_self_model(Path("."))
 
     assert any(
+        finding["code"] == "SELF_MODEL_CONTENT_HASH_MATCH"
+        and finding["severity"] == "info"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_warns_when_content_hash_is_missing(tmp_path):
+    cap_dir = tmp_path / "docs" / "self_model" / "capabilities"
+    ver_dir = tmp_path / "docs" / "self_model" / "verifications"
+    mech_dir = tmp_path / "src"
+    mem_dir = tmp_path / "docs" / "memory" / "l1"
+    adm_dir = tmp_path / "docs" / "memory" / "admissions"
+
+    cap_dir.mkdir(parents=True)
+    ver_dir.mkdir(parents=True)
+    mech_dir.mkdir(parents=True)
+    mem_dir.mkdir(parents=True)
+    adm_dir.mkdir(parents=True)
+
+    (mech_dir / "mechanism.py").write_text("pass\n", encoding="utf-8")
+    (mem_dir / "L1-X.json").write_text("{}", encoding="utf-8")
+    (adm_dir / "CADM-X.json").write_text(
+        json.dumps(
+            {
+                "verdict_id": "CADM-X",
+                "target_item_id": "L1-X",
+                "decision": "admit",
+                "created_at": "2026-07-05T00:00:00+00:00",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    verification = read_json(Path("docs/self_model/verifications/VERIFY-20260705-0001.json"))
+    verification["repo_commit"] = "0" * 40
+    (ver_dir / "VERIFY-20260705-0001.json").write_text(
+        json.dumps(verification),
+        encoding="utf-8",
+    )
+
+    capability = read_json(Path("docs/self_model/capabilities/CAP-0001.json"))
+    capability["last_verified"]["repo_commit"] = "0" * 40
+    capability["last_verified"]["verification_artifact"] = (
+        "docs/self_model/verifications/VERIFY-20260705-0001.json"
+    )
+    capability["evidence"]["commits"] = [{"commit": "0" * 40, "role": "implementation"}]
+    capability["evidence"]["files"] = [
+        {"path": "src/mechanism.py", "role": "mechanism", "content_hash": None}
+    ]
+    capability["evidence"]["memory_records"] = [
+        {"id": "L1-X", "path": "docs/memory/l1/L1-X.json", "role": "summary"}
+    ]
+    capability["evidence"]["admissions"] = [
+        {
+            "id": "CADM-X",
+            "path": "docs/memory/admissions/CADM-X.json",
+            "role": "warrant",
+        }
+    ]
+    (cap_dir / "CAP-0001.json").write_text(json.dumps(capability), encoding="utf-8")
+
+    result = audit_self_model(tmp_path)
+
+    assert any(
         finding["code"] == "SELF_MODEL_CONTENT_HASH_MISSING"
+        and finding["severity"] == "warn"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_warns_when_content_hash_mismatches(tmp_path):
+    cap_dir = tmp_path / "docs" / "self_model" / "capabilities"
+    ver_dir = tmp_path / "docs" / "self_model" / "verifications"
+    mech_dir = tmp_path / "src"
+    mem_dir = tmp_path / "docs" / "memory" / "l1"
+    adm_dir = tmp_path / "docs" / "memory" / "admissions"
+
+    cap_dir.mkdir(parents=True)
+    ver_dir.mkdir(parents=True)
+    mech_dir.mkdir(parents=True)
+    mem_dir.mkdir(parents=True)
+    adm_dir.mkdir(parents=True)
+
+    source = mech_dir / "mechanism.py"
+    source.write_text("pass\n", encoding="utf-8")
+    (mem_dir / "L1-X.json").write_text("{}", encoding="utf-8")
+    (adm_dir / "CADM-X.json").write_text(
+        json.dumps(
+            {
+                "verdict_id": "CADM-X",
+                "target_item_id": "L1-X",
+                "decision": "admit",
+                "created_at": "2026-07-05T00:00:00+00:00",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    verification = read_json(Path("docs/self_model/verifications/VERIFY-20260705-0001.json"))
+    verification["repo_commit"] = "0" * 40
+    (ver_dir / "VERIFY-20260705-0001.json").write_text(
+        json.dumps(verification),
+        encoding="utf-8",
+    )
+
+    capability = read_json(Path("docs/self_model/capabilities/CAP-0001.json"))
+    capability["last_verified"]["repo_commit"] = "0" * 40
+    capability["last_verified"]["verification_artifact"] = (
+        "docs/self_model/verifications/VERIFY-20260705-0001.json"
+    )
+    capability["evidence"]["commits"] = [{"commit": "0" * 40, "role": "implementation"}]
+    capability["evidence"]["files"] = [
+        {
+            "path": "src/mechanism.py",
+            "role": "mechanism",
+            "content_hash": "f" * 64,
+        }
+    ]
+    capability["evidence"]["memory_records"] = [
+        {"id": "L1-X", "path": "docs/memory/l1/L1-X.json", "role": "summary"}
+    ]
+    capability["evidence"]["admissions"] = [
+        {
+            "id": "CADM-X",
+            "path": "docs/memory/admissions/CADM-X.json",
+            "role": "warrant",
+        }
+    ]
+    (cap_dir / "CAP-0001.json").write_text(json.dumps(capability), encoding="utf-8")
+
+    result = audit_self_model(tmp_path)
+
+    assert any(
+        finding["code"] == "SELF_MODEL_CONTENT_HASH_MISMATCH"
         and finding["severity"] == "warn"
         for finding in result["findings"]
     )
@@ -196,3 +330,36 @@ def test_audit_warns_when_latest_warrant_is_not_admitting(tmp_path):
         and finding["severity"] == "warn"
         for finding in result["findings"]
     )
+
+
+
+def test_refresh_capability_hashes_script_updates_null_hash(tmp_path):
+    import subprocess
+    import sys
+
+    capability = read_json(Path("docs/self_model/capabilities/CAP-0001.json"))
+    capability_path = tmp_path / "CAP-0001.json"
+    capability["evidence"]["files"] = [
+        {"path": "source.txt", "role": "mechanism", "content_hash": None}
+    ]
+    source = tmp_path / "source.txt"
+    source.write_text("content\n", encoding="utf-8")
+    capability_path.write_text(json.dumps(capability), encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/refresh_capability_hashes.py",
+            str(capability_path),
+            "--repo-root",
+            str(tmp_path),
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    refreshed = read_json(capability_path)
+    assert refreshed["evidence"]["files"][0]["content_hash"] == file_sha256(source)

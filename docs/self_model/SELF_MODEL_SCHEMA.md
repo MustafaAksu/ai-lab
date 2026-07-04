@@ -41,7 +41,7 @@ All SELF-MODEL v1 artifact IDs are immutable birth stamps. Corrections are repre
 
 A CAP record is a falsifiable claim about an implemented, partial, experimental, planned, or deprecated capability.
 
-CAP evidence must use full commit hashes and structured references. File evidence includes `content_hash`; this may be `null` in v1, but SELF-AUDIT warns when it is missing.
+CAP evidence must use full commit hashes and structured references. File evidence includes `content_hash`; this may be `null` in v1, but SELF-AUDIT warns when it is missing. When `content_hash` is present, SELF-AUDIT compares it to the current file SHA-256 and reports match or mismatch findings.
 
 ## GAP records
 
@@ -67,6 +67,7 @@ SELF-AUDIT v1 checks:
 7. stale_verification warns when the verification commit is older than the configured commit-distance threshold.
 8. warrant-state check resolves the latest admission verdict for warrant evidence and warns if it is no longer admitting.
 9. content_hash = null is a warning, not an error, in v1.
+10. content_hash mismatch is a warning, because file change means verification may be stale, not necessarily false.
 ```
 
 Severity semantics:
@@ -96,4 +97,5 @@ SELF-MODEL v1 does not:
 - infer capabilities from arbitrary prose;
 - automatically repair stale capabilities;
 - provide semantic verification that a mechanism file still implements the claimed behavior.
+- treat content_hash mismatch as proof that the capability is false.
 ```
