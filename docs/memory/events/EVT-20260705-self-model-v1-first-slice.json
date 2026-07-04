@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "075e0da"
+  ],
+  "commit_hash": "075e0da",
+  "created_at": "2026-07-04T21:28:39.228865+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-self-model-v1-first-slice",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-self-model-v1-first-slice",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added SELF-MODEL v1 first slice. Introduced mechanism-honest self-model schema, CAP/GAP/VERIFY artifact families, validation and audit logic, writer scripts, CAP-0001 for explicit L0 latest-context inclusion, GAP-0001 for automatic L0 discovery, VERIFY-20260705-0001 for test evidence, and seven focused self-model tests. Full suite passed with 276 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "self-audit",
+    "governed-improvement",
+    "l0-summary"
+  ],
+  "turn_id": 1
+}

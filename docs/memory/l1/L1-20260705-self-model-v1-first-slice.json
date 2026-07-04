@@ -1,0 +1,45 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added SELF-MODEL schema documentation and prefix/immutability rules.",
+    "Added CAP-0001, GAP-0001, and VERIFY-20260705-0001 seed records.",
+    "Added CAP/GAP/VERIFY writer scripts and self-model validation/audit tests."
+  ],
+  "content_hash": "23cdf470c03f88c73cb6cb8c53d48aa45f5764d4f1bb3e1261f680d714a97d98",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-04T21:28:39.312636+00:00",
+  "episode_id": "EP-20260705-self-model-v1-first-slice",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Canonical architecture uses SELF-MODEL, SELF-AUDIT, VERIFY, PLAN, and GOVERNED IMPROVEMENT rather than claiming AI-Lab is self-aware.",
+    "Capability records require structured evidence references and full commit hashes.",
+    "VERIFY v1 is attributed testimony, not yet an execution instrument.",
+    "SELF-AUDIT v1 checks warrant state by resolving the latest admission verdict for warrant evidence."
+  ],
+  "l1_id": "L1-20260705-self-model-v1-first-slice",
+  "namespace": "public",
+  "next_actions": [
+    "Add build_self_model.py to generate SELF_MODEL.json as aggregation-only from CAP/GAP/VERIFY records."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "VERIFY records are still manually transcribed evidence in v1; future writer should run commands and capture output itself.",
+    "Freshness uses commit-distance proxy in v1; path-sensitive mechanism/test freshness is deferred."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-v1-first-slice"
+  ],
+  "summary_text": "SELF-MODEL v1 first slice is implemented. The repo now has a mechanism-honest self-model layer that avoids canonical self-awareness claims and instead uses SELF-MODEL, SELF-AUDIT, VERIFY, PLAN, and governed-improvement vocabulary. The first slice added ai_lab/documentation/self_model.py, SELF_MODEL_SCHEMA.md, CAP-0001 for explicit L0 latest-context inclusion, GAP-0001 for automatic L0 discovery, VERIFY-20260705-0001 as attributed test-run evidence, writer scripts for CAP/GAP/VERIFY records, and tests covering validation, full-hash discipline, recorded_by attribution, content_hash warnings, evidence-path errors, and latest-warrant-state warnings. Focused self-model tests passed and the full suite passed with 276 tests before commit 075e0da.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "self-audit",
+    "governed-improvement"
+  ],
+  "ttl_until": null
+}

@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-04T21:28:39.398805+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260705-self-model-v1-first-slice",
+    "075e0da"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 075e0da, the committed SELF-MODEL v1 artifacts, and passing focused/full test results.",
+  "substrate": "process",
+  "target_item_id": "L1-20260705-self-model-v1-first-slice",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260705-self-model-v1-first-slice",
+  "warrant_state": "supported"
+}
