@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-04T19:40:50.811069+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260704-provider-explicit-l0-prompt-wiring",
+    "c710fef"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit c710fef and passing focused/full pytest results for provider explicit L0 prompt wiring.",
+  "substrate": "process",
+  "target_item_id": "L1-20260704-provider-explicit-l0-prompt-wiring",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260704-provider-explicit-l0-prompt-wiring",
+  "warrant_state": "supported"
+}

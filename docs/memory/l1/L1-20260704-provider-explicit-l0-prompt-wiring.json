@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Extended prompt_context build_latest_context_pack_manifest and build_latest_context_pack_text with explicit L0 passthrough.",
+    "Relaxed ask_provider.py and compare_providers.py --include-l0 validation so it works with --latest-context prompt generation.",
+    "Added provider CLI tests proving explicit L0 IDs reach latest-context prompt builders."
+  ],
+  "content_hash": "e50ff79e8fda97d99df7a02a2f0c2ce1fb2f19d8859db4048fbb415965e1daac",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-04T19:40:50.717634+00:00",
+  "episode_id": "EP-20260704-provider-explicit-l0-prompt-wiring",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Treat --include-l0 as a latest-context provider prompt feature, not only a JSON context-summary preview feature.",
+    "Preserve backward compatibility by adding include_l0/l0_store kwargs only when explicit L0 IDs are supplied."
+  ],
+  "l1_id": "L1-20260704-provider-explicit-l0-prompt-wiring",
+  "namespace": "public",
+  "next_actions": [
+    "Record this memory refresh, then decide whether the next target is explicit L0 exclusion diagnostics in provider dry runs or automatic L0 discovery from selected artifacts."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Automatic L0 retrieval/ranking is still not implemented; this remains an explicit user-seeded path."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260704-provider-explicit-l0-prompt-wiring"
+  ],
+  "summary_text": "Explicit L0 context-pack inclusion is now wired into provider prompt generation. Previously --include-l0 was limited to JSON context-summary preview. The provider prompt helpers now accept include_l0 and l0_store, and ask_provider.py / compare_providers.py pass those values into latest-context construction when explicit L0 IDs are requested. The CLI guard now requires --include-l0 to be used with --latest-context, while retaining the JSON-only requirement when --include-l0 is combined with --print-context-summary. Existing call sites remain compatible because include_l0 and l0_store are only passed through when requested. Focused provider tests and the full suite passed before commit.",
+  "summary_version": "v1",
+  "topics": [
+    "l0-summary",
+    "provider-prompts",
+    "latest-context"
+  ],
+  "ttl_until": null
+}

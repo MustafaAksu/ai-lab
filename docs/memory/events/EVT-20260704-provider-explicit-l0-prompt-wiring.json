@@ -1,0 +1,35 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "c710fef"
+  ],
+  "commit_hash": "c710fef",
+  "created_at": "2026-07-04T19:40:50.598683+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260704-provider-explicit-l0-prompt-wiring",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260704-provider-explicit-l0-prompt-wiring",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Wired explicit L0 inclusion into provider prompt paths. ask_provider.py and compare_providers.py now allow --include-l0 with --latest-context prompt generation, not only JSON context-summary preview. prompt_context latest-context manifest/text helpers now accept include_l0 and l0_store and pass them through only when explicit L0 IDs are requested, preserving compatibility with existing call sites and tests.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "l0-summary",
+    "provider-prompts",
+    "latest-context"
+  ],
+  "turn_id": 1
+}
