@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added file_sha256 helper and content_hash match/mismatch audit findings.",
+    "Added refresh_capability_hashes.py to update CAP evidence file hashes.",
+    "Refreshed CAP-0001 evidence hashes for twelve mechanism/interface/test files."
+  ],
+  "content_hash": "2e4ca364a40fca28bc1f7495b9defed118d7dc90984196d9fbd75c157efb73cb",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-04T21:37:15.399820+00:00",
+  "episode_id": "EP-20260705-self-model-content-hash-audit",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Treat missing file as error, missing content_hash as warning, content_hash mismatch as warning, and content_hash match as info.",
+    "Bind CAP evidence to file content using SHA-256 while preserving v1 semantics that mismatches indicate stale verification rather than proof of false capability."
+  ],
+  "l1_id": "L1-20260705-self-model-content-hash-audit",
+  "namespace": "public",
+  "next_actions": [
+    "Add build_self_model.py to generate SELF_MODEL.json as aggregation-only from CAP/GAP/VERIFY records and current audit findings."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Content-hash mismatch still does not prove semantic capability failure; it only signals that the evidence file changed since the recorded hash."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-content-hash-audit"
+  ],
+  "summary_text": "SELF-MODEL content-hash binding is implemented. The self-model audit now computes SHA-256 hashes for capability evidence files and reports hash match, missing-hash, and mismatch states. CAP-0001 was refreshed so all twelve declared mechanism/interface/test evidence files now carry content_hash values, and the audit reports SELF_MODEL_CONTENT_HASH_MATCH for each. A new scripts/refresh_capability_hashes.py helper refreshes null or existing hashes for CAP records. Tests were expanded to cover matching hashes, missing hashes, mismatches, and script-based refresh. Focused self-model tests passed with 10 tests and the full suite passed with 279 tests before commit 241661b.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "self-audit",
+    "content-hash"
+  ],
+  "ttl_until": null
+}

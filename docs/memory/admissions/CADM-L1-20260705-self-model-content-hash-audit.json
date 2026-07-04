@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-04T21:37:15.489655+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260705-self-model-content-hash-audit",
+    "241661b"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 241661b, CAP-0001 refreshed content hashes, passing self-model audit output, and passing focused/full test results.",
+  "substrate": "process",
+  "target_item_id": "L1-20260705-self-model-content-hash-audit",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260705-self-model-content-hash-audit",
+  "warrant_state": "supported"
+}
