@@ -1,0 +1,73 @@
+{
+  "active_capabilities": [
+    "CAP-0001"
+  ],
+  "audit_summary": {
+    "ok": true,
+    "severity_counts": {
+      "error": 0,
+      "info": 16,
+      "warn": 0
+    }
+  },
+  "capabilities": [
+    {
+      "capability_id": "CAP-0001",
+      "category": "memory_context",
+      "name": "Explicit L0 latest-context inclusion",
+      "source_path": "docs/self_model/capabilities/CAP-0001.json",
+      "status": "implemented"
+    }
+  ],
+  "capability_counts": {
+    "implemented": 1
+  },
+  "gap_counts": {
+    "open": 1
+  },
+  "gaps": [
+    {
+      "category": "memory_context",
+      "gap_id": "GAP-0001",
+      "name": "Automatic L0 discovery from selected context",
+      "priority": "medium",
+      "source_path": "docs/self_model/gaps/GAP-0001.json",
+      "status": "open"
+    }
+  ],
+  "generated_at": "2026-07-04T21:42:04+00:00",
+  "generation_rule": "aggregation_only",
+  "known_risks": [
+    {
+      "risk": "Capability may be overclaimed if future docs imply automatic retrieval.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0001"
+    },
+    {
+      "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
+      "source_field": "risk",
+      "source_record": "GAP-0001"
+    }
+  ],
+  "model_type": "self_model",
+  "open_gaps": [
+    "GAP-0001"
+  ],
+  "recommended_next_targets": [
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0001",
+      "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
+    }
+  ],
+  "repo_head": "12d7d7c58b23fb12b1cd2488637f92176ac962df",
+  "schema_version": "v1",
+  "system_label": "AI-Lab",
+  "verifications": [
+    {
+      "repo_commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
+      "source_path": "docs/self_model/verifications/VERIFY-20260705-0001.json",
+      "verification_id": "VERIFY-20260705-0001"
+    }
+  ]
+}

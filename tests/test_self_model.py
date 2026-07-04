@@ -363,3 +363,98 @@ def test_refresh_capability_hashes_script_updates_null_hash(tmp_path):
     assert result.returncode == 0, result.stderr
     refreshed = read_json(capability_path)
     assert refreshed["evidence"]["files"][0]["content_hash"] == file_sha256(source)
+
+
+def test_build_self_model_index_is_aggregation_only_for_seed_records():
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert index["schema_version"] == "v1"
+    assert index["model_type"] == "self_model"
+    assert index["generation_rule"] == "aggregation_only"
+    assert index["active_capabilities"] == ["CAP-0001"]
+    assert index["open_gaps"] == ["GAP-0001"]
+    assert index["capability_counts"]["implemented"] == 1
+    assert index["gap_counts"]["open"] == 1
+    assert index["audit_summary"]["ok"] is True
+
+
+def test_build_self_model_index_recommendations_are_copied_from_gaps():
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    recommendations = index["recommended_next_targets"]
+    assert recommendations == [
+        {
+            "target": (
+                "Add a read-only diagnostic that reports possible candidate "
+                "sources for future automatic L0 discovery without changing "
+                "prompt selection."
+            ),
+            "source_record": "GAP-0001",
+            "source_field": "recommended_first_slice",
+        }
+    ]
+
+
+def test_build_self_model_index_risks_keep_source_pointers():
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert {
+        "risk": "Capability may be overclaimed if future docs imply automatic retrieval.",
+        "source_record": "CAP-0001",
+        "source_field": "risks[0]",
+    } in index["known_risks"]
+    assert {
+        "risk": (
+            "If documentation says L0 is automatically retrieved, that would "
+            "overstate current behavior."
+        ),
+        "source_record": "GAP-0001",
+        "source_field": "risk",
+    } in index["known_risks"]
+
+
+def test_build_self_model_script_writes_index(tmp_path):
+    import subprocess
+    import sys
+
+    output = tmp_path / "SELF_MODEL.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/build_self_model.py",
+            "--repo-root",
+            ".",
+            "--output",
+            str(output),
+            "--generated-at",
+            "2026-07-05T00:00:00+00:00",
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    assert data["generated_at"] == "2026-07-05T00:00:00+00:00"
+    assert data["generation_rule"] == "aggregation_only"
+    assert data["active_capabilities"] == ["CAP-0001"]
+    assert data["open_gaps"] == ["GAP-0001"]

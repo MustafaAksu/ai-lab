@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -578,3 +579,188 @@ def audit_self_model(
 
     ok = not any(finding["severity"] == "error" for finding in findings)
     return {"schema_version": "v1", "ok": ok, "findings": findings}
+
+
+def _repo_head(repo_root: Path) -> str | None:
+    return _git_output(["rev-parse", "HEAD"], repo_root)
+
+
+def _load_valid_records(
+    directory: Path,
+    pattern: str,
+    validator,
+) -> list[tuple[Path, dict[str, object]]]:
+    records: list[tuple[Path, dict[str, object]]] = []
+
+    if not directory.is_dir():
+        return records
+
+    for path in sorted(directory.glob(pattern)):
+        record = read_json(path)
+        validator(record)
+        records.append((path, record))
+
+    return records
+
+
+def _count_by_status(records: list[tuple[Path, dict[str, object]]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+
+    for _, record in records:
+        status = record.get("status")
+        if isinstance(status, str):
+            counts[status] = counts.get(status, 0) + 1
+
+    return dict(sorted(counts.items()))
+
+
+def _audit_severity_counts(audit: dict[str, object]) -> dict[str, int]:
+    counts = {"error": 0, "warn": 0, "info": 0}
+
+    findings = audit.get("findings")
+    if isinstance(findings, list):
+        for finding in findings:
+            if not isinstance(finding, dict):
+                continue
+
+            severity = finding.get("severity")
+            if isinstance(severity, str):
+                counts[severity] = counts.get(severity, 0) + 1
+
+    return dict(sorted(counts.items()))
+
+
+def _relative_path(path: Path, repo_root: Path) -> str:
+    try:
+        return path.relative_to(repo_root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def build_self_model_index(
+    repo_root: Path = Path("."),
+    generated_at: str | None = None,
+) -> dict[str, object]:
+    repo_root = repo_root.resolve()
+
+    capabilities = _load_valid_records(
+        repo_root / "docs" / "self_model" / "capabilities",
+        "CAP-*.json",
+        validate_capability_record,
+    )
+    gaps = _load_valid_records(
+        repo_root / "docs" / "self_model" / "gaps",
+        "GAP-*.json",
+        validate_gap_record,
+    )
+    verifications = _load_valid_records(
+        repo_root / "docs" / "self_model" / "verifications",
+        "VERIFY-*.json",
+        validate_verification_record,
+    )
+
+    audit = audit_self_model(repo_root)
+
+    capability_records = [
+        {
+            "capability_id": str(record["capability_id"]),
+            "name": str(record["name"]),
+            "status": str(record["status"]),
+            "category": str(record["category"]),
+            "source_path": _relative_path(path, repo_root),
+        }
+        for path, record in capabilities
+    ]
+
+    gap_records = [
+        {
+            "gap_id": str(record["gap_id"]),
+            "name": str(record["name"]),
+            "status": str(record["status"]),
+            "category": str(record["category"]),
+            "priority": str(record["priority"]),
+            "source_path": _relative_path(path, repo_root),
+        }
+        for path, record in gaps
+    ]
+
+    verification_records = [
+        {
+            "verification_id": str(record["verification_id"]),
+            "repo_commit": str(record["repo_commit"]),
+            "source_path": _relative_path(path, repo_root),
+        }
+        for path, record in verifications
+    ]
+
+    known_risks: list[dict[str, str]] = []
+    for _, record in capabilities:
+        capability_id = str(record["capability_id"])
+        risks = record.get("risks")
+        if isinstance(risks, list):
+            for index, risk in enumerate(risks):
+                if isinstance(risk, str) and risk:
+                    known_risks.append(
+                        {
+                            "risk": risk,
+                            "source_record": capability_id,
+                            "source_field": f"risks[{index}]",
+                        }
+                    )
+
+    for _, record in gaps:
+        risk = record.get("risk")
+        if isinstance(risk, str) and risk:
+            known_risks.append(
+                {
+                    "risk": risk,
+                    "source_record": str(record["gap_id"]),
+                    "source_field": "risk",
+                }
+            )
+
+    recommended_next_targets: list[dict[str, str]] = []
+    for _, record in gaps:
+        if record.get("status") != "open":
+            continue
+
+        first_slice = record.get("recommended_first_slice")
+        if isinstance(first_slice, str) and first_slice:
+            recommended_next_targets.append(
+                {
+                    "target": first_slice,
+                    "source_record": str(record["gap_id"]),
+                    "source_field": "recommended_first_slice",
+                }
+            )
+
+    return {
+        "schema_version": "v1",
+        "generated_at": generated_at
+        or datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "repo_head": _repo_head(repo_root),
+        "system_label": "AI-Lab",
+        "model_type": "self_model",
+        "generation_rule": "aggregation_only",
+        "capability_counts": _count_by_status(capabilities),
+        "gap_counts": _count_by_status(gaps),
+        "active_capabilities": [
+            str(record["capability_id"])
+            for _, record in capabilities
+            if record.get("status") == "implemented"
+        ],
+        "open_gaps": [
+            str(record["gap_id"])
+            for _, record in gaps
+            if record.get("status") == "open"
+        ],
+        "capabilities": capability_records,
+        "gaps": gap_records,
+        "verifications": verification_records,
+        "known_risks": known_risks,
+        "recommended_next_targets": recommended_next_targets,
+        "audit_summary": {
+            "ok": bool(audit.get("ok")),
+            "severity_counts": _audit_severity_counts(audit),
+        },
+    }
