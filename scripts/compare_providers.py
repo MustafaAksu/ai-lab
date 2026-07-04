@@ -327,11 +327,11 @@ def main() -> int:
     if args.summary_format == "json" and not args.print_context_summary:
         parser.error("--summary-format json requires --print-context-summary.")
 
-    if args.include_l0 and not args.print_context_summary:
-        parser.error("--include-l0 requires --print-context-summary.")
+    if args.include_l0 and not args.latest_context:
+        parser.error("--include-l0 requires --latest-context.")
 
-    if args.include_l0 and args.summary_format != "json":
-        parser.error("--include-l0 requires --summary-format json.")
+    if args.include_l0 and args.print_context_summary and args.summary_format != "json":
+        parser.error("--include-l0 with --print-context-summary requires --summary-format json.")
 
     if args.validate_l0_invariants and not args.print_context_summary:
         parser.error("--validate-l0-invariants requires --print-context-summary.")
@@ -362,15 +362,21 @@ def main() -> int:
 
     if args.latest_context:
         task_label = context_task_slug(raw_prompt)
-        context_manifest = build_latest_context_pack_manifest(
-            task=context_task_label(raw_prompt),
-            token_budget=args.token_budget,
-            model_target=args.model_target,
-            scope=args.scope,
-            require_admission=args.require_admission,
-            max_warning_admissions=resolved_max_warning_admissions,
-            task_label=task_label,
-        )
+        context_kwargs = {
+            "task": context_task_label(raw_prompt),
+            "token_budget": args.token_budget,
+            "model_target": args.model_target,
+            "scope": args.scope,
+            "require_admission": args.require_admission,
+            "max_warning_admissions": resolved_max_warning_admissions,
+            "task_label": task_label,
+        }
+
+        if args.include_l0:
+            context_kwargs["include_l0"] = tuple(args.include_l0)
+            context_kwargs["l0_store"] = args.l0_store
+
+        context_manifest = build_latest_context_pack_manifest(**context_kwargs)
         context_manifest = replace(context_manifest, task_label=task_label)
         context_pack = render_context_pack_markdown(context_manifest)
 

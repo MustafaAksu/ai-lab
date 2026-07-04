@@ -541,7 +541,7 @@ def test_main_print_prompt_context_summary_json_can_include_l0(
     monkeypatch.setattr(
         ask_provider,
         "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         "sys.argv",
@@ -576,29 +576,27 @@ def test_main_print_prompt_context_summary_json_can_include_l0(
     assert "BEGIN CONTEXT PACK" in final_prompt
 
 
-def test_main_include_l0_requires_json_context_summary(monkeypatch):
-    import pytest
 
-    from scripts import ask_provider
+def test_main_include_l0_with_context_summary_requires_json(monkeypatch):
+    import pytest
+    import scripts.ask_provider as script
 
     monkeypatch.setattr(
         "sys.argv",
         [
             "ask_provider.py",
             "openai",
-            "Do",
-            "summary",
-            "step.",
+            "hello",
             "--latest-context",
+            "--print-prompt",
             "--print-context-summary",
             "--include-l0",
             "chunk-a",
-            "--print-prompt",
         ],
     )
 
     with pytest.raises(SystemExit) as exc_info:
-        ask_provider.main()
+        script.main()
 
     assert exc_info.value.code == 2
 
@@ -628,7 +626,7 @@ def test_main_print_prompt_context_summary_json_can_validate_l0_invariants(
     monkeypatch.setattr(
         ask_provider,
         "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         "sys.argv",
@@ -671,7 +669,7 @@ def test_main_print_prompt_context_summary_json_validation_can_fail_without_nonz
     monkeypatch.setattr(
         ask_provider,
         "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         ask_provider,
@@ -725,7 +723,7 @@ def test_main_print_prompt_context_summary_json_validation_collects_all_errors(
     monkeypatch.setattr(
         ask_provider,
         "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         ask_provider,
@@ -782,7 +780,7 @@ def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(
     monkeypatch.setattr(
         ask_provider,
         "build_latest_context_pack_text",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: "# Generated Context Pack",
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: "# Generated Context Pack",
     )
     monkeypatch.setattr(
         ask_provider,
@@ -843,3 +841,41 @@ def test_main_validate_l0_invariants_requires_json_summary(monkeypatch):
         ask_provider.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_latest_context_print_prompt_can_include_l0(monkeypatch, tmp_path, capsys):
+    import scripts.ask_provider as script
+
+    captured = []
+
+    def fake_build_latest_context_pack_text(**kwargs):
+        captured.append(kwargs)
+        return "CTX"
+
+    monkeypatch.setattr(
+        script,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "hello",
+            "--latest-context",
+            "--print-prompt",
+            "--include-l0",
+            "chunk-a",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    rendered = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in rendered
+    assert captured
+    assert all(call["include_l0"] == ("chunk-a",) for call in captured)
+    assert all(call["l0_store"] == tmp_path for call in captured)

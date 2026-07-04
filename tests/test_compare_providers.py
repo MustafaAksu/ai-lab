@@ -209,7 +209,7 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -558,7 +558,7 @@ def test_main_context_comparison_records_explicit_zero_policy_metadata(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -614,7 +614,7 @@ def test_main_print_prompt_can_include_context_summary(monkeypatch, capsys):
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -688,7 +688,7 @@ def test_main_print_prompt_context_summary_can_include_budget_window(monkeypatch
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -747,7 +747,7 @@ def test_main_print_prompt_context_summary_can_emit_json(monkeypatch, capsys):
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -868,7 +868,7 @@ def test_main_print_prompt_context_summary_json_can_include_l0(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -946,7 +946,7 @@ def test_main_print_prompt_context_summary_json_can_validate_l0_invariants(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -1008,7 +1008,7 @@ def test_main_print_prompt_context_summary_json_validation_collects_all_errors(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -1083,7 +1083,7 @@ def test_main_print_prompt_context_summary_json_validation_can_fail_nonzero(
     monkeypatch.setattr(
         compare_providers,
         "build_latest_context_pack_manifest",
-        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None: manifest,
+        lambda task, token_budget=None, model_target=None, scope=None, require_admission=False, task_label=None, full_prompt_hash=None, max_warning_admissions=None, **kwargs: manifest,
     )
     monkeypatch.setattr(
         compare_providers,
@@ -1147,3 +1147,54 @@ def test_main_validate_l0_invariants_requires_json_summary(monkeypatch):
         compare_providers.main()
 
     assert exc_info.value.code == 2
+
+
+def test_main_latest_context_print_prompt_can_include_l0(monkeypatch, tmp_path, capsys):
+    import scripts.compare_providers as script
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+    captured = []
+
+    def fake_build_latest_context_pack_manifest(**kwargs):
+        captured.append(kwargs)
+        item = ContextPackItem(
+            item_type="l0_summary",
+            item_id="chunk-a",
+            reason="Explicit L0.",
+            relevance_score=0.95,
+            source_path=str(tmp_path / "chunk-a.json"),
+            citation="3ac9f2b1d0af@a1c2d3e|b:100-200",
+        )
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+        )
+
+    monkeypatch.setattr(
+        script,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(script, "render_context_pack_markdown", lambda manifest: "CTX")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "hello",
+            "--latest-context",
+            "--print-prompt",
+            "--include-l0",
+            "chunk-a",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    rendered = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in rendered
+    assert captured
+    assert captured[0]["include_l0"] == ("chunk-a",)
+    assert captured[0]["l0_store"] == tmp_path

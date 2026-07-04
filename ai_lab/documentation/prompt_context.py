@@ -875,23 +875,33 @@ def build_latest_context_pack_manifest(
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
     max_warning_admissions: int | None = None,
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
         comparison_dir=Path("docs/comparisons"),
         abstraction_dir=Path("docs/abstractions"),
     )
-    return build_latest_context_manifest(
-        task=task,
-        records=records,
-        token_budget=token_budget,
-        model_target=model_target,
-        l1_scope=scope,
-        require_admission=require_admission,
-        task_label=task_label,
-        full_prompt_hash=full_prompt_hash,
-        max_warning_admissions=max_warning_admissions,
-    )
+
+    manifest_kwargs: dict[str, object] = {
+        "task": task,
+        "records": records,
+        "token_budget": token_budget,
+        "model_target": model_target,
+        "l1_scope": scope,
+        "require_admission": require_admission,
+        "task_label": task_label,
+        "full_prompt_hash": full_prompt_hash,
+        "max_warning_admissions": max_warning_admissions,
+    }
+
+    if include_l0:
+        manifest_kwargs["include_l0"] = include_l0
+        if l0_store is not None:
+            manifest_kwargs["l0_store"] = l0_store
+
+    return build_latest_context_manifest(**manifest_kwargs)
 
 
 def build_latest_context_pack_text(
@@ -903,18 +913,27 @@ def build_latest_context_pack_text(
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
     max_warning_admissions: int | None = None,
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
-    manifest = build_latest_context_pack_manifest(
-        task=task,
-        token_budget=token_budget,
-        model_target=model_target,
-        scope=scope,
-        require_admission=require_admission,
-        task_label=task_label,
-        full_prompt_hash=full_prompt_hash,
-        max_warning_admissions=max_warning_admissions,
-    )
+    manifest_kwargs: dict[str, object] = {
+        "task": task,
+        "token_budget": token_budget,
+        "model_target": model_target,
+        "scope": scope,
+        "require_admission": require_admission,
+        "task_label": task_label,
+        "full_prompt_hash": full_prompt_hash,
+        "max_warning_admissions": max_warning_admissions,
+    }
+
+    if include_l0:
+        manifest_kwargs["include_l0"] = include_l0
+        if l0_store is not None:
+            manifest_kwargs["l0_store"] = l0_store
+
+    manifest = build_latest_context_pack_manifest(**manifest_kwargs)
     return render_context_pack_markdown(manifest)
 
 

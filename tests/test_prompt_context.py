@@ -993,3 +993,48 @@ def test_load_l0_record_with_diagnostics_preserves_malformed_drop_semantics(tmp_
             }
         ],
     }
+
+
+def test_build_latest_context_pack_text_can_include_l0(monkeypatch, tmp_path):
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+    from ai_lab.documentation import prompt_context
+
+    captured = {}
+
+    def fake_build_latest_context_pack_manifest(**kwargs):
+        captured.update(kwargs)
+        item = ContextPackItem(
+            item_type="l0_summary",
+            item_id="chunk-a",
+            reason="Explicit L0.",
+            relevance_score=0.95,
+            token_estimate=100,
+        )
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+        )
+
+    monkeypatch.setattr(
+        prompt_context,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(
+        prompt_context,
+        "render_context_pack_markdown",
+        lambda manifest: "# Rendered Context",
+    )
+
+    assert (
+        prompt_context.build_latest_context_pack_text(
+            task="Prepare context.",
+            include_l0=("chunk-a",),
+            l0_store=tmp_path,
+        )
+        == "# Rendered Context"
+    )
+
+    assert captured["include_l0"] == ("chunk-a",)
+    assert captured["l0_store"] == tmp_path
