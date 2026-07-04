@@ -95,6 +95,22 @@ Every generated recommendation must point back to a source record and source fie
 
 When introduced, `SELF_MODEL.json` must be aggregation-only. It may copy, sort, count, filter, group, and link to source records. It must not invent recommendations, infer capabilities, or synthesize risk explanations.
 
+
+## SELF_MODEL.json staleness audit
+
+A committed `SELF_MODEL.json` does not require `repo_head` to equal current `HEAD`, because the commit that stores the generated index necessarily advances `HEAD`.
+
+Therefore index staleness is checked by:
+
+```text
+1. Whether CAP/GAP/VERIFY source records changed since the stored repo_head.
+2. Whether a normalized rebuild differs from the stored index.
+```
+
+The normalized rebuild comparison ignores `generated_at` and `repo_head`, and compares the aggregation content.
+
+This avoids noisy warnings after unrelated memory or documentation commits.
+
 ## Non-goals
 
 SELF-MODEL v1 does not:

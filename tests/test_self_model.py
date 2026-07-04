@@ -458,3 +458,89 @@ def test_build_self_model_script_writes_index(tmp_path):
     assert data["generation_rule"] == "aggregation_only"
     assert data["active_capabilities"] == ["CAP-0001"]
     assert data["open_gaps"] == ["GAP-0001"]
+
+
+def test_audit_self_model_index_seed_has_no_errors():
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    result = audit_self_model_index(Path("."))
+
+    assert result["ok"] is True
+    assert not [
+        finding
+        for finding in result["findings"]
+        if finding["severity"] == "error"
+    ]
+    assert any(
+        finding["code"] == "SELF_MODEL_INDEX_CONTENT_CURRENT"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_self_model_index_detects_stale_content(tmp_path):
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    original = json.loads(Path("docs/self_model/SELF_MODEL.json").read_text())
+    original["open_gaps"] = []
+
+    index_path = tmp_path / "SELF_MODEL.json"
+    index_path.write_text(json.dumps(original), encoding="utf-8")
+
+    result = audit_self_model_index(
+        repo_root=Path("."),
+        index_path=index_path,
+    )
+
+    assert result["ok"] is True
+    assert any(
+        finding["code"] == "SELF_MODEL_INDEX_CONTENT_STALE"
+        and finding["severity"] == "warn"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_self_model_index_missing_file_is_error(tmp_path):
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    result = audit_self_model_index(
+        repo_root=Path("."),
+        index_path=tmp_path / "missing.json",
+    )
+
+    assert result["ok"] is False
+    assert result["findings"] == [
+        {
+            "severity": "error",
+            "code": "SELF_MODEL_INDEX_MISSING",
+            "target": str(tmp_path / "missing.json"),
+            "message": "SELF_MODEL.json is missing.",
+        }
+    ]
+
+
+def test_audit_self_model_index_script_reports_json():
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/audit_self_model_index.py",
+            "--repo-root",
+            ".",
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    data = json.loads(result.stdout)
+    assert data["schema_version"] == "v1"
+    assert data["ok"] is True
+    assert any(
+        finding["code"] == "SELF_MODEL_INDEX_CONTENT_CURRENT"
+        for finding in data["findings"]
+    )

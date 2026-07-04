@@ -764,3 +764,198 @@ def build_self_model_index(
             "severity_counts": _audit_severity_counts(audit),
         },
     }
+
+
+SELF_MODEL_INDEX_SOURCE_PATHS = (
+    "docs/self_model/capabilities",
+    "docs/self_model/gaps",
+    "docs/self_model/verifications",
+)
+
+
+def _normalized_self_model_index(index: dict[str, object]) -> dict[str, object]:
+    normalized = dict(index)
+    normalized.pop("generated_at", None)
+    normalized.pop("repo_head", None)
+    return normalized
+
+
+def _git_path_changed_since(repo_root: Path, commit: str, path: str) -> bool | None:
+    result = subprocess.run(
+        ["git", "diff", "--quiet", f"{commit}..HEAD", "--", path],
+        cwd=repo_root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    if result.returncode == 0:
+        return False
+    if result.returncode == 1:
+        return True
+    return None
+
+
+def audit_self_model_index(
+    repo_root: Path = Path("."),
+    index_path: Path | None = None,
+) -> dict[str, object]:
+    repo_root = repo_root.resolve()
+    resolved_index_path = index_path or repo_root / "docs" / "self_model" / "SELF_MODEL.json"
+
+    findings: list[dict[str, str]] = []
+
+    if not resolved_index_path.exists():
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_MISSING",
+                str(resolved_index_path),
+                "SELF_MODEL.json is missing.",
+            )
+        )
+        return {"schema_version": "v1", "ok": False, "findings": findings}
+
+    try:
+        index = read_json(resolved_index_path)
+    except Exception as error:
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_INVALID_JSON",
+                str(resolved_index_path),
+                str(error),
+            )
+        )
+        return {"schema_version": "v1", "ok": False, "findings": findings}
+
+    if index.get("schema_version") != "v1":
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_SCHEMA_INVALID",
+                str(resolved_index_path),
+                "$.schema_version must be v1.",
+            )
+        )
+
+    if index.get("generation_rule") != "aggregation_only":
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_GENERATION_RULE_INVALID",
+                str(resolved_index_path),
+                "$.generation_rule must be aggregation_only.",
+            )
+        )
+
+    stored_repo_head = index.get("repo_head")
+    current_head = _repo_head(repo_root)
+
+    if not isinstance(stored_repo_head, str) or not FULL_COMMIT_RE.match(stored_repo_head):
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REPO_HEAD_INVALID",
+                str(resolved_index_path),
+                "$.repo_head must be a full 40-character lowercase git hash.",
+            )
+        )
+    elif not _git_success(["cat-file", "-e", f"{stored_repo_head}^{{commit}}"], repo_root):
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REPO_HEAD_MISSING",
+                str(resolved_index_path),
+                f"Stored repo_head is missing from git history: {stored_repo_head}",
+            )
+        )
+    elif stored_repo_head == current_head:
+        findings.append(
+            _finding(
+                "info",
+                "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+                str(resolved_index_path),
+                "Stored repo_head matches current HEAD.",
+            )
+        )
+    else:
+        changed_paths: list[str] = []
+        unknown_paths: list[str] = []
+
+        for source_path in SELF_MODEL_INDEX_SOURCE_PATHS:
+            changed = _git_path_changed_since(repo_root, stored_repo_head, source_path)
+            if changed is True:
+                changed_paths.append(source_path)
+            elif changed is None:
+                unknown_paths.append(source_path)
+
+        if changed_paths:
+            findings.append(
+                _finding(
+                    "warn",
+                    "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED",
+                    str(resolved_index_path),
+                    "Self-model source records changed since stored repo_head: "
+                    + ", ".join(changed_paths),
+                )
+            )
+        elif unknown_paths:
+            findings.append(
+                _finding(
+                    "warn",
+                    "SELF_MODEL_INDEX_SOURCE_DRIFT_UNKNOWN",
+                    str(resolved_index_path),
+                    "Could not determine source-record drift for: "
+                    + ", ".join(unknown_paths),
+                )
+            )
+        else:
+            findings.append(
+                _finding(
+                    "info",
+                    "SELF_MODEL_INDEX_REPO_HEAD_DIFFERS_SOURCE_UNCHANGED",
+                    str(resolved_index_path),
+                    "Stored repo_head differs from current HEAD, but source records are unchanged.",
+                )
+            )
+
+    try:
+        rebuilt = build_self_model_index(
+            repo_root=repo_root,
+            generated_at=(
+                index.get("generated_at")
+                if isinstance(index.get("generated_at"), str)
+                else None
+            ),
+        )
+    except Exception as error:
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REBUILD_FAILED",
+                str(resolved_index_path),
+                str(error),
+            )
+        )
+    else:
+        if _normalized_self_model_index(index) != _normalized_self_model_index(rebuilt):
+            findings.append(
+                _finding(
+                    "warn",
+                    "SELF_MODEL_INDEX_CONTENT_STALE",
+                    str(resolved_index_path),
+                    "Stored SELF_MODEL.json differs from a normalized rebuild.",
+                )
+            )
+        else:
+            findings.append(
+                _finding(
+                    "info",
+                    "SELF_MODEL_INDEX_CONTENT_CURRENT",
+                    str(resolved_index_path),
+                    "Stored SELF_MODEL.json matches a normalized rebuild.",
+                )
+            )
+
+    ok = not any(finding["severity"] == "error" for finding in findings)
+    return {"schema_version": "v1", "ok": ok, "findings": findings}
