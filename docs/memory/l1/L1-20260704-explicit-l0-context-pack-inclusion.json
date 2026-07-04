@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added explicit_l0_summary_items and context_item_from_l0_summary_record.",
+    "Extended build_latest_context_manifest with include_l0 and l0_store parameters.",
+    "Added build_context_pack.py --include-l0 and --l0-store flags.",
+    "Added compact L0 JSON rendering for l0_summary context items."
+  ],
+  "content_hash": "e034b4fa6c38e11343dace96001192948889dbaf8b6bc445f85a6a063cee37b6",
+  "coverage_score": 0.95,
+  "created_at": "2026-07-04T19:10:40.359508+00:00",
+  "episode_id": "EP-20260704-explicit-l0-context-pack-inclusion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Use existing ContextPackItem item_type l0_summary; do not add a new L0 item type or new dataclass.",
+    "Keep explicit L0 inclusion guarded and non-fatal: invalid requested records become exclusions, not crashes."
+  ],
+  "l1_id": "L1-20260704-explicit-l0-context-pack-inclusion",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to wire explicit L0 inclusion into provider prompt paths or add diagnostics/listing support around explicit L0 context-pack exclusions."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The include_l0 path is explicit only; automatic retrieval, dependency traversal, ranking, and admission-aware L0 expansion remain deferred."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260704-explicit-l0-context-pack-inclusion"
+  ],
+  "summary_text": "Added guarded explicit L0 context-pack inclusion. The implementation uses the existing l0_summary context item type rather than inventing a new type. Explicit L0 IDs are loaded from the configured L0 store, validated with validate_l0_summary_record, checked for chunk_id/file-name consistency, and converted into ContextPackItem entries. Missing, unreadable, malformed, non-object, invalid, or mismatched L0 records are skipped with non-fatal policy exclusions. build_context_pack.py now accepts --include-l0 and --l0-store. The markdown renderer uses a compact validated L0 rendering path for l0_summary items instead of raw JSON source dumping. Focused and full tests passed before commit.",
+  "summary_version": "v1",
+  "topics": [
+    "l0-summary",
+    "context-pack",
+    "renderer"
+  ],
+  "ttl_until": null
+}

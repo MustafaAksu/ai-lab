@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-04T19:10:40.450174+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260704-explicit-l0-context-pack-inclusion",
+    "2ba4d78"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 2ba4d78 and passing focused/full pytest results for explicit L0 context-pack inclusion.",
+  "substrate": "process",
+  "target_item_id": "L1-20260704-explicit-l0-context-pack-inclusion",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260704-explicit-l0-context-pack-inclusion",
+  "warrant_state": "supported"
+}
