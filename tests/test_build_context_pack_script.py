@@ -161,3 +161,49 @@ def test_build_context_pack_passes_require_admission(tmp_path, monkeypatch):
     )
 
     assert build_context_pack.main() == 0
+
+
+def test_main_passes_explicit_l0_arguments(monkeypatch, tmp_path, capsys):
+    import scripts.build_context_pack as script
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+    captured = {}
+
+    def fake_discover_artifacts(comparison_dir, abstraction_dir):
+        return ()
+
+    def fake_build_latest_context_manifest(**kwargs):
+        captured.update(kwargs)
+        item = ContextPackItem(
+            item_type="l0_summary",
+            item_id="chunk-a",
+            reason="Explicit L0.",
+            relevance_score=0.95,
+            source_path=str(tmp_path / "chunk-a.json"),
+            citation="3ac9f2b1d0af@a1c2d3e|b:100-200",
+        )
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+        )
+
+    monkeypatch.setattr(script, "discover_artifacts", fake_discover_artifacts)
+    monkeypatch.setattr(script, "build_latest_context_manifest", fake_build_latest_context_manifest)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare context.",
+            "--include-l0",
+            "chunk-a",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    capsys.readouterr()
+
+    assert captured["include_l0"] == ("chunk-a",)
+    assert captured["l0_store"] == tmp_path

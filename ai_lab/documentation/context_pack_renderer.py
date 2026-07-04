@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
-from ai_lab.documentation.context_pack import ContextPackManifest
+from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 
 
 def _read_source_path(source_path: str | None) -> str:
@@ -19,6 +21,62 @@ def _read_source_path(source_path: str | None) -> str:
         return path.read_text(encoding="utf-8", errors="ignore").strip()
     except OSError as error:
         return f"[source file unreadable: {source_path}; {error}]"
+
+
+def _read_l0_summary_source_path(source_path: str | None) -> str:
+    """Read and compactly render a validated L0 summary JSON source."""
+
+    if not source_path:
+        return "[missing source_path]"
+
+    path = Path(source_path)
+
+    try:
+        if not path.is_file():
+            return f"[source file not found: {source_path}]"
+
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as error:
+        return f"[source file unreadable: {source_path}; {error}]"
+    except ValueError:
+        return f"[invalid l0_summary source JSON: {source_path}]"
+
+    if not isinstance(data, dict):
+        return f"[invalid l0_summary source: expected JSON object at {source_path}]"
+
+    try:
+        validate_l0_summary_record(data)
+    except L0SummaryError as error:
+        return f"[invalid l0_summary source: {error}]"
+
+    chunk_reference = data["chunk_reference"]
+    span = chunk_reference["span"]
+
+    lines = [
+        f"Chunk ID: {chunk_reference['chunk_id']}",
+        f"Citation: {data['citation']}",
+        (
+            "Artifact: "
+            f"{chunk_reference['artifact_cid']}@{chunk_reference['version']}"
+        ),
+        f"Span: {span['unit']}:{span['start']}-{span['end']}",
+        "",
+        "Summary:",
+        str(data["l0_summary"]),
+    ]
+
+    keyphrases = data.get("keyphrases", [])
+    if isinstance(keyphrases, list) and keyphrases:
+        lines.extend(["", f"Keyphrases: {', '.join(str(item) for item in keyphrases)}"])
+
+    return "\n".join(lines)
+
+
+def _read_context_item_source(item: ContextPackItem) -> str:
+    if item.item_type == "l0_summary":
+        return _read_l0_summary_source_path(item.source_path)
+
+    return _read_source_path(item.source_path)
 
 
 def render_context_pack_markdown(manifest: ContextPackManifest) -> str:
@@ -90,7 +148,7 @@ def render_context_pack_markdown(manifest: ContextPackManifest) -> str:
             [
                 "",
                 "BEGIN SOURCE CONTENT",
-                _read_source_path(item.source_path),
+                _read_context_item_source(item),
                 "END SOURCE CONTENT",
             ]
         )

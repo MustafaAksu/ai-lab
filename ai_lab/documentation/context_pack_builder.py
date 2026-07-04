@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+import json
 from pathlib import Path
 
 from ai_lab.documentation.artifact_history import (
@@ -19,6 +20,7 @@ from ai_lab.documentation.context_pack import (
     ContextPackManifest,
 )
 from ai_lab.documentation.interaction_log import EpisodeL1Summary, InteractionLogError
+from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 
 
 def _shorten(value: str, max_length: int = 240) -> str:
@@ -265,6 +267,140 @@ def context_item_from_l1_summary(
     )
 
 
+
+def estimate_tokens_for_l0_summary_record(record: dict[str, object]) -> int:
+    """Estimate prompt cost for compact rendered L0 summary content."""
+
+    chunk_reference = record.get("chunk_reference", {})
+    if not isinstance(chunk_reference, dict):
+        chunk_reference = {}
+
+    keyphrases = record.get("keyphrases", ())
+    if not isinstance(keyphrases, list):
+        keyphrases = []
+
+    text = "\n".join(
+        (
+            f"Chunk ID: {chunk_reference.get('chunk_id', '')}",
+            f"Citation: {record.get('citation', '')}",
+            f"Summary: {record.get('l0_summary', '')}",
+            f"Keyphrases: {', '.join(str(item) for item in keyphrases)}",
+        )
+    )
+    return estimate_tokens_for_text(text)
+
+
+def context_item_from_l0_summary_record(
+    record: dict[str, object],
+    path: Path,
+    relevance_score: float = 0.96,
+    token_estimate: int | None = None,
+) -> ContextPackItem:
+    """Create a context-pack item from one validated L0 summary JSON artifact."""
+
+    chunk_reference = record["chunk_reference"]
+    if not isinstance(chunk_reference, dict):
+        raise ContextPackError("L0 chunk_reference must be an object.")
+
+    chunk_id = str(chunk_reference["chunk_id"])
+
+    if token_estimate is None:
+        token_estimate = estimate_tokens_for_l0_summary_record(record)
+
+    return ContextPackItem(
+        item_type="l0_summary",
+        item_id=chunk_id,
+        reason=_shorten(f"Explicit L0 summary context seed: {chunk_id}"),
+        relevance_score=relevance_score,
+        token_estimate=token_estimate,
+        source_path=str(path),
+        citation=str(record["citation"]),
+    )
+
+
+def explicit_l0_summary_items(
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path = Path("docs/memory/l0"),
+) -> tuple[tuple[ContextPackItem, ...], tuple[ContextPackExclusion, ...]]:
+    """Return valid explicit L0 context items plus non-fatal exclusions."""
+
+    items: list[ContextPackItem] = []
+    exclusions: list[ContextPackExclusion] = []
+
+    for chunk_id in include_l0:
+        path = l0_store / f"{chunk_id}.json"
+
+        if not path.is_file():
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary was not found.",
+                )
+            )
+            continue
+
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary could not be read as JSON.",
+                )
+            )
+            continue
+
+        if not isinstance(data, dict):
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary was not a JSON object.",
+                )
+            )
+            continue
+
+        try:
+            validate_l0_summary_record(data)
+        except L0SummaryError:
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary failed record validation.",
+                )
+            )
+            continue
+
+        record_chunk_reference = data["chunk_reference"]
+        if not isinstance(record_chunk_reference, dict):
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary had invalid chunk reference.",
+                )
+            )
+            continue
+
+        record_chunk_id = str(record_chunk_reference["chunk_id"])
+        if record_chunk_id != chunk_id:
+            exclusions.append(
+                ContextPackExclusion(
+                    item_id=chunk_id,
+                    reason="policy",
+                    note="Requested explicit L0 summary chunk_id did not match file name.",
+                )
+            )
+            continue
+
+        items.append(context_item_from_l0_summary_record(record=data, path=path))
+
+    return tuple(items), tuple(exclusions)
+
+
 def discover_latest_l1_summary_item(
     l1_dir: Path = Path("docs/memory/l1"),
     scope: str | None = None,
@@ -397,6 +533,8 @@ def build_latest_context_manifest(
     task_label: str | None = None,
     full_prompt_hash: str | None = None,
     max_warning_admissions: int | None = None,
+    include_l0: tuple[str, ...] = (),
+    l0_store: Path = Path("docs/memory/l0"),
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -420,9 +558,16 @@ def build_latest_context_manifest(
         for record in ordered_records
     )
 
+    explicit_l0_items, explicit_l0_exclusions = explicit_l0_summary_items(
+        include_l0=include_l0,
+        l0_store=l0_store,
+    )
+
     latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir, scope=l1_scope)
     if latest_l1_item is not None:
         candidate_items = (latest_l1_item, *candidate_items)
+
+    candidate_items = (*explicit_l0_items, *candidate_items)
 
     candidate_items = annotate_items_with_admission_verdicts(
         items=candidate_items,
@@ -449,7 +594,12 @@ def build_latest_context_manifest(
         token_budget=token_budget,
     )
 
-    exclusions = (*admission_exclusions, *warning_cap_exclusions, *budget_exclusions)
+    exclusions = (
+        *explicit_l0_exclusions,
+        *admission_exclusions,
+        *warning_cap_exclusions,
+        *budget_exclusions,
+    )
 
     return ContextPackManifest(
         task=task,

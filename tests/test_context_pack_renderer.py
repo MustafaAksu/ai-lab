@@ -189,3 +189,58 @@ def test_render_context_pack_includes_admission_policy(tmp_path):
     assert "Admission policy:" in rendered
     assert "- require_admission: True" in rendered
     assert "- max_warning_admissions: 1" in rendered
+
+
+def test_render_context_pack_markdown_renders_l0_summary_json_compactly(tmp_path):
+    import json
+
+    source = tmp_path / "chunk-a.json"
+    source.write_text(
+        json.dumps(
+            {
+                "chunk_reference": {
+                    "chunk_id": "chunk-a",
+                    "artifact_cid": "3ac9f2b1d0af",
+                    "version": "a1c2d3e",
+                    "span": {"unit": "b", "start": 100, "end": 200},
+                    "artifact_type": "doc",
+                    "embedding_ids": [],
+                    "redaction_level": "none",
+                },
+                "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+                "l0_summary": "Defines citation format and validation rules.",
+                "keyphrases": ["citation", "span", "validation"],
+                "entities": [{"type": "concept", "name": "citation"}],
+                "claims": [{"text": "Citations preserve provenance.", "polarity": "positive"}],
+                "risks": [{"text": "Invalid spans weaken grounding.", "severity": "low"}],
+                "created_at": "2026-07-03T00:00:00+00:00",
+                "last_refreshed_at": "2026-07-03T00:00:00+00:00",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    item = ContextPackItem(
+        item_type="l0_summary",
+        item_id="chunk-a",
+        reason="Explicit L0 context seed.",
+        relevance_score=0.95,
+        token_estimate=100,
+        source_path=str(source),
+        citation="3ac9f2b1d0af@a1c2d3e|b:100-200",
+    )
+
+    manifest = ContextPackManifest(
+        task="Render explicit L0.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+
+    rendered = render_context_pack_markdown(manifest)
+
+    assert "### chunk-a (l0_summary)" in rendered
+    assert "Citation: 3ac9f2b1d0af@a1c2d3e|b:100-200" in rendered
+    assert "Summary:" in rendered
+    assert "Defines citation format and validation rules." in rendered
+    assert "Keyphrases: citation, span, validation" in rendered
+    assert '"chunk_reference"' not in rendered

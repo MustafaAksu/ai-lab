@@ -891,3 +891,162 @@ def test_build_latest_context_manifest_records_admission_policy(tmp_path):
         "max_warning_admissions": 1,
     }
     assert manifest.to_dict()["admission_policy"] == manifest.admission_policy
+
+
+def write_l0_record(path, chunk_id="chunk-a", summary_text="Explicit L0 summary."):
+    import json
+
+    data = {
+        "chunk_reference": {
+            "chunk_id": chunk_id,
+            "artifact_cid": "3ac9f2b1d0af",
+            "version": "a1c2d3e",
+            "span": {"unit": "b", "start": 100, "end": 200},
+            "artifact_type": "doc",
+            "embedding_ids": [],
+            "redaction_level": "none",
+        },
+        "citation": "3ac9f2b1d0af@a1c2d3e|b:100-200",
+        "l0_summary": summary_text,
+        "keyphrases": ["citation", "span", "validation"],
+        "entities": [],
+        "claims": [],
+        "risks": [],
+        "created_at": "2026-07-03T00:00:00+00:00",
+        "last_refreshed_at": "2026-07-03T00:00:00+00:00",
+    }
+    path.write_text(json.dumps(data), encoding="utf-8")
+    return data
+
+
+def test_build_latest_context_manifest_includes_explicit_l0_summary(tmp_path):
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+    write_l0_record(l0_store / "chunk-a.json")
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context with explicit L0.",
+        records=records,
+        include_l0=("chunk-a",),
+        l0_store=l0_store,
+        l1_dir=tmp_path / "empty-l1",
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("chunk-a", "ABS-0003")
+    assert manifest.items[0].item_type == "l0_summary"
+    assert manifest.items[0].source_path == str(l0_store / "chunk-a.json")
+    assert manifest.items[0].citation == "3ac9f2b1d0af@a1c2d3e|b:100-200"
+    assert manifest.exclusions == ()
+
+
+def test_build_latest_context_manifest_skips_missing_explicit_l0(tmp_path):
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context with missing explicit L0.",
+        records=records,
+        include_l0=("missing-chunk",),
+        l0_store=tmp_path / "missing-l0",
+        l1_dir=tmp_path / "empty-l1",
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
+    assert len(manifest.exclusions) == 1
+    assert manifest.exclusions[0].item_id == "missing-chunk"
+    assert manifest.exclusions[0].reason == "policy"
+    assert manifest.exclusions[0].note == "Requested explicit L0 summary was not found."
+
+
+def test_build_latest_context_manifest_skips_malformed_explicit_l0(tmp_path):
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+    (l0_store / "chunk-a.json").write_text('{"chunk_reference": {"chunk_id": "chunk-a"}}', encoding="utf-8")
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("Memory abstraction.", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context with malformed explicit L0.",
+        records=records,
+        include_l0=("chunk-a",),
+        l0_store=l0_store,
+        l1_dir=tmp_path / "empty-l1",
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
+    assert len(manifest.exclusions) == 1
+    assert manifest.exclusions[0].item_id == "chunk-a"
+    assert manifest.exclusions[0].reason == "policy"
+    assert manifest.exclusions[0].note == "Requested explicit L0 summary failed record validation."
+
+
+def test_build_latest_context_manifest_budget_can_exclude_explicit_l0(tmp_path):
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+    write_l0_record(l0_store / "chunk-a.json", summary_text="x" * 300)
+
+    artifact_path = tmp_path / "ABS-0003.md"
+    artifact_path.write_text("x" * 40, encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0003",
+            "ABS",
+            "Memory Loop",
+            artifact_path,
+            "2026-06-30T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare budgeted context with explicit L0.",
+        records=records,
+        token_budget=20,
+        include_l0=("chunk-a",),
+        l0_store=l0_store,
+        l1_dir=tmp_path / "empty-l1",
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0003",)
+    assert any(
+        exclusion.item_id == "chunk-a" and exclusion.reason == "too_large"
+        for exclusion in manifest.exclusions
+    )

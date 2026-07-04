@@ -56,6 +56,18 @@ def main() -> int:
         help="Optional L1 memory scope/stream to select from.",
     )
     parser.add_argument(
+        "--include-l0",
+        action="append",
+        default=[],
+        help="Explicit L0 chunk ID to include as guarded l0_summary context.",
+    )
+    parser.add_argument(
+        "--l0-store",
+        type=Path,
+        default=Path("docs/memory/l0"),
+        help="Directory containing L0 summary JSON records.",
+    )
+    parser.add_argument(
         "--require-admission",
         action="store_true",
         help="Require selected context items to have an admitting admission verdict.",
@@ -101,16 +113,22 @@ def main() -> int:
     )
 
     if args.policy == "latest_context":
-        manifest = build_latest_context_manifest(
-            task=args.task,
-            records=records,
-            token_budget=args.token_budget,
-            model_target=args.model_target,
-            pipeline_run_id=args.pipeline_run_id,
-            l1_scope=args.scope,
-            require_admission=args.require_admission,
-            max_warning_admissions=args.max_warning_admissions,
-        )
+        manifest_kwargs = {
+            "task": args.task,
+            "records": records,
+            "token_budget": args.token_budget,
+            "model_target": args.model_target,
+            "pipeline_run_id": args.pipeline_run_id,
+            "l1_scope": args.scope,
+            "require_admission": args.require_admission,
+            "max_warning_admissions": args.max_warning_admissions,
+        }
+
+        if args.include_l0:
+            manifest_kwargs["include_l0"] = tuple(args.include_l0)
+            manifest_kwargs["l0_store"] = args.l0_store
+
+        manifest = build_latest_context_manifest(**manifest_kwargs)
     else:
         raise ValueError(f"Unsupported policy: {args.policy}")
 
