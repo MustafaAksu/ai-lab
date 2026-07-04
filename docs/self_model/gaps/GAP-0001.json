@@ -1,0 +1,24 @@
+{
+  "blocked_by": [],
+  "category": "memory_context",
+  "evidence": {
+    "files_checked": [
+      "ai_lab/documentation/context_pack_builder.py",
+      "ai_lab/documentation/prompt_context.py",
+      "scripts/ask_provider.py",
+      "scripts/compare_providers.py"
+    ],
+    "reason": "Existing implementation supports explicit include_l0 only."
+  },
+  "gap_id": "GAP-0001",
+  "name": "Automatic L0 discovery from selected context",
+  "priority": "medium",
+  "recommended_first_slice": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection.",
+  "related_capabilities": [
+    "CAP-0001"
+  ],
+  "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "AI-Lab cannot yet automatically discover relevant L0 summaries from selected artifacts, L1 records, or task semantics."
+}

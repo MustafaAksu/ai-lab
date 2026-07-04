@@ -1,0 +1,131 @@
+{
+  "capability_id": "CAP-0001",
+  "category": "memory_context",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "CADM-L1-20260704-explicit-l0-context-pack-inclusion",
+        "path": "docs/memory/admissions/CADM-L1-20260704-explicit-l0-context-pack-inclusion.json",
+        "role": "warrant"
+      },
+      {
+        "id": "CADM-L1-20260704-provider-explicit-l0-prompt-wiring",
+        "path": "docs/memory/admissions/CADM-L1-20260704-provider-explicit-l0-prompt-wiring.json",
+        "role": "warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "2ba4d787b9848cb5865c3c75c0c9d20fb9c1fd09",
+        "role": "implementation"
+      },
+      {
+        "commit": "c710fefd0eb4518b8f5aeb1f1b1b657ff857e655",
+        "role": "implementation"
+      },
+      {
+        "commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
+        "role": "memory_refresh"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": null,
+        "path": "ai_lab/documentation/context_pack_builder.py",
+        "role": "mechanism"
+      },
+      {
+        "content_hash": null,
+        "path": "ai_lab/documentation/context_pack_renderer.py",
+        "role": "mechanism"
+      },
+      {
+        "content_hash": null,
+        "path": "ai_lab/documentation/prompt_context.py",
+        "role": "mechanism"
+      },
+      {
+        "content_hash": null,
+        "path": "scripts/build_context_pack.py",
+        "role": "interface"
+      },
+      {
+        "content_hash": null,
+        "path": "scripts/ask_provider.py",
+        "role": "interface"
+      },
+      {
+        "content_hash": null,
+        "path": "scripts/compare_providers.py",
+        "role": "interface"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_context_pack_builder.py",
+        "role": "test"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_context_pack_renderer.py",
+        "role": "test"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_build_context_pack_script.py",
+        "role": "test"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_ask_provider.py",
+        "role": "test"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_compare_providers.py",
+        "role": "test"
+      },
+      {
+        "content_hash": null,
+        "path": "tests/test_prompt_context.py",
+        "role": "test"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "L1-20260704-explicit-l0-context-pack-inclusion",
+        "path": "docs/memory/l1/L1-20260704-explicit-l0-context-pack-inclusion.json",
+        "role": "summary"
+      },
+      {
+        "id": "L1-20260704-provider-explicit-l0-prompt-wiring",
+        "path": "docs/memory/l1/L1-20260704-provider-explicit-l0-prompt-wiring.json",
+        "role": "summary"
+      }
+    ]
+  },
+  "interfaces": [
+    "scripts/build_context_pack.py --include-l0",
+    "scripts/ask_provider.py --latest-context --include-l0",
+    "scripts/compare_providers.py --latest-context --include-l0"
+  ],
+  "last_verified": {
+    "repo_commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260705-0001.json",
+    "verified_at": "2026-07-04T21:26:15+00:00"
+  },
+  "limits": [
+    "Explicit L0 inclusion requires user-supplied chunk IDs.",
+    "Automatic L0 discovery, ranking, dependency expansion, and repair are not implemented."
+  ],
+  "name": "Explicit L0 latest-context inclusion",
+  "recommended_next_actions": [
+    "Add explicit L0 exclusion diagnostics to provider dry runs.",
+    "Design automatic L0 discovery separately as a planned capability."
+  ],
+  "risks": [
+    "Capability may be overclaimed if future docs imply automatic retrieval."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "AI-Lab can include explicit L0 chunk summaries in latest-context packs and provider prompt paths."
+}
