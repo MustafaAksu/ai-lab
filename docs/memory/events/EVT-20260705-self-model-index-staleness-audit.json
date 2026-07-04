@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "97b38c0"
+  ],
+  "commit_hash": "97b38c0",
+  "created_at": "2026-07-04T21:51:31.678967+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-self-model-index-staleness-audit",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-self-model-index-staleness-audit",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added SELF_MODEL.json staleness audit. The audit checks generated index freshness without requiring stored repo_head to equal current HEAD, because the commit storing the generated index necessarily advances HEAD. It detects CAP/GAP/VERIFY source-record drift since stored repo_head and compares the stored index to a normalized rebuild while ignoring generated_at and repo_head. Added scripts/audit_self_model_index.py and expanded self-model tests. Focused self-model tests passed with 18 tests and the full suite passed with 287 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "self-audit",
+    "staleness",
+    "aggregation-only"
+  ],
+  "turn_id": 1
+}

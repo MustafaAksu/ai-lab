@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added audit_self_model_index to check SELF_MODEL.json freshness.",
+    "Added scripts/audit_self_model_index.py CLI.",
+    "Added schema documentation for non-noisy SELF_MODEL.json staleness auditing."
+  ],
+  "content_hash": "5a355a6982f6fafb49d7a06d95651ac722c78dc12e755eb145cb5f38da95526f",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-04T21:51:31.765074+00:00",
+  "episode_id": "EP-20260705-self-model-index-staleness-audit",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Do not treat stored SELF_MODEL.json repo_head differing from current HEAD as stale by itself.",
+    "Define index staleness as source-record drift and normalized rebuild drift, not raw HEAD mismatch."
+  ],
+  "l1_id": "L1-20260705-self-model-index-staleness-audit",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to add PLAN records next or extend SELF_MODEL.json/index audit to include AUDIT and PLAN families before planning governed improvements."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The staleness audit currently tracks CAP/GAP/VERIFY source directories, not every possible future self-model source family such as AUDIT or PLAN."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-index-staleness-audit"
+  ],
+  "summary_text": "SELF_MODEL.json staleness audit is implemented. The audit intentionally does not require stored repo_head to equal current HEAD, because committing the generated SELF_MODEL.json advances HEAD. Instead, it checks whether CAP/GAP/VERIFY source records changed since the stored repo_head and whether the stored index differs from a normalized rebuild that ignores generated_at and repo_head. The audit reports SELF_MODEL_INDEX_REPO_HEAD_DIFFERS_SOURCE_UNCHANGED and SELF_MODEL_INDEX_CONTENT_CURRENT for the current clean state. Added scripts/audit_self_model_index.py, audit_self_model_index, and tests for no-error seed state, stale content detection, missing index error, and CLI JSON output. Focused self-model tests passed with 18 tests and the full suite passed with 287 tests before commit 97b38c0.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "self-audit",
+    "staleness"
+  ],
+  "ttl_until": null
+}
