@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "02123eb"
+  ],
+  "commit_hash": "02123eb",
+  "created_at": "2026-07-04T21:44:26.404032+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-self-model-index-generation",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-self-model-index-generation",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added aggregation-only SELF_MODEL.json generation. build_self_model_index now aggregates CAP, GAP, VERIFY, and audit records without synthesizing recommendations. scripts/build_self_model.py writes docs/self_model/SELF_MODEL.json. The generated index reports active capabilities, open gaps, verification records, known risks with source pointers, recommendations copied only from GAP recommended_first_slice fields, and audit summary counts. Focused self-model tests passed with 14 tests and the full suite passed with 283 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "self-audit",
+    "governed-improvement",
+    "aggregation-only"
+  ],
+  "turn_id": 1
+}

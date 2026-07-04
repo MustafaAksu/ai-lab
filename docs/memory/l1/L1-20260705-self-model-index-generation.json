@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added build_self_model_index to aggregate CAP, GAP, VERIFY, and audit records.",
+    "Added scripts/build_self_model.py to write docs/self_model/SELF_MODEL.json.",
+    "Added tests proving aggregation-only generation, copied recommendations, source-linked risks, and script output."
+  ],
+  "content_hash": "c4f313cf0f217686f13aa251a932ba80afa21dcd058e9ef6ebc4de826c7534d4",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-04T21:44:26.495484+00:00",
+  "episode_id": "EP-20260705-self-model-index-generation",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "SELF_MODEL.json is aggregation-only and must not reason, infer capabilities, or synthesize recommendations.",
+    "Generated recommendations must point back to source_record and source_field, currently GAP-0001.recommended_first_slice."
+  ],
+  "l1_id": "L1-20260705-self-model-index-generation",
+  "namespace": "public",
+  "next_actions": [
+    "Add audit or test coverage that detects stale SELF_MODEL.json relative to source CAP/GAP/VERIFY records or repo head."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "SELF_MODEL.json is a generated snapshot and can become stale if source records change without regeneration."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-index-generation"
+  ],
+  "summary_text": "Aggregation-only SELF_MODEL.json generation is implemented. The self-model layer now includes build_self_model_index and scripts/build_self_model.py, which generate docs/self_model/SELF_MODEL.json from CAP, GAP, VERIFY, and audit records. The generated index reports active capabilities, open gaps, capability and gap counts, verification records, known risks with source pointers, recommended next targets copied only from GAP recommended_first_slice fields, and audit summary severity counts. The generator is explicitly aggregation-only: it may copy, count, sort, group, filter, and link to source records, but it must not infer capabilities or synthesize recommendations. Focused self-model tests passed with 14 tests and the full suite passed with 283 tests before commit 02123eb.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "self-audit",
+    "aggregation-only"
+  ],
+  "ttl_until": null
+}
