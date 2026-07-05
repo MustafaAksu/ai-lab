@@ -640,6 +640,73 @@ def validate_plan_record(record: dict[str, object]) -> None:
     for key in ("rationale", "constraints", "success_criteria"):
         _plan_require_string_list(record, key)
 
+
+WARRANT_TARGET_TYPES = {"capability", "gap", "plan", "verification", "self_model_index"}
+WARRANT_STATES = {"supported", "disputed", "rejected", "superseded", "unreviewed"}
+WARRANT_DECISIONS = {"admit", "admit_with_warning", "reject", "defer"}
+WARRANT_ID_RE = re.compile(r"^WARR-\d{8}-\d{4}$")
+
+
+def _warrant_require_string(record: dict[str, object], key: str) -> str:
+    value = record.get(key)
+    if not isinstance(value, str) or not value:
+        raise SelfModelError(f"$.{key} must be a non-empty string.")
+    return value
+
+
+def _warrant_require_string_list(record: dict[str, object], key: str) -> list[str]:
+    value = record.get(key)
+    if not isinstance(value, list) or not value:
+        raise SelfModelError(f"$.{key} must be a non-empty list of strings.")
+
+    result: list[str] = []
+    for index, item in enumerate(value):
+        if not isinstance(item, str) or not item:
+            raise SelfModelError(f"$.{key}[{index}] must be a non-empty string.")
+        result.append(item)
+
+    return result
+
+
+def validate_warrant_record(record: dict[str, object]) -> None:
+    if not isinstance(record, dict):
+        raise SelfModelError("Warrant record must be a JSON object.")
+
+    if record.get("schema_version") != "v1":
+        raise SelfModelError("$.schema_version must be v1.")
+
+    warrant_id = _warrant_require_string(record, "warrant_id")
+    if not WARRANT_ID_RE.match(warrant_id):
+        raise SelfModelError("$.warrant_id must match WARR-YYYYMMDD-NNNN.")
+
+    target_item_id = _warrant_require_string(record, "target_item_id")
+    if not target_item_id:
+        raise SelfModelError("$.target_item_id must be non-empty.")
+
+    target_item_type = _warrant_require_string(record, "target_item_type")
+    if target_item_type not in WARRANT_TARGET_TYPES:
+        raise SelfModelError(
+            "$.target_item_type must be one of: "
+            + ", ".join(sorted(WARRANT_TARGET_TYPES))
+        )
+
+    decision = _warrant_require_string(record, "decision")
+    if decision not in WARRANT_DECISIONS:
+        raise SelfModelError(
+            "$.decision must be one of: " + ", ".join(sorted(WARRANT_DECISIONS))
+        )
+
+    warrant_state = _warrant_require_string(record, "warrant_state")
+    if warrant_state not in WARRANT_STATES:
+        raise SelfModelError(
+            "$.warrant_state must be one of: " + ", ".join(sorted(WARRANT_STATES))
+        )
+
+    for key in ("created_at", "author", "substrate", "reason", "scope"):
+        _warrant_require_string(record, key)
+
+    _warrant_require_string_list(record, "evidence_ids")
+
 def _repo_head(repo_root: Path) -> str | None:
     return _git_output(["rev-parse", "HEAD"], repo_root)
 
@@ -660,6 +727,20 @@ def _load_valid_records(
         records.append((path, record))
 
     return records
+
+
+def _count_by_field(
+    records: list[tuple[Path, dict[str, object]]],
+    field: str,
+) -> dict[str, int]:
+    counts: dict[str, int] = {}
+
+    for _, record in records:
+        value = record.get(field)
+        if isinstance(value, str):
+            counts[value] = counts.get(value, 0) + 1
+
+    return dict(sorted(counts.items()))
 
 
 def _count_by_status(records: list[tuple[Path, dict[str, object]]]) -> dict[str, int]:
@@ -722,6 +803,11 @@ def build_self_model_index(
         "PLAN-*.json",
         validate_plan_record,
     )
+    warrants = _load_valid_records(
+        repo_root / "docs" / "self_model" / "warrants",
+        "WARR-*.json",
+        validate_warrant_record,
+    )
 
     audit = audit_self_model(repo_root)
 
@@ -766,6 +852,26 @@ def build_self_model_index(
             "source_path": _relative_path(path, repo_root),
         }
         for path, record in plans
+    ]
+
+    warrant_records = [
+        {
+            "warrant_id": str(record["warrant_id"]),
+            "target_item_id": str(record["target_item_id"]),
+            "target_item_type": str(record["target_item_type"]),
+            "decision": str(record["decision"]),
+            "warrant_state": str(record["warrant_state"]),
+            "source_path": _relative_path(path, repo_root),
+        }
+        for path, record in warrants
+    ]
+
+    admitted_plans = [
+        str(record["target_item_id"])
+        for _, record in warrants
+        if record.get("target_item_type") == "plan"
+        and record.get("decision") in {"admit", "admit_with_warning"}
+        and record.get("warrant_state") == "supported"
     ]
 
     known_risks: list[dict[str, str]] = []
@@ -831,6 +937,7 @@ def build_self_model_index(
         "capability_counts": _count_by_status(capabilities),
         "gap_counts": _count_by_status(gaps),
         "plan_counts": _count_by_status(plans),
+        "warrant_counts": _count_by_field(warrants, "warrant_state"),
         "active_capabilities": [
             str(record["capability_id"])
             for _, record in capabilities
@@ -846,10 +953,12 @@ def build_self_model_index(
             for _, record in plans
             if record.get("status") in {"proposed", "admitted"}
         ],
+        "admitted_plans": sorted(set(admitted_plans)),
         "capabilities": capability_records,
         "gaps": gap_records,
         "verifications": verification_records,
         "plans": plan_records,
+        "warrants": warrant_records,
         "known_risks": known_risks,
         "recommended_next_targets": recommended_next_targets,
         "audit_summary": {
@@ -864,6 +973,7 @@ SELF_MODEL_INDEX_SOURCE_PATHS = (
     "docs/self_model/gaps",
     "docs/self_model/verifications",
     "docs/self_model/plans",
+    "docs/self_model/warrants",
 )
 
 

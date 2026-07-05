@@ -84,6 +84,38 @@ Commit-distance freshness is a v1 proxy. It may warn after unrelated commits. Th
 
 
 
+
+## WARRANT records
+
+WARRANT records are evidence-backed adjudications for self-model items such as capabilities, gaps, plans, verifications, or the generated self-model index.
+
+They are separate from context admission records. Context admission decides whether an item may enter a context pack. WARRANT records justify or approve claims and governed-improvement actions.
+
+Required fields:
+
+```json
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-YYYYMMDD-NNNN",
+  "target_item_id": "PLAN-20260705-0001",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "created_at": "...",
+  "author": "...",
+  "substrate": "process",
+  "reason": "...",
+  "scope": "...",
+  "evidence_ids": ["..."]
+}
+```
+
+Allowed target types are `capability`, `gap`, `plan`, `verification`, and `self_model_index`.
+
+Allowed decisions are `admit`, `admit_with_warning`, `reject`, and `defer`.
+
+Allowed warrant states are `supported`, `disputed`, `rejected`, `superseded`, and `unreviewed`.
+
 ## PLAN records
 
 PLAN records describe proposed governed improvements before implementation work begins.
@@ -120,7 +152,7 @@ The index is aggregation-only. It may copy, count, sort, group, filter, and link
 
 Every generated recommendation must point back to a source record and source field, such as `GAP-0001.recommended_first_slice`.
 
-The generated index also includes PLAN records and `open_plans` so proposed governed improvements are visible to the self-model.
+The generated index also includes PLAN records, `open_plans`, WARRANT records, and `admitted_plans` so proposed and admitted governed improvements are visible to the self-model.
 
 ## Generated SELF_MODEL.json rule
 

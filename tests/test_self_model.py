@@ -663,3 +663,113 @@ def test_write_plan_record_script_writes_valid_record(tmp_path):
     data = json.loads(output.read_text(encoding="utf-8"))
     assert data["plan_id"] == "PLAN-20260705-9999"
     assert data["source_gap_id"] == "GAP-0001"
+
+
+def test_validate_warrant_record_accepts_seed_warrant():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_warrant_record
+
+    record = json.loads(
+        Path("docs/self_model/warrants/WARR-20260705-0001.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_warrant_record(record)
+
+
+def test_validate_warrant_record_rejects_invalid_target_type():
+    import pytest
+    from ai_lab.documentation.self_model import SelfModelError, validate_warrant_record
+
+    record = {
+        "schema_version": "v1",
+        "warrant_id": "WARR-20260705-9999",
+        "target_item_id": "PLAN-20260705-0001",
+        "target_item_type": "context_admission",
+        "decision": "admit",
+        "warrant_state": "supported",
+        "created_at": "2026-07-05T00:00:00Z",
+        "author": "chatgpt",
+        "substrate": "process",
+        "reason": "Reason.",
+        "scope": "Scope.",
+        "evidence_ids": ["PLAN-20260705-0001"],
+    }
+
+    with pytest.raises(SelfModelError, match="target_item_type"):
+        validate_warrant_record(record)
+
+
+def test_build_self_model_index_includes_warrant_records():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert index["warrant_counts"]["supported"] == 1
+    assert index["admitted_plans"] == ["PLAN-20260705-0001"]
+    assert index["warrants"] == [
+        {
+            "warrant_id": "WARR-20260705-0001",
+            "target_item_id": "PLAN-20260705-0001",
+            "target_item_type": "plan",
+            "decision": "admit",
+            "warrant_state": "supported",
+            "source_path": "docs/self_model/warrants/WARR-20260705-0001.json",
+        }
+    ]
+
+
+def test_write_warrant_record_script_writes_valid_record(tmp_path):
+    import json
+    import subprocess
+    import sys
+
+    output = tmp_path / "WARR-20260705-9999.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/write_warrant_record.py",
+            "--warrant-id",
+            "WARR-20260705-9999",
+            "--target-item-id",
+            "PLAN-20260705-0001",
+            "--target-item-type",
+            "plan",
+            "--decision",
+            "admit",
+            "--warrant-state",
+            "supported",
+            "--created-at",
+            "2026-07-05T00:00:00Z",
+            "--author",
+            "chatgpt",
+            "--substrate",
+            "process",
+            "--reason",
+            "Reason.",
+            "--scope",
+            "Scope.",
+            "--evidence-id",
+            "PLAN-20260705-0001",
+            "--output",
+            str(output),
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    assert data["warrant_id"] == "WARR-20260705-9999"
+    assert data["target_item_type"] == "plan"
+    assert data["decision"] == "admit"

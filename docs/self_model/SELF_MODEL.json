@@ -2,6 +2,9 @@
   "active_capabilities": [
     "CAP-0001"
   ],
+  "admitted_plans": [
+    "PLAN-20260705-0001"
+  ],
   "audit_summary": {
     "ok": true,
     "severity_counts": {
@@ -35,7 +38,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-05T09:30:53+00:00",
+  "generated_at": "2026-07-05T11:41:59+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -80,7 +83,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "8783910202cf395f2f988c5ae255335a8465f6ec",
+  "repo_head": "2954057b478411bc07bacb5877043bdfde993d31",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -88,6 +91,19 @@
       "repo_commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
       "source_path": "docs/self_model/verifications/VERIFY-20260705-0001.json",
       "verification_id": "VERIFY-20260705-0001"
+    }
+  ],
+  "warrant_counts": {
+    "supported": 1
+  },
+  "warrants": [
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260705-0001.json",
+      "target_item_id": "PLAN-20260705-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260705-0001",
+      "warrant_state": "supported"
     }
   ]
 }
