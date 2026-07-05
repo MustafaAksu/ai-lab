@@ -1,0 +1,42 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added l0_candidate_diagnostics to report valid L0 summary records as candidate sources.",
+    "Added scripts/diagnose_l0_candidates.py CLI.",
+    "Added tests for valid records, context_match, invalid records, missing store, stdout JSON, and output-file JSON."
+  ],
+  "content_hash": "954bb7d97f446cb455f02390d8779956c7bbf6fd37d2b3839cb576cec3fea029",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-05T12:07:57.144111+00:00",
+  "episode_id": "EP-20260705-l0-candidate-diagnostics",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "The GAP-0001 first implementation slice is diagnostic-only and read-only.",
+    "L0 candidate diagnostics must report selection_effect none and must not modify context selection or provider prompts."
+  ],
+  "l1_id": "L1-20260705-l0-candidate-diagnostics",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether the next GAP-0001 slice should connect diagnostics to latest-context manifests or add richer candidate scoring while preserving selection_effect none."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The diagnostic only scans L0 stores; it does not yet derive L0 candidates from selected L1/context relationships."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-l0-candidate-diagnostics"
+  ],
+  "summary_text": "Read-only L0 candidate diagnostics are implemented under admitted PLAN-20260705-0001 and WARR-20260705-0001. The new diagnostic module scans an L0 store for valid L0 summary records and reports candidate sources with selection_effect none. It can optionally mark context_match against supplied context item IDs, reports invalid records as non-fatal dropped entries, and handles missing stores without failure. The CLI scripts/diagnose_l0_candidates.py emits JSON to stdout or an output file. This slice intentionally does not alter provider prompts, context selection, or latest-context behavior. Focused diagnostic tests passed with 6 tests, self-model tests passed with 26 tests, and the full suite passed with 301 tests before commit f0691d2.",
+  "summary_version": "v1",
+  "topics": [
+    "l0",
+    "diagnostic",
+    "governed-improvement"
+  ],
+  "ttl_until": null
+}

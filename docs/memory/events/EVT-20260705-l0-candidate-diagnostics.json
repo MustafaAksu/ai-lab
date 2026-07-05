@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "f0691d2"
+  ],
+  "commit_hash": "f0691d2",
+  "created_at": "2026-07-05T12:07:57.038645+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-l0-candidate-diagnostics",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-l0-candidate-diagnostics",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Implemented admitted PLAN-20260705-0001 as read-only L0 candidate diagnostics. Added ai_lab/documentation/l0_candidate_diagnostics.py, scripts/diagnose_l0_candidates.py, and tests/test_l0_candidate_diagnostics.py. The diagnostic reports valid L0 summary records as candidate sources with selection_effect none, optional context_match markers, and non-fatal dropped records. It does not change provider prompts, context selection, or latest-context behavior. Focused L0 diagnostic tests passed with 6 tests, self-model tests passed with 26 tests, and the full suite passed with 301 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "l0",
+    "diagnostic",
+    "self-model",
+    "governed-improvement"
+  ],
+  "turn_id": 1
+}
