@@ -1,0 +1,38 @@
+{
+  "commands": [
+    {
+      "command": "pytest tests/test_l0_candidate_diagnostics.py",
+      "exit_code": 0,
+      "summary": "6 passed"
+    },
+    {
+      "command": "pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "26 passed before CAP-0002 registration; 29 expected after registration"
+    },
+    {
+      "command": "pytest",
+      "exit_code": 0,
+      "summary": "301 passed before CAP-0002 registration; 304 expected after registration"
+    },
+    {
+      "command": "python scripts/diagnose_l0_candidates.py --l0-store docs/memory/l0",
+      "exit_code": 0,
+      "summary": "Reported selection_effect none and missing L0 store non-fatally."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Index audit ok true."
+    }
+  ],
+  "created_at": "2026-07-05T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "f0691d224c31ad8ce1183514aaf76afb50423e50",
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260705-0002"
+}

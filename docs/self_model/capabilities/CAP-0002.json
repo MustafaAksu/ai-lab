@@ -1,0 +1,76 @@
+{
+  "capability_id": "CAP-0002",
+  "category": "diagnostic",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "CADM-L1-20260705-l0-candidate-diagnostics",
+        "path": "docs/memory/admissions/CADM-L1-20260705-l0-candidate-diagnostics.json",
+        "role": "warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "f0691d224c31ad8ce1183514aaf76afb50423e50",
+        "role": "implementation"
+      },
+      {
+        "commit": "cd5a0d3a5ac848f79d602ef15b335f995ef33821",
+        "role": "memory_refresh"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "7786ae6872811d004126a2ebd2f52d28ba72e49473e0c9754cec2f57c4d00bfb",
+        "path": "ai_lab/documentation/l0_candidate_diagnostics.py",
+        "role": "mechanism"
+      },
+      {
+        "content_hash": "c8fa9a7a34932e2c484e3033d38377da704c722a469cd1f1a8ad211deb0a6ca9",
+        "path": "scripts/diagnose_l0_candidates.py",
+        "role": "interface"
+      },
+      {
+        "content_hash": "18b22ec49214b83011735692be130f70b79f753356c2b97b31c62528f0c4d6a4",
+        "path": "tests/test_l0_candidate_diagnostics.py",
+        "role": "test"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "EVT-20260705-l0-candidate-diagnostics",
+        "path": "docs/memory/events/EVT-20260705-l0-candidate-diagnostics.json",
+        "role": "event"
+      },
+      {
+        "id": "L1-20260705-l0-candidate-diagnostics",
+        "path": "docs/memory/l1/L1-20260705-l0-candidate-diagnostics.json",
+        "role": "summary"
+      }
+    ]
+  },
+  "interfaces": [
+    "scripts/build_context_pack.py --include-l0",
+    "scripts/ask_provider.py --latest-context --include-l0",
+    "scripts/compare_providers.py --latest-context --include-l0"
+  ],
+  "last_verified": {
+    "repo_commit": "f0691d224c31ad8ce1183514aaf76afb50423e50",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260705-0002.json",
+    "verified_at": "2026-07-05T00:00:00+00:00"
+  },
+  "limits": [
+    "Explicit L0 inclusion requires user-supplied chunk IDs.",
+    "Automatic L0 discovery, ranking, dependency expansion, and repair are not implemented."
+  ],
+  "name": "Read-only L0 candidate diagnostics",
+  "recommended_next_actions": [
+    "Decide whether to connect diagnostics to latest-context manifests or add richer candidate scoring while preserving selection_effect none."
+  ],
+  "risks": [
+    "The diagnostic only scans L0 stores; it does not yet derive L0 candidates from selected L1/context relationships."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Read-only L0 candidate diagnostics scan an L0 store for valid L0 summary records and report candidates with selection_effect none."
+}

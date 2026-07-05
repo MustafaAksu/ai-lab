@@ -376,9 +376,9 @@ def test_build_self_model_index_is_aggregation_only_for_seed_records():
     assert index["schema_version"] == "v1"
     assert index["model_type"] == "self_model"
     assert index["generation_rule"] == "aggregation_only"
-    assert index["active_capabilities"] == ["CAP-0001"]
+    assert index["active_capabilities"] == ["CAP-0001", "CAP-0002"]
     assert index["open_gaps"] == ["GAP-0001"]
-    assert index["capability_counts"]["implemented"] == 1
+    assert index["capability_counts"]["implemented"] == 2
     assert index["gap_counts"]["open"] == 1
     assert index["audit_summary"]["ok"] is True
 
@@ -456,7 +456,7 @@ def test_build_self_model_script_writes_index(tmp_path):
     data = json.loads(output.read_text(encoding="utf-8"))
     assert data["generated_at"] == "2026-07-05T00:00:00+00:00"
     assert data["generation_rule"] == "aggregation_only"
-    assert data["active_capabilities"] == ["CAP-0001"]
+    assert data["active_capabilities"] == ["CAP-0001", "CAP-0002"]
     assert data["open_gaps"] == ["GAP-0001"]
 
 
@@ -775,3 +775,51 @@ def test_write_warrant_record_script_writes_valid_record(tmp_path):
     assert data["warrant_id"] == "WARR-20260705-9999"
     assert data["target_item_type"] == "plan"
     assert data["decision"] == "admit"
+
+def test_validate_capability_record_accepts_cap_0002():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_capability_record
+
+    record = json.loads(
+        Path("docs/self_model/capabilities/CAP-0002.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_capability_record(record)
+
+
+def test_validate_verification_record_accepts_verify_0002():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_verification_record
+
+    record = json.loads(
+        Path("docs/self_model/verifications/VERIFY-20260705-0002.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_verification_record(record)
+
+
+def test_build_self_model_index_includes_cap_0002():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert "CAP-0002" in index["active_capabilities"]
+    assert any(
+        capability["capability_id"] == "CAP-0002"
+        and capability["status"] == "implemented"
+        for capability in index["capabilities"]
+    )
+    assert any(
+        verification["verification_id"] == "VERIFY-20260705-0002"
+        for verification in index["verifications"]
+    )

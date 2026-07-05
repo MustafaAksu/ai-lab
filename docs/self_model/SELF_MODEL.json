@@ -1,6 +1,7 @@
 {
   "active_capabilities": [
-    "CAP-0001"
+    "CAP-0001",
+    "CAP-0002"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001"
@@ -9,7 +10,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 16,
+      "info": 22,
       "warn": 1
     }
   },
@@ -20,10 +21,17 @@
       "name": "Explicit L0 latest-context inclusion",
       "source_path": "docs/self_model/capabilities/CAP-0001.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0002",
+      "category": "diagnostic",
+      "name": "Read-only L0 candidate diagnostics",
+      "source_path": "docs/self_model/capabilities/CAP-0002.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 1
+    "implemented": 2
   },
   "gap_counts": {
     "open": 1
@@ -38,13 +46,18 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-05T11:50:18+00:00",
+  "generated_at": "2026-07-05T12:25:41+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
       "risk": "Capability may be overclaimed if future docs imply automatic retrieval.",
       "source_field": "risks[0]",
       "source_record": "CAP-0001"
+    },
+    {
+      "risk": "The diagnostic only scans L0 stores; it does not yet derive L0 candidates from selected L1/context relationships.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0002"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -83,7 +96,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "7b60e67bd3522cb14305a361d6ea5f3a2354f7d7",
+  "repo_head": "cd5a0d3a5ac848f79d602ef15b335f995ef33821",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -91,6 +104,11 @@
       "repo_commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
       "source_path": "docs/self_model/verifications/VERIFY-20260705-0001.json",
       "verification_id": "VERIFY-20260705-0001"
+    },
+    {
+      "repo_commit": "f0691d224c31ad8ce1183514aaf76afb50423e50",
+      "source_path": "docs/self_model/verifications/VERIFY-20260705-0002.json",
+      "verification_id": "VERIFY-20260705-0002"
     }
   ],
   "warrant_counts": {
