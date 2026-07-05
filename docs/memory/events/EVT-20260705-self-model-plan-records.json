@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "6adb71b"
+  ],
+  "commit_hash": "6adb71b",
+  "created_at": "2026-07-05T09:32:56.589719+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-self-model-plan-records",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-self-model-plan-records",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added PLAN records for governed improvement. The self-model layer now validates PLAN records, includes a seed PLAN-20260705-0001 for GAP-0001 read-only L0 candidate diagnostics, provides scripts/write_plan_record.py, and includes plans/open_plans/plan_counts in generated SELF_MODEL.json. The index audit was refined so source-record changes that still match a normalized rebuild are reported as content-current rather than stale. Focused self-model tests passed with 22 tests and the full suite passed with 291 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "plan",
+    "governed-improvement",
+    "gap-0001"
+  ],
+  "turn_id": 1
+}

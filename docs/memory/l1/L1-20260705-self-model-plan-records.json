@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added validate_plan_record and PLAN status handling.",
+    "Added seed PLAN-20260705-0001 for GAP-0001 read-only L0 candidate diagnostics.",
+    "Added scripts/write_plan_record.py.",
+    "Extended SELF_MODEL.json to include plan_counts, open_plans, plans, and PLAN risks."
+  ],
+  "content_hash": "0beb61b943233aceab404704df17fe70f0035aa9b3f8226ab5ccfae174431bed",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-05T09:32:56.713067+00:00",
+  "episode_id": "EP-20260705-self-model-plan-records",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN records are the bridge between GAP findings and governed implementation work.",
+    "A proposed PLAN does not itself grant permission to implement; PLAN admission should come before governed improvement work proceeds."
+  ],
+  "l1_id": "L1-20260705-self-model-plan-records",
+  "namespace": "public",
+  "next_actions": [
+    "Create a CADM-PLAN admission record for PLAN-20260705-0001 before implementing read-only L0 candidate diagnostics."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "PLAN-20260705-0001 is still proposed, not admitted; implementation should wait for CADM-PLAN admission."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-plan-records"
+  ],
+  "summary_text": "PLAN records are implemented for governed improvement. The self-model layer now has PLAN validation, scripts/write_plan_record.py, a seed PLAN-20260705-0001 sourced from GAP-0001, and SELF_MODEL.json aggregation of plan_counts, open_plans, and plans. PLAN-20260705-0001 proposes a read-only L0 candidate diagnostic as the safe first slice toward automatic L0 discovery, while explicitly constraining it not to change prompt selection or claim automatic retrieval. The index audit was refined so source-record changes are not noisy when the stored SELF_MODEL.json matches a normalized rebuild. Focused self-model tests passed with 22 tests and the full suite passed with 291 tests before commit 6adb71b.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "governed-improvement"
+  ],
+  "ttl_until": null
+}

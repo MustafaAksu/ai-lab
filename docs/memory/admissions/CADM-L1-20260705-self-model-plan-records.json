@@ -1,0 +1,20 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-05T09:32:56.837006+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260705-self-model-plan-records",
+    "6adb71b"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 6adb71b, PLAN-20260705-0001, generated SELF_MODEL.json plan inclusion, and passing focused/full test results.",
+  "substrate": "process",
+  "target_item_id": "L1-20260705-self-model-plan-records",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260705-self-model-plan-records",
+  "warrant_state": "supported"
+}
