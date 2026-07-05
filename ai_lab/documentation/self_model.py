@@ -581,6 +581,65 @@ def audit_self_model(
     return {"schema_version": "v1", "ok": ok, "findings": findings}
 
 
+
+PLAN_STATUSES = {"proposed", "admitted", "rejected", "completed", "superseded"}
+
+
+def _plan_require_string(record: dict[str, object], key: str) -> str:
+    value = record.get(key)
+    if not isinstance(value, str) or not value:
+        raise SelfModelError(f"$.{key} must be a non-empty string.")
+    return value
+
+
+def _plan_require_string_list(record: dict[str, object], key: str) -> list[str]:
+    value = record.get(key)
+    if not isinstance(value, list) or not value:
+        raise SelfModelError(f"$.{key} must be a non-empty list of strings.")
+
+    result: list[str] = []
+    for index, item in enumerate(value):
+        if not isinstance(item, str) or not item:
+            raise SelfModelError(f"$.{key}[{index}] must be a non-empty string.")
+        result.append(item)
+
+    return result
+
+
+def validate_plan_record(record: dict[str, object]) -> None:
+    if not isinstance(record, dict):
+        raise SelfModelError("Plan record must be a JSON object.")
+
+    if record.get("schema_version") != "v1":
+        raise SelfModelError("$.schema_version must be v1.")
+
+    plan_id = _plan_require_string(record, "plan_id")
+    if not PLAN_ID_RE.match(plan_id):
+        raise SelfModelError("$.plan_id must match PLAN-YYYYMMDD-NNNN.")
+
+    source_gap_id = _plan_require_string(record, "source_gap_id")
+    if not GAP_ID_RE.match(source_gap_id):
+        raise SelfModelError("$.source_gap_id must match GAP-NNNN.")
+
+    status = _plan_require_string(record, "status")
+    if status not in PLAN_STATUSES:
+        raise SelfModelError(
+            "$.status must be one of: " + ", ".join(sorted(PLAN_STATUSES))
+        )
+
+    for key in (
+        "title",
+        "created_at",
+        "objective",
+        "proposed_change",
+        "risk",
+        "next_action",
+    ):
+        _plan_require_string(record, key)
+
+    for key in ("rationale", "constraints", "success_criteria"):
+        _plan_require_string_list(record, key)
+
 def _repo_head(repo_root: Path) -> str | None:
     return _git_output(["rev-parse", "HEAD"], repo_root)
 
@@ -658,6 +717,11 @@ def build_self_model_index(
         "VERIFY-*.json",
         validate_verification_record,
     )
+    plans = _load_valid_records(
+        repo_root / "docs" / "self_model" / "plans",
+        "PLAN-*.json",
+        validate_plan_record,
+    )
 
     audit = audit_self_model(repo_root)
 
@@ -693,6 +757,17 @@ def build_self_model_index(
         for path, record in verifications
     ]
 
+    plan_records = [
+        {
+            "plan_id": str(record["plan_id"]),
+            "title": str(record["title"]),
+            "status": str(record["status"]),
+            "source_gap_id": str(record["source_gap_id"]),
+            "source_path": _relative_path(path, repo_root),
+        }
+        for path, record in plans
+    ]
+
     known_risks: list[dict[str, str]] = []
     for _, record in capabilities:
         capability_id = str(record["capability_id"])
@@ -715,6 +790,17 @@ def build_self_model_index(
                 {
                     "risk": risk,
                     "source_record": str(record["gap_id"]),
+                    "source_field": "risk",
+                }
+            )
+
+    for _, record in plans:
+        risk = record.get("risk")
+        if isinstance(risk, str) and risk:
+            known_risks.append(
+                {
+                    "risk": risk,
+                    "source_record": str(record["plan_id"]),
                     "source_field": "risk",
                 }
             )
@@ -744,6 +830,7 @@ def build_self_model_index(
         "generation_rule": "aggregation_only",
         "capability_counts": _count_by_status(capabilities),
         "gap_counts": _count_by_status(gaps),
+        "plan_counts": _count_by_status(plans),
         "active_capabilities": [
             str(record["capability_id"])
             for _, record in capabilities
@@ -754,9 +841,15 @@ def build_self_model_index(
             for _, record in gaps
             if record.get("status") == "open"
         ],
+        "open_plans": [
+            str(record["plan_id"])
+            for _, record in plans
+            if record.get("status") in {"proposed", "admitted"}
+        ],
         "capabilities": capability_records,
         "gaps": gap_records,
         "verifications": verification_records,
+        "plans": plan_records,
         "known_risks": known_risks,
         "recommended_next_targets": recommended_next_targets,
         "audit_summary": {
@@ -770,6 +863,7 @@ SELF_MODEL_INDEX_SOURCE_PATHS = (
     "docs/self_model/capabilities",
     "docs/self_model/gaps",
     "docs/self_model/verifications",
+    "docs/self_model/plans",
 )
 
 
@@ -956,6 +1050,189 @@ def audit_self_model_index(
                     "Stored SELF_MODEL.json matches a normalized rebuild.",
                 )
             )
+
+    ok = not any(finding["severity"] == "error" for finding in findings)
+    return {"schema_version": "v1", "ok": ok, "findings": findings}
+
+
+def audit_self_model_index(
+    repo_root: Path = Path("."),
+    index_path: Path | None = None,
+) -> dict[str, object]:
+    repo_root = repo_root.resolve()
+    resolved_index_path = index_path or repo_root / "docs" / "self_model" / "SELF_MODEL.json"
+
+    findings: list[dict[str, str]] = []
+
+    if not resolved_index_path.exists():
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_MISSING",
+                str(resolved_index_path),
+                "SELF_MODEL.json is missing.",
+            )
+        )
+        return {"schema_version": "v1", "ok": False, "findings": findings}
+
+    try:
+        index = read_json(resolved_index_path)
+    except Exception as error:
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_INVALID_JSON",
+                str(resolved_index_path),
+                str(error),
+            )
+        )
+        return {"schema_version": "v1", "ok": False, "findings": findings}
+
+    if index.get("schema_version") != "v1":
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_SCHEMA_INVALID",
+                str(resolved_index_path),
+                "$.schema_version must be v1.",
+            )
+        )
+
+    if index.get("generation_rule") != "aggregation_only":
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_GENERATION_RULE_INVALID",
+                str(resolved_index_path),
+                "$.generation_rule must be aggregation_only.",
+            )
+        )
+
+    stored_repo_head = index.get("repo_head")
+    current_head = _repo_head(repo_root)
+    changed_paths: list[str] = []
+    unknown_paths: list[str] = []
+
+    if not isinstance(stored_repo_head, str) or not FULL_COMMIT_RE.match(stored_repo_head):
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REPO_HEAD_INVALID",
+                str(resolved_index_path),
+                "$.repo_head must be a full 40-character lowercase git hash.",
+            )
+        )
+    elif not _git_success(["cat-file", "-e", f"{stored_repo_head}^{{commit}}"], repo_root):
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REPO_HEAD_MISSING",
+                str(resolved_index_path),
+                f"Stored repo_head is missing from git history: {stored_repo_head}",
+            )
+        )
+    elif stored_repo_head == current_head:
+        findings.append(
+            _finding(
+                "info",
+                "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+                str(resolved_index_path),
+                "Stored repo_head matches current HEAD.",
+            )
+        )
+    else:
+        for source_path in SELF_MODEL_INDEX_SOURCE_PATHS:
+            changed = _git_path_changed_since(repo_root, stored_repo_head, source_path)
+            if changed is True:
+                changed_paths.append(source_path)
+            elif changed is None:
+                unknown_paths.append(source_path)
+
+    try:
+        rebuilt = build_self_model_index(
+            repo_root=repo_root,
+            generated_at=(
+                index.get("generated_at")
+                if isinstance(index.get("generated_at"), str)
+                else None
+            ),
+        )
+    except Exception as error:
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_INDEX_REBUILD_FAILED",
+                str(resolved_index_path),
+                str(error),
+            )
+        )
+        content_current = False
+    else:
+        content_current = (
+            _normalized_self_model_index(index)
+            == _normalized_self_model_index(rebuilt)
+        )
+
+    if isinstance(stored_repo_head, str) and FULL_COMMIT_RE.match(stored_repo_head):
+        if stored_repo_head != current_head:
+            if changed_paths and content_current:
+                findings.append(
+                    _finding(
+                        "info",
+                        "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED_CONTENT_CURRENT",
+                        str(resolved_index_path),
+                        "Source records changed since stored repo_head, but stored SELF_MODEL.json matches a normalized rebuild: "
+                        + ", ".join(changed_paths),
+                    )
+                )
+            elif changed_paths:
+                findings.append(
+                    _finding(
+                        "warn",
+                        "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED",
+                        str(resolved_index_path),
+                        "Self-model source records changed since stored repo_head: "
+                        + ", ".join(changed_paths),
+                    )
+                )
+            elif unknown_paths:
+                findings.append(
+                    _finding(
+                        "warn",
+                        "SELF_MODEL_INDEX_SOURCE_DRIFT_UNKNOWN",
+                        str(resolved_index_path),
+                        "Could not determine source-record drift for: "
+                        + ", ".join(unknown_paths),
+                    )
+                )
+            else:
+                findings.append(
+                    _finding(
+                        "info",
+                        "SELF_MODEL_INDEX_REPO_HEAD_DIFFERS_SOURCE_UNCHANGED",
+                        str(resolved_index_path),
+                        "Stored repo_head differs from current HEAD, but source records are unchanged.",
+                    )
+                )
+
+    if content_current:
+        findings.append(
+            _finding(
+                "info",
+                "SELF_MODEL_INDEX_CONTENT_CURRENT",
+                str(resolved_index_path),
+                "Stored SELF_MODEL.json matches a normalized rebuild.",
+            )
+        )
+    else:
+        findings.append(
+            _finding(
+                "warn",
+                "SELF_MODEL_INDEX_CONTENT_STALE",
+                str(resolved_index_path),
+                "Stored SELF_MODEL.json differs from a normalized rebuild.",
+            )
+        )
 
     ok = not any(finding["severity"] == "error" for finding in findings)
     return {"schema_version": "v1", "ok": ok, "findings": findings}

@@ -544,3 +544,122 @@ def test_audit_self_model_index_script_reports_json():
         finding["code"] == "SELF_MODEL_INDEX_CONTENT_CURRENT"
         for finding in data["findings"]
     )
+
+
+def test_validate_plan_record_accepts_seed_plan():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_plan_record
+
+    record = json.loads(
+        Path("docs/self_model/plans/PLAN-20260705-0001.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_plan_record(record)
+
+
+def test_validate_plan_record_rejects_invalid_plan_id():
+    import pytest
+    from ai_lab.documentation.self_model import SelfModelError, validate_plan_record
+
+    record = {
+        "schema_version": "v1",
+        "plan_id": "PLAN-bad",
+        "title": "Bad plan",
+        "status": "proposed",
+        "created_at": "2026-07-05T00:00:00Z",
+        "source_gap_id": "GAP-0001",
+        "objective": "Objective.",
+        "proposed_change": "Change.",
+        "rationale": ["Because."],
+        "constraints": ["Constraint."],
+        "success_criteria": ["Success."],
+        "risk": "Risk.",
+        "next_action": "Next.",
+    }
+
+    with pytest.raises(SelfModelError, match="plan_id"):
+        validate_plan_record(record)
+
+
+def test_build_self_model_index_includes_plan_records():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert index["plan_counts"]["proposed"] == 1
+    assert index["open_plans"] == ["PLAN-20260705-0001"]
+    assert index["plans"] == [
+        {
+            "plan_id": "PLAN-20260705-0001",
+            "title": "Read-only L0 candidate diagnostics",
+            "status": "proposed",
+            "source_gap_id": "GAP-0001",
+            "source_path": "docs/self_model/plans/PLAN-20260705-0001.json",
+        }
+    ]
+    assert {
+        "risk": (
+            "The diagnostic could be misread as automatic retrieval unless "
+            "output labels remain explicit about read-only candidate reporting."
+        ),
+        "source_record": "PLAN-20260705-0001",
+        "source_field": "risk",
+    } in index["known_risks"]
+
+
+def test_write_plan_record_script_writes_valid_record(tmp_path):
+    import json
+    import subprocess
+    import sys
+
+    output = tmp_path / "PLAN-20260705-9999.json"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/write_plan_record.py",
+            "--plan-id",
+            "PLAN-20260705-9999",
+            "--title",
+            "Test plan",
+            "--status",
+            "proposed",
+            "--created-at",
+            "2026-07-05T00:00:00Z",
+            "--source-gap-id",
+            "GAP-0001",
+            "--objective",
+            "Test objective.",
+            "--proposed-change",
+            "Test proposed change.",
+            "--rationale",
+            "Test rationale.",
+            "--constraint",
+            "Test constraint.",
+            "--success-criterion",
+            "Test success criterion.",
+            "--risk",
+            "Test risk.",
+            "--next-action",
+            "Test next action.",
+            "--output",
+            str(output),
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+    data = json.loads(output.read_text(encoding="utf-8"))
+    assert data["plan_id"] == "PLAN-20260705-9999"
+    assert data["source_gap_id"] == "GAP-0001"
