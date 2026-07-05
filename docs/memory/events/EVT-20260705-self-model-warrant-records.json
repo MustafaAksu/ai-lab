@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "7b60e67"
+  ],
+  "commit_hash": "7b60e67",
+  "created_at": "2026-07-05T11:44:06.147634+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-self-model-warrant-records",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-self-model-warrant-records",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added WARRANT records for self-model adjudication and PLAN admission. This corrected the earlier attempt to use context admission for a plan target: context admission remains for context-pack inclusion, while WARRANT records approve or reject self-model claims and governed actions. Added validate_warrant_record, scripts/write_warrant_record.py, WARR-20260705-0001 admitting PLAN-20260705-0001, and SELF_MODEL.json inclusion of warrants, warrant_counts, and admitted_plans. Fixed warrant_counts to count warrant_state rather than status. Focused self-model tests passed with 26 tests and the full suite passed with 295 tests before commit.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan",
+    "governed-improvement"
+  ],
+  "turn_id": 1
+}

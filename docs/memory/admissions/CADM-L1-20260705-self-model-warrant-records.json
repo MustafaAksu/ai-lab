@@ -1,0 +1,21 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-05T11:44:06.349237+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260705-self-model-warrant-records",
+    "7b60e67",
+    "WARR-20260705-0001"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 7b60e67, WARR-20260705-0001, generated SELF_MODEL.json warrant inclusion, and passing focused/full test results.",
+  "substrate": "process",
+  "target_item_id": "L1-20260705-self-model-warrant-records",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260705-self-model-warrant-records",
+  "warrant_state": "supported"
+}

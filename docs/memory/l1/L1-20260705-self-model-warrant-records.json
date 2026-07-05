@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added validate_warrant_record and WARRANT constants.",
+    "Added scripts/write_warrant_record.py.",
+    "Added WARR-20260705-0001 admitting PLAN-20260705-0001.",
+    "Extended SELF_MODEL.json with warrants, warrant_counts, and admitted_plans."
+  ],
+  "content_hash": "ee4a835c11a3eaebc6652df966c45d56e60dbd77a617fb1f614dd824889a4207",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-05T11:44:06.251819+00:00",
+  "episode_id": "EP-20260705-self-model-warrant-records",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Do not use context admission for PLAN approval; use WARRANT records for self-model adjudication.",
+    "PLAN-20260705-0001 is now admitted by WARR-20260705-0001 for read-only L0 candidate diagnostics only."
+  ],
+  "l1_id": "L1-20260705-self-model-warrant-records",
+  "namespace": "public",
+  "next_actions": [
+    "Implement the admitted PLAN-20260705-0001 read-only L0 candidate diagnostic as the next governed improvement slice."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "WARRANT records currently admit plans but do not automatically update PLAN status from proposed to admitted."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-self-model-warrant-records"
+  ],
+  "summary_text": "WARRANT records are implemented for self-model adjudication and PLAN admission. The failed attempt to admit PLAN-20260705-0001 through context admission exposed the design boundary: context admission decides what enters context packs, while WARRANT records approve or reject claims, plans, and governed actions. The self-model layer now validates WARRANT records, includes scripts/write_warrant_record.py, includes seed WARR-20260705-0001 admitting PLAN-20260705-0001, and aggregates warrants, warrant_counts, and admitted_plans into SELF_MODEL.json. The warrant_counts bug was fixed by counting warrant_state rather than status. Focused self-model tests passed with 26 tests and the full suite passed with 295 tests before commit 7b60e67.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan",
+    "governed-improvement"
+  ],
+  "ttl_until": null
+}
