@@ -713,18 +713,32 @@ def test_build_self_model_index_includes_warrant_records():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["warrant_counts"]["supported"] == 1
+    assert index["warrant_counts"]["supported"] == 2
     assert index["admitted_plans"] == ["PLAN-20260705-0001"]
-    assert index["warrants"] == [
-        {
-            "warrant_id": "WARR-20260705-0001",
-            "target_item_id": "PLAN-20260705-0001",
-            "target_item_type": "plan",
-            "decision": "admit",
-            "warrant_state": "supported",
-            "source_path": "docs/self_model/warrants/WARR-20260705-0001.json",
-        }
-    ]
+    assert {
+        warrant["warrant_id"]
+        for warrant in index["warrants"]
+    } == {"WARR-20260705-0001", "WARR-20260705-0002"}
+
+    assert any(
+        warrant["warrant_id"] == "WARR-20260705-0001"
+        and warrant["target_item_id"] == "PLAN-20260705-0001"
+        and warrant["target_item_type"] == "plan"
+        and warrant["decision"] == "admit"
+        and warrant["warrant_state"] == "supported"
+        and warrant["source_path"] == "docs/self_model/warrants/WARR-20260705-0001.json"
+        for warrant in index["warrants"]
+    )
+
+    assert any(
+        warrant["warrant_id"] == "WARR-20260705-0002"
+        and warrant["target_item_id"] == "PLAN-20260705-0001"
+        and warrant["target_item_type"] == "plan"
+        and warrant["decision"] == "admit"
+        and warrant["warrant_state"] == "supported"
+        and warrant["source_path"] == "docs/self_model/warrants/WARR-20260705-0002.json"
+        for warrant in index["warrants"]
+    )
 
 
 def test_write_warrant_record_script_writes_valid_record(tmp_path):
@@ -822,4 +836,38 @@ def test_build_self_model_index_includes_cap_0002():
     assert any(
         verification["verification_id"] == "VERIFY-20260705-0002"
         for verification in index["verifications"]
+    )
+
+
+def test_validate_warrant_record_accepts_warr_0002():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_warrant_record
+
+    record = json.loads(
+        Path("docs/self_model/warrants/WARR-20260705-0002.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_warrant_record(record)
+
+
+def test_build_self_model_index_includes_completion_warrant():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert index["warrant_counts"]["supported"] == 2
+    assert any(
+        warrant["warrant_id"] == "WARR-20260705-0002"
+        and warrant["target_item_id"] == "PLAN-20260705-0001"
+        and warrant["target_item_type"] == "plan"
+        and warrant["decision"] == "admit"
+        and warrant["warrant_state"] == "supported"
+        for warrant in index["warrants"]
     )

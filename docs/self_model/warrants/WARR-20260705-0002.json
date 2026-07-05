@@ -1,0 +1,23 @@
+{
+  "author": "chatgpt",
+  "created_at": "2026-07-05T00:00:00Z",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260705-0001",
+    "WARR-20260705-0001",
+    "f0691d2",
+    "cd5a0d3",
+    "CAP-0002",
+    "VERIFY-20260705-0002",
+    "647beec",
+    "74842bd"
+  ],
+  "reason": "PLAN-20260705-0001 required a read-only diagnostic that reports candidate L0 sources without modifying selected context or provider behavior. Commit f0691d2 implemented that diagnostic. Commit cd5a0d3 recorded memory for the implementation. Commit 647beec registered CAP-0002 and VERIFY-20260705-0002, and commit 74842bd recorded memory for the capability registration. Tests passed with 304 tests after CAP-0002 registration, and the self-model index audit returned ok true.",
+  "schema_version": "v1",
+  "scope": "Certifies that PLAN-20260705-0001 has been fulfilled by the read-only L0 candidate diagnostics implementation and its SELF-MODEL capability/verification records. This warrant does not change provider prompts, context selection, or automatic L0 retrieval behavior.",
+  "substrate": "process",
+  "target_item_id": "PLAN-20260705-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260705-0002",
+  "warrant_state": "supported"
+}
