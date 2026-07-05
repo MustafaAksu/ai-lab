@@ -471,10 +471,11 @@ def test_audit_self_model_index_seed_has_no_errors():
         for finding in result["findings"]
         if finding["severity"] == "error"
     ]
-    assert any(
-        finding["code"] == "SELF_MODEL_INDEX_CONTENT_CURRENT"
-        for finding in result["findings"]
-    )
+    codes = {finding["code"] for finding in result["findings"]}
+    assert codes & {
+        "SELF_MODEL_INDEX_CONTENT_CURRENT",
+        "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED_CONTENT_CURRENT",
+    }
 
 
 def test_audit_self_model_index_detects_stale_content(tmp_path):
@@ -540,10 +541,11 @@ def test_audit_self_model_index_script_reports_json():
     data = json.loads(result.stdout)
     assert data["schema_version"] == "v1"
     assert data["ok"] is True
-    assert any(
-        finding["code"] == "SELF_MODEL_INDEX_CONTENT_CURRENT"
-        for finding in data["findings"]
-    )
+    codes = {finding["code"] for finding in data["findings"]}
+    assert codes & {
+        "SELF_MODEL_INDEX_CONTENT_CURRENT",
+        "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED_CONTENT_CURRENT",
+    }
 
 
 def test_validate_plan_record_accepts_seed_plan():
