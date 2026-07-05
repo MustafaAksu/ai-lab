@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/capabilities/CAP-0002.json.",
+    "Added docs/self_model/verifications/VERIFY-20260705-0002.json.",
+    "Regenerated docs/self_model/SELF_MODEL.json with two implemented capabilities.",
+    "Updated self-model tests for CAP-0002 and VERIFY-20260705-0002."
+  ],
+  "content_hash": "78ab728f81604d4b228873575ac5d68166a4b468157e6eb68e978c70cbf2ac33",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-05T12:30:02.843725+00:00",
+  "episode_id": "EP-20260705-l0-diagnostics-capability-record",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "CAP-0002 records read-only L0 candidate diagnostics as an implemented self-model capability.",
+    "VERIFY-20260705-0002 records object-shaped command evidence for the capability registration."
+  ],
+  "l1_id": "L1-20260705-l0-diagnostics-capability-record",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether PLAN-20260705-0001 should be marked completed directly or closed by a new completion warrant edge."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "CAP-0002 is diagnostic-only; it does not imply automatic L0 discovery or context selection behavior."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-l0-diagnostics-capability-record"
+  ],
+  "summary_text": "The read-only L0 candidate diagnostics implementation is now registered in SELF-MODEL as CAP-0002, with VERIFY-20260705-0002 as its verification artifact. CAP-0002 declares the diagnostic as an implemented capability and evidence-binds the diagnostic module, CLI, and tests. SELF_MODEL.json aggregates CAP-0001 and CAP-0002 as implemented capabilities. Post-commit audit reported ok true with SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED_CONTENT_CURRENT and SELF_MODEL_INDEX_CONTENT_CURRENT, so no index-refresh commit was needed after 647beec.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "l0",
+    "diagnostic",
+    "capability-record"
+  ],
+  "ttl_until": null
+}

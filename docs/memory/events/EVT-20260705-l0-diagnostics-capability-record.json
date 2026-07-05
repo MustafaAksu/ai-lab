@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "647beec"
+  ],
+  "commit_hash": "647beec",
+  "created_at": "2026-07-05T12:30:02.670030+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-l0-diagnostics-capability-record",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-l0-diagnostics-capability-record",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Registered read-only L0 candidate diagnostics in SELF-MODEL as CAP-0002 and added VERIFY-20260705-0002. CAP-0002 evidence-binds ai_lab/documentation/l0_candidate_diagnostics.py, scripts/diagnose_l0_candidates.py, and tests/test_l0_candidate_diagnostics.py. SELF_MODEL.json now reports two implemented capabilities: CAP-0001 and CAP-0002. Focused self-model tests passed with 29 tests, L0 diagnostic tests passed with 6 tests, the full suite passed with 304 tests, and the self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "l0",
+    "diagnostic",
+    "capability-record",
+    "verification-record"
+  ],
+  "turn_id": 1
+}
