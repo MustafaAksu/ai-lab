@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/warrants/WARR-20260705-0002.json.",
+    "Regenerated docs/self_model/SELF_MODEL.json with two supported warrants.",
+    "Updated self-model tests to accept both warrant records."
+  ],
+  "content_hash": "ea540a8c78b37b4f6d857a0325278d0532bf95bc772f5c6c17518df5f1c4bf85",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-05T12:38:07.571161+00:00",
+  "episode_id": "EP-20260705-l0-diagnostics-plan-completion-warrant",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN completion is certified by a new warrant edge rather than by mutating the PLAN record in this slice.",
+    "WARR-20260705-0002 certifies fulfillment only for the read-only L0 candidate diagnostics scope."
+  ],
+  "l1_id": "L1-20260705-l0-diagnostics-plan-completion-warrant",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to update PLAN-20260705-0001 status to completed now that WARR-20260705-0002 certifies fulfillment."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "PLAN-20260705-0001 still has status proposed and therefore remains in open_plans until a separate PLAN-status completion slice is performed."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-l0-diagnostics-plan-completion-warrant"
+  ],
+  "summary_text": "WARR-20260705-0002 was added as a supported completion warrant for PLAN-20260705-0001. This warrant certifies that the read-only L0 candidate diagnostics plan has been fulfilled by implementation commit f0691d2, memory commit cd5a0d3, CAP-0002/VERIFY-20260705-0002 registration commit 647beec, and capability memory commit 74842bd. The warrant does not mutate PLAN-20260705-0001 status and does not claim automatic L0 retrieval, provider prompt changes, or context selection changes. SELF_MODEL.json now reports warrant_counts.supported = 2 and includes both WARR-20260705-0001 and WARR-20260705-0002. Post-commit audit after da7954e returned ok true and content current, so no index-refresh commit was needed.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan-completion",
+    "l0"
+  ],
+  "ttl_until": null
+}

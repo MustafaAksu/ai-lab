@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "da7954e"
+  ],
+  "commit_hash": "da7954e",
+  "created_at": "2026-07-05T12:38:07.482297+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-l0-diagnostics-plan-completion-warrant",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-l0-diagnostics-plan-completion-warrant",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added WARR-20260705-0002 as a supported completion warrant for PLAN-20260705-0001. The warrant certifies that the read-only L0 candidate diagnostics plan was fulfilled by implementation commit f0691d2, memory commit cd5a0d3, CAP-0002 and VERIFY-20260705-0002 registration commit 647beec, and capability memory commit 74842bd. SELF_MODEL.json now aggregates two supported warrants for PLAN-20260705-0001. Focused self-model tests passed with 31 tests, full suite passed with 306 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan-completion",
+    "l0",
+    "diagnostic"
+  ],
+  "turn_id": 1
+}
