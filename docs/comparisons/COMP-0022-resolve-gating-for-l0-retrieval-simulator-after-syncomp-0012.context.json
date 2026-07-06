@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-06T07:31:56.843804+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0012",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0021",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "96f44a8b4a2e58ac5e8eea83b24f8566caacce1ab4352605d872385cdc2bd25f",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-L1-20260706-context-manifest-l0-diagnostics-completion",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260706-context-manifest-l0-diagnostics-completion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260706-context-manifest-l0-diagnostics-completion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260706-context-manifest-l0-diagnostics-completion.json",
+      "token_estimate": 606,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "83dedf86f26559be",
+  "task": "Resolve gating assumptions before implementing a diagnostic-only L0 hybrid retrieval simulator. Source artifacts: - COMP-0021-ai-lab-backlog-prioritization-after-context-manifest-l0-diagnostics - SYNCOMP-0012-ai-lab-backlog-prioritization-after-context-manifest-l0-diagnostics Current boundaries: - Explicit L0 inclusion is implemented. - Read-only L0 candidate diagnostics are implemented. - Context-manifest-connected L0 candidate diagnostics are implemented. - PLAN-20260705-0001 and PLAN-20260...",
+  "task_label": "resolve-gating-assumptions-before-implementing-a-diagnostic-only-l0-hybrid-retri",
+  "total_token_estimate": 2543
+}
