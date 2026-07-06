@@ -56,7 +56,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-06T14:38:38+00:00",
+  "generated_at": "2026-07-06T14:52:01+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -104,12 +104,9 @@
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [
-    "PLAN-20260706-0002"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "completed": 2,
-    "proposed": 1
+    "completed": 3
   },
   "plans": [
     {
@@ -130,7 +127,7 @@
       "plan_id": "PLAN-20260706-0002",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260706-0002.json",
-      "status": "proposed",
+      "status": "completed",
       "title": "Diagnostic-only L0 Hybrid Retrieval Simulator \u2014 Manifest Diagnostics"
     }
   ],
@@ -141,7 +138,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "be78851e53916d009817fd2436817a9da9fb1ab8",
+  "repo_head": "0ed3758cfd618047d82536479f84ae600064fadc",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -167,7 +164,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 5
+    "supported": 6
   },
   "warrants": [
     {
@@ -208,6 +205,14 @@
       "target_item_id": "PLAN-20260706-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260706-0003",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260706-0004.json",
+      "target_item_id": "PLAN-20260706-0002",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260706-0004",
       "warrant_state": "supported"
     }
   ]

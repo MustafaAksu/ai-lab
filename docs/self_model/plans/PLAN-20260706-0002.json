@@ -3,7 +3,7 @@
   "plan_id": "PLAN-20260706-0002",
   "title": "Diagnostic-only L0 Hybrid Retrieval Simulator — Manifest Diagnostics",
   "source_gap_id": "GAP-0001",
-  "status": "proposed",
+  "status": "completed",
   "created_at": "2026-07-06T00:00:00Z",
   "objective": "Add a read-only, per-request manifest diagnostics section to capture simulated hybrid L0 candidate metadata and scores without affecting prompts, selection, or indexes.",
   "proposed_change": "Introduce manifest.diagnostics.l0_retrieval_simulator with approved fields and constraints, including selection_effect fixed to \"none\" and optional reranker constrained to \"none\" or omitted. Provide a read-only deprecated compatibility alias at context_pack.selection_diagnostics.retrieval_candidates. Emit diagnostics only when explicitly requested; require explicit combine_policy and normalization configuration; enforce governance prohibitions through guardrail fields and tests.",
@@ -34,5 +34,5 @@
     "Self-model records and SELF_MODEL.json represent the slice as diagnostic-only."
   ],
   "risk": "Diagnostic retrieval_score may be confused with actionable selection semantics unless the schema, tests, warrant, and docs keep selection_effect fixed to \"none\" and forbid prompt or selection effects.",
-  "next_action": "Create a warrant for PLAN-20260706-0002 that explicitly forbids prompt inclusion, context selection changes, production embedding/index mutation, reranking beyond \"none\", token budget telemetry, selection adapter integration, cross-namespace/redaction bypass, and persistent write-back."
+  "next_action": "No further implementation remains for PLAN-20260706-0002. The diagnostic-only L0 hybrid retrieval simulator is implemented by CAP-0003, verified by VERIFY-20260706-0002, and completion is certified by WARR-20260706-0004. Any future live retrieval, production embeddings, non-none reranking, telemetry, token-budget enforcement, selection adapter, provider prompt change, or context selection behavior requires a separate PLAN/WARRANT."
 }
