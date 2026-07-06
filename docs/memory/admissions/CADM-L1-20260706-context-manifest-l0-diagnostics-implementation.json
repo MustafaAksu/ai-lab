@@ -1,0 +1,23 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-06T06:51:25.787006+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-implementation",
+    "c74b42c",
+    "WARR-20260706-0001",
+    "PLAN-20260706-0001",
+    "CAP-0002"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit c74b42c, WARR-20260706-0001, PLAN-20260706-0001, passing tests, smoke output, and a clean post-commit self-model index audit.",
+  "substrate": "process",
+  "target_item_id": "L1-20260706-context-manifest-l0-diagnostics-implementation",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260706-context-manifest-l0-diagnostics-implementation",
+  "warrant_state": "supported"
+}

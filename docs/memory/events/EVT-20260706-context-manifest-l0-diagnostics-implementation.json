@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "c74b42c"
+  ],
+  "commit_hash": "c74b42c",
+  "created_at": "2026-07-06T06:51:25.582351+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-implementation",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260706-context-manifest-l0-diagnostics-implementation",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Implemented context-manifest-connected L0 candidate diagnostics in commit c74b42c. The diagnostic now extracts selected item_id values from a saved context-pack manifest and uses them only for read-only context_match reporting against valid L0 summary records. The CLI now supports --context-manifest. Missing, invalid, non-object, and missing-items manifests are handled nonfatally. The implementation preserves selection_effect none and does not change provider prompts, context selection, or automatic L0 retrieval behavior. CAP-0002 evidence hashes were refreshed. L0 diagnostic tests passed with 10 tests, self-model tests passed with 37 tests, full suite passed with 316 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "l0",
+    "diagnostic",
+    "context-manifest",
+    "capability"
+  ],
+  "turn_id": 1
+}

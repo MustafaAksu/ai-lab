@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added context_item_ids_from_manifest_record and context_item_ids_from_manifest_path helpers.",
+    "Added l0_candidate_diagnostics_from_context_manifest.",
+    "Extended scripts/diagnose_l0_candidates.py with --context-manifest.",
+    "Added tests for manifest extraction, manifest-based matching, missing manifest nonfatal behavior, and CLI manifest reading.",
+    "Refreshed CAP-0002 evidence hashes and rebuilt SELF_MODEL.json."
+  ],
+  "content_hash": "59b0af4307d2772e47781b6d42cc46339be1d1d918fcbf3110a3214bb87f195e",
+  "coverage_score": 0.97,
+  "created_at": "2026-07-06T06:51:25.685373+00:00",
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-implementation",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Context-manifest L0 integration is diagnostic-only, not automatic retrieval.",
+    "The manifest connection reads selected item_id values only for context_match telemetry."
+  ],
+  "l1_id": "L1-20260706-context-manifest-l0-diagnostics-implementation",
+  "namespace": "public",
+  "next_actions": [
+    "Create verification/completion records for PLAN-20260706-0001 and then mark the plan completed."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Future slices must not treat context_match telemetry as context selection or automatic L0 retrieval."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-implementation"
+  ],
+  "summary_text": "Commit c74b42c implemented the admitted PLAN-20260706-0001 slice under WARR-20260706-0001. L0 candidate diagnostics can now read a saved context-pack manifest, extract selected item_id values, and report context_match for valid L0 summary records. This is diagnostic-only: selection_effect remains none, missing manifests are nonfatal, and no provider prompt, context-pack selection, or automatic L0 retrieval behavior was added. The CLI scripts/diagnose_l0_candidates.py now supports --context-manifest. CAP-0002 evidence hashes were refreshed to cover the modified diagnostic module, CLI, and tests. Post-implementation smoke showed a missing docs/context/latest_manifest.json returns context_manifest_status = missing with selection_effect = none. Post-commit audit after c74b42c returned ok true and content current.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "l0",
+    "diagnostic",
+    "context-manifest",
+    "capability"
+  ],
+  "ttl_until": null
+}
