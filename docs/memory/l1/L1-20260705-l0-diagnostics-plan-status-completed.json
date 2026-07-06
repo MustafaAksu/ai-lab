@@ -1,0 +1,43 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Updated docs/self_model/plans/PLAN-20260705-0001.json status to completed.",
+    "Regenerated docs/self_model/SELF_MODEL.json with open_plans empty.",
+    "Updated self-model tests for completed PLAN status."
+  ],
+  "content_hash": "7c36e19c3a63644286696ece5273d961510f07fc592714498d0f6d86d8a133a3",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-06T05:22:34.045034+00:00",
+  "episode_id": "EP-20260705-l0-diagnostics-plan-status-completed",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260705-0001 is now closed by status after completion was certified by WARR-20260705-0002.",
+    "Future automatic L0 discovery or context-selection behavior requires a separate PLAN/WARRANT slice."
+  ],
+  "l1_id": "L1-20260705-l0-diagnostics-plan-status-completed",
+  "namespace": "public",
+  "next_actions": [
+    "Choose the next GAP-0001 slice: either richer read-only candidate scoring or context-manifest-connected diagnostics, still without changing provider prompts."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "GAP-0001 remains open because automatic L0 discovery itself is still not implemented; only the read-only diagnostic first slice is completed."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260705-l0-diagnostics-plan-status-completed"
+  ],
+  "summary_text": "PLAN-20260705-0001 is now completed. The completion followed WARR-20260705-0002, which certified fulfillment of the read-only L0 candidate diagnostics scope. Commit 1a5c777 updated the PLAN status from proposed to completed, updated next_action to state that no further action remains for this PLAN, regenerated SELF_MODEL.json, and updated self-model tests. SELF_MODEL.json now reports plan_counts.completed = 1, open_plans = [], admitted_plans = [PLAN-20260705-0001], and warrant_counts.supported = 2. Post-commit audit reported ok true and content current.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan-completion",
+    "l0",
+    "diagnostic"
+  ],
+  "ttl_until": null
+}

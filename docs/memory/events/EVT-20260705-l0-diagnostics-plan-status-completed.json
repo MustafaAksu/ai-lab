@@ -1,0 +1,36 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "1a5c777"
+  ],
+  "commit_hash": "1a5c777",
+  "created_at": "2026-07-06T05:22:33.963575+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260705-l0-diagnostics-plan-status-completed",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260705-l0-diagnostics-plan-status-completed",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Marked PLAN-20260705-0001 completed after WARR-20260705-0002 certified fulfillment. SELF_MODEL.json now reports plan_counts completed 1, open_plans empty, admitted_plans containing PLAN-20260705-0001, and warrant_counts supported 2. Focused self-model tests passed with 33 tests, full suite passed with 308 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "plan-completion",
+    "l0",
+    "diagnostic"
+  ],
+  "turn_id": 1
+}

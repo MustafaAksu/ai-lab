@@ -1,0 +1,24 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-06T05:22:34.126242+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260705-l0-diagnostics-plan-status-completed",
+    "1a5c777",
+    "PLAN-20260705-0001",
+    "WARR-20260705-0002",
+    "CAP-0002",
+    "VERIFY-20260705-0002"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit 1a5c777, WARR-20260705-0002, completed PLAN-20260705-0001, passing tests, and a clean post-commit self-model index audit.",
+  "substrate": "process",
+  "target_item_id": "L1-20260705-l0-diagnostics-plan-status-completed",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260705-l0-diagnostics-plan-status-completed",
+  "warrant_state": "supported"
+}
