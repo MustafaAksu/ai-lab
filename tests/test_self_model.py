@@ -570,7 +570,7 @@ def test_validate_plan_record_rejects_invalid_plan_id():
         "schema_version": "v1",
         "plan_id": "PLAN-bad",
         "title": "Bad plan",
-        "status": "proposed",
+        "status": "completed",
         "created_at": "2026-07-05T00:00:00Z",
         "source_gap_id": "GAP-0001",
         "objective": "Objective.",
@@ -595,13 +595,13 @@ def test_build_self_model_index_includes_plan_records():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["plan_counts"]["proposed"] == 1
-    assert index["open_plans"] == ["PLAN-20260705-0001"]
+    assert index["plan_counts"]["completed"] == 1
+    assert index["open_plans"] == []
     assert index["plans"] == [
         {
             "plan_id": "PLAN-20260705-0001",
             "title": "Read-only L0 candidate diagnostics",
-            "status": "proposed",
+            "status": "completed",
             "source_gap_id": "GAP-0001",
             "source_path": "docs/self_model/plans/PLAN-20260705-0001.json",
         }
@@ -870,4 +870,37 @@ def test_build_self_model_index_includes_completion_warrant():
         and warrant["decision"] == "admit"
         and warrant["warrant_state"] == "supported"
         for warrant in index["warrants"]
+    )
+
+
+def test_validate_plan_record_accepts_completed_plan_0001():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_plan_record
+
+    record = json.loads(
+        Path("docs/self_model/plans/PLAN-20260705-0001.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert record["status"] == "completed"
+    validate_plan_record(record)
+
+
+def test_build_self_model_index_excludes_completed_plan_from_open_plans():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-05T00:00:00+00:00",
+    )
+
+    assert index["plan_counts"]["completed"] == 1
+    assert index["open_plans"] == []
+    assert any(
+        plan["plan_id"] == "PLAN-20260705-0001"
+        and plan["status"] == "completed"
+        for plan in index["plans"]
     )

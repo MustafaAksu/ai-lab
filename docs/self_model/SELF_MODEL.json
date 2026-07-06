@@ -46,7 +46,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-05T12:33:50+00:00",
+  "generated_at": "2026-07-05T12:41:14+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -74,18 +74,16 @@
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [
-    "PLAN-20260705-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "proposed": 1
+    "completed": 1
   },
   "plans": [
     {
       "plan_id": "PLAN-20260705-0001",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260705-0001.json",
-      "status": "proposed",
+      "status": "completed",
       "title": "Read-only L0 candidate diagnostics"
     }
   ],
@@ -96,7 +94,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "74842bd5bf88ee1fffa028e1717931a18697f68e",
+  "repo_head": "b7109d2f902bf04eb99923b1c9c8366620d6b8f1",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

@@ -6,7 +6,7 @@
     "Governed improvement work should proceed only after PLAN admission."
   ],
   "created_at": "2026-07-05T00:00:00Z",
-  "next_action": "Seek CADM-PLAN admission before implementing the diagnostic.",
+  "next_action": "No further implementation action remains for this PLAN. Completion is certified by WARR-20260705-0002. Future automatic L0 discovery or context-selection behavior requires a separate PLAN/WARRANT slice.",
   "objective": "Create a read-only diagnostic for possible automatic L0 discovery candidates.",
   "plan_id": "PLAN-20260705-0001",
   "proposed_change": "Add a diagnostic surface that reports possible candidate sources for future automatic L0 discovery without changing prompt selection.",
@@ -18,7 +18,7 @@
   "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
   "schema_version": "v1",
   "source_gap_id": "GAP-0001",
-  "status": "proposed",
+  "status": "completed",
   "success_criteria": [
     "The diagnostic reports candidate source records without modifying selected context.",
     "The diagnostic output distinguishes candidates from included prompt context.",
