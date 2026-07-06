@@ -376,9 +376,9 @@ def test_build_self_model_index_is_aggregation_only_for_seed_records():
     assert index["schema_version"] == "v1"
     assert index["model_type"] == "self_model"
     assert index["generation_rule"] == "aggregation_only"
-    assert index["active_capabilities"] == ["CAP-0001", "CAP-0002", "CAP-0003"]
+    assert index["active_capabilities"] == ["CAP-0001", "CAP-0002", "CAP-0003", "CAP-0004"]
     assert index["open_gaps"] == ["GAP-0001"]
-    assert index["capability_counts"]["implemented"] == 3
+    assert index["capability_counts"]["implemented"] == 4
     assert index["gap_counts"]["open"] == 1
     assert index["audit_summary"]["ok"] is True
 
@@ -456,7 +456,7 @@ def test_build_self_model_script_writes_index(tmp_path):
     data = json.loads(output.read_text(encoding="utf-8"))
     assert data["generated_at"] == "2026-07-05T00:00:00+00:00"
     assert data["generation_rule"] == "aggregation_only"
-    assert data["active_capabilities"] == ["CAP-0001", "CAP-0002", "CAP-0003"]
+    assert data["active_capabilities"] == ["CAP-0001", "CAP-0002", "CAP-0003", "CAP-0004"]
     assert data["open_gaps"] == ["GAP-0001"]
 
 
@@ -1118,7 +1118,7 @@ def test_build_self_model_index_includes_cap_0003_and_verify_20260706_0002():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["capability_counts"]["implemented"] == 3
+    assert index["capability_counts"]["implemented"] == 4
     assert "CAP-0003" in index["active_capabilities"]
     assert any(
         capability["capability_id"] == "CAP-0003"
@@ -1213,4 +1213,44 @@ def test_build_self_model_index_includes_warr_20260706_0005_admission():
         and warrant["warrant_state"] == "supported"
         and warrant["source_path"] == "docs/self_model/warrants/WARR-20260706-0005.json"
         for warrant in index["warrants"]
+    )
+
+def test_validate_cap_0004_record():
+    from ai_lab.documentation.self_model import validate_capability_record
+
+    validate_capability_record(
+        read_json(Path("docs/self_model/capabilities/CAP-0004.json"))
+    )
+
+
+def test_validate_verify_20260706_0003_record():
+    from ai_lab.documentation.self_model import validate_verification_record
+
+    validate_verification_record(
+        read_json(Path("docs/self_model/verifications/VERIFY-20260706-0003.json"))
+    )
+
+
+def test_build_self_model_index_includes_cap_0004():
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(repo_root=Path("."))
+
+    assert index["capability_counts"]["implemented"] == 4
+    assert index["active_capabilities"] == [
+        "CAP-0001",
+        "CAP-0002",
+        "CAP-0003",
+        "CAP-0004",
+    ]
+    assert any(
+        capability["capability_id"] == "CAP-0004"
+        and capability["status"] == "implemented"
+        and capability["source_path"] == "docs/self_model/capabilities/CAP-0004.json"
+        for capability in index["capabilities"]
+    )
+    assert any(
+        verification["verification_id"] == "VERIFY-20260706-0003"
+        and verification["source_path"] == "docs/self_model/verifications/VERIFY-20260706-0003.json"
+        for verification in index["verifications"]
     )

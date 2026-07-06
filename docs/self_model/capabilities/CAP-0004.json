@@ -1,0 +1,84 @@
+{
+  "schema_version": "v1",
+  "capability_id": "CAP-0004",
+  "name": "Read-only L0 discovery advisor",
+  "category": "diagnostic",
+  "status": "implemented",
+  "summary": "Builds advisory-only L0 discovery suggestions from explicit read-only diagnostic records without mutating context selection, provider prompts, indexes, embeddings, memory stores, or repository state.",
+  "interfaces": [
+    "ai_lab.documentation.l0_discovery_advisor.build_l0_discovery_advisor_record",
+    "ai_lab.documentation.l0_discovery_advisor.validate_l0_discovery_advisor_record",
+    "ai_lab.documentation.l0_discovery_advisor.l0_discovery_advisor_manifest_document",
+    "scripts/advise_l0_discovery.py",
+    "manifest.diagnostics.l0_discovery_advisor"
+  ],
+  "limits": [
+    "Advisory diagnostic output only; no automatic include_l0 behavior.",
+    "selection_effect remains none for the advisor record and every suggestion.",
+    "Does not mutate ContextPackManifest.items or any context-selection result.",
+    "Does not change provider prompts or prompt rendering.",
+    "Does not perform live retrieval against production indexes.",
+    "Does not call external embedding APIs or create production embeddings.",
+    "Does not mutate vector indexes, document indexes, memory stores, or repository state.",
+    "Does not perform token-budget enforcement or emit token-budget telemetry.",
+    "Does not admit non-none reranking or adapter behavior."
+  ],
+  "risks": [
+    "Diagnostic retrieval_score may be misread as selection authority unless selection_effect none and guardrails remain explicit.",
+    "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice."
+  ],
+  "recommended_next_actions": [
+    "Register completion for PLAN-20260706-0003 only after CAP-0004 is committed and the self-model index is rebuilt.",
+    "Keep any future automatic inclusion adapter, prompt change, token-budget enforcement, or production retrieval behind a separate PLAN/WARRANT."
+  ],
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260706-0003",
+        "path": "docs/self_model/plans/PLAN-20260706-0003.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260706-0005",
+        "path": "docs/self_model/warrants/WARR-20260706-0005.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "959f8f4d0e6217c4356179f3c6454f73470858fd",
+        "role": "implementation commit"
+      }
+    ],
+    "files": [
+      {
+        "path": "ai_lab/documentation/l0_discovery_advisor.py",
+        "role": "implementation",
+        "content_hash": "0ccc3fd612b91b4a66689a64e43392ac3881d5ddc3e942006b6ff439c5058726"
+      },
+      {
+        "path": "scripts/advise_l0_discovery.py",
+        "role": "implementation",
+        "content_hash": "b0da32857c22eac24ac711eea805c30d6e66e1e52b81bb68efe034e27f08c9c2"
+      },
+      {
+        "path": "tests/test_l0_discovery_advisor.py",
+        "role": "tests",
+        "content_hash": "ed37e0546f4fb279ff5f070df93930902193897ffe26f1b6ad6e358ce0351c11"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260706-0003",
+        "path": "docs/self_model/verifications/VERIFY-20260706-0003.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "last_verified": {
+    "repo_commit": "959f8f4d0e6217c4356179f3c6454f73470858fd",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260706-0003.json",
+    "verified_at": "2026-07-06T00:00:00Z"
+  },
+  "created_at": "2026-07-06T00:00:00Z"
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260706-0003",
+  "created_at": "2026-07-06T00:00:00Z",
+  "repo_commit": "959f8f4d0e6217c4356179f3c6454f73470858fd",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_l0_discovery_advisor.py",
+      "exit_code": 0,
+      "summary": "7 read-only L0 discovery advisor tests passed, including module validation, manifest diagnostics placement, guardrail rejection, and CLI behavior."
+    },
+    {
+      "command": "python -m pytest tests/test_l0_discovery_advisor.py tests/test_l0_retrieval_simulator.py tests/test_l0_candidate_diagnostics.py tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "77 related L0 advisor, simulator, diagnostics, and self-model tests passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "350 full-suite tests passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true with normalized content current."
+    },
+    {
+      "command": "python scripts/advise_l0_discovery.py --retrieval-simulator <fixture> --run-id post-commit-smoke --output <tmp>",
+      "exit_code": 0,
+      "summary": "CLI smoke emitted manifest.diagnostics.l0_discovery_advisor with selection_effect none, one suggestion, and zero write/context/prompt side effects."
+    }
+  ]
+}

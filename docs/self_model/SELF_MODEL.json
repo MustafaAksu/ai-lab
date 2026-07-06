@@ -2,7 +2,8 @@
   "active_capabilities": [
     "CAP-0001",
     "CAP-0002",
-    "CAP-0003"
+    "CAP-0003",
+    "CAP-0004"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -14,7 +15,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 27,
+      "info": 32,
       "warn": 2
     }
   },
@@ -39,10 +40,17 @@
       "name": "Diagnostic-only L0 hybrid retrieval simulator",
       "source_path": "docs/self_model/capabilities/CAP-0003.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0004",
+      "category": "diagnostic",
+      "name": "Read-only L0 discovery advisor",
+      "source_path": "docs/self_model/capabilities/CAP-0004.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 3
+    "implemented": 4
   },
   "gap_counts": {
     "open": 1
@@ -57,7 +65,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-06T15:21:12+00:00",
+  "generated_at": "2026-07-06T20:04:51+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -79,6 +87,16 @@
       "risk": "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice.",
       "source_field": "risks[1]",
       "source_record": "CAP-0003"
+    },
+    {
+      "risk": "Diagnostic retrieval_score may be misread as selection authority unless selection_effect none and guardrails remain explicit.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0004"
+    },
+    {
+      "risk": "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0004"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -154,7 +172,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "9f542edb03e7cfc9e532ffb3dbbe165046bc069a",
+  "repo_head": "959f8f4d0e6217c4356179f3c6454f73470858fd",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -177,6 +195,11 @@
       "repo_commit": "be78851e53916d009817fd2436817a9da9fb1ab8",
       "source_path": "docs/self_model/verifications/VERIFY-20260706-0002.json",
       "verification_id": "VERIFY-20260706-0002"
+    },
+    {
+      "repo_commit": "959f8f4d0e6217c4356179f3c6454f73470858fd",
+      "source_path": "docs/self_model/verifications/VERIFY-20260706-0003.json",
+      "verification_id": "VERIFY-20260706-0003"
     }
   ],
   "warrant_counts": {
