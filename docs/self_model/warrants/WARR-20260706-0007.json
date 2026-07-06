@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260706-0007",
+  "target_item_id": "PLAN-20260706-0004",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-06T00:00:00Z",
+  "scope": "Admits PLAN-20260706-0004 only as a diagnostic-only context-manifest integration slice for surfacing read-only L0 discovery advisor suggestions inside manifest diagnostics. This warrant does not admit automatic include_l0, ContextPackManifest.items mutation, provider prompt changes, latest-context prompt path changes, live retrieval, external embedding API calls, production embedding creation, vector/document index mutation, memory-store mutation, token-budget enforcement or telemetry, non-none reranking, or adapter behavior.",
+  "reason": "CAP-0004 already provides the read-only L0 discovery advisor, and GAP-0001 remains open. The smallest governed next step is to connect advisor output to context manifest diagnostics while preserving selection_effect none and keeping suggestions advisory-only outside selected context items and provider prompt construction.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260706-0004",
+    "CAP-0004",
+    "VERIFY-20260706-0003",
+    "WARR-20260706-0006",
+    "75c92bf"
+  ]
+}
