@@ -27,8 +27,8 @@
     "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice."
   ],
   "recommended_next_actions": [
-    "Create a completion warrant for PLAN-20260706-0002 after self-model registration is committed.",
-    "Keep any future adapter, reranker, telemetry, or live retrieval work behind a separate PLAN/WARRANT."
+    "Keep future adapter, reranker, telemetry, live retrieval, token-budget enforcement, prompt inclusion, or context-selection work behind a separate PLAN/WARRANT.",
+    "Consider whether GAP-0001 should next move to an adapter-design PLAN or remain open pending additional diagnostic evidence."
   ],
   "evidence": {
     "admissions": [
