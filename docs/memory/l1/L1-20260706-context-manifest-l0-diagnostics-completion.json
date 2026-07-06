@@ -1,0 +1,48 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/verifications/VERIFY-20260706-0001.json.",
+    "Added docs/self_model/warrants/WARR-20260706-0002.json.",
+    "Marked docs/self_model/plans/PLAN-20260706-0001.json completed.",
+    "Regenerated docs/self_model/SELF_MODEL.json with completed plans = 2 and supported warrants = 4.",
+    "Updated self-model tests for completion state."
+  ],
+  "content_hash": "523e08605a24a6f47fc8a4b72d1237dd0ced7f8b5739af3fb62b41552ef25def",
+  "coverage_score": 0.97,
+  "created_at": "2026-07-06T07:04:44.432676+00:00",
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-completion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260706-0001 is completed and has no remaining implementation work.",
+    "Future automatic L0 retrieval or selection behavior requires a separate PLAN and WARRANT."
+  ],
+  "l1_id": "L1-20260706-context-manifest-l0-diagnostics-completion",
+  "namespace": "public",
+  "next_actions": [
+    "Start a new governed slice only if automatic L0 retrieval, context selection changes, or provider prompt changes are desired."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Future work may confuse context_match telemetry with automatic retrieval unless a new governed slice explicitly admits that behavior."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-completion"
+  ],
+  "summary_text": "Commit c6f09f0 completed PLAN-20260706-0001. The completion added VERIFY-20260706-0001 and WARR-20260706-0002, changed PLAN-20260706-0001 status to completed, rebuilt SELF_MODEL.json, and updated self-model tests. SELF_MODEL.json now reports plan_counts.completed = 2, open_plans = [], admitted_plans = [PLAN-20260705-0001, PLAN-20260706-0001], and warrant_counts.supported = 4. The completed slice remains diagnostic-only: it certifies read-only context-manifest-connected L0 candidate diagnostics and does not claim provider prompt changes, context selection changes, or automatic L0 retrieval behavior. Post-commit audit after c6f09f0 returned ok true and content current.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "verification",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

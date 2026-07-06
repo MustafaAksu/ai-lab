@@ -1,0 +1,39 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "c6f09f0"
+  ],
+  "commit_hash": "c6f09f0",
+  "created_at": "2026-07-06T07:04:44.317664+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-completion",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260706-context-manifest-l0-diagnostics-completion",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Completed PLAN-20260706-0001 in commit c6f09f0. Added VERIFY-20260706-0001 and WARR-20260706-0002, marked PLAN-20260706-0001 completed, rebuilt SELF_MODEL.json, and updated self-model tests. Completion certifies the read-only context-manifest-connected L0 candidate diagnostics slice only. It does not claim provider prompt changes, context selection changes, or automatic L0 retrieval behavior. Recovery fixed the verification recorded_by schema by reusing the existing object-shaped recorded_by pattern. Self-model tests passed with 40 tests, full suite passed with 319 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "verification",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "turn_id": 1
+}

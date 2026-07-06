@@ -1,0 +1,24 @@
+{
+  "author": "chatgpt",
+  "citations": [],
+  "created_at": "2026-07-06T07:04:44.533555+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-completion",
+    "c6f09f0",
+    "VERIFY-20260706-0001",
+    "WARR-20260706-0002",
+    "PLAN-20260706-0001",
+    "CAP-0002"
+  ],
+  "evidence_paths": [],
+  "expires_at": null,
+  "freshness_state": "fresh",
+  "note": null,
+  "reason": "The L1 summary is grounded in commit c6f09f0, VERIFY-20260706-0001, WARR-20260706-0002, PLAN-20260706-0001 completion state, passing tests, and a clean post-commit self-model index audit.",
+  "substrate": "process",
+  "target_item_id": "L1-20260706-context-manifest-l0-diagnostics-completion",
+  "target_item_type": "episode_l1",
+  "verdict_id": "CADM-L1-20260706-context-manifest-l0-diagnostics-completion",
+  "warrant_state": "supported"
+}
