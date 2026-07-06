@@ -9,7 +9,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from ai_lab.documentation.l0_candidate_diagnostics import l0_candidate_diagnostics
+from ai_lab.documentation.l0_candidate_diagnostics import (
+    context_item_ids_from_manifest_path,
+    l0_candidate_diagnostics,
+)
 
 
 def main() -> int:
@@ -29,6 +32,15 @@ def main() -> int:
         help="Optional context item ID to mark against candidate L0 chunk IDs.",
     )
     parser.add_argument(
+        "--context-manifest",
+        type=Path,
+        default=None,
+        help=(
+            "Optional saved context-pack JSON manifest. Its selected item_id "
+            "values are used only for read-only candidate matching."
+        ),
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=None,
@@ -37,10 +49,20 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    context_item_ids = tuple(args.context_item_id)
+    manifest_details: dict[str, object] = {}
+
+    if args.context_manifest is not None:
+        manifest_item_ids, manifest_details = context_item_ids_from_manifest_path(
+            args.context_manifest
+        )
+        context_item_ids = (*manifest_item_ids, *context_item_ids)
+
     result = l0_candidate_diagnostics(
         l0_store=args.l0_store,
-        context_item_ids=tuple(args.context_item_id),
+        context_item_ids=context_item_ids,
     )
+    result.update(manifest_details)
 
     output = json.dumps(result, indent=2, sort_keys=True) + "\n"
 

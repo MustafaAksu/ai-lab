@@ -41,6 +41,82 @@ def _citation(record: dict[str, object]) -> str | None:
     return None
 
 
+def _dedupe_preserving_order(values: tuple[str, ...]) -> tuple[str, ...]:
+    seen: set[str] = set()
+    deduped: list[str] = []
+
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        deduped.append(value)
+
+    return tuple(deduped)
+
+
+def context_item_ids_from_manifest_record(
+    manifest_record: dict[str, object],
+) -> tuple[str, ...]:
+    """Extract selected context item IDs from a context-pack manifest record."""
+
+    items = manifest_record.get("items")
+    if not isinstance(items, list):
+        return ()
+
+    item_ids: list[str] = []
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+
+        item_id = item.get("item_id")
+        if isinstance(item_id, str) and item_id:
+            item_ids.append(item_id)
+
+    return _dedupe_preserving_order(tuple(item_ids))
+
+
+def context_item_ids_from_manifest_path(
+    context_manifest_path: Path,
+) -> tuple[tuple[str, ...], dict[str, object]]:
+    """Read context item IDs from a saved context-pack manifest non-fatally."""
+
+    details: dict[str, object] = {
+        "context_manifest_path": str(context_manifest_path),
+    }
+
+    if not context_manifest_path.exists():
+        details["context_manifest_status"] = "missing"
+        details["context_manifest_item_count"] = 0
+        return (), details
+
+    if not context_manifest_path.is_file():
+        details["context_manifest_status"] = "not_file"
+        details["context_manifest_item_count"] = 0
+        return (), details
+
+    try:
+        raw = _read_json(context_manifest_path)
+    except Exception:
+        details["context_manifest_status"] = "invalid_json"
+        details["context_manifest_item_count"] = 0
+        return (), details
+
+    if not isinstance(raw, dict):
+        details["context_manifest_status"] = "not_object"
+        details["context_manifest_item_count"] = 0
+        return (), details
+
+    if "items" not in raw or not isinstance(raw.get("items"), list):
+        details["context_manifest_status"] = "missing_items"
+        details["context_manifest_item_count"] = 0
+        return (), details
+
+    context_item_ids = context_item_ids_from_manifest_record(raw)
+    details["context_manifest_status"] = "ok"
+    details["context_manifest_item_count"] = len(context_item_ids)
+    return context_item_ids, details
+
+
 def l0_candidate_diagnostics(
     l0_store: Path = Path("docs/memory/l0"),
     context_item_ids: tuple[str, ...] = (),
@@ -148,4 +224,22 @@ def l0_candidate_diagnostics(
 
     result["candidates"] = candidates
     result["dropped"] = dropped
+    return result
+
+
+def l0_candidate_diagnostics_from_context_manifest(
+    l0_store: Path = Path("docs/memory/l0"),
+    context_manifest_path: Path = Path("docs/context/latest_manifest.json"),
+) -> dict[str, object]:
+    """Run read-only L0 diagnostics against item IDs from a saved manifest."""
+
+    context_item_ids, details = context_item_ids_from_manifest_path(
+        context_manifest_path
+    )
+
+    result = l0_candidate_diagnostics(
+        l0_store=l0_store,
+        context_item_ids=context_item_ids,
+    )
+    result.update(details)
     return result
