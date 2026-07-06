@@ -2,8 +2,19 @@
 
 These are code-level defaults, not secrets.
 Secrets remain in local git-ignored files.
+
+Environment overrides are optional and intended for high-stakes
+provider comparisons, not as a global default policy change.
 """
 
-OPENAI_MODEL = "gpt-5"
-CLAUDE_MODEL = "claude-sonnet-4-5"
-CLAUDE_MAX_TOKENS = 4096
+from __future__ import annotations
+
+import os
+
+
+OPENAI_MODEL = os.getenv("AI_LAB_OPENAI_MODEL", "gpt-5")
+OPENAI_REASONING_EFFORT = os.getenv("AI_LAB_OPENAI_REASONING_EFFORT") or None
+
+CLAUDE_MODEL = os.getenv("AI_LAB_CLAUDE_MODEL", "claude-sonnet-4-5")
+CLAUDE_EFFORT = os.getenv("AI_LAB_CLAUDE_EFFORT") or None
+CLAUDE_MAX_TOKENS = int(os.getenv("AI_LAB_CLAUDE_MAX_TOKENS", "4096"))

@@ -47,3 +47,29 @@ def test_claude_provider_accepts_custom_max_tokens():
 
         assert provider.ask("Hello") == "Short response."
         assert provider._client.messages.create.call_args.kwargs["max_tokens"] == 2048
+
+def test_claude_provider_passes_effort():
+    with (
+        patch("ai_lab.providers.claude_provider.read_claude_api_key") as read_key,
+        patch("ai_lab.providers.claude_provider.Anthropic") as anthropic_cls,
+    ):
+        read_key.return_value = "test-key"
+        client = anthropic_cls.return_value
+
+        text_block = type("Block", (), {"type": "text", "text": "ok"})()
+        client.messages.create.return_value.content = [text_block]
+
+        provider = ClaudeProvider(
+            model="claude-test",
+            max_tokens=1234,
+            effort="xhigh",
+        )
+
+        assert provider.ask("prompt") == "ok"
+
+        client.messages.create.assert_called_once_with(
+            model="claude-test",
+            max_tokens=1234,
+            messages=[{"role": "user", "content": "prompt"}],
+            output_config={"effort": "xhigh"},
+        )
