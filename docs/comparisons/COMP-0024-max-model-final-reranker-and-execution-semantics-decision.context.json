@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-06T08:40:44.309588+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0014",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0023",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "150b62643ccad4bdbaa3fcd3cf8fe3f47df1e084602162017f48f49b50fa6c0f",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-L1-20260706-context-manifest-l0-diagnostics-completion",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260706-context-manifest-l0-diagnostics-completion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260706-context-manifest-l0-diagnostics-completion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260706-context-manifest-l0-diagnostics-completion.json",
+      "token_estimate": 606,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "50b9ace1a434138d",
+  "task": "Resolve the final two decisions before creating PLAN-20260706-0002. All prior boundaries are fixed: - No automatic L0 retrieval. - No context selection changes. - No provider prompt changes. - No production embedding creation. - No vector/index mutation. - No reranking unless explicitly admitted later. - No token budget telemetry. - No selection adapter integration. - No persistent write-back. - Canonical path: manifest.diagnostics.l0_retrieval_simulator. - Compatibility alias: context_pack.s...",
+  "task_label": "resolve-the-final-two-decisions-before-creating-plan-20260706-0002-all-prior-bou",
+  "total_token_estimate": 2543
+}
