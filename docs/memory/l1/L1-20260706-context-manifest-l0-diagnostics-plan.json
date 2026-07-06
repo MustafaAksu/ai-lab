@@ -1,0 +1,44 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/plans/PLAN-20260706-0001.json.",
+    "Regenerated docs/self_model/SELF_MODEL.json with one completed PLAN and one proposed/open PLAN.",
+    "Updated self-model tests to include PLAN-20260706-0001."
+  ],
+  "content_hash": "6cf36cfe1fc94f458b009b88477a69ed182534a470179fdc169644186d8fc796",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-06T05:48:31.247249+00:00",
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-plan",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "The next GAP-0001 slice is context-manifest-connected diagnostics, not automatic retrieval.",
+    "Implementation must wait for a warrant/admission edge before coding."
+  ],
+  "l1_id": "L1-20260706-context-manifest-l0-diagnostics-plan",
+  "namespace": "public",
+  "next_actions": [
+    "Create a warrant/admission edge for PLAN-20260706-0001 before implementation."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "The diagnostic may be misread as automatic retrieval unless labels continue to state selection_effect none and read-only behavior."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-plan"
+  ],
+  "summary_text": "PLAN-20260706-0001 was added as the next GAP-0001 slice after completing PLAN-20260705-0001. It proposes context-manifest-connected L0 candidate diagnostics: the diagnostic should accept or read latest-context manifest item IDs and report which valid L0 summary records match those IDs, while preserving selection_effect none. The PLAN explicitly keeps the diagnostic read-only and forbids provider prompt changes, context-pack selection changes, and automatic L0 retrieval claims. SELF_MODEL.json now reports plan_counts.completed = 1, plan_counts.proposed = 1, open_plans = [PLAN-20260706-0001], admitted_plans = [PLAN-20260705-0001], and warrant_counts.supported = 2. Post-commit audit after 5f196db returned ok true and content current.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

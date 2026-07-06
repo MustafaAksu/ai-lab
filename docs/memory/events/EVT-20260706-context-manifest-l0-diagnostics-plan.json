@@ -1,0 +1,37 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "5f196db"
+  ],
+  "commit_hash": "5f196db",
+  "created_at": "2026-07-06T05:48:31.153577+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-plan",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260706-context-manifest-l0-diagnostics-plan",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added PLAN-20260706-0001 for context-manifest-connected L0 candidate diagnostics. The PLAN proposes extending the read-only L0 candidate diagnostic so it can be run against latest-context manifest item IDs and explain candidate relationships while preserving selection_effect none. It explicitly forbids provider prompt changes, context selection changes, and automatic L0 retrieval claims. SELF_MODEL.json now reports one completed PLAN and one proposed/open PLAN. Focused self-model tests passed with 35 tests, full suite passed with 310 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "plan",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "turn_id": 1
+}
