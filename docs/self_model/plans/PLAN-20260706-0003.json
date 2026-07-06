@@ -1,0 +1,39 @@
+{
+  "schema_version": "v1",
+  "plan_id": "PLAN-20260706-0003",
+  "title": "Read-only L0 Discovery Advisor Contract",
+  "source_gap_id": "GAP-0001",
+  "status": "proposed",
+  "created_at": "2026-07-06T00:00:00Z",
+  "objective": "Define and implement a read-only advisor layer that turns existing L0 diagnostics and simulator output into explicit L0 discovery suggestions without changing context selection, provider prompts, or repository state.",
+  "proposed_change": "Introduce a diagnostic-only L0 discovery advisor contract, likely under manifest.diagnostics.l0_discovery_advisor, that can consume selected context manifest item IDs, L0 candidate diagnostics, and/or l0_retrieval_simulator output to produce suggested include_l0 chunk IDs with reasons. The advisor remains advisory only: selection_effect is fixed to \"none\", suggestions are not added to ContextPackManifest.items, and provider prompt paths remain unchanged.",
+  "rationale": [
+    "GAP-0001 remains open after explicit inclusion, candidate diagnostics, and hybrid simulator work.",
+    "The next smallest step is an advisory contract before any automatic selection adapter is admitted.",
+    "An advisor can make low-risk discovery behavior observable while preserving the no-selection-effect boundary.",
+    "The existing simulator and candidate diagnostics provide enough evidence to design suggestion semantics without live retrieval.",
+    "Future automatic context inclusion should be gated by a separate PLAN/WARRANT after advisory evidence exists."
+  ],
+  "constraints": [
+    "No automatic context selection and no mutation of ContextPackManifest.items.",
+    "No provider prompt inclusion or prompt rendering changes.",
+    "No live retrieval against production indexes.",
+    "No external embedding API calls and no production embedding creation.",
+    "No vector index, document index, memory store, or repository write-back beyond explicit output artifacts requested by CLI users.",
+    "No reranking beyond existing literal/implicit reranker none semantics.",
+    "No token-budget enforcement or token-budget telemetry.",
+    "No cross-namespace access, namespace ACL bypass, or redaction-boundary bypass.",
+    "selection_effect must remain fixed to \"none\" for advisor output and every suggested candidate.",
+    "Any later automatic inclusion adapter requires a separate PLAN/WARRANT."
+  ],
+  "success_criteria": [
+    "A schema or validator accepts read-only l0_discovery_advisor records with selection_effect none.",
+    "Advisor suggestions include chunk IDs, reasons, source diagnostic references, and explicit non-selection semantics.",
+    "Tests prove suggestions do not alter context selection, provider prompt construction, or existing simulator/candidate diagnostic behavior.",
+    "CLI or module output can be produced from explicit files/fixtures/read-only diagnostics only.",
+    "Guardrails show zero writes, zero index mutations, zero embedding creations, and no prompt or context item changes.",
+    "SELF_MODEL records the result as advisory/diagnostic and does not claim automatic context inclusion."
+  ],
+  "risk": "Suggested include_l0 IDs may be mistaken for automatic selection decisions unless the contract, tests, and warrant keep advisory output separate from ContextPackManifest.items and provider prompt construction.",
+  "next_action": "Create a warrant for PLAN-20260706-0003 before implementation. The warrant must explicitly forbid context selection changes, prompt changes, production retrieval/embedding/index side effects, persistent write-back, token-budget telemetry/enforcement, non-none reranking, and automatic include_l0 behavior."
+}
