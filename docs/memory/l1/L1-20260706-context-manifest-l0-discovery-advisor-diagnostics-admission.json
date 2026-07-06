@@ -1,0 +1,46 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added PLAN-20260706-0004 as a proposed plan in commit 75c92bf.",
+    "Added WARR-20260706-0007 and moved PLAN-20260706-0004 to admitted in commit 1ec99b0.",
+    "Regenerated SELF_MODEL.json and updated self-model tests for the admitted open plan state."
+  ],
+  "content_hash": "0130dbdde783b6ee3605a221b799190303550d9ca04c60013580e55dc8de540a",
+  "coverage_score": 0.97,
+  "created_at": "2026-07-06T21:03:05.066810+00:00",
+  "episode_id": "EP-20260706-context-manifest-l0-discovery-advisor-diagnostics-admission",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260706-0004 is admitted by WARR-20260706-0007 but not implemented.",
+    "The next implementation slice must connect CAP-0004 advisor output to context manifest diagnostics only, preserving selection_effect none."
+  ],
+  "l1_id": "L1-20260706-context-manifest-l0-discovery-advisor-diagnostics-admission",
+  "namespace": "public",
+  "next_actions": [
+    "Implement admitted PLAN-20260706-0004 as a diagnostic-only context manifest integration with no selection, prompt, retrieval, embedding, index, memory-store, token-budget, reranking, or adapter side effects."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Future implementation may accidentally be interpreted as automatic L0 inclusion unless diagnostics remain separate from ContextPackManifest.items and provider prompt construction."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260706-context-manifest-l0-discovery-advisor-diagnostics-admission"
+  ],
+  "summary_text": "PLAN-20260706-0004 was proposed in commit 75c92bf and admitted in commit 1ec99b0 for context-manifest-connected L0 discovery advisor diagnostics. The slice remains governance-only so far: no implementation, capability, verification, provider prompt change, latest-context prompt path change, live retrieval, embedding creation, index mutation, memory-store mutation, token-budget behavior, non-none reranking, adapter behavior, automatic include_l0, or ContextPackManifest.items mutation was added. SELF_MODEL now records PLAN-20260706-0004 as admitted, open_plans = [PLAN-20260706-0004], admitted_plans includes PLAN-20260706-0004, plan_counts.completed = 4, plan_counts.admitted = 1, capability_counts.implemented = 4, and warrant_counts.supported = 9. Pre-commit checks for the admission slice were green: self-model tests 62 passed, full suite 359 passed, and audit_self_model_index returned ok true. The next governed step is implementation of the admitted diagnostic-only manifest integration, still preserving selection_effect none and advisory-only semantics.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "l0",
+    "diagnostic",
+    "context-manifest",
+    "discovery-advisor"
+  ],
+  "ttl_until": null
+}
