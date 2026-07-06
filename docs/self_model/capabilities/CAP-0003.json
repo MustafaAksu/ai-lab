@@ -1,0 +1,71 @@
+{
+  "schema_version": "v1",
+  "capability_id": "CAP-0003",
+  "name": "Diagnostic-only L0 hybrid retrieval simulator",
+  "category": "diagnostic",
+  "status": "implemented",
+  "summary": "Builds read-only manifest diagnostics for simulated BM25+dense L0 candidate scoring at manifest.diagnostics.l0_retrieval_simulator, with selection_effect none and zero write/index/embedding side effects.",
+  "interfaces": [
+    "scripts/simulate_l0_retrieval.py",
+    "ai_lab.documentation.l0_retrieval_simulator.build_l0_retrieval_simulator_record",
+    "ai_lab.documentation.l0_retrieval_simulator.validate_l0_retrieval_simulator_record",
+    "manifest.diagnostics.l0_retrieval_simulator",
+    "context_pack.selection_diagnostics.retrieval_candidates"
+  ],
+  "limits": [
+    "Diagnostic-only; does not perform automatic L0 retrieval.",
+    "Does not change context selection or provider prompts.",
+    "Does not call external embedding APIs or create production embeddings.",
+    "Does not mutate vector indexes, document indexes, or repository memory stores.",
+    "Dense scores must be externally supplied by fixtures or read-only snapshots.",
+    "Reranker is omitted or literal none only; non-none reranking requires a separate PLAN/WARRANT.",
+    "No token budget enforcement or token budget telemetry.",
+    "No selection adapter integration."
+  ],
+  "risks": [
+    "Diagnostic retrieval_score may be misread as selection authority unless selection_effect none and guardrails remain explicit.",
+    "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice."
+  ],
+  "recommended_next_actions": [
+    "Create a completion warrant for PLAN-20260706-0002 after self-model registration is committed.",
+    "Keep any future adapter, reranker, telemetry, or live retrieval work behind a separate PLAN/WARRANT."
+  ],
+  "evidence": {
+    "admissions": [
+      {
+        "id": "WARR-20260706-0003",
+        "path": "docs/self_model/warrants/WARR-20260706-0003.json",
+        "role": "plan_admission"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "be78851e53916d009817fd2436817a9da9fb1ab8",
+        "role": "implementation"
+      }
+    ],
+    "files": [
+      {
+        "path": "ai_lab/documentation/l0_retrieval_simulator.py",
+        "role": "mechanism",
+        "content_hash": "f62f597ad05cadbc39c281021e764dab9a87f58beb889fcfdb8745cad0554782"
+      },
+      {
+        "path": "scripts/simulate_l0_retrieval.py",
+        "role": "interface",
+        "content_hash": "3e2fb1b8c5337c1d81ae5009c47ce971ed3fdea02c007a9b34989253c38b6480"
+      },
+      {
+        "path": "tests/test_l0_retrieval_simulator.py",
+        "role": "test",
+        "content_hash": "88946e38beb79d410bd54d13ed1fb72a61e1e5c701f3acbb2ea6e9bc69f21030"
+      }
+    ],
+    "memory_records": []
+  },
+  "last_verified": {
+    "repo_commit": "be78851e53916d009817fd2436817a9da9fb1ab8",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260706-0002.json",
+    "verified_at": "2026-07-06T00:00:00+00:00"
+  }
+}
