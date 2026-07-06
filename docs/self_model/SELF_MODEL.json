@@ -47,7 +47,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-06T07:00:44+00:00",
+  "generated_at": "2026-07-06T09:52:01+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -74,15 +74,23 @@
       "risk": "Users may interpret context-connected diagnostics as automatic retrieval unless output labels remain explicit about read-only diagnostic status.",
       "source_field": "risk",
       "source_record": "PLAN-20260706-0001"
+    },
+    {
+      "risk": "Diagnostic retrieval_score may be confused with actionable selection semantics unless the schema, tests, warrant, and docs keep selection_effect fixed to \"none\" and forbid prompt or selection effects.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260706-0002"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260706-0002"
+  ],
   "plan_counts": {
-    "completed": 2
+    "completed": 2,
+    "proposed": 1
   },
   "plans": [
     {
@@ -98,6 +106,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260706-0001.json",
       "status": "completed",
       "title": "Context-manifest-connected L0 candidate diagnostics"
+    },
+    {
+      "plan_id": "PLAN-20260706-0002",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260706-0002.json",
+      "status": "proposed",
+      "title": "Diagnostic-only L0 Hybrid Retrieval Simulator \u2014 Manifest Diagnostics"
     }
   ],
   "recommended_next_targets": [
@@ -107,7 +122,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "98b8267b79cc295ef31c4acf421df19b9066511e",
+  "repo_head": "ea517c4713361f312557b2ee4168a4eac79b7459",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

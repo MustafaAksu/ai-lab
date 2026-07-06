@@ -1,0 +1,38 @@
+{
+  "schema_version": "v1",
+  "plan_id": "PLAN-20260706-0002",
+  "title": "Diagnostic-only L0 Hybrid Retrieval Simulator — Manifest Diagnostics",
+  "source_gap_id": "GAP-0001",
+  "status": "proposed",
+  "created_at": "2026-07-06T00:00:00Z",
+  "objective": "Add a read-only, per-request manifest diagnostics section to capture simulated hybrid L0 candidate metadata and scores without affecting prompts, selection, or indexes.",
+  "proposed_change": "Introduce manifest.diagnostics.l0_retrieval_simulator with approved fields and constraints, including selection_effect fixed to \"none\" and optional reranker constrained to \"none\" or omitted. Provide a read-only deprecated compatibility alias at context_pack.selection_diagnostics.retrieval_candidates. Emit diagnostics only when explicitly requested; require explicit combine_policy and normalization configuration; enforce governance prohibitions through guardrail fields and tests.",
+  "rationale": [
+    "Enables reproducible, read-only diagnostics aligned with context-manifest usage.",
+    "Keeps diagnostic retrieval scoring separate from context selection and provider prompts.",
+    "Prepares a later governed adapter or reranker evaluation slice without admitting behavior changes now.",
+    "Preserves the reconciled memory-loop direction while remaining diagnostic-only.",
+    "Follows COMP-0024/SYNCOMP-0015 max-model agreement on reranker and execution semantics."
+  ],
+  "constraints": [
+    "No automatic L0 retrieval; inputs are simulated, externally provided, or read from explicitly read-only snapshots.",
+    "No context selection changes and no provider prompt inclusion.",
+    "No production embedding creation, external embedding API calls, vector index mutation, or document index mutation.",
+    "Reranking is deferred; reranker must be omitted or equal to \"none\".",
+    "No token budget enforcement or token budget telemetry.",
+    "No selection adapter integration in this slice.",
+    "No cross-namespace access, namespace ACL bypass, or redaction-boundary bypass.",
+    "No persistent write-back; diagnostics are per-request or ephemeral within the manifest only.",
+    "combine_policy and normalization require explicit configuration; no implicit defaults."
+  ],
+  "success_criteria": [
+    "A schema or validator accepts manifest.diagnostics.l0_retrieval_simulator entries with the approved diagnostic fields.",
+    "All candidates have selection_effect equal to \"none\".",
+    "The optional reranker field accepts only \"none\"; omission is treated as \"none\".",
+    "Guardrail fields indicate zero side effects: side_effects_blocked true, writes_performed 0, index_mutations 0, embedding_creations 0.",
+    "Tests prove no provider prompt changes, no context selection changes, no production embedding or index writes, and no persistent write-back.",
+    "Self-model records and SELF_MODEL.json represent the slice as diagnostic-only."
+  ],
+  "risk": "Diagnostic retrieval_score may be confused with actionable selection semantics unless the schema, tests, warrant, and docs keep selection_effect fixed to \"none\" and forbid prompt or selection effects.",
+  "next_action": "Create a warrant for PLAN-20260706-0002 that explicitly forbids prompt inclusion, context selection changes, production embedding/index mutation, reranking beyond \"none\", token budget telemetry, selection adapter integration, cross-namespace/redaction bypass, and persistent write-back."
+}
