@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "max_warning_admissions": 1,
+    "require_admission": true
+  },
+  "admission_summary": {
+    "admit": 1,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 2
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-06T08:00:46.160443+00:00",
+  "exclusions": [
+    {
+      "item_id": "SYNCOMP-0013",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    },
+    {
+      "item_id": "COMP-0022",
+      "note": "No admission verdict; require_admission is enabled.",
+      "reason": "policy"
+    }
+  ],
+  "full_prompt_hash": "8e7c3ddcda6c38cddd026564a297cd435be76aeb395cc25a1da82ce288c8369a",
+  "items": [
+    {
+      "admission_decision": "admit",
+      "admission_verdict_id": "CADM-L1-20260706-context-manifest-l0-diagnostics-completion",
+      "freshness_state": "fresh",
+      "item_id": "L1-20260706-context-manifest-l0-diagnostics-completion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260706-context-manifest-l0-diagnostics-completion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260706-context-manifest-l0-diagnostics-completion.json",
+      "token_estimate": 606,
+      "warrant_state": "supported"
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    }
+  ],
+  "manifest_id": "6711a327fa316f47",
+  "task": "Finalize unresolved gating for the next diagnostic-only L0 Hybrid Retrieval Simulator slice. Maintain current boundaries: - No automatic L0 retrieval. - No context selection changes. - No provider prompt changes. - No production embedding creation. - No vector/index mutation. - Reranking is deferred unless explicitly admitted. - Token budget telemetry is deferred unless explicitly admitted. Prior artifacts: - COMP-0021 / SYNCOMP-0012: backlog prioritization. - COMP-0022 / SYNCOMP-0013: L0 ret...",
+  "task_label": "finalize-unresolved-gating-for-the-next-diagnostic-only-l0-hybrid-retrieval-simu",
+  "total_token_estimate": 2543
+}
