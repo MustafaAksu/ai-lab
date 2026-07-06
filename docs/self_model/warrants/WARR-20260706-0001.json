@@ -1,0 +1,22 @@
+{
+  "author": "chatgpt",
+  "created_at": "2026-07-06T00:00:00Z",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260706-0001",
+    "GAP-0001",
+    "CAP-0002",
+    "PLAN-20260705-0001",
+    "WARR-20260705-0002",
+    "5f196db",
+    "766c8ab"
+  ],
+  "reason": "PLAN-20260706-0001 is a safe next GAP-0001 slice because it extends CAP-0002 diagnostics toward latest-context manifest item IDs while preserving selection_effect none. PLAN-20260705-0001 is completed, CAP-0002 provides the read-only diagnostic foundation, and the new PLAN explicitly forbids provider prompt changes, context-pack selection changes, and automatic L0 retrieval claims.",
+  "schema_version": "v1",
+  "scope": "Admits PLAN-20260706-0001 for implementation of read-only context-manifest-connected L0 candidate diagnostics only. This warrant does not admit provider prompt changes, context selection changes, or automatic L0 retrieval behavior.",
+  "substrate": "process",
+  "target_item_id": "PLAN-20260706-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260706-0001",
+  "warrant_state": "supported"
+}
