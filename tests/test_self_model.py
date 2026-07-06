@@ -596,16 +596,30 @@ def test_build_self_model_index_includes_plan_records():
     )
 
     assert index["plan_counts"]["completed"] == 1
-    assert index["open_plans"] == []
-    assert index["plans"] == [
-        {
-            "plan_id": "PLAN-20260705-0001",
-            "title": "Read-only L0 candidate diagnostics",
-            "status": "completed",
-            "source_gap_id": "GAP-0001",
-            "source_path": "docs/self_model/plans/PLAN-20260705-0001.json",
-        }
-    ]
+    assert index["plan_counts"]["proposed"] == 1
+    assert index["open_plans"] == ["PLAN-20260706-0001"]
+    assert {
+        plan["plan_id"]
+        for plan in index["plans"]
+    } == {"PLAN-20260705-0001", "PLAN-20260706-0001"}
+
+    assert any(
+        plan["plan_id"] == "PLAN-20260705-0001"
+        and plan["title"] == "Read-only L0 candidate diagnostics"
+        and plan["status"] == "completed"
+        and plan["source_gap_id"] == "GAP-0001"
+        and plan["source_path"] == "docs/self_model/plans/PLAN-20260705-0001.json"
+        for plan in index["plans"]
+    )
+
+    assert any(
+        plan["plan_id"] == "PLAN-20260706-0001"
+        and plan["title"] == "Context-manifest-connected L0 candidate diagnostics"
+        and plan["status"] == "proposed"
+        and plan["source_gap_id"] == "GAP-0001"
+        and plan["source_path"] == "docs/self_model/plans/PLAN-20260706-0001.json"
+        for plan in index["plans"]
+    )
     assert {
         "risk": (
             "The diagnostic could be misread as automatic retrieval unless "
@@ -898,9 +912,43 @@ def test_build_self_model_index_excludes_completed_plan_from_open_plans():
     )
 
     assert index["plan_counts"]["completed"] == 1
-    assert index["open_plans"] == []
+    assert index["plan_counts"]["proposed"] == 1
+    assert index["open_plans"] == ["PLAN-20260706-0001"]
     assert any(
         plan["plan_id"] == "PLAN-20260705-0001"
         and plan["status"] == "completed"
+        for plan in index["plans"]
+    )
+
+
+def test_validate_plan_record_accepts_plan_20260706_0001():
+    import json
+    from pathlib import Path
+    from ai_lab.documentation.self_model import validate_plan_record
+
+    record = json.loads(
+        Path("docs/self_model/plans/PLAN-20260706-0001.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert record["status"] == "proposed"
+    validate_plan_record(record)
+
+
+def test_build_self_model_index_includes_plan_20260706_0001():
+    from pathlib import Path
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(
+        Path("."),
+        generated_at="2026-07-06T00:00:00+00:00",
+    )
+
+    assert "PLAN-20260706-0001" in index["open_plans"]
+    assert any(
+        plan["plan_id"] == "PLAN-20260706-0001"
+        and plan["status"] == "proposed"
+        and plan["source_gap_id"] == "GAP-0001"
         for plan in index["plans"]
     )

@@ -46,7 +46,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-05T12:41:14+00:00",
+  "generated_at": "2026-07-06T05:35:56+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -68,15 +68,23 @@
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
+    },
+    {
+      "risk": "Users may interpret context-connected diagnostics as automatic retrieval unless output labels remain explicit about read-only diagnostic status.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260706-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260706-0001"
+  ],
   "plan_counts": {
-    "completed": 1
+    "completed": 1,
+    "proposed": 1
   },
   "plans": [
     {
@@ -85,6 +93,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260705-0001.json",
       "status": "completed",
       "title": "Read-only L0 candidate diagnostics"
+    },
+    {
+      "plan_id": "PLAN-20260706-0001",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260706-0001.json",
+      "status": "proposed",
+      "title": "Context-manifest-connected L0 candidate diagnostics"
     }
   ],
   "recommended_next_targets": [
@@ -94,7 +109,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "b7109d2f902bf04eb99923b1c9c8366620d6b8f1",
+  "repo_head": "9cd606a45c94e8607c2790f9812729f6042a4c48",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
