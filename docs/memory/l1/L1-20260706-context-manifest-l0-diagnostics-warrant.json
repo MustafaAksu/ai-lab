@@ -1,0 +1,45 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/warrants/WARR-20260706-0001.json.",
+    "Regenerated docs/self_model/SELF_MODEL.json with supported warrants = 3.",
+    "Updated self-model tests for the new warrant and admitted plan state."
+  ],
+  "content_hash": "2313bcfa6483ceb8b251cdd1bd7fd08a9cdba3133fdd5156ae7bce98707e2858",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-06T05:59:50.699712+00:00",
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-warrant",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260706-0001 is now admitted for implementation by WARR-20260706-0001.",
+    "The admission scope remains diagnostic-only and read-only."
+  ],
+  "l1_id": "L1-20260706-context-manifest-l0-diagnostics-warrant",
+  "namespace": "public",
+  "next_actions": [
+    "Implement context-manifest-connected L0 candidate diagnostics under WARR-20260706-0001."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Implementation must not drift from diagnostic-only behavior into provider prompt or context selection behavior."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260706-context-manifest-l0-diagnostics-warrant"
+  ],
+  "summary_text": "WARR-20260706-0001 was added and committed in 50b4df0 to admit PLAN-20260706-0001 for implementation. The warrant is scoped only to read-only context-manifest-connected L0 candidate diagnostics. It preserves the PLAN constraints: no provider prompt changes, no context selection changes, and no automatic L0 retrieval behavior. SELF_MODEL.json now reports warrant_counts.supported = 3 and admitted_plans = [PLAN-20260705-0001, PLAN-20260706-0001]. Post-commit audit after 50b4df0 returned ok true and content current.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

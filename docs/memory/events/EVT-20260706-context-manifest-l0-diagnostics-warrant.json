@@ -1,0 +1,38 @@
+{
+  "access_level": "public",
+  "actor": "chatgpt",
+  "artifact_ids": [
+    "50b4df0"
+  ],
+  "commit_hash": "50b4df0",
+  "created_at": "2026-07-06T05:59:50.614160+00:00",
+  "duration_ms": null,
+  "episode_id": "EP-20260706-context-manifest-l0-diagnostics-warrant",
+  "error_code": null,
+  "error_message": null,
+  "event_id": "EVT-20260706-context-manifest-l0-diagnostics-warrant",
+  "event_type": "commit",
+  "model_used": null,
+  "model_version": null,
+  "namespace": "public",
+  "outcome_code": "success",
+  "prompt_manifest_id": null,
+  "redaction_level": "none",
+  "request_text_hash": null,
+  "response_text_hash": null,
+  "role": "assistant",
+  "scope": "default",
+  "selected_context_manifest_id": null,
+  "summary": "Added WARR-20260706-0001 to admit PLAN-20260706-0001 for implementation. The warrant authorizes only read-only context-manifest-connected L0 candidate diagnostics and explicitly does not admit provider prompt changes, context selection changes, or automatic L0 retrieval behavior. SELF_MODEL.json now reports supported warrants = 3 and admitted_plans = [PLAN-20260705-0001, PLAN-20260706-0001]. Focused self-model tests passed with 37 tests, full suite passed with 312 tests, and post-commit self-model index audit returned ok true.",
+  "tokens_completion": null,
+  "tokens_prompt": null,
+  "topics": [
+    "self-model",
+    "warrant",
+    "plan",
+    "l0",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "turn_id": 1
+}
