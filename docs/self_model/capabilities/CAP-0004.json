@@ -28,8 +28,8 @@
     "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice."
   ],
   "recommended_next_actions": [
-    "Register completion for PLAN-20260706-0003 only after CAP-0004 is committed and the self-model index is rebuilt.",
-    "Keep any future automatic inclusion adapter, prompt change, token-budget enforcement, or production retrieval behind a separate PLAN/WARRANT."
+    "Keep any future automatic inclusion adapter, prompt change, token-budget enforcement, production retrieval, production embedding, non-none reranking, or index/store mutation behind a separate PLAN/WARRANT.",
+    "Use advisory output as diagnostic evidence only; do not treat suggested include_l0 arguments as automatic context-selection decisions."
   ],
   "evidence": {
     "admissions": [

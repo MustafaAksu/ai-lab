@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260706-0006",
+  "target_item_id": "PLAN-20260706-0003",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-06T00:00:00Z",
+  "scope": "Certifies completion of PLAN-20260706-0003 only for the read-only diagnostic/advisory L0 discovery advisor implemented by CAP-0004. This completion warrant does not admit automatic context inclusion, provider prompt changes, live retrieval, production embeddings, persistent index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior.",
+  "reason": "The admitted implementation slice is present, tested, and registered: CAP-0004 exposes the advisor module, validator, manifest diagnostics document helper, and CLI; VERIFY-20260706-0003 records passing advisor, related, full-suite, audit, and CLI smoke checks. The advisor preserves selection_effect none and emits advisory suggestions without mutating context items or provider prompts.",
+  "evidence_ids": [
+    "PLAN-20260706-0003",
+    "WARR-20260706-0005",
+    "CAP-0004",
+    "VERIFY-20260706-0003",
+    "959f8f4d0e6217c4356179f3c6454f73470858fd",
+    "01f177f7c05f9408abba87ac0e45261d57f0e6ba"
+  ]
+}
