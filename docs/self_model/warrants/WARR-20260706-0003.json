@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260706-0003",
+  "target_item_id": "PLAN-20260706-0002",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "AI-Lab governed self-model workflow",
+  "substrate": "COMP-0024/SYNCOMP-0015 max-model final reranker and execution semantics decision",
+  "created_at": "2026-07-06T00:00:00Z",
+  "scope": "Admits implementation of PLAN-20260706-0002 as a diagnostic-only L0 hybrid retrieval simulator manifest diagnostics slice. The warrant does not admit automatic L0 retrieval, context selection changes, provider prompt changes, production embedding creation, index mutation, reranking beyond literal/implicit 'none', token budget telemetry, selection adapter integration, cross-namespace/redaction bypass, or persistent write-back.",
+  "reason": "COMP-0024 shows max-model agreement that header.reranker is accepted only as an optional field constrained to the enum ['none'], with omission interpreted as 'none' and consumers forbidden to distinguish omission from explicit 'none'. The simulator must not perform live retrieval against production indices. Inputs must be simulated, externally provided as inert diagnostic data, or read from explicitly read-only snapshots. The simulator must not call external embedding APIs, create production embeddings, mutate vector/document indices, change context selection, change provider prompts, or perform production writes. BM25 and dense scores are diagnostic outputs from fixtures, mocks, or read-only snapshots only and must have selection_effect 'none'. The compatibility alias context_pack.selection_diagnostics.retrieval_candidates is read-only/deprecated and inherits these constraints.",
+  "evidence_ids": [
+    "COMP-0024",
+    "SYNCOMP-0015",
+    "PLAN-20260706-0002",
+    "GAP-0001"
+  ]
+}
