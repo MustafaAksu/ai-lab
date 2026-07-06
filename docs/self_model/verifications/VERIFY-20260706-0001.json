@@ -1,0 +1,38 @@
+{
+  "commands": [
+    {
+      "command": "pytest tests/test_l0_candidate_diagnostics.py",
+      "exit_code": 0,
+      "summary": "10 L0 candidate diagnostic tests passed, including context manifest extraction, manifest-based matching, missing manifest nonfatal behavior, and CLI --context-manifest behavior."
+    },
+    {
+      "command": "pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "37 self-model tests passed after CAP-0002 evidence hash refresh and SELF_MODEL rebuild during implementation validation."
+    },
+    {
+      "command": "pytest",
+      "exit_code": 0,
+      "summary": "316 full-suite tests passed after context-manifest-connected L0 diagnostics implementation."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model index audit returned ok true with content current."
+    },
+    {
+      "command": "python scripts/diagnose_l0_candidates.py --context-manifest docs/context/latest_manifest.json",
+      "exit_code": 0,
+      "summary": "Smoke confirmed missing context manifest is nonfatal and selection_effect remains none."
+    }
+  ],
+  "created_at": "2026-07-06T00:00:00Z",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "98b8267b79cc295ef31c4acf421df19b9066511e",
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260706-0001"
+}

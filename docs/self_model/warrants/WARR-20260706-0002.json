@@ -1,0 +1,21 @@
+{
+  "author": "chatgpt",
+  "created_at": "2026-07-06T00:00:00Z",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260706-0001",
+    "WARR-20260706-0001",
+    "VERIFY-20260706-0001",
+    "CAP-0002",
+    "c74b42c",
+    "98b8267b79cc295ef31c4acf421df19b9066511e"
+  ],
+  "reason": "The implementation in c74b42c added manifest item_id extraction, manifest-path diagnostics, CLI --context-manifest support, nonfatal missing/invalid manifest handling, and tests proving selection_effect remains none. Verification VERIFY-20260706-0001 records focused, self-model, full-suite, audit, and smoke checks.",
+  "schema_version": "v1",
+  "scope": "Supports completion of PLAN-20260706-0001 for read-only context-manifest-connected L0 candidate diagnostics. This completion does not claim provider prompt changes, context selection changes, or automatic L0 retrieval behavior.",
+  "substrate": "process",
+  "target_item_id": "PLAN-20260706-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260706-0002",
+  "warrant_state": "supported"
+}

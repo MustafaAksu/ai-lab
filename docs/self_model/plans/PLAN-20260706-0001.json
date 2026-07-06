@@ -8,7 +8,7 @@
     "Implementation should proceed only after this PLAN receives a warrant/admission edge."
   ],
   "created_at": "2026-07-06T00:00:00Z",
-  "next_action": "Seek WARR admission before implementing the context-manifest-connected diagnostic slice.",
+  "next_action": "No further implementation remains for PLAN-20260706-0001. Completion is certified by WARR-20260706-0002 and VERIFY-20260706-0001. Future automatic L0 retrieval or context-selection behavior requires a separate PLAN and WARRANT.",
   "objective": "Extend read-only L0 candidate diagnostics so they can be run against latest-context manifest item IDs and explain candidate relationships without modifying context selection.",
   "plan_id": "PLAN-20260706-0001",
   "proposed_change": "Add a diagnostic path that accepts or reads latest-context manifest item IDs and reports which valid L0 summary records match those IDs, while preserving selection_effect none.",
@@ -21,7 +21,7 @@
   "risk": "Users may interpret context-connected diagnostics as automatic retrieval unless output labels remain explicit about read-only diagnostic status.",
   "schema_version": "v1",
   "source_gap_id": "GAP-0001",
-  "status": "proposed",
+  "status": "completed",
   "success_criteria": [
     "A CLI or helper can consume latest-context manifest item IDs for diagnostic matching.",
     "Output clearly distinguishes context manifest IDs, candidate L0 records, and non-matches.",
