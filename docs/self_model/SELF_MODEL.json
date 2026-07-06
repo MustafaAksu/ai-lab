@@ -65,7 +65,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-06T20:11:15+00:00",
+  "generated_at": "2026-07-06T20:39:12+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -122,15 +122,23 @@
       "risk": "Suggested include_l0 IDs may be mistaken for automatic selection decisions unless the contract, tests, and warrant keep advisory output separate from ContextPackManifest.items and provider prompt construction.",
       "source_field": "risk",
       "source_record": "PLAN-20260706-0003"
+    },
+    {
+      "risk": "Advisor suggestions surfaced through context manifest diagnostics may be misread as automatic include_l0 selection unless the PLAN, warrant, tests, and future implementation keep diagnostic output separate from manifest items, provider prompts, latest-context paths, retrieval, embedding, indexes, memory stores, token-budget systems, reranking, and adapters.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260706-0004"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260706-0004"
+  ],
   "plan_counts": {
-    "completed": 4
+    "completed": 4,
+    "proposed": 1
   },
   "plans": [
     {
@@ -160,6 +168,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260706-0003.json",
       "status": "completed",
       "title": "Read-only L0 Discovery Advisor Contract"
+    },
+    {
+      "plan_id": "PLAN-20260706-0004",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260706-0004.json",
+      "status": "proposed",
+      "title": "Context-manifest-connected L0 Discovery Advisor Diagnostics"
     }
   ],
   "recommended_next_targets": [
@@ -169,7 +184,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "01f177f7c05f9408abba87ac0e45261d57f0e6ba",
+  "repo_head": "1a3052ffb1004b080dcfb2670de59293de9fa60f",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
