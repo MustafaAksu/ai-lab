@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260706-0005",
+  "target_item_id": "PLAN-20260706-0003",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-06T00:00:00Z",
+  "scope": "Admits PLAN-20260706-0003 only as a read-only diagnostic/advisory contract slice for L0 discovery suggestions. This warrant does not admit automatic context inclusion, provider prompt changes, live retrieval, production embeddings, persistent index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior.",
+  "reason": "GAP-0001 remains open, but the repository now has explicit L0 inclusion, read-only candidate diagnostics, and a diagnostic-only hybrid simulator. A read-only advisor contract is the smallest governed step toward observable L0 discovery while preserving selection_effect none and requiring a separate PLAN/WARRANT for any future automatic inclusion.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260706-0003",
+    "CAP-0001",
+    "CAP-0002",
+    "CAP-0003",
+    "VERIFY-20260706-0002",
+    "WARR-20260706-0004"
+  ]
+}
