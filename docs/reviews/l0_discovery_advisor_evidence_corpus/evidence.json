@@ -1,0 +1,238 @@
+{
+  "contract": {
+    "adapter_behavior": false,
+    "automatic_include_l0": false,
+    "changes_latest_context_prompt_path": false,
+    "changes_provider_prompts": false,
+    "diagnostic_evidence_only": true,
+    "embedding_creation": false,
+    "external_embedding_api_calls": false,
+    "index_mutation": false,
+    "live_retrieval": false,
+    "memory_store_mutation": false,
+    "mutates_context_manifest_items": false,
+    "reranker": "none",
+    "token_budget_enforcement": false,
+    "token_budget_telemetry": false
+  },
+  "corpus_id": "l0_discovery_advisor_evidence_corpus.v1",
+  "created_at": "2026-07-07T00:00:00Z",
+  "evaluation": {
+    "aggregate": {
+      "already_selected_suggestion_count": 1,
+      "duplicate_suggestion_count": 0,
+      "manifests_invalid_advisor": 1,
+      "manifests_missing_advisor": 1,
+      "manifests_seen": 4,
+      "manifests_with_advisor": 2,
+      "manifests_without_suggestions": 0,
+      "selection_effect": "none",
+      "total_suggestions": 4,
+      "unique_suggested_chunk_count": 4,
+      "unique_suggested_chunk_ids": [
+        "L0-ALPHA",
+        "L0-BETA",
+        "L0-EXISTING",
+        "L0-GAMMA"
+      ]
+    },
+    "contract": {
+      "adapter_behavior": false,
+      "automatic_include_l0": false,
+      "changes_latest_context_prompt_path": false,
+      "changes_provider_prompts": false,
+      "diagnostic_evaluation_only": true,
+      "embedding_creation": false,
+      "external_embedding_api_calls": false,
+      "index_mutation": false,
+      "live_retrieval": false,
+      "memory_store_mutation": false,
+      "mutates_context_manifest_items": false,
+      "reranker": "none",
+      "token_budget_enforcement": false,
+      "token_budget_telemetry": false
+    },
+    "created_at": "2026-07-07T00:00:00Z",
+    "evaluation_type": "manifest_connected_l0_discovery_advisor",
+    "evaluator_id": "l0_discovery_advisor_evaluation.v1",
+    "guardrails": {
+      "adapter_behavior": false,
+      "automatic_include_l0": false,
+      "context_items_mutated": 0,
+      "embedding_creations": 0,
+      "index_mutations": 0,
+      "latest_context_prompt_path_changed": 0,
+      "memory_store_mutations": 0,
+      "provider_prompts_changed": 0,
+      "reranker": "none",
+      "side_effects_blocked": true,
+      "token_budget_enforced": false,
+      "token_budget_telemetry_emitted": false,
+      "writes_performed": 0
+    },
+    "inputs": {
+      "manifest_count": 4,
+      "manifest_paths": [
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json"
+      ]
+    },
+    "manifest_evaluations": [
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-ALPHA"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
+        "suggested_chunk_ids": [
+          "L0-ALPHA",
+          "L0-BETA"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-ALPHA",
+          "L0-BETA"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 1,
+        "already_selected_suggestion_ids": [
+          "L0-EXISTING"
+        ],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "L0-EXISTING"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
+        "suggested_chunk_ids": [
+          "L0-EXISTING",
+          "L0-GAMMA"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXISTING",
+          "L0-GAMMA"
+        ]
+      },
+      {
+        "advisor_status": "missing_diagnostics",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-MISSING"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
+        "suggested_chunk_ids": [],
+        "suggestion_count": 0,
+        "unique_suggested_chunk_ids": []
+      },
+      {
+        "advisor_status": "invalid_l0_discovery_advisor",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "error": "record selection_effect must be none",
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-INVALID"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json",
+        "suggested_chunk_ids": [],
+        "suggestion_count": 0,
+        "unique_suggested_chunk_ids": []
+      }
+    ],
+    "run_id": "PLAN-20260707-0002-evidence-corpus",
+    "schema_version": "v1",
+    "selection_effect": "none"
+  },
+  "findings": {
+    "already_selected_suggestion_count": 1,
+    "duplicate_suggestion_count": 0,
+    "manifests_invalid_advisor": 1,
+    "manifests_missing_advisor": 1,
+    "manifests_seen": 4,
+    "manifests_with_advisor": 2,
+    "total_suggestions": 4,
+    "unique_suggested_chunk_count": 4
+  },
+  "guardrails": {
+    "adapter_behavior": false,
+    "automatic_include_l0": false,
+    "context_items_mutated": 0,
+    "embedding_creations": 0,
+    "external_embedding_api_calls": false,
+    "index_mutations": 0,
+    "latest_context_prompt_path_changed": 0,
+    "live_retrieval": false,
+    "memory_store_mutations": 0,
+    "provider_prompts_changed": 0,
+    "reranker": "none",
+    "side_effects_blocked": true,
+    "token_budget_enforced": false,
+    "token_budget_telemetry_emitted": false
+  },
+  "inputs": {
+    "deterministic_fixture_count": 4,
+    "evaluator": "scripts/evaluate_l0_discovery_advisor.py",
+    "manifest_paths": [
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json"
+    ]
+  },
+  "outputs": {
+    "evidence_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+    "manifest_dir": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests",
+    "output_root": "docs/reviews/l0_discovery_advisor_evidence_corpus"
+  },
+  "plan_id": "PLAN-20260707-0002",
+  "run_id": "PLAN-20260707-0002-evidence-corpus",
+  "schema_version": "v1",
+  "selection_effect": "none"
+}

@@ -1,0 +1,16 @@
+{
+  "assembly_policy": "latest_context",
+  "items": [
+    {
+      "item_id": "CTX-MISSING",
+      "item_type": "abstraction",
+      "reason": "Selected context with no advisor diagnostics.",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/CTX-MISSING.md",
+      "token_estimate": 100
+    }
+  ],
+  "manifest_id": "corpus-missing-advisor",
+  "schema_version": "v1",
+  "task": "Evaluate missing advisor diagnostics handling."
+}
