@@ -66,7 +66,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T10:27:15+00:00",
+  "generated_at": "2026-07-07T10:30:39+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -128,15 +128,23 @@
       "risk": "Advisor suggestions surfaced through context manifest diagnostics may be misread as automatic include_l0 selection unless the PLAN, warrant, tests, and future implementation keep diagnostic output separate from manifest items, provider prompts, latest-context paths, retrieval, embedding, indexes, memory stores, token-budget systems, reranking, and adapters.",
       "source_field": "risk",
       "source_record": "PLAN-20260706-0004"
+    },
+    {
+      "risk": "Advisor evaluation may be mistaken for approval of automatic L0 inclusion unless the PLAN keeps measurement separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260707-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260707-0001"
+  ],
   "plan_counts": {
-    "completed": 5
+    "completed": 5,
+    "proposed": 1
   },
   "plans": [
     {
@@ -173,6 +181,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260706-0004.json",
       "status": "completed",
       "title": "Context-manifest-connected L0 Discovery Advisor Diagnostics"
+    },
+    {
+      "plan_id": "PLAN-20260707-0001",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260707-0001.json",
+      "status": "proposed",
+      "title": "Evaluate Manifest-Connected L0 Discovery Advisor Diagnostics"
     }
   ],
   "recommended_next_targets": [
@@ -182,7 +197,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "91089599c6f76b0345c092c623b2849da4e51812",
+  "repo_head": "223420c2908b8659871c5f33e3138930d90d4c95",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

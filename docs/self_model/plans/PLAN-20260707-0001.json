@@ -1,0 +1,43 @@
+{
+  "schema_version": "v1",
+  "plan_id": "PLAN-20260707-0001",
+  "title": "Evaluate Manifest-Connected L0 Discovery Advisor Diagnostics",
+  "source_gap_id": "GAP-0001",
+  "status": "proposed",
+  "created_at": "2026-07-07T00:00:00Z",
+  "objective": "Evaluate the manifest-connected L0 discovery advisor diagnostics on representative context-pack tasks so the project can judge suggestion usefulness, stability, noise, and safety before any automatic L0 inclusion or adapter behavior is proposed.",
+  "proposed_change": "Add a proposal-only evaluation slice that exercises the existing opt-in manifest.diagnostics.l0_discovery_advisor path against representative context-pack tasks or fixtures and records diagnostic evidence. The evaluation must not change ContextPackManifest.items, provider prompts, latest-context prompt paths, retrieval, embedding, indexes, memory stores, token-budget behavior, reranking, or adapters.",
+  "rationale": [
+    "PLAN-20260706-0004 made advisor suggestions visible through context manifest diagnostics, but did not measure whether the suggestions are useful or safe.",
+    "GAP-0001 remains open even after explicit inclusion, candidate diagnostics, simulator, advisor, and manifest diagnostics bridge work.",
+    "Automatic L0 inclusion would be premature without evidence about suggestion quality, redundancy, noise, and stale or unsafe suggestions.",
+    "An evaluation slice is smaller and safer than an automatic-selection slice because it only records evidence from existing diagnostic-only behavior.",
+    "The evaluation can provide the warrant basis for deciding whether a later automatic include_l0 or adapter PLAN is justified."
+  ],
+  "constraints": [
+    "Proposal only: no implementation is admitted by this PLAN record.",
+    "No automatic include_l0 behavior.",
+    "No mutation of ContextPackManifest.items.",
+    "No provider prompt changes.",
+    "No latest-context prompt path changes.",
+    "No live retrieval.",
+    "No external embedding API calls.",
+    "No production embedding creation.",
+    "No vector index or document index mutation.",
+    "No memory-store mutation.",
+    "No token-budget enforcement or token-budget telemetry.",
+    "No non-none reranking.",
+    "No adapter behavior.",
+    "Any evaluation implementation requires separate admission by WARRANT before governed improvement work begins."
+  ],
+  "success_criteria": [
+    "SELF_MODEL records PLAN-20260707-0001 as proposed, open, and not admitted.",
+    "The proposed evaluation scope is limited to existing diagnostic-only advisor output.",
+    "The proposal defines evidence needed before any automatic L0 inclusion PLAN can be considered.",
+    "The proposal keeps advisor output outside ContextPackManifest.items and outside provider prompt construction.",
+    "No CAP, VERIFY, WARRANT, or implementation claim is added by this PLAN-only slice.",
+    "SELF-AUDIT remains green after the proposed PLAN is indexed."
+  ],
+  "risk": "Advisor evaluation may be mistaken for approval of automatic L0 inclusion unless the PLAN keeps measurement separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
+  "next_action": "Seek a WARRANT to admit only a diagnostic evaluation implementation. Do not add automatic include_l0 behavior, mutate ContextPackManifest.items, change provider prompts or latest-context prompt paths, perform live retrieval, call external embedding APIs, create production embeddings, mutate vector/document indexes or memory stores, add token-budget enforcement/telemetry, add non-none reranking, or introduce adapter behavior."
+}
