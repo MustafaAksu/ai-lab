@@ -69,7 +69,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T14:08:07+00:00",
+  "generated_at": "2026-07-07T14:19:57+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -224,7 +224,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "f9207a2c48ac99761d631ac5de9c91f336186a13",
+  "repo_head": "db70e382c9e73862f6b2fa01ce128c673c1f3e08",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
