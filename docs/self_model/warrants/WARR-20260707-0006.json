@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0006",
+  "target_item_id": "PLAN-20260707-0003",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T14:25:17.323249+00:00",
+  "scope": "Supports completion closure for PLAN-20260707-0003 as a review-only threshold definition slice. Does not close GAP-0001 and does not approve automatic include_l0.",
+  "reason": "The admitted artifact was implemented, persisted, and tested. It defines explicit thresholds, marks the current evidence corpus not_ready, blocks automatic include_l0 approval, and preserves all runtime guardrails. This warrant supports recording the plan as completed while using the valid warrant decision vocabulary.",
+  "evidence_ids": [
+    "PLAN-20260707-0003",
+    "WARR-20260707-0005",
+    "VERIFY-20260707-0003",
+    "docs/reviews/l0_discovery_advisor_thresholds/thresholds.json",
+    "a2cfa4312cc86a93be6dde6339cc1abbe21bf374"
+  ]
+}

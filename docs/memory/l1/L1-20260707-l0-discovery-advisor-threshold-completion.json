@@ -1,0 +1,54 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Implemented the review-only threshold artifact.",
+    "Recorded eight acceptance thresholds.",
+    "Persisted docs/reviews/l0_discovery_advisor_thresholds/thresholds.json.",
+    "Created VERIFY-20260707-0003.",
+    "Created WARR-20260707-0006.",
+    "Marked PLAN-20260707-0003 completed."
+  ],
+  "content_hash": "9ad9a1887eb0519a46b0b42f334dc3da7351ab247d3e77e995759d15dcce99d5",
+  "coverage_score": 0.97,
+  "created_at": "2026-07-07T14:25:17.323249+00:00",
+  "episode_id": "EP-20260707-l0-discovery-advisor-threshold-completion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Current evidence is not_ready for automatic include_l0.",
+    "Automatic include_l0 remains unapproved.",
+    "GAP-0001 remains open.",
+    "Future behavior-changing work requires a separate plan and stronger evidence."
+  ],
+  "l1_id": "L1-20260707-l0-discovery-advisor-threshold-completion",
+  "namespace": "public",
+  "next_actions": [
+    "Decide whether to expand the deterministic evidence corpus toward the threshold gates."
+  ],
+  "open_questions": [
+    "Should the next governed slice expand corpus diversity or pause GAP-0001 work?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Thresholds may be mistaken for automatic inclusion approval unless the not_ready decision is kept explicit."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-l0-discovery-advisor-threshold-completion"
+  ],
+  "summary_text": "PLAN-20260707-0003 completed the L0 discovery advisor acceptance-threshold review. The generated thresholds artifact records eight gates and marks the current corpus not_ready for automatic include_l0. Automatic inclusion remains unapproved and GAP-0001 remains open.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "verification",
+    "warrant",
+    "l0",
+    "discovery-advisor",
+    "thresholds",
+    "completion"
+  ],
+  "ttl_until": null
+}

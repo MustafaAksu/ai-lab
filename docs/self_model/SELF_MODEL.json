@@ -69,7 +69,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T14:19:57+00:00",
+  "generated_at": "2026-07-07T14:33:34+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -152,12 +152,9 @@
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [
-    "PLAN-20260707-0003"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 7
+    "completed": 8
   },
   "plans": [
     {
@@ -213,7 +210,7 @@
       "plan_id": "PLAN-20260707-0003",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260707-0003.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Define L0 Discovery Advisor Acceptance Thresholds"
     }
   ],
@@ -224,7 +221,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "db70e382c9e73862f6b2fa01ce128c673c1f3e08",
+  "repo_head": "a2cfa4312cc86a93be6dde6339cc1abbe21bf374",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -267,10 +264,15 @@
       "repo_commit": "dbaf3b323984debb1498126b0a05d600c2b2d643",
       "source_path": "docs/self_model/verifications/VERIFY-20260707-0002.json",
       "verification_id": "VERIFY-20260707-0002"
+    },
+    {
+      "repo_commit": "a2cfa4312cc86a93be6dde6339cc1abbe21bf374",
+      "source_path": "docs/self_model/verifications/VERIFY-20260707-0003.json",
+      "verification_id": "VERIFY-20260707-0003"
     }
   ],
   "warrant_counts": {
-    "supported": 15
+    "supported": 16
   },
   "warrants": [
     {
@@ -391,6 +393,14 @@
       "target_item_id": "PLAN-20260707-0003",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260707-0005",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260707-0006.json",
+      "target_item_id": "PLAN-20260707-0003",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260707-0006",
       "warrant_state": "supported"
     }
   ]

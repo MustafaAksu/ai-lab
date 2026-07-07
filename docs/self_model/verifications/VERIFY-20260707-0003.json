@@ -1,0 +1,39 @@
+{
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260707-0003",
+  "created_at": "2026-07-07T14:25:17.323249+00:00",
+  "repo_commit": "a2cfa4312cc86a93be6dde6339cc1abbe21bf374",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Whitespace check passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Full suite passed after evidence corpus implementation."
+    },
+    {
+      "command": "read docs/reviews/l0_discovery_advisor_thresholds/thresholds.json",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ],
+  "target_item_id": "PLAN-20260707-0003",
+  "target_item_type": "plan",
+  "status": "passed",
+  "summary": "PLAN-20260707-0003 implemented a review-only threshold artifact. The artifact concludes current evidence is not ready for automatic include_l0 and preserves all no-runtime-side-effect guardrails.",
+  "artifacts_checked": [
+    "ai_lab/documentation/l0_discovery_advisor_thresholds.py",
+    "scripts/run_l0_discovery_advisor_thresholds.py",
+    "tests/test_l0_discovery_advisor_thresholds.py",
+    "docs/reviews/l0_discovery_advisor_thresholds/thresholds.json",
+    "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json"
+  ]
+}
