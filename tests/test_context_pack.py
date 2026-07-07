@@ -405,3 +405,53 @@ def test_context_pack_manifest_rejects_invalid_admission_policy_cap():
             items=(item,),
             admission_policy={"max_warning_admissions": -1},
         )
+
+def test_context_pack_manifest_serializes_diagnostics_without_changing_manifest_id():
+    item = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Latest abstraction.",
+        relevance_score=0.95,
+    )
+
+    plain = ContextPackManifest(
+        task="Prepare context.",
+        assembly_policy="latest_context",
+        items=(item,),
+    )
+    with_diagnostics = ContextPackManifest(
+        task="Prepare context.",
+        assembly_policy="latest_context",
+        items=(item,),
+        diagnostics={
+            "l0_discovery_advisor": {
+                "selection_effect": "none",
+                "suggestions": [],
+            }
+        },
+    )
+
+    assert with_diagnostics.manifest_id == plain.manifest_id
+    assert with_diagnostics.items == plain.items
+    assert with_diagnostics.to_dict()["diagnostics"]["l0_discovery_advisor"][
+        "selection_effect"
+    ] == "none"
+    assert "diagnostics" not in plain.to_dict()
+
+
+def test_context_pack_manifest_rejects_non_object_diagnostics():
+    item = ContextPackItem(
+        item_type="abstraction",
+        item_id="ABS-0003",
+        reason="Latest abstraction.",
+        relevance_score=0.95,
+    )
+
+    with pytest.raises(ContextPackError, match="diagnostics must be an object"):
+        ContextPackManifest(
+            task="Prepare context.",
+            assembly_policy="latest_context",
+            items=(item,),
+            diagnostics=[],  # type: ignore[arg-type]
+        )
+

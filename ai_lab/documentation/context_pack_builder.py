@@ -520,6 +520,42 @@ def select_items_with_budget(
     return tuple(selected), tuple(exclusions)
 
 
+def l0_discovery_advisor_diagnostics_for_manifest(
+    *,
+    selected_items: tuple[ContextPackItem, ...],
+    l0_store: Path = Path("docs/memory/l0"),
+    max_suggestions: int | None = None,
+    run_id: str | None = None,
+) -> dict[str, object]:
+    """Build read-only advisor diagnostics for an already-selected manifest.
+
+    This helper is intentionally diagnostic-only. It derives candidate input from
+    existing L0 candidate diagnostics and never mutates selected context items,
+    provider prompts, indexes, embeddings, memory stores, or adapters.
+    """
+
+    from ai_lab.documentation.l0_candidate_diagnostics import l0_candidate_diagnostics
+    from ai_lab.documentation.l0_discovery_advisor import (
+        build_l0_discovery_advisor_record,
+        validate_l0_discovery_advisor_record,
+    )
+
+    selected_context_item_ids = tuple(item.item_id for item in selected_items)
+    candidate_diagnostics = l0_candidate_diagnostics(
+        l0_store=l0_store,
+        context_item_ids=selected_context_item_ids,
+    )
+
+    record = build_l0_discovery_advisor_record(
+        selected_context_item_ids=selected_context_item_ids,
+        candidate_diagnostics_records=[candidate_diagnostics],
+        max_suggestions=max_suggestions,
+        run_id=run_id,
+    )
+    validate_l0_discovery_advisor_record(record)
+    return record
+
+
 def build_latest_context_manifest(
     task: str,
     records: Iterable[ArtifactRecord],
@@ -535,6 +571,8 @@ def build_latest_context_manifest(
     max_warning_admissions: int | None = None,
     include_l0: tuple[str, ...] = (),
     l0_store: Path = Path("docs/memory/l0"),
+    include_l0_discovery_advisor_diagnostics: bool = False,
+    l0_discovery_advisor_max_suggestions: int | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -601,6 +639,17 @@ def build_latest_context_manifest(
         *budget_exclusions,
     )
 
+    diagnostics: dict[str, object] | None = None
+    if include_l0_discovery_advisor_diagnostics:
+        diagnostics = {
+            "l0_discovery_advisor": l0_discovery_advisor_diagnostics_for_manifest(
+                selected_items=selected_items,
+                l0_store=l0_store,
+                max_suggestions=l0_discovery_advisor_max_suggestions,
+                run_id="context_pack_manifest",
+            )
+        }
+
     return ContextPackManifest(
         task=task,
         assembly_policy="latest_context",
@@ -619,4 +668,5 @@ def build_latest_context_manifest(
             require_admission=require_admission,
             max_warning_admissions=max_warning_admissions,
         ),
+        diagnostics=diagnostics,
     )

@@ -104,6 +104,21 @@ def main() -> int:
         default=None,
         help="Optional JSON manifest output file.",
     )
+    parser.add_argument(
+        "--include-l0-discovery-advisor-diagnostics",
+        action="store_true",
+        help=(
+            "Emit advisory-only L0 discovery advisor diagnostics under "
+            "manifest.diagnostics.l0_discovery_advisor. Does not change "
+            "context selection or provider prompts."
+        ),
+    )
+    parser.add_argument(
+        "--l0-discovery-advisor-max-suggestions",
+        type=int,
+        default=None,
+        help="Optional cap for advisory L0 discovery suggestions.",
+    )
 
     args = parser.parse_args()
 
@@ -123,6 +138,14 @@ def main() -> int:
             "require_admission": args.require_admission,
             "max_warning_admissions": args.max_warning_admissions,
         }
+
+        if args.include_l0_discovery_advisor_diagnostics:
+            manifest_kwargs["include_l0_discovery_advisor_diagnostics"] = True
+
+        if args.l0_discovery_advisor_max_suggestions is not None:
+            manifest_kwargs["l0_discovery_advisor_max_suggestions"] = (
+                args.l0_discovery_advisor_max_suggestions
+            )
 
         if args.include_l0:
             manifest_kwargs["include_l0"] = tuple(args.include_l0)

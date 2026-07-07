@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from ai_lab.documentation.context_pack import ContextPackError, ContextPackExclusion, ContextPackItem
@@ -1050,3 +1051,59 @@ def test_build_latest_context_manifest_budget_can_exclude_explicit_l0(tmp_path):
         exclusion.item_id == "chunk-a" and exclusion.reason == "too_large"
         for exclusion in manifest.exclusions
     )
+
+def test_build_latest_context_manifest_can_emit_l0_discovery_advisor_diagnostics(tmp_path):
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+    write_l0_record(l0_store / "chunk-a.json", summary_text="Stable L0 summary.")
+
+    record = make_record(
+        "ABS-0003",
+        "ABS",
+        "Memory Loop",
+        "docs/abstractions/ABS-0003.md",
+        "2026-06-30T00:00:00+00:00",
+        abstraction_level=1,
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context.",
+        records=(record,),
+        l1_dir=tmp_path / "l1",
+        l0_store=l0_store,
+        include_l0_discovery_advisor_diagnostics=True,
+    )
+
+    data = manifest.to_dict()
+    advisor = data["diagnostics"]["l0_discovery_advisor"]
+
+    assert [item.item_id for item in manifest.items] == ["ABS-0003"]
+    assert advisor["selection_effect"] == "none"
+    assert advisor["contract"]["automatic_include_l0"] is False
+    assert advisor["contract"]["mutates_context_manifest_items"] is False
+    assert advisor["contract"]["changes_provider_prompts"] is False
+    assert advisor["guardrails"]["context_items_mutated"] == 0
+    assert advisor["guardrails"]["provider_prompts_changed"] == 0
+    assert advisor["guardrails"]["automatic_include_l0"] is False
+    assert advisor["suggestions"][0]["chunk_id"] == "chunk-a"
+    assert advisor["suggestions"][0]["selection_effect"] == "none"
+
+
+def test_build_latest_context_manifest_omits_l0_discovery_advisor_by_default(tmp_path):
+    record = make_record(
+        "ABS-0003",
+        "ABS",
+        "Memory Loop",
+        "docs/abstractions/ABS-0003.md",
+        "2026-06-30T00:00:00+00:00",
+        abstraction_level=1,
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare context.",
+        records=(record,),
+        l0_store=tmp_path,
+    )
+
+    assert "diagnostics" not in manifest.to_dict()
+

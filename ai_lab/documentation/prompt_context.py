@@ -827,6 +827,8 @@ def format_provider_context_summary_json(
     context_window: int | None = None,
     include_l0: tuple[str, ...] = (),
     l0_store: Path | None = None,
+    include_l0_discovery_advisor_diagnostics: bool = False,
+    l0_discovery_advisor_max_suggestions: int | None = None,
 ) -> str:
     """Return stable JSON for the provider latest-context summary."""
 
@@ -877,6 +879,8 @@ def build_latest_context_pack_manifest(
     max_warning_admissions: int | None = None,
     include_l0: tuple[str, ...] = (),
     l0_store: Path | None = None,
+    include_l0_discovery_advisor_diagnostics: bool = False,
+    l0_discovery_advisor_max_suggestions: int | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
@@ -895,6 +899,14 @@ def build_latest_context_pack_manifest(
         "full_prompt_hash": full_prompt_hash,
         "max_warning_admissions": max_warning_admissions,
     }
+
+    if include_l0_discovery_advisor_diagnostics:
+        manifest_kwargs["include_l0_discovery_advisor_diagnostics"] = True
+
+    if l0_discovery_advisor_max_suggestions is not None:
+        manifest_kwargs["l0_discovery_advisor_max_suggestions"] = (
+            l0_discovery_advisor_max_suggestions
+        )
 
     if include_l0:
         manifest_kwargs["include_l0"] = include_l0
@@ -915,6 +927,8 @@ def build_latest_context_pack_text(
     max_warning_admissions: int | None = None,
     include_l0: tuple[str, ...] = (),
     l0_store: Path | None = None,
+    include_l0_discovery_advisor_diagnostics: bool = False,
+    l0_discovery_advisor_max_suggestions: int | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
     manifest_kwargs: dict[str, object] = {
@@ -927,6 +941,14 @@ def build_latest_context_pack_text(
         "full_prompt_hash": full_prompt_hash,
         "max_warning_admissions": max_warning_admissions,
     }
+
+    if include_l0_discovery_advisor_diagnostics:
+        manifest_kwargs["include_l0_discovery_advisor_diagnostics"] = True
+
+    if l0_discovery_advisor_max_suggestions is not None:
+        manifest_kwargs["l0_discovery_advisor_max_suggestions"] = (
+            l0_discovery_advisor_max_suggestions
+        )
 
     if include_l0:
         manifest_kwargs["include_l0"] = include_l0

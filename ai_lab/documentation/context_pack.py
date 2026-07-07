@@ -269,6 +269,7 @@ class ContextPackManifest:
     full_prompt_hash: str | None = None
     admission_summary: dict[str, int] | None = None
     admission_policy: dict[str, object] | None = None
+    diagnostics: dict[str, object] | None = None
 
     def __post_init__(self) -> None:
         _validate_short_text(self.task, "task", max_length=500)
@@ -299,6 +300,13 @@ class ContextPackManifest:
 
         if self.admission_policy is not None:
             _validate_admission_policy(self.admission_policy, "admission_policy")
+
+        if self.diagnostics is not None:
+            if not isinstance(self.diagnostics, dict):
+                raise ContextPackError("diagnostics must be an object.")
+            for diagnostic_key in self.diagnostics:
+                if not isinstance(diagnostic_key, str) or not diagnostic_key:
+                    raise ContextPackError("diagnostics keys must be non-empty strings.")
 
         expected_manifest_id = compute_manifest_id(
             task=self.task,
@@ -345,6 +353,9 @@ class ContextPackManifest:
 
         if self.admission_policy is not None:
             data["admission_policy"] = dict(self.admission_policy)
+
+        if self.diagnostics is not None:
+            data["diagnostics"] = dict(self.diagnostics)
 
         if self.pipeline_run_id:
             data["provenance"] = {
