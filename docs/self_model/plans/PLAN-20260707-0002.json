@@ -3,7 +3,7 @@
   "plan_id": "PLAN-20260707-0002",
   "title": "Run L0 Discovery Advisor Evaluation Evidence Corpus",
   "source_gap_id": "GAP-0001",
-  "status": "proposed",
+  "status": "admitted",
   "created_at": "2026-07-07T00:00:00Z",
   "objective": "Run the completed diagnostic-only L0 discovery advisor evaluator on a representative corpus of saved context-pack manifests so the project can record concrete evidence about suggestion usefulness, redundancy, noise, missing or invalid advisor diagnostics, and safety before considering any automatic L0 inclusion behavior.",
   "proposed_change": "Add a proposal-only evidence-corpus slice that produces or collects saved context-pack manifest JSON fixtures, runs scripts/evaluate_l0_discovery_advisor.py against them, and records the resulting evaluation evidence. The slice must remain observational and must not change context selection, prompts, retrieval, embeddings, indexes, memory stores, token-budget behavior, reranking, or adapters.",
@@ -32,13 +32,14 @@
     "Any evidence-corpus implementation requires separate admission by WARRANT before governed improvement work begins."
   ],
   "success_criteria": [
-    "SELF_MODEL records PLAN-20260707-0002 as proposed, open, and not completed.",
-    "The proposed slice is limited to corpus evidence gathering and does not approve automatic L0 inclusion.",
-    "The evidence corpus can be evaluated by the existing diagnostic-only evaluator from PLAN-20260707-0001.",
-    "The proposed evidence can summarize suggestion counts, redundancy, missing/invalid advisor diagnostics, already-selected suggestions, and diagnostic-only guardrails.",
-    "The proposal keeps advisor output outside ContextPackManifest.items and outside provider prompt construction.",
-    "SELF-AUDIT remains green after the proposed PLAN is indexed."
+    "SELF_MODEL records PLAN-20260707-0002 as admitted, open, and not completed.",
+    "The admitted slice is limited to corpus evidence gathering and does not approve automatic L0 inclusion.",
+    "The evidence corpus is evaluated by the existing diagnostic-only evaluator from PLAN-20260707-0001.",
+    "The evidence can summarize suggestion counts, redundancy, missing/invalid advisor diagnostics, already-selected suggestions, and diagnostic-only guardrails.",
+    "The slice keeps advisor output outside ContextPackManifest.items and outside provider prompt construction.",
+    "Tests prove the evidence-corpus behavior has no context item, prompt, retrieval, embedding, index, memory, token-budget, reranking, or adapter side effects.",
+    "SELF-AUDIT remains green after the admitted PLAN and warrant are indexed."
   ],
   "risk": "Evaluation evidence may be mistaken for approval of automatic L0 inclusion unless the plan keeps evidence gathering separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
-  "next_action": "If admitted by a separate WARRANT, implement only the diagnostic-only evidence corpus slice using saved manifests or deterministic fixtures. Do not add automatic include_l0 behavior, mutate ContextPackManifest.items, change prompts, perform live retrieval, call embedding APIs, create embeddings, mutate indexes or memory stores, add token-budget telemetry/enforcement, add non-none reranking, or introduce adapters."
+  "next_action": "Implement only the admitted diagnostic-only evidence corpus slice using saved manifests or deterministic fixtures. Do not add automatic include_l0 behavior, mutate ContextPackManifest.items, change prompts, perform live retrieval, call embedding APIs, create embeddings, mutate indexes or memory stores, add token-budget telemetry/enforcement, add non-none reranking, or introduce adapters."
 }

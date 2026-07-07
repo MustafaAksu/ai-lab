@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0003",
+  "target_item_id": "PLAN-20260707-0002",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T11:07:26.857786+00:00",
+  "scope": "Admits PLAN-20260707-0002 only for a diagnostic-only evidence-corpus slice that uses saved manifests or deterministic fixtures with the completed L0 discovery advisor evaluator. This warrant does not admit automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt changes, latest-context prompt path changes, live retrieval, external embedding API calls, production embedding creation, vector/document index mutation, memory-store mutation, token-budget enforcement or telemetry, non-none reranking, or adapter behavior.",
+  "reason": "PLAN-20260707-0001 completed the diagnostic-only evaluator, but GAP-0001 still lacks evidence about advisor usefulness, redundancy, noise, missing or invalid diagnostics, and safety on representative manifests. A saved-manifest evidence corpus is the next bounded measurement step before any automatic L0 inclusion proposal can be justified.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260707-0001",
+    "PLAN-20260707-0002",
+    "WARR-20260707-0002",
+    "a08016f87d8da60a7b76a94801e33cbc4825e905"
+  ]
+}

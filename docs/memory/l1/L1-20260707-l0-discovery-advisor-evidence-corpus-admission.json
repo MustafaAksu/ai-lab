@@ -1,0 +1,52 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Created WARR-20260707-0003 admitting PLAN-20260707-0002.",
+    "Marked PLAN-20260707-0002 admitted.",
+    "Recorded the diagnostic-only evidence-corpus boundary for future implementation."
+  ],
+  "content_hash": "eaed59e163938adbf58dc844ec1e913e2703c0abc2d248f7a88d822f49e55389",
+  "coverage_score": 0.96,
+  "created_at": "2026-07-07T11:07:26.857786+00:00",
+  "episode_id": "EP-20260707-l0-discovery-advisor-evidence-corpus-admission",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "Admit the evidence-corpus slice before implementing it.",
+    "Keep evidence gathering separate from automatic L0 selection.",
+    "Use only saved manifests or deterministic fixtures as evaluator inputs."
+  ],
+  "l1_id": "L1-20260707-l0-discovery-advisor-evidence-corpus-admission",
+  "namespace": "public",
+  "next_actions": [
+    "Implement the admitted evidence-corpus slice using the existing diagnostic-only evaluator."
+  ],
+  "open_questions": [
+    "Which deterministic representative manifests should form the initial evidence corpus?",
+    "Which evidence thresholds should later justify proposing automatic include_l0 behavior?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Corpus results may be misread as automatic inclusion approval unless the diagnostic-only boundary remains explicit."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-l0-discovery-advisor-evidence-corpus-admission"
+  ],
+  "summary_text": "PLAN-20260707-0002 was admitted by WARR-20260707-0003 as a diagnostic-only evidence-corpus slice for the completed L0 discovery advisor evaluator. The admitted work may use saved manifests or deterministic fixtures to record evaluation evidence about suggestion counts, redundancy, missing or invalid advisor diagnostics, already-selected suggestions, and guardrails. The warrant does not admit automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt changes, latest-context prompt path changes, live retrieval, external embedding API calls, production embedding creation, index or memory-store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "l0",
+    "discovery-advisor",
+    "diagnostic",
+    "evaluation",
+    "evidence-corpus",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}
