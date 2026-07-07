@@ -1,0 +1,50 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/verifications/VERIFY-20260706-0004.json.",
+    "Added docs/self_model/warrants/WARR-20260706-0008.json.",
+    "Marked docs/self_model/plans/PLAN-20260706-0004.json completed.",
+    "Recorded that manifest-connected advisor diagnostics are opt-in and diagnostic-only.",
+    "Prepared SELF_MODEL and self-model tests for completed plans = 5 and supported warrants = 10."
+  ],
+  "content_hash": "f3dc8cc3f7bcc9ad4c780c4d1df64e2b7de7bffcf24ed2bf283ccd41f3022a5c",
+  "coverage_score": 0.98,
+  "created_at": "2026-07-07T08:47:15.243545+00:00",
+  "episode_id": "EP-20260707-context-manifest-l0-discovery-advisor-diagnostics-completion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260706-0004 is completed and has no remaining implementation work.",
+    "Advisor diagnostics remain opt-in metadata and do not alter selected context items or provider prompts.",
+    "Automatic L0 inclusion or adapter behavior still requires a separate PLAN/WARRANT."
+  ],
+  "l1_id": "L1-20260707-context-manifest-l0-discovery-advisor-diagnostics-completion",
+  "namespace": "public",
+  "next_actions": [
+    "Start a new governed slice only if automatic L0 inclusion, selection adapters, retrieval, embeddings, prompt changes, or index/store mutation are desired."
+  ],
+  "open_questions": [],
+  "redaction_level": "none",
+  "risks": [
+    "Advisor suggestions may still be misread as automatic selection unless future documentation and CLIs preserve the advisory-only wording."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-context-manifest-l0-discovery-advisor-diagnostics-completion"
+  ],
+  "summary_text": "Commits 09f0794 and e3fb7b4 implemented PLAN-20260706-0004, and the current completion slice records VERIFY-20260706-0004 and WARR-20260706-0008 against HEAD e3fb7b4. The completed work connects the read-only L0 discovery advisor to context-pack manifest diagnostics as an opt-in diagnostic-only path. ContextPackManifest now supports optional diagnostics metadata, context_pack_builder can emit manifest.diagnostics.l0_discovery_advisor from existing read-only l0_candidate_diagnostics, and scripts/build_context_pack.py exposes --include-l0-discovery-advisor-diagnostics plus an optional suggestion cap. Default behavior remains unchanged: diagnostics are omitted unless explicitly requested, provider prompt rendering is unchanged, ContextPackManifest.items is not mutated, no automatic include_l0 behavior is introduced, and there is no live retrieval, embedding creation, index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "verification",
+    "l0",
+    "discovery-advisor",
+    "diagnostic",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

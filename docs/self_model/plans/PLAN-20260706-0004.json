@@ -3,7 +3,7 @@
   "plan_id": "PLAN-20260706-0004",
   "title": "Context-manifest-connected L0 Discovery Advisor Diagnostics",
   "source_gap_id": "GAP-0001",
-  "status": "admitted",
+  "status": "completed",
   "created_at": "2026-07-06T00:00:00Z",
   "objective": "Connect the read-only L0 discovery advisor to context manifest diagnostics so context-pack workflows can optionally emit advisory L0 discovery suggestions without changing selection, prompt construction, retrieval, or repository state.",
   "proposed_change": "Add a proposed diagnostic-only integration path in which context manifest diagnostics may call or embed L0 discovery advisor output under diagnostics metadata. The integration must preserve advisory-only semantics: selection_effect remains fixed to \"none\", suggested include_l0 IDs are not automatically included, ContextPackManifest.items is not mutated, and provider prompt/latest-context paths remain unchanged.",
@@ -31,13 +31,13 @@
     "Any implementation requires separate admission by WARRANT before governed improvement work begins."
   ],
   "success_criteria": [
-    "SELF_MODEL records PLAN-20260706-0004 as admitted, not completed, and not implemented.",
-    "Manifest diagnostics can be proposed to expose L0 discovery advisor suggestions with explicit advisory-only semantics.",
-    "The proposed integration keeps advisor output outside ContextPackManifest.items and outside provider prompt construction.",
-    "Tests can prove that diagnostic emission has selection_effect none and no context item, prompt, retrieval, embedding, index, memory, token-budget, reranking, or adapter side effects.",
-    "No CAP, VERIFY, or implementation claim is added by this PLAN-only slice.",
-    "SELF-AUDIT remains green after the proposed PLAN is indexed."
+    "SELF_MODEL records PLAN-20260706-0004 as completed with supported completion warrant WARR-20260706-0008.",
+    "ContextPackManifest can serialize optional diagnostics metadata without changing manifest_id computation or selected items.",
+    "Context-pack workflows can opt in to manifest.diagnostics.l0_discovery_advisor with explicit advisory-only semantics.",
+    "Advisor output remains outside ContextPackManifest.items and outside provider prompt construction.",
+    "Tests prove diagnostic emission has selection_effect none and no context item, prompt, retrieval, embedding, index, memory, token-budget, reranking, or adapter side effects.",
+    "SELF-AUDIT remains green after the completed PLAN, completion warrant, and verification are indexed."
   ],
   "risk": "Advisor suggestions surfaced through context manifest diagnostics may be misread as automatic include_l0 selection unless the PLAN, warrant, tests, and future implementation keep diagnostic output separate from manifest items, provider prompts, latest-context paths, retrieval, embedding, indexes, memory stores, token-budget systems, reranking, and adapters.",
-  "next_action": "Implement only the admitted diagnostic-only manifest integration slice. Do not add automatic include_l0 behavior, mutate ContextPackManifest.items, change provider prompts or latest-context prompt paths, perform live retrieval, call external embedding APIs, create production embeddings, mutate vector/document indexes or memory stores, add token-budget enforcement/telemetry, add non-none reranking, or introduce adapter behavior."
+  "next_action": "No further implementation remains for PLAN-20260706-0004. The manifest-connected L0 discovery advisor diagnostics slice is completed and remains diagnostic-only. Any automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt change, latest-context prompt change, live retrieval, external embedding API use, production embedding creation, index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior requires a separate PLAN/WARRANT."
 }

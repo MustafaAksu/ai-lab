@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260706-0008",
+  "target_item_id": "PLAN-20260706-0004",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T08:47:15.243545+00:00",
+  "scope": "Certifies completion of PLAN-20260706-0004 only for the opt-in, diagnostic-only connection of the read-only L0 discovery advisor to context-pack manifest diagnostics. This completion warrant does not admit automatic include_l0 behavior, mutation of ContextPackManifest.items, provider prompt changes, latest-context prompt changes, live retrieval, external embedding API calls, production embedding creation, index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior.",
+  "reason": "The admitted implementation slice is present, tested, and pushed. ContextPackManifest now supports optional diagnostics metadata; context_pack_builder can opt in to manifest.diagnostics.l0_discovery_advisor by lazily consuming existing read-only l0_candidate_diagnostics; scripts/build_context_pack.py exposes an opt-in CLI flag and suggestion cap. Default manifest and prompt behavior remains unchanged, advisor output stays outside ContextPackManifest.items, and verification records full-suite, targeted, audit, and whitespace checks.",
+  "evidence_ids": [
+    "PLAN-20260706-0004",
+    "WARR-20260706-0007",
+    "VERIFY-20260706-0004",
+    "e3fb7b40290c3c67cbbe9dda465bd2a9a4505575",
+    "09f07943c663df66bd89c975b40cdf3d5b81d865",
+    "e3fb7b4"
+  ]
+}
