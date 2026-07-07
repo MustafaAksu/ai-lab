@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0001",
+  "target_item_id": "PLAN-20260707-0001",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T10:34:42.626559+00:00",
+  "scope": "Admits PLAN-20260707-0001 only as a diagnostic evaluation slice for measuring manifest-connected L0 discovery advisor suggestions on representative context-pack tasks or fixtures. This warrant does not admit automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt changes, latest-context prompt path changes, live retrieval, external embedding API calls, production embedding creation, vector/document index mutation, memory-store mutation, token-budget enforcement or telemetry, non-none reranking, or adapter behavior.",
+  "reason": "PLAN-20260706-0004 completed the opt-in manifest diagnostics bridge, but GAP-0001 remains open and there is not yet evidence that advisor suggestions are useful, stable, non-noisy, or safe enough to justify automatic L0 inclusion. The smallest governed next step is diagnostic-only evaluation of existing advisor output before any automatic-selection plan is considered.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260707-0001",
+    "PLAN-20260706-0004",
+    "WARR-20260706-0008",
+    "VERIFY-20260706-0004",
+    "7e15005",
+    "d4b58c5"
+  ]
+}

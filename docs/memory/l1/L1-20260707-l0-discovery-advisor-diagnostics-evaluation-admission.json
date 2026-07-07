@@ -1,0 +1,52 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/warrants/WARR-20260707-0001.json.",
+    "Marked docs/self_model/plans/PLAN-20260707-0001.json admitted.",
+    "Recorded the admitted evaluation boundary as diagnostic-only and observational.",
+    "Prepared SELF_MODEL and tests for admitted plans including PLAN-20260707-0001."
+  ],
+  "content_hash": "77103e26d395a48bb28d43f080bdde0590d683782263d0397e642ec6a4a3342b",
+  "coverage_score": 0.97,
+  "created_at": "2026-07-07T10:34:42.626559+00:00",
+  "episode_id": "EP-20260707-l0-discovery-advisor-diagnostics-evaluation-admission",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260707-0001 is admitted but not implemented or completed.",
+    "The next implementation must evaluate existing diagnostic advisor output only.",
+    "Automatic L0 inclusion remains out of scope and requires a separate PLAN/WARRANT."
+  ],
+  "l1_id": "L1-20260707-l0-discovery-advisor-diagnostics-evaluation-admission",
+  "namespace": "public",
+  "next_actions": [
+    "Implement a diagnostic-only evaluation harness/report for manifest-connected L0 discovery advisor suggestions."
+  ],
+  "open_questions": [
+    "Which representative context-pack tasks should form the first advisor evaluation corpus?",
+    "What thresholds, if any, should later justify proposing automatic L0 inclusion?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Evaluation results may be misread as approval for automatic selection unless the diagnostic-only boundary is preserved."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-l0-discovery-advisor-diagnostics-evaluation-admission"
+  ],
+  "summary_text": "PLAN-20260707-0001 is admitted by WARR-20260707-0001 as a diagnostic-only evaluation slice. The evaluation is intended to measure manifest-connected L0 discovery advisor suggestions on representative context-pack tasks or fixtures before any automatic L0 inclusion or adapter plan is considered. The admitted scope remains observational: no automatic include_l0, no ContextPackManifest.items mutation, no provider prompt or latest-context prompt change, no live retrieval, no external embedding API calls, no production embedding creation, no index or memory-store mutation, no token-budget telemetry or enforcement, no non-none reranking, and no adapter behavior.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "l0",
+    "discovery-advisor",
+    "diagnostic",
+    "evaluation",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

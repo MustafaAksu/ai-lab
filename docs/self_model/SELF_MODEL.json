@@ -10,14 +10,15 @@
     "PLAN-20260706-0001",
     "PLAN-20260706-0002",
     "PLAN-20260706-0003",
-    "PLAN-20260706-0004"
+    "PLAN-20260706-0004",
+    "PLAN-20260707-0001"
   ],
   "audit_summary": {
     "ok": true,
     "severity_counts": {
       "error": 0,
       "info": 27,
-      "warn": 8
+      "warn": 9
     }
   },
   "capabilities": [
@@ -66,7 +67,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T10:32:22+00:00",
+  "generated_at": "2026-07-07T10:34:42+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -143,8 +144,8 @@
     "PLAN-20260707-0001"
   ],
   "plan_counts": {
-    "completed": 5,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 5
   },
   "plans": [
     {
@@ -186,7 +187,7 @@
       "plan_id": "PLAN-20260707-0001",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260707-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Evaluate Manifest-Connected L0 Discovery Advisor Diagnostics"
     }
   ],
@@ -197,7 +198,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "7e150051c1be2d0864b9fb1ff7ab9511e11d82bc",
+  "repo_head": "d4b58c5319c6a9b31a276ec71896e6404f8a2e46",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -233,7 +234,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 10
+    "supported": 11
   },
   "warrants": [
     {
@@ -314,6 +315,14 @@
       "target_item_id": "PLAN-20260706-0004",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260706-0008",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260707-0001.json",
+      "target_item_id": "PLAN-20260707-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260707-0001",
       "warrant_state": "supported"
     }
   ]
