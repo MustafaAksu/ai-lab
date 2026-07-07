@@ -1,0 +1,28 @@
+{
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260707-0002",
+  "created_at": "2026-07-07T11:37:14.038303+00:00",
+  "repo_commit": "dbaf3b323984debb1498126b0a05d600c2b2d643",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "commands": [
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "summary": "Whitespace check passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed after evidence corpus implementation."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ]
+}

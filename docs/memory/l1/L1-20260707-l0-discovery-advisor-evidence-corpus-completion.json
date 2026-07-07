@@ -1,0 +1,49 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added VERIFY-20260707-0002.",
+    "Added WARR-20260707-0004.",
+    "Marked PLAN-20260707-0002 completed.",
+    "Recorded evidence corpus completion memory."
+  ],
+  "content_hash": "c217d74b6ba4598bef5cbab18ef9689f03cd4ad5f3434ebaa63367e73dc241a4",
+  "coverage_score": 0.98,
+  "created_at": "2026-07-07T11:37:14.038303+00:00",
+  "episode_id": "EP-20260707-l0-discovery-advisor-evidence-corpus-completion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260707-0002 is completed.",
+    "Automatic L0 inclusion remains out of scope."
+  ],
+  "l1_id": "L1-20260707-l0-discovery-advisor-evidence-corpus-completion",
+  "namespace": "public",
+  "next_actions": [
+    "Review evidence thresholds before proposing any automatic include_l0 behavior."
+  ],
+  "open_questions": [
+    "What evidence thresholds should justify a later automatic include_l0 proposal?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Evidence may be misread as approval of automatic inclusion unless boundaries remain explicit."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-l0-discovery-advisor-evidence-corpus-completion"
+  ],
+  "summary_text": "PLAN-20260707-0002 is completed. The evidence corpus recorded 4 manifests, 2 valid advisor diagnostics, 1 missing advisor diagnostic, 1 invalid advisor diagnostic, 4 total suggestions, 4 unique suggested chunks, 1 already-selected suggestion, and 0 duplicate suggestions. The corpus is diagnostic-only.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "verification",
+    "l0",
+    "discovery-advisor",
+    "evidence-corpus"
+  ],
+  "ttl_until": null
+}
