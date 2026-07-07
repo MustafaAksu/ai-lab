@@ -1,0 +1,178 @@
+{
+  "contract": {
+    "adapter_behavior": false,
+    "automatic_include_l0": false,
+    "changes_latest_context_prompt_path": false,
+    "changes_provider_prompts": false,
+    "embedding_creation": false,
+    "external_embedding_api_calls": false,
+    "index_mutation": false,
+    "live_retrieval": false,
+    "memory_store_mutation": false,
+    "mutates_context_manifest_items": false,
+    "reranker": "none",
+    "review_only": true,
+    "token_budget_enforcement": false,
+    "token_budget_telemetry": false
+  },
+  "created_at": "2026-07-07T00:00:00Z",
+  "decision": {
+    "approved_for_automatic_include_l0": false,
+    "blocking_criteria": [
+      "minimum_manifest_count",
+      "minimum_valid_advisor_manifest_count",
+      "maximum_missing_advisor_manifest_rate",
+      "maximum_invalid_advisor_manifest_rate",
+      "maximum_already_selected_suggestion_rate",
+      "minimum_unique_suggested_chunk_count"
+    ],
+    "decision": "not_ready",
+    "next_required_evidence": [
+      "Expand deterministic corpus to at least 12 manifests.",
+      "Include at least 8 valid advisor-bearing manifests.",
+      "Drive missing advisor diagnostic rate to <= 5%.",
+      "Drive invalid advisor diagnostic rate to 0%.",
+      "Keep already-selected suggestion rate <= 10%.",
+      "Keep duplicate suggestion rate at 0%.",
+      "Demonstrate at least 12 unique suggested L0 chunks."
+    ],
+    "reason": "Current evidence corpus is too small and mixed for automatic include_l0."
+  },
+  "evidence_corpus_id": "l0_discovery_advisor_evidence_corpus.v1",
+  "evidence_source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+  "guardrails": {
+    "adapter_behavior": false,
+    "automatic_include_l0": false,
+    "context_items_mutated": 0,
+    "embedding_creations": 0,
+    "external_embedding_api_calls": false,
+    "index_mutations": 0,
+    "latest_context_prompt_path_changed": 0,
+    "live_retrieval": false,
+    "memory_store_mutations": 0,
+    "provider_prompts_changed": 0,
+    "reranker": "none",
+    "side_effects_blocked": true,
+    "token_budget_enforced": false,
+    "token_budget_telemetry_emitted": false
+  },
+  "inputs": {
+    "evidence_findings": {
+      "already_selected_suggestion_count": 1,
+      "duplicate_suggestion_count": 0,
+      "manifests_invalid_advisor": 1,
+      "manifests_missing_advisor": 1,
+      "manifests_seen": 4,
+      "manifests_with_advisor": 2,
+      "total_suggestions": 4,
+      "unique_suggested_chunk_count": 4
+    },
+    "evidence_guardrails": {
+      "adapter_behavior": false,
+      "automatic_include_l0": false,
+      "context_items_mutated": 0,
+      "embedding_creations": 0,
+      "external_embedding_api_calls": false,
+      "index_mutations": 0,
+      "latest_context_prompt_path_changed": 0,
+      "live_retrieval": false,
+      "memory_store_mutations": 0,
+      "provider_prompts_changed": 0,
+      "reranker": "none",
+      "side_effects_blocked": true,
+      "token_budget_enforced": false,
+      "token_budget_telemetry_emitted": false
+    },
+    "evidence_plan_id": "PLAN-20260707-0002"
+  },
+  "observed_metrics": {
+    "already_selected_suggestion_rate": 0.25,
+    "duplicate_suggestion_rate": 0.0,
+    "invalid_advisor_manifest_rate": 0.25,
+    "manifest_count": 4,
+    "missing_advisor_manifest_rate": 0.25,
+    "total_suggestions": 4,
+    "unique_suggested_chunk_count": 4,
+    "valid_advisor_manifest_count": 2
+  },
+  "plan_id": "PLAN-20260707-0003",
+  "review_type": "automatic_l0_discovery_acceptance_thresholds",
+  "run_id": "l0-discovery-advisor-thresholds-20260707",
+  "schema_version": "v1",
+  "selection_effect": "none",
+  "threshold_review_id": "l0_discovery_advisor_acceptance_thresholds.v1",
+  "thresholds": [
+    {
+      "blocking": true,
+      "description": "Automatic include_l0 requires a broader deterministic evidence corpus.",
+      "observed": 4,
+      "operator": ">=",
+      "passes": false,
+      "required": 12,
+      "threshold_id": "minimum_manifest_count"
+    },
+    {
+      "blocking": true,
+      "description": "Automatic include_l0 requires enough valid advisor-bearing manifests.",
+      "observed": 2,
+      "operator": ">=",
+      "passes": false,
+      "required": 8,
+      "threshold_id": "minimum_valid_advisor_manifest_count"
+    },
+    {
+      "blocking": true,
+      "description": "Missing advisor diagnostics must be rare before automatic inclusion.",
+      "observed": 0.25,
+      "operator": "<=",
+      "passes": false,
+      "required": 0.05,
+      "threshold_id": "maximum_missing_advisor_manifest_rate"
+    },
+    {
+      "blocking": true,
+      "description": "Invalid advisor diagnostics must be zero before automatic inclusion.",
+      "observed": 0.25,
+      "operator": "<=",
+      "passes": false,
+      "required": 0.0,
+      "threshold_id": "maximum_invalid_advisor_manifest_rate"
+    },
+    {
+      "blocking": true,
+      "description": "Redundant already-selected suggestions must stay low.",
+      "observed": 0.25,
+      "operator": "<=",
+      "passes": false,
+      "required": 0.1,
+      "threshold_id": "maximum_already_selected_suggestion_rate"
+    },
+    {
+      "blocking": true,
+      "description": "Duplicate advisor suggestions must remain absent.",
+      "observed": 0.0,
+      "operator": "<=",
+      "passes": true,
+      "required": 0.0,
+      "threshold_id": "maximum_duplicate_suggestion_rate"
+    },
+    {
+      "blocking": true,
+      "description": "Automatic inclusion needs more unique candidate coverage.",
+      "observed": 4,
+      "operator": ">=",
+      "passes": false,
+      "required": 12,
+      "threshold_id": "minimum_unique_suggested_chunk_count"
+    },
+    {
+      "blocking": true,
+      "description": "Evidence must remain diagnostic-only with no runtime side effects.",
+      "observed": true,
+      "operator": "is",
+      "passes": true,
+      "required": true,
+      "threshold_id": "runtime_side_effect_guardrail"
+    }
+  ]
+}
