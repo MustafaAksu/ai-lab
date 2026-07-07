@@ -1,0 +1,54 @@
+{
+  "access_level": "public",
+  "citations": [],
+  "completed_work": [
+    "Added docs/self_model/verifications/VERIFY-20260707-0001.json.",
+    "Added docs/self_model/warrants/WARR-20260707-0002.json.",
+    "Marked docs/self_model/plans/PLAN-20260707-0001.json completed.",
+    "Recorded completion of the diagnostic-only advisor evaluation module and CLI.",
+    "Prepared SELF_MODEL and self-model tests for completed plans = 6 and supported warrants = 12."
+  ],
+  "content_hash": "051e9eb2d57ccae0d2fdc8107f944f0ec86bc572a9fec3ef95f0d8732d600df0",
+  "coverage_score": 0.98,
+  "created_at": "2026-07-07T10:49:04.553030+00:00",
+  "episode_id": "EP-20260707-l0-discovery-advisor-diagnostics-evaluation-completion",
+  "freshness_state": "fresh",
+  "generation_model": null,
+  "generation_prompt_id": null,
+  "key_decisions": [
+    "PLAN-20260707-0001 is completed and has no remaining implementation work.",
+    "The evaluation harness reads saved manifests and stays diagnostic-only.",
+    "Automatic L0 inclusion remains out of scope and requires a separate PLAN/WARRANT."
+  ],
+  "l1_id": "L1-20260707-l0-discovery-advisor-diagnostics-evaluation-completion",
+  "namespace": "public",
+  "next_actions": [
+    "Use the evaluation CLI on representative saved manifests to gather evidence before considering any automatic L0 inclusion proposal."
+  ],
+  "open_questions": [
+    "Which saved manifest corpus should be used for the first substantive advisor quality evaluation?",
+    "What acceptance thresholds should justify a later automatic inclusion proposal?"
+  ],
+  "redaction_level": "none",
+  "risks": [
+    "Evaluation evidence may still be misread as automatic selection approval unless future work preserves the diagnostic-only boundary."
+  ],
+  "scope": "default",
+  "source_event_ids": [
+    "EVT-20260707-l0-discovery-advisor-diagnostics-evaluation-completion"
+  ],
+  "summary_text": "PLAN-20260707-0001 is completed against implementation commit 58fea51. The completed slice added a diagnostic-only evaluator module and CLI for saved context-pack manifest JSON files containing manifest.diagnostics.l0_discovery_advisor. The evaluator records manifest-level and aggregate suggestion evidence, including missing/invalid advisor diagnostics, total and unique suggestions, duplicates, already-selected suggestions, and guardrails. It remains observational only: no automatic include_l0 behavior, no ContextPackManifest.items mutation, no provider prompt or latest-context prompt changes, no live retrieval, no external embedding API calls, no production embedding creation, no index or memory-store mutation, no token-budget telemetry/enforcement, no non-none reranking, and no adapter behavior.",
+  "summary_version": "v1",
+  "topics": [
+    "self-model",
+    "plan",
+    "warrant",
+    "verification",
+    "l0",
+    "discovery-advisor",
+    "diagnostic",
+    "evaluation",
+    "context-manifest"
+  ],
+  "ttl_until": null
+}

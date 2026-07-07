@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0002",
+  "target_item_id": "PLAN-20260707-0001",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T10:49:04.553030+00:00",
+  "scope": "Certifies completion of PLAN-20260707-0001 only for the diagnostic-only L0 discovery advisor evaluation harness and CLI. This completion warrant does not admit automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt changes, latest-context prompt path changes, live retrieval, external embedding API calls, production embedding creation, vector/document index mutation, memory-store mutation, token-budget enforcement or telemetry, non-none reranking, or adapter behavior.",
+  "reason": "The admitted evaluation slice is implemented by ai_lab/documentation/l0_discovery_advisor_evaluation.py and scripts/evaluate_l0_discovery_advisor.py, with tests in tests/test_l0_discovery_advisor_evaluation.py. The evaluator reads saved manifest JSON records, summarizes existing manifest.diagnostics.l0_discovery_advisor output, validates diagnostic-only guardrails, and remains observational: it does not alter selected items, prompts, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, or adapters.",
+  "evidence_ids": [
+    "PLAN-20260707-0001",
+    "WARR-20260707-0001",
+    "VERIFY-20260707-0001",
+    "58fea514aee34bf95c0ac0d4f70b832f1639dce6",
+    "58fea51"
+  ]
+}

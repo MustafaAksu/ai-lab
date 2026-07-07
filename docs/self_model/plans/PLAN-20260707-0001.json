@@ -3,7 +3,7 @@
   "plan_id": "PLAN-20260707-0001",
   "title": "Evaluate Manifest-Connected L0 Discovery Advisor Diagnostics",
   "source_gap_id": "GAP-0001",
-  "status": "admitted",
+  "status": "completed",
   "created_at": "2026-07-07T00:00:00Z",
   "objective": "Evaluate the manifest-connected L0 discovery advisor diagnostics on representative context-pack tasks so the project can judge suggestion usefulness, stability, noise, and safety before any automatic L0 inclusion or adapter behavior is proposed.",
   "proposed_change": "Add a proposal-only evaluation slice that exercises the existing opt-in manifest.diagnostics.l0_discovery_advisor path against representative context-pack tasks or fixtures and records diagnostic evidence. The evaluation must not change ContextPackManifest.items, provider prompts, latest-context prompt paths, retrieval, embedding, indexes, memory stores, token-budget behavior, reranking, or adapters.",
@@ -31,13 +31,13 @@
     "Any evaluation implementation requires separate admission by WARRANT before governed improvement work begins."
   ],
   "success_criteria": [
-    "SELF_MODEL records PLAN-20260707-0001 as admitted, open, and not completed.",
-    "A diagnostic-only evaluation implementation can measure existing manifest.diagnostics.l0_discovery_advisor output on representative context-pack tasks or fixtures.",
-    "Evaluation evidence can summarize suggestion usefulness, stability, redundancy, noise, stale candidates, and safety risks before any automatic L0 inclusion PLAN is considered.",
+    "SELF_MODEL records PLAN-20260707-0001 as completed with supported completion warrant WARR-20260707-0002.",
+    "A diagnostic-only evaluation implementation measures existing manifest.diagnostics.l0_discovery_advisor output on saved context-pack manifest JSON files.",
+    "Evaluation evidence summarizes suggestion counts, unique suggested chunk IDs, missing/invalid advisor diagnostics, duplicate suggestions, already-selected suggestions, and diagnostic-only guardrails.",
     "The evaluation keeps advisor output outside ContextPackManifest.items and outside provider prompt construction.",
-    "Tests can prove evaluation behavior has no context item, prompt, retrieval, embedding, index, memory, token-budget, reranking, or adapter side effects.",
-    "SELF-AUDIT remains green after the admitted PLAN and warrant are indexed."
+    "Tests prove evaluation behavior has no context item, prompt, retrieval, embedding, index, memory, token-budget, reranking, or adapter side effects.",
+    "SELF-AUDIT remains green after the completed PLAN, verification, and completion warrant are indexed."
   ],
   "risk": "Advisor evaluation may be mistaken for approval of automatic L0 inclusion unless the PLAN keeps measurement separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
-  "next_action": "Implement only the admitted diagnostic-only evaluation slice. Do not add automatic include_l0 behavior, mutate ContextPackManifest.items, change provider prompts or latest-context prompt paths, perform live retrieval, call external embedding APIs, create production embeddings, mutate vector/document indexes or memory stores, add token-budget enforcement/telemetry, add non-none reranking, or introduce adapter behavior."
+  "next_action": "No further implementation remains for PLAN-20260707-0001. The diagnostic-only evaluation harness and CLI are implemented and completed. Any automatic include_l0 behavior, ContextPackManifest.items mutation, provider prompt change, latest-context prompt change, live retrieval, external embedding API use, production embedding creation, index/store mutation, token-budget telemetry/enforcement, non-none reranking, or adapter behavior requires a separate PLAN/WARRANT."
 }

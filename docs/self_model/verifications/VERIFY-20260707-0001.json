@@ -1,0 +1,33 @@
+{
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260707-0001",
+  "created_at": "2026-07-07T10:49:04.553030+00:00",
+  "repo_commit": "58fea514aee34bf95c0ac0d4f70b832f1639dce6",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_l0_discovery_advisor_evaluation.py tests/test_l0_discovery_advisor.py tests/test_context_pack_builder.py tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Targeted L0 discovery advisor evaluation, advisor, context-pack builder, and self-model tests passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed after the diagnostic-only evaluation implementation."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true with repo_head current and normalized content current."
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "summary": "Whitespace check passed."
+    }
+  ]
+}
