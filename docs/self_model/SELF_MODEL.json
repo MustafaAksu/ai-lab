@@ -67,7 +67,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T10:51:01+00:00",
+  "generated_at": "2026-07-07T10:56:58+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -134,15 +134,23 @@
       "risk": "Advisor evaluation may be mistaken for approval of automatic L0 inclusion unless the PLAN keeps measurement separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
       "source_field": "risk",
       "source_record": "PLAN-20260707-0001"
+    },
+    {
+      "risk": "Evaluation evidence may be mistaken for approval of automatic L0 inclusion unless the plan keeps evidence gathering separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260707-0002"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260707-0002"
+  ],
   "plan_counts": {
-    "completed": 6
+    "completed": 6,
+    "proposed": 1
   },
   "plans": [
     {
@@ -186,6 +194,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260707-0001.json",
       "status": "completed",
       "title": "Evaluate Manifest-Connected L0 Discovery Advisor Diagnostics"
+    },
+    {
+      "plan_id": "PLAN-20260707-0002",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260707-0002.json",
+      "status": "proposed",
+      "title": "Run L0 Discovery Advisor Evaluation Evidence Corpus"
     }
   ],
   "recommended_next_targets": [
@@ -195,7 +210,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "4920c9600f9943a5687ddc2726ea32b3605d22eb",
+  "repo_head": "28078d2cedac81823c8d264b1903844ea704081a",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
