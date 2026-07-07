@@ -454,4 +454,3 @@ def test_context_pack_manifest_rejects_non_object_diagnostics():
             items=(item,),
             diagnostics=[],  # type: ignore[arg-type]
         )
-

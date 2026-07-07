@@ -258,4 +258,3 @@ def test_main_passes_l0_discovery_advisor_diagnostics_arguments(monkeypatch, tmp
     assert captured["include_l0_discovery_advisor_diagnostics"] is True
     assert captured["l0_discovery_advisor_max_suggestions"] == 3
     assert data["diagnostics"]["l0_discovery_advisor"]["selection_effect"] == "none"
-

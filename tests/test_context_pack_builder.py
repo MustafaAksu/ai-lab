@@ -1106,4 +1106,3 @@ def test_build_latest_context_manifest_omits_l0_discovery_advisor_by_default(tmp
     )
 
     assert "diagnostics" not in manifest.to_dict()
-
