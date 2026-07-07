@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0005",
+  "target_item_id": "PLAN-20260707-0003",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-07T14:04:55.432743+00:00",
+  "scope": "Admits PLAN-20260707-0003 only for a review-only threshold artifact. It does not admit automatic include_l0, manifest item mutation, prompt changes, live retrieval, embeddings, index/store mutation, token-budget behavior, reranking, or adapters.",
+  "reason": "The current deterministic evidence corpus proves the diagnostic/evidence machinery works, but it is too small to justify automatic include_l0. Thresholds must be defined before any runtime behavior proposal.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260707-0002",
+    "PLAN-20260707-0003",
+    "WARR-20260707-0004",
+    "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+    "eabe46c16ab3ea761c7d5e28a7febdc7b20e0d20"
+  ]
+}

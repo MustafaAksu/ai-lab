@@ -12,7 +12,8 @@
     "PLAN-20260706-0003",
     "PLAN-20260706-0004",
     "PLAN-20260707-0001",
-    "PLAN-20260707-0002"
+    "PLAN-20260707-0002",
+    "PLAN-20260707-0003"
   ],
   "audit_summary": {
     "ok": true,
@@ -68,7 +69,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T14:01:20+00:00",
+  "generated_at": "2026-07-07T14:04:55+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -155,8 +156,8 @@
     "PLAN-20260707-0003"
   ],
   "plan_counts": {
-    "completed": 7,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 7
   },
   "plans": [
     {
@@ -212,7 +213,7 @@
       "plan_id": "PLAN-20260707-0003",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260707-0003.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Define L0 Discovery Advisor Acceptance Thresholds"
     }
   ],
@@ -223,7 +224,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "010da29a8a66f81d3897035c36748238e48ff114",
+  "repo_head": "eabe46c16ab3ea761c7d5e28a7febdc7b20e0d20",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -269,7 +270,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 14
+    "supported": 15
   },
   "warrants": [
     {
@@ -382,6 +383,14 @@
       "target_item_id": "PLAN-20260707-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260707-0004",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260707-0005.json",
+      "target_item_id": "PLAN-20260707-0003",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260707-0005",
       "warrant_state": "supported"
     }
   ]
