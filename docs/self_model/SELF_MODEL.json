@@ -71,7 +71,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-09T14:43:26+00:00",
+  "generated_at": "2026-07-09T14:45:15+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -239,7 +239,7 @@
     }
   ],
   "recommended_next_targets": [],
-  "repo_head": "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316",
+  "repo_head": "cebb30c90e87b1a0121bd2723e4af9f5ee54ab97",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
