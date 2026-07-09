@@ -1,4 +1,8 @@
 {
+  "completed_at": "2026-07-09T19:57:23.447670+00:00",
+  "completion_summary": "Completed the read-only graph neighborhood advisor diagnostic slice. The implementation adds a standalone diagnostic module and tests for artifact lineage relations, validated EDGE records, non-authoritative future edge seeds, relation-path explanations, token estimates, and diagnostic budget exclusions. It does not change runtime context selection, provider prompts, graph persistence, retrieval, embeddings, reranking, production indexes, memory stores, or automatic context inclusion.",
+  "completion_verification_id": "VERIFY-20260709-0003",
+  "completion_warrant_id": "WARR-20260709-0007",
   "constraints": [
     "No runtime context selection changes.",
     "No provider prompt changes.",
@@ -9,7 +13,7 @@
     "All recommendations must be provenance-backed by existing relations, edge records, lineage data, or explicitly marked non-authoritative edge seeds."
   ],
   "created_at": "2026-07-09T19:22:17.382472+00:00",
-  "next_action": "Implement the admitted read-only graph neighborhood advisor diagnostic slice. Maintain the diagnostic-only boundary: no runtime context selection changes, no provider prompt changes, no graph writes, no retrieval or embedding calls, and no automatic inclusion in context packs.",
+  "next_action": "Use CAP-0005 as diagnostic evidence only. Any context-pack integration, automatic selection behavior, graph persistence, retrieval, embedding, reranking, or provider prompt change requires a separate governed PLAN/WARRANT.",
   "objective": "Define the first governed slice for GAP-0002 by adding a read-only graph neighborhood diagnostic/advisor that can report candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without changing runtime context selection.",
   "plan_id": "PLAN-20260709-0002",
   "proposed_change": "Add a deterministic, read-only diagnostic surface for graph-local scoped memory. The slice should inspect existing artifact lineage/front-matter relations, committed EDGE records when present, and non-authoritative future edge seeds, then produce an advisor report for a target task or artifact. The report must be explanation-only and must not write graph artifacts, mutate context manifests, change provider prompts, call retrieval or embedding services, or alter selection.",
@@ -22,7 +26,7 @@
   "risk": "The main risk is accidentally turning graph-neighborhood advice into runtime selection. The first slice must remain diagnostic-only and must not modify manifests, prompts, retrieval, embeddings, or persisted graph state.",
   "schema_version": "v1",
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "A proposed diagnostic/advisor contract is represented in tests and source code without runtime selection effects.",
     "Given deterministic fixture artifacts and edges, the advisor reports neighboring candidates with relation-path explanations.",

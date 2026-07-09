@@ -1,0 +1,23 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-09T19:57:23.447670+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260709-0002",
+    "WARR-20260709-0005",
+    "CAP-0005",
+    "VERIFY-20260709-0002",
+    "WARR-20260709-0006",
+    "VERIFY-20260709-0003",
+    "b2acf9303825ca00db12a06326ddc91a28fed906",
+    "7806b73e328d67d62f4f068d993d2cc89949594d"
+  ],
+  "reason": "The admitted diagnostic-only graph-neighborhood advisor slice was implemented, tested, and recorded as CAP-0005. The implementation remains read-only and does not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, or automatic context inclusion.",
+  "schema_version": "v1",
+  "scope": "Supports completion closure for PLAN-20260709-0002 as a read-only diagnostic capability only. Does not close GAP-0002 and does not admit runtime context selection, prompt, graph persistence, retrieval, embedding, reranking, index, memory-store, or automatic-inclusion changes.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260709-0002",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260709-0007",
+  "warrant_state": "supported"
+}

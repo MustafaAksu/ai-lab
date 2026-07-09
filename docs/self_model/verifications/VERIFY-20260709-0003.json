@@ -1,0 +1,45 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/graph_neighborhood.py",
+    "tests/test_graph_neighborhood.py",
+    "docs/self_model/capabilities/CAP-0005.json",
+    "docs/self_model/verifications/VERIFY-20260709-0002.json",
+    "docs/self_model/warrants/WARR-20260709-0006.json",
+    "docs/self_model/plans/PLAN-20260709-0002.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood advisor tests passed with 7 tests."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Self-model tests passed with 92 tests after CAP-0005 records."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 427 tests after CAP-0005 records."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ],
+  "created_at": "2026-07-09T19:57:23.447670+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "7806b73e328d67d62f4f068d993d2cc89949594d",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "PLAN-20260709-0002 completed the admitted read-only graph neighborhood advisor diagnostic slice and recorded it as CAP-0005. Tests verify the diagnostic-only graph-neighborhood advisor behavior and the self-model records for the implemented capability.",
+  "target_item_id": "PLAN-20260709-0002",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260709-0003"
+}

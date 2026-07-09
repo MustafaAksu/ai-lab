@@ -594,10 +594,10 @@ def test_build_self_model_index_includes_plan_records():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index.get("plan_counts", {}).get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert {
         plan["plan_id"]
         for plan in index["plans"]
@@ -727,12 +727,12 @@ def test_build_self_model_index_includes_warrant_records():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert index["admitted_plans"] == ["PLAN-20260705-0001", "PLAN-20260706-0001", "PLAN-20260706-0002", "PLAN-20260706-0003", "PLAN-20260706-0004", "PLAN-20260707-0001", "PLAN-20260707-0002", "PLAN-20260707-0003", "PLAN-20260707-0004", "PLAN-20260709-0001", "PLAN-20260709-0002"]
     assert {
         warrant["warrant_id"]
         for warrant in index["warrants"]
-    } == {"WARR-20260705-0001", "WARR-20260705-0002", "WARR-20260706-0001", "WARR-20260706-0002", "WARR-20260706-0003", "WARR-20260706-0004", "WARR-20260706-0005", "WARR-20260706-0006", "WARR-20260706-0007", "WARR-20260706-0008", "WARR-20260707-0001", "WARR-20260707-0002", "WARR-20260707-0003", "WARR-20260707-0004", "WARR-20260707-0005", "WARR-20260707-0006", "WARR-20260707-0007", "WARR-20260707-0008", "WARR-20260709-0001", "WARR-20260709-0002", "WARR-20260709-0003", "WARR-20260709-0004", "WARR-20260709-0005", "WARR-20260709-0006"}
+    } == {"WARR-20260705-0001", "WARR-20260705-0002", "WARR-20260706-0001", "WARR-20260706-0002", "WARR-20260706-0003", "WARR-20260706-0004", "WARR-20260706-0005", "WARR-20260706-0006", "WARR-20260706-0007", "WARR-20260706-0008", "WARR-20260707-0001", "WARR-20260707-0002", "WARR-20260707-0003", "WARR-20260707-0004", "WARR-20260707-0005", "WARR-20260707-0006", "WARR-20260707-0007", "WARR-20260707-0008", "WARR-20260709-0001", "WARR-20260709-0002", "WARR-20260709-0003", "WARR-20260709-0004", "WARR-20260709-0005", "WARR-20260709-0006", "WARR-20260709-0007"}
 
     assert any(
         warrant["warrant_id"] == "WARR-20260705-0001"
@@ -876,7 +876,7 @@ def test_build_self_model_index_includes_completion_warrant():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260705-0002"
         and warrant["target_item_id"] == "PLAN-20260705-0001"
@@ -911,10 +911,10 @@ def test_build_self_model_index_excludes_completed_plan_from_open_plans():
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index.get("plan_counts", {}).get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260705-0001"
         and plan["status"] == "completed"
@@ -980,7 +980,7 @@ def test_build_self_model_index_admits_plan_20260706_0001():
 
     assert "PLAN-20260706-0001" not in index["open_plans"]
     assert "PLAN-20260706-0001" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260706-0001"
         and warrant["target_item_id"] == "PLAN-20260706-0001"
@@ -1028,11 +1028,11 @@ def test_build_self_model_index_marks_plan_20260706_0001_completed():
         generated_at="2026-07-06T00:00:00+00:00",
     )
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0001" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         plan["plan_id"] == "PLAN-20260706-0001"
         and plan["status"] == "completed"
@@ -1064,7 +1064,7 @@ def test_build_self_model_index_includes_plan_20260706_0002():
     index = build_self_model_index(repo_root=Path("."))
 
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260706-0002"
         and plan["status"] == "completed"
@@ -1087,7 +1087,7 @@ def test_build_self_model_index_admits_plan_20260706_0002():
     index = build_self_model_index(repo_root=Path("."))
 
     assert "PLAN-20260706-0002" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260706-0003"
         and warrant["target_item_id"] == "PLAN-20260706-0002"
@@ -1144,11 +1144,11 @@ def test_build_self_model_index_marks_plan_20260706_0002_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0002" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         plan["plan_id"] == "PLAN-20260706-0002"
         and plan["status"] == "completed"
@@ -1174,10 +1174,10 @@ def test_build_self_model_index_includes_plan_20260706_0003():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260706-0003"
         and plan["status"] == "completed"
@@ -1199,12 +1199,12 @@ def test_build_self_model_index_includes_warr_20260706_0005_admission():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0003" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260706-0005"
         and warrant["target_item_id"] == "PLAN-20260706-0003"
@@ -1268,11 +1268,11 @@ def test_build_self_model_index_records_plan_20260706_0003_completion():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0003" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         plan["plan_id"] == "PLAN-20260706-0003"
         and plan["status"] == "completed"
@@ -1302,10 +1302,10 @@ def test_build_self_model_index_records_plan_20260706_0004_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
+    assert index["plan_counts"]["completed"] == 11
     assert index.get("plan_counts", {}).get("proposed", 0) == 0
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0004" in index["admitted_plans"]
     assert index["capability_counts"]["implemented"] == 5
     assert any(
@@ -1330,12 +1330,12 @@ def test_build_self_model_index_includes_warr_20260706_0007_admission():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index.get("plan_counts", {}).get("proposed", 0) == 0
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["open_plans"] == []
     assert "PLAN-20260706-0004" in index["admitted_plans"]
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260706-0007"
         and warrant["target_item_id"] == "PLAN-20260706-0004"
@@ -1362,10 +1362,10 @@ def test_build_self_model_index_records_plan_20260707_0001_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
+    assert index["plan_counts"]["completed"] == 11
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert "PLAN-20260707-0001" in index["admitted_plans"]
     assert any(
         plan["plan_id"] == "PLAN-20260707-0001"
@@ -1381,7 +1381,7 @@ def test_build_self_model_index_records_warrant_20260707_0001_for_plan_20260707_
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260707-0001"
         and warrant["target_item_id"] == "PLAN-20260707-0001"
@@ -1395,7 +1395,7 @@ def test_build_self_model_index_records_warrant_20260707_0002_for_plan_20260707_
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260707-0002"
         and warrant["target_item_id"] == "PLAN-20260707-0001"
@@ -1430,10 +1430,10 @@ def test_build_self_model_index_records_plan_20260707_0002_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
+    assert index["plan_counts"]["completed"] == 11
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260707-0002"
         and plan["status"] == "completed"
@@ -1447,7 +1447,7 @@ def test_build_self_model_index_records_warrant_20260707_0003_for_plan_20260707_
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260707-0003"
         and warrant["target_item_id"] == "PLAN-20260707-0002"
@@ -1462,9 +1462,9 @@ def test_build_self_model_index_records_plan_20260707_0002_completion_artifacts(
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260707-0002"
         and plan["status"] == "completed"
@@ -1509,10 +1509,10 @@ def test_build_self_model_index_records_plan_20260707_0003_as_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
+    assert index["plan_counts"]["completed"] == 11
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert any(
         plan["plan_id"] == "PLAN-20260707-0003"
         and plan["status"] == "completed"
@@ -1527,7 +1527,7 @@ def test_build_self_model_index_records_warrant_20260707_0005_for_plan_20260707_
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260707-0005"
         and warrant["target_item_id"] == "PLAN-20260707-0003"
@@ -1541,7 +1541,7 @@ def test_build_self_model_index_records_verification_20260707_0003_for_threshold
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert len(index["verifications"]) == 12
+    assert len(index["verifications"]) == 13
     assert any(
         verification["verification_id"] == "VERIFY-20260707-0003"
         and verification["source_path"]
@@ -1555,7 +1555,7 @@ def test_build_self_model_index_records_warrant_20260707_0006_for_threshold_comp
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         warrant["warrant_id"] == "WARR-20260707-0006"
         and warrant["target_item_id"] == "PLAN-20260707-0003"
@@ -1586,8 +1586,8 @@ def test_build_self_model_index_records_plan_20260707_0004_as_completed():
     index = build_self_model_index(repo_root=Path("."))
 
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"]["completed"] == 10
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["open_plans"] == []
     assert "PLAN-20260707-0004" not in index["open_plans"]
     assert index["open_gaps"] == ["GAP-0002"]
 
@@ -1632,10 +1632,10 @@ def test_build_self_model_index_records_plan_20260709_0001_as_completed():
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["plan_counts"]["completed"] == 10
+    assert index["plan_counts"]["completed"] == 11
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"].get("admitted", 0) == 1
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["open_plans"] == []
     assert index["open_gaps"] == ["GAP-0002"]
 
 
@@ -1645,7 +1645,7 @@ def test_build_self_model_index_records_warrant_20260709_0001_for_runtime_inclus
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["warrant_counts"]["supported"] == 24
+    assert index["warrant_counts"]["supported"] == 25
     assert "PLAN-20260709-0001" in index["admitted_plans"]
     assert any(
         warrant["warrant_id"] == "WARR-20260709-0001"
@@ -1711,22 +1711,22 @@ def test_validate_plan_20260709_0002_record():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260709-0002"
-    assert record["status"] == "admitted"
+    assert record["status"] == "completed"
     assert record["source_gap_id"] == "GAP-0002"
 
 
-def test_build_self_model_index_records_plan_20260709_0002_open():
+def test_build_self_model_index_records_plan_20260709_0002_completed():
     from ai_lab.documentation.self_model import build_self_model_index
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
-    assert index["plan_counts"]["completed"] == 10
+    assert index["open_plans"] == []
+    assert index["plan_counts"]["completed"] == 11
     assert index["plan_counts"].get("proposed", 0) == 0
-    assert index["plan_counts"]["admitted"] == 1
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert any(
         plan["plan_id"] == "PLAN-20260709-0002"
-        and plan["status"] == "admitted"
+        and plan["status"] == "completed"
         and plan["source_gap_id"] == "GAP-0002"
         and plan["source_path"] == "docs/self_model/plans/PLAN-20260709-0002.json"
         for plan in index["plans"]
@@ -1745,19 +1745,19 @@ def test_validate_warr_20260709_0005_record():
     assert record["decision"] == "admit"
 
 
-def test_build_self_model_index_records_plan_20260709_0002_admitted():
+def test_build_self_model_index_records_plan_20260709_0002_completion_warrant():
     from ai_lab.documentation.self_model import build_self_model_index
 
     index = build_self_model_index(repo_root=Path("."))
 
-    assert index["open_plans"] == ["PLAN-20260709-0002"]
-    assert index["plan_counts"]["completed"] == 10
-    assert index["plan_counts"]["admitted"] == 1
+    assert index["open_plans"] == []
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
     assert index["plan_counts"].get("proposed", 0) == 0
     assert "PLAN-20260709-0002" in index["admitted_plans"]
     assert any(
         plan["plan_id"] == "PLAN-20260709-0002"
-        and plan["status"] == "admitted"
+        and plan["status"] == "completed"
         and plan["source_gap_id"] == "GAP-0002"
         and plan["source_path"] == "docs/self_model/plans/PLAN-20260709-0002.json"
         for plan in index["plans"]
@@ -1813,8 +1813,8 @@ def test_build_self_model_index_records_cap_0005_implemented():
 
     assert "CAP-0005" in index["active_capabilities"]
     assert index["capability_counts"]["implemented"] == 5
-    assert len(index["verifications"]) == 12
-    assert index["warrant_counts"]["supported"] == 24
+    assert len(index["verifications"]) == 13
+    assert index["warrant_counts"]["supported"] == 25
     assert any(
         capability["capability_id"] == "CAP-0005"
         and capability["status"] == "implemented"
@@ -1831,4 +1831,72 @@ def test_build_self_model_index_records_cap_0005_implemented():
         and warrant["target_item_id"] == "CAP-0005"
         and warrant["target_item_type"] == "capability"
         for warrant in index["warrants"]
+    )
+
+
+def test_validate_verify_20260709_0003_record():
+    from ai_lab.documentation.self_model import validate_verification_record
+
+    record = read_json(Path("docs/self_model/verifications/VERIFY-20260709-0003.json"))
+    validate_verification_record(record)
+
+    assert record["verification_id"] == "VERIFY-20260709-0003"
+    assert record["target_item_id"] == "PLAN-20260709-0002"
+    assert record["target_item_type"] == "plan"
+    assert record["status"] == "passed"
+
+
+def test_validate_warr_20260709_0007_record():
+    from ai_lab.documentation.self_model import validate_warrant_record
+
+    record = read_json(Path("docs/self_model/warrants/WARR-20260709-0007.json"))
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260709-0007"
+    assert record["target_item_id"] == "PLAN-20260709-0002"
+    assert record["target_item_type"] == "plan"
+    assert record["decision"] == "admit"
+
+
+def test_build_self_model_index_records_plan_20260709_0002_as_completed():
+    from ai_lab.documentation.self_model import build_self_model_index
+
+    index = build_self_model_index(repo_root=Path("."))
+
+    assert index["open_plans"] == []
+    assert index["open_gaps"] == ["GAP-0002"]
+    assert index["plan_counts"]["completed"] == 11
+    assert index["plan_counts"].get("admitted", 0) == 0
+    assert index["plan_counts"].get("proposed", 0) == 0
+    assert "PLAN-20260709-0002" in index["admitted_plans"]
+    assert any(
+        plan["plan_id"] == "PLAN-20260709-0002"
+        and plan["status"] == "completed"
+        and plan["source_gap_id"] == "GAP-0002"
+        and plan["source_path"] == "docs/self_model/plans/PLAN-20260709-0002.json"
+        for plan in index["plans"]
+    )
+    assert any(
+        verification["verification_id"] == "VERIFY-20260709-0003"
+        and verification["source_path"] == "docs/self_model/verifications/VERIFY-20260709-0003.json"
+        for verification in index["verifications"]
+    )
+    assert any(
+        warrant["warrant_id"] == "WARR-20260709-0007"
+        and warrant["target_item_id"] == "PLAN-20260709-0002"
+        and warrant["target_item_type"] == "plan"
+        for warrant in index["warrants"]
+    )
+
+
+def test_gap_0002_recommended_slice_points_beyond_cap_0005_completion():
+    record = read_json(Path("docs/self_model/gaps/GAP-0002.json"))
+
+    assert record["status"] == "open"
+    assert "CAP-0005" in record["recommended_first_slice"]
+    assert "evidence-only" in record["recommended_first_slice"]
+    assert "Do not modify context selection" in record["recommended_first_slice"]
+    assert any(
+        "recorded as CAP-0005" in note
+        for note in record.get("notes", [])
     )
