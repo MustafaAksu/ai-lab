@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260707-0008",
+  "target_item_id": "PLAN-20260707-0004",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-09T07:33:25.745782+00:00",
+  "scope": "Supports completion closure for PLAN-20260707-0004 as deterministic evidence corpus expansion only. Does not close GAP-0001 and does not implement automatic include_l0.",
+  "reason": "The admitted corpus expansion was implemented, persisted, and tested. Evidence now contains 12 deterministic manifests, 12 valid advisor-bearing manifests, 24 unique suggestions, no missing or invalid advisor records, no already-selected or duplicate suggestions, and no runtime side effects. This warrant supports recording the plan as completed while using the valid warrant decision vocabulary.",
+  "evidence_ids": [
+    "PLAN-20260707-0004",
+    "WARR-20260707-0007",
+    "VERIFY-20260707-0004",
+    "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+    "docs/reviews/l0_discovery_advisor_thresholds/thresholds.json",
+    "ac18d34b5c7e63cede8d57682ec8242d2877d8e2"
+  ]
+}

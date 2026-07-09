@@ -1,0 +1,45 @@
+{
+  "schema_version": "v1",
+  "verification_id": "VERIFY-20260707-0004",
+  "created_at": "2026-07-09T07:33:25.745782+00:00",
+  "repo_commit": "ac18d34b5c7e63cede8d57682ec8242d2877d8e2",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_l0_discovery_advisor_evidence_corpus.py",
+      "exit_code": 0,
+      "summary": "Evidence corpus tests passed."
+    },
+    {
+      "command": "python -m pytest tests/test_l0_discovery_advisor_thresholds.py",
+      "exit_code": 0,
+      "summary": "Threshold review tests passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ],
+  "target_item_id": "PLAN-20260707-0004",
+  "target_item_type": "plan",
+  "status": "passed",
+  "summary": "PLAN-20260707-0004 expanded the deterministic L0 discovery advisor evidence corpus to 12 clean manifests. The threshold review now passes all gates and preserves all no-runtime-side-effect guardrails.",
+  "artifacts_checked": [
+    "ai_lab/documentation/l0_discovery_advisor_evidence_corpus.py",
+    "ai_lab/documentation/l0_discovery_advisor_thresholds.py",
+    "tests/test_l0_discovery_advisor_evidence_corpus.py",
+    "tests/test_l0_discovery_advisor_thresholds.py",
+    "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+    "docs/reviews/l0_discovery_advisor_thresholds/thresholds.json"
+  ]
+}

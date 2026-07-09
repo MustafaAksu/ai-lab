@@ -3,7 +3,7 @@
   "plan_id": "PLAN-20260707-0004",
   "title": "Expand deterministic L0 discovery advisor evidence corpus",
   "source_gap_id": "GAP-0001",
-  "status": "admitted",
+  "status": "completed",
   "created_at": "2026-07-08T19:05:18.495631+00:00",
   "objective": "Expand the deterministic L0 discovery advisor evidence corpus so GAP-0001 can be measured against the PLAN-20260707-0003 threshold gates.",
   "proposed_change": "Add deterministic evidence-corpus manifest fixtures and regenerate evidence/threshold review outputs. This remains evidence-only and does not enable automatic include_l0.",
@@ -52,5 +52,9 @@
   "scope": "Evidence corpus expansion only. No runtime selection, prompt, retrieval, embedding, index, memory, reranking, adapter, or token-budget behavior changes.",
   "admitted_at": "2026-07-09T06:11:45.501795+00:00",
   "admission_warrant_id": "WARR-20260707-0007",
-  "admission_summary": "Admitted for deterministic evidence corpus expansion only; no automatic include_l0 or runtime behavior changes are approved."
+  "admission_summary": "Admitted for deterministic evidence corpus expansion only; no automatic include_l0 or runtime behavior changes are approved.",
+  "completed_at": "2026-07-09T07:33:25.745782+00:00",
+  "completion_verification_id": "VERIFY-20260707-0004",
+  "completion_warrant_id": "WARR-20260707-0008",
+  "completion_summary": "Completed deterministic evidence corpus expansion. Threshold gates now pass, while GAP-0001 remains open and automatic include_l0 remains unimplemented."
 }
