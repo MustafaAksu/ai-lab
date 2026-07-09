@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "warrant_id": "WARR-20260709-0001",
+  "target_item_id": "PLAN-20260709-0001",
+  "target_item_type": "plan",
+  "decision": "admit",
+  "warrant_state": "supported",
+  "author": "assistant",
+  "substrate": "conversation",
+  "created_at": "2026-07-09T13:59:58.585135+00:00",
+  "scope": "Admits opt-in runtime automatic L0 discovery inclusion only. Default behavior must remain unchanged, and automatic include_l0 must not become default-on in this slice.",
+  "reason": "The evidence corpus expansion completed successfully, the threshold review passes all gates, and GAP-0001 remains open because runtime automatic include_l0 is still unimplemented. The next safe implementation slice is explicit opt-in runtime wiring with deterministic, capped, deduplicated inclusion and no live retrieval, embeddings, index mutation, memory mutation, reranking, or global provider prompt template changes.",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260709-0001",
+    "PLAN-20260707-0003",
+    "PLAN-20260707-0004",
+    "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
+    "docs/reviews/l0_discovery_advisor_thresholds/thresholds.json",
+    "9c0f466"
+  ]
+}
