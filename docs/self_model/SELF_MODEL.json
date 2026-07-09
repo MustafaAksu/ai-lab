@@ -70,7 +70,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T13:50:26+00:00",
+  "generated_at": "2026-07-09T13:57:58+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -152,15 +152,23 @@
       "risk": "Thresholds may be mistaken for approval of automatic inclusion unless the plan keeps threshold definition separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
       "source_field": "risk",
       "source_record": "PLAN-20260707-0004"
+    },
+    {
+      "risk": "Automatic context inclusion can silently alter prompt content, token usage, and response behavior. The risk is controlled by keeping default behavior unchanged, requiring explicit opt-in, deduping, capping, and testing both disabled and enabled paths.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260709-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260709-0001"
+  ],
   "plan_counts": {
-    "completed": 9
+    "completed": 9,
+    "proposed": 1
   },
   "plans": [
     {
@@ -225,6 +233,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260707-0004.json",
       "status": "completed",
       "title": "Expand deterministic L0 discovery advisor evidence corpus"
+    },
+    {
+      "plan_id": "PLAN-20260709-0001",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260709-0001.json",
+      "status": "proposed",
+      "title": "Add opt-in runtime automatic L0 discovery inclusion"
     }
   ],
   "recommended_next_targets": [
@@ -234,7 +249,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "6352d504a0e70305959be895d3dad59520cc85ef",
+  "repo_head": "d3e69522e26e02086b43548d520314f83e314127",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
