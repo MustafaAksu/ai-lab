@@ -1,0 +1,79 @@
+{
+  "capability_id": "CAP-0006",
+  "category": "diagnostic",
+  "created_at": "2026-07-09T20:21:34.771636+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260709-0003",
+        "path": "docs/self_model/plans/PLAN-20260709-0003.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260709-0008",
+        "path": "docs/self_model/warrants/WARR-20260709-0008.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
+        "role": "implementation commit"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "87fd1c34d2063641fd217cbedfa6584c6f39b2eda2b5529ea7c58a254dbffb56",
+        "path": "ai_lab/documentation/graph_neighborhood_evaluation.py",
+        "role": "implementation"
+      },
+      {
+        "content_hash": "0cb16f819ecffd4a35e240fe903c04f44da7b05a7d8d0324977daf678b39dbb6",
+        "path": "tests/test_graph_neighborhood_evaluation.py",
+        "role": "tests"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260709-0004",
+        "path": "docs/self_model/verifications/VERIFY-20260709-0004.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.graph_neighborhood_evaluation.evaluate_graph_neighborhood_advisor",
+    "ai_lab.documentation.graph_neighborhood_evaluation.format_graph_neighborhood_evidence_report",
+    "ai_lab.documentation.graph_neighborhood_evaluation.GraphNeighborhoodEvidenceReport",
+    "ai_lab.documentation.graph_neighborhood_evaluation.GraphNeighborhoodEvidenceFinding"
+  ],
+  "last_verified": {
+    "repo_commit": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260709-0004.json",
+    "verified_at": "2026-07-09T20:21:34.771636+00:00"
+  },
+  "limits": [
+    "Evidence/reporting output only.",
+    "selection_effect remains none.",
+    "Does not modify context selection or ContextPackManifest.items.",
+    "Does not change provider prompts or prompt rendering.",
+    "Does not persist graph nodes or graph edges.",
+    "Does not introduce a graph database.",
+    "Does not call retrieval services, embedding services, rerankers, or production indexes.",
+    "Does not mutate indexes, memory stores, runtime manifests, or repository graph state.",
+    "Does not perform automatic context inclusion.",
+    "A plan_separately recommendation is not approval to integrate with context packs."
+  ],
+  "name": "Graph neighborhood evidence evaluation",
+  "recommended_next_actions": [
+    "Use CAP-0006 reports to decide whether a separate context-pack integration plan should be proposed.",
+    "Do not treat CAP-0006 output as runtime selection authority."
+  ],
+  "risks": [
+    "A plan_separately recommendation may be mistaken for integration approval unless the reporting-only boundary remains explicit.",
+    "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, or prompt changes require separate governed plans and warrants."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provides evidence-only evaluation/reporting for CAP-0005 graph-neighborhood advisor output. It records whether relation paths, authority labels, token estimates, diagnostic decisions, and inclusion/exclusion rationales are present, then emits a recommendation about whether future context-pack integration should be planned separately."
+}

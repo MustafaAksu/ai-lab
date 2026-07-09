@@ -1,0 +1,31 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/graph_neighborhood_evaluation.py",
+    "tests/test_graph_neighborhood_evaluation.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood_evaluation.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood evidence evaluation tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 439 tests."
+    }
+  ],
+  "created_at": "2026-07-09T20:21:34.771636+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "CAP-0006 implements evidence-only graph-neighborhood advisor evaluation. Tests verify CAP-0005 artifact-lineage evaluation, empty-neighborhood not_ready handling, non-authoritative seed labels, formatting, selection_effect none, and explicit no-selection/no-prompt/no-automatic-inclusion boundaries.",
+  "target_item_id": "CAP-0006",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260709-0004"
+}

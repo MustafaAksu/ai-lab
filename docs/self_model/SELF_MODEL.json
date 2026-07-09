@@ -4,7 +4,8 @@
     "CAP-0002",
     "CAP-0003",
     "CAP-0004",
-    "CAP-0005"
+    "CAP-0005",
+    "CAP-0006"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -24,7 +25,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 26,
+      "info": 30,
       "warn": 14
     }
   },
@@ -63,10 +64,17 @@
       "name": "Read-only graph neighborhood advisor",
       "source_path": "docs/self_model/capabilities/CAP-0005.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0006",
+      "category": "diagnostic",
+      "name": "Graph neighborhood evidence evaluation",
+      "source_path": "docs/self_model/capabilities/CAP-0006.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 5
+    "implemented": 6
   },
   "gap_counts": {
     "closed": 1,
@@ -90,7 +98,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T20:13:06+00:00",
+  "generated_at": "2026-07-09T20:23:02+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -132,6 +140,16 @@
       "risk": "Future integration with context packs, graph persistence, retrieval, embeddings, or prompt changes requires separate governed plans and warrants.",
       "source_field": "risks[1]",
       "source_record": "CAP-0005"
+    },
+    {
+      "risk": "A plan_separately recommendation may be mistaken for integration approval unless the reporting-only boundary remains explicit.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0006"
+    },
+    {
+      "risk": "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, or prompt changes require separate governed plans and warrants.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0006"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -308,7 +326,7 @@
       "target": "Add an evidence-only graph-neighborhood diagnostic evaluation/reporting slice that applies CAP-0005 to deterministic repository artifacts or fixtures, records whether relation paths, authority labels, and token estimates are useful for future graph-local scoped memory, and proposes whether context-pack integration should be separately planned. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion."
     }
   ],
-  "repo_head": "28aa86040cb1583b4273b90d8f60785f756f4059",
+  "repo_head": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -376,10 +394,15 @@
       "repo_commit": "7806b73e328d67d62f4f068d993d2cc89949594d",
       "source_path": "docs/self_model/verifications/VERIFY-20260709-0003.json",
       "verification_id": "VERIFY-20260709-0003"
+    },
+    {
+      "repo_commit": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
+      "source_path": "docs/self_model/verifications/VERIFY-20260709-0004.json",
+      "verification_id": "VERIFY-20260709-0004"
     }
   ],
   "warrant_counts": {
-    "supported": 26
+    "supported": 27
   },
   "warrants": [
     {
@@ -588,6 +611,14 @@
       "target_item_id": "PLAN-20260709-0003",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260709-0008",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0009.json",
+      "target_item_id": "CAP-0006",
+      "target_item_type": "capability",
+      "warrant_id": "WARR-20260709-0009",
       "warrant_state": "supported"
     }
   ]

@@ -1,0 +1,22 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-09T20:21:34.771636+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0006.json",
+    "docs/self_model/verifications/VERIFY-20260709-0004.json",
+    "docs/self_model/plans/PLAN-20260709-0003.json",
+    "docs/self_model/warrants/WARR-20260709-0008.json",
+    "ai_lab/documentation/graph_neighborhood_evaluation.py",
+    "tests/test_graph_neighborhood_evaluation.py",
+    "87664eca9c573f050659dbe4e8f5a52fe08f31dc"
+  ],
+  "reason": "The implementation satisfies the admitted evidence-only reporting slice for PLAN-20260709-0003. It adds standalone diagnostic evaluation around CAP-0005 and tests without modifying context-pack selection, provider prompts, graph persistence, retrieval, embeddings, reranking, indexes, memory stores, or automatic context inclusion.",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0006 as an implemented diagnostic capability only. Does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0006",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260709-0009",
+  "warrant_state": "supported"
+}
