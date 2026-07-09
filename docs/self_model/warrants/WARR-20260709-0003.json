@@ -1,0 +1,21 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-09T14:39:18.499121+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "GAP-0001",
+    "PLAN-20260709-0001",
+    "VERIFY-20260709-0001",
+    "WARR-20260709-0002",
+    "2d9f472f21455eac930aa246559715adb0e9df74",
+    "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316"
+  ],
+  "reason": "GAP-0001 described the absence of automatic L0 discovery. The runtime now supports explicit opt-in automatic inclusion from existing advisor diagnostics, with tests for disabled/default and enabled behavior. The remaining limitation is policy choice about default enablement, not absence of the mechanism.",
+  "schema_version": "v1",
+  "scope": "Supports closing GAP-0001 for explicit opt-in automatic L0 discovery inclusion. Does not claim default-on automatic inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "GAP-0001",
+  "target_item_type": "gap",
+  "warrant_id": "WARR-20260709-0003",
+  "warrant_state": "supported"
+}

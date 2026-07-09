@@ -1,0 +1,20 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-09T14:39:18.499121+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260709-0001",
+    "WARR-20260709-0001",
+    "VERIFY-20260709-0001",
+    "2d9f472f21455eac930aa246559715adb0e9df74",
+    "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316"
+  ],
+  "reason": "The admitted opt-in runtime inclusion slice was implemented and tested. Automatic L0 discovery inclusion is default-disabled, opt-in only, deterministic, capped, deduplicated, and implemented without live retrieval, embedding creation, index mutation, memory mutation, reranking, or global provider prompt template changes.",
+  "schema_version": "v1",
+  "scope": "Supports completion closure for PLAN-20260709-0001 as explicit opt-in runtime automatic L0 discovery inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260709-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260709-0002",
+  "warrant_state": "supported"
+}

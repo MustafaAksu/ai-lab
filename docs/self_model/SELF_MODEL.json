@@ -59,7 +59,7 @@
     "implemented": 4
   },
   "gap_counts": {
-    "open": 1
+    "closed": 1
   },
   "gaps": [
     {
@@ -68,10 +68,10 @@
       "name": "Automatic L0 discovery from selected context",
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0001.json",
-      "status": "open"
+      "status": "closed"
     }
   ],
-  "generated_at": "2026-07-09T14:33:55+00:00",
+  "generated_at": "2026-07-09T14:43:26+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -161,15 +161,10 @@
     }
   ],
   "model_type": "self_model",
-  "open_gaps": [
-    "GAP-0001"
-  ],
-  "open_plans": [
-    "PLAN-20260709-0001"
-  ],
+  "open_gaps": [],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 9
+    "completed": 10
   },
   "plans": [
     {
@@ -239,18 +234,12 @@
       "plan_id": "PLAN-20260709-0001",
       "source_gap_id": "GAP-0001",
       "source_path": "docs/self_model/plans/PLAN-20260709-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Add opt-in runtime automatic L0 discovery inclusion"
     }
   ],
-  "recommended_next_targets": [
-    {
-      "source_field": "recommended_first_slice",
-      "source_record": "GAP-0001",
-      "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
-    }
-  ],
-  "repo_head": "2d9f472f21455eac930aa246559715adb0e9df74",
+  "recommended_next_targets": [],
+  "repo_head": "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -303,10 +292,15 @@
       "repo_commit": "ac18d34b5c7e63cede8d57682ec8242d2877d8e2",
       "source_path": "docs/self_model/verifications/VERIFY-20260707-0004.json",
       "verification_id": "VERIFY-20260707-0004"
+    },
+    {
+      "repo_commit": "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316",
+      "source_path": "docs/self_model/verifications/VERIFY-20260709-0001.json",
+      "verification_id": "VERIFY-20260709-0001"
     }
   ],
   "warrant_counts": {
-    "supported": 19
+    "supported": 21
   },
   "warrants": [
     {
@@ -459,6 +453,22 @@
       "target_item_id": "PLAN-20260709-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260709-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0002.json",
+      "target_item_id": "PLAN-20260709-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260709-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0003.json",
+      "target_item_id": "GAP-0001",
+      "target_item_type": "gap",
+      "warrant_id": "WARR-20260709-0003",
       "warrant_state": "supported"
     }
   ]

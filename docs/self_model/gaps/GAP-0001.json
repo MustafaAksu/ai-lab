@@ -1,24 +1,33 @@
 {
   "blocked_by": [],
   "category": "memory_context",
+  "closed_at": "2026-07-09T14:39:18.499121+00:00",
+  "closure_summary": "Closed by PLAN-20260709-0001 after explicit opt-in runtime automatic L0 discovery inclusion was implemented, tested, and exposed through the context builder, prompt context wrappers, and CLI entry points. Default behavior remains unchanged.",
+  "closure_warrant_id": "WARR-20260709-0003",
   "evidence": {
     "files_checked": [
       "ai_lab/documentation/context_pack_builder.py",
       "ai_lab/documentation/prompt_context.py",
+      "scripts/build_context_pack.py",
       "scripts/ask_provider.py",
-      "scripts/compare_providers.py"
+      "scripts/compare_providers.py",
+      "tests/test_context_pack_builder.py",
+      "tests/test_prompt_context.py",
+      "tests/test_build_context_pack_script.py",
+      "tests/test_ask_provider.py",
+      "tests/test_compare_providers.py"
     ],
-    "reason": "Existing implementation supports explicit include_l0 only."
+    "reason": "Runtime now supports explicit opt-in automatic L0 discovery inclusion with deterministic advisor suggestions, deduplication, caps, default-disabled behavior, and CLI opt-in flags."
   },
   "gap_id": "GAP-0001",
   "name": "Automatic L0 discovery from selected context",
   "priority": "medium",
-  "recommended_first_slice": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection.",
+  "recommended_first_slice": "Completed by PLAN-20260709-0001: explicit opt-in automatic L0 discovery inclusion is implemented.",
   "related_capabilities": [
     "CAP-0001"
   ],
   "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
   "schema_version": "v1",
-  "status": "open",
-  "summary": "AI-Lab cannot yet automatically discover relevant L0 summaries from selected artifacts, L1 records, or task semantics."
+  "status": "closed",
+  "summary": "AI-Lab can now automatically include eligible L0 summaries from selected context when explicit opt-in automatic L0 discovery is enabled."
 }

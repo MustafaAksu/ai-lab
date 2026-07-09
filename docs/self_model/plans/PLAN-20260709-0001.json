@@ -1,18 +1,11 @@
 {
-  "schema_version": "v1",
-  "plan_id": "PLAN-20260709-0001",
-  "title": "Add opt-in runtime automatic L0 discovery inclusion",
-  "source_gap_id": "GAP-0001",
-  "status": "admitted",
-  "created_at": "2026-07-09T13:56:09.729457+00:00",
-  "objective": "Implement real runtime automatic include_l0 behavior behind an explicit opt-in control, using the now-threshold-approved deterministic L0 discovery advisor evidence.",
-  "proposed_change": "Wire L0 discovery advisor suggestions into runtime context construction when an explicit opt-in flag or configuration path is enabled. Default behavior must remain unchanged. Inclusion must be deterministic, capped, deduplicated, and sourced only from existing advisor diagnostics.",
-  "rationale": [
-    "PLAN-20260707-0004 expanded the deterministic evidence corpus to 12 clean manifests.",
-    "The PLAN-20260707-0003 threshold review now passes all gates for the expanded corpus.",
-    "GAP-0001 remains open because runtime automatic include_l0 is still unimplemented.",
-    "The next useful slice should exercise real runtime behavior, but keep the default path unchanged until opt-in behavior is tested."
-  ],
+  "admission_summary": "Admitted for explicit opt-in runtime automatic include_l0 implementation only. Default behavior must remain unchanged and automatic include_l0 must not be default-on.",
+  "admission_warrant_id": "WARR-20260709-0001",
+  "admitted_at": "2026-07-09T13:59:58.585135+00:00",
+  "completed_at": "2026-07-09T14:39:18.499121+00:00",
+  "completion_summary": "Completed explicit opt-in runtime automatic L0 discovery inclusion. Default context construction remains unchanged; automatic L0 inclusion requires explicit opt-in, is deterministic, capped, deduplicated, and uses existing L0 discovery advisor diagnostics without live retrieval, embeddings, index mutation, memory mutation, reranking, or global provider prompt template changes.",
+  "completion_verification_id": "VERIFY-20260709-0001",
+  "completion_warrant_id": "WARR-20260709-0002",
   "constraints": [
     "Proposal only: no implementation is admitted by this PLAN record.",
     "Default runtime behavior must remain unchanged.",
@@ -30,6 +23,31 @@
     "Do not close GAP-0001 unless opt-in runtime behavior is implemented, tested, and documented.",
     "Do not make automatic include_l0 default-on in this slice."
   ],
+  "created_at": "2026-07-09T13:56:09.729457+00:00",
+  "next_action": "If admitted, inspect the context construction path and implement opt-in automatic include_l0 with tests.",
+  "non_goals": [
+    "Do not make automatic include_l0 default-on.",
+    "Do not add live retrieval.",
+    "Do not add embeddings or index mutation.",
+    "Do not mutate memory stores.",
+    "Do not add reranking.",
+    "Do not change provider prompt templates globally.",
+    "Do not close GAP-0001 in the proposal/admission step."
+  ],
+  "objective": "Implement real runtime automatic include_l0 behavior behind an explicit opt-in control, using the now-threshold-approved deterministic L0 discovery advisor evidence.",
+  "plan_id": "PLAN-20260709-0001",
+  "proposed_change": "Wire L0 discovery advisor suggestions into runtime context construction when an explicit opt-in flag or configuration path is enabled. Default behavior must remain unchanged. Inclusion must be deterministic, capped, deduplicated, and sourced only from existing advisor diagnostics.",
+  "rationale": [
+    "PLAN-20260707-0004 expanded the deterministic evidence corpus to 12 clean manifests.",
+    "The PLAN-20260707-0003 threshold review now passes all gates for the expanded corpus.",
+    "GAP-0001 remains open because runtime automatic include_l0 is still unimplemented.",
+    "The next useful slice should exercise real runtime behavior, but keep the default path unchanged until opt-in behavior is tested."
+  ],
+  "risk": "Automatic context inclusion can silently alter prompt content, token usage, and response behavior. The risk is controlled by keeping default behavior unchanged, requiring explicit opt-in, deduping, capping, and testing both disabled and enabled paths.",
+  "schema_version": "v1",
+  "scope": "Runtime opt-in wiring only: deterministic inclusion from existing L0 discovery advisor diagnostics into context construction when explicitly enabled.",
+  "source_gap_id": "GAP-0001",
+  "status": "completed",
   "success_criteria": [
     "A runtime option exists to enable automatic include_l0 from L0 discovery advisor diagnostics.",
     "With the option disabled, existing context construction output remains unchanged.",
@@ -40,20 +58,6 @@
     "Tests cover disabled/default behavior and enabled opt-in behavior.",
     "SELF_MODEL and tests are updated to record the proposed runtime activation slice."
   ],
-  "risk": "Automatic context inclusion can silently alter prompt content, token usage, and response behavior. The risk is controlled by keeping default behavior unchanged, requiring explicit opt-in, deduping, capping, and testing both disabled and enabled paths.",
-  "next_action": "If admitted, inspect the context construction path and implement opt-in automatic include_l0 with tests.",
   "summary": "Propose the first runtime activation slice for GAP-0001: explicit opt-in automatic include_l0 from deterministic advisor diagnostics, with default behavior unchanged.",
-  "non_goals": [
-    "Do not make automatic include_l0 default-on.",
-    "Do not add live retrieval.",
-    "Do not add embeddings or index mutation.",
-    "Do not mutate memory stores.",
-    "Do not add reranking.",
-    "Do not change provider prompt templates globally.",
-    "Do not close GAP-0001 in the proposal/admission step."
-  ],
-  "scope": "Runtime opt-in wiring only: deterministic inclusion from existing L0 discovery advisor diagnostics into context construction when explicitly enabled.",
-  "admitted_at": "2026-07-09T13:59:58.585135+00:00",
-  "admission_warrant_id": "WARR-20260709-0001",
-  "admission_summary": "Admitted for explicit opt-in runtime automatic include_l0 implementation only. Default behavior must remain unchanged and automatic include_l0 must not be default-on."
+  "title": "Add opt-in runtime automatic L0 discovery inclusion"
 }
