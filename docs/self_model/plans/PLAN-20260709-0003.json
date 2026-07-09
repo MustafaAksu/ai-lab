@@ -1,0 +1,39 @@
+{
+  "constraints": [
+    "Proposal only: no implementation is admitted by this PLAN record.",
+    "Evidence/reporting only.",
+    "No runtime context selection changes.",
+    "No provider prompt changes.",
+    "No persisted graph node or edge writes.",
+    "No graph database.",
+    "No retrieval, embedding, reranking, or production index mutation.",
+    "No automatic context inclusion.",
+    "No context-pack integration.",
+    "Use CAP-0005 as diagnostic evidence only."
+  ],
+  "created_at": "2026-07-09T20:03:54.782006+00:00",
+  "next_action": "Seek admission for this proposed evidence-only evaluation/reporting slice before implementation.",
+  "objective": "Evaluate CAP-0005 as an evidence-only diagnostic/reporting slice before any context-pack integration or graph-local scoped memory selection behavior is planned.",
+  "plan_id": "PLAN-20260709-0003",
+  "proposed_change": "Add deterministic evidence/reporting around the read-only graph neighborhood advisor. The slice should apply CAP-0005 to repository fixtures or deterministic artifacts, record whether relation paths, authority labels, token estimates, and diagnostic inclusion/exclusion rationale are useful for future graph-local scoped memory, and produce a recommendation about whether context-pack integration should be separately planned.",
+  "rationale": [
+    "PLAN-20260709-0002 completed the first read-only graph neighborhood advisor slice and recorded it as CAP-0005.",
+    "GAP-0002 remains open because graph-local scoped memory context selection is not implemented.",
+    "The updated GAP-0002 recommended first slice now points to evidence-only evaluation of CAP-0005 before integration.",
+    "Evidence-only reporting preserves the diagnostic boundary while making the next integration decision auditable."
+  ],
+  "risk": "Evidence reports may be mistaken for approval of context-pack integration. This plan must remain reporting-only and must not admit any selector, prompt, retrieval, embedding, reranking, persistence, or automatic-inclusion behavior.",
+  "schema_version": "v1",
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "A deterministic evidence/reporting contract is represented in tests and source code.",
+    "The report applies CAP-0005 to deterministic artifacts or fixtures.",
+    "The report records relation paths, authority labels, token estimates, and diagnostic inclusion/exclusion rationale.",
+    "The report states whether context-pack integration should be separately planned.",
+    "The report preserves selection_effect none or equivalent no-selection-effect language.",
+    "Existing latest-context and context-pack behavior remains unchanged by default.",
+    "Self-model and audit tests remain green."
+  ],
+  "title": "Evaluate graph neighborhood advisor evidence"
+}

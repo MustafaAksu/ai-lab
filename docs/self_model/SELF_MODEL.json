@@ -89,7 +89,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T19:59:57+00:00",
+  "generated_at": "2026-07-09T20:06:50+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -196,15 +196,23 @@
       "risk": "The main risk is accidentally turning graph-neighborhood advice into runtime selection. The first slice must remain diagnostic-only and must not modify manifests, prompts, retrieval, embeddings, or persisted graph state.",
       "source_field": "risk",
       "source_record": "PLAN-20260709-0002"
+    },
+    {
+      "risk": "Evidence reports may be mistaken for approval of context-pack integration. This plan must remain reporting-only and must not admit any selector, prompt, retrieval, embedding, reranking, persistence, or automatic-inclusion behavior.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260709-0003"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260709-0003"
+  ],
   "plan_counts": {
-    "completed": 11
+    "completed": 11,
+    "proposed": 1
   },
   "plans": [
     {
@@ -283,6 +291,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260709-0002.json",
       "status": "completed",
       "title": "Add read-only graph neighborhood advisor diagnostic"
+    },
+    {
+      "plan_id": "PLAN-20260709-0003",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260709-0003.json",
+      "status": "proposed",
+      "title": "Evaluate graph neighborhood advisor evidence"
     }
   ],
   "recommended_next_targets": [
@@ -292,7 +307,7 @@
       "target": "Add an evidence-only graph-neighborhood diagnostic evaluation/reporting slice that applies CAP-0005 to deterministic repository artifacts or fixtures, records whether relation paths, authority labels, and token estimates are useful for future graph-local scoped memory, and proposes whether context-pack integration should be separately planned. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion."
     }
   ],
-  "repo_head": "7806b73e328d67d62f4f068d993d2cc89949594d",
+  "repo_head": "baec5d901be754a12c533bde5048b84a11652b9c",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
