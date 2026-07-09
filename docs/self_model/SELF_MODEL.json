@@ -17,7 +17,8 @@
     "PLAN-20260707-0003",
     "PLAN-20260707-0004",
     "PLAN-20260709-0001",
-    "PLAN-20260709-0002"
+    "PLAN-20260709-0002",
+    "PLAN-20260709-0003"
   ],
   "audit_summary": {
     "ok": true,
@@ -89,7 +90,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T20:06:50+00:00",
+  "generated_at": "2026-07-09T20:13:06+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -211,8 +212,8 @@
     "PLAN-20260709-0003"
   ],
   "plan_counts": {
-    "completed": 11,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 11
   },
   "plans": [
     {
@@ -296,7 +297,7 @@
       "plan_id": "PLAN-20260709-0003",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260709-0003.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Evaluate graph neighborhood advisor evidence"
     }
   ],
@@ -307,7 +308,7 @@
       "target": "Add an evidence-only graph-neighborhood diagnostic evaluation/reporting slice that applies CAP-0005 to deterministic repository artifacts or fixtures, records whether relation paths, authority labels, and token estimates are useful for future graph-local scoped memory, and proposes whether context-pack integration should be separately planned. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion."
     }
   ],
-  "repo_head": "baec5d901be754a12c533bde5048b84a11652b9c",
+  "repo_head": "28aa86040cb1583b4273b90d8f60785f756f4059",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -378,7 +379,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 25
+    "supported": 26
   },
   "warrants": [
     {
@@ -579,6 +580,14 @@
       "target_item_id": "PLAN-20260709-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260709-0007",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0008.json",
+      "target_item_id": "PLAN-20260709-0003",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260709-0008",
       "warrant_state": "supported"
     }
   ]
