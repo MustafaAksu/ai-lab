@@ -3,7 +3,8 @@
     "CAP-0001",
     "CAP-0002",
     "CAP-0003",
-    "CAP-0004"
+    "CAP-0004",
+    "CAP-0005"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -22,7 +23,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 22,
+      "info": 26,
       "warn": 14
     }
   },
@@ -54,10 +55,17 @@
       "name": "Read-only L0 discovery advisor",
       "source_path": "docs/self_model/capabilities/CAP-0004.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0005",
+      "category": "diagnostic",
+      "name": "Read-only graph neighborhood advisor",
+      "source_path": "docs/self_model/capabilities/CAP-0005.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 4
+    "implemented": 5
   },
   "gap_counts": {
     "closed": 1,
@@ -81,7 +89,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T19:29:53+00:00",
+  "generated_at": "2026-07-09T19:50:10+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -113,6 +121,16 @@
       "risk": "Future live retrieval, production embeddings, reranking, or adapter integration must not be inferred from this diagnostic slice.",
       "source_field": "risks[1]",
       "source_record": "CAP-0004"
+    },
+    {
+      "risk": "Diagnostic neighborhood suggestions may be mistaken for context-selection authority unless selection_effect none and diagnostic-only boundaries remain explicit.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0005"
+    },
+    {
+      "risk": "Future integration with context packs, graph persistence, retrieval, embeddings, or prompt changes requires separate governed plans and warrants.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0005"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -277,7 +295,7 @@
       "target": "Add a read-only graph neighborhood diagnostic/advisor that reports candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without modifying context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, or runtime manifests."
     }
   ],
-  "repo_head": "4c1288ba779aeb8e582c6dde632fa3fedef0affa",
+  "repo_head": "b2acf9303825ca00db12a06326ddc91a28fed906",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -335,10 +353,15 @@
       "repo_commit": "7909dab7c2a5e96270ca8a6fc5ec0affa7f84316",
       "source_path": "docs/self_model/verifications/VERIFY-20260709-0001.json",
       "verification_id": "VERIFY-20260709-0001"
+    },
+    {
+      "repo_commit": "b2acf9303825ca00db12a06326ddc91a28fed906",
+      "source_path": "docs/self_model/verifications/VERIFY-20260709-0002.json",
+      "verification_id": "VERIFY-20260709-0002"
     }
   ],
   "warrant_counts": {
-    "supported": 23
+    "supported": 24
   },
   "warrants": [
     {
@@ -523,6 +546,14 @@
       "target_item_id": "PLAN-20260709-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260709-0005",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0006.json",
+      "target_item_id": "CAP-0005",
+      "target_item_type": "capability",
+      "warrant_id": "WARR-20260709-0006",
       "warrant_state": "supported"
     }
   ]

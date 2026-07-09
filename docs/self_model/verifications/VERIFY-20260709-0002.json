@@ -1,0 +1,31 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/graph_neighborhood.py",
+    "tests/test_graph_neighborhood.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood advisor tests passed with 7 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 423 tests."
+    }
+  ],
+  "created_at": "2026-07-09T19:45:55.618411+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "b2acf9303825ca00db12a06326ddc91a28fed906",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "CAP-0005 implements the admitted read-only graph neighborhood advisor. Tests verify artifact-lineage candidates, diagnostic budget exclusions, validated EDGE record traversal, invalid EDGE rejection, non-authoritative future edge seeds, deterministic helper behavior, and authoritative scope exposure.",
+  "target_item_id": "CAP-0005",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260709-0002"
+}

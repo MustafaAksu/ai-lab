@@ -1,0 +1,78 @@
+{
+  "capability_id": "CAP-0005",
+  "category": "diagnostic",
+  "created_at": "2026-07-09T19:45:55.618411+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260709-0002",
+        "path": "docs/self_model/plans/PLAN-20260709-0002.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260709-0005",
+        "path": "docs/self_model/warrants/WARR-20260709-0005.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "b2acf9303825ca00db12a06326ddc91a28fed906",
+        "role": "implementation commit"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "436c4baff9f27134e21fe25356b2b6d7f52482c6ad518e992b4f97bc2aae81d5",
+        "path": "ai_lab/documentation/graph_neighborhood.py",
+        "role": "implementation"
+      },
+      {
+        "content_hash": "54ea1ce56be4295760535f6bff087c94daea40f7843aa0b23cd1d147ace60717",
+        "path": "tests/test_graph_neighborhood.py",
+        "role": "tests"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260709-0002",
+        "path": "docs/self_model/verifications/VERIFY-20260709-0002.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.graph_neighborhood.graph_neighborhood_advisor",
+    "ai_lab.documentation.graph_neighborhood.format_graph_neighborhood_report",
+    "ai_lab.documentation.graph_neighborhood.artifact_lineage_relations",
+    "ai_lab.documentation.graph_neighborhood.edge_record_relations",
+    "ai_lab.documentation.graph_neighborhood.future_edge_seed_relations"
+  ],
+  "last_verified": {
+    "repo_commit": "b2acf9303825ca00db12a06326ddc91a28fed906",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260709-0002.json",
+    "verified_at": "2026-07-09T19:45:55.618411+00:00"
+  },
+  "limits": [
+    "Diagnostic output only; no runtime context selection changes.",
+    "Does not mutate ContextPackManifest.items or any context-selection result.",
+    "Does not change provider prompts or prompt rendering.",
+    "Does not persist graph nodes, graph edges, manifests, indexes, or memory records.",
+    "Does not introduce a graph database.",
+    "Does not call retrieval services, embedding services, rerankers, or production indexes.",
+    "Does not perform automatic inclusion in context packs.",
+    "Future edge seed records are explicitly non-authoritative."
+  ],
+  "name": "Read-only graph neighborhood advisor",
+  "recommended_next_actions": [
+    "Keep graph-neighborhood advice diagnostic-only until a separate PLAN/WARRANT admits context-pack integration.",
+    "Use the advisor to inspect graph-local evidence and relation paths, not as an automatic selector."
+  ],
+  "risks": [
+    "Diagnostic neighborhood suggestions may be mistaken for context-selection authority unless selection_effect none and diagnostic-only boundaries remain explicit.",
+    "Future integration with context packs, graph persistence, retrieval, embeddings, or prompt changes requires separate governed plans and warrants."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provides deterministic, read-only graph-neighborhood diagnostic advice for artifact records, validated EDGE records, and non-authoritative future edge seeds. The advisor reports neighboring candidates, relation paths, source authority, token estimates, and diagnostic inclusion/exclusion rationale without modifying runtime context selection or provider prompts."
+}
