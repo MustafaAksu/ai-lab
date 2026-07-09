@@ -879,3 +879,43 @@ def test_main_latest_context_print_prompt_can_include_l0(monkeypatch, tmp_path, 
     assert captured
     assert all(call["include_l0"] == ("chunk-a",) for call in captured)
     assert all(call["l0_store"] == tmp_path for call in captured)
+
+
+def test_main_latest_context_print_prompt_can_auto_include_l0_discovery(monkeypatch, tmp_path, capsys):
+    import scripts.ask_provider as script
+
+    captured = []
+
+    def fake_build_latest_context_pack_text(**kwargs):
+        captured.append(kwargs)
+        return "CTX"
+
+    monkeypatch.setattr(
+        script,
+        "build_latest_context_pack_text",
+        fake_build_latest_context_pack_text,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "ask_provider.py",
+            "openai",
+            "hello",
+            "--latest-context",
+            "--print-prompt",
+            "--auto-include-l0-discovery",
+            "--auto-include-l0-discovery-max-items",
+            "2",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    rendered = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in rendered
+    assert captured
+    assert all(call["auto_include_l0_discovery"] is True for call in captured)
+    assert all(call["auto_include_l0_discovery_max_items"] == 2 for call in captured)
+    assert all(call["l0_store"] == tmp_path for call in captured)

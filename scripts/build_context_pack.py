@@ -119,6 +119,20 @@ def main() -> int:
         default=None,
         help="Optional cap for advisory L0 discovery suggestions.",
     )
+    parser.add_argument(
+        "--auto-include-l0-discovery",
+        action="store_true",
+        help=(
+            "Opt in to automatic L0 summary inclusion from deterministic "
+            "L0 discovery advisor suggestions. Default is disabled."
+        ),
+    )
+    parser.add_argument(
+        "--auto-include-l0-discovery-max-items",
+        type=int,
+        default=None,
+        help="Optional cap for automatic L0 discovery inclusions.",
+    )
 
     args = parser.parse_args()
 
@@ -145,6 +159,15 @@ def main() -> int:
         if args.l0_discovery_advisor_max_suggestions is not None:
             manifest_kwargs["l0_discovery_advisor_max_suggestions"] = (
                 args.l0_discovery_advisor_max_suggestions
+            )
+
+        if args.auto_include_l0_discovery:
+            manifest_kwargs["auto_include_l0_discovery"] = True
+            manifest_kwargs["l0_store"] = args.l0_store
+
+        if args.auto_include_l0_discovery_max_items is not None:
+            manifest_kwargs["auto_include_l0_discovery_max_items"] = (
+                args.auto_include_l0_discovery_max_items
             )
 
         if args.include_l0:

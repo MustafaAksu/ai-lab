@@ -520,6 +520,55 @@ def select_items_with_budget(
     return tuple(selected), tuple(exclusions)
 
 
+def _dedupe_l0_chunk_ids(chunk_ids: tuple[str, ...]) -> tuple[str, ...]:
+    """Return chunk IDs in first-seen deterministic order without duplicates."""
+    seen: set[str] = set()
+    deduped: list[str] = []
+
+    for chunk_id in chunk_ids:
+        if chunk_id in seen:
+            continue
+        seen.add(chunk_id)
+        deduped.append(chunk_id)
+
+    return tuple(deduped)
+
+
+def automatic_l0_discovery_include_l0_args(
+    *,
+    selected_items: tuple[ContextPackItem, ...],
+    l0_store: Path = Path("docs/memory/l0"),
+    max_suggestions: int | None = None,
+    run_id: str | None = None,
+) -> tuple[str, ...]:
+    """Return deterministic advisor-suggested include_l0 args for opt-in runtime use."""
+
+    advisor = l0_discovery_advisor_diagnostics_for_manifest(
+        selected_items=selected_items,
+        l0_store=l0_store,
+        max_suggestions=max_suggestions,
+        run_id=run_id,
+    )
+
+    selected_item_ids = {item.item_id for item in selected_items}
+    include_l0_args: list[str] = []
+
+    for suggestion in advisor.get("suggestions", ()):
+        if not isinstance(suggestion, dict):
+            continue
+
+        chunk_id = suggestion.get("suggested_include_l0_arg")
+        if not isinstance(chunk_id, str) or not chunk_id:
+            continue
+
+        if chunk_id in selected_item_ids:
+            continue
+
+        include_l0_args.append(chunk_id)
+
+    return _dedupe_l0_chunk_ids(tuple(include_l0_args))
+
+
 def l0_discovery_advisor_diagnostics_for_manifest(
     *,
     selected_items: tuple[ContextPackItem, ...],
@@ -573,6 +622,8 @@ def build_latest_context_manifest(
     l0_store: Path = Path("docs/memory/l0"),
     include_l0_discovery_advisor_diagnostics: bool = False,
     l0_discovery_advisor_max_suggestions: int | None = None,
+    auto_include_l0_discovery: bool = False,
+    auto_include_l0_discovery_max_items: int | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -632,8 +683,54 @@ def build_latest_context_manifest(
         token_budget=token_budget,
     )
 
+    auto_l0_exclusions: tuple[ContextPackExclusion, ...] = ()
+
+    if auto_include_l0_discovery:
+        auto_include_l0 = automatic_l0_discovery_include_l0_args(
+            selected_items=selected_items,
+            l0_store=l0_store,
+            max_suggestions=auto_include_l0_discovery_max_items,
+            run_id="context_pack_manifest_auto_include",
+        )
+        auto_l0_items, auto_l0_exclusions = explicit_l0_summary_items(
+            include_l0=auto_include_l0,
+            l0_store=l0_store,
+        )
+
+        if auto_l0_items:
+            existing_item_ids = {item.item_id for item in candidate_items}
+            deduped_auto_l0_items = tuple(
+                item for item in auto_l0_items if item.item_id not in existing_item_ids
+            )
+
+            if deduped_auto_l0_items:
+                candidate_items = (*deduped_auto_l0_items, *candidate_items)
+                candidate_items = annotate_items_with_admission_verdicts(
+                    items=candidate_items,
+                    admission_dir=admission_dir,
+                )
+
+                if require_admission:
+                    candidate_items, admission_exclusions = (
+                        filter_items_by_admission_requirement(items=candidate_items)
+                    )
+
+                if max_warning_admissions is not None:
+                    candidate_items, warning_cap_exclusions = (
+                        cap_admit_with_warning_items(
+                            items=candidate_items,
+                            max_warning_admissions=max_warning_admissions,
+                        )
+                    )
+
+                selected_items, budget_exclusions = select_items_with_budget(
+                    items=candidate_items,
+                    token_budget=token_budget,
+                )
+
     exclusions = (
         *explicit_l0_exclusions,
+        *auto_l0_exclusions,
         *admission_exclusions,
         *warning_cap_exclusions,
         *budget_exclusions,

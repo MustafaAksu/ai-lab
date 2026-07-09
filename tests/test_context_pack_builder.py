@@ -1106,3 +1106,98 @@ def test_build_latest_context_manifest_omits_l0_discovery_advisor_by_default(tmp
     )
 
     assert "diagnostics" not in manifest.to_dict()
+
+
+def test_build_latest_context_manifest_auto_include_l0_discovery_is_disabled_by_default(tmp_path):
+    from ai_lab.documentation.artifact_history import ArtifactRecord
+    from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
+
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+
+    manifest = build_latest_context_manifest(
+        task="default disabled",
+        records=(
+            ArtifactRecord(
+                artifact_id="ABS-1",
+                title="Artifact",
+                path=Path("docs/abstractions/ABS-1.md"),
+                kind="ABS",
+                created_at="2026-07-09T00:00:00+00:00",
+            ),
+        ),
+        l0_store=l0_store,
+    )
+
+    assert all(item.item_type != "l0_summary" for item in manifest.items)
+    assert manifest.diagnostics is None
+
+
+def test_build_latest_context_manifest_can_auto_include_l0_discovery_suggestions(tmp_path):
+    import json
+    from ai_lab.documentation.artifact_history import ArtifactRecord
+    from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
+
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+
+    write_l0_record(
+        l0_store / "L0-auto.json",
+        chunk_id="L0-auto",
+        summary_text="Automatically included L0 summary.",
+    )
+
+    manifest = build_latest_context_manifest(
+        task="auto include",
+        records=(
+            ArtifactRecord(
+                artifact_id="ABS-1",
+                title="Artifact",
+                path=Path("docs/abstractions/ABS-1.md"),
+                kind="ABS",
+                created_at="2026-07-09T00:00:00+00:00",
+            ),
+        ),
+        l0_store=l0_store,
+        auto_include_l0_discovery=True,
+        auto_include_l0_discovery_max_items=1,
+    )
+
+    assert [item.item_id for item in manifest.items if item.item_type == "l0_summary"] == [
+        "L0-auto"
+    ]
+    assert manifest.items[0].item_id == "L0-auto"
+
+
+def test_build_latest_context_manifest_auto_include_l0_discovery_deduplicates_explicit_l0(tmp_path):
+    import json
+    from ai_lab.documentation.artifact_history import ArtifactRecord
+    from ai_lab.documentation.context_pack_builder import build_latest_context_manifest
+
+    l0_store = tmp_path / "l0"
+    l0_store.mkdir()
+
+    write_l0_record(
+        l0_store / "L0-auto.json",
+        chunk_id="L0-auto",
+        summary_text="Explicit and automatic L0 summary.",
+    )
+
+    manifest = build_latest_context_manifest(
+        task="auto include dedupe",
+        records=(
+            ArtifactRecord(
+                artifact_id="ABS-1",
+                title="Artifact",
+                path=Path("docs/abstractions/ABS-1.md"),
+                kind="ABS",
+                created_at="2026-07-09T00:00:00+00:00",
+            ),
+        ),
+        include_l0=("L0-auto",),
+        l0_store=l0_store,
+        auto_include_l0_discovery=True,
+        auto_include_l0_discovery_max_items=1,
+    )
+
+    assert [item.item_id for item in manifest.items].count("L0-auto") == 1

@@ -1038,3 +1038,92 @@ def test_build_latest_context_pack_text_can_include_l0(monkeypatch, tmp_path):
 
     assert captured["include_l0"] == ("chunk-a",)
     assert captured["l0_store"] == tmp_path
+
+
+def test_build_latest_context_pack_manifest_passes_auto_include_l0_discovery(monkeypatch):
+    from ai_lab.documentation import prompt_context
+
+    captured = {}
+
+    def fake_build_latest_context_manifest(**kwargs):
+        captured.update(kwargs)
+
+        from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+        item = ContextPackItem(
+            item_type="abstraction",
+            item_id="ABS-auto-test",
+            reason="Auto include wrapper test.",
+            relevance_score=0.9,
+            token_estimate=1,
+        )
+
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+            token_budget=kwargs.get("token_budget"),
+            exclusions=(),
+            model_target=kwargs.get("model_target"),
+            pipeline_run_id=None,
+        )
+
+    monkeypatch.setattr(
+        prompt_context,
+        "build_latest_context_manifest",
+        fake_build_latest_context_manifest,
+    )
+    monkeypatch.setattr(prompt_context, "discover_artifacts", lambda **kwargs: ())
+
+    prompt_context.build_latest_context_pack_manifest(
+        task="auto include wrapper",
+        auto_include_l0_discovery=True,
+        auto_include_l0_discovery_max_items=2,
+    )
+
+    assert captured["auto_include_l0_discovery"] is True
+    assert captured["auto_include_l0_discovery_max_items"] == 2
+
+
+def test_build_latest_context_pack_text_passes_auto_include_l0_discovery(monkeypatch):
+    from ai_lab.documentation import prompt_context
+
+    captured = {}
+
+    def fake_build_latest_context_pack_manifest(**kwargs):
+        captured.update(kwargs)
+
+        from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+        item = ContextPackItem(
+            item_type="abstraction",
+            item_id="ABS-auto-test",
+            reason="Auto include wrapper test.",
+            relevance_score=0.9,
+            token_estimate=1,
+        )
+
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+            token_budget=kwargs.get("token_budget"),
+            exclusions=(),
+            model_target=kwargs.get("model_target"),
+            pipeline_run_id=None,
+        )
+
+    monkeypatch.setattr(
+        prompt_context,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+
+    prompt_context.build_latest_context_pack_text(
+        task="auto include text",
+        auto_include_l0_discovery=True,
+        auto_include_l0_discovery_max_items=2,
+    )
+
+    assert captured["auto_include_l0_discovery"] is True
+    assert captured["auto_include_l0_discovery_max_items"] == 2

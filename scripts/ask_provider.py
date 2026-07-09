@@ -114,6 +114,20 @@ def main() -> int:
         help="Directory containing L0 chunk summary JSON files.",
     )
     parser.add_argument(
+        "--auto-include-l0-discovery",
+        action="store_true",
+        help=(
+            "Opt in to automatic L0 summary inclusion from deterministic "
+            "L0 discovery advisor suggestions. Requires --latest-context."
+        ),
+    )
+    parser.add_argument(
+        "--auto-include-l0-discovery-max-items",
+        type=int,
+        default=None,
+        help="Optional cap for automatic L0 discovery inclusions.",
+    )
+    parser.add_argument(
         "--validate-l0-invariants",
         action="store_true",
         help=(
@@ -191,6 +205,18 @@ def main() -> int:
     if args.include_l0 and not args.latest_context:
         parser.error("--include-l0 requires --latest-context.")
 
+    if args.auto_include_l0_discovery and not args.latest_context:
+        parser.error("--auto-include-l0-discovery requires --latest-context.")
+
+    if (
+        args.auto_include_l0_discovery_max_items is not None
+        and not args.auto_include_l0_discovery
+    ):
+        parser.error(
+            "--auto-include-l0-discovery-max-items requires "
+            "--auto-include-l0-discovery."
+        )
+
     if args.include_l0 and args.print_context_summary and args.summary_format != "json":
         parser.error("--include-l0 with --print-context-summary requires --summary-format json.")
 
@@ -236,6 +262,15 @@ def main() -> int:
             context_kwargs["include_l0"] = tuple(args.include_l0)
             context_kwargs["l0_store"] = args.l0_store
 
+        if args.auto_include_l0_discovery:
+            context_kwargs["auto_include_l0_discovery"] = True
+            context_kwargs["l0_store"] = args.l0_store
+
+        if args.auto_include_l0_discovery_max_items is not None:
+            context_kwargs["auto_include_l0_discovery_max_items"] = (
+                args.auto_include_l0_discovery_max_items
+            )
+
         context_pack = build_latest_context_pack_text(**context_kwargs)
 
     final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)
@@ -255,6 +290,15 @@ def main() -> int:
         if args.include_l0:
             context_kwargs["include_l0"] = tuple(args.include_l0)
             context_kwargs["l0_store"] = args.l0_store
+
+        if args.auto_include_l0_discovery:
+            context_kwargs["auto_include_l0_discovery"] = True
+            context_kwargs["l0_store"] = args.l0_store
+
+        if args.auto_include_l0_discovery_max_items is not None:
+            context_kwargs["auto_include_l0_discovery_max_items"] = (
+                args.auto_include_l0_discovery_max_items
+            )
 
         context_pack = build_latest_context_pack_text(**context_kwargs)
         final_prompt = build_prompt(prompt=prompt, context_pack=context_pack)

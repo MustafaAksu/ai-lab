@@ -258,3 +258,50 @@ def test_main_passes_l0_discovery_advisor_diagnostics_arguments(monkeypatch, tmp
     assert captured["include_l0_discovery_advisor_diagnostics"] is True
     assert captured["l0_discovery_advisor_max_suggestions"] == 3
     assert data["diagnostics"]["l0_discovery_advisor"]["selection_effect"] == "none"
+
+
+def test_main_passes_auto_include_l0_discovery_arguments(monkeypatch, tmp_path, capsys):
+    import scripts.build_context_pack as script
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+    captured = {}
+
+    def fake_discover_artifacts(comparison_dir, abstraction_dir):
+        return ()
+
+    def fake_build_latest_context_manifest(**kwargs):
+        captured.update(kwargs)
+        item = ContextPackItem(
+            item_type="abstraction",
+            item_id="ABS-0003",
+            reason="Latest abstraction.",
+            relevance_score=0.9,
+            token_estimate=100,
+        )
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+        )
+
+    monkeypatch.setattr(script, "discover_artifacts", fake_discover_artifacts)
+    monkeypatch.setattr(script, "build_latest_context_manifest", fake_build_latest_context_manifest)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare context.",
+            "--auto-include-l0-discovery",
+            "--auto-include-l0-discovery-max-items",
+            "2",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    capsys.readouterr()
+
+    assert captured["auto_include_l0_discovery"] is True
+    assert captured["auto_include_l0_discovery_max_items"] == 2
+    assert captured["l0_store"] == tmp_path

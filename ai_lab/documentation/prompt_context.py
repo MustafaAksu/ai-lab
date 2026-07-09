@@ -829,6 +829,8 @@ def format_provider_context_summary_json(
     l0_store: Path | None = None,
     include_l0_discovery_advisor_diagnostics: bool = False,
     l0_discovery_advisor_max_suggestions: int | None = None,
+    auto_include_l0_discovery: bool = False,
+    auto_include_l0_discovery_max_items: int | None = None,
 ) -> str:
     """Return stable JSON for the provider latest-context summary."""
 
@@ -881,6 +883,8 @@ def build_latest_context_pack_manifest(
     l0_store: Path | None = None,
     include_l0_discovery_advisor_diagnostics: bool = False,
     l0_discovery_advisor_max_suggestions: int | None = None,
+    auto_include_l0_discovery: bool = False,
+    auto_include_l0_discovery_max_items: int | None = None,
 ) -> ContextPackManifest:
     """Build a latest-context manifest from repository artifacts."""
     records = discover_artifacts(
@@ -908,6 +912,16 @@ def build_latest_context_pack_manifest(
             l0_discovery_advisor_max_suggestions
         )
 
+    if auto_include_l0_discovery:
+        manifest_kwargs["auto_include_l0_discovery"] = True
+        if l0_store is not None:
+            manifest_kwargs["l0_store"] = l0_store
+
+    if auto_include_l0_discovery_max_items is not None:
+        manifest_kwargs["auto_include_l0_discovery_max_items"] = (
+            auto_include_l0_discovery_max_items
+        )
+
     if include_l0:
         manifest_kwargs["include_l0"] = include_l0
         if l0_store is not None:
@@ -929,6 +943,8 @@ def build_latest_context_pack_text(
     l0_store: Path | None = None,
     include_l0_discovery_advisor_diagnostics: bool = False,
     l0_discovery_advisor_max_suggestions: int | None = None,
+    auto_include_l0_discovery: bool = False,
+    auto_include_l0_discovery_max_items: int | None = None,
 ) -> str:
     """Build and render a latest-context pack from repository artifacts."""
     manifest_kwargs: dict[str, object] = {
@@ -948,6 +964,16 @@ def build_latest_context_pack_text(
     if l0_discovery_advisor_max_suggestions is not None:
         manifest_kwargs["l0_discovery_advisor_max_suggestions"] = (
             l0_discovery_advisor_max_suggestions
+        )
+
+    if auto_include_l0_discovery:
+        manifest_kwargs["auto_include_l0_discovery"] = True
+        if l0_store is not None:
+            manifest_kwargs["l0_store"] = l0_store
+
+    if auto_include_l0_discovery_max_items is not None:
+        manifest_kwargs["auto_include_l0_discovery_max_items"] = (
+            auto_include_l0_discovery_max_items
         )
 
     if include_l0:

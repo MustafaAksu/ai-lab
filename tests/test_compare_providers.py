@@ -1198,3 +1198,55 @@ def test_main_latest_context_print_prompt_can_include_l0(monkeypatch, tmp_path, 
     assert captured
     assert captured[0]["include_l0"] == ("chunk-a",)
     assert captured[0]["l0_store"] == tmp_path
+
+
+def test_main_latest_context_print_prompt_can_auto_include_l0_discovery(monkeypatch, tmp_path, capsys):
+    import scripts.compare_providers as script
+    from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
+
+    captured = []
+
+    def fake_build_latest_context_pack_manifest(**kwargs):
+        captured.append(kwargs)
+        item = ContextPackItem(
+            item_type="abstraction",
+            item_id="ABS-0003",
+            reason="Latest abstraction.",
+            relevance_score=0.9,
+            token_estimate=100,
+        )
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+        )
+
+    monkeypatch.setattr(
+        script,
+        "build_latest_context_pack_manifest",
+        fake_build_latest_context_pack_manifest,
+    )
+    monkeypatch.setattr(script, "render_context_pack_markdown", lambda manifest: "CTX")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "compare_providers.py",
+            "hello",
+            "--latest-context",
+            "--print-prompt",
+            "--auto-include-l0-discovery",
+            "--auto-include-l0-discovery-max-items",
+            "2",
+            "--l0-store",
+            str(tmp_path),
+        ],
+    )
+
+    assert script.main() == 0
+    rendered = capsys.readouterr().out
+
+    assert "BEGIN CONTEXT PACK" in rendered
+    assert captured
+    assert captured[0]["auto_include_l0_discovery"] is True
+    assert captured[0]["auto_include_l0_discovery_max_items"] == 2
+    assert captured[0]["l0_store"] == tmp_path
