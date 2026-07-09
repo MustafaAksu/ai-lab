@@ -15,7 +15,8 @@
     "PLAN-20260707-0002",
     "PLAN-20260707-0003",
     "PLAN-20260707-0004",
-    "PLAN-20260709-0001"
+    "PLAN-20260709-0001",
+    "PLAN-20260709-0002"
   ],
   "audit_summary": {
     "ok": true,
@@ -80,7 +81,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T19:26:28+00:00",
+  "generated_at": "2026-07-09T19:29:53+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -187,8 +188,8 @@
     "PLAN-20260709-0002"
   ],
   "plan_counts": {
-    "completed": 10,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 10
   },
   "plans": [
     {
@@ -265,7 +266,7 @@
       "plan_id": "PLAN-20260709-0002",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260709-0002.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Add read-only graph neighborhood advisor diagnostic"
     }
   ],
@@ -276,7 +277,7 @@
       "target": "Add a read-only graph neighborhood diagnostic/advisor that reports candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without modifying context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, or runtime manifests."
     }
   ],
-  "repo_head": "12424ce12dd1977ff36d14b0c710391fcb7f1153",
+  "repo_head": "4c1288ba779aeb8e582c6dde632fa3fedef0affa",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -337,7 +338,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 22
+    "supported": 23
   },
   "warrants": [
     {
@@ -514,6 +515,14 @@
       "target_item_id": "GAP-0002",
       "target_item_type": "gap",
       "warrant_id": "WARR-20260709-0004",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0005.json",
+      "target_item_id": "PLAN-20260709-0002",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260709-0005",
       "warrant_state": "supported"
     }
   ]
