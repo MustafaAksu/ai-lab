@@ -59,7 +59,8 @@
     "implemented": 4
   },
   "gap_counts": {
-    "closed": 1
+    "closed": 1,
+    "open": 1
   },
   "gaps": [
     {
@@ -69,9 +70,17 @@
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0001.json",
       "status": "closed"
+    },
+    {
+      "category": "memory_context",
+      "gap_id": "GAP-0002",
+      "name": "Graph-local scoped memory context selection",
+      "priority": "medium",
+      "source_path": "docs/self_model/gaps/GAP-0002.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T14:45:15+00:00",
+  "generated_at": "2026-07-09T19:18:46+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -108,6 +117,11 @@
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
       "source_field": "risk",
       "source_record": "GAP-0001"
+    },
+    {
+      "risk": "Without graph-local scoped memory, context assembly may remain too coarse: it can miss relevant neighboring artifacts, include stale latest artifacts, or fail to distinguish local task context from global ontology/invariant context.",
+      "source_field": "risk",
+      "source_record": "GAP-0002"
     },
     {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
@@ -161,7 +175,9 @@
     }
   ],
   "model_type": "self_model",
-  "open_gaps": [],
+  "open_gaps": [
+    "GAP-0002"
+  ],
   "open_plans": [],
   "plan_counts": {
     "completed": 10
@@ -238,8 +254,14 @@
       "title": "Add opt-in runtime automatic L0 discovery inclusion"
     }
   ],
-  "recommended_next_targets": [],
-  "repo_head": "cebb30c90e87b1a0121bd2723e4af9f5ee54ab97",
+  "recommended_next_targets": [
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0002",
+      "target": "Add a read-only graph neighborhood diagnostic/advisor that reports candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without modifying context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, or runtime manifests."
+    }
+  ],
+  "repo_head": "ea8076960d8a633f7c213f21e5cf1ecd9b8c6776",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -300,7 +322,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 21
+    "supported": 22
   },
   "warrants": [
     {
@@ -469,6 +491,14 @@
       "target_item_id": "GAP-0001",
       "target_item_type": "gap",
       "warrant_id": "WARR-20260709-0003",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0004.json",
+      "target_item_id": "GAP-0002",
+      "target_item_type": "gap",
+      "warrant_id": "WARR-20260709-0004",
       "warrant_state": "supported"
     }
   ]

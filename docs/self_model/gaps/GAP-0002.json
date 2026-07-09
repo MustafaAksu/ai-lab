@@ -1,0 +1,33 @@
+{
+  "blocked_by": [],
+  "category": "memory_context",
+  "evidence": {
+    "files_checked": [
+      "docs/comparisons/COMP-0025-ai-lab-next-gap-after-gap-0001-closure.md",
+      "docs/architecture/ADR-0001-engineering-constitution.md",
+      "docs/architecture/ADR-0002-ontology-precedes-implementation.md",
+      "docs/architecture/ADR-0003-edge-identity-immutability-and-addressing.md",
+      "docs/development_directions.md",
+      "docs/self_model/SELF_MODEL_SCHEMA.md",
+      "ai_lab/documentation/edge_validation.py",
+      "ai_lab/documentation/artifact_history.py",
+      "ai_lab/documentation/interaction_log.py",
+      "ai_lab/documentation/context_pack_builder.py"
+    ],
+    "reason": "COMP-0025 and the architecture/development documents identify graph-local scoped memory as a missing capability. Current implementation validates bootstrap edge records, formats artifact lineage/source trees, and exposes future edge seeds, but context construction still relies on latest_records_by_context_level and does not compute graph neighborhoods or graph-state-aware memory selection."
+  },
+  "gap_id": "GAP-0002",
+  "name": "Graph-local scoped memory context selection",
+  "priority": "medium",
+  "recommended_first_slice": "Add a read-only graph neighborhood diagnostic/advisor that reports candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without modifying context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, or runtime manifests.",
+  "related_capabilities": [
+    "CAP-0001",
+    "CAP-0002",
+    "CAP-0003",
+    "CAP-0004"
+  ],
+  "risk": "Without graph-local scoped memory, context assembly may remain too coarse: it can miss relevant neighboring artifacts, include stale latest artifacts, or fail to distinguish local task context from global ontology/invariant context.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "AI-Lab cannot yet construct context from graph-local neighborhoods, typed relation records, scoped summaries, and local/global memory balance. Current latest-context selection remains artifact-type based, with edge validation and edge-seed support but no graph-state or neighborhood selection mechanism."
+}
