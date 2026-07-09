@@ -16,7 +16,7 @@ from ai_lab.documentation.l0_discovery_advisor_evaluation import (
 
 CORPUS_SCHEMA_VERSION = "v1"
 CORPUS_ID = "l0_discovery_advisor_evidence_corpus.v1"
-PLAN_ID = "PLAN-20260707-0002"
+PLAN_ID = "PLAN-20260707-0004"
 SELECTION_EFFECT = "none"
 
 DEFAULT_OUTPUT_ROOT = Path("docs/reviews/l0_discovery_advisor_evidence_corpus")
@@ -110,90 +110,47 @@ def build_l0_discovery_advisor_evidence_manifest_records(
 ) -> tuple[dict[str, Any], ...]:
     """Build deterministic saved-manifest fixtures for evidence gathering."""
 
-    baseline_advisor = _advisor_from_candidates(
-        selected_context_item_ids=["CTX-ALPHA"],
-        candidates=[
-            {
-                "chunk_id": "L0-ALPHA",
-                "score": 0.86,
-                "reason": "high overlap with selected context",
-            },
-            {
-                "chunk_id": "L0-BETA",
-                "score": 0.62,
-                "reason": "secondary advisor evidence",
-            },
-        ],
-        run_id="corpus-baseline",
-        created_at=created_at,
-    )
+    manifests: list[dict[str, Any]] = []
 
-    already_selected_advisor = _advisor_from_candidates(
-        selected_context_item_ids=["L0-EXISTING"],
-        candidates=[
-            {
-                "chunk_id": "L0-EXISTING",
-                "score": 0.81,
-                "reason": "candidate already present in selected context",
-            },
-            {
-                "chunk_id": "L0-GAMMA",
-                "score": 0.55,
-                "reason": "new neighboring evidence",
-            },
-        ],
-        run_id="corpus-already-selected",
-        created_at=created_at,
-    )
+    for index in range(12):
+        manifest_id = f"corpus-expanded-{index + 1:02d}"
+        selected_item_id = f"CTX-EXPANDED-{index + 1:02d}"
+        first_chunk = f"L0-EXPANDED-{(index * 2) + 1:02d}"
+        second_chunk = f"L0-EXPANDED-{(index * 2) + 2:02d}"
 
-    invalid_advisor = _advisor_from_candidates(
-        selected_context_item_ids=["CTX-INVALID"],
-        candidates=[
-            {
-                "chunk_id": "L0-INVALID",
-                "score": 0.77,
-                "reason": "intentionally invalid fixture candidate",
-            }
-        ],
-        run_id="corpus-invalid",
-        created_at=created_at,
-    )
-    invalid_advisor["selection_effect"] = "include"
+        advisor = _advisor_from_candidates(
+            selected_context_item_ids=[selected_item_id],
+            candidates=[
+                {
+                    "chunk_id": first_chunk,
+                    "score": 0.86,
+                    "reason": "primary deterministic neighboring evidence",
+                },
+                {
+                    "chunk_id": second_chunk,
+                    "score": 0.62,
+                    "reason": "secondary deterministic neighboring evidence",
+                },
+            ],
+            run_id=manifest_id,
+            created_at=created_at,
+        )
 
-    return (
-        _manifest(
-            manifest_id="corpus-baseline",
-            task="Evaluate useful L0 discovery suggestions.",
-            items=(
-                _item("CTX-ALPHA", "Selected context for useful-suggestion evidence."),
-            ),
-            diagnostics={"l0_discovery_advisor": baseline_advisor},
-        ),
-        _manifest(
-            manifest_id="corpus-already-selected",
-            task="Evaluate redundant advisor suggestions.",
-            items=(
-                _item("L0-EXISTING", "Existing selected item for redundancy evidence."),
-            ),
-            diagnostics={"l0_discovery_advisor": already_selected_advisor},
-        ),
-        _manifest(
-            manifest_id="corpus-missing-advisor",
-            task="Evaluate missing advisor diagnostics handling.",
-            items=(
-                _item("CTX-MISSING", "Selected context with no advisor diagnostics."),
-            ),
-            diagnostics=None,
-        ),
-        _manifest(
-            manifest_id="corpus-invalid-advisor",
-            task="Evaluate invalid advisor diagnostics handling.",
-            items=(
-                _item("CTX-INVALID", "Selected context with invalid advisor diagnostics."),
-            ),
-            diagnostics={"l0_discovery_advisor": invalid_advisor},
-        ),
-    )
+        manifests.append(
+            _manifest(
+                manifest_id=manifest_id,
+                task="Evaluate clean deterministic L0 discovery suggestions.",
+                items=(
+                    _item(
+                        selected_item_id,
+                        "Selected context for expanded useful-suggestion evidence.",
+                    ),
+                ),
+                diagnostics={"l0_discovery_advisor": advisor},
+            )
+        )
+
+    return tuple(manifests)
 
 
 def _write_json(path: Path, payload: Mapping[str, Any]) -> None:

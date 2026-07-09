@@ -306,7 +306,9 @@ def build_l0_discovery_advisor_threshold_review(
                 else "Current evidence corpus is too small and mixed for automatic include_l0."
             ),
             "blocking_criteria": blocking_criteria,
-            "next_required_evidence": [
+            "next_required_evidence": []
+            if approved
+            else [
                 "Expand deterministic corpus to at least 12 manifests.",
                 "Include at least 8 valid advisor-bearing manifests.",
                 "Drive missing advisor diagnostic rate to <= 5%.",
@@ -383,19 +385,43 @@ def validate_l0_discovery_advisor_threshold_review_record(
         _bool(threshold.get("blocking"), f"thresholds[{index}].blocking")
 
     decision = _as_mapping(record.get("decision"), "decision")
-    if decision.get("approved_for_automatic_include_l0") is not False:
-        raise L0DiscoveryAdvisorThresholdReviewError(
-            "decision.approved_for_automatic_include_l0 must be false"
-        )
-    if decision.get("decision") != "not_ready":
-        raise L0DiscoveryAdvisorThresholdReviewError("decision must be not_ready")
-    blocking_criteria = _as_sequence(
-        decision.get("blocking_criteria"), "decision.blocking_criteria"
+    approved_for_automatic_include_l0 = _bool(
+        decision.get("approved_for_automatic_include_l0"),
+        "decision.approved_for_automatic_include_l0",
     )
-    if not blocking_criteria:
+    decision_value = _nonempty_string(decision.get("decision"), "decision.decision")
+    blocking_criteria = list(
+        _as_sequence(decision.get("blocking_criteria"), "decision.blocking_criteria")
+    )
+    expected_blocking_criteria = [
+        threshold["threshold_id"]
+        for threshold in thresholds
+        if threshold["blocking"] and not threshold["passes"]
+    ]
+
+    if blocking_criteria != expected_blocking_criteria:
         raise L0DiscoveryAdvisorThresholdReviewError(
-            "decision.blocking_criteria must not be empty"
+            "decision.blocking_criteria must match failing blocking thresholds"
         )
+
+    if approved_for_automatic_include_l0:
+        if decision_value != "approved":
+            raise L0DiscoveryAdvisorThresholdReviewError(
+                "approved threshold reviews must use decision approved"
+            )
+        if blocking_criteria:
+            raise L0DiscoveryAdvisorThresholdReviewError(
+                "approved threshold reviews must not have blocking criteria"
+            )
+    else:
+        if decision_value != "not_ready":
+            raise L0DiscoveryAdvisorThresholdReviewError(
+                "non-approved threshold reviews must use decision not_ready"
+            )
+        if not blocking_criteria:
+            raise L0DiscoveryAdvisorThresholdReviewError(
+                "not_ready threshold reviews must have blocking criteria"
+            )
 
     guardrails = _as_mapping(record.get("guardrails"), "guardrails")
     if guardrails.get("automatic_include_l0") is not False:

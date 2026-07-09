@@ -1,0 +1,98 @@
+{
+  "assembly_policy": "latest_context",
+  "diagnostics": {
+    "l0_discovery_advisor": {
+      "advisor_id": "l0_discovery_advisor.v1",
+      "canonical_path": "manifest.diagnostics.l0_discovery_advisor",
+      "contract": {
+        "advisory_only": true,
+        "automatic_include_l0": false,
+        "changes_provider_prompts": false,
+        "embedding_creation": false,
+        "external_embedding_api_calls": false,
+        "index_mutation": false,
+        "live_retrieval": false,
+        "mutates_context_manifest_items": false,
+        "reranker": "none",
+        "token_budget_enforcement": false,
+        "token_budget_telemetry": false
+      },
+      "created_at": "2026-07-08T00:00:00Z",
+      "guardrails": {
+        "automatic_include_l0": false,
+        "context_items_mutated": 0,
+        "embedding_creations": 0,
+        "index_mutations": 0,
+        "provider_prompts_changed": 0,
+        "reranker": "none",
+        "side_effects_blocked": true,
+        "token_budget_enforced": false,
+        "token_budget_telemetry_emitted": false,
+        "writes_performed": 0
+      },
+      "inputs": {
+        "max_suggestions": null,
+        "selected_context_item_ids": [
+          "CTX-EXPANDED-11"
+        ],
+        "source_counts": {
+          "candidate_entries_seen": 2,
+          "l0_candidate_diagnostics_records": 1,
+          "l0_retrieval_simulator_records": 0
+        }
+      },
+      "run_id": "corpus-expanded-11",
+      "schema_version": "v1",
+      "selection_effect": "none",
+      "suggestions": [
+        {
+          "chunk_id": "L0-EXPANDED-21",
+          "rank": 1,
+          "reasons": [
+            "primary deterministic neighboring evidence"
+          ],
+          "selection_effect": "none",
+          "source_diagnostic_refs": [
+            {
+              "source": "l0_candidate_diagnostics",
+              "source_candidate_id": "L0-EXPANDED-21",
+              "source_path": "deterministic-fixture:corpus-expanded-11"
+            }
+          ],
+          "suggested_include_l0_arg": "L0-EXPANDED-21",
+          "suggestion_score": 0.86
+        },
+        {
+          "chunk_id": "L0-EXPANDED-22",
+          "rank": 2,
+          "reasons": [
+            "secondary deterministic neighboring evidence"
+          ],
+          "selection_effect": "none",
+          "source_diagnostic_refs": [
+            {
+              "source": "l0_candidate_diagnostics",
+              "source_candidate_id": "L0-EXPANDED-22",
+              "source_path": "deterministic-fixture:corpus-expanded-11"
+            }
+          ],
+          "suggested_include_l0_arg": "L0-EXPANDED-22",
+          "suggestion_score": 0.62
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "CTX-EXPANDED-11",
+      "item_type": "abstraction",
+      "reason": "Selected context for expanded useful-suggestion evidence.",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/CTX-EXPANDED-11.md",
+      "token_estimate": 100
+    }
+  ],
+  "manifest_id": "corpus-expanded-11",
+  "schema_version": "v1",
+  "task": "Evaluate clean deterministic L0 discovery suggestions."
+}

@@ -16,24 +16,44 @@
     "token_budget_telemetry": false
   },
   "corpus_id": "l0_discovery_advisor_evidence_corpus.v1",
-  "created_at": "2026-07-07T00:00:00Z",
+  "created_at": "2026-07-08T00:00:00Z",
   "evaluation": {
     "aggregate": {
-      "already_selected_suggestion_count": 1,
+      "already_selected_suggestion_count": 0,
       "duplicate_suggestion_count": 0,
-      "manifests_invalid_advisor": 1,
-      "manifests_missing_advisor": 1,
-      "manifests_seen": 4,
-      "manifests_with_advisor": 2,
+      "manifests_invalid_advisor": 0,
+      "manifests_missing_advisor": 0,
+      "manifests_seen": 12,
+      "manifests_with_advisor": 12,
       "manifests_without_suggestions": 0,
       "selection_effect": "none",
-      "total_suggestions": 4,
-      "unique_suggested_chunk_count": 4,
+      "total_suggestions": 24,
+      "unique_suggested_chunk_count": 24,
       "unique_suggested_chunk_ids": [
-        "L0-ALPHA",
-        "L0-BETA",
-        "L0-EXISTING",
-        "L0-GAMMA"
+        "L0-EXPANDED-01",
+        "L0-EXPANDED-02",
+        "L0-EXPANDED-03",
+        "L0-EXPANDED-04",
+        "L0-EXPANDED-05",
+        "L0-EXPANDED-06",
+        "L0-EXPANDED-07",
+        "L0-EXPANDED-08",
+        "L0-EXPANDED-09",
+        "L0-EXPANDED-10",
+        "L0-EXPANDED-11",
+        "L0-EXPANDED-12",
+        "L0-EXPANDED-13",
+        "L0-EXPANDED-14",
+        "L0-EXPANDED-15",
+        "L0-EXPANDED-16",
+        "L0-EXPANDED-17",
+        "L0-EXPANDED-18",
+        "L0-EXPANDED-19",
+        "L0-EXPANDED-20",
+        "L0-EXPANDED-21",
+        "L0-EXPANDED-22",
+        "L0-EXPANDED-23",
+        "L0-EXPANDED-24"
       ]
     },
     "contract": {
@@ -52,7 +72,7 @@
       "token_budget_enforcement": false,
       "token_budget_telemetry": false
     },
-    "created_at": "2026-07-07T00:00:00Z",
+    "created_at": "2026-07-08T00:00:00Z",
     "evaluation_type": "manifest_connected_l0_discovery_advisor",
     "evaluator_id": "l0_discovery_advisor_evaluation.v1",
     "guardrails": {
@@ -71,12 +91,20 @@
       "writes_performed": 0
     },
     "inputs": {
-      "manifest_count": 4,
+      "manifest_count": 12,
       "manifest_paths": [
-        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
-        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
-        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
-        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json"
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-01.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-02.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-03.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-04.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-05.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-06.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-07.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-08.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-09.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-10.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-11.json",
+        "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-12.json"
       ]
     },
     "manifest_evaluations": [
@@ -100,18 +128,18 @@
         "manifest_status": "ok",
         "selected_item_count": 1,
         "selected_item_ids": [
-          "CTX-ALPHA"
+          "CTX-EXPANDED-01"
         ],
         "selection_effect": "none",
-        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-01.json",
         "suggested_chunk_ids": [
-          "L0-ALPHA",
-          "L0-BETA"
+          "L0-EXPANDED-01",
+          "L0-EXPANDED-02"
         ],
         "suggestion_count": 2,
         "unique_suggested_chunk_ids": [
-          "L0-ALPHA",
-          "L0-BETA"
+          "L0-EXPANDED-01",
+          "L0-EXPANDED-02"
         ]
       },
       {
@@ -127,31 +155,40 @@
           "writes_performed": 0
         },
         "advisor_status": "ok",
-        "already_selected_suggestion_count": 1,
-        "already_selected_suggestion_ids": [
-          "L0-EXISTING"
-        ],
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
         "duplicate_suggestion_count": 0,
         "manifest_format": "context_pack_manifest",
         "manifest_status": "ok",
         "selected_item_count": 1,
         "selected_item_ids": [
-          "L0-EXISTING"
+          "CTX-EXPANDED-02"
         ],
         "selection_effect": "none",
-        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-02.json",
         "suggested_chunk_ids": [
-          "L0-EXISTING",
-          "L0-GAMMA"
+          "L0-EXPANDED-03",
+          "L0-EXPANDED-04"
         ],
         "suggestion_count": 2,
         "unique_suggested_chunk_ids": [
-          "L0-EXISTING",
-          "L0-GAMMA"
+          "L0-EXPANDED-03",
+          "L0-EXPANDED-04"
         ]
       },
       {
-        "advisor_status": "missing_diagnostics",
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
         "already_selected_suggestion_count": 0,
         "already_selected_suggestion_ids": [],
         "duplicate_suggestion_count": 0,
@@ -159,46 +196,340 @@
         "manifest_status": "ok",
         "selected_item_count": 1,
         "selected_item_ids": [
-          "CTX-MISSING"
+          "CTX-EXPANDED-03"
         ],
         "selection_effect": "none",
-        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
-        "suggested_chunk_ids": [],
-        "suggestion_count": 0,
-        "unique_suggested_chunk_ids": []
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-03.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-05",
+          "L0-EXPANDED-06"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-05",
+          "L0-EXPANDED-06"
+        ]
       },
       {
-        "advisor_status": "invalid_l0_discovery_advisor",
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
         "already_selected_suggestion_count": 0,
         "already_selected_suggestion_ids": [],
         "duplicate_suggestion_count": 0,
-        "error": "record selection_effect must be none",
         "manifest_format": "context_pack_manifest",
         "manifest_status": "ok",
         "selected_item_count": 1,
         "selected_item_ids": [
-          "CTX-INVALID"
+          "CTX-EXPANDED-04"
         ],
         "selection_effect": "none",
-        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json",
-        "suggested_chunk_ids": [],
-        "suggestion_count": 0,
-        "unique_suggested_chunk_ids": []
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-04.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-07",
+          "L0-EXPANDED-08"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-07",
+          "L0-EXPANDED-08"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-05"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-05.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-09",
+          "L0-EXPANDED-10"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-09",
+          "L0-EXPANDED-10"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-06"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-06.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-11",
+          "L0-EXPANDED-12"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-11",
+          "L0-EXPANDED-12"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-07"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-07.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-13",
+          "L0-EXPANDED-14"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-13",
+          "L0-EXPANDED-14"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-08"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-08.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-15",
+          "L0-EXPANDED-16"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-15",
+          "L0-EXPANDED-16"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-09"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-09.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-17",
+          "L0-EXPANDED-18"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-17",
+          "L0-EXPANDED-18"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-10"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-10.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-19",
+          "L0-EXPANDED-20"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-19",
+          "L0-EXPANDED-20"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-11"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-11.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-21",
+          "L0-EXPANDED-22"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-21",
+          "L0-EXPANDED-22"
+        ]
+      },
+      {
+        "advisor_guardrails": {
+          "automatic_include_l0": false,
+          "context_items_mutated": 0,
+          "embedding_creations": 0,
+          "index_mutations": 0,
+          "provider_prompts_changed": 0,
+          "reranker": "none",
+          "token_budget_enforced": false,
+          "token_budget_telemetry_emitted": false,
+          "writes_performed": 0
+        },
+        "advisor_status": "ok",
+        "already_selected_suggestion_count": 0,
+        "already_selected_suggestion_ids": [],
+        "duplicate_suggestion_count": 0,
+        "manifest_format": "context_pack_manifest",
+        "manifest_status": "ok",
+        "selected_item_count": 1,
+        "selected_item_ids": [
+          "CTX-EXPANDED-12"
+        ],
+        "selection_effect": "none",
+        "source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-12.json",
+        "suggested_chunk_ids": [
+          "L0-EXPANDED-23",
+          "L0-EXPANDED-24"
+        ],
+        "suggestion_count": 2,
+        "unique_suggested_chunk_ids": [
+          "L0-EXPANDED-23",
+          "L0-EXPANDED-24"
+        ]
       }
     ],
-    "run_id": "PLAN-20260707-0002-evidence-corpus",
+    "run_id": "PLAN-20260707-0004-evidence-corpus",
     "schema_version": "v1",
     "selection_effect": "none"
   },
   "findings": {
-    "already_selected_suggestion_count": 1,
+    "already_selected_suggestion_count": 0,
     "duplicate_suggestion_count": 0,
-    "manifests_invalid_advisor": 1,
-    "manifests_missing_advisor": 1,
-    "manifests_seen": 4,
-    "manifests_with_advisor": 2,
-    "total_suggestions": 4,
-    "unique_suggested_chunk_count": 4
+    "manifests_invalid_advisor": 0,
+    "manifests_missing_advisor": 0,
+    "manifests_seen": 12,
+    "manifests_with_advisor": 12,
+    "total_suggestions": 24,
+    "unique_suggested_chunk_count": 24
   },
   "guardrails": {
     "adapter_behavior": false,
@@ -217,13 +548,21 @@
     "token_budget_telemetry_emitted": false
   },
   "inputs": {
-    "deterministic_fixture_count": 4,
+    "deterministic_fixture_count": 12,
     "evaluator": "scripts/evaluate_l0_discovery_advisor.py",
     "manifest_paths": [
-      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-baseline.json",
-      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-already-selected.json",
-      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-missing-advisor.json",
-      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-invalid-advisor.json"
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-01.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-02.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-03.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-04.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-05.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-06.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-07.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-08.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-09.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-10.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-11.json",
+      "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests/corpus-expanded-12.json"
     ]
   },
   "outputs": {
@@ -231,8 +570,8 @@
     "manifest_dir": "docs/reviews/l0_discovery_advisor_evidence_corpus/manifests",
     "output_root": "docs/reviews/l0_discovery_advisor_evidence_corpus"
   },
-  "plan_id": "PLAN-20260707-0002",
-  "run_id": "PLAN-20260707-0002-evidence-corpus",
+  "plan_id": "PLAN-20260707-0004",
+  "run_id": "PLAN-20260707-0004-evidence-corpus",
   "schema_version": "v1",
   "selection_effect": "none"
 }

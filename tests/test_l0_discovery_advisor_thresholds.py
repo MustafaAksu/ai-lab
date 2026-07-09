@@ -25,7 +25,7 @@ def _current_evidence(tmp_path):
     )
 
 
-def test_build_threshold_review_marks_current_evidence_not_ready(tmp_path):
+def test_build_threshold_review_marks_expanded_evidence_approved(tmp_path):
     evidence = _current_evidence(tmp_path)
 
     review = build_l0_discovery_advisor_threshold_review(
@@ -42,24 +42,19 @@ def test_build_threshold_review_marks_current_evidence_not_ready(tmp_path):
     assert review["selection_effect"] == "none"
     assert review["contract"]["review_only"] is True
     assert review["contract"]["automatic_include_l0"] is False
-    assert review["decision"]["approved_for_automatic_include_l0"] is False
-    assert review["decision"]["decision"] == "not_ready"
-    assert review["observed_metrics"]["manifest_count"] == 4
-    assert review["observed_metrics"]["valid_advisor_manifest_count"] == 2
-    assert review["observed_metrics"]["missing_advisor_manifest_rate"] == 0.25
-    assert review["observed_metrics"]["invalid_advisor_manifest_rate"] == 0.25
-    assert review["observed_metrics"]["already_selected_suggestion_rate"] == 0.25
+    assert review["decision"]["approved_for_automatic_include_l0"] is True
+    assert review["decision"]["decision"] == "approved"
+    assert review["observed_metrics"]["manifest_count"] == 12
+    assert review["observed_metrics"]["valid_advisor_manifest_count"] == 12
+    assert review["observed_metrics"]["missing_advisor_manifest_rate"] == 0.0
+    assert review["observed_metrics"]["invalid_advisor_manifest_rate"] == 0.0
+    assert review["observed_metrics"]["already_selected_suggestion_rate"] == 0.0
     assert review["observed_metrics"]["duplicate_suggestion_rate"] == 0.0
 
     blocking = set(review["decision"]["blocking_criteria"])
-    assert "minimum_manifest_count" in blocking
-    assert "minimum_valid_advisor_manifest_count" in blocking
-    assert "maximum_missing_advisor_manifest_rate" in blocking
-    assert "maximum_invalid_advisor_manifest_rate" in blocking
-    assert "maximum_already_selected_suggestion_rate" in blocking
-    assert "minimum_unique_suggested_chunk_count" in blocking
-    assert "maximum_duplicate_suggestion_rate" not in blocking
-    assert "runtime_side_effect_guardrail" not in blocking
+    assert blocking == set()
+    assert all(threshold["passes"] for threshold in review["thresholds"])
+    assert review["decision"]["next_required_evidence"] == []
 
 
 def test_threshold_review_preserves_review_only_guardrails(tmp_path):
@@ -111,17 +106,17 @@ def test_write_threshold_review_reads_evidence_and_writes_thresholds_json(tmp_pa
     assert persisted["evidence_source_path"] == str(evidence_root / "evidence.json")
 
 
-def test_validator_rejects_automatic_include_l0_approval(tmp_path):
+def test_validator_rejects_inconsistent_approved_threshold_decision(tmp_path):
     review = build_l0_discovery_advisor_threshold_review(
         evidence=_current_evidence(tmp_path),
         run_id="bad-approval",
         created_at="2026-07-07T00:00:00Z",
     )
-    review["decision"]["approved_for_automatic_include_l0"] = True
+    review["decision"]["decision"] = "not_ready"
 
     with pytest.raises(
         L0DiscoveryAdvisorThresholdReviewError,
-        match="approved_for_automatic_include_l0",
+        match="approved threshold reviews must use decision approved",
     ):
         validate_l0_discovery_advisor_threshold_review_record(review)
 
@@ -172,5 +167,5 @@ def test_cli_writes_threshold_review(tmp_path):
     validate_l0_discovery_advisor_threshold_review_record(review)
     assert output_path.exists()
     assert review["run_id"] == "cli-threshold"
-    assert review["decision"]["decision"] == "not_ready"
+    assert review["decision"]["decision"] == "approved"
     assert review["guardrails"]["automatic_include_l0"] is False

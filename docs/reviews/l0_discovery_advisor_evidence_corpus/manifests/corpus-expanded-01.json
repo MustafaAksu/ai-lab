@@ -17,7 +17,7 @@
         "token_budget_enforcement": false,
         "token_budget_telemetry": false
       },
-      "created_at": "2026-07-07T00:00:00Z",
+      "created_at": "2026-07-08T00:00:00Z",
       "guardrails": {
         "automatic_include_l0": false,
         "context_items_mutated": 0,
@@ -33,7 +33,7 @@
       "inputs": {
         "max_suggestions": null,
         "selected_context_item_ids": [
-          "CTX-ALPHA"
+          "CTX-EXPANDED-01"
         ],
         "source_counts": {
           "candidate_entries_seen": 2,
@@ -41,42 +41,42 @@
           "l0_retrieval_simulator_records": 0
         }
       },
-      "run_id": "corpus-baseline",
+      "run_id": "corpus-expanded-01",
       "schema_version": "v1",
       "selection_effect": "none",
       "suggestions": [
         {
-          "chunk_id": "L0-ALPHA",
+          "chunk_id": "L0-EXPANDED-01",
           "rank": 1,
           "reasons": [
-            "high overlap with selected context"
+            "primary deterministic neighboring evidence"
           ],
           "selection_effect": "none",
           "source_diagnostic_refs": [
             {
               "source": "l0_candidate_diagnostics",
-              "source_candidate_id": "L0-ALPHA",
-              "source_path": "deterministic-fixture:corpus-baseline"
+              "source_candidate_id": "L0-EXPANDED-01",
+              "source_path": "deterministic-fixture:corpus-expanded-01"
             }
           ],
-          "suggested_include_l0_arg": "L0-ALPHA",
+          "suggested_include_l0_arg": "L0-EXPANDED-01",
           "suggestion_score": 0.86
         },
         {
-          "chunk_id": "L0-BETA",
+          "chunk_id": "L0-EXPANDED-02",
           "rank": 2,
           "reasons": [
-            "secondary advisor evidence"
+            "secondary deterministic neighboring evidence"
           ],
           "selection_effect": "none",
           "source_diagnostic_refs": [
             {
               "source": "l0_candidate_diagnostics",
-              "source_candidate_id": "L0-BETA",
-              "source_path": "deterministic-fixture:corpus-baseline"
+              "source_candidate_id": "L0-EXPANDED-02",
+              "source_path": "deterministic-fixture:corpus-expanded-01"
             }
           ],
-          "suggested_include_l0_arg": "L0-BETA",
+          "suggested_include_l0_arg": "L0-EXPANDED-02",
           "suggestion_score": 0.62
         }
       ]
@@ -84,15 +84,15 @@
   },
   "items": [
     {
-      "item_id": "CTX-ALPHA",
+      "item_id": "CTX-EXPANDED-01",
       "item_type": "abstraction",
-      "reason": "Selected context for useful-suggestion evidence.",
+      "reason": "Selected context for expanded useful-suggestion evidence.",
       "relevance_score": 0.9,
-      "source_path": "docs/abstractions/CTX-ALPHA.md",
+      "source_path": "docs/abstractions/CTX-EXPANDED-01.md",
       "token_estimate": 100
     }
   ],
-  "manifest_id": "corpus-baseline",
+  "manifest_id": "corpus-expanded-01",
   "schema_version": "v1",
-  "task": "Evaluate useful L0 discovery suggestions."
+  "task": "Evaluate clean deterministic L0 discovery suggestions."
 }

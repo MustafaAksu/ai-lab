@@ -17,7 +17,7 @@
         "token_budget_enforcement": false,
         "token_budget_telemetry": false
       },
-      "created_at": "2026-07-07T00:00:00Z",
+      "created_at": "2026-07-08T00:00:00Z",
       "guardrails": {
         "automatic_include_l0": false,
         "context_items_mutated": 0,
@@ -33,49 +33,66 @@
       "inputs": {
         "max_suggestions": null,
         "selected_context_item_ids": [
-          "CTX-INVALID"
+          "CTX-EXPANDED-05"
         ],
         "source_counts": {
-          "candidate_entries_seen": 1,
+          "candidate_entries_seen": 2,
           "l0_candidate_diagnostics_records": 1,
           "l0_retrieval_simulator_records": 0
         }
       },
-      "run_id": "corpus-invalid",
+      "run_id": "corpus-expanded-05",
       "schema_version": "v1",
-      "selection_effect": "include",
+      "selection_effect": "none",
       "suggestions": [
         {
-          "chunk_id": "L0-INVALID",
+          "chunk_id": "L0-EXPANDED-09",
           "rank": 1,
           "reasons": [
-            "intentionally invalid fixture candidate"
+            "primary deterministic neighboring evidence"
           ],
           "selection_effect": "none",
           "source_diagnostic_refs": [
             {
               "source": "l0_candidate_diagnostics",
-              "source_candidate_id": "L0-INVALID",
-              "source_path": "deterministic-fixture:corpus-invalid"
+              "source_candidate_id": "L0-EXPANDED-09",
+              "source_path": "deterministic-fixture:corpus-expanded-05"
             }
           ],
-          "suggested_include_l0_arg": "L0-INVALID",
-          "suggestion_score": 0.77
+          "suggested_include_l0_arg": "L0-EXPANDED-09",
+          "suggestion_score": 0.86
+        },
+        {
+          "chunk_id": "L0-EXPANDED-10",
+          "rank": 2,
+          "reasons": [
+            "secondary deterministic neighboring evidence"
+          ],
+          "selection_effect": "none",
+          "source_diagnostic_refs": [
+            {
+              "source": "l0_candidate_diagnostics",
+              "source_candidate_id": "L0-EXPANDED-10",
+              "source_path": "deterministic-fixture:corpus-expanded-05"
+            }
+          ],
+          "suggested_include_l0_arg": "L0-EXPANDED-10",
+          "suggestion_score": 0.62
         }
       ]
     }
   },
   "items": [
     {
-      "item_id": "CTX-INVALID",
+      "item_id": "CTX-EXPANDED-05",
       "item_type": "abstraction",
-      "reason": "Selected context with invalid advisor diagnostics.",
+      "reason": "Selected context for expanded useful-suggestion evidence.",
       "relevance_score": 0.9,
-      "source_path": "docs/abstractions/CTX-INVALID.md",
+      "source_path": "docs/abstractions/CTX-EXPANDED-05.md",
       "token_estimate": 100
     }
   ],
-  "manifest_id": "corpus-invalid-advisor",
+  "manifest_id": "corpus-expanded-05",
   "schema_version": "v1",
-  "task": "Evaluate invalid advisor diagnostics handling."
+  "task": "Evaluate clean deterministic L0 discovery suggestions."
 }

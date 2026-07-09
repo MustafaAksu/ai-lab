@@ -19,10 +19,8 @@ def test_build_default_corpus_manifests_are_deterministic_and_diagnostic_only():
     )
 
     assert [manifest["manifest_id"] for manifest in manifests] == [
-        "corpus-baseline",
-        "corpus-already-selected",
-        "corpus-missing-advisor",
-        "corpus-invalid-advisor",
+        f"corpus-expanded-{index + 1:02d}"
+        for index in range(12)
     ]
     assert all(manifest["assembly_policy"] == "latest_context" for manifest in manifests)
     assert all(manifest["items"] for manifest in manifests)
@@ -32,8 +30,8 @@ def test_build_default_corpus_manifests_are_deterministic_and_diagnostic_only():
     assert advisor["guardrails"]["automatic_include_l0"] is False
     assert advisor["guardrails"]["context_items_mutated"] == 0
     assert advisor["guardrails"]["provider_prompts_changed"] == 0
-    assert "diagnostics" not in manifests[2]
-    assert manifests[3]["diagnostics"]["l0_discovery_advisor"]["selection_effect"] == "include"
+    assert all("diagnostics" in manifest for manifest in manifests)
+    assert all(manifest["diagnostics"]["l0_discovery_advisor"]["selection_effect"] == "none" for manifest in manifests)
 
 
 def test_write_evidence_corpus_records_expected_findings_and_guardrails(tmp_path):
@@ -46,7 +44,7 @@ def test_write_evidence_corpus_records_expected_findings_and_guardrails(tmp_path
     validate_l0_discovery_advisor_evidence_corpus_record(evidence)
 
     assert evidence["corpus_id"] == CORPUS_ID
-    assert evidence["plan_id"] == "PLAN-20260707-0002"
+    assert evidence["plan_id"] == "PLAN-20260707-0004"
     assert evidence["selection_effect"] == "none"
     assert evidence["contract"]["diagnostic_evidence_only"] is True
     assert evidence["contract"]["automatic_include_l0"] is False
@@ -60,16 +58,16 @@ def test_write_evidence_corpus_records_expected_findings_and_guardrails(tmp_path
     assert evidence["contract"]["adapter_behavior"] is False
 
     assert evidence["findings"] == {
-        "manifests_seen": 4,
-        "manifests_with_advisor": 2,
-        "manifests_missing_advisor": 1,
-        "manifests_invalid_advisor": 1,
-        "total_suggestions": 4,
-        "unique_suggested_chunk_count": 4,
-        "already_selected_suggestion_count": 1,
+        "manifests_seen": 12,
+        "manifests_with_advisor": 12,
+        "manifests_missing_advisor": 0,
+        "manifests_invalid_advisor": 0,
+        "total_suggestions": 24,
+        "unique_suggested_chunk_count": 24,
+        "already_selected_suggestion_count": 0,
         "duplicate_suggestion_count": 0,
     }
-    assert evidence["evaluation"]["aggregate"]["already_selected_suggestion_count"] == 1
+    assert evidence["evaluation"]["aggregate"]["already_selected_suggestion_count"] == 0
     assert evidence["guardrails"]["context_items_mutated"] == 0
     assert evidence["guardrails"]["provider_prompts_changed"] == 0
     assert evidence["guardrails"]["automatic_include_l0"] is False
@@ -90,7 +88,7 @@ def test_write_evidence_corpus_writes_saved_manifests_and_evidence_json(tmp_path
 
     assert evidence_path.exists()
     assert manifest_dir.exists()
-    assert len(list(manifest_dir.glob("*.json"))) == 4
+    assert len(list(manifest_dir.glob("*.json"))) == 12
 
     persisted = json.loads(evidence_path.read_text(encoding="utf-8"))
     validate_l0_discovery_advisor_evidence_corpus_record(persisted)
@@ -133,7 +131,7 @@ def test_cli_writes_evidence_corpus(tmp_path):
     evidence = json.loads(completed.stdout)
     validate_l0_discovery_advisor_evidence_corpus_record(evidence)
     assert evidence["run_id"] == "cli-corpus"
-    assert evidence["findings"]["manifests_seen"] == 4
-    assert evidence["findings"]["manifests_invalid_advisor"] == 1
+    assert evidence["findings"]["manifests_seen"] == 12
+    assert evidence["findings"]["manifests_invalid_advisor"] == 0
     assert (output_root / "evidence.json").exists()
-    assert len(list((output_root / "manifests").glob("*.json"))) == 4
+    assert len(list((output_root / "manifests").glob("*.json"))) == 12

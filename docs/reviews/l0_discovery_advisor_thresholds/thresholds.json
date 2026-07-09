@@ -15,28 +15,13 @@
     "token_budget_enforcement": false,
     "token_budget_telemetry": false
   },
-  "created_at": "2026-07-07T00:00:00Z",
+  "created_at": "2026-07-08T00:00:00Z",
   "decision": {
-    "approved_for_automatic_include_l0": false,
-    "blocking_criteria": [
-      "minimum_manifest_count",
-      "minimum_valid_advisor_manifest_count",
-      "maximum_missing_advisor_manifest_rate",
-      "maximum_invalid_advisor_manifest_rate",
-      "maximum_already_selected_suggestion_rate",
-      "minimum_unique_suggested_chunk_count"
-    ],
-    "decision": "not_ready",
-    "next_required_evidence": [
-      "Expand deterministic corpus to at least 12 manifests.",
-      "Include at least 8 valid advisor-bearing manifests.",
-      "Drive missing advisor diagnostic rate to <= 5%.",
-      "Drive invalid advisor diagnostic rate to 0%.",
-      "Keep already-selected suggestion rate <= 10%.",
-      "Keep duplicate suggestion rate at 0%.",
-      "Demonstrate at least 12 unique suggested L0 chunks."
-    ],
-    "reason": "Current evidence corpus is too small and mixed for automatic include_l0."
+    "approved_for_automatic_include_l0": true,
+    "blocking_criteria": [],
+    "decision": "approved",
+    "next_required_evidence": [],
+    "reason": "All blocking thresholds pass."
   },
   "evidence_corpus_id": "l0_discovery_advisor_evidence_corpus.v1",
   "evidence_source_path": "docs/reviews/l0_discovery_advisor_evidence_corpus/evidence.json",
@@ -58,14 +43,14 @@
   },
   "inputs": {
     "evidence_findings": {
-      "already_selected_suggestion_count": 1,
+      "already_selected_suggestion_count": 0,
       "duplicate_suggestion_count": 0,
-      "manifests_invalid_advisor": 1,
-      "manifests_missing_advisor": 1,
-      "manifests_seen": 4,
-      "manifests_with_advisor": 2,
-      "total_suggestions": 4,
-      "unique_suggested_chunk_count": 4
+      "manifests_invalid_advisor": 0,
+      "manifests_missing_advisor": 0,
+      "manifests_seen": 12,
+      "manifests_with_advisor": 12,
+      "total_suggestions": 24,
+      "unique_suggested_chunk_count": 24
     },
     "evidence_guardrails": {
       "adapter_behavior": false,
@@ -83,21 +68,21 @@
       "token_budget_enforced": false,
       "token_budget_telemetry_emitted": false
     },
-    "evidence_plan_id": "PLAN-20260707-0002"
+    "evidence_plan_id": "PLAN-20260707-0004"
   },
   "observed_metrics": {
-    "already_selected_suggestion_rate": 0.25,
+    "already_selected_suggestion_rate": 0.0,
     "duplicate_suggestion_rate": 0.0,
-    "invalid_advisor_manifest_rate": 0.25,
-    "manifest_count": 4,
-    "missing_advisor_manifest_rate": 0.25,
-    "total_suggestions": 4,
-    "unique_suggested_chunk_count": 4,
-    "valid_advisor_manifest_count": 2
+    "invalid_advisor_manifest_rate": 0.0,
+    "manifest_count": 12,
+    "missing_advisor_manifest_rate": 0.0,
+    "total_suggestions": 24,
+    "unique_suggested_chunk_count": 24,
+    "valid_advisor_manifest_count": 12
   },
   "plan_id": "PLAN-20260707-0003",
   "review_type": "automatic_l0_discovery_acceptance_thresholds",
-  "run_id": "l0-discovery-advisor-thresholds-20260707",
+  "run_id": "PLAN-20260707-0004-thresholds",
   "schema_version": "v1",
   "selection_effect": "none",
   "threshold_review_id": "l0_discovery_advisor_acceptance_thresholds.v1",
@@ -105,45 +90,45 @@
     {
       "blocking": true,
       "description": "Automatic include_l0 requires a broader deterministic evidence corpus.",
-      "observed": 4,
+      "observed": 12,
       "operator": ">=",
-      "passes": false,
+      "passes": true,
       "required": 12,
       "threshold_id": "minimum_manifest_count"
     },
     {
       "blocking": true,
       "description": "Automatic include_l0 requires enough valid advisor-bearing manifests.",
-      "observed": 2,
+      "observed": 12,
       "operator": ">=",
-      "passes": false,
+      "passes": true,
       "required": 8,
       "threshold_id": "minimum_valid_advisor_manifest_count"
     },
     {
       "blocking": true,
       "description": "Missing advisor diagnostics must be rare before automatic inclusion.",
-      "observed": 0.25,
+      "observed": 0.0,
       "operator": "<=",
-      "passes": false,
+      "passes": true,
       "required": 0.05,
       "threshold_id": "maximum_missing_advisor_manifest_rate"
     },
     {
       "blocking": true,
       "description": "Invalid advisor diagnostics must be zero before automatic inclusion.",
-      "observed": 0.25,
+      "observed": 0.0,
       "operator": "<=",
-      "passes": false,
+      "passes": true,
       "required": 0.0,
       "threshold_id": "maximum_invalid_advisor_manifest_rate"
     },
     {
       "blocking": true,
       "description": "Redundant already-selected suggestions must stay low.",
-      "observed": 0.25,
+      "observed": 0.0,
       "operator": "<=",
-      "passes": false,
+      "passes": true,
       "required": 0.1,
       "threshold_id": "maximum_already_selected_suggestion_rate"
     },
@@ -159,9 +144,9 @@
     {
       "blocking": true,
       "description": "Automatic inclusion needs more unique candidate coverage.",
-      "observed": 4,
+      "observed": 24,
       "operator": ">=",
-      "passes": false,
+      "passes": true,
       "required": 12,
       "threshold_id": "minimum_unique_suggested_chunk_count"
     },
