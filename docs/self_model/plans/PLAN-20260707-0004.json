@@ -1,0 +1,53 @@
+{
+  "schema_version": "v1",
+  "plan_id": "PLAN-20260707-0004",
+  "title": "Expand deterministic L0 discovery advisor evidence corpus",
+  "source_gap_id": "GAP-0001",
+  "status": "proposed",
+  "created_at": "2026-07-08T19:05:18.495631+00:00",
+  "objective": "Expand the deterministic L0 discovery advisor evidence corpus so GAP-0001 can be measured against the PLAN-20260707-0003 threshold gates.",
+  "proposed_change": "Add deterministic evidence-corpus manifest fixtures and regenerate evidence/threshold review outputs. This remains evidence-only and does not enable automatic include_l0.",
+  "rationale": [
+    "PLAN-20260707-0003 concluded the current corpus is not_ready.",
+    "The current evidence has too few manifests, too few valid advisor-bearing manifests, and too few unique suggested chunks.",
+    "The next safe governed slice is deterministic evidence expansion, not automatic include_l0."
+  ],
+  "constraints": [
+    "Proposal only: no implementation is admitted by this PLAN record.",
+    "No automatic include_l0 behavior.",
+    "No mutation of ContextPackManifest.items.",
+    "No provider prompt changes.",
+    "No latest-context prompt path changes.",
+    "No live retrieval.",
+    "No external embedding API calls.",
+    "No production embedding creation.",
+    "No vector index or document index mutation.",
+    "No memory-store mutation.",
+    "No token-budget enforcement or token-budget telemetry.",
+    "No non-none reranking.",
+    "No adapter behavior.",
+    "Review only: read existing evidence and define thresholds; do not alter runtime behavior.",
+    "Any threshold-review implementation requires separate admission by WARRANT before governed improvement work begins."
+  ],
+  "success_criteria": [
+    "Evidence corpus contains at least 12 deterministic manifests.",
+    "At least 8 manifests contain valid advisor diagnostics.",
+    "Missing advisor diagnostic rate is <= 5%.",
+    "Invalid advisor diagnostic rate is 0%.",
+    "Already-selected suggestion rate is <= 10%.",
+    "Duplicate suggestion rate remains 0%.",
+    "At least 12 unique suggested L0 chunks are demonstrated.",
+    "No automatic include_l0 or runtime side effects are introduced."
+  ],
+  "risk": "Thresholds may be mistaken for approval of automatic inclusion unless the plan keeps threshold definition separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
+  "next_action": "If admitted, implement deterministic corpus expansion and rerun evidence/threshold review generation.",
+  "summary": "Expand deterministic L0 discovery advisor evidence so GAP-0001 can be measured against the PLAN-20260707-0003 threshold gates. This remains evidence-only and does not enable automatic include_l0.",
+  "non_goals": [
+    "Do not enable automatic include_l0.",
+    "Do not mutate ContextPackManifest.items.",
+    "Do not change provider prompts.",
+    "Do not add live retrieval, embeddings, index mutation, memory mutation, reranking, token-budget enforcement, or adapter behavior.",
+    "Do not close GAP-0001 in this slice."
+  ],
+  "scope": "Evidence corpus expansion only. No runtime selection, prompt, retrieval, embedding, index, memory, reranking, adapter, or token-budget behavior changes."
+}

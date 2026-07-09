@@ -69,7 +69,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-07T14:37:29+00:00",
+  "generated_at": "2026-07-09T06:09:02+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -146,15 +146,23 @@
       "risk": "Thresholds may be mistaken for approval of automatic inclusion unless the plan keeps threshold definition separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
       "source_field": "risk",
       "source_record": "PLAN-20260707-0003"
+    },
+    {
+      "risk": "Thresholds may be mistaken for approval of automatic inclusion unless the plan keeps threshold definition separate from selection, prompt construction, retrieval, embeddings, indexes, memory stores, token-budget systems, reranking, and adapters.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260707-0004"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0001"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260707-0004"
+  ],
   "plan_counts": {
-    "completed": 8
+    "completed": 8,
+    "proposed": 1
   },
   "plans": [
     {
@@ -212,6 +220,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260707-0003.json",
       "status": "completed",
       "title": "Define L0 Discovery Advisor Acceptance Thresholds"
+    },
+    {
+      "plan_id": "PLAN-20260707-0004",
+      "source_gap_id": "GAP-0001",
+      "source_path": "docs/self_model/plans/PLAN-20260707-0004.json",
+      "status": "proposed",
+      "title": "Expand deterministic L0 discovery advisor evidence corpus"
     }
   ],
   "recommended_next_targets": [
@@ -221,7 +236,7 @@
       "target": "Add a read-only diagnostic that reports possible candidate sources for future automatic L0 discovery without changing prompt selection."
     }
   ],
-  "repo_head": "a72bea3f9fc2de661fde4860859c66b6c36a15bf",
+  "repo_head": "3e29593e1c856b3797ee3f92a855b9f07d1095cf",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
