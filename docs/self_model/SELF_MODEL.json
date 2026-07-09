@@ -80,7 +80,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T19:18:46+00:00",
+  "generated_at": "2026-07-09T19:26:28+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -172,15 +172,23 @@
       "risk": "Automatic context inclusion can silently alter prompt content, token usage, and response behavior. The risk is controlled by keeping default behavior unchanged, requiring explicit opt-in, deduping, capping, and testing both disabled and enabled paths.",
       "source_field": "risk",
       "source_record": "PLAN-20260709-0001"
+    },
+    {
+      "risk": "The main risk is accidentally turning graph-neighborhood advice into runtime selection. The first slice must remain diagnostic-only and must not modify manifests, prompts, retrieval, embeddings, or persisted graph state.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260709-0002"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260709-0002"
+  ],
   "plan_counts": {
-    "completed": 10
+    "completed": 10,
+    "proposed": 1
   },
   "plans": [
     {
@@ -252,6 +260,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260709-0001.json",
       "status": "completed",
       "title": "Add opt-in runtime automatic L0 discovery inclusion"
+    },
+    {
+      "plan_id": "PLAN-20260709-0002",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260709-0002.json",
+      "status": "proposed",
+      "title": "Add read-only graph neighborhood advisor diagnostic"
     }
   ],
   "recommended_next_targets": [
@@ -261,7 +276,7 @@
       "target": "Add a read-only graph neighborhood diagnostic/advisor that reports candidate neighboring artifacts, relation paths, scope interpretation, token estimates, and inclusion/exclusion rationale without modifying context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, or runtime manifests."
     }
   ],
-  "repo_head": "ea8076960d8a633f7c213f21e5cf1ecd9b8c6776",
+  "repo_head": "12424ce12dd1977ff36d14b0c710391fcb7f1153",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
