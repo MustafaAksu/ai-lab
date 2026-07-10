@@ -23,7 +23,7 @@
     "The original recommended first slice, adding a read-only graph neighborhood diagnostic/advisor, was completed by PLAN-20260709-0002 and recorded as CAP-0005. GAP-0002 remains open because graph-local scoped memory context selection is not yet implemented."
   ],
   "priority": "medium",
-  "recommended_first_slice": "Use CAP-0007 evidence-only readiness decisions to determine whether to propose a separate context-pack integration plan for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant.",
+  "recommended_first_slice": "Propose a separate governed context-pack integration plan for graph-local scoped memory using DECISION-20260710-0001 and CAP-0008 as evidence-only readiness evidence. The proposal must preserve existing default context-pack behavior until separately admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant.",
   "related_capabilities": [
     "CAP-0001",
     "CAP-0002",

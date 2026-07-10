@@ -1,0 +1,45 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260710-0002.json",
+    "docs/self_model/capabilities/CAP-0008.json",
+    "docs/self_model/verifications/VERIFY-20260710-0001.json",
+    "docs/self_model/warrants/WARR-20260710-0002.json",
+    "ai_lab/documentation/graph_neighborhood_readiness.py",
+    "tests/test_graph_neighborhood_readiness.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood_readiness.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood readiness decision tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Self-model tests passed with 115 tests before completion records."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 458 tests before completion records."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit passed before completion records."
+    }
+  ],
+  "created_at": "2026-07-10T09:45:06.201303+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "675432925b0de6238c5849887ea0a13772d8078f",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260710-0002 after recording CAP-0008, DECISION-20260710-0001, VERIFY-20260710-0003, and WARR-20260710-0005. The repository readiness decision artifact remains evidence-only, selection_effect none, and does not change context-pack integration, runtime selection, provider prompts, persistence, retrieval, embeddings, reranking, indexes, memory stores, runtime manifests, or automatic context inclusion.",
+  "target_item_id": "PLAN-20260710-0002",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260710-0004"
+}

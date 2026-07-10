@@ -1,5 +1,9 @@
 {
   "admission_warrant_id": "WARR-20260710-0004",
+  "completed_at": "2026-07-10T09:45:06.201303+00:00",
+  "completion_summary": "Completed the evidence-only repository readiness decision artifact. DECISION-20260710-0001 records that CAP-0006/CAP-0007/CAP-0008 evidence supports proposing a separate governed context-pack integration plan, while preserving selection_effect none and blocking all runtime, provider prompt, persistence, retrieval, embedding, reranking, index, memory-store, runtime-manifest, and automatic context inclusion changes.",
+  "completion_verification_id": "VERIFY-20260710-0004",
+  "completion_warrant_id": "WARR-20260710-0006",
   "constraints": [
     "Evidence and decision artifact only.",
     "No context-pack integration.",
@@ -31,7 +35,7 @@
     "Tests proving the artifact is evidence-only and has no context-selection effect.",
     "A completion record deciding whether a separate integration proposal is justified."
   ],
-  "next_action": "Implement only the admitted repository-tracked evidence-only readiness decision artifact. Do not implement context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "next_action": "Keep GAP-0002 open. The next governed step is to propose a separate context-pack integration plan for graph-local scoped memory if desired; do not implement integration without a new admission warrant.",
   "non_goals": [
     "Implementing context-pack integration.",
     "Changing runtime context selection.",
@@ -59,7 +63,7 @@
     "Keep GAP-0002 open unless a separate future plan explicitly closes it."
   ],
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The readiness decision artifact is deterministic and repository-tracked.",
     "The artifact cites CAP-0006/CAP-0007 evidence.",
