@@ -7,7 +7,8 @@
     "CAP-0005",
     "CAP-0006",
     "CAP-0007",
-    "CAP-0008"
+    "CAP-0008",
+    "CAP-0009"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -30,8 +31,8 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 36,
-      "warn": 18
+      "info": 38,
+      "warn": 20
     }
   },
   "capabilities": [
@@ -90,10 +91,17 @@
       "name": "Graph neighborhood repository readiness decision artifact",
       "source_path": "docs/self_model/capabilities/CAP-0008.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0009",
+      "category": "diagnostic",
+      "name": "Opt-in graph-neighborhood context-pack candidates",
+      "source_path": "docs/self_model/capabilities/CAP-0009.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 8
+    "implemented": 9
   },
   "gap_counts": {
     "closed": 1,
@@ -117,7 +125,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T11:01:02+00:00",
+  "generated_at": "2026-07-10T14:42:08+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -189,6 +197,16 @@
       "risk": "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants.",
       "source_field": "risks[1]",
       "source_record": "CAP-0008"
+    },
+    {
+      "risk": "A positive context-pack candidate integration may be mistaken for integration approval unless the separate-plan boundary remains explicit.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0009"
+    },
+    {
+      "risk": "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0009"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -401,7 +419,7 @@
       "target": "Propose a separate governed context-pack integration plan for graph-local scoped memory using DECISION-20260710-0001 and CAP-0008 as evidence-only readiness evidence. The proposal must preserve existing default context-pack behavior until separately admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "a4a5ead2c40afc3b8deacd43605b98efaf41d121",
+  "repo_head": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -499,10 +517,15 @@
       "repo_commit": "675432925b0de6238c5849887ea0a13772d8078f",
       "source_path": "docs/self_model/verifications/VERIFY-20260710-0004.json",
       "verification_id": "VERIFY-20260710-0004"
+    },
+    {
+      "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+      "source_path": "docs/self_model/verifications/VERIFY-20260710-0005.json",
+      "verification_id": "VERIFY-20260710-0005"
     }
   ],
   "warrant_counts": {
-    "supported": 35
+    "supported": 36
   },
   "warrants": [
     {
@@ -783,6 +806,14 @@
       "target_item_id": "PLAN-20260710-0003",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260710-0007",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260710-0008.json",
+      "target_item_id": "CAP-0009",
+      "target_item_type": "capability",
+      "warrant_id": "WARR-20260710-0008",
       "warrant_state": "supported"
     }
   ]

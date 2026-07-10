@@ -1,0 +1,82 @@
+{
+  "capability_id": "CAP-0009",
+  "category": "diagnostic",
+  "created_at": "2026-07-10T11:16:12.714326+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260710-0003",
+        "path": "docs/self_model/plans/PLAN-20260710-0003.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260710-0001",
+        "path": "docs/self_model/warrants/WARR-20260710-0001.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+        "role": "implementation commit"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "28a2c503836473156b61de40c325f83e1d58c5b8ed1c3d7383795dc4ff5e15bf",
+        "path": "docs/self_model/decisions/DECISION-20260710-0001.json",
+        "role": "implementation"
+      },
+      {
+        "content_hash": "6f2ec9613190320e42532694381a072cd291dbc9dd30362ec9c88d999acb62a8",
+        "path": "tests/test_self_model.py",
+        "role": "tests"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260710-0005",
+        "path": "docs/self_model/verifications/VERIFY-20260710-0005.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.graph_neighborhood_readiness.decide_graph_neighborhood_integration_readiness",
+    "ai_lab.documentation.graph_neighborhood_readiness.format_graph_neighborhood_readiness_report",
+    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodIntegrationReadinessReport",
+    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodReadinessFinding"
+  ],
+  "last_verified": {
+    "repo_commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260710-0005.json",
+    "verified_at": "2026-07-10T06:56:12.443456+00:00"
+  },
+  "limits": [
+    "Evidence and decision artifacting only.",
+    "A positive decision only means a separate governed integration plan may be proposed.",
+    "selection_effect remains none.",
+    "Preserves default context-pack behavior.",
+    "Does not modify context selection or ContextPackManifest.items.",
+    "Does not change provider prompts or prompt rendering.",
+    "Does not persist graph nodes or graph edges.",
+    "Does not introduce a graph database.",
+    "Does not call retrieval services, embedding services, rerankers, or production indexes.",
+    "Does not mutate indexes, memory stores, runtime manifests, or repository graph state.",
+    "Does not perform automatic context inclusion.",
+    "Does not admit or implement context-pack integration."
+  ],
+  "name": "Opt-in graph-neighborhood context-pack candidates",
+  "recommended_next_actions": [
+    "Use CAP-0009 to decide whether to propose a separate context-pack integration plan.",
+    "Do not treat CAP-0009 output as runtime selection authority."
+  ],
+  "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+  "risks": [
+    "A positive context-pack candidate integration may be mistaken for integration approval unless the separate-plan boundary remains explicit.",
+    "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provides an opt-in, default-off graph-neighborhood context candidate path inside build_latest_context_manifest. The slice converts read-only graph-neighborhood advisor candidates into ordinary context-pack items only when explicitly enabled, while preserving existing default context-pack behavior and avoiding provider prompt, runtime manifest, retrieval, embedding, reranking, persisted graph, index, memory-store, and automatic context inclusion changes."
+}

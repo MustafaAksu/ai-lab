@@ -1,0 +1,20 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T11:16:12.714326+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/verifications/VERIFY-20260710-0005.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "tests/test_context_pack_builder.py"
+  ],
+  "reason": "Support CAP-0009 because the implementation is opt-in and default-off, preserves existing context-pack behavior when disabled, converts graph-neighborhood advisor output into ordinary context candidates only under explicit parameters, and has targeted/full test plus audit evidence. The warrant does not authorize provider prompt default changes or automatic context inclusion.",
+  "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0009 as an implemented diagnostic capability only. Does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0009",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260710-0008",
+  "warrant_state": "supported"
+}

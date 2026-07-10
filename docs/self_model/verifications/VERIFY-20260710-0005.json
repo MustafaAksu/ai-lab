@@ -1,0 +1,36 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "tests/test_self_model.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_context_pack.py tests/test_context_pack_builder.py tests/test_context_pack_renderer.py tests/test_prompt_context.py tests/test_graph_neighborhood.py -x",
+      "exit_code": 0,
+      "summary": "Targeted context-pack, prompt-context, and graph-neighborhood tests passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository test suite passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ],
+  "created_at": "2026-07-10T11:16:12.714326+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified CAP-0009 by running targeted context-pack/graph-neighborhood tests, the full test suite, and the self-model audit after adding the opt-in graph-neighborhood context candidate path. Defaults remain unchanged and provider/script prompt paths are not enabled.",
+  "target_item_id": "CAP-0009",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260710-0005"
+}
