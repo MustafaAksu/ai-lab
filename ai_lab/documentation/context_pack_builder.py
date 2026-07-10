@@ -19,6 +19,7 @@ from ai_lab.documentation.context_pack import (
     ContextPackItem,
     ContextPackManifest,
 )
+from ai_lab.documentation.graph_neighborhood import graph_neighborhood_advisor
 from ai_lab.documentation.interaction_log import EpisodeL1Summary, InteractionLogError
 from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 
@@ -467,6 +468,86 @@ def context_item_from_record(
     )
 
 
+def graph_neighborhood_context_items(
+    *,
+    target_id: str,
+    records: Iterable[ArtifactRecord],
+    edge_records: Iterable[dict[str, object]] = (),
+    future_edge_seed_records: Iterable[dict[str, str]] = (),
+    max_depth: int = 2,
+    token_budget: int | None = None,
+) -> tuple[tuple[ContextPackItem, ...], dict[str, object]]:
+    """Return opt-in graph-neighborhood context items plus diagnostics.
+
+    This helper is default-off at the manifest builder boundary. It converts the
+    read-only graph-neighborhood advisor output into ordinary context-pack
+    candidates without mutating provider prompts, persisted graph artifacts,
+    retrieval, embeddings, indexes, memory stores, or runtime manifests.
+    """
+
+    record_tuple = tuple(records)
+    record_index = {record.artifact_id: record for record in record_tuple}
+
+    report = graph_neighborhood_advisor(
+        target_id=target_id,
+        artifact_records=record_tuple,
+        edge_records=edge_records,
+        future_edge_seed_records=future_edge_seed_records,
+        max_depth=max_depth,
+        token_budget=token_budget,
+    )
+
+    items: list[ContextPackItem] = []
+
+    for candidate in report.candidates:
+        if candidate.decision != "included":
+            continue
+
+        record = record_index.get(candidate.artifact_id)
+        if record is None:
+            continue
+
+        distance_penalty = max(candidate.distance - 1, 0) * 0.08
+        relevance_score = max(0.5, 0.88 - distance_penalty)
+
+        items.append(
+            ContextPackItem(
+                item_type=item_type_for_record(record),
+                item_id=record.artifact_id,
+                reason=_shorten(
+                    "Graph-neighborhood context candidate "
+                    f"distance {candidate.distance}: {record.title}"
+                ),
+                relevance_score=relevance_score,
+                token_estimate=candidate.token_estimate,
+                source_path=str(record.path),
+            )
+        )
+
+    diagnostics = {
+        "enabled": True,
+        "selection_effect": "opt_in_context_candidate",
+        "target_id": report.target_id,
+        "max_depth": report.max_depth,
+        "token_budget": report.token_budget,
+        "candidate_count": len(report.candidates),
+        "included_count": len(items),
+        "selected_artifact_ids": list(report.selected_artifact_ids),
+        "excluded_artifact_ids": list(report.excluded_artifact_ids),
+        "selected_token_estimate": report.selected_token_estimate,
+        "guardrails": {
+            "default_off": True,
+            "provider_prompt_changed": False,
+            "persisted_graph_writes": False,
+            "retrieval_changed": False,
+            "embeddings_changed": False,
+            "runtime_manifest_changed": False,
+        },
+    }
+
+    return tuple(items), diagnostics
+
+
 def _context_level_sort_key(level: str) -> tuple[int, str]:
     if level.startswith("ABS-L"):
         try:
@@ -624,6 +705,12 @@ def build_latest_context_manifest(
     l0_discovery_advisor_max_suggestions: int | None = None,
     auto_include_l0_discovery: bool = False,
     auto_include_l0_discovery_max_items: int | None = None,
+    include_graph_neighborhood_candidates: bool = False,
+    graph_neighborhood_target_id: str | None = None,
+    graph_neighborhood_edge_records: Iterable[dict[str, object]] = (),
+    graph_neighborhood_future_edge_seed_records: Iterable[dict[str, str]] = (),
+    graph_neighborhood_max_depth: int = 2,
+    graph_neighborhood_token_budget: int | None = None,
 ) -> ContextPackManifest:
     """
     Build a manifest from the latest useful context records.
@@ -632,7 +719,8 @@ def build_latest_context_manifest(
     This keeps context-pack construction aligned with the existing latest-context
     seed view.
     """
-    latest_by_level = latest_records_by_context_level(records)
+    record_tuple = tuple(records)
+    latest_by_level = latest_records_by_context_level(record_tuple)
 
     ordered_records = tuple(
         latest_by_level[level]
@@ -655,6 +743,32 @@ def build_latest_context_manifest(
     latest_l1_item = discover_latest_l1_summary_item(l1_dir=l1_dir, scope=l1_scope)
     if latest_l1_item is not None:
         candidate_items = (latest_l1_item, *candidate_items)
+
+    graph_neighborhood_diagnostics: dict[str, object] | None = None
+
+    if include_graph_neighborhood_candidates:
+        if graph_neighborhood_target_id is None:
+            raise ContextPackError(
+                "graph_neighborhood_target_id is required when "
+                "include_graph_neighborhood_candidates is enabled."
+            )
+
+        graph_items, graph_neighborhood_diagnostics = graph_neighborhood_context_items(
+            target_id=graph_neighborhood_target_id,
+            records=record_tuple,
+            edge_records=graph_neighborhood_edge_records,
+            future_edge_seed_records=graph_neighborhood_future_edge_seed_records,
+            max_depth=graph_neighborhood_max_depth,
+            token_budget=graph_neighborhood_token_budget,
+        )
+
+        existing_item_ids = {item.item_id for item in candidate_items}
+        deduped_graph_items = tuple(
+            item for item in graph_items if item.item_id not in existing_item_ids
+        )
+
+        if deduped_graph_items:
+            candidate_items = (*deduped_graph_items, *candidate_items)
 
     candidate_items = (*explicit_l0_items, *candidate_items)
 
@@ -736,16 +850,17 @@ def build_latest_context_manifest(
         *budget_exclusions,
     )
 
-    diagnostics: dict[str, object] | None = None
+    diagnostics: dict[str, object] = {}
+    if graph_neighborhood_diagnostics is not None:
+        diagnostics["graph_neighborhood"] = graph_neighborhood_diagnostics
+
     if include_l0_discovery_advisor_diagnostics:
-        diagnostics = {
-            "l0_discovery_advisor": l0_discovery_advisor_diagnostics_for_manifest(
-                selected_items=selected_items,
-                l0_store=l0_store,
-                max_suggestions=l0_discovery_advisor_max_suggestions,
-                run_id="context_pack_manifest",
-            )
-        }
+        diagnostics["l0_discovery_advisor"] = l0_discovery_advisor_diagnostics_for_manifest(
+            selected_items=selected_items,
+            l0_store=l0_store,
+            max_suggestions=l0_discovery_advisor_max_suggestions,
+            run_id="context_pack_manifest",
+        )
 
     return ContextPackManifest(
         task=task,
@@ -765,5 +880,5 @@ def build_latest_context_manifest(
             require_admission=require_admission,
             max_warning_admissions=max_warning_admissions,
         ),
-        diagnostics=diagnostics,
+        diagnostics=diagnostics or None,
     )

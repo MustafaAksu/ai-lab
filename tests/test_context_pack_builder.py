@@ -1201,3 +1201,115 @@ def test_build_latest_context_manifest_auto_include_l0_discovery_deduplicates_ex
     )
 
     assert [item.item_id for item in manifest.items].count("L0-auto") == 1
+
+
+def test_build_latest_context_manifest_default_excludes_graph_neighborhood_candidates(tmp_path):
+    source_path = tmp_path / "ABS-0001.md"
+    target_path = tmp_path / "ABS-0002.md"
+    source_path.write_text("source abstraction", encoding="utf-8")
+    target_path.write_text("target abstraction", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0001",
+            "ABS",
+            "Source Memory",
+            source_path,
+            "2026-07-01T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+        make_record(
+            "ABS-0002",
+            "ABS",
+            "Target Memory",
+            target_path,
+            "2026-07-02T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare default context.",
+        records=records,
+        l1_dir=tmp_path / "empty-l1",
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0002",)
+    assert manifest.diagnostics is None
+
+
+def test_build_latest_context_manifest_can_opt_in_graph_neighborhood_candidates(tmp_path):
+    source_path = tmp_path / "ABS-0001.md"
+    target_path = tmp_path / "ABS-0002.md"
+    source_path.write_text("source abstraction", encoding="utf-8")
+    target_path.write_text("target abstraction", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0001",
+            "ABS",
+            "Source Memory",
+            source_path,
+            "2026-07-01T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+        make_record(
+            "ABS-0002",
+            "ABS",
+            "Target Memory",
+            target_path,
+            "2026-07-02T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    manifest = build_latest_context_manifest(
+        task="Prepare graph-local context.",
+        records=records,
+        l1_dir=tmp_path / "empty-l1",
+        include_graph_neighborhood_candidates=True,
+        graph_neighborhood_target_id="ABS-0002",
+        graph_neighborhood_future_edge_seed_records=(
+            {
+                "source_id": "ABS-0001",
+                "predicate": "supports",
+                "target_id": "ABS-0002",
+            },
+        ),
+    )
+
+    assert tuple(item.item_id for item in manifest.items) == ("ABS-0001", "ABS-0002")
+    assert manifest.items[0].reason.startswith("Graph-neighborhood context candidate")
+    assert manifest.diagnostics is not None
+    assert manifest.diagnostics["graph_neighborhood"]["enabled"] is True
+    assert manifest.diagnostics["graph_neighborhood"]["selection_effect"] == "opt_in_context_candidate"
+    assert manifest.diagnostics["graph_neighborhood"]["guardrails"]["default_off"] is True
+    assert manifest.diagnostics["graph_neighborhood"]["guardrails"]["provider_prompt_changed"] is False
+    assert manifest.diagnostics["graph_neighborhood"]["guardrails"]["persisted_graph_writes"] is False
+    assert manifest.diagnostics["graph_neighborhood"]["guardrails"]["runtime_manifest_changed"] is False
+
+
+def test_build_latest_context_manifest_requires_graph_target_when_opted_in(tmp_path):
+    import pytest
+
+    artifact_path = tmp_path / "ABS-0001.md"
+    artifact_path.write_text("source abstraction", encoding="utf-8")
+
+    records = (
+        make_record(
+            "ABS-0001",
+            "ABS",
+            "Source Memory",
+            artifact_path,
+            "2026-07-01T00:00:00+00:00",
+            abstraction_level=1,
+        ),
+    )
+
+    with pytest.raises(ContextPackError, match="graph_neighborhood_target_id is required"):
+        build_latest_context_manifest(
+            task="Prepare graph-local context.",
+            records=records,
+            l1_dir=tmp_path / "empty-l1",
+            include_graph_neighborhood_candidates=True,
+        )
