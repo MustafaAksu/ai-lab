@@ -1,0 +1,70 @@
+{
+  "constraints": [
+    "Evidence and decision artifact only.",
+    "No context-pack integration.",
+    "No runtime context selection changes.",
+    "No provider prompt changes.",
+    "No persisted graph node or edge writes.",
+    "No graph database adoption.",
+    "No retrieval calls.",
+    "No embedding calls.",
+    "No reranking calls.",
+    "No production index mutation.",
+    "No memory-store mutation.",
+    "No runtime-manifest mutation.",
+    "No automatic context inclusion.",
+    "Any integration must be a separate governed plan with its own admission warrant."
+  ],
+  "created_at": "2026-07-10T07:48:05.777861+00:00",
+  "created_from": {
+    "repo_commit": "8ec319214a4f8dd1997a235d895acbda8260d200",
+    "source_capability_id": "CAP-0007",
+    "source_plan_id": "PLAN-20260710-0001"
+  },
+  "depends_on_capability_ids": [
+    "CAP-0006",
+    "CAP-0007"
+  ],
+  "expected_outputs": [
+    "A repository-tracked graph-neighborhood readiness decision artifact.",
+    "Tests proving the artifact is evidence-only and has no context-selection effect.",
+    "A completion record deciding whether a separate integration proposal is justified."
+  ],
+  "next_action": "If admitted, implement only the repository readiness decision artifact. Do not implement context-pack integration or runtime selection behavior.",
+  "non_goals": [
+    "Implementing context-pack integration.",
+    "Changing runtime context selection.",
+    "Changing provider prompts.",
+    "Persisting graph state.",
+    "Adding retrieval, embeddings, reranking, or index mutation.",
+    "Automatically including graph-neighborhood context."
+  ],
+  "objective": "Create a repository-tracked evidence-only readiness decision artifact using CAP-0007. The artifact should decide whether the available CAP-0006/CAP-0007 evidence justifies proposing a separate context-pack integration plan for graph-local scoped memory.",
+  "plan_id": "PLAN-20260710-0002",
+  "proposed_change": "Create a repository-tracked evidence-only graph-neighborhood readiness decision artifact using CAP-0007 and CAP-0006 evidence. The artifact will decide only whether a separate governed context-pack integration plan should be proposed for graph-local scoped memory. It will not implement context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "rationale": [
+    "GAP-0002 remains open after CAP-0007.",
+    "CAP-0007 provides evidence-only readiness decision semantics but does not itself create a repository-tracked decision artifact.",
+    "A repository-tracked readiness decision artifact is the next safe governed step before any separate context-pack integration proposal is considered.",
+    "The plan remains evidence-only and explicitly blocks integration, runtime selection changes, prompt changes, persistence, retrieval, embeddings, reranking, index mutation, memory-store mutation, runtime-manifest mutation, and automatic context inclusion."
+  ],
+  "risk": "The main risk is mistaking an evidence-only readiness decision for approval to implement context-pack integration or runtime context selection. This plan mitigates that risk by explicitly blocking integration, prompt changes, persistence, retrieval, embeddings, reranking, index mutation, memory-store mutation, runtime-manifest mutation, and automatic context inclusion.",
+  "schema_version": "v1",
+  "scope": [
+    "Use CAP-0007 readiness decision semantics.",
+    "Produce a bounded repository artifact recording the readiness decision.",
+    "Record the evidence used for the decision.",
+    "Decide only whether a separate governed context-pack integration plan should be proposed.",
+    "Keep GAP-0002 open unless a separate future plan explicitly closes it."
+  ],
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "The readiness decision artifact is deterministic and repository-tracked.",
+    "The artifact cites CAP-0006/CAP-0007 evidence.",
+    "The artifact preserves selection_effect none.",
+    "The artifact explicitly blocks integration/runtime behaviors.",
+    "The full test suite and self-model audit pass."
+  ],
+  "title": "Create graph neighborhood repository readiness decision artifact"
+}
