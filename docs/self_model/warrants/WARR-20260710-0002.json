@@ -1,0 +1,22 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T06:56:12.443456+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0007.json",
+    "docs/self_model/verifications/VERIFY-20260710-0001.json",
+    "docs/self_model/plans/PLAN-20260710-0001.json",
+    "docs/self_model/warrants/WARR-20260710-0001.json",
+    "ai_lab/documentation/graph_neighborhood_readiness.py",
+    "tests/test_graph_neighborhood_readiness.py",
+    "be5e3e9a3425358fdad35684dea5bbda0991efeb"
+  ],
+  "reason": "The implementation satisfies the admitted evidence-only readiness/decision reporting slice for PLAN-20260710-0001. It consumes CAP-0006 evidence reports and decides only whether a separate context-pack integration plan should be proposed, without modifying context-pack behavior, runtime selection, prompts, graph persistence, retrieval, embeddings, reranking, indexes, memory stores, runtime manifests, or automatic inclusion.",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0007 as an implemented diagnostic capability only. Does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0007",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260710-0002",
+  "warrant_state": "supported"
+}

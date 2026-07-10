@@ -1,0 +1,31 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/graph_neighborhood_readiness.py",
+    "tests/test_graph_neighborhood_readiness.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood_readiness.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood readiness decision tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 454 tests."
+    }
+  ],
+  "created_at": "2026-07-10T06:56:12.443456+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "CAP-0007 implements evidence-only readiness/decision reporting from CAP-0006 reports. Tests verify positive separate-plan recommendation, not-ready behavior, evidence-report requirement, formatting, selection_effect none, preserved default context-pack behavior, and explicit no-integration/no-automatic-inclusion boundaries.",
+  "target_item_id": "CAP-0007",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260710-0001"
+}
