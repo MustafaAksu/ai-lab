@@ -1,4 +1,5 @@
 {
+  "admission_warrant_id": "WARR-20260710-0004",
   "constraints": [
     "Evidence and decision artifact only.",
     "No context-pack integration.",
@@ -30,7 +31,7 @@
     "Tests proving the artifact is evidence-only and has no context-selection effect.",
     "A completion record deciding whether a separate integration proposal is justified."
   ],
-  "next_action": "If admitted, implement only the repository readiness decision artifact. Do not implement context-pack integration or runtime selection behavior.",
+  "next_action": "Implement only the admitted repository-tracked evidence-only readiness decision artifact. Do not implement context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
   "non_goals": [
     "Implementing context-pack integration.",
     "Changing runtime context selection.",
@@ -58,7 +59,7 @@
     "Keep GAP-0002 open unless a separate future plan explicitly closes it."
   ],
   "source_gap_id": "GAP-0002",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "The readiness decision artifact is deterministic and repository-tracked.",
     "The artifact cites CAP-0006/CAP-0007 evidence.",

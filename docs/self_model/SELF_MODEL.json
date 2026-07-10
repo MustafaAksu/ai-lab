@@ -21,7 +21,8 @@
     "PLAN-20260709-0001",
     "PLAN-20260709-0002",
     "PLAN-20260709-0003",
-    "PLAN-20260710-0001"
+    "PLAN-20260710-0001",
+    "PLAN-20260710-0002"
   ],
   "audit_summary": {
     "ok": true,
@@ -107,7 +108,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T08:55:35+00:00",
+  "generated_at": "2026-07-10T09:19:44+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -259,8 +260,8 @@
     "PLAN-20260710-0002"
   ],
   "plan_counts": {
-    "completed": 13,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 13
   },
   "plans": [
     {
@@ -358,7 +359,7 @@
       "plan_id": "PLAN-20260710-0002",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260710-0002.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Create graph neighborhood repository readiness decision artifact"
     }
   ],
@@ -369,7 +370,7 @@
       "target": "Use CAP-0007 evidence-only readiness decisions to determine whether to propose a separate context-pack integration plan for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "8ec319214a4f8dd1997a235d895acbda8260d200",
+  "repo_head": "a6dad9297ad1940ccaef0d92b01845bd7af2b413",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -460,7 +461,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 31
+    "supported": 32
   },
   "warrants": [
     {
@@ -709,6 +710,14 @@
       "target_item_id": "PLAN-20260710-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260710-0003",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260710-0004.json",
+      "target_item_id": "PLAN-20260710-0002",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260710-0004",
       "warrant_state": "supported"
     }
   ]
