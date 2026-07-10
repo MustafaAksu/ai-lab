@@ -1,0 +1,45 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260710-0001.json",
+    "docs/self_model/capabilities/CAP-0007.json",
+    "docs/self_model/verifications/VERIFY-20260710-0001.json",
+    "docs/self_model/warrants/WARR-20260710-0002.json",
+    "ai_lab/documentation/graph_neighborhood_readiness.py",
+    "tests/test_graph_neighborhood_readiness.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood_readiness.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood readiness decision tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Self-model tests passed with 115 tests before completion records."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 458 tests before completion records."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit passed before completion records."
+    }
+  ],
+  "created_at": "2026-07-10T07:43:28.648500+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "8fb13b50d2cd0e5c513d2d5838bed68716209586",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "PLAN-20260710-0001 completed. The evidence-only graph-neighborhood readiness decision report was implemented and recorded as CAP-0007. Tests confirm positive separate-plan recommendations, not-ready behavior, evidence requirements, formatting, selection_effect none, preserved default context-pack behavior, and explicit no-integration boundaries.",
+  "target_item_id": "PLAN-20260710-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260710-0002"
+}

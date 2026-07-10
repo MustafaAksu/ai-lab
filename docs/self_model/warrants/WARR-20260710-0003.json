@@ -1,0 +1,23 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T07:43:28.648500+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260710-0001.json",
+    "docs/self_model/capabilities/CAP-0007.json",
+    "docs/self_model/verifications/VERIFY-20260710-0001.json",
+    "docs/self_model/verifications/VERIFY-20260710-0002.json",
+    "docs/self_model/warrants/WARR-20260710-0002.json",
+    "ai_lab/documentation/graph_neighborhood_readiness.py",
+    "tests/test_graph_neighborhood_readiness.py",
+    "8fb13b50d2cd0e5c513d2d5838bed68716209586"
+  ],
+  "reason": "The admitted evidence-only readiness/decision reporting slice was implemented, tested, recorded as CAP-0007, and kept within the no-selection/no-integration boundary. The warrant decision uses schema-valid 'admit'; completion semantics are recorded by target_item_type, target_item_id, scope, and PLAN completion fields.",
+  "schema_version": "v1",
+  "scope": "Completes PLAN-20260710-0001 only. GAP-0002 remains open. This warrant does not close graph-local scoped memory and does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260710-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260710-0003",
+  "warrant_state": "supported"
+}

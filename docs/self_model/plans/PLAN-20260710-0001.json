@@ -2,6 +2,10 @@
   "admission_summary": "Admitted for evidence-only readiness/decision reporting using CAP-0006. No context-pack integration, runtime context selection behavior, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion are admitted.",
   "admission_warrant_id": "WARR-20260710-0001",
   "admitted_at": "2026-07-10T06:47:34.603562+00:00",
+  "completed_at": "2026-07-10T07:43:28.648500+00:00",
+  "completion_summary": "Completed the evidence-only readiness/decision reporting slice. Implementation is recorded as CAP-0007 and decides only whether a separate governed context-pack integration plan should be proposed. No context-pack integration, runtime selection behavior, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion were added.",
+  "completion_verification_id": "VERIFY-20260710-0002",
+  "completion_warrant_id": "WARR-20260710-0003",
   "constraints": [
     "Proposal only: no implementation is admitted by this PLAN record.",
     "Evidence and decision reporting only.",
@@ -16,7 +20,7 @@
     "Any context-pack integration must be proposed and admitted under a separate future plan."
   ],
   "created_at": "2026-07-10T06:43:11.069479+00:00",
-  "next_action": "Implement the admitted evidence-only readiness/decision report. The implementation may consume CAP-0006 reports and produce a bounded recommendation about whether to propose a separate integration plan, but it must not implement integration or runtime selection behavior.",
+  "next_action": "Keep GAP-0002 open. Use CAP-0007 readiness decisions to determine whether to propose a separate context-pack integration plan. Any integration remains outside this completed plan.",
   "objective": "Use CAP-0006 evidence-only reports to decide whether a separate governed context-pack integration proposal is justified for graph-local scoped memory.",
   "plan_id": "PLAN-20260710-0001",
   "proposed_change": "Add a deterministic repository evidence decision/report artifact around CAP-0006. The report should apply CAP-0006 to deterministic repository artifacts or fixtures, summarize whether relation paths, authority labels, token estimates, diagnostic rationales, and selection_effect none are adequate, and produce a bounded decision on whether to propose a separate context-pack integration plan.",
@@ -29,7 +33,7 @@
   "risk": "A positive readiness decision may be mistaken for implementation approval. This plan must only decide whether to propose a separate integration plan; it must not admit or implement integration.",
   "schema_version": "v1",
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "A deterministic decision/report contract is represented in tests and source code.",
     "The report consumes CAP-0006 evidence-only output rather than bypassing it.",

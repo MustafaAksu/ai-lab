@@ -28,7 +28,7 @@
     "severity_counts": {
       "error": 0,
       "info": 34,
-      "warn": 14
+      "warn": 15
     }
   },
   "capabilities": [
@@ -107,7 +107,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T07:34:17+00:00",
+  "generated_at": "2026-07-10T07:43:28+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -250,12 +250,9 @@
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [
-    "PLAN-20260710-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 12
+    "completed": 13
   },
   "plans": [
     {
@@ -346,7 +343,7 @@
       "plan_id": "PLAN-20260710-0001",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260710-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Decide graph neighborhood integration readiness"
     }
   ],
@@ -354,10 +351,10 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
-      "target": "Use CAP-0006 evidence-only reports to decide whether a separate context-pack integration proposal should be created for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
+      "target": "Use CAP-0007 evidence-only readiness decisions to determine whether to propose a separate context-pack integration plan for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+  "repo_head": "8fb13b50d2cd0e5c513d2d5838bed68716209586",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -440,10 +437,15 @@
       "repo_commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
       "source_path": "docs/self_model/verifications/VERIFY-20260710-0001.json",
       "verification_id": "VERIFY-20260710-0001"
+    },
+    {
+      "repo_commit": "8fb13b50d2cd0e5c513d2d5838bed68716209586",
+      "source_path": "docs/self_model/verifications/VERIFY-20260710-0002.json",
+      "verification_id": "VERIFY-20260710-0002"
     }
   ],
   "warrant_counts": {
-    "supported": 30
+    "supported": 31
   },
   "warrants": [
     {
@@ -684,6 +686,14 @@
       "target_item_id": "CAP-0007",
       "target_item_type": "capability",
       "warrant_id": "WARR-20260710-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260710-0003.json",
+      "target_item_id": "PLAN-20260710-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260710-0003",
       "warrant_state": "supported"
     }
   ]
