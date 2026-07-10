@@ -17,12 +17,13 @@
     "reason": "COMP-0025 and the architecture/development documents identify graph-local scoped memory as a missing capability. Current implementation validates bootstrap edge records, formats artifact lineage/source trees, and exposes future edge seeds, but context construction still relies on latest_records_by_context_level and does not compute graph neighborhoods or graph-state-aware memory selection."
   },
   "gap_id": "GAP-0002",
+  "last_reviewed_at": "2026-07-10T06:34:20.257443+00:00",
   "name": "Graph-local scoped memory context selection",
   "notes": [
     "The original recommended first slice, adding a read-only graph neighborhood diagnostic/advisor, was completed by PLAN-20260709-0002 and recorded as CAP-0005. GAP-0002 remains open because graph-local scoped memory context selection is not yet implemented."
   ],
   "priority": "medium",
-  "recommended_first_slice": "Add an evidence-only graph-neighborhood diagnostic evaluation/reporting slice that applies CAP-0005 to deterministic repository artifacts or fixtures, records whether relation paths, authority labels, and token estimates are useful for future graph-local scoped memory, and proposes whether context-pack integration should be separately planned. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion.",
+  "recommended_first_slice": "Use CAP-0006 evidence-only reports to decide whether a separate context-pack integration proposal should be created for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant.",
   "related_capabilities": [
     "CAP-0001",
     "CAP-0002",

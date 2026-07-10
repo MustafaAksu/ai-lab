@@ -1,0 +1,45 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260709-0003.json",
+    "docs/self_model/capabilities/CAP-0006.json",
+    "docs/self_model/verifications/VERIFY-20260709-0004.json",
+    "docs/self_model/warrants/WARR-20260709-0009.json",
+    "ai_lab/documentation/graph_neighborhood_evaluation.py",
+    "tests/test_graph_neighborhood_evaluation.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_graph_neighborhood_evaluation.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood evidence evaluation tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Self-model tests passed with 104 tests before completion records."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 443 tests before completion records."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit passed before completion records."
+    }
+  ],
+  "created_at": "2026-07-10T06:34:20.257443+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "6d177b86257be2f563a271bef693fd7ad90ba39f",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "PLAN-20260709-0003 completed. The evidence-only graph-neighborhood evaluation/reporting slice was implemented and recorded as CAP-0006, with tests confirming diagnostic-only behavior, relation-path evidence, authority labels, token estimates, rationales, formatting, and explicit no-selection/no-prompt/no-automatic-inclusion boundaries.",
+  "target_item_id": "PLAN-20260709-0003",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260709-0005"
+}

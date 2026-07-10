@@ -2,6 +2,10 @@
   "admission_summary": "Admitted for evidence-only graph-neighborhood advisor evaluation/reporting. No context-pack integration, runtime selection behavior, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, or automatic context inclusion are admitted.",
   "admission_warrant_id": "WARR-20260709-0008",
   "admitted_at": "2026-07-09T20:11:06.231601+00:00",
+  "completed_at": "2026-07-10T06:34:20.257443+00:00",
+  "completion_summary": "Completed the evidence-only graph-neighborhood advisor evaluation/reporting slice. Implementation is recorded as CAP-0006 and remains diagnostic-only with selection_effect none. No context-pack integration, runtime selection behavior, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime manifest mutation, or automatic context inclusion were added.",
+  "completion_verification_id": "VERIFY-20260709-0005",
+  "completion_warrant_id": "WARR-20260709-0010",
   "constraints": [
     "Proposal only: no implementation is admitted by this PLAN record.",
     "Evidence/reporting only.",
@@ -15,7 +19,7 @@
     "Use CAP-0005 as diagnostic evidence only."
   ],
   "created_at": "2026-07-09T20:03:54.782006+00:00",
-  "next_action": "Implement the admitted evidence-only evaluation/reporting slice using CAP-0005. Maintain the reporting-only boundary and do not modify runtime selection, prompts, graph persistence, retrieval, embeddings, reranking, indexes, memory stores, or automatic context inclusion.",
+  "next_action": "Keep GAP-0002 open. Use CAP-0006 evidence reports to decide whether a separate context-pack integration proposal should be created under a new governed plan.",
   "objective": "Evaluate CAP-0005 as an evidence-only diagnostic/reporting slice before any context-pack integration or graph-local scoped memory selection behavior is planned.",
   "plan_id": "PLAN-20260709-0003",
   "proposed_change": "Add deterministic evidence/reporting around the read-only graph neighborhood advisor. The slice should apply CAP-0005 to repository fixtures or deterministic artifacts, record whether relation paths, authority labels, token estimates, and diagnostic inclusion/exclusion rationale are useful for future graph-local scoped memory, and produce a recommendation about whether context-pack integration should be separately planned.",
@@ -28,7 +32,7 @@
   "risk": "Evidence reports may be mistaken for approval of context-pack integration. This plan must remain reporting-only and must not admit any selector, prompt, retrieval, embedding, reranking, persistence, or automatic-inclusion behavior.",
   "schema_version": "v1",
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "A deterministic evidence/reporting contract is represented in tests and source code.",
     "The report applies CAP-0005 to deterministic artifacts or fixtures.",

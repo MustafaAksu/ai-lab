@@ -98,7 +98,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-09T20:23:02+00:00",
+  "generated_at": "2026-07-10T06:39:21+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -226,12 +226,9 @@
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [
-    "PLAN-20260709-0003"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 11
+    "completed": 12
   },
   "plans": [
     {
@@ -315,7 +312,7 @@
       "plan_id": "PLAN-20260709-0003",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260709-0003.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Evaluate graph neighborhood advisor evidence"
     }
   ],
@@ -323,10 +320,10 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
-      "target": "Add an evidence-only graph-neighborhood diagnostic evaluation/reporting slice that applies CAP-0005 to deterministic repository artifacts or fixtures, records whether relation paths, authority labels, and token estimates are useful for future graph-local scoped memory, and proposes whether context-pack integration should be separately planned. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion."
+      "target": "Use CAP-0006 evidence-only reports to decide whether a separate context-pack integration proposal should be created for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
+  "repo_head": "6d177b86257be2f563a271bef693fd7ad90ba39f",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -399,10 +396,15 @@
       "repo_commit": "87664eca9c573f050659dbe4e8f5a52fe08f31dc",
       "source_path": "docs/self_model/verifications/VERIFY-20260709-0004.json",
       "verification_id": "VERIFY-20260709-0004"
+    },
+    {
+      "repo_commit": "6d177b86257be2f563a271bef693fd7ad90ba39f",
+      "source_path": "docs/self_model/verifications/VERIFY-20260709-0005.json",
+      "verification_id": "VERIFY-20260709-0005"
     }
   ],
   "warrant_counts": {
-    "supported": 27
+    "supported": 28
   },
   "warrants": [
     {
@@ -619,6 +621,14 @@
       "target_item_id": "CAP-0006",
       "target_item_type": "capability",
       "warrant_id": "WARR-20260709-0009",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260709-0010.json",
+      "target_item_id": "PLAN-20260709-0003",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260709-0010",
       "warrant_state": "supported"
     }
   ]
