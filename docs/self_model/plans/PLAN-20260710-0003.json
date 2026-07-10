@@ -1,4 +1,5 @@
 {
+  "admission_warrant_id": "WARR-20260710-0007",
   "constraints": [
     "Proposal only.",
     "Do not implement context-pack integration in this plan proposal.",
@@ -37,7 +38,7 @@
     "No runtime integration implementation in the proposal commit."
   ],
   "mitigation": "Limit this step to self-model plan records, tests, and index updates. Require a separate admission warrant before any code path changes context-pack behavior.",
-  "next_action": "Seek admission for this proposed context-pack integration plan. Do not implement integration until the plan is admitted by a separate warrant.",
+  "next_action": "Implement only the admitted context-pack integration slice under PLAN-20260710-0003 constraints. Preserve existing default context-pack behavior until implementation tests and completion warrant support any behavior change.",
   "non_goals": [
     "Implementing context-pack integration.",
     "Changing runtime context selection.",
@@ -73,7 +74,7 @@
     "CAP-0008"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "The plan validates through the self-model schema.",
     "The plan is indexed as proposed and open.",

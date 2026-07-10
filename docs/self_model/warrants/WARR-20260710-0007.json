@@ -1,0 +1,27 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Implementation must remain evidence-only.",
+    "Default context-pack behavior must remain unchanged.",
+    "No context selection, provider prompt, persistence, retrieval, embedding, reranking, index, memory-store, runtime-manifest, or automatic inclusion behavior may be changed.",
+    "Any actual context-pack integration requires a later separate governed plan and admission warrant."
+  ],
+  "created_at": "2026-07-10T10:31:39.665540+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "docs/self_model/capabilities/CAP-0008.json",
+    "docs/self_model/plans/PLAN-20260710-0002.json"
+  ],
+  "reason": "Admit PLAN-20260710-0003 as a governed context-pack integration planning slice. The admission is supported by DECISION-20260710-0001 and CAP-0008, and permits only the admitted planning/implementation work under the plan constraints. This warrant does not itself implement runtime context selection changes, provider prompt changes, persisted graph writes, retrieval changes, embeddings, reranking, production index mutation, memory store mutation, runtime manifest mutation, or automatic context inclusion.",
+  "repo_commit": "0ed6f5bd20df7a633b4423afbc7276579d478bf3",
+  "schema_version": "v1",
+  "scope": "Admit only the evidence-only repository-tracked readiness decision artifact plan.",
+  "substrate": "self_model_governance",
+  "target_item_id": "PLAN-20260710-0003",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260710-0007",
+  "warrant_state": "supported"
+}
