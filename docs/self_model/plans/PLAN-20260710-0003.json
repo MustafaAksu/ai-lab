@@ -1,0 +1,86 @@
+{
+  "constraints": [
+    "Proposal only.",
+    "Do not implement context-pack integration in this plan proposal.",
+    "Do not change runtime context selection.",
+    "Do not change provider prompts.",
+    "Do not write persisted graph artifacts.",
+    "Do not add a graph database.",
+    "Do not change retrieval, embeddings, reranking, or production indexes.",
+    "Do not mutate memory stores or runtime manifests.",
+    "Do not enable automatic context inclusion.",
+    "Any implementation requires this plan to be admitted first."
+  ],
+  "created_at": "2026-07-10T10:19:27.446686+00:00",
+  "created_from": {
+    "repo_commit": "8ec319214a4f8dd1997a235d895acbda8260d200",
+    "source_capability_id": "CAP-0007",
+    "source_plan_id": "PLAN-20260710-0001"
+  },
+  "created_from_repo_commit": "983a364374c0bb0255d1092a9b550e1b20c3692b",
+  "depends_on_capability_ids": [
+    "CAP-0005",
+    "CAP-0006",
+    "CAP-0007",
+    "CAP-0008"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "docs/self_model/capabilities/CAP-0008.json",
+    "docs/self_model/plans/PLAN-20260710-0002.json"
+  ],
+  "expected_outputs": [
+    "A proposed context-pack integration plan for graph-local scoped memory.",
+    "Explicit integration boundaries and rollback constraints.",
+    "Success criteria requiring preservation of existing default context-pack behavior until admitted.",
+    "No runtime integration implementation in the proposal commit."
+  ],
+  "mitigation": "Limit this step to self-model plan records, tests, and index updates. Require a separate admission warrant before any code path changes context-pack behavior.",
+  "next_action": "Seek admission for this proposed context-pack integration plan. Do not implement integration until the plan is admitted by a separate warrant.",
+  "non_goals": [
+    "Implementing context-pack integration.",
+    "Changing runtime context selection.",
+    "Changing provider prompts.",
+    "Persisting graph state.",
+    "Adding retrieval, embeddings, reranking, or index mutation.",
+    "Automatically including graph-neighborhood context."
+  ],
+  "objective": "Create a repository-tracked evidence-only readiness decision artifact using CAP-0007. The artifact should decide whether the available CAP-0006/CAP-0007 evidence justifies proposing a separate context-pack integration plan for graph-local scoped memory.",
+  "plan_id": "PLAN-20260710-0003",
+  "proposed_change": "Create a governed plan for a narrowly scoped context-pack integration slice that can use graph-neighborhood readiness evidence to prepare future context selection behavior while preserving existing default context-pack behavior until separately admitted and implemented.",
+  "rationale": [
+    "GAP-0002 remains open after PLAN-20260710-0002 completion.",
+    "DECISION-20260710-0001 records that the repository readiness evidence supports proposing a separate governed context-pack integration plan.",
+    "CAP-0008 provides a repository-tracked evidence-only readiness decision artifact.",
+    "The next step must be proposal and admission governance before any integration implementation."
+  ],
+  "repo_commit": "983a364374c0bb0255d1092a9b550e1b20c3692b",
+  "risk": "The main risk is accidentally implementing integration behavior during the proposal step. This plan must remain a governance proposal only until admitted.",
+  "schema_version": "v1",
+  "scope": [
+    "Use CAP-0007 readiness decision semantics.",
+    "Produce a bounded repository artifact recording the readiness decision.",
+    "Record the evidence used for the decision.",
+    "Decide only whether a separate governed context-pack integration plan should be proposed.",
+    "Keep GAP-0002 open unless a separate future plan explicitly closes it."
+  ],
+  "source_capability_id": "CAP-0008",
+  "source_capability_ids": [
+    "CAP-0005",
+    "CAP-0006",
+    "CAP-0007",
+    "CAP-0008"
+  ],
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "The plan validates through the self-model schema.",
+    "The plan is indexed as proposed and open.",
+    "The plan explicitly cites DECISION-20260710-0001 and CAP-0008 as evidence.",
+    "The plan explicitly blocks implementation until a later admission warrant.",
+    "Self-model tests, full tests, and audit pass."
+  ],
+  "summary": "Propose a separate governed context-pack integration plan for graph-local scoped memory. This proposal is the governance step after DECISION-20260710-0001 and CAP-0008; it does not implement integration or change runtime behavior.",
+  "title": "Propose graph neighborhood context-pack integration plan"
+}

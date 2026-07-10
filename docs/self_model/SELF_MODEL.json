@@ -116,7 +116,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T09:53:11+00:00",
+  "generated_at": "2026-07-10T10:25:39+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -268,15 +268,23 @@
       "risk": "The main risk is mistaking an evidence-only readiness decision for approval to implement context-pack integration or runtime context selection. This plan mitigates that risk by explicitly blocking integration, prompt changes, persistence, retrieval, embeddings, reranking, index mutation, memory-store mutation, runtime-manifest mutation, and automatic context inclusion.",
       "source_field": "risk",
       "source_record": "PLAN-20260710-0002"
+    },
+    {
+      "risk": "The main risk is accidentally implementing integration behavior during the proposal step. This plan must remain a governance proposal only until admitted.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260710-0003"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260710-0003"
+  ],
   "plan_counts": {
-    "completed": 14
+    "completed": 14,
+    "proposed": 1
   },
   "plans": [
     {
@@ -376,6 +384,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260710-0002.json",
       "status": "completed",
       "title": "Create graph neighborhood repository readiness decision artifact"
+    },
+    {
+      "plan_id": "PLAN-20260710-0003",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260710-0003.json",
+      "status": "proposed",
+      "title": "Propose graph neighborhood context-pack integration plan"
     }
   ],
   "recommended_next_targets": [
@@ -385,7 +400,7 @@
       "target": "Propose a separate governed context-pack integration plan for graph-local scoped memory using DECISION-20260710-0001 and CAP-0008 as evidence-only readiness evidence. The proposal must preserve existing default context-pack behavior until separately admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "675432925b0de6238c5849887ea0a13772d8078f",
+  "repo_head": "983a364374c0bb0255d1092a9b550e1b20c3692b",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
