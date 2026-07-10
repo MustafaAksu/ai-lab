@@ -108,7 +108,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T09:19:44+00:00",
+  "generated_at": "2026-07-10T09:24:17+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -370,7 +370,7 @@
       "target": "Use CAP-0007 evidence-only readiness decisions to determine whether to propose a separate context-pack integration plan for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "a6dad9297ad1940ccaef0d92b01845bd7af2b413",
+  "repo_head": "d1fe6858e2f4b91c7782f9ce11579ed996ccf953",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

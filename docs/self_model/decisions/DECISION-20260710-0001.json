@@ -1,0 +1,51 @@
+{
+  "authorized_effects": [
+    "Record an evidence-only repository readiness decision.",
+    "Recommend proposing a separate governed context-pack integration plan."
+  ],
+  "blocked_effects": [
+    "No context-pack integration.",
+    "No runtime context selection changes.",
+    "No provider prompt changes.",
+    "No persisted graph writes.",
+    "No graph database.",
+    "No retrieval, embedding, or reranking changes.",
+    "No production index mutation.",
+    "No memory-store mutation.",
+    "No runtime-manifest mutation.",
+    "No automatic context inclusion."
+  ],
+  "created_at": "2026-07-10T09:22:40.870029+00:00",
+  "decision": "propose_separate_context_pack_integration_plan",
+  "decision_id": "DECISION-20260710-0001",
+  "evidence_refs": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/plans/PLAN-20260710-0002.json",
+    "docs/self_model/capabilities/CAP-0006.json",
+    "docs/self_model/capabilities/CAP-0007.json",
+    "docs/self_model/warrants/WARR-20260710-0004.json"
+  ],
+  "rationale": [
+    "GAP-0002 remains open for graph-local scoped memory context selection.",
+    "CAP-0006 provides evidence evaluation for graph neighborhood reports.",
+    "CAP-0007 provides evidence-only readiness decision semantics.",
+    "A separate context-pack integration plan is justified only as a future governed proposal, not as part of this artifact."
+  ],
+  "repo_commit": "d1fe6858e2f4b91c7782f9ce11579ed996ccf953",
+  "required_next_governance": [
+    "Any context-pack integration must be proposed as a separate governed context-pack integration plan.",
+    "Any integration plan must receive its own admission warrant before implementation.",
+    "Existing default context-pack behavior must remain unchanged until separately admitted."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "none",
+  "source_capability_ids": [
+    "CAP-0006",
+    "CAP-0007"
+  ],
+  "source_gap_id": "GAP-0002",
+  "source_plan_id": "PLAN-20260710-0002",
+  "status": "recorded",
+  "summary": "CAP-0006/CAP-0007 evidence supports proposing a separate governed context-pack integration plan for graph-local scoped memory. This decision artifact does not implement or admit integration.",
+  "title": "Graph neighborhood repository readiness decision"
+}

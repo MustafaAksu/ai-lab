@@ -2347,3 +2347,34 @@ def test_build_self_model_index_records_warr_20260710_0004_admission():
         and warrant["source_path"] == "docs/self_model/warrants/WARR-20260710-0004.json"
         for warrant in index["warrants"]
     )
+
+
+def test_decision_20260710_0001_graph_neighborhood_repository_readiness():
+    decision = read_json(Path("docs/self_model/decisions/DECISION-20260710-0001.json"))
+
+    assert decision["schema_version"] == "v1"
+    assert decision["decision_id"] == "DECISION-20260710-0001"
+    assert decision["status"] == "recorded"
+    assert decision["source_gap_id"] == "GAP-0002"
+    assert decision["source_plan_id"] == "PLAN-20260710-0002"
+    assert decision["source_capability_ids"] == ["CAP-0006", "CAP-0007"]
+    assert decision["decision"] == "propose_separate_context_pack_integration_plan"
+    assert decision["selection_effect"] == "none"
+
+    blocked = set(decision["blocked_effects"])
+    assert "No context-pack integration." in blocked
+    assert "No runtime context selection changes." in blocked
+    assert "No provider prompt changes." in blocked
+    assert "No persisted graph writes." in blocked
+    assert "No graph database." in blocked
+    assert "No retrieval, embedding, or reranking changes." in blocked
+    assert "No production index mutation." in blocked
+    assert "No memory-store mutation." in blocked
+    assert "No runtime-manifest mutation." in blocked
+    assert "No automatic context inclusion." in blocked
+
+    assert any(
+        "separate governed context-pack integration plan"
+        in item
+        for item in decision["required_next_governance"]
+    )
