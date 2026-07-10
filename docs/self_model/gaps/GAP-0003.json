@@ -3,18 +3,18 @@
   "category": "self_model_infrastructure",
   "evidence": {
     "files_checked": [
-      "docs/comparisons/COMP-0025-ai-lab-next-gap-after-gap-0001-closure.md",
-      "docs/architecture/ADR-0001-engineering-constitution.md",
-      "docs/architecture/ADR-0002-ontology-precedes-implementation.md",
-      "docs/architecture/ADR-0003-edge-identity-immutability-and-addressing.md",
-      "docs/development_directions.md",
+      "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
+      "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.context.json",
       "docs/self_model/SELF_MODEL_SCHEMA.md",
-      "ai_lab/documentation/edge_validation.py",
-      "ai_lab/documentation/artifact_history.py",
-      "ai_lab/documentation/interaction_log.py",
-      "ai_lab/documentation/context_pack_builder.py"
+      "docs/self_model/SELF_MODEL.json",
+      "docs/self_model/gaps/GAP-0002.json",
+      "docs/self_model/capabilities/CAP-0009.json",
+      "ai_lab/documentation/self_model.py",
+      "scripts/build_self_model.py",
+      "scripts/audit_self_model_index.py",
+      "tests/test_self_model.py"
     ],
-    "reason": "COMP-0025 and the architecture/development documents identify graph-local scoped memory as a missing capability. Current implementation validates bootstrap edge records, formats artifact lineage/source trees, and exposes future edge seeds, but context construction still relies on latest_records_by_context_level and does not compute graph neighborhoods or graph-state-aware memory selection."
+    "reason": "COMP-0026 records independent provider agreement that AI-Lab's dynamic record discovery is undermined by production tests and maintenance workflows that encode exact inventories and quantities. The GAP-0003 registration itself directly reproduced the problem: adding one gap and one warrant caused failures in exact open-gap lists and counts, recommendation inventories, supported-warrant counts, and the complete warrant-ID set, even though the generated self-model index and normalized-content audit were correct. This demonstrates a missing parametric registry and invariant-based verification layer rather than isolated test cleanup."
   },
   "evidence_ids": [
     "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
@@ -23,7 +23,7 @@
     "docs/self_model/capabilities/CAP-0009.json"
   ],
   "gap_id": "GAP-0003",
-  "last_reviewed_at": "2026-07-10T07:43:28.648500+00:00",
+  "last_reviewed_at": "2026-07-10T20:01:25.489735+00:00",
   "name": "Parametric self-model registry and invariant-based verification",
   "notes": [
     "COMP-0026 records provider agreement that this is an architectural self-model gap rather than isolated test cleanup.",
@@ -35,10 +35,7 @@
   "priority": "high",
   "recommended_first_slice": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan.",
   "related_capabilities": [
-    "CAP-0001",
-    "CAP-0002",
-    "CAP-0003",
-    "CAP-0004"
+    "CAP-0009"
   ],
   "risk": "Without a parametric registry and invariant-based verification, self-model growth remains brittle, repository projections can become stale, referential or lifecycle errors can be hidden behind manually updated counts, and every new governed object increases maintenance cost before feature work can proceed safely.",
   "schema_version": "v1",
