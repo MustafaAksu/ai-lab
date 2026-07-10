@@ -98,7 +98,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T06:39:21+00:00",
+  "generated_at": "2026-07-10T06:45:05+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -220,15 +220,23 @@
       "risk": "Evidence reports may be mistaken for approval of context-pack integration. This plan must remain reporting-only and must not admit any selector, prompt, retrieval, embedding, reranking, persistence, or automatic-inclusion behavior.",
       "source_field": "risk",
       "source_record": "PLAN-20260709-0003"
+    },
+    {
+      "risk": "A positive readiness decision may be mistaken for implementation approval. This plan must only decide whether to propose a separate integration plan; it must not admit or implement integration.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260710-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260710-0001"
+  ],
   "plan_counts": {
-    "completed": 12
+    "completed": 12,
+    "proposed": 1
   },
   "plans": [
     {
@@ -314,6 +322,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260709-0003.json",
       "status": "completed",
       "title": "Evaluate graph neighborhood advisor evidence"
+    },
+    {
+      "plan_id": "PLAN-20260710-0001",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260710-0001.json",
+      "status": "proposed",
+      "title": "Decide graph neighborhood integration readiness"
     }
   ],
   "recommended_next_targets": [
@@ -323,7 +338,7 @@
       "target": "Use CAP-0006 evidence-only reports to decide whether a separate context-pack integration proposal should be created for graph-local scoped memory. Any integration must be a new governed plan and must explicitly preserve existing default context-pack behavior until admitted. Do not modify context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "6d177b86257be2f563a271bef693fd7ad90ba39f",
+  "repo_head": "e51f55a82e646d16a99f0761ae1afe17a0103970",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

@@ -1,0 +1,40 @@
+{
+  "constraints": [
+    "Proposal only: no implementation is admitted by this PLAN record.",
+    "Evidence and decision reporting only.",
+    "No context-pack integration.",
+    "No runtime context selection changes.",
+    "No provider prompt changes.",
+    "No persisted graph node or edge writes.",
+    "No graph database.",
+    "No retrieval, embedding, reranking, or production index mutation.",
+    "No memory-store or runtime-manifest mutation.",
+    "No automatic context inclusion.",
+    "Any context-pack integration must be proposed and admitted under a separate future plan."
+  ],
+  "created_at": "2026-07-10T06:43:11.069479+00:00",
+  "next_action": "Seek admission for this proposed evidence-only decision/report slice before implementation.",
+  "objective": "Use CAP-0006 evidence-only reports to decide whether a separate governed context-pack integration proposal is justified for graph-local scoped memory.",
+  "plan_id": "PLAN-20260710-0001",
+  "proposed_change": "Add a deterministic repository evidence decision/report artifact around CAP-0006. The report should apply CAP-0006 to deterministic repository artifacts or fixtures, summarize whether relation paths, authority labels, token estimates, diagnostic rationales, and selection_effect none are adequate, and produce a bounded decision on whether to propose a separate context-pack integration plan.",
+  "rationale": [
+    "GAP-0002 remains open after CAP-0005 and CAP-0006 because graph-local scoped memory selection is not implemented.",
+    "CAP-0006 provides evidence-only reports but does not itself decide whether integration should be proposed.",
+    "The current GAP-0002 recommended first slice asks for CAP-0006 evidence-only reports to decide whether a separate context-pack integration proposal should be created.",
+    "A decision/report artifact preserves the no-integration boundary while making the next governance choice auditable."
+  ],
+  "risk": "A positive readiness decision may be mistaken for implementation approval. This plan must only decide whether to propose a separate integration plan; it must not admit or implement integration.",
+  "schema_version": "v1",
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "A deterministic decision/report contract is represented in tests and source code.",
+    "The report consumes CAP-0006 evidence-only output rather than bypassing it.",
+    "The report records whether relation paths, authority labels, token estimates, diagnostic rationales, and selection_effect none are adequate.",
+    "The report produces a bounded recommendation: propose a separate context-pack integration plan, or do not propose one yet.",
+    "The report explicitly preserves existing default context-pack behavior.",
+    "No runtime selection, provider prompt, graph persistence, retrieval, embedding, reranking, index, memory-store, runtime-manifest, or automatic-inclusion behavior is changed.",
+    "Self-model and audit tests remain green."
+  ],
+  "title": "Decide graph neighborhood integration readiness"
+}
