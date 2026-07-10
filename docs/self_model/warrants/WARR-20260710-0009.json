@@ -1,0 +1,21 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T14:53:18.703223+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "docs/self_model/verifications/VERIFY-20260710-0006.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "tests/test_context_pack_builder.py"
+  ],
+  "reason": "PLAN-20260710-0003 is complete because CAP-0009 implements the admitted opt-in, default-off graph-neighborhood context-pack candidate slice with targeted/full test and audit evidence. Completion does not close GAP-0002 because automatic provider/runtime context inclusion remains out of scope.",
+  "repo_commit": "ebb599409ac1b6248432b697e8d37253e2111b6a",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0009 as an implemented diagnostic capability only. Does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260710-0003",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260710-0009",
+  "warrant_state": "supported"
+}

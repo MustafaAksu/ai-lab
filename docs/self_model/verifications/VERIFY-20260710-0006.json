@@ -1,0 +1,36 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "tests/test_self_model.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_context_pack.py tests/test_context_pack_builder.py tests/test_context_pack_renderer.py tests/test_prompt_context.py tests/test_graph_neighborhood.py -x",
+      "exit_code": 0,
+      "summary": "Targeted context-pack, prompt-context, and graph-neighborhood tests passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository test suite passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model audit returned ok true."
+    }
+  ],
+  "created_at": "2026-07-10T14:53:18.703223+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "ebb599409ac1b6248432b697e8d37253e2111b6a",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260710-0003 after CAP-0009 recorded the opt-in, default-off graph-neighborhood context-pack candidate integration. Targeted tests, full repository tests, and self-model audit passed. Existing default context-pack behavior remains preserved; provider prompt defaults, persisted graph writes, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, and automatic context inclusion were not enabled.",
+  "target_item_id": "PLAN-20260710-0003",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260710-0006"
+}

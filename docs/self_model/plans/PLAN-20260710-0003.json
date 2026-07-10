@@ -1,5 +1,9 @@
 {
   "admission_warrant_id": "WARR-20260710-0007",
+  "completed_at": "2026-07-10T14:53:18.703223+00:00",
+  "completion_summary": "Completed the admitted opt-in graph-neighborhood context-pack integration slice. CAP-0009 adds default-off graph-neighborhood context candidates to build_latest_context_manifest while preserving existing default context-pack behavior and avoiding provider prompt, runtime manifest, retrieval, embedding, reranking, persisted graph, production index, memory-store, and automatic context inclusion changes.",
+  "completion_verification_id": "VERIFY-20260710-0006",
+  "completion_warrant_id": "WARR-20260710-0009",
   "constraints": [
     "Proposal only.",
     "Do not implement context-pack integration in this plan proposal.",
@@ -38,7 +42,7 @@
     "No runtime integration implementation in the proposal commit."
   ],
   "mitigation": "Limit this step to self-model plan records, tests, and index updates. Require a separate admission warrant before any code path changes context-pack behavior.",
-  "next_action": "Implement only the admitted context-pack integration slice under PLAN-20260710-0003 constraints. Preserve existing default context-pack behavior until implementation tests and completion warrant support any behavior change.",
+  "next_action": "Keep GAP-0002 open. The next governed slice should evaluate whether to expose the opt-in graph-neighborhood candidate path through scripts or provider-facing flags, still default-off, or gather evidence before any automatic context inclusion.",
   "non_goals": [
     "Implementing context-pack integration.",
     "Changing runtime context selection.",
@@ -74,7 +78,7 @@
     "CAP-0008"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The plan validates through the self-model schema.",
     "The plan is indexed as proposed and open.",
