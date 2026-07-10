@@ -1,0 +1,20 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T19:49:43.662747+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
+    "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.context.json",
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0009.json"
+  ],
+  "reason": "COMP-0026 records independent provider agreement that exact production inventories, quantities, and historical assertions are incorrectly acting as static schema. The missing parametric registry, referential-integrity checks, fixture-based lifecycle tests, and projection-drift enforcement constitute a distinct architectural self-model gap. This warrant supports registering GAP-0003 only; it does not admit an implementation plan.",
+  "repo_commit": "ea3eca4d1331e835ddf784ede807ea0f2dbacbb1",
+  "schema_version": "v1",
+  "scope": "Support registration of GAP-0003 as an open prerequisite for future self-model work. Existing JSON records remain canonical. No registry, test refactor, CLI, schema change, ID allocator, graph integration, or CAP-0009 exposure implementation is admitted by this warrant.",
+  "substrate": "provider_comparison",
+  "target_item_id": "GAP-0003",
+  "target_item_type": "gap",
+  "warrant_id": "WARR-20260710-0010",
+  "warrant_state": "supported"
+}

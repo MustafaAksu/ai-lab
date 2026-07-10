@@ -105,7 +105,7 @@
   },
   "gap_counts": {
     "closed": 1,
-    "open": 1
+    "open": 2
   },
   "gaps": [
     {
@@ -123,9 +123,17 @@
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0002.json",
       "status": "open"
+    },
+    {
+      "category": "self_model_infrastructure",
+      "gap_id": "GAP-0003",
+      "name": "Parametric self-model registry and invariant-based verification",
+      "priority": "high",
+      "source_path": "docs/self_model/gaps/GAP-0003.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T14:57:32+00:00",
+  "generated_at": "2026-07-10T19:55:38+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -219,6 +227,11 @@
       "source_record": "GAP-0002"
     },
     {
+      "risk": "Without a parametric registry and invariant-based verification, self-model growth remains brittle, repository projections can become stale, referential or lifecycle errors can be hidden behind manually updated counts, and every new governed object increases maintenance cost before feature work can proceed safely.",
+      "source_field": "risk",
+      "source_record": "GAP-0003"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -296,7 +309,8 @@
   ],
   "model_type": "self_model",
   "open_gaps": [
-    "GAP-0002"
+    "GAP-0002",
+    "GAP-0003"
   ],
   "open_plans": [],
   "plan_counts": {
@@ -414,9 +428,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0003",
+      "target": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan."
     }
   ],
-  "repo_head": "ebb599409ac1b6248432b697e8d37253e2111b6a",
+  "repo_head": "ea3eca4d1331e835ddf784ede807ea0f2dbacbb1",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -527,7 +546,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 37
+    "supported": 38
   },
   "warrants": [
     {
@@ -824,6 +843,14 @@
       "target_item_id": "PLAN-20260710-0003",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260710-0009",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260710-0010.json",
+      "target_item_id": "GAP-0003",
+      "target_item_type": "gap",
+      "warrant_id": "WARR-20260710-0010",
       "warrant_state": "supported"
     }
   ]
