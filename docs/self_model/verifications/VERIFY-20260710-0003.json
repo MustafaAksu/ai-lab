@@ -1,0 +1,31 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "tests/test_self_model.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_self_model.py",
+      "exit_code": 0,
+      "summary": "Focused graph-neighborhood readiness decision tests passed with 4 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full suite passed with 454 tests."
+    }
+  ],
+  "created_at": "2026-07-10T09:33:47.219340+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "77995429cfb04e446c868706263c4a01074d53e2",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified CAP-0008 by adding DECISION-20260710-0001, rebuilding SELF_MODEL.json, running tests/test_self_model.py, running the full pytest suite, and auditing the self-model index. The artifact remains evidence-only and has selection_effect none.",
+  "target_item_id": "CAP-0008",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260710-0003"
+}

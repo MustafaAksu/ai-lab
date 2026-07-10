@@ -1,0 +1,81 @@
+{
+  "capability_id": "CAP-0008",
+  "category": "diagnostic",
+  "created_at": "2026-07-10T09:33:47.219340+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260710-0002",
+        "path": "docs/self_model/plans/PLAN-20260710-0002.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260710-0001",
+        "path": "docs/self_model/warrants/WARR-20260710-0001.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+        "role": "implementation commit"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "28a2c503836473156b61de40c325f83e1d58c5b8ed1c3d7383795dc4ff5e15bf",
+        "path": "docs/self_model/decisions/DECISION-20260710-0001.json",
+        "role": "implementation"
+      },
+      {
+        "content_hash": "6f2ec9613190320e42532694381a072cd291dbc9dd30362ec9c88d999acb62a8",
+        "path": "tests/test_self_model.py",
+        "role": "tests"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260710-0003",
+        "path": "docs/self_model/verifications/VERIFY-20260710-0003.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.graph_neighborhood_readiness.decide_graph_neighborhood_integration_readiness",
+    "ai_lab.documentation.graph_neighborhood_readiness.format_graph_neighborhood_readiness_report",
+    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodIntegrationReadinessReport",
+    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodReadinessFinding"
+  ],
+  "last_verified": {
+    "repo_commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260710-0003.json",
+    "verified_at": "2026-07-10T06:56:12.443456+00:00"
+  },
+  "limits": [
+    "Evidence and decision artifacting only.",
+    "A positive decision only means a separate governed integration plan may be proposed.",
+    "selection_effect remains none.",
+    "Preserves default context-pack behavior.",
+    "Does not modify context selection or ContextPackManifest.items.",
+    "Does not change provider prompts or prompt rendering.",
+    "Does not persist graph nodes or graph edges.",
+    "Does not introduce a graph database.",
+    "Does not call retrieval services, embedding services, rerankers, or production indexes.",
+    "Does not mutate indexes, memory stores, runtime manifests, or repository graph state.",
+    "Does not perform automatic context inclusion.",
+    "Does not admit or implement context-pack integration."
+  ],
+  "name": "Graph neighborhood repository readiness decision artifact",
+  "recommended_next_actions": [
+    "Use CAP-0008 to decide whether to propose a separate context-pack integration plan.",
+    "Do not treat CAP-0008 output as runtime selection authority."
+  ],
+  "risks": [
+    "A positive readiness decision may be mistaken for integration approval unless the separate-plan boundary remains explicit.",
+    "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Records an evidence-only repository readiness decision artifact for graph-local scoped memory. The artifact recommends proposing a separate governed context-pack integration plan while preserving selection_effect none and blocking runtime/context-pack/provider/persistence/retrieval changes."
+}

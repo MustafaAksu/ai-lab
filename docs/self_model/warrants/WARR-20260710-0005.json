@@ -1,0 +1,20 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T09:33:47.219340+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0008.json",
+    "docs/self_model/verifications/VERIFY-20260710-0003.json",
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "docs/self_model/plans/PLAN-20260710-0002.json"
+  ],
+  "reason": "CAP-0008 is supported because DECISION-20260710-0001 is a repository-tracked, evidence-only readiness decision artifact. It recommends only a separate future governed context-pack integration proposal and does not change runtime context selection, provider prompts, persistence, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion.",
+  "repo_commit": "77995429cfb04e446c868706263c4a01074d53e2",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0008 as an implemented diagnostic capability only. Does not admit context-pack integration, runtime context selection changes, provider prompt changes, graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, runtime-manifest mutation, or automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0008",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260710-0005",
+  "warrant_state": "supported"
+}
