@@ -1,4 +1,5 @@
 {
+  "admission_warrant_id": "WARR-20260710-0011",
   "constraints": [
     "Proposal only.",
     "Do not implement the registry in this proposal commit.",
@@ -75,7 +76,7 @@
     "Add a schema-valid record-skeleton CLI that suggests a locally available max-suffix ID, refuses current-worktree collisions, validates before writing, and documents merge-time collision handling."
   ],
   "source_gap_id": "GAP-0003",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "The plan validates through the current self-model schema.",
     "The plan is indexed as proposed and open.",

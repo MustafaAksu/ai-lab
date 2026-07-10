@@ -25,7 +25,8 @@
     "PLAN-20260709-0003",
     "PLAN-20260710-0001",
     "PLAN-20260710-0002",
-    "PLAN-20260710-0003"
+    "PLAN-20260710-0003",
+    "PLAN-20260710-0004"
   ],
   "audit_summary": {
     "ok": true,
@@ -133,7 +134,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-10T20:14:46+00:00",
+  "generated_at": "2026-07-10T20:28:50+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -321,8 +322,8 @@
     "PLAN-20260710-0004"
   ],
   "plan_counts": {
-    "completed": 15,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 15
   },
   "plans": [
     {
@@ -434,7 +435,7 @@
       "plan_id": "PLAN-20260710-0004",
       "source_gap_id": "GAP-0003",
       "source_path": "docs/self_model/plans/PLAN-20260710-0004.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Introduce parametric self-model registry and invariant-based verification"
     }
   ],
@@ -450,7 +451,7 @@
       "target": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan."
     }
   ],
-  "repo_head": "6c7dab420d47c38727168305243f30cb6cdd30f5",
+  "repo_head": "0848cc07e8ffa70f87387dc74141b65bef9868a1",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -561,7 +562,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 38
+    "supported": 39
   },
   "warrants": [
     {
@@ -866,6 +867,14 @@
       "target_item_id": "GAP-0003",
       "target_item_type": "gap",
       "warrant_id": "WARR-20260710-0010",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260710-0011.json",
+      "target_item_id": "PLAN-20260710-0004",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260710-0011",
       "warrant_state": "supported"
     }
   ]

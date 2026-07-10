@@ -1,0 +1,21 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-10T20:25:17.149670+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/gaps/GAP-0003.json",
+    "docs/self_model/warrants/WARR-20260710-0010.json",
+    "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
+    "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.context.json"
+  ],
+  "reason": "PLAN-20260710-0004 is sufficiently bounded, testable, and supported by COMP-0026 and the observed GAP-0003 registration failures. The plan preserves canonical JSON records and the existing SELF_MODEL.json external schema, separates fixture-based known-state tests from production invariants, documents the non-transactional nature of ID suggestions, and explicitly avoids CAP-0009 exposure or runtime context-selection changes.",
+  "repo_commit": "0848cc07e8ffa70f87387dc74141b65bef9868a1",
+  "schema_version": "v1",
+  "scope": "Admit only the implementation slice described by PLAN-20260710-0004: static specifications for existing self-model record types; a read-only dynamically generated registry; registry-backed index generation with external-schema preservation; normalized projection-drift checks; uniqueness, reference, lifecycle, and omission invariants; temporary fixture-repository tests; GraphRelation-compatible normalized relations; and an explicit schema-valid record-skeleton CLI. This warrant does not admit new record types, lifecycle semantics, a second inventory, a central ID allocator, a graph database, automatic commits, CAP-0009 exposure, provider-prompt changes, context-selection changes, or closure of GAP-0002 or GAP-0003.",
+  "substrate": "provider_comparison",
+  "target_item_id": "PLAN-20260710-0004",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260710-0011",
+  "warrant_state": "supported"
+}
