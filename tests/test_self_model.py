@@ -3036,3 +3036,258 @@ def test_build_self_model_index_consumes_registry(monkeypatch):
     ]
     assert "decisions" not in index
     assert index["generation_rule"] == "aggregation_only"
+
+
+def test_self_model_registry_lifecycle_metadata(tmp_path):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    sources = [
+        Path(
+            "docs/self_model/plans/"
+            "PLAN-20260710-0003.json"
+        ),
+        Path(
+            "docs/self_model/plans/"
+            "PLAN-20260710-0004.json"
+        ),
+    ]
+
+    for source in sources:
+        target = (
+            tmp_path
+            / "docs"
+            / "self_model"
+            / "plans"
+            / source.name
+        )
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(
+            json.dumps(
+                read_json(source),
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n"
+        )
+
+    registry = SelfModelRegistry(tmp_path)
+
+    assert registry.is_open("PLAN-20260710-0004")
+    assert not registry.is_open("PLAN-20260710-0003")
+    assert [
+        entry.record_id
+        for entry in registry.open_entries("plan")
+    ] == ["PLAN-20260710-0004"]
+
+
+def test_self_model_registry_resolves_explicit_references(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    sources = [
+        Path(
+            "docs/self_model/capabilities/CAP-0005.json"
+        ),
+        Path(
+            "docs/self_model/capabilities/CAP-0009.json"
+        ),
+        Path(
+            "docs/self_model/gaps/GAP-0003.json"
+        ),
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260709-0002.json"
+        ),
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        ),
+    ]
+
+    directory_by_prefix = {
+        "CAP": "capabilities",
+        "GAP": "gaps",
+        "VERIFY": "verifications",
+        "WARR": "warrants",
+    }
+
+    for source in sources:
+        prefix = source.name.split("-", 1)[0]
+        target = (
+            tmp_path
+            / "docs"
+            / "self_model"
+            / directory_by_prefix[prefix]
+            / source.name
+        )
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(
+            json.dumps(
+                read_json(source),
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n"
+        )
+
+    registry = SelfModelRegistry(tmp_path)
+
+    assert registry.unresolved_references() == ()
+
+    gap_reference = registry.references("gap")[0]
+    assert gap_reference.field_name == "related_capabilities"
+    assert (
+        registry.resolve_reference(gap_reference).record_id
+        == "CAP-0009"
+    )
+
+    verification_reference = registry.references(
+        "verification"
+    )[0]
+    assert (
+        verification_reference.expected_target_type
+        == "capability"
+    )
+    assert (
+        registry.resolve_reference(
+            verification_reference
+        ).record_id
+        == "CAP-0005"
+    )
+
+    warrant_reference = registry.references("warrant")[0]
+    assert warrant_reference.expected_target_type == "capability"
+    assert (
+        registry.resolve_reference(warrant_reference).record_id
+        == "CAP-0005"
+    )
+
+
+def test_self_model_registry_reports_missing_reference(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    source = Path(
+        "docs/self_model/gaps/GAP-0003.json"
+    )
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "gaps"
+        / source.name
+    )
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        json.dumps(
+            read_json(source),
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+    issues = registry.unresolved_references()
+
+    assert len(issues) == 1
+    assert issues[0].code == "missing_target"
+    assert issues[0].reference.source_record_id == "GAP-0003"
+    assert issues[0].reference.target_id == "CAP-0009"
+    assert (
+        issues[0].reference.expected_target_type
+        == "capability"
+    )
+    assert issues[0].actual_target_type is None
+
+
+def test_self_model_registry_reports_wrong_reference_type(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    capability_source = Path(
+        "docs/self_model/capabilities/CAP-0005.json"
+    )
+    capability_target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "capabilities"
+        / capability_source.name
+    )
+    capability_target.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    capability_target.write_text(
+        json.dumps(
+            read_json(capability_source),
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    warrant = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        )
+    )
+    warrant["target_item_type"] = "gap"
+
+    warrant_target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "warrants"
+        / "WARR-20260709-0006.json"
+    )
+    warrant_target.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    warrant_target.write_text(
+        json.dumps(
+            warrant,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+    issues = registry.unresolved_references()
+
+    assert len(issues) == 1
+    assert issues[0].code == "wrong_target_type"
+    assert issues[0].reference.target_id == "CAP-0005"
+    assert issues[0].reference.expected_target_type == "gap"
+    assert issues[0].actual_target_type == "capability"
+    assert (
+        registry.resolve_reference(issues[0].reference)
+        is None
+    )

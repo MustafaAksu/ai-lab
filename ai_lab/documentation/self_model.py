@@ -909,6 +909,46 @@ def _thaw_json(value: object) -> object:
     return deepcopy(value)
 
 
+def _mapping_value_at_path(
+    record: Mapping[str, object],
+    field_path: tuple[str, ...],
+) -> object | None:
+    """Return a nested mapping value or None when the path is absent."""
+
+    value: object = record
+
+    for part in field_path:
+        if not isinstance(value, Mapping):
+            return None
+        if part not in value:
+            return None
+        value = value[part]
+
+    return value
+
+
+@dataclass(frozen=True)
+class ReferenceSpec:
+    """Static location and expected type for a canonical ID reference."""
+
+    field_path: tuple[str, ...]
+    target_type: str | None = None
+    target_type_path: tuple[str, ...] | None = None
+    many: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.field_path:
+            raise ValueError("reference field_path must not be empty")
+
+        if (self.target_type is None) == (
+            self.target_type_path is None
+        ):
+            raise ValueError(
+                "reference must define exactly one of target_type "
+                "or target_type_path"
+            )
+
+
 @dataclass(frozen=True)
 class RecordTypeSpec:
     """Static ontology information for one canonical record family."""
@@ -920,6 +960,33 @@ class RecordTypeSpec:
     id_pattern: re.Pattern[str]
     validator: RecordValidator
     status_field: str | None = "status"
+    allowed_statuses: frozenset[str] = frozenset()
+    open_statuses: frozenset[str] = frozenset()
+    references: tuple[ReferenceSpec, ...] = ()
+
+
+@dataclass(frozen=True)
+class RegistryReference:
+    """One explicit canonical ID reference discovered in a record."""
+
+    source_record_id: str
+    source_record_type: str
+    field_path: tuple[str, ...]
+    target_id: str
+    expected_target_type: str
+
+    @property
+    def field_name(self) -> str:
+        return ".".join(self.field_path)
+
+
+@dataclass(frozen=True)
+class RegistryReferenceIssue:
+    """A missing or wrong-type canonical registry reference."""
+
+    code: str
+    reference: RegistryReference
+    actual_target_type: str | None
 
 
 @dataclass(frozen=True)
@@ -951,6 +1018,7 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_field="capability_id",
         id_pattern=CAPABILITY_ID_RE,
         validator=validate_capability_record,
+        allowed_statuses=frozenset(CAPABILITY_STATUSES),
     ),
     RecordTypeSpec(
         record_type="gap",
@@ -959,6 +1027,19 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_field="gap_id",
         id_pattern=GAP_ID_RE,
         validator=validate_gap_record,
+        allowed_statuses=frozenset(GAP_STATUSES),
+        open_statuses=frozenset({"open"}),
+        references=(
+            ReferenceSpec(
+                field_path=("related_capabilities",),
+                target_type="capability",
+                many=True,
+            ),
+            ReferenceSpec(
+                field_path=("closure_warrant_id",),
+                target_type="warrant",
+            ),
+        ),
     ),
     RecordTypeSpec(
         record_type="verification",
@@ -968,6 +1049,12 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_pattern=VERIFY_ID_RE,
         validator=validate_verification_record,
         status_field=None,
+        references=(
+            ReferenceSpec(
+                field_path=("target_item_id",),
+                target_type_path=("target_item_type",),
+            ),
+        ),
     ),
     RecordTypeSpec(
         record_type="plan",
@@ -976,6 +1063,54 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_field="plan_id",
         id_pattern=PLAN_ID_RE,
         validator=validate_plan_record,
+        allowed_statuses=frozenset(PLAN_STATUSES),
+        open_statuses=frozenset({"proposed", "admitted"}),
+        references=(
+            ReferenceSpec(
+                field_path=("source_gap_id",),
+                target_type="gap",
+            ),
+            ReferenceSpec(
+                field_path=("admission_warrant_id",),
+                target_type="warrant",
+            ),
+            ReferenceSpec(
+                field_path=("completion_verification_id",),
+                target_type="verification",
+            ),
+            ReferenceSpec(
+                field_path=("completion_warrant_id",),
+                target_type="warrant",
+            ),
+            ReferenceSpec(
+                field_path=("source_capability_id",),
+                target_type="capability",
+            ),
+            ReferenceSpec(
+                field_path=("source_capability_ids",),
+                target_type="capability",
+                many=True,
+            ),
+            ReferenceSpec(
+                field_path=("depends_on_capability_ids",),
+                target_type="capability",
+                many=True,
+            ),
+            ReferenceSpec(
+                field_path=(
+                    "created_from",
+                    "source_capability_id",
+                ),
+                target_type="capability",
+            ),
+            ReferenceSpec(
+                field_path=(
+                    "created_from",
+                    "source_plan_id",
+                ),
+                target_type="plan",
+            ),
+        ),
     ),
     RecordTypeSpec(
         record_type="warrant",
@@ -985,6 +1120,13 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_pattern=WARRANT_ID_RE,
         validator=validate_warrant_record,
         status_field="warrant_state",
+        allowed_statuses=frozenset(WARRANT_STATES),
+        references=(
+            ReferenceSpec(
+                field_path=("target_item_id",),
+                target_type_path=("target_item_type",),
+            ),
+        ),
     ),
     RecordTypeSpec(
         record_type="decision",
@@ -993,6 +1135,22 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         id_field="decision_id",
         id_pattern=DECISION_ID_RE,
         validator=validate_decision_record,
+        allowed_statuses=frozenset(DECISION_STATUSES),
+        references=(
+            ReferenceSpec(
+                field_path=("source_gap_id",),
+                target_type="gap",
+            ),
+            ReferenceSpec(
+                field_path=("source_plan_id",),
+                target_type="plan",
+            ),
+            ReferenceSpec(
+                field_path=("source_capability_ids",),
+                target_type="capability",
+                many=True,
+            ),
+        ),
     ),
 )
 
@@ -1015,6 +1173,15 @@ class SelfModelRegistry:
                     "duplicate record-type specification: "
                     f"{spec.record_type}"
                 )
+
+            if not spec.open_statuses.issubset(
+                spec.allowed_statuses
+            ):
+                raise SelfModelError(
+                    "open statuses must be a subset of allowed "
+                    f"statuses for {spec.record_type}"
+                )
+
             spec_by_type[spec.record_type] = spec
 
         self._spec_by_type = MappingProxyType(spec_by_type)
@@ -1073,8 +1240,27 @@ class SelfModelRegistry:
                 status: str | None = None
                 if spec.status_field is not None:
                     value = record.get(spec.status_field)
+
+                    if value is not None and not isinstance(value, str):
+                        relative = path.relative_to(self.repo_root)
+                        raise SelfModelError(
+                            f"{relative}: $.{spec.status_field} "
+                            "must be a string"
+                        )
+
                     if isinstance(value, str):
                         status = value
+
+                    if (
+                        status is not None
+                        and spec.allowed_statuses
+                        and status not in spec.allowed_statuses
+                    ):
+                        relative = path.relative_to(self.repo_root)
+                        raise SelfModelError(
+                            f"{relative}: unsupported "
+                            f"{spec.status_field} value {status}"
+                        )
 
                 frozen_record = _freeze_json(record)
                 if not isinstance(frozen_record, Mapping):
@@ -1094,6 +1280,7 @@ class SelfModelRegistry:
 
         self._entries = tuple(entries)
         self._entries_by_id = MappingProxyType(entries_by_id)
+        self._references = self._collect_references()
 
     @property
     def record_types(self) -> tuple[str, ...]:
@@ -1144,6 +1331,154 @@ class SelfModelRegistry:
                 )
 
         return dict(sorted(counts.items()))
+
+    def is_open(self, record_id: str) -> bool:
+        entry = self.require(record_id)
+        spec = self._spec_by_type[entry.record_type]
+        return (
+            entry.status is not None
+            and entry.status in spec.open_statuses
+        )
+
+    def open_entries(
+        self,
+        record_type: str,
+    ) -> tuple[RegistryEntry, ...]:
+        return tuple(
+            entry
+            for entry in self.entries(record_type)
+            if self.is_open(entry.record_id)
+        )
+
+    def _collect_references(
+        self,
+    ) -> tuple[RegistryReference, ...]:
+        references: list[RegistryReference] = []
+
+        for entry in self._entries:
+            spec = self._spec_by_type[entry.record_type]
+
+            for reference_spec in spec.references:
+                raw_value = _mapping_value_at_path(
+                    entry.record,
+                    reference_spec.field_path,
+                )
+
+                if raw_value is None:
+                    continue
+
+                if reference_spec.target_type is not None:
+                    expected_type = reference_spec.target_type
+                else:
+                    expected_value = _mapping_value_at_path(
+                        entry.record,
+                        reference_spec.target_type_path or (),
+                    )
+                    if not isinstance(expected_value, str):
+                        raise SelfModelError(
+                            f"{entry.record_id} "
+                            f"{'.'.join(reference_spec.field_path)} "
+                            "requires a string target type"
+                        )
+                    expected_type = expected_value
+
+                if expected_type not in self._spec_by_type:
+                    raise SelfModelError(
+                        f"{entry.record_id} references unknown "
+                        f"record type {expected_type}"
+                    )
+
+                if reference_spec.many:
+                    if not isinstance(raw_value, tuple):
+                        raise SelfModelError(
+                            f"{entry.record_id} "
+                            f"{'.'.join(reference_spec.field_path)} "
+                            "must be a list"
+                        )
+                    target_values = raw_value
+                else:
+                    target_values = (raw_value,)
+
+                for target_value in target_values:
+                    if not isinstance(target_value, str):
+                        raise SelfModelError(
+                            f"{entry.record_id} "
+                            f"{'.'.join(reference_spec.field_path)} "
+                            "must contain string IDs"
+                        )
+
+                    references.append(
+                        RegistryReference(
+                            source_record_id=entry.record_id,
+                            source_record_type=entry.record_type,
+                            field_path=reference_spec.field_path,
+                            target_id=target_value,
+                            expected_target_type=expected_type,
+                        )
+                    )
+
+        return tuple(references)
+
+    def references(
+        self,
+        record_type: str | None = None,
+    ) -> tuple[RegistryReference, ...]:
+        if record_type is None:
+            return self._references
+
+        if record_type not in self._spec_by_type:
+            raise SelfModelError(
+                f"unknown self-model record type: {record_type}"
+            )
+
+        return tuple(
+            reference
+            for reference in self._references
+            if reference.source_record_type == record_type
+        )
+
+    def resolve_reference(
+        self,
+        reference: RegistryReference,
+    ) -> RegistryEntry | None:
+        target = self.get(reference.target_id)
+
+        if target is None:
+            return None
+
+        if target.record_type != reference.expected_target_type:
+            return None
+
+        return target
+
+    def unresolved_references(
+        self,
+    ) -> tuple[RegistryReferenceIssue, ...]:
+        issues: list[RegistryReferenceIssue] = []
+
+        for reference in self._references:
+            target = self.get(reference.target_id)
+
+            if target is None:
+                issues.append(
+                    RegistryReferenceIssue(
+                        code="missing_target",
+                        reference=reference,
+                        actual_target_type=None,
+                    )
+                )
+                continue
+
+            if target.record_type != reference.expected_target_type:
+                issues.append(
+                    RegistryReferenceIssue(
+                        code="wrong_target_type",
+                        reference=reference,
+                        actual_target_type=target.record_type,
+                    )
+                )
+
+        return tuple(issues)
 
 
 def build_self_model_index(
