@@ -2779,3 +2779,227 @@ def test_validate_warr_20260710_0011_admission():
     assert record["target_item_type"] == "plan"
     assert record["decision"] == "admit"
     assert record["warrant_state"] == "supported"
+
+
+def test_self_model_registry_specs_cover_existing_record_families():
+    from ai_lab.documentation.self_model import (
+        SELF_MODEL_RECORD_SPECS,
+    )
+
+    assert {
+        spec.record_type
+        for spec in SELF_MODEL_RECORD_SPECS
+    } == {
+        "capability",
+        "decision",
+        "gap",
+        "plan",
+        "verification",
+        "warrant",
+    }
+
+    assert len({
+        spec.record_type
+        for spec in SELF_MODEL_RECORD_SPECS
+    }) == len(SELF_MODEL_RECORD_SPECS)
+
+
+def test_validate_existing_decision_record():
+    from ai_lab.documentation.self_model import (
+        validate_decision_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/decisions/"
+            "DECISION-20260710-0001.json"
+        )
+    )
+
+    validate_decision_record(record)
+
+    assert record["decision_id"] == "DECISION-20260710-0001"
+    assert record["status"] == "recorded"
+
+
+def test_self_model_registry_discovers_fixture_records(tmp_path):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SELF_MODEL_RECORD_SPECS,
+        SelfModelRegistry,
+        read_json,
+    )
+
+    samples = {
+        "capability": Path(
+            "docs/self_model/capabilities/CAP-0001.json"
+        ),
+        "decision": Path(
+            "docs/self_model/decisions/"
+            "DECISION-20260710-0001.json"
+        ),
+        "gap": Path(
+            "docs/self_model/gaps/GAP-0001.json"
+        ),
+        "plan": Path(
+            "docs/self_model/plans/PLAN-20260705-0001.json"
+        ),
+        "verification": Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260705-0001.json"
+        ),
+        "warrant": Path(
+            "docs/self_model/warrants/"
+            "WARR-20260705-0001.json"
+        ),
+    }
+
+    for spec in SELF_MODEL_RECORD_SPECS:
+        source = samples[spec.record_type]
+        target = (
+            tmp_path
+            / "docs"
+            / "self_model"
+            / spec.directory_name
+            / source.name
+        )
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(
+            json.dumps(
+                read_json(source),
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n"
+        )
+
+    registry = SelfModelRegistry(tmp_path)
+
+    assert registry.count() == 6
+    assert registry.count("capability") == 1
+    assert registry.count("decision") == 1
+    assert registry.count("gap") == 1
+    assert registry.count("plan") == 1
+    assert registry.count("verification") == 1
+    assert registry.count("warrant") == 1
+
+    capability = registry.require("CAP-0001")
+    assert capability.record_type == "capability"
+    assert capability.source_path == Path(
+        "docs/self_model/capabilities/CAP-0001.json"
+    )
+
+    decision = registry.require(
+        "DECISION-20260710-0001"
+    )
+    assert decision.status == "recorded"
+
+    assert registry.get("CAP-9999") is None
+    assert registry.count_by_status("verification") == {}
+
+
+def test_self_model_registry_record_data_is_recursively_read_only(
+    tmp_path,
+):
+    import json
+
+    import pytest
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    source = Path(
+        "docs/self_model/decisions/"
+        "DECISION-20260710-0001.json"
+    )
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "decisions"
+        / source.name
+    )
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        json.dumps(
+            read_json(source),
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+    entry = registry.require("DECISION-20260710-0001")
+
+    with pytest.raises(TypeError):
+        entry.record["title"] = "mutated"
+
+    with pytest.raises(AttributeError):
+        entry.record["rationale"].append("mutated")
+
+    mutable = entry.mutable_record()
+    mutable["title"] = "changed copy"
+    mutable["rationale"].append("changed copy")
+
+    assert (
+        entry.record["title"]
+        == "Graph neighborhood repository readiness decision"
+    )
+    assert "changed copy" not in entry.record["rationale"]
+
+
+def test_self_model_registry_rejects_filename_id_mismatch(
+    tmp_path,
+):
+    import json
+
+    import pytest
+
+    from ai_lab.documentation.self_model import (
+        SelfModelError,
+        SelfModelRegistry,
+        read_json,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/decisions/"
+            "DECISION-20260710-0001.json"
+        )
+    )
+
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "decisions"
+        / "DECISION-20260710-9999.json"
+    )
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        json.dumps(record, indent=2, sort_keys=True)
+        + "\n"
+    )
+
+    with pytest.raises(
+        SelfModelError,
+        match="filename must be DECISION-20260710-0001.json",
+    ):
+        SelfModelRegistry(tmp_path)
+
+
+def test_self_model_registry_allows_missing_type_directories(
+    tmp_path,
+):
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+
+    assert registry.count() == 0
+    assert registry.entries() == ()

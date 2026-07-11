@@ -4,8 +4,12 @@ import hashlib
 import json
 import re
 import subprocess
+from collections.abc import Callable, Iterable, Mapping
+from copy import deepcopy
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from types import MappingProxyType
 
 
 class SelfModelError(ValueError):
@@ -15,6 +19,7 @@ class SelfModelError(ValueError):
 CAPABILITY_STATUSES = {"implemented", "partial", "experimental", "planned", "deprecated"}
 GAP_STATUSES = {"open", "accepted", "closed", "deferred"}
 GAP_PRIORITIES = {"low", "medium", "high"}
+DECISION_STATUSES = {"recorded"}
 ADMITTING_DECISIONS = {"admit", "admit_with_warning"}
 
 CAPABILITY_ID_RE = re.compile(r"^CAP-\d{4}$")
@@ -22,6 +27,7 @@ GAP_ID_RE = re.compile(r"^GAP-\d{4}$")
 VERIFY_ID_RE = re.compile(r"^VERIFY-\d{8}-\d{4}$")
 AUDIT_ID_RE = re.compile(r"^AUDIT-\d{8}-\d{4}$")
 PLAN_ID_RE = re.compile(r"^PLAN-\d{8}-\d{4}$")
+DECISION_ID_RE = re.compile(r"^DECISION-\d{8}-\d{4}$")
 FULL_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 
 
@@ -606,6 +612,92 @@ def _plan_require_string_list(record: dict[str, object], key: str) -> list[str]:
     return result
 
 
+
+def validate_decision_record(record: dict[str, object]) -> None:
+    """Validate an existing DECISION-* self-model record."""
+
+    if not isinstance(record, dict):
+        raise SelfModelError("Decision record must be a JSON object.")
+
+    if record.get("schema_version") != "v1":
+        raise SelfModelError("$.schema_version must be v1.")
+
+    _require_id(
+        record.get("decision_id"),
+        "$.decision_id",
+        DECISION_ID_RE,
+        "DECISION-YYYYMMDD-NNNN",
+    )
+
+    status = _require_non_empty_string(
+        record.get("status"),
+        "$.status",
+    )
+    if status not in DECISION_STATUSES:
+        raise SelfModelError(
+            "$.status is not a valid decision status"
+        )
+
+    for field_name in (
+        "title",
+        "created_at",
+        "decision",
+        "selection_effect",
+        "summary",
+    ):
+        _require_non_empty_string(
+            record.get(field_name),
+            f"$.{field_name}",
+        )
+
+    _require_full_commit(
+        record.get("repo_commit"),
+        "$.repo_commit",
+    )
+
+    _require_id(
+        record.get("source_gap_id"),
+        "$.source_gap_id",
+        GAP_ID_RE,
+        "GAP-NNNN",
+    )
+    _require_id(
+        record.get("source_plan_id"),
+        "$.source_plan_id",
+        PLAN_ID_RE,
+        "PLAN-YYYYMMDD-NNNN",
+    )
+
+    source_capability_ids = _require_list(
+        record.get("source_capability_ids"),
+        "$.source_capability_ids",
+    )
+    for index, item in enumerate(source_capability_ids):
+        _require_id(
+            item,
+            f"$.source_capability_ids[{index}]",
+            CAPABILITY_ID_RE,
+            "CAP-NNNN",
+        )
+
+    for field_name in (
+        "evidence_refs",
+        "rationale",
+        "authorized_effects",
+        "blocked_effects",
+        "required_next_governance",
+    ):
+        values = _require_list(
+            record.get(field_name),
+            f"$.{field_name}",
+        )
+        for index, item in enumerate(values):
+            _require_non_empty_string(
+                item,
+                f"$.{field_name}[{index}]",
+            )
+
+
 def validate_plan_record(record: dict[str, object]) -> None:
     if not isinstance(record, dict):
         raise SelfModelError("Plan record must be a JSON object.")
@@ -775,6 +867,283 @@ def _relative_path(path: Path, repo_root: Path) -> str:
         return path.relative_to(repo_root).as_posix()
     except ValueError:
         return path.as_posix()
+
+
+
+RecordValidator = Callable[[dict[str, object]], None]
+
+
+def _freeze_json(value: object) -> object:
+    """Recursively freeze JSON-compatible data."""
+
+    if isinstance(value, dict):
+        return MappingProxyType({
+            str(key): _freeze_json(item)
+            for key, item in value.items()
+        })
+
+    if isinstance(value, list):
+        return tuple(
+            _freeze_json(item)
+            for item in value
+        )
+
+    return value
+
+
+def _thaw_json(value: object) -> object:
+    """Return mutable JSON-compatible data from frozen data."""
+
+    if isinstance(value, Mapping):
+        return {
+            str(key): _thaw_json(item)
+            for key, item in value.items()
+        }
+
+    if isinstance(value, tuple):
+        return [
+            _thaw_json(item)
+            for item in value
+        ]
+
+    return deepcopy(value)
+
+
+@dataclass(frozen=True)
+class RecordTypeSpec:
+    """Static ontology information for one canonical record family."""
+
+    record_type: str
+    directory_name: str
+    filename_glob: str
+    id_field: str
+    id_pattern: re.Pattern[str]
+    validator: RecordValidator
+    status_field: str | None = "status"
+
+
+@dataclass(frozen=True)
+class RegistryEntry:
+    """One validated, recursively immutable self-model record."""
+
+    record_type: str
+    record_id: str
+    source_path: Path
+    record: Mapping[str, object]
+    status: str | None
+
+    def mutable_record(self) -> dict[str, object]:
+        """Return an independent mutable JSON-compatible record."""
+
+        thawed = _thaw_json(self.record)
+        if not isinstance(thawed, dict):
+            raise SelfModelError(
+                f"{self.record_id} did not thaw to an object"
+            )
+        return thawed
+
+
+SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
+    RecordTypeSpec(
+        record_type="capability",
+        directory_name="capabilities",
+        filename_glob="CAP-*.json",
+        id_field="capability_id",
+        id_pattern=CAPABILITY_ID_RE,
+        validator=validate_capability_record,
+    ),
+    RecordTypeSpec(
+        record_type="gap",
+        directory_name="gaps",
+        filename_glob="GAP-*.json",
+        id_field="gap_id",
+        id_pattern=GAP_ID_RE,
+        validator=validate_gap_record,
+    ),
+    RecordTypeSpec(
+        record_type="verification",
+        directory_name="verifications",
+        filename_glob="VERIFY-*.json",
+        id_field="verification_id",
+        id_pattern=VERIFY_ID_RE,
+        validator=validate_verification_record,
+        status_field=None,
+    ),
+    RecordTypeSpec(
+        record_type="plan",
+        directory_name="plans",
+        filename_glob="PLAN-*.json",
+        id_field="plan_id",
+        id_pattern=PLAN_ID_RE,
+        validator=validate_plan_record,
+    ),
+    RecordTypeSpec(
+        record_type="warrant",
+        directory_name="warrants",
+        filename_glob="WARR-*.json",
+        id_field="warrant_id",
+        id_pattern=WARRANT_ID_RE,
+        validator=validate_warrant_record,
+        status_field="warrant_state",
+    ),
+    RecordTypeSpec(
+        record_type="decision",
+        directory_name="decisions",
+        filename_glob="DECISION-*.json",
+        id_field="decision_id",
+        id_pattern=DECISION_ID_RE,
+        validator=validate_decision_record,
+    ),
+)
+
+
+class SelfModelRegistry:
+    """Read-only discovery and lookup over canonical self-model records."""
+
+    def __init__(
+        self,
+        repo_root: Path = Path("."),
+        specs: Iterable[RecordTypeSpec] = SELF_MODEL_RECORD_SPECS,
+    ) -> None:
+        self.repo_root = repo_root.resolve()
+        self.specs = tuple(specs)
+
+        spec_by_type: dict[str, RecordTypeSpec] = {}
+        for spec in self.specs:
+            if spec.record_type in spec_by_type:
+                raise SelfModelError(
+                    "duplicate record-type specification: "
+                    f"{spec.record_type}"
+                )
+            spec_by_type[spec.record_type] = spec
+
+        self._spec_by_type = MappingProxyType(spec_by_type)
+
+        entries: list[RegistryEntry] = []
+        entries_by_id: dict[str, RegistryEntry] = {}
+
+        for spec in self.specs:
+            directory = (
+                self.repo_root
+                / "docs"
+                / "self_model"
+                / spec.directory_name
+            )
+
+            if not directory.is_dir():
+                continue
+
+            for path in sorted(directory.glob(spec.filename_glob)):
+                try:
+                    record = read_json(path)
+                    spec.validator(record)
+                except (OSError, json.JSONDecodeError, SelfModelError) as exc:
+                    relative = path.relative_to(self.repo_root)
+                    raise SelfModelError(
+                        f"{relative}: {exc}"
+                    ) from exc
+
+                identifier = record.get(spec.id_field)
+                if (
+                    not isinstance(identifier, str)
+                    or not spec.id_pattern.fullmatch(identifier)
+                ):
+                    relative = path.relative_to(self.repo_root)
+                    raise SelfModelError(
+                        f"{relative}: $.{spec.id_field} does not "
+                        "match its record-type specification"
+                    )
+
+                expected_name = f"{identifier}.json"
+                if path.name != expected_name:
+                    relative = path.relative_to(self.repo_root)
+                    raise SelfModelError(
+                        f"{relative}: filename must be "
+                        f"{expected_name}"
+                    )
+
+                if identifier in entries_by_id:
+                    previous = entries_by_id[identifier]
+                    raise SelfModelError(
+                        f"duplicate self-model ID {identifier}: "
+                        f"{previous.source_path} and "
+                        f"{path.relative_to(self.repo_root)}"
+                    )
+
+                status: str | None = None
+                if spec.status_field is not None:
+                    value = record.get(spec.status_field)
+                    if isinstance(value, str):
+                        status = value
+
+                frozen_record = _freeze_json(record)
+                if not isinstance(frozen_record, Mapping):
+                    raise SelfModelError(
+                        f"{identifier} did not freeze to an object"
+                    )
+
+                entry = RegistryEntry(
+                    record_type=spec.record_type,
+                    record_id=identifier,
+                    source_path=path.relative_to(self.repo_root),
+                    record=frozen_record,
+                    status=status,
+                )
+                entries.append(entry)
+                entries_by_id[identifier] = entry
+
+        self._entries = tuple(entries)
+        self._entries_by_id = MappingProxyType(entries_by_id)
+
+    @property
+    def record_types(self) -> tuple[str, ...]:
+        return tuple(spec.record_type for spec in self.specs)
+
+    def entries(
+        self,
+        record_type: str | None = None,
+    ) -> tuple[RegistryEntry, ...]:
+        if record_type is None:
+            return self._entries
+
+        if record_type not in self._spec_by_type:
+            raise SelfModelError(
+                f"unknown self-model record type: {record_type}"
+            )
+
+        return tuple(
+            entry
+            for entry in self._entries
+            if entry.record_type == record_type
+        )
+
+    def get(self, record_id: str) -> RegistryEntry | None:
+        return self._entries_by_id.get(record_id)
+
+    def require(self, record_id: str) -> RegistryEntry:
+        entry = self.get(record_id)
+        if entry is None:
+            raise SelfModelError(
+                f"unknown self-model record ID: {record_id}"
+            )
+        return entry
+
+    def count(self, record_type: str | None = None) -> int:
+        return len(self.entries(record_type))
+
+    def count_by_status(
+        self,
+        record_type: str,
+    ) -> dict[str, int]:
+        counts: dict[str, int] = {}
+
+        for entry in self.entries(record_type):
+            if entry.status is not None:
+                counts[entry.status] = (
+                    counts.get(entry.status, 0) + 1
+                )
+
+        return dict(sorted(counts.items()))
 
 
 def build_self_model_index(
