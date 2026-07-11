@@ -1,8 +1,8 @@
 {
   "admission_warrant_id": "WARR-20260710-0011",
   "constraints": [
-    "Proposal only.",
-    "Do not implement the registry in this proposal commit.",
+    "Implementation is authorized only within the scope admitted by WARR-20260710-0011.",
+    "The proposal and admission commits must contain no registry implementation.",
     "Existing JSON records remain the sole canonical source.",
     "Do not introduce a second manually maintained object inventory.",
     "Preserve the current SELF_MODEL.json external schema in this slice.",
@@ -13,7 +13,7 @@
     "Do not automatically commit or push generated records.",
     "Do not expose CAP-0009 through additional scripts or provider flags.",
     "Do not alter context selection, provider prompts, or runtime behavior.",
-    "Any implementation requires a separate admission warrant."
+    "Implementation must remain within WARR-20260710-0011 and requires new governance for any scope expansion."
   ],
   "created_at": "2026-07-10T20:08:00.102315+00:00",
   "created_from_repo_commit": "6c7dab420d47c38727168305243f30cb6cdd30f5",
@@ -39,7 +39,7 @@
     "Developer documentation for registry use and ID collision handling."
   ],
   "mitigation": "Preserve the external projection schema, use independently constructed fixture repositories and filesystem completeness checks, keep production tests invariant-based, document volatile fields and ID limitations, and deliver the work incrementally with full-suite and audit verification.",
-  "next_action": "Review this proposal and, if justified, create a separate admission warrant for PLAN-20260710-0004. Do not implement any registry, test refactor, CLI, or CAP-0009 exposure before that admission.",
+  "next_action": "Implement the admitted slice incrementally, beginning with static record-type specifications and the read-only dynamic registry loader. Preserve the current SELF_MODEL.json external schema and do not begin CAP-0009 exposure or any other scope expansion without separate governance.",
   "non_goals": [
     "Changing the SELF_MODEL.json external schema.",
     "Introducing a graph database.",
@@ -79,8 +79,8 @@
   "status": "admitted",
   "success_criteria": [
     "The plan validates through the current self-model schema.",
-    "The plan is indexed as proposed and open.",
-    "No admission_warrant_id or completion fields exist in the proposed plan.",
+    "The plan is indexed as admitted and open.",
+    "The admitted plan references WARR-20260710-0011 and contains no completion fields until implementation is independently verified.",
     "No implementation files change in the proposal commit.",
     "After admitted implementation, adding an instance of an existing record type requires no Python or test-source change.",
     "Adding a new record type remains a deliberate ontology change requiring a validator or schema, one type specification, documentation, and focused tests.",
@@ -91,6 +91,6 @@
     "The skeleton CLI refuses local collisions, validates before writing, and clearly documents that allocation is not concurrency-safe.",
     "Self-model tests, the full test suite, and self-model audit pass."
   ],
-  "summary": "Propose a governed implementation slice that replaces brittle production-inventory assertions with a parametric self-model registry, fixture-based lifecycle tests, repository invariants, and explicit generated-projection drift detection. This proposal does not admit or implement the change.",
+  "summary": "Admit a governed implementation slice that replaces brittle production-inventory assertions with a parametric self-model registry, fixture-based lifecycle tests, repository invariants, and explicit generated-projection drift detection. Implementation is authorized only within the scope of WARR-20260710-0011.",
   "title": "Introduce parametric self-model registry and invariant-based verification"
 }
