@@ -1152,31 +1152,43 @@ def build_self_model_index(
 ) -> dict[str, object]:
     repo_root = repo_root.resolve()
 
-    capabilities = _load_valid_records(
-        repo_root / "docs" / "self_model" / "capabilities",
-        "CAP-*.json",
-        validate_capability_record,
-    )
-    gaps = _load_valid_records(
-        repo_root / "docs" / "self_model" / "gaps",
-        "GAP-*.json",
-        validate_gap_record,
-    )
-    verifications = _load_valid_records(
-        repo_root / "docs" / "self_model" / "verifications",
-        "VERIFY-*.json",
-        validate_verification_record,
-    )
-    plans = _load_valid_records(
-        repo_root / "docs" / "self_model" / "plans",
-        "PLAN-*.json",
-        validate_plan_record,
-    )
-    warrants = _load_valid_records(
-        repo_root / "docs" / "self_model" / "warrants",
-        "WARR-*.json",
-        validate_warrant_record,
-    )
+    registry = SelfModelRegistry(repo_root)
+
+    capabilities = [
+        (
+            repo_root / entry.source_path,
+            entry.mutable_record(),
+        )
+        for entry in registry.entries("capability")
+    ]
+    gaps = [
+        (
+            repo_root / entry.source_path,
+            entry.mutable_record(),
+        )
+        for entry in registry.entries("gap")
+    ]
+    verifications = [
+        (
+            repo_root / entry.source_path,
+            entry.mutable_record(),
+        )
+        for entry in registry.entries("verification")
+    ]
+    plans = [
+        (
+            repo_root / entry.source_path,
+            entry.mutable_record(),
+        )
+        for entry in registry.entries("plan")
+    ]
+    warrants = [
+        (
+            repo_root / entry.source_path,
+            entry.mutable_record(),
+        )
+        for entry in registry.entries("warrant")
+    ]
 
     audit = audit_self_model(repo_root)
 

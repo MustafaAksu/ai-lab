@@ -3003,3 +3003,36 @@ def test_self_model_registry_allows_missing_type_directories(
 
     assert registry.count() == 0
     assert registry.entries() == ()
+
+
+def test_build_self_model_index_consumes_registry(monkeypatch):
+    import ai_lab.documentation.self_model as self_model
+
+    calls = []
+    registry_class = self_model.SelfModelRegistry
+
+    class RecordingRegistry(registry_class):
+        def entries(self, record_type=None):
+            calls.append(record_type)
+            return super().entries(record_type)
+
+    monkeypatch.setattr(
+        self_model,
+        "SelfModelRegistry",
+        RecordingRegistry,
+    )
+
+    index = self_model.build_self_model_index(
+        Path("."),
+        generated_at="2026-07-11T00:00:00+00:00",
+    )
+
+    assert calls == [
+        "capability",
+        "gap",
+        "verification",
+        "plan",
+        "warrant",
+    ]
+    assert "decisions" not in index
+    assert index["generation_rule"] == "aggregation_only"
