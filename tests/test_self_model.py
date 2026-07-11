@@ -3291,3 +3291,195 @@ def test_self_model_registry_reports_wrong_reference_type(
         registry.resolve_reference(issues[0].reference)
         is None
     )
+
+
+def _write_registry_relation_fixture_record(
+    tmp_path,
+    source,
+):
+    import json
+
+    from ai_lab.documentation.self_model import read_json
+
+    directory_by_prefix = {
+        "CAP": "capabilities",
+        "GAP": "gaps",
+        "VERIFY": "verifications",
+        "WARR": "warrants",
+    }
+
+    prefix = source.name.split("-", 1)[0]
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / directory_by_prefix[prefix]
+        / source.name
+    )
+    target.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    target.write_text(
+        json.dumps(
+            read_json(source),
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+
+def test_self_model_registry_emits_graph_relations(
+    tmp_path,
+):
+    from ai_lab.documentation.self_model import (
+        RegistryRelation,
+        SelfModelRegistry,
+    )
+
+    sources = [
+        Path(
+            "docs/self_model/capabilities/CAP-0005.json"
+        ),
+        Path(
+            "docs/self_model/capabilities/CAP-0009.json"
+        ),
+        Path(
+            "docs/self_model/gaps/GAP-0003.json"
+        ),
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260709-0002.json"
+        ),
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        ),
+    ]
+
+    for source in sources:
+        _write_registry_relation_fixture_record(
+            tmp_path,
+            source,
+        )
+
+    registry = SelfModelRegistry(tmp_path)
+    relations = registry.relations()
+
+    assert len(relations) == 3
+    assert all(
+        isinstance(relation, RegistryRelation)
+        for relation in relations
+    )
+
+    relation_by_source = {
+        relation.source_id: relation
+        for relation in relations
+    }
+
+    gap_relation = relation_by_source["GAP-0003"]
+
+    assert gap_relation.predicate == (
+        "self_model.related_capabilities"
+    )
+    assert gap_relation.target_id == "CAP-0009"
+    assert (
+        gap_relation.relation_source
+        == "self_model_registry"
+    )
+    assert gap_relation.authoritative is True
+    assert gap_relation.scope == "self_model"
+    assert gap_relation.evidence == (
+        "docs/self_model/gaps/GAP-0003.json"
+        "#related_capabilities"
+    )
+
+    verification_relation = relation_by_source[
+        "VERIFY-20260709-0002"
+    ]
+    assert verification_relation.predicate == (
+        "self_model.target_item_id"
+    )
+    assert verification_relation.target_id == "CAP-0005"
+
+    warrant_relation = relation_by_source[
+        "WARR-20260709-0006"
+    ]
+    assert warrant_relation.predicate == (
+        "self_model.target_item_id"
+    )
+    assert warrant_relation.target_id == "CAP-0005"
+
+
+def test_self_model_registry_excludes_missing_relations(
+    tmp_path,
+):
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+    )
+
+    _write_registry_relation_fixture_record(
+        tmp_path,
+        Path(
+            "docs/self_model/gaps/GAP-0003.json"
+        ),
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+
+    assert len(registry.unresolved_references()) == 1
+    assert registry.relations() == ()
+
+
+def test_self_model_registry_excludes_wrong_type_relations(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        read_json,
+    )
+
+    _write_registry_relation_fixture_record(
+        tmp_path,
+        Path(
+            "docs/self_model/capabilities/CAP-0005.json"
+        ),
+    )
+
+    warrant = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        )
+    )
+    warrant["target_item_type"] = "gap"
+
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "warrants"
+        / "WARR-20260709-0006.json"
+    )
+    target.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    target.write_text(
+        json.dumps(
+            warrant,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    registry = SelfModelRegistry(tmp_path)
+    issues = registry.unresolved_references()
+
+    assert len(issues) == 1
+    assert issues[0].code == "wrong_target_type"
+    assert registry.relations() == ()

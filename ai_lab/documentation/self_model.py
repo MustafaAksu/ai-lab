@@ -10,8 +10,6 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from types import MappingProxyType
-
-
 class SelfModelError(ValueError):
     """Raised when a self-model record is structurally invalid."""
 
@@ -979,6 +977,12 @@ class RegistryReference:
     def field_name(self) -> str:
         return ".".join(self.field_path)
 
+    @property
+    def predicate(self) -> str:
+        """Return the normalized namespaced relation predicate."""
+
+        return f"self_model.{self.field_name}"
+
 
 @dataclass(frozen=True)
 class RegistryReferenceIssue:
@@ -987,6 +991,19 @@ class RegistryReferenceIssue:
     code: str
     reference: RegistryReference
     actual_target_type: str | None
+
+
+@dataclass(frozen=True)
+class RegistryRelation:
+    """A graph-compatible relation derived from registry references."""
+
+    source_id: str
+    predicate: str
+    target_id: str
+    relation_source: str
+    authoritative: bool
+    scope: str | None = None
+    evidence: str | None = None
 
 
 @dataclass(frozen=True)
@@ -1479,6 +1496,37 @@ class SelfModelRegistry:
                 )
 
         return tuple(issues)
+
+    def relations(self) -> tuple[RegistryRelation, ...]:
+        """Return graph-compatible relations for resolved registry IDs."""
+
+        relations: list[RegistryRelation] = []
+
+        for reference in self._references:
+            target = self.resolve_reference(reference)
+            if target is None:
+                continue
+
+            source_entry = self.require(
+                reference.source_record_id
+            )
+
+            relations.append(
+                RegistryRelation(
+                    source_id=reference.source_record_id,
+                    predicate=reference.predicate,
+                    target_id=target.record_id,
+                    relation_source="self_model_registry",
+                    authoritative=True,
+                    scope="self_model",
+                    evidence=(
+                        f"{source_entry.source_path}"
+                        f"#{reference.field_name}"
+                    ),
+                )
+            )
+
+        return tuple(relations)
 
 
 def build_self_model_index(
