@@ -498,10 +498,10 @@ def test_audit_self_model_index_detects_stale_content(tmp_path):
         index_path=index_path,
     )
 
-    assert result["ok"] is True
+    assert result["ok"] is False
     assert any(
         finding["code"] == "SELF_MODEL_INDEX_CONTENT_STALE"
-        and finding["severity"] == "warn"
+        and finding["severity"] == "error"
         for finding in result["findings"]
     )
 
@@ -3483,3 +3483,186 @@ def test_self_model_registry_excludes_wrong_type_relations(
     assert len(issues) == 1
     assert issues[0].code == "wrong_target_type"
     assert registry.relations() == ()
+
+
+def test_audit_self_model_registry_accepts_valid_fixture(
+    tmp_path,
+):
+    from ai_lab.documentation.self_model import (
+        audit_self_model_registry,
+    )
+
+    sources = [
+        Path(
+            "docs/self_model/capabilities/CAP-0005.json"
+        ),
+        Path(
+            "docs/self_model/capabilities/CAP-0009.json"
+        ),
+        Path(
+            "docs/self_model/gaps/GAP-0003.json"
+        ),
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260709-0002.json"
+        ),
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        ),
+    ]
+
+    for source_path in sources:
+        _write_registry_relation_fixture_record(
+            tmp_path,
+            source_path,
+        )
+
+    result = audit_self_model_registry(tmp_path)
+
+    assert result == {
+        "schema_version": "v1",
+        "ok": True,
+        "findings": [],
+    }
+
+
+def test_audit_self_model_registry_reports_missing_target(
+    tmp_path,
+):
+    from ai_lab.documentation.self_model import (
+        audit_self_model_registry,
+    )
+
+    _write_registry_relation_fixture_record(
+        tmp_path,
+        Path(
+            "docs/self_model/gaps/GAP-0003.json"
+        ),
+    )
+
+    result = audit_self_model_registry(tmp_path)
+
+    assert result["ok"] is False
+    assert len(result["findings"]) == 1
+
+    finding = result["findings"][0]
+
+    assert finding["severity"] == "error"
+    assert finding["code"] == (
+        "SELF_MODEL_REFERENCE_TARGET_MISSING"
+    )
+    assert finding["target"] == (
+        "docs/self_model/gaps/GAP-0003.json"
+        "#related_capabilities"
+    )
+    assert "CAP-0009" in finding["message"]
+    assert "capability" in finding["message"]
+
+
+def test_audit_self_model_registry_reports_wrong_target_type(
+    tmp_path,
+):
+    import json
+
+    from ai_lab.documentation.self_model import (
+        audit_self_model_registry,
+        read_json,
+    )
+
+    _write_registry_relation_fixture_record(
+        tmp_path,
+        Path(
+            "docs/self_model/capabilities/CAP-0005.json"
+        ),
+    )
+
+    warrant = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260709-0006.json"
+        )
+    )
+    warrant["target_item_type"] = "gap"
+
+    target = (
+        tmp_path
+        / "docs"
+        / "self_model"
+        / "warrants"
+        / "WARR-20260709-0006.json"
+    )
+    target.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    target.write_text(
+        json.dumps(
+            warrant,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+
+    result = audit_self_model_registry(tmp_path)
+
+    assert result["ok"] is False
+    assert len(result["findings"]) == 1
+
+    finding = result["findings"][0]
+
+    assert finding["severity"] == "error"
+    assert finding["code"] == (
+        "SELF_MODEL_REFERENCE_TARGET_TYPE_MISMATCH"
+    )
+    assert finding["target"] == (
+        "docs/self_model/warrants/"
+        "WARR-20260709-0006.json"
+        "#target_item_id"
+    )
+    assert "CAP-0005" in finding["message"]
+    assert "gap" in finding["message"]
+    assert "capability" in finding["message"]
+
+
+def test_audit_self_model_includes_registry_reference_errors(
+    monkeypatch,
+):
+    import ai_lab.documentation.self_model as self_model
+
+    injected = {
+        "severity": "error",
+        "code": "SELF_MODEL_REFERENCE_TARGET_MISSING",
+        "target": "fixture.json#source_gap_id",
+        "message": "Injected missing reference.",
+    }
+
+    monkeypatch.setattr(
+        self_model,
+        "audit_self_model_registry",
+        lambda repo_root: {
+            "schema_version": "v1",
+            "ok": False,
+            "findings": [injected],
+        },
+    )
+
+    result = self_model.audit_self_model(Path("."))
+
+    assert result["ok"] is False
+    assert injected in result["findings"]
+
+
+def test_audit_self_model_registry_current_repository_has_no_errors():
+    from ai_lab.documentation.self_model import (
+        audit_self_model_registry,
+    )
+
+    result = audit_self_model_registry(Path("."))
+
+    assert result == {
+        "schema_version": "v1",
+        "ok": True,
+        "findings": [],
+    }

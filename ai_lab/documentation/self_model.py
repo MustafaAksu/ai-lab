@@ -312,6 +312,103 @@ def _latest_admission_for_target(repo_root: Path, target_item_id: str) -> tuple[
     return matches[-1][2], used_fallback
 
 
+def audit_self_model_registry(
+    repo_root: Path = Path("."),
+) -> dict[str, object]:
+    """Audit canonical registry discovery and references."""
+
+    repo_root = repo_root.resolve()
+    findings: list[dict[str, str]] = []
+    registry_root = repo_root / "docs" / "self_model"
+
+    try:
+        registry = SelfModelRegistry(repo_root)
+    except Exception as error:
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_REGISTRY_INVALID",
+                str(registry_root),
+                str(error),
+            )
+        )
+        return {
+            "schema_version": "v1",
+            "ok": False,
+            "findings": findings,
+        }
+
+    for issue in registry.unresolved_references():
+        reference = issue.reference
+        source_entry = registry.require(
+            reference.source_record_id
+        )
+        target = (
+            f"{source_entry.source_path}"
+            f"#{reference.field_name}"
+        )
+
+        if issue.code == "missing_target":
+            findings.append(
+                _finding(
+                    "error",
+                    "SELF_MODEL_REFERENCE_TARGET_MISSING",
+                    target,
+                    (
+                        f"{reference.source_record_id} "
+                        f"{reference.field_name} references "
+                        f"missing {reference.expected_target_type} "
+                        f"record {reference.target_id}."
+                    ),
+                )
+            )
+            continue
+
+        if issue.code == "wrong_target_type":
+            findings.append(
+                _finding(
+                    "error",
+                    (
+                        "SELF_MODEL_REFERENCE_"
+                        "TARGET_TYPE_MISMATCH"
+                    ),
+                    target,
+                    (
+                        f"{reference.source_record_id} "
+                        f"{reference.field_name} references "
+                        f"{reference.target_id} as "
+                        f"{reference.expected_target_type}, "
+                        f"but the target is "
+                        f"{issue.actual_target_type}."
+                    ),
+                )
+            )
+            continue
+
+        findings.append(
+            _finding(
+                "error",
+                "SELF_MODEL_REFERENCE_INVALID",
+                target,
+                (
+                    "Unsupported registry reference issue: "
+                    f"{issue.code}"
+                ),
+            )
+        )
+
+    ok = not any(
+        finding["severity"] == "error"
+        for finding in findings
+    )
+
+    return {
+        "schema_version": "v1",
+        "ok": ok,
+        "findings": findings,
+    }
+
+
 def audit_self_model(
     repo_root: Path = Path("."),
     stale_commit_threshold: int = 10,
@@ -581,8 +678,27 @@ def audit_self_model(
                     )
                 )
 
-    ok = not any(finding["severity"] == "error" for finding in findings)
-    return {"schema_version": "v1", "ok": ok, "findings": findings}
+    registry_audit = audit_self_model_registry(
+        repo_root
+    )
+    registry_findings = registry_audit.get("findings")
+
+    if isinstance(registry_findings, list):
+        findings.extend(
+            finding
+            for finding in registry_findings
+            if isinstance(finding, dict)
+        )
+
+    ok = not any(
+        finding["severity"] == "error"
+        for finding in findings
+    )
+    return {
+        "schema_version": "v1",
+        "ok": ok,
+        "findings": findings,
+    }
 
 
 
@@ -2101,7 +2217,7 @@ def audit_self_model_index(
     else:
         findings.append(
             _finding(
-                "warn",
+                "error",
                 "SELF_MODEL_INDEX_CONTENT_STALE",
                 str(resolved_index_path),
                 "Stored SELF_MODEL.json differs from a normalized rebuild.",
