@@ -1072,6 +1072,8 @@ class RecordTypeSpec:
     filename_glob: str
     id_field: str
     id_pattern: re.Pattern[str]
+    id_prefix: str
+    date_scoped: bool
     validator: RecordValidator
     status_field: str | None = "status"
     allowed_statuses: frozenset[str] = frozenset()
@@ -1150,6 +1152,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="CAP-*.json",
         id_field="capability_id",
         id_pattern=CAPABILITY_ID_RE,
+        id_prefix="CAP",
+        date_scoped=False,
         validator=validate_capability_record,
         allowed_statuses=frozenset(CAPABILITY_STATUSES),
     ),
@@ -1159,6 +1163,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="GAP-*.json",
         id_field="gap_id",
         id_pattern=GAP_ID_RE,
+        id_prefix="GAP",
+        date_scoped=False,
         validator=validate_gap_record,
         allowed_statuses=frozenset(GAP_STATUSES),
         open_statuses=frozenset({"open"}),
@@ -1180,6 +1186,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="VERIFY-*.json",
         id_field="verification_id",
         id_pattern=VERIFY_ID_RE,
+        id_prefix="VERIFY",
+        date_scoped=True,
         validator=validate_verification_record,
         status_field=None,
         references=(
@@ -1195,6 +1203,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="PLAN-*.json",
         id_field="plan_id",
         id_pattern=PLAN_ID_RE,
+        id_prefix="PLAN",
+        date_scoped=True,
         validator=validate_plan_record,
         allowed_statuses=frozenset(PLAN_STATUSES),
         open_statuses=frozenset({"proposed", "admitted"}),
@@ -1251,6 +1261,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="WARR-*.json",
         id_field="warrant_id",
         id_pattern=WARRANT_ID_RE,
+        id_prefix="WARR",
+        date_scoped=True,
         validator=validate_warrant_record,
         status_field="warrant_state",
         allowed_statuses=frozenset(WARRANT_STATES),
@@ -1267,6 +1279,8 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         filename_glob="DECISION-*.json",
         id_field="decision_id",
         id_pattern=DECISION_ID_RE,
+        id_prefix="DECISION",
+        date_scoped=True,
         validator=validate_decision_record,
         allowed_statuses=frozenset(DECISION_STATUSES),
         references=(
@@ -1643,6 +1657,173 @@ class SelfModelRegistry:
             )
 
         return tuple(relations)
+
+def record_type_spec(
+    record_type: str,
+) -> RecordTypeSpec:
+    """Return the canonical specification for one record type."""
+
+    for spec in SELF_MODEL_RECORD_SPECS:
+        if spec.record_type == record_type:
+            return spec
+
+    raise SelfModelError(
+        f"unknown self-model record type: {record_type}"
+    )
+
+
+def _record_date_token(
+    value: str | None,
+) -> str:
+    """Return a validated YYYYMMDD token."""
+
+    if value is None:
+        return datetime.now(timezone.utc).strftime("%Y%m%d")
+
+    token = value.replace("-", "")
+
+    if not re.fullmatch(r"\d{8}", token):
+        raise SelfModelError(
+            "record date must use YYYY-MM-DD or YYYYMMDD"
+        )
+
+    try:
+        datetime.strptime(token, "%Y%m%d")
+    except ValueError as error:
+        raise SelfModelError(
+            f"invalid record date: {value}"
+        ) from error
+
+    return token
+
+
+def suggest_next_record_id(
+    record_type: str,
+    *,
+    repo_root: Path = Path("."),
+    record_date: str | None = None,
+) -> str:
+    """
+    Suggest the next locally available max-suffix record ID.
+
+    This is intentionally non-transactional and provides no protection
+    against IDs created concurrently in another branch or worktree.
+    """
+
+    spec = record_type_spec(record_type)
+    registry = SelfModelRegistry(repo_root)
+
+    if spec.date_scoped:
+        date_token = _record_date_token(record_date)
+        stem = f"{spec.id_prefix}-{date_token}-"
+    else:
+        stem = f"{spec.id_prefix}-"
+
+    suffixes: list[int] = []
+
+    for entry in registry.entries(record_type):
+        if not entry.record_id.startswith(stem):
+            continue
+
+        suffix = entry.record_id.rsplit("-", 1)[-1]
+
+        if suffix.isdigit():
+            suffixes.append(int(suffix))
+
+    next_suffix = max(suffixes, default=0) + 1
+
+    return f"{stem}{next_suffix:04d}"
+
+
+def default_record_path(
+    repo_root: Path,
+    record_type: str,
+    record_id: str,
+) -> Path:
+    """Return the canonical JSON path for a self-model record."""
+
+    spec = record_type_spec(record_type)
+
+    if not spec.id_pattern.fullmatch(record_id):
+        raise SelfModelError(
+            f"{record_id} does not match the "
+            f"{record_type} ID specification"
+        )
+
+    return (
+        repo_root.resolve()
+        / "docs"
+        / "self_model"
+        / spec.directory_name
+        / f"{record_id}.json"
+    )
+
+
+def write_new_self_model_record(
+    repo_root: Path,
+    record_type: str,
+    record: Mapping[str, object],
+) -> Path:
+    """
+    Validate and exclusively create one canonical self-model record.
+
+    Existing records and current-worktree path collisions are never
+    overwritten.
+    """
+
+    repo_root = repo_root.resolve()
+    spec = record_type_spec(record_type)
+    candidate = deepcopy(dict(record))
+
+    spec.validator(candidate)
+
+    identifier = candidate.get(spec.id_field)
+
+    if not isinstance(identifier, str):
+        raise SelfModelError(
+            f"$.{spec.id_field} must be a string"
+        )
+
+    registry = SelfModelRegistry(repo_root)
+    existing = registry.get(identifier)
+
+    if existing is not None:
+        raise SelfModelError(
+            f"self-model record ID already exists: "
+            f"{identifier} at {existing.source_path}"
+        )
+
+    output = default_record_path(
+        repo_root,
+        record_type,
+        identifier,
+    )
+
+    output.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    try:
+        with output.open(
+            "x",
+            encoding="utf-8",
+        ) as handle:
+            handle.write(
+                json.dumps(
+                    candidate,
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n"
+            )
+    except FileExistsError as error:
+        raise SelfModelError(
+            f"refusing to overwrite existing path: "
+            f"{output.relative_to(repo_root)}"
+        ) from error
+
+    return output
 
 
 def build_self_model_index(
