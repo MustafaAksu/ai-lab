@@ -1,0 +1,27 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-14T20:49:19.838662+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/verifications/VERIFY-20260714-0002.json",
+    "docs/self_model/capabilities/CAP-0010.json",
+    "docs/self_model/verifications/VERIFY-20260714-0001.json",
+    "docs/self_model/warrants/WARR-20260714-0001.json",
+    "ai_lab/documentation/self_model.py",
+    "scripts/create_self_model_record.py",
+    "tests/test_create_self_model_record_script.py",
+    "tests/test_self_model.py",
+    "docs/self_model/REGISTRY.md",
+    "3cc860cf28b5d5209145535b1daf519977d18d88"
+  ],
+  "reason": "PLAN-20260710-0004 is ready for completion because its admitted scope is implemented as CAP-0010 and independently verified by VERIFY-20260714-0002. The registry discovers and validates canonical instances dynamically, preserves the external projection, enforces references and drift, replaces production inventories with independent invariants, provides diagnostic normalized relations, and documents the local non-transactional record workflow. Focused tests, the full suite, and audits pass.",
+  "repo_commit": "3cc860cf28b5d5209145535b1daf519977d18d88",
+  "schema_version": "v1",
+  "scope": "Supports marking PLAN-20260710-0004 completed. Does not close GAP-0002 or GAP-0003; add record families, statuses, or lifecycle semantics; expose CAP-0009; alter context selection or provider prompts; persist graph state; perform retrieval, embeddings, or reranking; mutate production indexes, memory stores, or runtime manifests; or enable automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260710-0004",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260714-0002",
+  "warrant_state": "supported"
+}

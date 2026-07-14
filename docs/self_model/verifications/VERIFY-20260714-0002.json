@@ -1,0 +1,54 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/capabilities/CAP-0010.json",
+    "docs/self_model/verifications/VERIFY-20260714-0001.json",
+    "docs/self_model/warrants/WARR-20260714-0001.json",
+    "ai_lab/documentation/self_model.py",
+    "scripts/create_self_model_record.py",
+    "tests/test_create_self_model_record_script.py",
+    "tests/test_self_model.py",
+    "docs/self_model/REGISTRY.md",
+    "docs/self_model/SELF_MODEL.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_self_model.py tests/test_create_self_model_record_script.py -x",
+      "exit_code": 0,
+      "summary": "Focused self-model registry, invariant, and CLI verification passed with 175 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "The full repository test suite passed with 521 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "The committed self-model projection matched a normalized rebuild and the audit returned ok true."
+    },
+    {
+      "command": "python inline PLAN-20260710-0004 completion criteria verification",
+      "exit_code": 0,
+      "summary": "Confirmed the admitted plan validates, cites its admission warrant, has no premature completion fields, remains open, and is supported by CAP-0010."
+    },
+    {
+      "command": "python inline registry independence, relation, documentation, and omission invariant verification",
+      "exit_code": 0,
+      "summary": "Confirmed zero unresolved references, green registry audit, required GraphRelation-compatible fields, independent filesystem completeness tests, production inventory guards, and documented collision handling."
+    }
+  ],
+  "created_at": "2026-07-14T20:49:19.838662+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "3cc860cf28b5d5209145535b1daf519977d18d88",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Independently verified completion readiness for PLAN-20260710-0004 at the committed CAP-0010 state. All twelve success criteria are satisfied: existing-family instances are dynamically discovered without Python or test inventory changes; new families remain ontology changes; fixture and production invariants are present; normalized projection drift is enforced; relations retain the required GraphRelation-compatible fields; the CLI validates, refuses local collisions, and documents non-transactional allocation; focused tests, the full suite, and audits all pass.",
+  "target_item_id": "PLAN-20260710-0004",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260714-0002"
+}
