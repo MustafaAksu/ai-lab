@@ -1,0 +1,26 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-14T20:36:27+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0010.json",
+    "docs/self_model/verifications/VERIFY-20260714-0001.json",
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/warrants/WARR-20260710-0011.json",
+    "ai_lab/documentation/self_model.py",
+    "scripts/create_self_model_record.py",
+    "tests/test_create_self_model_record_script.py",
+    "tests/test_self_model.py",
+    "docs/self_model/REGISTRY.md",
+    "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f"
+  ],
+  "reason": "CAP-0010 is supported because the admitted registry slice is implemented at f5d7c1c and independently verified by VERIFY-20260714-0001. The implementation dynamically discovers existing canonical record instances, preserves the external projection, enforces reference and drift invariants, provides diagnostic normalized relations, and documents the local non-transactional ID workflow without changing runtime context behavior.",
+  "repo_commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0010 as an implemented documentation and governance capability. Does not complete PLAN-20260710-0004, close GAP-0002 or GAP-0003, add new record families or lifecycle semantics, expose CAP-0009, modify context selection or provider prompts, persist graph state, invoke retrieval, embeddings, or reranking, mutate production indexes or memory stores, alter runtime manifests, or enable automatic context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0010",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260714-0001",
+  "warrant_state": "supported"
+}

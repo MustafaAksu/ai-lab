@@ -1,0 +1,55 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/self_model.py",
+    "scripts/create_self_model_record.py",
+    "tests/test_create_self_model_record_script.py",
+    "tests/test_self_model.py",
+    "docs/self_model/REGISTRY.md",
+    "docs/self_model/plans/PLAN-20260710-0004.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_self_model.py tests/test_create_self_model_record_script.py -x",
+      "exit_code": 0,
+      "summary": "Focused registry, invariant, and CLI tests passed with 175 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository test suite passed with 521 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model index audit returned ok true and normalized content current."
+    },
+    {
+      "command": "python inline plan-and-registry invariant verification",
+      "exit_code": 0,
+      "summary": "Confirmed admitted plan state, no premature completion fields, six registry families, 89 records, 117 resolved references, 117 normalized relations, zero unresolved references, and a green registry audit."
+    },
+    {
+      "command": "python normalized pre-implementation SELF_MODEL.json comparison",
+      "exit_code": 0,
+      "summary": "Confirmed the external SELF_MODEL.json projection is unchanged outside generated_at and repo_head."
+    },
+    {
+      "command": "git diff --name-only 866d4a5..HEAD with runtime-facing path guard",
+      "exit_code": 0,
+      "summary": "Confirmed no provider, runtime, retrieval, embedding, reranking, context-pack-builder, or prompt-context implementation changed."
+    }
+  ],
+  "created_at": "2026-07-14T20:36:27+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified CAP-0010 against committed implementation f5d7c1c. Focused and full tests passed, the self-model audit was green, all explicit registry references resolved, normalized relations retained the required GraphRelation fields, the external projection was preserved, and no runtime-facing behavior changed.",
+  "target_item_id": "CAP-0010",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260714-0001"
+}

@@ -8,7 +8,8 @@
     "CAP-0006",
     "CAP-0007",
     "CAP-0008",
-    "CAP-0009"
+    "CAP-0009",
+    "CAP-0010"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -32,7 +33,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 38,
+      "info": 45,
       "warn": 23
     }
   },
@@ -99,10 +100,17 @@
       "name": "Opt-in graph-neighborhood context-pack candidates",
       "source_path": "docs/self_model/capabilities/CAP-0009.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0010",
+      "category": "documentation",
+      "name": "Parametric self-model registry and invariant verification",
+      "source_path": "docs/self_model/capabilities/CAP-0010.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 9
+    "implemented": 10
   },
   "gap_counts": {
     "closed": 1,
@@ -134,7 +142,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-11T19:05:33+00:00",
+  "generated_at": "2026-07-14T20:43:15+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -216,6 +224,21 @@
       "risk": "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants.",
       "source_field": "risks[1]",
       "source_record": "CAP-0009"
+    },
+    {
+      "risk": "A future test may lose independence if its expected inventory is derived through the same registry path being tested.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0010"
+    },
+    {
+      "risk": "Concurrent branches may receive the same locally suggested ID and must resolve the collision during merge or rebase.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0010"
+    },
+    {
+      "risk": "Adding a new record family still requires an explicit ontology and validator change.",
+      "source_field": "risks[2]",
+      "source_record": "CAP-0010"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -451,7 +474,7 @@
       "target": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan."
     }
   ],
-  "repo_head": "99874ed1f9c88f71b1b94bad5797686e65f520b1",
+  "repo_head": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -559,10 +582,15 @@
       "repo_commit": "ebb599409ac1b6248432b697e8d37253e2111b6a",
       "source_path": "docs/self_model/verifications/VERIFY-20260710-0006.json",
       "verification_id": "VERIFY-20260710-0006"
+    },
+    {
+      "repo_commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+      "source_path": "docs/self_model/verifications/VERIFY-20260714-0001.json",
+      "verification_id": "VERIFY-20260714-0001"
     }
   ],
   "warrant_counts": {
-    "supported": 39
+    "supported": 40
   },
   "warrants": [
     {
@@ -875,6 +903,14 @@
       "target_item_id": "PLAN-20260710-0004",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260710-0011",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260714-0001.json",
+      "target_item_id": "CAP-0010",
+      "target_item_type": "capability",
+      "warrant_id": "WARR-20260714-0001",
       "warrant_state": "supported"
     }
   ]

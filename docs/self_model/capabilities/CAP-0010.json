@@ -1,0 +1,128 @@
+{
+  "capability_id": "CAP-0010",
+  "category": "documentation",
+  "created_at": "2026-07-14T20:36:27+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260710-0004",
+        "path": "docs/self_model/plans/PLAN-20260710-0004.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260710-0011",
+        "path": "docs/self_model/warrants/WARR-20260710-0011.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "09ddb0524cf3a1947388bb40a0f65cf94a2b9f05",
+        "role": "read-only registry foundation"
+      },
+      {
+        "commit": "f2a19c5e4ea9f1d79385a0342bb12f440d7e44f2",
+        "role": "registry-backed index generation"
+      },
+      {
+        "commit": "98eb948a58b4b507e88cc955d3d9d713de21a55c",
+        "role": "lifecycle and reference metadata"
+      },
+      {
+        "commit": "e4a629fcc94b43a871679b9348a24e30931e2e5c",
+        "role": "normalized registry relations"
+      },
+      {
+        "commit": "41f5f33d236e33d4c4dbf2ab865e349e61774cf3",
+        "role": "registry and projection audit enforcement"
+      },
+      {
+        "commit": "b95e7f0ce06564e3af33021da46b5cc05b73450a",
+        "role": "collision-safe record CLI"
+      },
+      {
+        "commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+        "role": "production invariant tests and registry documentation"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "9754bfa7c253d561daea5b4d595951717ad49e8a1d3db2feeed97b305c76d6ba",
+        "path": "ai_lab/documentation/self_model.py",
+        "role": "implementation"
+      },
+      {
+        "content_hash": "c2913fc4eaac0a735495abdcdf5aa449b6515f1f494c9a050f2272533578fcbc",
+        "path": "scripts/create_self_model_record.py",
+        "role": "CLI implementation"
+      },
+      {
+        "content_hash": "e7c32751d935e79a9fd08eb25ff4b15648f671013a251126b81da59885451d0f",
+        "path": "tests/test_create_self_model_record_script.py",
+        "role": "CLI tests"
+      },
+      {
+        "content_hash": "d08cbf705233b0ea8eaaaeee049dbc646430c18cac56f0ed8140ad3e3b2485fd",
+        "path": "tests/test_self_model.py",
+        "role": "registry and invariant tests"
+      },
+      {
+        "content_hash": "7a6c856539244d1f3c3ed600883b17bedc82542a880c7efd290a8ad54557ff85",
+        "path": "docs/self_model/REGISTRY.md",
+        "role": "developer documentation"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260714-0001",
+        "path": "docs/self_model/verifications/VERIFY-20260714-0001.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.self_model.SelfModelRegistry",
+    "ai_lab.documentation.self_model.RecordTypeSpec",
+    "ai_lab.documentation.self_model.RegistryEntry",
+    "ai_lab.documentation.self_model.RegistryReference",
+    "ai_lab.documentation.self_model.RegistryRelation",
+    "ai_lab.documentation.self_model.build_self_model_index",
+    "ai_lab.documentation.self_model.audit_self_model_registry",
+    "ai_lab.documentation.self_model.suggest_next_record_id",
+    "ai_lab.documentation.self_model.write_new_self_model_record",
+    "scripts/create_self_model_record.py"
+  ],
+  "last_verified": {
+    "repo_commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260714-0001.json",
+    "verified_at": "2026-07-14T20:36:27+00:00"
+  },
+  "limits": [
+    "Canonical JSON records remain the sole source of truth.",
+    "The registry is read-only and does not maintain a second instance inventory.",
+    "The existing external SELF_MODEL.json schema is preserved.",
+    "Decision records remain registry-visible but outside the external SELF_MODEL.json projection.",
+    "RegistryRelation output is diagnostic-only and does not enter runtime graph-neighborhood selection.",
+    "Suggested IDs are local and non-transactional.",
+    "Exclusive creation prevents current-worktree overwrites but does not provide distributed reservation.",
+    "The CLI does not invent substantive record content, commit, push, or authorize governance.",
+    "No new record types, statuses, or lifecycle semantics are introduced.",
+    "Does not alter context selection, provider prompts, retrieval, embeddings, reranking, runtime manifests, or automatic context inclusion."
+  ],
+  "name": "Parametric self-model registry and invariant verification",
+  "recommended_next_actions": [
+    "Use SelfModelRegistry and invariant-based tests for future existing-family record additions.",
+    "Use create_self_model_record.py only with complete human-authored payloads and resolve cross-branch ID collisions through Git.",
+    "Keep normalized SELF_MODEL.json projection drift enforcement active.",
+    "Verify PLAN-20260710-0004 completion through a separate verification and warrant checkpoint."
+  ],
+  "repo_commit": "f5d7c1c44fd443cfe8d60564df212a14c7a35c3f",
+  "risks": [
+    "A future test may lose independence if its expected inventory is derived through the same registry path being tested.",
+    "Concurrent branches may receive the same locally suggested ID and must resolve the collision during merge or rebase.",
+    "Adding a new record family still requires an explicit ontology and validator change."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provides a read-only parametric registry over canonical self-model JSON records, registry-backed aggregation, reference and lifecycle metadata, normalized diagnostic relations, projection-drift enforcement, production invariant tests, and a validated collision-safe local record-creation CLI."
+}
