@@ -2534,7 +2534,7 @@ def test_build_self_model_index_records_gap_0003_open():
     )
 
 
-def test_validate_plan_20260710_0004_admission():
+def test_validate_plan_20260710_0004_completion():
     from ai_lab.documentation.self_model import validate_plan_record
 
     record = read_json(
@@ -2544,22 +2544,27 @@ def test_validate_plan_20260710_0004_admission():
 
     assert record["plan_id"] == "PLAN-20260710-0004"
     assert record["source_gap_id"] == "GAP-0003"
-    assert record["status"] == "admitted"
-    assert record["admission_warrant_id"] == "WARR-20260710-0011"
-    assert "completed_at" not in record
-    assert "completion_verification_id" not in record
-    assert "completion_warrant_id" not in record
+    assert record["status"] == "completed"
+    assert (
+        record["completion_verification_id"]
+        == "VERIFY-20260714-0002"
+    )
+    assert (
+        record["completion_warrant_id"]
+        == "WARR-20260714-0002"
+    )
+    assert record["completed_at"]
+    assert "CAP-0010" in record["completion_summary"]
 
 
-def test_build_self_model_index_records_plan_0004_as_admitted():
+def test_build_self_model_index_records_plan_0004_as_completed():
     from ai_lab.documentation.self_model import build_self_model_index
 
     index = build_self_model_index(Path("."))
 
-
     assert any(
         plan["plan_id"] == "PLAN-20260710-0004"
-        and plan["status"] == "admitted"
+        and plan["status"] == "completed"
         and plan["source_gap_id"] == "GAP-0003"
         for plan in index["plans"]
     )
@@ -2848,18 +2853,40 @@ def test_self_model_registry_lifecycle_metadata(tmp_path):
         read_json,
     )
 
-    sources = [
-        Path(
-            "docs/self_model/plans/"
-            "PLAN-20260710-0003.json"
-        ),
-        Path(
-            "docs/self_model/plans/"
-            "PLAN-20260710-0004.json"
-        ),
-    ]
+    completed_source = Path(
+        "docs/self_model/plans/"
+        "PLAN-20260710-0003.json"
+    )
+    admitted_source = Path(
+        "docs/self_model/plans/"
+        "PLAN-20260710-0004.json"
+    )
 
-    for source in sources:
+    completed_record = read_json(completed_source)
+    admitted_record = read_json(admitted_source)
+
+    admitted_record["status"] = "admitted"
+
+    for field_name in (
+        "completed_at",
+        "completion_summary",
+        "completion_verification_id",
+        "completion_warrant_id",
+    ):
+        admitted_record.pop(field_name, None)
+
+    fixture_records = (
+        (
+            completed_source,
+            completed_record,
+        ),
+        (
+            admitted_source,
+            admitted_record,
+        ),
+    )
+
+    for source, record in fixture_records:
         target = (
             tmp_path
             / "docs"
@@ -2867,14 +2894,18 @@ def test_self_model_registry_lifecycle_metadata(tmp_path):
             / "plans"
             / source.name
         )
-        target.parent.mkdir(parents=True, exist_ok=True)
+        target.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
         target.write_text(
             json.dumps(
-                read_json(source),
+                record,
                 indent=2,
                 sort_keys=True,
             )
-            + "\n"
+            + "\n",
+            encoding="utf-8",
         )
 
     registry = SelfModelRegistry(tmp_path)

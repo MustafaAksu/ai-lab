@@ -1,5 +1,9 @@
 {
   "admission_warrant_id": "WARR-20260710-0011",
+  "completed_at": "2026-07-14T20:52:25.743957+00:00",
+  "completion_summary": "Completed the admitted parametric self-model registry and invariant-based verification slice. CAP-0010 provides static specifications for all existing record families, a read-only dynamic registry over canonical JSON, registry-backed index generation, reference and lifecycle metadata, diagnostic GraphRelation-compatible normalized relations, projection-drift enforcement, fixture and production invariants, a validated collision-safe local record-creation CLI, and developer documentation for non-transactional ID allocation. Focused tests, the full repository suite, registry audit, and normalized SELF_MODEL.json audit passed. The external projection schema and runtime behavior remain unchanged.",
+  "completion_verification_id": "VERIFY-20260714-0002",
+  "completion_warrant_id": "WARR-20260714-0002",
   "constraints": [
     "Implementation is authorized only within the scope admitted by WARR-20260710-0011.",
     "The proposal and admission commits must contain no registry implementation.",
@@ -39,7 +43,7 @@
     "Developer documentation for registry use and ID collision handling."
   ],
   "mitigation": "Preserve the external projection schema, use independently constructed fixture repositories and filesystem completeness checks, keep production tests invariant-based, document volatile fields and ID limitations, and deliver the work incrementally with full-suite and audit verification.",
-  "next_action": "Implement the admitted slice incrementally, beginning with static record-type specifications and the read-only dynamic registry loader. Preserve the current SELF_MODEL.json external schema and do not begin CAP-0009 exposure or any other scope expansion without separate governance.",
+  "next_action": "Keep GAP-0002 and GAP-0003 open. Any further CAP-0009 exposure, runtime graph-local context integration, new self-model record family, lifecycle change, or distributed ID-allocation mechanism requires a separate proposed and admitted plan.",
   "non_goals": [
     "Changing the SELF_MODEL.json external schema.",
     "Introducing a graph database.",
@@ -76,7 +80,7 @@
     "Add a schema-valid record-skeleton CLI that suggests a locally available max-suffix ID, refuses current-worktree collisions, validates before writing, and documents merge-time collision handling."
   ],
   "source_gap_id": "GAP-0003",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The plan validates through the current self-model schema.",
     "The plan is indexed as admitted and open.",

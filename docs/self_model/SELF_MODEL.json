@@ -33,8 +33,8 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 45,
-      "warn": 23
+      "info": 44,
+      "warn": 24
     }
   },
   "capabilities": [
@@ -142,7 +142,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-14T20:49:20+00:00",
+  "generated_at": "2026-07-14T20:58:55+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -341,12 +341,9 @@
     "GAP-0002",
     "GAP-0003"
   ],
-  "open_plans": [
-    "PLAN-20260710-0004"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 15
+    "completed": 16
   },
   "plans": [
     {
@@ -458,7 +455,7 @@
       "plan_id": "PLAN-20260710-0004",
       "source_gap_id": "GAP-0003",
       "source_path": "docs/self_model/plans/PLAN-20260710-0004.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Introduce parametric self-model registry and invariant-based verification"
     }
   ],
@@ -474,7 +471,7 @@
       "target": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan."
     }
   ],
-  "repo_head": "3cc860cf28b5d5209145535b1daf519977d18d88",
+  "repo_head": "d705f358edae4afa49fb97d0b8f52fa7a7351612",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
