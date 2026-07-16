@@ -1,0 +1,37 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Implementation must remain confined to scripts/build_context_pack.py and its focused tests unless a directly necessary documentation or self-model record change is separately recorded.",
+    "Graph-neighborhood behavior must remain disabled by default.",
+    "An explicit target artifact ID is required whenever the graph-neighborhood path is enabled.",
+    "Maximum depth and graph token budget must reject invalid values and must not take effect unless graph-neighborhood candidate inclusion is enabled.",
+    "The first slice must use existing artifact-lineage relations and must not add external edge-record or future-edge-seed input.",
+    "Do not modify ask_provider.py, compare_providers.py, prompt_context.py, provider prompts, or prompt rendering.",
+    "Do not enable automatic target inference or automatic graph-local context inclusion.",
+    "Do not persist graph state or introduce retrieval, embeddings, reranking, production index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "GAP-0002 must remain open after this slice."
+  ],
+  "created_at": "2026-07-16T15:57:11.048428+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260716-0001.json",
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "ai_lab/documentation/graph_neighborhood.py",
+    "scripts/build_context_pack.py",
+    "tests/test_context_pack_builder.py",
+    "tests/test_build_context_pack_script.py"
+  ],
+  "reason": "PLAN-20260716-0001 is a bounded and testable exposure slice for the already implemented CAP-0009 library capability. Repository artifact-lineage relations provide a usable authoritative first input source, so the standalone context-pack CLI can expose explicit target, depth, and graph token-budget controls without introducing an edge-file contract. The plan preserves default behavior, excludes provider entry points, and keeps GAP-0002 open.",
+  "repo_commit": "db27454b81c1641bee1f68cffe7574345322761e",
+  "schema_version": "v1",
+  "scope": "Admit only the default-off scripts/build_context_pack.py exposure described by PLAN-20260716-0001: an explicit enable flag, required target artifact ID, optional maximum depth, optional graph-neighborhood token budget, argument dependency validation, forwarding to build_latest_context_manifest, and focused CLI tests. Use existing discovered artifact records and authoritative artifact-lineage relations only.",
+  "substrate": "self_model_governance",
+  "target_item_id": "PLAN-20260716-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260716-0002",
+  "warrant_state": "supported"
+}

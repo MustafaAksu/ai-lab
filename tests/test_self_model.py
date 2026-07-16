@@ -4002,7 +4002,7 @@ def test_self_model_tests_do_not_hardcode_production_inventory():
         + repr(violations)
     )
 
-def test_validate_plan_20260716_0001_proposal():
+def test_validate_plan_20260716_0001_admitted():
     from ai_lab.documentation.self_model import (
         validate_plan_record,
     )
@@ -4016,20 +4016,22 @@ def test_validate_plan_20260716_0001_proposal():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260716-0001"
-    assert record["status"] == "proposed"
+    assert record["status"] == "admitted"
     assert record["source_gap_id"] == "GAP-0002"
     assert record["source_capability_id"] == "CAP-0009"
     assert (
-        "scripts/build_context_pack.py"
-        in record["evidence_ids"]
+        record["admission_warrant_id"]
+        == "WARR-20260716-0002"
     )
+    assert record["admitted_at"]
     assert (
-        "Closing GAP-0002."
-        in record["non_goals"]
+        "default-off standalone context-pack CLI"
+        in record["admission_summary"]
     )
+    assert "Closing GAP-0002." in record["non_goals"]
 
 
-def test_build_self_model_index_records_plan_20260716_0001_proposed():
+def test_build_self_model_index_records_plan_20260716_0001_admitted():
     from ai_lab.documentation.self_model import (
         build_self_model_index,
     )
@@ -4040,13 +4042,51 @@ def test_build_self_model_index_records_plan_20260716_0001_proposed():
 
     assert any(
         plan["plan_id"] == "PLAN-20260716-0001"
-        and plan["status"] == "proposed"
+        and plan["status"] == "admitted"
         and plan["source_gap_id"] == "GAP-0002"
         for plan in index["plans"]
+    )
+
+    assert "PLAN-20260716-0001" in index["open_plans"]
+    assert (
+        "PLAN-20260716-0001"
+        in index["admitted_plans"]
     )
 
     assert any(
         gap["gap_id"] == "GAP-0002"
         and gap["status"] == "open"
         for gap in index["gaps"]
+    )
+
+
+def test_validate_warr_20260716_0002_admission():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260716-0002.json"
+        )
+    )
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260716-0002"
+    assert (
+        record["target_item_id"]
+        == "PLAN-20260716-0001"
+    )
+    assert record["target_item_type"] == "plan"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert (
+        "scripts/build_context_pack.py"
+        in record["scope"]
+    )
+    assert any(
+        "GAP-0002 must remain open"
+        in condition
+        for condition in record["conditions"]
     )

@@ -27,7 +27,8 @@
     "PLAN-20260710-0001",
     "PLAN-20260710-0002",
     "PLAN-20260710-0003",
-    "PLAN-20260710-0004"
+    "PLAN-20260710-0004",
+    "PLAN-20260716-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -142,7 +143,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T15:45:39+00:00",
+  "generated_at": "2026-07-16T15:57:11+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -349,8 +350,8 @@
     "PLAN-20260716-0001"
   ],
   "plan_counts": {
-    "completed": 16,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 16
   },
   "plans": [
     {
@@ -469,7 +470,7 @@
       "plan_id": "PLAN-20260716-0001",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260716-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Expose graph-neighborhood candidates through context-pack CLI"
     }
   ],
@@ -480,7 +481,7 @@
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "785e8d6789372f96db79aae51b5201ee65e5b10d",
+  "repo_head": "db27454b81c1641bee1f68cffe7574345322761e",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -606,7 +607,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 42
+    "supported": 43
   },
   "warrants": [
     {
@@ -943,6 +944,14 @@
       "target_item_id": "GAP-0003",
       "target_item_type": "gap",
       "warrant_id": "WARR-20260716-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260716-0002.json",
+      "target_item_id": "PLAN-20260716-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260716-0002",
       "warrant_state": "supported"
     }
   ]
