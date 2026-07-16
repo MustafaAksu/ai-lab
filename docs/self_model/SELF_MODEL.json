@@ -36,7 +36,7 @@
     "severity_counts": {
       "error": 0,
       "info": 48,
-      "warn": 24
+      "warn": 25
     }
   },
   "capabilities": [
@@ -151,7 +151,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T16:29:39+00:00",
+  "generated_at": "2026-07-16T19:31:34+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -501,7 +501,7 @@
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "ee2d6206d90ac5094f74288316910fa3284fa08d",
+  "repo_head": "66cb27a919a640558809f499dd865a7c13eb2086",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
