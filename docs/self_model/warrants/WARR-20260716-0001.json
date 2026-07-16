@@ -1,0 +1,25 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-16T15:09:21.620541+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "GAP-0003",
+    "CAP-0010",
+    "PLAN-20260710-0004",
+    "VERIFY-20260714-0001",
+    "VERIFY-20260714-0002",
+    "VERIFY-20260716-0001",
+    "WARR-20260714-0001",
+    "WARR-20260714-0002",
+    "e3060f9905bebbdd2454d50feef4f81cbc22f793"
+  ],
+  "reason": "GAP-0003 described the absence of a parametric registry and independent invariant-based verification for canonical self-model records. CAP-0010 and completed PLAN-20260710-0004 now provide every missing element, and VERIFY-20260716-0001 confirms the result through focused tests, the full repository suite, registry integrity checks, and normalized projection audit evidence.",
+  "repo_commit": "e3060f9905bebbdd2454d50feef4f81cbc22f793",
+  "schema_version": "v1",
+  "scope": "Supports closing GAP-0003 for parametric self-model registry and invariant-based verification. Does not close GAP-0002, claim distributed or transactional ID allocation, introduce new record families or lifecycle semantics, expose CAP-0009, alter context selection or provider prompts, persist graph state, perform retrieval, embeddings, or reranking, mutate production indexes or memory stores, change runtime manifests, or enable automatic graph-local context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "GAP-0003",
+  "target_item_type": "gap",
+  "warrant_id": "WARR-20260716-0001",
+  "warrant_state": "supported"
+}

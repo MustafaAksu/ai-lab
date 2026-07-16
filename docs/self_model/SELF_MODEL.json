@@ -142,7 +142,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-16T14:52:20+00:00",
+  "generated_at": "2026-07-16T15:09:21+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -471,7 +471,7 @@
       "target": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan."
     }
   ],
-  "repo_head": "e41a3bac2a01efec310b877f1738bb6b958cb155",
+  "repo_head": "e3060f9905bebbdd2454d50feef4f81cbc22f793",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -589,10 +589,15 @@
       "repo_commit": "3cc860cf28b5d5209145535b1daf519977d18d88",
       "source_path": "docs/self_model/verifications/VERIFY-20260714-0002.json",
       "verification_id": "VERIFY-20260714-0002"
+    },
+    {
+      "repo_commit": "e3060f9905bebbdd2454d50feef4f81cbc22f793",
+      "source_path": "docs/self_model/verifications/VERIFY-20260716-0001.json",
+      "verification_id": "VERIFY-20260716-0001"
     }
   ],
   "warrant_counts": {
-    "supported": 41
+    "supported": 42
   },
   "warrants": [
     {
@@ -921,6 +926,14 @@
       "target_item_id": "PLAN-20260710-0004",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260714-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260716-0001.json",
+      "target_item_id": "GAP-0003",
+      "target_item_type": "gap",
+      "warrant_id": "WARR-20260716-0001",
       "warrant_state": "supported"
     }
   ]

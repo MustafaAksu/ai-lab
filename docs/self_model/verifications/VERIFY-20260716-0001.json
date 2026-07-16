@@ -1,0 +1,58 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/gaps/GAP-0003.json",
+    "docs/self_model/capabilities/CAP-0010.json",
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/verifications/VERIFY-20260714-0001.json",
+    "docs/self_model/verifications/VERIFY-20260714-0002.json",
+    "docs/self_model/warrants/WARR-20260714-0001.json",
+    "docs/self_model/warrants/WARR-20260714-0002.json",
+    "ai_lab/documentation/self_model.py",
+    "scripts/create_self_model_record.py",
+    "scripts/audit_self_model_index.py",
+    "tests/test_self_model.py",
+    "tests/test_create_self_model_record_script.py",
+    "docs/self_model/REGISTRY.md",
+    "docs/self_model/SELF_MODEL.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_self_model.py tests/test_create_self_model_record_script.py -x",
+      "exit_code": 0,
+      "summary": "Focused self-model registry, invariant, lifecycle, projection, and CLI tests passed with 175 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "The full repository test suite passed with 521 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "The committed SELF_MODEL.json matched a normalized rebuild and the audit returned ok true."
+    },
+    {
+      "command": "python inline GAP-0003 resolution verification",
+      "exit_code": 0,
+      "summary": "Confirmed that CAP-0010 and completed PLAN-20260710-0004 provide the parametric registry, reference and lifecycle integrity, fixture and production invariants, normalized relations, projection-drift enforcement, validated local record CLI, and documentation identified as missing by GAP-0003."
+    },
+    {
+      "command": "python inline registry integrity verification",
+      "exit_code": 0,
+      "summary": "Confirmed zero unresolved references and a green self-model registry audit."
+    }
+  ],
+  "created_at": "2026-07-16T15:09:21.620541+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "e3060f9905bebbdd2454d50feef4f81cbc22f793",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified that the deficiency described by GAP-0003 has been resolved. CAP-0010 and completed PLAN-20260710-0004 provide a read-only parametric registry over canonical JSON records, registry-backed projection generation, reference and lifecycle integrity, independent fixture and production invariants, normalized diagnostic relations, projection-drift enforcement, a validated collision-safe local record CLI, and developer documentation. Focused tests, the complete suite, and self-model audits pass.",
+  "target_item_id": "GAP-0003",
+  "target_item_type": "gap",
+  "verification_id": "VERIFY-20260716-0001"
+}
