@@ -133,8 +133,94 @@ def main() -> int:
         default=None,
         help="Optional cap for automatic L0 discovery inclusions.",
     )
+    parser.add_argument(
+        "--include-graph-neighborhood-candidates",
+        action="store_true",
+        help=(
+            "Opt in to graph-neighborhood context candidates derived from "
+            "repository artifact lineage. Default is disabled."
+        ),
+    )
+    parser.add_argument(
+        "--graph-neighborhood-target-id",
+        default=None,
+        help=(
+            "Explicit target artifact ID for graph-neighborhood candidates. "
+            "Requires --include-graph-neighborhood-candidates."
+        ),
+    )
+    parser.add_argument(
+        "--graph-neighborhood-max-depth",
+        type=int,
+        default=None,
+        help=(
+            "Optional graph-neighborhood traversal depth. Must be at least 1 "
+            "and requires --include-graph-neighborhood-candidates."
+        ),
+    )
+    parser.add_argument(
+        "--graph-neighborhood-token-budget",
+        type=int,
+        default=None,
+        help=(
+            "Optional non-negative token budget for graph-neighborhood "
+            "candidates. Requires --include-graph-neighborhood-candidates."
+        ),
+    )
 
     args = parser.parse_args()
+
+    if (
+        args.include_graph_neighborhood_candidates
+        and args.graph_neighborhood_target_id is None
+    ):
+        parser.error(
+            "--include-graph-neighborhood-candidates requires "
+            "--graph-neighborhood-target-id."
+        )
+
+    if (
+        args.graph_neighborhood_target_id is not None
+        and not args.include_graph_neighborhood_candidates
+    ):
+        parser.error(
+            "--graph-neighborhood-target-id requires "
+            "--include-graph-neighborhood-candidates."
+        )
+
+    if (
+        args.graph_neighborhood_max_depth is not None
+        and not args.include_graph_neighborhood_candidates
+    ):
+        parser.error(
+            "--graph-neighborhood-max-depth requires "
+            "--include-graph-neighborhood-candidates."
+        )
+
+    if (
+        args.graph_neighborhood_token_budget is not None
+        and not args.include_graph_neighborhood_candidates
+    ):
+        parser.error(
+            "--graph-neighborhood-token-budget requires "
+            "--include-graph-neighborhood-candidates."
+        )
+
+    if (
+        args.graph_neighborhood_max_depth is not None
+        and args.graph_neighborhood_max_depth < 1
+    ):
+        parser.error(
+            "--graph-neighborhood-max-depth must be at least 1."
+        )
+
+    if (
+        args.graph_neighborhood_token_budget is not None
+        and args.graph_neighborhood_token_budget < 0
+    ):
+        parser.error(
+            "--graph-neighborhood-token-budget must be non-negative."
+        )
 
     records = discover_artifacts(
         comparison_dir=args.comparison_dir,
@@ -173,6 +259,22 @@ def main() -> int:
         if args.include_l0:
             manifest_kwargs["include_l0"] = tuple(args.include_l0)
             manifest_kwargs["l0_store"] = args.l0_store
+
+        if args.include_graph_neighborhood_candidates:
+            manifest_kwargs["include_graph_neighborhood_candidates"] = True
+            manifest_kwargs["graph_neighborhood_target_id"] = (
+                args.graph_neighborhood_target_id
+            )
+
+        if args.graph_neighborhood_max_depth is not None:
+            manifest_kwargs["graph_neighborhood_max_depth"] = (
+                args.graph_neighborhood_max_depth
+            )
+
+        if args.graph_neighborhood_token_budget is not None:
+            manifest_kwargs["graph_neighborhood_token_budget"] = (
+                args.graph_neighborhood_token_budget
+            )
 
         manifest = build_latest_context_manifest(**manifest_kwargs)
     else:

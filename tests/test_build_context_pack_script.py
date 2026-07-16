@@ -305,3 +305,289 @@ def test_main_passes_auto_include_l0_discovery_arguments(monkeypatch, tmp_path, 
     assert captured["auto_include_l0_discovery"] is True
     assert captured["auto_include_l0_discovery_max_items"] == 2
     assert captured["l0_store"] == tmp_path
+
+
+def test_main_passes_graph_neighborhood_arguments(monkeypatch, capsys):
+    import scripts.build_context_pack as script
+
+    captured = {}
+
+    monkeypatch.setattr(
+        script,
+        "discover_artifacts",
+        lambda comparison_dir, abstraction_dir: (),
+    )
+
+    def fake_build_latest_context_manifest(**kwargs):
+        captured.update(kwargs)
+
+        item = ContextPackItem(
+            item_type="abstraction",
+            item_id="ABS-0002",
+            reason="Graph target.",
+            relevance_score=0.9,
+            token_estimate=100,
+        )
+
+        return ContextPackManifest(
+            task=kwargs["task"],
+            assembly_policy="latest_context",
+            items=(item,),
+            diagnostics={
+                "graph_neighborhood": {
+                    "enabled": True,
+                    "selection_effect": (
+                        "opt_in_context_candidate"
+                    ),
+                }
+            },
+        )
+
+    monkeypatch.setattr(
+        script,
+        "build_latest_context_manifest",
+        fake_build_latest_context_manifest,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare graph-local context.",
+            "--include-graph-neighborhood-candidates",
+            "--graph-neighborhood-target-id",
+            "ABS-0002",
+            "--graph-neighborhood-max-depth",
+            "3",
+            "--graph-neighborhood-token-budget",
+            "1200",
+        ],
+    )
+
+    assert script.main() == 0
+    data = json.loads(capsys.readouterr().out)
+
+    assert (
+        captured["include_graph_neighborhood_candidates"]
+        is True
+    )
+    assert (
+        captured["graph_neighborhood_target_id"]
+        == "ABS-0002"
+    )
+    assert captured["graph_neighborhood_max_depth"] == 3
+    assert (
+        captured["graph_neighborhood_token_budget"]
+        == 1200
+    )
+    assert (
+        data["diagnostics"]["graph_neighborhood"][
+            "selection_effect"
+        ]
+        == "opt_in_context_candidate"
+    )
+
+
+def test_main_requires_graph_target_when_enabled(
+    monkeypatch,
+    capsys,
+):
+    import pytest
+    import scripts.build_context_pack as script
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare graph-local context.",
+            "--include-graph-neighborhood-candidates",
+        ],
+    )
+
+    with pytest.raises(SystemExit, match="2"):
+        script.main()
+
+    assert (
+        "--include-graph-neighborhood-candidates requires "
+        "--graph-neighborhood-target-id"
+        in capsys.readouterr().err
+    )
+
+
+def test_main_rejects_graph_options_without_enablement(
+    monkeypatch,
+    capsys,
+):
+    import pytest
+    import scripts.build_context_pack as script
+
+    cases = (
+        (
+            "--graph-neighborhood-target-id",
+            "ABS-0002",
+        ),
+        (
+            "--graph-neighborhood-max-depth",
+            "2",
+        ),
+        (
+            "--graph-neighborhood-token-budget",
+            "1200",
+        ),
+    )
+
+    for option, value in cases:
+        monkeypatch.setattr(
+            "sys.argv",
+            [
+                "build_context_pack.py",
+                "Prepare graph-local context.",
+                option,
+                value,
+            ],
+        )
+
+        with pytest.raises(SystemExit, match="2"):
+            script.main()
+
+        assert (
+            f"{option} requires "
+            "--include-graph-neighborhood-candidates"
+            in capsys.readouterr().err
+        )
+
+
+def test_main_rejects_invalid_graph_limits(
+    monkeypatch,
+    capsys,
+):
+    import pytest
+    import scripts.build_context_pack as script
+
+    cases = (
+        (
+            "--graph-neighborhood-max-depth",
+            "0",
+            (
+                "--graph-neighborhood-max-depth "
+                "must be at least 1"
+            ),
+        ),
+        (
+            "--graph-neighborhood-token-budget",
+            "-1",
+            (
+                "--graph-neighborhood-token-budget "
+                "must be non-negative"
+            ),
+        ),
+    )
+
+    for option, value, expected in cases:
+        monkeypatch.setattr(
+            "sys.argv",
+            [
+                "build_context_pack.py",
+                "Prepare graph-local context.",
+                "--include-graph-neighborhood-candidates",
+                "--graph-neighborhood-target-id",
+                "ABS-0002",
+                option,
+                value,
+            ],
+        )
+
+        with pytest.raises(SystemExit, match="2"):
+            script.main()
+
+        assert expected in capsys.readouterr().err
+
+
+def test_main_uses_artifact_lineage_for_graph_neighborhood(
+    monkeypatch,
+    tmp_path,
+    capsys,
+):
+    import ai_lab.documentation.context_pack_builder as builder
+    import scripts.build_context_pack as script
+    from ai_lab.documentation.artifact_history import (
+        ArtifactRecord,
+    )
+
+    monkeypatch.setattr(
+        builder,
+        "discover_latest_l1_summary_item",
+        lambda l1_dir, scope: None,
+    )
+
+    source_path = tmp_path / "ABS-0001.md"
+    target_path = tmp_path / "ABS-0002.md"
+
+    source_path.write_text(
+        "source abstraction",
+        encoding="utf-8",
+    )
+    target_path.write_text(
+        "target abstraction",
+        encoding="utf-8",
+    )
+
+    records = (
+        ArtifactRecord(
+            artifact_id="ABS-0001",
+            kind="ABS",
+            title="Source Memory",
+            path=source_path,
+            created_at="2026-07-01T00:00:00+00:00",
+            abstraction_level="1",
+        ),
+        ArtifactRecord(
+            artifact_id="ABS-0002",
+            kind="ABS",
+            title="Target Memory",
+            path=target_path,
+            created_at="2026-07-02T00:00:00+00:00",
+            source_artifacts=str(source_path),
+            abstraction_level="1",
+        ),
+    )
+
+    monkeypatch.setattr(
+        script,
+        "discover_artifacts",
+        lambda comparison_dir, abstraction_dir: records,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "build_context_pack.py",
+            "Prepare graph-local context.",
+            "--include-graph-neighborhood-candidates",
+            "--graph-neighborhood-target-id",
+            "ABS-0002",
+        ],
+    )
+
+    assert script.main() == 0
+    data = json.loads(capsys.readouterr().out)
+
+    assert [
+        item["item_id"]
+        for item in data["items"]
+    ] == [
+        "ABS-0001",
+        "ABS-0002",
+    ]
+    assert (
+        data["diagnostics"]["graph_neighborhood"]["enabled"]
+        is True
+    )
+    assert (
+        data["diagnostics"]["graph_neighborhood"]["target_id"]
+        == "ABS-0002"
+    )
+    assert (
+        data["diagnostics"]["graph_neighborhood"][
+            "selected_artifact_ids"
+        ]
+        == ["ABS-0001"]
+    )
