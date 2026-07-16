@@ -2,6 +2,10 @@
   "admission_summary": "Admitted for default-off standalone context-pack CLI exposure of CAP-0009 using an explicit target artifact ID and optional maximum-depth and graph token-budget controls. No provider-facing exposure, automatic target inference, external edge input, automatic inclusion, graph persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes are admitted.",
   "admission_warrant_id": "WARR-20260716-0002",
   "admitted_at": "2026-07-16T15:57:11.048428+00:00",
+  "completed_at": "2026-07-16T16:29:39.010675+00:00",
+  "completion_summary": "Completed the admitted standalone context-pack CLI exposure of CAP-0009. CAP-0011 adds explicit, default-off graph-neighborhood enablement, target artifact ID, maximum depth, and graph token-budget controls to scripts/build_context_pack.py. Existing default behavior and provider paths remain unchanged. GAP-0002 remains open.",
+  "completion_verification_id": "VERIFY-20260716-0003",
+  "completion_warrant_id": "WARR-20260716-0004",
   "constraints": [
     "Implementation is authorized only within the scope admitted by WARR-20260716-0002.",
     "Any scope expansion beyond WARR-20260716-0002 requires a separate proposed and admitted plan.",
@@ -32,7 +36,8 @@
     "ai_lab/documentation/graph_neighborhood.py",
     "scripts/build_context_pack.py",
     "tests/test_context_pack_builder.py",
-    "tests/test_build_context_pack_script.py"
+    "tests/test_build_context_pack_script.py",
+    "docs/self_model/capabilities/CAP-0011.json"
   ],
   "expected_outputs": [
     "A default-off build_context_pack.py graph-neighborhood CLI surface.",
@@ -42,7 +47,7 @@
     "No provider entry-point or prompt changes."
   ],
   "mitigation": "Limit the implementation plan to scripts/build_context_pack.py and its tests, require explicit target selection, preserve defaults, reject invalid option combinations, and prohibit provider or persistence changes.",
-  "next_action": "Implement only the CLI exposure admitted by WARR-20260716-0002, add focused parser, forwarding, default, error, and repository-lineage smoke tests, then perform independent capability and plan-completion verification. Do not close GAP-0002.",
+  "next_action": "Keep GAP-0002 open. Evaluate graph-local memory quality, target selection, scoped summaries, and local/global balance as separate governed work before considering provider-facing or automatic graph-local context behavior.",
   "non_goals": [
     "Provider-facing graph-neighborhood flags.",
     "Automatic target inference.",
@@ -78,7 +83,7 @@
     "CAP-0009"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The admitted plan validates through the self-model schema, references WARR-20260716-0002, and is indexed as admitted and open.",
     "The proposal commit changes only self-model records, generated projection, and proposal-specific tests.",
@@ -90,6 +95,6 @@
     "Focused tests, the full repository suite, and the self-model audit pass.",
     "GAP-0002 remains open."
   ],
-  "summary": "Admit a governed, default-off build_context_pack.py exposure of CAP-0009 using an explicit target artifact ID and optional depth and token-budget controls. Implementation is authorized only within WARR-20260716-0002; provider paths remain unchanged and GAP-0002 remains open.",
+  "summary": "Completed the governed, default-off build_context_pack.py exposure of CAP-0009. The resulting CAP-0011 capability uses explicit target and optional depth and token-budget controls, preserves existing defaults, and does not alter provider behavior or close GAP-0002.",
   "title": "Expose graph-neighborhood candidates through context-pack CLI"
 }

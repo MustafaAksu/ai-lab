@@ -1,0 +1,24 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-16T16:29:39.010675+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260716-0001.json",
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/verifications/VERIFY-20260716-0002.json",
+    "docs/self_model/verifications/VERIFY-20260716-0003.json",
+    "docs/self_model/warrants/WARR-20260716-0003.json",
+    "scripts/build_context_pack.py",
+    "tests/test_build_context_pack_script.py",
+    "ee2d6206d90ac5094f74288316910fa3284fa08d"
+  ],
+  "reason": "PLAN-20260716-0001 is complete because CAP-0011 implements the admitted standalone, default-off graph-neighborhood context-pack CLI exposure and VERIFY-20260716-0003 confirms the implementation meets the plan's boundaries and success criteria. Completion does not close GAP-0002 because full graph-local scoped memory selection, provider exposure, automatic target selection, and automatic inclusion remain outside scope.",
+  "repo_commit": "ee2d6206d90ac5094f74288316910fa3284fa08d",
+  "schema_version": "v1",
+  "scope": "Supports completion of PLAN-20260716-0001 only. This warrant does not close GAP-0002, authorize provider-facing graph-neighborhood flags, enable automatic target inference or automatic graph-local inclusion, accept external edge inputs, persist graph state, or modify retrieval, embeddings, reranking, indexes, memory stores, or runtime manifests.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260716-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260716-0004",
+  "warrant_state": "supported"
+}

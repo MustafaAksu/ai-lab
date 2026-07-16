@@ -1,0 +1,51 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260716-0001.json",
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/verifications/VERIFY-20260716-0002.json",
+    "docs/self_model/warrants/WARR-20260716-0003.json",
+    "scripts/build_context_pack.py",
+    "tests/test_build_context_pack_script.py",
+    "docs/self_model/gaps/GAP-0002.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_build_context_pack_script.py tests/test_context_pack_builder.py tests/test_graph_neighborhood.py -x",
+      "exit_code": 0,
+      "summary": "Targeted implementation tests passed with 55 tests."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py tests/test_create_self_model_record_script.py -x",
+      "exit_code": 0,
+      "summary": "Focused self-model lifecycle validation passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "The complete repository test suite passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "The self-model index audit returned ok true."
+    },
+    {
+      "command": "python scripts/build_context_pack.py \"Graph-local context smoke.\" --include-graph-neighborhood-candidates --graph-neighborhood-target-id ABS-0001 --graph-neighborhood-max-depth 2",
+      "exit_code": 0,
+      "summary": "The standalone CLI emitted opt-in graph-neighborhood diagnostics and selected authoritative artifact-lineage neighbors."
+    }
+  ],
+  "created_at": "2026-07-16T16:29:39.010675+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "ee2d6206d90ac5094f74288316910fa3284fa08d",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion readiness for PLAN-20260716-0001. CAP-0011 implements the admitted default-off standalone context-pack CLI exposure with explicit target, depth, and graph token-budget controls. Default behavior remains unchanged, invalid option combinations are rejected, repository artifact lineage provides useful candidates, provider paths remain unchanged, and GAP-0002 remains open.",
+  "target_item_id": "PLAN-20260716-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260716-0003"
+}

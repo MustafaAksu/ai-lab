@@ -151,7 +151,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T16:19:14+00:00",
+  "generated_at": "2026-07-16T16:29:39+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -369,12 +369,9 @@
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [
-    "PLAN-20260716-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 16
+    "completed": 17
   },
   "plans": [
     {
@@ -493,7 +490,7 @@
       "plan_id": "PLAN-20260716-0001",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260716-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Expose graph-neighborhood candidates through context-pack CLI"
     }
   ],
@@ -504,7 +501,7 @@
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+  "repo_head": "ee2d6206d90ac5094f74288316910fa3284fa08d",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -632,10 +629,15 @@
       "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
       "source_path": "docs/self_model/verifications/VERIFY-20260716-0002.json",
       "verification_id": "VERIFY-20260716-0002"
+    },
+    {
+      "repo_commit": "ee2d6206d90ac5094f74288316910fa3284fa08d",
+      "source_path": "docs/self_model/verifications/VERIFY-20260716-0003.json",
+      "verification_id": "VERIFY-20260716-0003"
     }
   ],
   "warrant_counts": {
-    "supported": 44
+    "supported": 45
   },
   "warrants": [
     {
@@ -988,6 +990,14 @@
       "target_item_id": "CAP-0011",
       "target_item_type": "capability",
       "warrant_id": "WARR-20260716-0003",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260716-0004.json",
+      "target_item_id": "PLAN-20260716-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260716-0004",
       "warrant_state": "supported"
     }
   ]
