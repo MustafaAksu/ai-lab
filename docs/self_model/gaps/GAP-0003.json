@@ -1,6 +1,9 @@
 {
   "blocked_by": [],
   "category": "self_model_infrastructure",
+  "closed_at": "2026-07-16T15:20:04.402713+00:00",
+  "closure_summary": "Closed after CAP-0010 and PLAN-20260710-0004 implemented and independently verified the missing parametric self-model registry and invariant-based verification layer. Canonical JSON records remain the sole source of truth; existing record families are discovered dynamically; reference, lifecycle, omission, and normalized projection-drift invariants are enforced; known-state lifecycle behavior is tested in controlled fixtures; normalized diagnostic relations and a validated collision-safe local record CLI are available. Local ID suggestion remains non-transactional, and GAP-0002 remains open.",
+  "closure_warrant_id": "WARR-20260716-0001",
   "evidence": {
     "files_checked": [
       "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
@@ -12,33 +15,45 @@
       "ai_lab/documentation/self_model.py",
       "scripts/build_self_model.py",
       "scripts/audit_self_model_index.py",
-      "tests/test_self_model.py"
+      "tests/test_self_model.py",
+      "docs/self_model/capabilities/CAP-0010.json",
+      "docs/self_model/plans/PLAN-20260710-0004.json",
+      "docs/self_model/verifications/VERIFY-20260716-0001.json",
+      "docs/self_model/warrants/WARR-20260716-0001.json",
+      "docs/self_model/REGISTRY.md",
+      "scripts/create_self_model_record.py",
+      "tests/test_create_self_model_record_script.py"
     ],
-    "reason": "COMP-0026 records independent provider agreement that AI-Lab's dynamic record discovery is undermined by production tests and maintenance workflows that encode exact inventories and quantities. The GAP-0003 registration itself directly reproduced the problem: adding one gap and one warrant caused failures in exact open-gap lists and counts, recommendation inventories, supported-warrant counts, and the complete warrant-ID set, even though the generated self-model index and normalized-content audit were correct. This demonstrates a missing parametric registry and invariant-based verification layer rather than isolated test cleanup."
+    "reason": "CAP-0010 and completed PLAN-20260710-0004 resolve the architectural deficiency recorded by GAP-0003. Existing-family records are discovered dynamically from canonical JSON, the external SELF_MODEL.json schema is preserved, references and lifecycle metadata are validated, production tests avoid exact global quantities and complete inventories, controlled fixtures verify known-state behavior, projection drift is enforced, normalized diagnostic relations are emitted, and the local record CLI validates and refuses current-worktree collisions."
   },
   "evidence_ids": [
     "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.md",
     "docs/comparisons/COMP-0026-parametric-self-model-registry-and-invariant-testing-review.context.json",
     "docs/self_model/gaps/GAP-0002.json",
-    "docs/self_model/capabilities/CAP-0009.json"
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/capabilities/CAP-0010.json",
+    "docs/self_model/plans/PLAN-20260710-0004.json",
+    "docs/self_model/verifications/VERIFY-20260716-0001.json",
+    "docs/self_model/warrants/WARR-20260716-0001.json"
   ],
   "gap_id": "GAP-0003",
-  "last_reviewed_at": "2026-07-10T20:01:25.489735+00:00",
+  "last_reviewed_at": "2026-07-16T15:20:04.402713+00:00",
   "name": "Parametric self-model registry and invariant-based verification",
   "notes": [
     "COMP-0026 records provider agreement that this is an architectural self-model gap rather than isolated test cleanup.",
     "Existing self-model JSON records remain canonical; no second manually maintained object inventory is permitted.",
     "Known counts and lifecycle transitions should be tested in temporary fixture repositories. Production-repository tests should enforce validation, uniqueness, referential integrity, lifecycle consistency, omission detection, and generated-projection drift.",
     "Suggested next-ID allocation is locally computed and non-transactional. Concurrent Git branches may collide and must resolve IDs during merge or rebase.",
-    "The GAP-0002 CAP-0009 opt-in exposure follow-up is deferred until this prerequisite is completed, but it is not cancelled and GAP-0002 remains open."
+    "The GAP-0002 CAP-0009 opt-in exposure follow-up is deferred until this prerequisite is completed, but it is not cancelled and GAP-0002 remains open.",
+    "GAP-0003 was closed by WARR-20260716-0001 after CAP-0010 and PLAN-20260710-0004 resolved its stated deficiency. Distributed ID reservation, new ontology families, and graph-local runtime context selection remain outside this gap."
   ],
   "priority": "high",
-  "recommended_first_slice": "Introduce a governed parametric self-model registry and invariant-based verification slice. Existing JSON records must remain the sole canonical source. Static configuration should describe record types, directories, ID fields, validators, lifecycle rules, and status semantics; instances, IDs, relations, and quantities must be discovered dynamically. build_self_model_index should consume the registry while preserving the current SELF_MODEL.json external schema. Add fixture-repository lifecycle tests, production referential-integrity and projection-drift checks, GraphRelation-compatible normalized relations, and a schema-valid record skeleton CLI with documented non-transactional ID allocation. Do not implement this slice without a separately proposed and admitted plan.",
+  "recommended_first_slice": "Completed by PLAN-20260710-0004 and CAP-0010. Continue using SelfModelRegistry, controlled fixture repositories, production invariants, normalized projection auditing, and the documented non-transactional local ID workflow for future self-model work.",
   "related_capabilities": [
     "CAP-0009"
   ],
   "risk": "Without a parametric registry and invariant-based verification, self-model growth remains brittle, repository projections can become stale, referential or lifecycle errors can be hidden behind manually updated counts, and every new governed object increases maintenance cost before feature work can proceed safely.",
   "schema_version": "v1",
-  "status": "open",
-  "summary": "AI-Lab dynamically discovers self-model records, but production tests and maintenance workflows still encode exact object IDs, complete inventories, and exact quantities. Adding a record can therefore require unrelated test edits, while the committed SELF_MODEL.json projection can drift from canonical JSON records."
+  "status": "closed",
+  "summary": "AI-Lab now provides a read-only parametric registry over canonical self-model JSON records, invariant-based production verification, reference and lifecycle integrity, omission and projection-drift detection, controlled fixture tests, normalized diagnostic relations, and a validated local record-creation CLI."
 }

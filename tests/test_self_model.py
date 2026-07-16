@@ -395,13 +395,6 @@ def test_build_self_model_index_recommendations_are_copied_from_gaps():
                 Path("docs/self_model/gaps/GAP-0002.json")
             )["recommended_first_slice"],
         },
-        {
-            "source_field": "recommended_first_slice",
-            "source_record": "GAP-0003",
-            "target": read_json(
-                Path("docs/self_model/gaps/GAP-0003.json")
-            )["recommended_first_slice"],
-        },
     ]
 
 
@@ -2481,16 +2474,56 @@ def test_build_self_model_index_records_plan_20260710_0003_completed():
 
 
 def test_validate_gap_0003_record():
-    from ai_lab.documentation.self_model import validate_gap_record
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        validate_gap_record,
+    )
 
-    record = read_json(Path("docs/self_model/gaps/GAP-0003.json"))
+    record = read_json(
+        Path("docs/self_model/gaps/GAP-0003.json")
+    )
     validate_gap_record(record)
 
     assert record["gap_id"] == "GAP-0003"
-    assert record["status"] == "open"
-    assert record["category"] == "self_model_infrastructure"
-    assert "parametric self-model registry" in record["recommended_first_slice"]
-    assert "separately proposed and admitted plan" in record["recommended_first_slice"]
+    assert record["status"] == "closed"
+    assert (
+        record["category"]
+        == "self_model_infrastructure"
+    )
+    assert record["closed_at"]
+    assert (
+        record["closure_warrant_id"]
+        == "WARR-20260716-0001"
+    )
+    assert "CAP-0010" in record["closure_summary"]
+    assert (
+        record["related_capabilities"]
+        == ["CAP-0009"]
+    )
+
+    registry = SelfModelRegistry(Path("."))
+    references = {
+        (
+            reference.field_name,
+            reference.target_id,
+        )
+        for reference in registry.references("gap")
+        if (
+            reference.source_record_id
+            == "GAP-0003"
+        )
+    }
+
+    assert references == {
+        (
+            "related_capabilities",
+            "CAP-0009",
+        ),
+        (
+            "closure_warrant_id",
+            "WARR-20260716-0001",
+        ),
+    }
 
 
 def test_validate_warr_20260710_0010_record():
@@ -2508,29 +2541,37 @@ def test_validate_warr_20260710_0010_record():
     assert record["warrant_state"] == "supported"
 
 
-def test_build_self_model_index_records_gap_0003_open():
-    from ai_lab.documentation.self_model import build_self_model_index
+def test_build_self_model_index_records_gap_0003_closed():
+    from ai_lab.documentation.self_model import (
+        build_self_model_index,
+    )
 
-    index = build_self_model_index(repo_root=Path("."))
-
+    index = build_self_model_index(
+        repo_root=Path(".")
+    )
 
     assert any(
         gap["gap_id"] == "GAP-0003"
-        and gap["status"] == "open"
+        and gap["status"] == "closed"
         for gap in index["gaps"]
     )
+    assert "GAP-0003" not in index["open_gaps"]
 
     assert any(
-        warrant["warrant_id"] == "WARR-20260710-0010"
-        and warrant["target_item_id"] == "GAP-0003"
-        and warrant["target_item_type"] == "gap"
+        warrant["warrant_id"]
+        == "WARR-20260716-0001"
+        and warrant["target_item_id"]
+        == "GAP-0003"
+        and warrant["target_item_type"]
+        == "gap"
         for warrant in index["warrants"]
     )
 
-    assert any(
-        recommendation["source_record"] == "GAP-0003"
-        and recommendation["source_field"] == "recommended_first_slice"
-        for recommendation in index["recommended_next_targets"]
+    assert not any(
+        recommendation["source_record"]
+        == "GAP-0003"
+        for recommendation
+        in index["recommended_next_targets"]
     )
 
 
@@ -2964,14 +3005,31 @@ def test_self_model_registry_resolves_explicit_references(
             / directory_by_prefix[prefix]
             / source.name
         )
-        target.parent.mkdir(parents=True, exist_ok=True)
+        target.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        record = read_json(source)
+
+        if source.name == "GAP-0003.json":
+            record["status"] = "open"
+
+            for field_name in (
+                "closed_at",
+                "closure_summary",
+                "closure_warrant_id",
+            ):
+                record.pop(field_name, None)
+
         target.write_text(
             json.dumps(
-                read_json(source),
+                record,
                 indent=2,
                 sort_keys=True,
             )
-            + "\n"
+            + "\n",
+            encoding="utf-8",
         )
 
     registry = SelfModelRegistry(tmp_path)
@@ -2979,9 +3037,14 @@ def test_self_model_registry_resolves_explicit_references(
     assert registry.unresolved_references() == ()
 
     gap_reference = registry.references("gap")[0]
-    assert gap_reference.field_name == "related_capabilities"
     assert (
-        registry.resolve_reference(gap_reference).record_id
+        gap_reference.field_name
+        == "related_capabilities"
+    )
+    assert (
+        registry.resolve_reference(
+            gap_reference
+        ).record_id
         == "CAP-0009"
     )
 
@@ -2999,10 +3062,17 @@ def test_self_model_registry_resolves_explicit_references(
         == "CAP-0005"
     )
 
-    warrant_reference = registry.references("warrant")[0]
-    assert warrant_reference.expected_target_type == "capability"
+    warrant_reference = registry.references(
+        "warrant"
+    )[0]
     assert (
-        registry.resolve_reference(warrant_reference).record_id
+        warrant_reference.expected_target_type
+        == "capability"
+    )
+    assert (
+        registry.resolve_reference(
+            warrant_reference
+        ).record_id
         == "CAP-0005"
     )
 
@@ -3028,13 +3098,25 @@ def test_self_model_registry_reports_missing_reference(
         / source.name
     )
     target.parent.mkdir(parents=True)
+
+    record = read_json(source)
+    record["status"] = "open"
+
+    for field_name in (
+        "closed_at",
+        "closure_summary",
+        "closure_warrant_id",
+    ):
+        record.pop(field_name, None)
+
     target.write_text(
         json.dumps(
-            read_json(source),
+            record,
             indent=2,
             sort_keys=True,
         )
-        + "\n"
+        + "\n",
+        encoding="utf-8",
     )
 
     registry = SelfModelRegistry(tmp_path)
@@ -3042,8 +3124,14 @@ def test_self_model_registry_reports_missing_reference(
 
     assert len(issues) == 1
     assert issues[0].code == "missing_target"
-    assert issues[0].reference.source_record_id == "GAP-0003"
-    assert issues[0].reference.target_id == "CAP-0009"
+    assert (
+        issues[0].reference.source_record_id
+        == "GAP-0003"
+    )
+    assert (
+        issues[0].reference.target_id
+        == "CAP-0009"
+    )
     assert (
         issues[0].reference.expected_target_type
         == "capability"
@@ -3153,13 +3241,30 @@ def _write_registry_relation_fixture_record(
         parents=True,
         exist_ok=True,
     )
+
+    record = read_json(source)
+
+    # Relation fixtures using GAP-0003 test only the
+    # related_capabilities edge. Keep them independent
+    # from the live record's closure-warrant relation.
+    if source.name == "GAP-0003.json":
+        record["status"] = "open"
+
+        for field_name in (
+            "closed_at",
+            "closure_summary",
+            "closure_warrant_id",
+        ):
+            record.pop(field_name, None)
+
     target.write_text(
         json.dumps(
-            read_json(source),
+            record,
             indent=2,
             sort_keys=True,
         )
-        + "\n"
+        + "\n",
+        encoding="utf-8",
     )
 
 
