@@ -1,0 +1,117 @@
+{
+  "constraints": [
+    "Proposal only in this checkpoint.",
+    "Do not implement the evaluator before a separate admission warrant.",
+    "Any admitted implementation must remain evidence-only with selection_effect none.",
+    "Do not change graph_neighborhood_context_items or build_latest_context_manifest selection behavior.",
+    "Do not mutate ContextPackManifest.items.",
+    "Do not change scripts/build_context_pack.py, ask_provider.py, compare_providers.py, provider prompts, or prompt rendering.",
+    "Do not change CLI behavior or introduce new CLI flags in this slice.",
+    "Do not infer graph targets automatically or enable automatic graph-local context inclusion.",
+    "Do not persist compact representations or graph state.",
+    "Do not add retrieval, embeddings, reranking, production index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "Do not classify hypothetical representation as implemented capability.",
+    "Do not close GAP-0002."
+  ],
+  "created_at": "2026-07-16T20:53:16.933225+00:00",
+  "created_from": {
+    "repo_commit": "be6bceffea2b36852c3d39bb8429c7a2017b1544",
+    "source_capability_id": "CAP-0011",
+    "source_gap_id": "GAP-0002",
+    "source_verification_id": "VERIFY-20260716-0004"
+  },
+  "created_from_repo_commit": "be6bceffea2b36852c3d39bb8429c7a2017b1544",
+  "depends_on_capability_ids": [
+    "CAP-0005",
+    "CAP-0009",
+    "CAP-0011"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0005.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/verifications/VERIFY-20260716-0004.json",
+    "docs/self_model/warrants/WARR-20260716-0005.json",
+    "docs/comparisons/COMP-0027-gap-0002-next-governed-slice-review.md",
+    "docs/comparisons/COMP-0027-gap-0002-next-governed-slice-review.context.json",
+    "ai_lab/documentation/graph_neighborhood.py",
+    "ai_lab/documentation/context_pack_builder.py",
+    "tests/test_graph_neighborhood.py",
+    "tests/test_context_pack_builder.py",
+    "be6bceffea2b36852c3d39bb8429c7a2017b1544"
+  ],
+  "expected_outputs": [
+    "A deterministic inventory of compact representation coverage across the audited artifact corpus.",
+    "A read-only distance-aware packing evaluation module with selection_effect none.",
+    "A structured evidence report comparing whole-artifact and hypothetical distance-aware scenarios.",
+    "Separate diagnostics for lineage isolation and token-budget exclusion.",
+    "A decision-ready recommendation to reuse existing representations, propose a new compact contract, or reject the distance-aware approach.",
+    "Capability, verification, warrant, tests, and self-model records if the admitted evaluation is implemented successfully."
+  ],
+  "mitigation": "Inventory representation coverage first within the admitted evidence slice, label all compact scenarios hypothetical, use deterministic token accounting, report isolated targets separately, and require a new governed plan before adding persisted representation contracts or context-selection behavior.",
+  "next_action": "Review and, if supported, admit PLAN-20260716-0002 through a separate warrant. Do not implement the evaluator while the plan remains proposed.",
+  "non_goals": [
+    "Implementing compact graph-neighbor summaries.",
+    "Defining a persisted compact-summary contract.",
+    "Changing existing artifact Markdown files.",
+    "Changing context-pack item rendering.",
+    "Changing token-budget enforcement.",
+    "Changing CLI behavior.",
+    "Provider-facing graph-neighborhood exposure.",
+    "Automatic target selection.",
+    "Automatic graph-local context inclusion.",
+    "Adding or editing authoritative lineage relations.",
+    "Persisting a graph database or graph index.",
+    "Retrieval, embeddings, or reranking.",
+    "Closing GAP-0002."
+  ],
+  "objective": "Determine whether existing repository representations are sufficient to evaluate and later support compact graph-local context within realistic token budgets, or whether a separate compact-representation contract must first be proposed.",
+  "plan_id": "PLAN-20260716-0002",
+  "proposed_change": "After a separate admission checkpoint, add a deterministic, read-only evidence evaluator that inventories existing compact representation coverage and performs hypothetical distance-aware token-budget analysis. The evaluator will report evidence only and will not modify context manifests or selection behavior.",
+  "rationale": [
+    "The repository-wide audit found authoritative and bounded graph neighborhoods: 33 of 43 targets had neighborhoods, all selected paths were authoritative, and the maximum neighborhood contained six candidates.",
+    "The same audit found whole-artifact representation pressure: neighborhood costs ranged from 494 to 13,208 tokens, with median cost 2,223 tokens.",
+    "At 500-token budgets many targets retained no neighbor, and at 1,500 tokens many retained only one neighbor.",
+    "COMP-0027 records independent provider agreement that representation granularity is the demonstrated blocker, while target-selection semantics and persisted compact contracts are premature.",
+    "COMP-0027 also supports inventorying existing L0, L1, ABS, and related representations before deciding that a new compact representation contract is required.",
+    "The ten lineage-isolated targets represent a separate diagnostic class and should not block evaluation across the 33 connected targets."
+  ],
+  "repo_commit": "be6bceffea2b36852c3d39bb8429c7a2017b1544",
+  "risk": "The principal risk is treating existing summaries as suitable graph-local representations without measuring coverage or semantic fitness. A second risk is treating hypothetical compact scenarios as implemented behavior. A third risk is conflating lineage isolation with budget starvation.",
+  "schema_version": "v1",
+  "scope": [
+    "Inventory existing L0 chunk summaries, L1 episode and artifact summaries, ABS abstractions, and other structured compact representations relevant to the 43-artifact audit corpus.",
+    "Measure representation availability, schema provenance, and deterministic token-cost distributions.",
+    "Evaluate all 33 connected targets under the existing whole-artifact baseline and hypothetical rich distance-one plus compact distance-two scenarios.",
+    "Evaluate representative graph budgets including 500, 1,000, 1,500, 2,000, and 3,000 tokens.",
+    "Report neighborhood coverage, retained-neighbor counts, distance-one and distance-two token shares, and reasons for exclusion.",
+    "Classify the ten lineage-isolated targets separately from token-budget-excluded targets.",
+    "Assess whether existing compact representations are sufficient for later implementation or whether a new persisted compact-representation contract should be proposed separately.",
+    "Keep graph-local context distinct from global ontology, invariants, and governance context.",
+    "Keep GAP-0002 open unless a separate future closure verification and warrant support closure."
+  ],
+  "source_capability_id": "CAP-0011",
+  "source_capability_ids": [
+    "CAP-0005",
+    "CAP-0009",
+    "CAP-0011"
+  ],
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "The proposed plan validates through the self-model schema and is indexed as proposed and open.",
+    "The plan cites GAP-0002, CAP-0005, CAP-0009, CAP-0011, VERIFY-20260716-0004, WARR-20260716-0005, and COMP-0027.",
+    "Any later evaluator inventories representation coverage before drawing conclusions about compact representation fitness.",
+    "Any later evaluator preserves selection_effect none and does not mutate ContextPackManifest.items.",
+    "Evaluation distinguishes lineage-isolated targets from token-budget-excluded candidates.",
+    "Evaluation reports deterministic token and coverage metrics for all 33 connected targets.",
+    "Evaluation treats hypothetical compact representations as diagnostic scenarios, not implemented behavior.",
+    "No new persisted compact representation contract is introduced in this slice.",
+    "No provider, prompt, context-selection, CLI, automatic target-selection, automatic-inclusion, graph-persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest behavior changes.",
+    "Targeted tests, full repository tests, and self-model audit pass before any implementation capability is registered.",
+    "GAP-0002 remains open."
+  ],
+  "summary": "Propose an evidence-only evaluation of existing compact artifact representations and hypothetical distance-aware graph-neighborhood packing. The slice will inventory available L0, L1, ABS, and other compact representations; compare the current whole-artifact baseline against rich distance-one and compact distance-two scenarios; and diagnose lineage-isolated targets separately. It preserves selection_effect none and introduces no context-selection, provider, prompt, CLI, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes.",
+  "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
+}

@@ -151,7 +151,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T20:00:26+00:00",
+  "generated_at": "2026-07-16T20:53:17+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -368,15 +368,23 @@
       "risk": "A CLI flag could be mistaken for full graph-local memory selection or could silently broaden provider behavior. The slice must remain standalone, explicit, default-off, lineage-only, and outside provider prompt construction.",
       "source_field": "risk",
       "source_record": "PLAN-20260716-0001"
+    },
+    {
+      "risk": "The principal risk is treating existing summaries as suitable graph-local representations without measuring coverage or semantic fitness. A second risk is treating hypothetical compact scenarios as implemented behavior. A third risk is conflating lineage isolation with budget starvation.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260716-0002"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260716-0002"
+  ],
   "plan_counts": {
-    "completed": 17
+    "completed": 17,
+    "proposed": 1
   },
   "plans": [
     {
@@ -497,6 +505,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260716-0001.json",
       "status": "completed",
       "title": "Expose graph-neighborhood candidates through context-pack CLI"
+    },
+    {
+      "plan_id": "PLAN-20260716-0002",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260716-0002.json",
+      "status": "proposed",
+      "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
     }
   ],
   "recommended_next_targets": [
@@ -506,7 +521,7 @@
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
     }
   ],
-  "repo_head": "c936a8a8de34c64308584173cd7b191225304af6",
+  "repo_head": "be6bceffea2b36852c3d39bb8429c7a2017b1544",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

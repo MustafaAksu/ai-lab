@@ -4435,3 +4435,100 @@ def test_validate_warr_20260716_0005_graph_governance_reconciliation():
     assert record["warrant_state"] == "supported"
     assert "Does not alter historical" in record["scope"]
     assert "close GAP-0002" in record["scope"]
+
+
+def test_validate_plan_20260716_0002_proposed():
+    from ai_lab.documentation.self_model import (
+        validate_plan_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/plans/"
+            "PLAN-20260716-0002.json"
+        )
+    )
+
+    validate_plan_record(record)
+
+    assert record["plan_id"] == "PLAN-20260716-0002"
+    assert record["status"] == "proposed"
+    assert record["source_gap_id"] == "GAP-0002"
+    assert record["source_capability_id"] == "CAP-0011"
+
+    assert "CAP-0005" in record["source_capability_ids"]
+    assert "CAP-0009" in record["source_capability_ids"]
+    assert "CAP-0011" in record["source_capability_ids"]
+
+    assert (
+        "compact representation coverage"
+        in record["title"].lower()
+    )
+    assert (
+        "selection_effect none"
+        in record["summary"]
+    )
+    assert (
+        "Proposal only in this checkpoint."
+        in record["constraints"]
+    )
+    assert (
+        "docs/comparisons/"
+        "COMP-0027-gap-0002-next-governed-slice-review.md"
+        in record["evidence_ids"]
+    )
+    assert any(
+        "lineage-isolated targets"
+        in criterion
+        for criterion in record["success_criteria"]
+    )
+    assert any(
+        "hypothetical compact representations"
+        in criterion
+        for criterion in record["success_criteria"]
+    )
+
+    assert "admission_warrant_id" not in record
+    assert "completed_at" not in record
+    assert "completion_verification_id" not in record
+    assert "completion_warrant_id" not in record
+
+
+def test_build_self_model_index_records_plan_20260716_0002_open():
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        build_self_model_index,
+    )
+
+    index = build_self_model_index(
+        repo_root=Path(".")
+    )
+
+    assert any(
+        plan["plan_id"] == "PLAN-20260716-0002"
+        and plan["status"] == "proposed"
+        and plan["source_gap_id"] == "GAP-0002"
+        for plan in index["plans"]
+    )
+
+    assert (
+        "PLAN-20260716-0002"
+        in index["open_plans"]
+    )
+    assert (
+        "PLAN-20260716-0002"
+        not in index["admitted_plans"]
+    )
+
+    registry = SelfModelRegistry(Path(".").resolve())
+
+    plan = registry.require("PLAN-20260716-0002")
+    gap = registry.require("GAP-0002")
+
+    assert plan.status == "proposed"
+    assert registry.is_open(plan.record_id)
+
+    assert gap.status == "open"
+    assert registry.is_open(gap.record_id)
+
+    assert registry.unresolved_references() == ()
