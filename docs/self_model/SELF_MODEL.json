@@ -142,7 +142,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T15:20:04+00:00",
+  "generated_at": "2026-07-16T15:45:39+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -334,15 +334,23 @@
       "risk": "A registry refactor could create false confidence if discovery, index generation, and tests all depend on the same implementation path. It could also accidentally change the SELF_MODEL.json schema, omit files, centralize ontology logic incorrectly, or imply concurrency guarantees for ID allocation that do not exist.",
       "source_field": "risk",
       "source_record": "PLAN-20260710-0004"
+    },
+    {
+      "risk": "A CLI flag could be mistaken for full graph-local memory selection or could silently broaden provider behavior. The slice must remain standalone, explicit, default-off, lineage-only, and outside provider prompt construction.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260716-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260716-0001"
+  ],
   "plan_counts": {
-    "completed": 16
+    "completed": 16,
+    "proposed": 1
   },
   "plans": [
     {
@@ -456,6 +464,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260710-0004.json",
       "status": "completed",
       "title": "Introduce parametric self-model registry and invariant-based verification"
+    },
+    {
+      "plan_id": "PLAN-20260716-0001",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260716-0001.json",
+      "status": "proposed",
+      "title": "Expose graph-neighborhood candidates through context-pack CLI"
     }
   ],
   "recommended_next_targets": [
@@ -465,7 +480,7 @@
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "596d9c329a2d22227fc6679a860a8329c666883a",
+  "repo_head": "785e8d6789372f96db79aae51b5201ee65e5b10d",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

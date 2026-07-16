@@ -4001,3 +4001,52 @@ def test_self_model_tests_do_not_hardcode_production_inventory():
         "Literal production inventory assertions found: "
         + repr(violations)
     )
+
+def test_validate_plan_20260716_0001_proposal():
+    from ai_lab.documentation.self_model import (
+        validate_plan_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/plans/"
+            "PLAN-20260716-0001.json"
+        )
+    )
+    validate_plan_record(record)
+
+    assert record["plan_id"] == "PLAN-20260716-0001"
+    assert record["status"] == "proposed"
+    assert record["source_gap_id"] == "GAP-0002"
+    assert record["source_capability_id"] == "CAP-0009"
+    assert (
+        "scripts/build_context_pack.py"
+        in record["evidence_ids"]
+    )
+    assert (
+        "Closing GAP-0002."
+        in record["non_goals"]
+    )
+
+
+def test_build_self_model_index_records_plan_20260716_0001_proposed():
+    from ai_lab.documentation.self_model import (
+        build_self_model_index,
+    )
+
+    index = build_self_model_index(
+        repo_root=Path(".")
+    )
+
+    assert any(
+        plan["plan_id"] == "PLAN-20260716-0001"
+        and plan["status"] == "proposed"
+        and plan["source_gap_id"] == "GAP-0002"
+        for plan in index["plans"]
+    )
+
+    assert any(
+        gap["gap_id"] == "GAP-0002"
+        and gap["status"] == "open"
+        for gap in index["gaps"]
+    )

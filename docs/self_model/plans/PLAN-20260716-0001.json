@@ -1,0 +1,92 @@
+{
+  "constraints": [
+    "Proposal only; do not implement CLI changes in this commit.",
+    "Any implementation requires a separate admission warrant.",
+    "The graph-neighborhood path must remain disabled by default.",
+    "The target artifact ID must be explicit when graph-neighborhood candidates are enabled.",
+    "Use existing discovered artifacts and authoritative artifact-lineage relations only in this first slice.",
+    "Do not add external edge-record or future-edge-seed file input.",
+    "Do not modify ask_provider.py, compare_providers.py, provider prompts, or prompt rendering.",
+    "Do not change default context selection or enable automatic graph-local inclusion.",
+    "Do not persist graph state or add retrieval, embeddings, reranking, production index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "Keep GAP-0002 open unless a separate future closure verification supports closing it."
+  ],
+  "created_at": "2026-07-16T15:45:38.705141+00:00",
+  "created_from_repo_commit": "785e8d6789372f96db79aae51b5201ee65e5b10d",
+  "depends_on_capability_ids": [
+    "CAP-0005",
+    "CAP-0006",
+    "CAP-0007",
+    "CAP-0008",
+    "CAP-0009"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/decisions/DECISION-20260710-0001.json",
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "ai_lab/documentation/graph_neighborhood.py",
+    "scripts/build_context_pack.py",
+    "tests/test_context_pack_builder.py",
+    "tests/test_build_context_pack_script.py"
+  ],
+  "expected_outputs": [
+    "A default-off build_context_pack.py graph-neighborhood CLI surface.",
+    "Argument validation requiring explicit enablement and target ID.",
+    "Forwarding of optional maximum depth and graph token budget to build_latest_context_manifest.",
+    "Tests for unchanged defaults, valid forwarding, invalid option combinations, and repository-lineage smoke behavior.",
+    "No provider entry-point or prompt changes."
+  ],
+  "mitigation": "Limit the implementation plan to scripts/build_context_pack.py and its tests, require explicit target selection, preserve defaults, reject invalid option combinations, and prohibit provider or persistence changes.",
+  "next_action": "Seek a separate admission warrant for this bounded CLI-only exposure plan. Do not implement or expose CAP-0009 through providers until separately governed.",
+  "non_goals": [
+    "Provider-facing graph-neighborhood flags.",
+    "Automatic target inference.",
+    "Automatic graph-local context inclusion.",
+    "External edge-record or future-edge-seed input files.",
+    "Persisted graph nodes or edges.",
+    "Graph database adoption.",
+    "Retrieval, embeddings, reranking, or index mutation.",
+    "Closing GAP-0002."
+  ],
+  "objective": "Make the existing CAP-0009 default-off graph-neighborhood context candidate path usable from the standalone context-pack CLI without exposing it to provider entry points or changing default context selection.",
+  "plan_id": "PLAN-20260716-0001",
+  "proposed_change": "Add explicit default-off graph-neighborhood options to scripts/build_context_pack.py: an enable flag, a required target artifact ID when enabled, optional maximum depth, and optional graph-neighborhood token budget. Wire those values to build_latest_context_manifest using the already discovered artifact records and their authoritative artifact-lineage relations. Do not add external edge-file or future-edge-seed input in this first exposure slice.",
+  "rationale": [
+    "CAP-0009 already implements and tests opt-in graph-neighborhood context candidates at the library boundary.",
+    "scripts/build_context_pack.py currently exposes no CAP-0009 parameters, so the implemented path is reachable only through direct Python calls.",
+    "Repository artifact-lineage relations already produce useful authoritative neighborhoods without requiring a new edge-file contract.",
+    "The standalone context-pack CLI is the narrowest observable exposure surface and avoids provider prompt or provider execution changes.",
+    "GAP-0002 is broader than CLI exposure and must remain open after this slice."
+  ],
+  "repo_commit": "785e8d6789372f96db79aae51b5201ee65e5b10d",
+  "risk": "A CLI flag could be mistaken for full graph-local memory selection or could silently broaden provider behavior. The slice must remain standalone, explicit, default-off, lineage-only, and outside provider prompt construction.",
+  "schema_version": "v1",
+  "scope": [
+    "Propose explicit build_context_pack.py options for graph-neighborhood enablement, target ID, maximum depth, and graph token budget.",
+    "Define parser dependency and validation behavior for the new options.",
+    "Preserve current CLI output formats and existing defaults.",
+    "Require tests proving disabled behavior is unchanged and enabled behavior forwards only explicit values.",
+    "Require a CLI smoke test using repository artifact-lineage relations without additional edge inputs."
+  ],
+  "source_capability_id": "CAP-0009",
+  "source_capability_ids": [
+    "CAP-0009"
+  ],
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "The proposal validates through the self-model schema and is indexed as proposed.",
+    "The proposal commit changes only self-model records, generated projection, and proposal-specific tests.",
+    "No CLI implementation occurs before a separate admission warrant.",
+    "After admitted implementation, build_context_pack.py remains behaviorally unchanged when graph-neighborhood options are absent.",
+    "Explicit enablement with a valid target ID adds CAP-0009 candidates and diagnostics using repository artifact lineage.",
+    "Maximum depth and graph token budget are validated and forwarded deterministically.",
+    "Provider entry points and prompt rendering remain unchanged.",
+    "Focused tests, the full repository suite, and the self-model audit pass.",
+    "GAP-0002 remains open."
+  ],
+  "summary": "Propose a governed, default-off build_context_pack.py exposure of CAP-0009 using an explicit target artifact ID and optional depth and token-budget controls, while preserving existing defaults and keeping provider paths and GAP-0002 unchanged.",
+  "title": "Expose graph-neighborhood candidates through context-pack CLI"
+}
