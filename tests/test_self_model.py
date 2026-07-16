@@ -4437,7 +4437,7 @@ def test_validate_warr_20260716_0005_graph_governance_reconciliation():
     assert "close GAP-0002" in record["scope"]
 
 
-def test_validate_plan_20260716_0002_proposed():
+def test_validate_plan_20260716_0002_admitted():
     from ai_lab.documentation.self_model import (
         validate_plan_record,
     )
@@ -4452,49 +4452,59 @@ def test_validate_plan_20260716_0002_proposed():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260716-0002"
-    assert record["status"] == "proposed"
+    assert record["status"] == "admitted"
     assert record["source_gap_id"] == "GAP-0002"
     assert record["source_capability_id"] == "CAP-0011"
 
-    assert "CAP-0005" in record["source_capability_ids"]
-    assert "CAP-0009" in record["source_capability_ids"]
-    assert "CAP-0011" in record["source_capability_ids"]
-
     assert (
-        "compact representation coverage"
-        in record["title"].lower()
+        record["admission_warrant_id"]
+        == "WARR-20260716-0006"
     )
+    assert record["admitted_at"]
     assert (
         "selection_effect none"
-        in record["summary"]
+        in record["admission_summary"]
+    )
+    assert (
+        "GAP-0002 remains open"
+        in record["admission_summary"]
+    )
+
+    assert "CAP-0005" in record[
+        "source_capability_ids"
+    ]
+    assert "CAP-0009" in record[
+        "source_capability_ids"
+    ]
+    assert "CAP-0011" in record[
+        "source_capability_ids"
+    ]
+
+    assert (
+        "Implementation is authorized only"
+        in record["constraints"][0]
+    )
+    assert (
+        "WARR-20260716-0006"
+        in record["constraints"][0]
     )
     assert (
         "Proposal only in this checkpoint."
-        in record["constraints"]
+        not in record["constraints"]
     )
+
     assert (
         "docs/comparisons/"
         "COMP-0027-gap-0002-next-governed-slice-review.md"
         in record["evidence_ids"]
     )
-    assert any(
-        "lineage-isolated targets"
-        in criterion
-        for criterion in record["success_criteria"]
-    )
-    assert any(
-        "hypothetical compact representations"
-        in criterion
-        for criterion in record["success_criteria"]
-    )
 
-    assert "admission_warrant_id" not in record
     assert "completed_at" not in record
     assert "completion_verification_id" not in record
     assert "completion_warrant_id" not in record
 
 
-def test_build_self_model_index_records_plan_20260716_0002_open():
+def test_build_self_model_index_records_plan_20260716_0002_admitted():
     from ai_lab.documentation.self_model import (
         SelfModelRegistry,
         build_self_model_index,
@@ -4506,7 +4516,7 @@ def test_build_self_model_index_records_plan_20260716_0002_open():
 
     assert any(
         plan["plan_id"] == "PLAN-20260716-0002"
-        and plan["status"] == "proposed"
+        and plan["status"] == "admitted"
         and plan["source_gap_id"] == "GAP-0002"
         for plan in index["plans"]
     )
@@ -4517,7 +4527,7 @@ def test_build_self_model_index_records_plan_20260716_0002_open():
     )
     assert (
         "PLAN-20260716-0002"
-        not in index["admitted_plans"]
+        in index["admitted_plans"]
     )
 
     registry = SelfModelRegistry(Path(".").resolve())
@@ -4525,10 +4535,96 @@ def test_build_self_model_index_records_plan_20260716_0002_open():
     plan = registry.require("PLAN-20260716-0002")
     gap = registry.require("GAP-0002")
 
-    assert plan.status == "proposed"
+    assert plan.status == "admitted"
     assert registry.is_open(plan.record_id)
 
     assert gap.status == "open"
     assert registry.is_open(gap.record_id)
 
+    assert registry.unresolved_references() == ()
+
+
+def test_validate_warr_20260716_0006_admission():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260716-0006.json"
+        )
+    )
+
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260716-0006"
+    assert (
+        record["target_item_id"]
+        == "PLAN-20260716-0002"
+    )
+    assert record["target_item_type"] == "plan"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert record["substrate"] == "provider_comparison"
+
+    assert (
+        "evidence-only"
+        in record["scope"]
+    )
+    assert (
+        "docs/comparisons/"
+        "COMP-0027-gap-0002-next-governed-slice-review.md"
+        in record["evidence_ids"]
+    )
+    assert any(
+        "selection_effect none" in condition
+        for condition in record["conditions"]
+    )
+    assert any(
+        "No new persisted compact-summary"
+        in condition
+        for condition in record["conditions"]
+    )
+    assert any(
+        "GAP-0002 must remain open"
+        in condition
+        for condition in record["conditions"]
+    )
+
+
+def test_build_self_model_index_records_warr_20260716_0006_admission():
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        build_self_model_index,
+    )
+
+    index = build_self_model_index(
+        repo_root=Path(".")
+    )
+
+    assert any(
+        warrant["warrant_id"]
+        == "WARR-20260716-0006"
+        and warrant["target_item_id"]
+        == "PLAN-20260716-0002"
+        and warrant["target_item_type"] == "plan"
+        and warrant["decision"] == "admit"
+        and warrant["warrant_state"] == "supported"
+        and warrant["source_path"]
+        == (
+            "docs/self_model/warrants/"
+            "WARR-20260716-0006.json"
+        )
+        for warrant in index["warrants"]
+    )
+
+    registry = SelfModelRegistry(Path(".").resolve())
+
+    warrant = registry.require("WARR-20260716-0006")
+    plan = registry.require("PLAN-20260716-0002")
+
+    assert warrant.status == "supported"
+    assert plan.status == "admitted"
+    assert registry.is_open(plan.record_id)
     assert registry.unresolved_references() == ()

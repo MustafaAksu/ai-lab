@@ -1,7 +1,10 @@
 {
+  "admission_summary": "Admitted for an evidence-only inventory of existing compact representations and deterministic evaluation of hypothetical distance-aware graph-neighborhood packing. The admitted slice preserves selection_effect none, does not mutate ContextPackManifest.items, introduces no persisted compact representation contract, and makes no context-selection, provider, prompt, CLI, automatic inclusion, graph persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes. GAP-0002 remains open.",
+  "admission_warrant_id": "WARR-20260716-0006",
+  "admitted_at": "2026-07-16T21:09:01.097271+00:00",
   "constraints": [
-    "Proposal only in this checkpoint.",
-    "Do not implement the evaluator before a separate admission warrant.",
+    "Implementation is authorized only within the scope admitted by WARR-20260716-0006.",
+    "Any scope expansion beyond WARR-20260716-0006 requires a separate proposed and admitted plan.",
     "Any admitted implementation must remain evidence-only with selection_effect none.",
     "Do not change graph_neighborhood_context_items or build_latest_context_manifest selection behavior.",
     "Do not mutate ContextPackManifest.items.",
@@ -50,7 +53,7 @@
     "Capability, verification, warrant, tests, and self-model records if the admitted evaluation is implemented successfully."
   ],
   "mitigation": "Inventory representation coverage first within the admitted evidence slice, label all compact scenarios hypothetical, use deterministic token accounting, report isolated targets separately, and require a new governed plan before adding persisted representation contracts or context-selection behavior.",
-  "next_action": "Review and, if supported, admit PLAN-20260716-0002 through a separate warrant. Do not implement the evaluator while the plan remains proposed.",
+  "next_action": "Implement only the evidence-only inventory and evaluator admitted by WARR-20260716-0006. Keep GAP-0002 open and require new governance before any persisted compact contract or context-selection behavior.",
   "non_goals": [
     "Implementing compact graph-neighbor summaries.",
     "Defining a persisted compact-summary contract.",
@@ -98,10 +101,10 @@
     "CAP-0011"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
-    "The proposed plan validates through the self-model schema and is indexed as proposed and open.",
-    "The plan cites GAP-0002, CAP-0005, CAP-0009, CAP-0011, VERIFY-20260716-0004, WARR-20260716-0005, and COMP-0027.",
+    "The admitted plan validates through the self-model schema, references WARR-20260716-0006, and is indexed as admitted and open.",
+    "The admitted plan cites GAP-0002, CAP-0005, CAP-0009, CAP-0011, VERIFY-20260716-0004, WARR-20260716-0005, WARR-20260716-0006, and COMP-0027.",
     "Any later evaluator inventories representation coverage before drawing conclusions about compact representation fitness.",
     "Any later evaluator preserves selection_effect none and does not mutate ContextPackManifest.items.",
     "Evaluation distinguishes lineage-isolated targets from token-budget-excluded candidates.",
@@ -112,6 +115,6 @@
     "Targeted tests, full repository tests, and self-model audit pass before any implementation capability is registered.",
     "GAP-0002 remains open."
   ],
-  "summary": "Propose an evidence-only evaluation of existing compact artifact representations and hypothetical distance-aware graph-neighborhood packing. The slice will inventory available L0, L1, ABS, and other compact representations; compare the current whole-artifact baseline against rich distance-one and compact distance-two scenarios; and diagnose lineage-isolated targets separately. It preserves selection_effect none and introduces no context-selection, provider, prompt, CLI, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes.",
+  "summary": "Admit an evidence-only evaluation of existing compact artifact representations and hypothetical distance-aware graph-neighborhood packing. The slice inventories available L0, L1, ABS, and other compact representations; compares the whole-artifact baseline against rich distance-one and compact distance-two scenarios; and diagnoses lineage-isolated targets separately. It preserves selection_effect none and introduces no context-selection, provider, prompt, CLI, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes.",
   "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
 }
