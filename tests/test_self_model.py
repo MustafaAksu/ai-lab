@@ -4090,3 +4090,124 @@ def test_validate_warr_20260716_0002_admission():
         in condition
         for condition in record["conditions"]
     )
+
+
+def test_validate_cap_0011_graph_neighborhood_context_cli():
+    from ai_lab.documentation.self_model import (
+        validate_capability_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/capabilities/"
+            "CAP-0011.json"
+        )
+    )
+    validate_capability_record(record)
+
+    assert record["capability_id"] == "CAP-0011"
+    assert record["status"] == "implemented"
+    assert record["category"] == "memory_context"
+    assert record["repo_commit"].startswith("c59e237")
+    assert (
+        "scripts.build_context_pack.main"
+        in record["interfaces"]
+    )
+    assert (
+        record["last_verified"]["verification_artifact"]
+        == (
+            "docs/self_model/verifications/"
+            "VERIFY-20260716-0002.json"
+        )
+    )
+    assert any(
+        "disabled by default" in limit
+        for limit in record["limits"]
+    )
+    assert any(
+        "GAP-0002" in limit
+        for limit in record["limits"]
+    )
+
+
+def test_validate_verify_20260716_0002_cap_0011():
+    from ai_lab.documentation.self_model import (
+        validate_verification_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260716-0002.json"
+        )
+    )
+    validate_verification_record(record)
+
+    assert (
+        record["verification_id"]
+        == "VERIFY-20260716-0002"
+    )
+    assert record["target_item_id"] == "CAP-0011"
+    assert record["target_item_type"] == "capability"
+    assert record["status"] == "passed"
+    assert record["repo_commit"].startswith("c59e237")
+    assert any(
+        "55 tests" in command["summary"]
+        for command in record["commands"]
+    )
+    assert any(
+        "529 tests" in command["summary"]
+        for command in record["commands"]
+    )
+
+
+def test_validate_warr_20260716_0003_cap_0011():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260716-0003.json"
+        )
+    )
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260716-0003"
+    assert record["target_item_id"] == "CAP-0011"
+    assert record["target_item_type"] == "capability"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert "does not complete" in record["scope"]
+    assert "close GAP-0002" in record["scope"]
+
+
+def test_registry_records_cap_0011_without_completing_plan():
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+    )
+
+    registry = SelfModelRegistry(Path(".").resolve())
+
+    capability = registry.require("CAP-0011")
+    verification = registry.require(
+        "VERIFY-20260716-0002"
+    )
+    warrant = registry.require("WARR-20260716-0003")
+    plan = registry.require("PLAN-20260716-0001")
+    gap = registry.require("GAP-0002")
+
+    assert capability.status == "implemented"
+    assert verification.record["status"] == "passed"
+    assert warrant.status == "supported"
+
+    assert plan.status == "admitted"
+    assert registry.is_open(plan.record_id)
+    assert "completed_at" not in plan.record
+    assert "completion_verification_id" not in plan.record
+    assert "completion_warrant_id" not in plan.record
+
+    assert gap.status == "open"
+    assert registry.is_open(gap.record_id)
+    assert registry.unresolved_references() == ()

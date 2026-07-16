@@ -1,0 +1,23 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-16T16:19:14.059271+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/verifications/VERIFY-20260716-0002.json",
+    "docs/self_model/plans/PLAN-20260716-0001.json",
+    "docs/self_model/warrants/WARR-20260716-0002.json",
+    "scripts/build_context_pack.py",
+    "tests/test_build_context_pack_script.py",
+    "c59e237704eaa6ca9392550eb915106b17b7d3e1"
+  ],
+  "reason": "CAP-0011 is supported because the admitted CLI-only slice was implemented at c59e237 and independently verified by VERIFY-20260716-0002. The implementation preserves disabled-by-default behavior, requires an explicit target, validates optional controls, uses authoritative repository artifact lineage, and makes no provider, prompt, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes.",
+  "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+  "schema_version": "v1",
+  "scope": "Supports CAP-0011 as an implemented standalone context-pack CLI capability. This warrant does not complete PLAN-20260716-0001, close GAP-0002, authorize provider-facing graph-neighborhood flags, infer targets automatically, accept external edge inputs, persist graph state, or enable automatic graph-local context inclusion.",
+  "substrate": "conversation",
+  "target_item_id": "CAP-0011",
+  "target_item_type": "capability",
+  "warrant_id": "WARR-20260716-0003",
+  "warrant_state": "supported"
+}

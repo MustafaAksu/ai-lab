@@ -9,7 +9,8 @@
     "CAP-0007",
     "CAP-0008",
     "CAP-0009",
-    "CAP-0010"
+    "CAP-0010",
+    "CAP-0011"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -34,7 +35,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 44,
+      "info": 48,
       "warn": 24
     }
   },
@@ -108,10 +109,17 @@
       "name": "Parametric self-model registry and invariant verification",
       "source_path": "docs/self_model/capabilities/CAP-0010.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0011",
+      "category": "memory_context",
+      "name": "Graph-neighborhood context-pack CLI exposure",
+      "source_path": "docs/self_model/capabilities/CAP-0011.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 10
+    "implemented": 11
   },
   "gap_counts": {
     "closed": 2,
@@ -143,7 +151,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T15:57:11+00:00",
+  "generated_at": "2026-07-16T16:19:14+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -240,6 +248,21 @@
       "risk": "Adding a new record family still requires an explicit ontology and validator change.",
       "source_field": "risks[2]",
       "source_record": "CAP-0010"
+    },
+    {
+      "risk": "Users may mistake explicit CLI candidate inclusion for complete graph-local scoped-memory selection.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0011"
+    },
+    {
+      "risk": "A target ID with sparse or unsuitable artifact lineage may yield no useful neighborhood candidates.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0011"
+    },
+    {
+      "risk": "Future provider exposure or automatic target selection could broaden runtime behavior and requires separate governance.",
+      "source_field": "risks[2]",
+      "source_record": "CAP-0011"
     },
     {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
@@ -481,7 +504,7 @@
       "target": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant."
     }
   ],
-  "repo_head": "db27454b81c1641bee1f68cffe7574345322761e",
+  "repo_head": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -604,10 +627,15 @@
       "repo_commit": "e3060f9905bebbdd2454d50feef4f81cbc22f793",
       "source_path": "docs/self_model/verifications/VERIFY-20260716-0001.json",
       "verification_id": "VERIFY-20260716-0001"
+    },
+    {
+      "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+      "source_path": "docs/self_model/verifications/VERIFY-20260716-0002.json",
+      "verification_id": "VERIFY-20260716-0002"
     }
   ],
   "warrant_counts": {
-    "supported": 43
+    "supported": 44
   },
   "warrants": [
     {
@@ -952,6 +980,14 @@
       "target_item_id": "PLAN-20260716-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260716-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260716-0003.json",
+      "target_item_id": "CAP-0011",
+      "target_item_type": "capability",
+      "warrant_id": "WARR-20260716-0003",
       "warrant_state": "supported"
     }
   ]

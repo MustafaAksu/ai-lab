@@ -1,0 +1,82 @@
+{
+  "capability_id": "CAP-0011",
+  "category": "memory_context",
+  "created_at": "2026-07-16T16:19:14.059271+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260716-0001",
+        "path": "docs/self_model/plans/PLAN-20260716-0001.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260716-0002",
+        "path": "docs/self_model/warrants/WARR-20260716-0002.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+        "role": "default-off graph-neighborhood context-pack CLI implementation"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "568644293bcc7a608b66dcf282713e865facabbfc9e1a5914d669d40304ac357",
+        "path": "scripts/build_context_pack.py",
+        "role": "CLI implementation"
+      },
+      {
+        "content_hash": "a5be1df8e47863763e21758cef3829ec2d1acb54fcad2ffb8421fe1c8b605d6b",
+        "path": "tests/test_build_context_pack_script.py",
+        "role": "CLI tests"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260716-0002",
+        "path": "docs/self_model/verifications/VERIFY-20260716-0002.json",
+        "role": "verification record"
+      }
+    ]
+  },
+  "interfaces": [
+    "scripts.build_context_pack.main",
+    "scripts/build_context_pack.py --include-graph-neighborhood-candidates",
+    "scripts/build_context_pack.py --graph-neighborhood-target-id",
+    "scripts/build_context_pack.py --graph-neighborhood-max-depth",
+    "scripts/build_context_pack.py --graph-neighborhood-token-budget"
+  ],
+  "last_verified": {
+    "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260716-0002.json",
+    "verified_at": "2026-07-16T16:19:14.059271+00:00"
+  },
+  "limits": [
+    "Graph-neighborhood candidate inclusion remains disabled by default.",
+    "The standalone context-pack CLI requires an explicit target artifact ID when enabled.",
+    "The first exposure uses existing discovered artifacts and authoritative artifact-lineage relations only.",
+    "No external edge-record or future-edge-seed input is exposed.",
+    "No automatic target inference is performed.",
+    "Does not modify ask_provider.py, compare_providers.py, prompt_context.py, provider prompts, or prompt rendering.",
+    "Does not enable automatic graph-local context inclusion outside explicit CLI opt-in.",
+    "Does not persist graph state or introduce retrieval, embeddings, reranking, production index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "Does not by itself satisfy or close the broader GAP-0002 graph-local scoped-memory gap."
+  ],
+  "name": "Graph-neighborhood context-pack CLI exposure",
+  "recommended_next_actions": [
+    "Verify PLAN-20260716-0001 completion through a separate verification and warrant checkpoint.",
+    "Keep GAP-0002 open and evaluate actual graph-local memory quality separately from CLI reachability.",
+    "Treat any provider-facing exposure, automatic target inference, external edge input, or automatic inclusion as a separate governed slice."
+  ],
+  "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+  "risks": [
+    "Users may mistake explicit CLI candidate inclusion for complete graph-local scoped-memory selection.",
+    "A target ID with sparse or unsuitable artifact lineage may yield no useful neighborhood candidates.",
+    "Future provider exposure or automatic target selection could broaden runtime behavior and requires separate governance."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Exposes CAP-0009 through the standalone build_context_pack.py CLI using explicit, default-off graph-neighborhood options. The CLI requires a target artifact ID when enabled, optionally accepts maximum depth and a graph-neighborhood token budget, and derives candidates from existing authoritative artifact lineage without changing provider paths or default context behavior."
+}

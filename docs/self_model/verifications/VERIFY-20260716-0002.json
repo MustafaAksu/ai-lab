@@ -1,0 +1,55 @@
+{
+  "artifacts_checked": [
+    "scripts/build_context_pack.py",
+    "tests/test_build_context_pack_script.py",
+    "ai_lab/documentation/context_pack_builder.py",
+    "ai_lab/documentation/graph_neighborhood.py",
+    "docs/self_model/plans/PLAN-20260716-0001.json",
+    "docs/self_model/warrants/WARR-20260716-0002.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_build_context_pack_script.py tests/test_context_pack_builder.py tests/test_graph_neighborhood.py -x",
+      "exit_code": 0,
+      "summary": "Targeted context-pack CLI, builder, and graph-neighborhood tests passed with 55 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository test suite passed with 529 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "Self-model index audit returned ok true and normalized content current."
+    },
+    {
+      "command": "python scripts/build_context_pack.py \"Default context smoke.\"",
+      "exit_code": 0,
+      "summary": "Default CLI execution emitted no graph-neighborhood diagnostics, confirming the feature remains disabled by default."
+    },
+    {
+      "command": "python scripts/build_context_pack.py \"Graph-local context smoke.\" --include-graph-neighborhood-candidates --graph-neighborhood-target-id ABS-0001 --graph-neighborhood-max-depth 2",
+      "exit_code": 0,
+      "summary": "Live repository smoke selected three authoritative lineage neighbors for ABS-0001: COMP-0003, COMP-0004, and SYNCOMP-0001."
+    },
+    {
+      "command": "git diff --name-only 582a072..c59e237",
+      "exit_code": 0,
+      "summary": "Implementation scope contained only scripts/build_context_pack.py and tests/test_build_context_pack_script.py."
+    }
+  ],
+  "created_at": "2026-07-16T16:19:14.059271+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified the committed default-off graph-neighborhood context-pack CLI exposure at c59e237. Tests confirm explicit target, depth, and token-budget forwarding; invalid option combinations are rejected; default output is unchanged; repository artifact lineage supplies useful neighbors; provider and prompt paths remain unchanged; and no graph persistence or external edge input was introduced.",
+  "target_item_id": "CAP-0011",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260716-0002"
+}
