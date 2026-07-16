@@ -66,9 +66,9 @@
   ],
   "name": "Graph-neighborhood context-pack CLI exposure",
   "recommended_next_actions": [
-    "Verify PLAN-20260716-0001 completion through a separate verification and warrant checkpoint.",
-    "Keep GAP-0002 open and evaluate actual graph-local memory quality separately from CLI reachability.",
-    "Treat any provider-facing exposure, automatic target inference, external edge input, or automatic inclusion as a separate governed slice."
+    "PLAN-20260716-0001 is completed; retain CAP-0011 as an explicit, default-off standalone CLI capability.",
+    "Keep GAP-0002 open and evaluate graph-local memory quality, compact distance-aware representation, isolated-target behavior, and local/global balance.",
+    "Treat provider-facing exposure, automatic target inference, external edge input, and automatic inclusion as separate governed slices."
   ],
   "repo_commit": "c59e237704eaa6ca9392550eb915106b17b7d3e1",
   "risks": [

@@ -1,0 +1,54 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "docs/self_model/warrants/WARR-20260710-0007.json",
+    "docs/self_model/warrants/WARR-20260710-0008.json",
+    "docs/self_model/warrants/WARR-20260710-0009.json",
+    "docs/self_model/verifications/VERIFY-20260710-0005.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "tests/test_context_pack_builder.py"
+  ],
+  "commands": [
+    {
+      "command": "git show --stat dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+      "exit_code": 0,
+      "summary": "Confirmed the actual CAP-0009 implementation commit and files."
+    },
+    {
+      "command": "python -m pytest tests/test_context_pack_builder.py tests/test_build_context_pack_script.py tests/test_graph_neighborhood.py -x",
+      "exit_code": 0,
+      "summary": "Targeted graph-neighborhood builder and CLI regression tests passed."
+    },
+    {
+      "command": "python -m pytest tests/test_self_model.py tests/test_create_self_model_record_script.py -x",
+      "exit_code": 0,
+      "summary": "Focused self-model governance and registry validation passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "The complete repository test suite passed."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "The normalized self-model index audit returned ok true."
+    }
+  ],
+  "created_at": "2026-07-16T20:00:25.882913+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "c936a8a8de34c64308584173cd7b191225304af6",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified governance-only reconciliation of the GAP-0002 capability chain. CAP-0009 now records its actual opt-in context-pack implementation commit, interfaces, source files, admission warrant, and bounded integration semantics. CAP-0011 no longer recommends already-completed plan work. GAP-0002 remains open and now identifies compact distance-aware representation, budget behavior, isolated targets, target selection, and local/global balance as the next evidence questions. No runtime code was changed.",
+  "target_item_id": "GAP-0002",
+  "target_item_type": "gap",
+  "verification_id": "VERIFY-20260716-0004"
+}

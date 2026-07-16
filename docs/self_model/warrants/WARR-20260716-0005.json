@@ -1,0 +1,26 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-16T20:00:25.882913+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0009.json",
+    "docs/self_model/capabilities/CAP-0011.json",
+    "docs/self_model/verifications/VERIFY-20260716-0004.json",
+    "docs/self_model/plans/PLAN-20260710-0003.json",
+    "docs/self_model/warrants/WARR-20260710-0007.json",
+    "ai_lab/documentation/context_pack_builder.py",
+    "tests/test_context_pack_builder.py",
+    "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+    "c936a8a8de34c64308584173cd7b191225304af6"
+  ],
+  "reason": "Support the governance-only reconciliation because Git history and implementation inspection confirm that CAP-0009 was implemented at dbcf88d as an explicit default-off context-pack candidate path, while its canonical record retained copied readiness-capability metadata. The same review confirms CAP-0011 completed standalone CLI exposure and that GAP-0002's former recommendation is obsolete. The corrected records align the ontology with implemented behavior and current evidence without changing runtime code.",
+  "repo_commit": "c936a8a8de34c64308584173cd7b191225304af6",
+  "schema_version": "v1",
+  "scope": "Supports correction of CAP-0009 canonical provenance and semantics, refresh of CAP-0011 next actions, and review of the still-open GAP-0002. Does not alter historical plans, warrants, or verification records; close GAP-0002; admit a new feature plan; change context selection defaults; expose provider-facing graph behavior; enable automatic target selection or inclusion; persist graph state; or modify retrieval, embeddings, reranking, indexes, memory stores, runtime manifests, or provider prompts.",
+  "substrate": "conversation",
+  "target_item_id": "GAP-0002",
+  "target_item_type": "gap",
+  "warrant_id": "WARR-20260716-0005",
+  "warrant_state": "supported"
+}

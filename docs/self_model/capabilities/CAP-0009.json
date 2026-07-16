@@ -1,6 +1,6 @@
 {
   "capability_id": "CAP-0009",
-  "category": "diagnostic",
+  "category": "memory_context",
   "created_at": "2026-07-10T11:16:12.714326+00:00",
   "evidence": {
     "admissions": [
@@ -10,26 +10,26 @@
         "role": "admitted implementation plan"
       },
       {
-        "id": "WARR-20260710-0001",
-        "path": "docs/self_model/warrants/WARR-20260710-0001.json",
+        "id": "WARR-20260710-0007",
+        "path": "docs/self_model/warrants/WARR-20260710-0007.json",
         "role": "admission warrant"
       }
     ],
     "commits": [
       {
-        "commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
-        "role": "implementation commit"
+        "commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
+        "role": "opt-in graph-neighborhood context-pack candidate implementation"
       }
     ],
     "files": [
       {
-        "content_hash": "28a2c503836473156b61de40c325f83e1d58c5b8ed1c3d7383795dc4ff5e15bf",
-        "path": "docs/self_model/decisions/DECISION-20260710-0001.json",
+        "content_hash": "16f8addd1650271d6eca167fbd0878a59d010833c797cb9095c34ffc3dd65d3e",
+        "path": "ai_lab/documentation/context_pack_builder.py",
         "role": "implementation"
       },
       {
-        "content_hash": "6f2ec9613190320e42532694381a072cd291dbc9dd30362ec9c88d999acb62a8",
-        "path": "tests/test_self_model.py",
+        "content_hash": "32ed75956a290e86c7a402cb729186e417718fbfba8d3746798fd51f2e3b0cd6",
+        "path": "tests/test_context_pack_builder.py",
         "role": "tests"
       }
     ],
@@ -42,41 +42,37 @@
     ]
   },
   "interfaces": [
-    "ai_lab.documentation.graph_neighborhood_readiness.decide_graph_neighborhood_integration_readiness",
-    "ai_lab.documentation.graph_neighborhood_readiness.format_graph_neighborhood_readiness_report",
-    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodIntegrationReadinessReport",
-    "ai_lab.documentation.graph_neighborhood_readiness.GraphNeighborhoodReadinessFinding"
+    "ai_lab.documentation.context_pack_builder.graph_neighborhood_context_items",
+    "ai_lab.documentation.context_pack_builder.build_latest_context_manifest"
   ],
   "last_verified": {
-    "repo_commit": "be5e3e9a3425358fdad35684dea5bbda0991efeb",
+    "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
     "verification_artifact": "docs/self_model/verifications/VERIFY-20260710-0005.json",
-    "verified_at": "2026-07-10T06:56:12.443456+00:00"
+    "verified_at": "2026-07-10T11:16:12.714326+00:00"
   },
   "limits": [
-    "Evidence and decision artifacting only.",
-    "A positive decision only means a separate governed integration plan may be proposed.",
-    "selection_effect remains none.",
-    "Preserves default context-pack behavior.",
-    "Does not modify context selection or ContextPackManifest.items.",
+    "Graph-neighborhood candidate integration is disabled by default.",
+    "An explicit graph_neighborhood_target_id is required when the feature is enabled.",
+    "When enabled, selected graph-neighborhood candidates are added to the ordinary context-pack candidate set and may affect ContextPackManifest.items.",
+    "CAP-0009 is a library-level integration capability; standalone CLI exposure was added separately by CAP-0011.",
+    "Candidate budgeting uses whole-artifact token estimates and does not provide compact distance-aware representations.",
+    "No automatic target inference or automatic graph-neighborhood inclusion is performed.",
     "Does not change provider prompts or prompt rendering.",
-    "Does not persist graph nodes or graph edges.",
-    "Does not introduce a graph database.",
-    "Does not call retrieval services, embedding services, rerankers, or production indexes.",
-    "Does not mutate indexes, memory stores, runtime manifests, or repository graph state.",
-    "Does not perform automatic context inclusion.",
-    "Does not admit or implement context-pack integration."
+    "Does not persist graph state or introduce retrieval, embeddings, reranking, production-index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "Does not by itself complete graph-local scoped memory or close GAP-0002."
   ],
   "name": "Opt-in graph-neighborhood context-pack candidates",
   "recommended_next_actions": [
-    "Use CAP-0009 to decide whether to propose a separate context-pack integration plan.",
-    "Do not treat CAP-0009 output as runtime selection authority."
+    "Use CAP-0011 when explicit standalone context-pack CLI exposure is required.",
+    "Evaluate compact distance-aware neighbor representation, isolated-target handling, and local/global context balance before provider-facing or automatic inclusion."
   ],
   "repo_commit": "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a",
   "risks": [
-    "A positive context-pack candidate integration may be mistaken for integration approval unless the separate-plan boundary remains explicit.",
-    "Future context-pack integration, graph persistence, retrieval, embeddings, reranking, prompt changes, or runtime selection require separate governed plans and warrants."
+    "Whole-artifact token estimates can exclude all useful neighbors under small graph token budgets.",
+    "Opt-in manifest integration may be mistaken for automatic runtime graph-local memory selection.",
+    "Historical CAP-0009 governance metadata contained copied readiness-capability fields; the corrected canonical interpretation is supported by VERIFY-20260716-0004 and WARR-20260716-0005."
   ],
   "schema_version": "v1",
   "status": "implemented",
-  "summary": "Provides an opt-in, default-off graph-neighborhood context candidate path inside build_latest_context_manifest. The slice converts read-only graph-neighborhood advisor candidates into ordinary context-pack items only when explicitly enabled, while preserving existing default context-pack behavior and avoiding provider prompt, runtime manifest, retrieval, embedding, reranking, persisted graph, index, memory-store, and automatic context inclusion changes."
+  "summary": "Provides a library-level, opt-in and default-off graph-neighborhood context candidate path inside build_latest_context_manifest. When explicitly enabled, read-only graph-neighborhood advisor candidates are converted into ordinary ContextPackItem values and may affect the resulting manifest items. Existing default behavior remains unchanged."
 }

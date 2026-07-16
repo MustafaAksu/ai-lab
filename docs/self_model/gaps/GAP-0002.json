@@ -3,35 +3,49 @@
   "category": "memory_context",
   "evidence": {
     "files_checked": [
-      "docs/comparisons/COMP-0025-ai-lab-next-gap-after-gap-0001-closure.md",
-      "docs/architecture/ADR-0001-engineering-constitution.md",
-      "docs/architecture/ADR-0002-ontology-precedes-implementation.md",
-      "docs/architecture/ADR-0003-edge-identity-immutability-and-addressing.md",
-      "docs/development_directions.md",
-      "docs/self_model/SELF_MODEL_SCHEMA.md",
-      "ai_lab/documentation/edge_validation.py",
-      "ai_lab/documentation/artifact_history.py",
-      "ai_lab/documentation/interaction_log.py",
-      "ai_lab/documentation/context_pack_builder.py"
+      "docs/self_model/gaps/GAP-0002.json",
+      "docs/self_model/capabilities/CAP-0005.json",
+      "docs/self_model/capabilities/CAP-0006.json",
+      "docs/self_model/capabilities/CAP-0007.json",
+      "docs/self_model/capabilities/CAP-0008.json",
+      "docs/self_model/capabilities/CAP-0009.json",
+      "docs/self_model/capabilities/CAP-0011.json",
+      "docs/self_model/plans/PLAN-20260710-0003.json",
+      "docs/self_model/plans/PLAN-20260716-0001.json",
+      "ai_lab/documentation/context_pack_builder.py",
+      "ai_lab/documentation/graph_neighborhood.py",
+      "tests/test_context_pack_builder.py",
+      "tests/test_graph_neighborhood.py",
+      "tests/test_build_context_pack_script.py"
     ],
-    "reason": "COMP-0025 and the architecture/development documents identify graph-local scoped memory as a missing capability. Current implementation validates bootstrap edge records, formats artifact lineage/source trees, and exposes future edge seeds, but context construction still relies on latest_records_by_context_level and does not compute graph neighborhoods or graph-state-aware memory selection."
+    "reason": "The implemented capability chain now reaches explicit default-off manifest and standalone CLI candidate integration. A repository-wide read-only audit over 43 artifacts found 33 targets with authoritative depth-two neighborhoods and 10 lineage-isolated targets. Neighborhood sizes remained bounded at one to six candidates, but median whole-artifact cost was 2,223 tokens and the maximum was 13,208 tokens. Budgets of 500 or 1,500 tokens frequently selected no neighbor or only one neighbor, showing that representation granularity and budget starvation\u2014not edge authority or graph fan-out\u2014are the next unresolved issues."
   },
   "gap_id": "GAP-0002",
-  "last_reviewed_at": "2026-07-10T07:43:28.648500+00:00",
+  "last_reviewed_at": "2026-07-16T20:00:25.882913+00:00",
   "name": "Graph-local scoped memory context selection",
   "notes": [
-    "The original recommended first slice, adding a read-only graph neighborhood diagnostic/advisor, was completed by PLAN-20260709-0002 and recorded as CAP-0005. GAP-0002 remains open because graph-local scoped memory context selection is not yet implemented."
+    "PLAN-20260709-0002 and CAP-0005 implemented the original read-only graph-neighborhood advisor slice.",
+    "CAP-0006 through CAP-0009 added evidence evaluation, readiness decisions, and explicit default-off context-pack candidate integration.",
+    "PLAN-20260716-0001 and CAP-0011 completed standalone context-pack CLI exposure while preserving default and provider behavior.",
+    "The 2026-07-16 repository audit found authoritative and bounded neighborhoods, but substantial whole-artifact budget starvation and ten lineage-isolated targets.",
+    "GAP-0002 remains open because CLI reachability and whole-artifact candidate inclusion do not yet provide compact distance-aware graph-local scoped memory."
   ],
   "priority": "medium",
-  "recommended_first_slice": "Evaluate a separate governed follow-up slice for exposing CAP-0009 through explicit script or provider-facing opt-in parameters, or for gathering evidence before any automatic graph-local context inclusion. Keep existing default context-pack behavior unchanged. Do not modify default context selection, provider prompts, persisted graph artifacts, retrieval, embeddings, reranking, production indexes, memory stores, runtime manifests, or automatic context inclusion without a separate admission warrant.",
+  "recommended_first_slice": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan.",
   "related_capabilities": [
     "CAP-0001",
     "CAP-0002",
     "CAP-0003",
-    "CAP-0004"
+    "CAP-0004",
+    "CAP-0005",
+    "CAP-0006",
+    "CAP-0007",
+    "CAP-0008",
+    "CAP-0009",
+    "CAP-0011"
   ],
   "risk": "Without graph-local scoped memory, context assembly may remain too coarse: it can miss relevant neighboring artifacts, include stale latest artifacts, or fail to distinguish local task context from global ontology/invariant context.",
   "schema_version": "v1",
   "status": "open",
-  "summary": "AI-Lab cannot yet construct context from graph-local neighborhoods, typed relation records, scoped summaries, and local/global memory balance. Current latest-context selection remains artifact-type based, with edge validation and edge-seed support but no graph-state or neighborhood selection mechanism."
+  "summary": "AI-Lab now provides authoritative read-only graph-neighborhood diagnostics, evidence and readiness evaluation, explicit default-off context-pack candidate integration, and standalone CLI exposure. GAP-0002 remains open because graph-local scoped memory still lacks compact distance-aware representations, target-selection policy, isolated-target fallback semantics, typed scoped-summary composition, local/global memory balance, and separately governed provider-facing or automatic inclusion."
 }

@@ -1768,17 +1768,51 @@ def test_build_self_model_index_records_plan_20260709_0002_as_completed():
     )
 
 
-def test_gap_0002_recommended_slice_points_beyond_cap_0005_completion():
-    record = read_json(Path("docs/self_model/gaps/GAP-0002.json"))
+def test_gap_0002_recommends_distance_aware_evaluation():
+    from ai_lab.documentation.self_model import (
+        validate_gap_record,
+    )
+
+    record = read_json(
+        Path("docs/self_model/gaps/GAP-0002.json")
+    )
+    validate_gap_record(record)
 
     assert record["status"] == "open"
-    assert "CAP-0009" in record["recommended_first_slice"]
-    assert "explicit script or provider-facing opt-in parameters" in record["recommended_first_slice"]
-    assert "Keep existing default context-pack behavior unchanged" in record["recommended_first_slice"]
-    assert "Do not modify default context selection" in record["recommended_first_slice"]
+    assert "CAP-0009" in record["related_capabilities"]
+    assert "CAP-0011" in record["related_capabilities"]
+    assert (
+        "distance-aware graph-neighborhood representation"
+        in record["recommended_first_slice"]
+    )
+    assert (
+        "isolated-target diagnostics"
+        in record["recommended_first_slice"]
+    )
+    assert (
+        "provider prompts"
+        in record["recommended_first_slice"]
+    )
+    assert (
+        "2,223 tokens"
+        in record["evidence"]["reason"]
+    )
+    assert (
+        "13,208 tokens"
+        in record["evidence"]["reason"]
+    )
+
+    capability = read_json(
+        Path(
+            "docs/self_model/capabilities/"
+            "CAP-0011.json"
+        )
+    )
     assert any(
-        "recorded as CAP-0005" in note
-        for note in record.get("notes", [])
+        "PLAN-20260716-0001 is completed"
+        in action
+        for action
+        in capability["recommended_next_actions"]
     )
 
 
@@ -2384,13 +2418,71 @@ def test_build_self_model_index_records_warr_20260710_0007_admission():
 
 
 def test_validate_cap_0009_record():
-    from ai_lab.documentation.self_model import validate_capability_record
+    from ai_lab.documentation.self_model import (
+        validate_capability_record,
+    )
 
-    record = read_json(Path("docs/self_model/capabilities/CAP-0009.json"))
+    record = read_json(
+        Path(
+            "docs/self_model/capabilities/"
+            "CAP-0009.json"
+        )
+    )
     validate_capability_record(record)
 
     assert record["capability_id"] == "CAP-0009"
     assert record["status"] == "implemented"
+    assert record["category"] == "memory_context"
+    assert record["repo_commit"].startswith("dbcf88d")
+    assert (
+        "ai_lab.documentation.context_pack_builder."
+        "graph_neighborhood_context_items"
+        in record["interfaces"]
+    )
+    assert (
+        "ai_lab.documentation.context_pack_builder."
+        "build_latest_context_manifest"
+        in record["interfaces"]
+    )
+
+    admissions = {
+        item["id"]
+        for item in record["evidence"]["admissions"]
+    }
+    assert admissions == {
+        "PLAN-20260710-0003",
+        "WARR-20260710-0007",
+    }
+
+    assert (
+        record["evidence"]["commits"][0]["commit"]
+        == (
+            "dbcf88d94a8b35ed8177c1a9aadc49b8849d7c4a"
+        )
+    )
+
+    files = {
+        item["path"]
+        for item in record["evidence"]["files"]
+    }
+    assert files == {
+        (
+            "ai_lab/documentation/"
+            "context_pack_builder.py"
+        ),
+        "tests/test_context_pack_builder.py",
+    }
+
+    assert any(
+        "may affect ContextPackManifest.items"
+        in limit
+        for limit in record["limits"]
+    )
+    assert any(
+        "whole-artifact token estimates"
+        in limit
+        for limit in record["limits"]
+    )
 
 
 def test_validate_verify_20260710_0005_record():
@@ -4297,3 +4389,49 @@ def test_validate_warr_20260716_0004_plan_completion():
     assert record["decision"] == "admit"
     assert record["warrant_state"] == "supported"
     assert "does not close GAP-0002" in record["scope"]
+
+
+def test_validate_verify_20260716_0004_graph_governance_reconciliation():
+    from ai_lab.documentation.self_model import (
+        validate_verification_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260716-0004.json"
+        )
+    )
+    validate_verification_record(record)
+
+    assert (
+        record["verification_id"]
+        == "VERIFY-20260716-0004"
+    )
+    assert record["target_item_id"] == "GAP-0002"
+    assert record["target_item_type"] == "gap"
+    assert record["status"] == "passed"
+    assert "CAP-0009" in record["summary"]
+    assert "No runtime code was changed" in record["summary"]
+
+
+def test_validate_warr_20260716_0005_graph_governance_reconciliation():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260716-0005.json"
+        )
+    )
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260716-0005"
+    assert record["target_item_id"] == "GAP-0002"
+    assert record["target_item_type"] == "gap"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert "Does not alter historical" in record["scope"]
+    assert "close GAP-0002" in record["scope"]
