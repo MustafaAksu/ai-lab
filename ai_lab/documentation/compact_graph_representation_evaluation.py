@@ -104,9 +104,21 @@ class PackingBudgetResult:
         return len(self.included_artifact_ids)
 
     def to_dict(self) -> dict[str, object]:
-        data = asdict(self)
-        data["included_neighbor_count"] = self.included_neighbor_count
-        return data
+        return {
+            "target_id": self.target_id,
+            "scenario": self.scenario,
+            "token_budget": self.token_budget,
+            "included_artifact_ids": list(
+                self.included_artifact_ids
+            ),
+            "excluded_artifact_ids": list(
+                self.excluded_artifact_ids
+            ),
+            "used_token_estimate": self.used_token_estimate,
+            "included_neighbor_count": (
+                self.included_neighbor_count
+            ),
+        }
 
 
 @dataclass(frozen=True)

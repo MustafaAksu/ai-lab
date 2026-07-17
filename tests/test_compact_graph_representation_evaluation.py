@@ -310,3 +310,162 @@ def test_report_is_deterministic_json_ready_and_marks_boundaries(tmp_path: Path)
 def test_whitespace_estimator_matches_graph_neighborhood_semantics():
     assert estimate_text_tokens("") == 1
     assert estimate_text_tokens("one two three") == 3
+
+
+def test_repository_evidence_artifacts_match_frozen_corpus():
+    json_path = Path(
+        "docs/reviews/"
+        "compact_graph_representation_evaluation/"
+        "EVAL-20260716-0001.json"
+    )
+    markdown_path = Path(
+        "docs/reviews/"
+        "compact_graph_representation_evaluation/"
+        "EVAL-20260716-0001.md"
+    )
+
+    payload = json.loads(
+        json_path.read_text(encoding="utf-8")
+    )
+
+    frozen_ids = {
+        profile["artifact_id"]
+        for profile in payload["inventory"]["profiles"]
+    }
+
+    records = tuple(
+        record
+        for record in discover_artifacts()
+        if record.artifact_id in frozen_ids
+    )
+
+    assert {
+        record.artifact_id
+        for record in records
+    } == frozen_ids
+    assert len(records) == 43
+    assert "COMP-0027" not in frozen_ids
+
+    report = evaluate_compact_graph_representations(
+        evaluation_id="EVAL-20260716-0001",
+        artifact_records=records,
+        excluded_artifact_ids=("COMP-0027",),
+    )
+
+    assert report.to_dict() == payload
+    assert markdown_path.read_text(
+        encoding="utf-8"
+    ) == (
+        format_compact_graph_representation_report(
+            report
+        )
+        + "\n"
+    )
+
+
+def test_repository_evidence_supports_separate_compact_contract():
+    json_path = Path(
+        "docs/reviews/"
+        "compact_graph_representation_evaluation/"
+        "EVAL-20260716-0001.json"
+    )
+    markdown_path = Path(
+        "docs/reviews/"
+        "compact_graph_representation_evaluation/"
+        "EVAL-20260716-0001.md"
+    )
+
+    payload = json.loads(
+        json_path.read_text(encoding="utf-8")
+    )
+    inventory = payload["inventory"]
+
+    assert payload["selection_effect"] == "none"
+    assert (
+        payload["token_estimator_id"]
+        == "whitespace_word_count_v1"
+    )
+    assert payload["excluded_artifact_ids"] == [
+        "COMP-0027"
+    ]
+
+    assert inventory["artifact_count"] == 43
+    assert inventory["artifact_kind_counts"] == {
+        "ABS": 3,
+        "COMP": 26,
+        "SYNCOMP": 14,
+    }
+    assert (
+        inventory["semantic_compact_artifact_count"]
+        == 17
+    )
+    assert inventory["semantic_compact_kind_counts"] == {
+        "ABS": 3,
+        "SYNCOMP": 14,
+    }
+    assert inventory["l0_record_count"] == 0
+    assert inventory["l1_record_count"] == 56
+    assert (
+        inventory[
+            "l1_record_count_with_canonical_artifact_links"
+        ]
+        == 0
+    )
+    assert (
+        inventory["artifact_summary_record_count"]
+        == 0
+    )
+
+    assert payload["connected_target_count"] == 33
+    assert len(payload["isolated_target_ids"]) == 10
+    assert payload["recommendation"] == (
+        "propose_separate_compact_representation_contract"
+    )
+
+    aggregates = {
+        (
+            item["scenario"],
+            item["token_budget"],
+        ): item
+        for item in payload["aggregates"]
+    }
+
+    for budget in (500, 1000, 1500):
+        baseline = aggregates[
+            ("whole_artifact_baseline", budget)
+        ]
+        existing = aggregates[
+            (
+                "distance_aware_existing_compact",
+                budget,
+            )
+        ]
+        lower_bound = aggregates[
+            (
+                "distance_aware_metadata_lower_bound",
+                budget,
+            )
+        ]
+
+        assert (
+            existing["total_included_neighbors"]
+            == baseline["total_included_neighbors"]
+        )
+        assert (
+            lower_bound["total_included_neighbors"]
+            > existing["total_included_neighbors"]
+        )
+
+    markdown = markdown_path.read_text(
+        encoding="utf-8"
+    )
+
+    assert "semantically insufficient" in markdown
+    assert (
+        "does not modify ContextPackManifest.items"
+        in markdown
+    )
+    assert (
+        "propose_separate_compact_representation_contract"
+        in markdown
+    )
