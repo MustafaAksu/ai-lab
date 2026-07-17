@@ -4722,3 +4722,93 @@ def test_validate_warr_20260716_0007_completion():
         in record["scope"]
     )
     assert "close GAP-0002" in record["scope"]
+
+
+def test_validate_plan_20260717_0001_proposed():
+    from ai_lab.documentation.self_model import (
+        validate_plan_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/plans/"
+            "PLAN-20260717-0001.json"
+        )
+    )
+
+    validate_plan_record(record)
+
+    assert record["plan_id"] == "PLAN-20260717-0001"
+    assert record["status"] == "proposed"
+    assert record["source_gap_id"] == "GAP-0002"
+    assert record["source_capability_id"] == "CAP-0012"
+    assert (
+        "AI-optimized compact artifact sidecar"
+        in record["title"]
+    )
+    assert (
+        "Proposal only in this checkpoint."
+        in record["constraints"]
+    )
+    assert any(
+        "canonical" in constraint.lower()
+        and "source of truth" in constraint.lower()
+        for constraint in record["constraints"]
+    )
+    assert any(
+        "250-500" in item
+        and "80-200" in item
+        for item in record["scope"]
+    )
+    assert any(
+        "fidelity" in item.lower()
+        for item in record["expected_outputs"]
+    )
+    assert (
+        "docs/reviews/"
+        "compact_graph_representation_evaluation/"
+        "EVAL-20260716-0001.json"
+        in record["evidence_ids"]
+    )
+
+    assert "admission_warrant_id" not in record
+    assert "admitted_at" not in record
+    assert "completed_at" not in record
+    assert "completion_verification_id" not in record
+    assert "completion_warrant_id" not in record
+
+
+def test_build_self_model_index_records_plan_20260717_0001_open():
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        build_self_model_index,
+    )
+
+    index = build_self_model_index(
+        repo_root=Path(".")
+    )
+
+    assert any(
+        plan["plan_id"] == "PLAN-20260717-0001"
+        and plan["status"] == "proposed"
+        and plan["source_gap_id"] == "GAP-0002"
+        for plan in index["plans"]
+    )
+    assert (
+        "PLAN-20260717-0001"
+        in index["open_plans"]
+    )
+    assert (
+        "PLAN-20260717-0001"
+        not in index["admitted_plans"]
+    )
+
+    registry = SelfModelRegistry(Path(".").resolve())
+    plan = registry.require("PLAN-20260717-0001")
+    gap = registry.require("GAP-0002")
+
+    assert plan.status == "proposed"
+    assert registry.is_open(plan.record_id)
+    assert gap.status == "open"
+    assert registry.is_open(gap.record_id)
+    assert registry.unresolved_references() == ()

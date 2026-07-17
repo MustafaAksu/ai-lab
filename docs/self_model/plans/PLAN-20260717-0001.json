@@ -1,0 +1,118 @@
+{
+  "constraints": [
+    "Proposal only in this checkpoint.",
+    "Do not implement the sidecar contract before a separate admission warrant.",
+    "Canonical human-readable artifacts must remain the source of truth.",
+    "Sidecars must be explicitly derived, versioned, provenance-bearing, and regenerable.",
+    "No sidecar may claim semantic completeness without explicit fidelity evidence.",
+    "Token targets are profile hypotheses until validated; they are not production limits in this proposal.",
+    "Do not generate corpus-wide or production sidecars in this slice.",
+    "Do not modify ContextPackManifest.items, graph_neighborhood_context_items, or build_latest_context_manifest.",
+    "Do not change scripts/build_context_pack.py, ask_provider.py, compare_providers.py, provider prompts, prompt rendering, or CLI behavior.",
+    "Do not add automatic target inference or automatic graph-local inclusion.",
+    "Do not add graph persistence, retrieval, embeddings, reranking, production index mutation, memory-store mutation, or runtime-manifest mutation.",
+    "Do not close GAP-0002."
+  ],
+  "created_at": "2026-07-17T16:42:21.602954+00:00",
+  "created_from": {
+    "repo_commit": "370333b20ff5c2cc96c03bebefce06673d4efbc3",
+    "source_capability_id": "CAP-0012",
+    "source_gap_id": "GAP-0002",
+    "source_plan_id": "PLAN-20260716-0002"
+  },
+  "created_from_repo_commit": "370333b20ff5c2cc96c03bebefce06673d4efbc3",
+  "depends_on_capability_ids": [
+    "CAP-0005",
+    "CAP-0009",
+    "CAP-0011",
+    "CAP-0012"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0002.json",
+    "docs/self_model/capabilities/CAP-0012.json",
+    "docs/self_model/plans/PLAN-20260716-0002.json",
+    "docs/self_model/verifications/VERIFY-20260716-0005.json",
+    "docs/self_model/warrants/WARR-20260716-0007.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.md",
+    "docs/software_spec.md",
+    "docs/development_directions.md",
+    "docs/proposals/P-0001-AI-Lab-Documentation-Architecture-v0.3.md",
+    "370333b20ff5c2cc96c03bebefce06673d4efbc3"
+  ],
+  "expected_outputs": [
+    "A static compact artifact-sidecar schema and validator.",
+    "Documented rich immediate-neighbor and compact second-level representation profiles.",
+    "Deterministic identity, path, filename, serialization, and ordering rules.",
+    "Provenance, source-hash, versioning, staleness, regeneration, supersession, and deletion semantics.",
+    "A semantic fidelity rubric and validation categories.",
+    "Synthetic or explicitly designated fixtures covering valid, stale, incomplete, over-budget, and semantically unfaithful sidecars.",
+    "Documentation identifying later separately governed slices for generation, evaluation, graph-packing integration, and provider exposure."
+  ],
+  "mitigation": "Keep source artifacts canonical; require source hashes, schema and generator versions, explicit omission metadata, deterministic serialization, staleness rules, and independent fidelity tests. Validate the contract on bounded fixtures before any bulk generation or context integration is proposed.",
+  "next_action": "Review and, if supported, admit PLAN-20260717-0001 through a separate warrant. Do not implement a sidecar schema, generate sidecars, or change context selection while the plan remains proposed.",
+  "non_goals": [
+    "Bulk generation of sidecars for repository documents.",
+    "Provider- or model-driven sidecar generation.",
+    "Changing canonical human-readable artifacts.",
+    "Replacing canonical artifacts with sidecars.",
+    "Adding sidecars to ContextPackManifest.items.",
+    "Changing graph-neighborhood packing or token budgets.",
+    "Changing context selection or prompt rendering.",
+    "Provider-facing exposure.",
+    "Automatic target selection or automatic inclusion.",
+    "Persisting a graph database or retrieval index.",
+    "Adding embeddings, reranking, or vector search.",
+    "Closing GAP-0002."
+  ],
+  "objective": "Define a validated compact representation contract that preserves the minimum semantic and governance content needed for later distance-aware graph-local context, while keeping human-readable source artifacts canonical and preventing silent information loss.",
+  "plan_id": "PLAN-20260717-0001",
+  "proposed_change": "After a separate admission checkpoint, define a static AI-optimized artifact-sidecar schema, validator, serialization and naming rules, provenance and source-hash requirements, candidate rich and compact token profiles, regeneration and staleness semantics, and a fidelity test rubric. Validate the contract with synthetic or explicitly designated sample fixtures only. Do not bulk-generate sidecars or integrate them into graph packing in this slice.",
+  "rationale": [
+    "CAP-0012 and EVAL-20260716-0001 found semantic compact coverage for only 17 of 43 audited artifacts.",
+    "The audit found no persisted L0 records, no canonically linked L1 records, and no persisted ArtifactSummary records for the audited corpus.",
+    "Existing synthesis and abstraction sections did not improve graph packing through the 1,500-token budget.",
+    "Metadata-only packing improved counts but was explicitly semantically insufficient.",
+    "The repository contains related L0, L1, ArtifactSummary, provenance, and synthesis precedents, but no reusable DSN-style artifact-sidecar schema.",
+    "A contract must precede bulk generation so compression does not silently discard claims, constraints, uncertainty, or provenance."
+  ],
+  "repo_commit": "370333b20ff5c2cc96c03bebefce06673d4efbc3",
+  "risk": "A compact sidecar contract can create false confidence if token reduction is optimized without measurable semantic fidelity. A weak contract may omit critical claims, constraints, negative results, provenance, uncertainty, or supersession state. A second risk is allowing derived sidecars to become an accidental second canonical corpus.",
+  "schema_version": "v1",
+  "scope": [
+    "Define which canonical artifact families are eligible for compact sidecars and how unsupported families are reported.",
+    "Define stable sidecar identity, source artifact identity, source path, source content hash, source repository commit, schema version, generator identity, and generation timestamp fields.",
+    "Define required semantic fields for purpose, status, key claims, decisions, results, constraints, risks, dependencies, evidence references, uncertainty, unresolved items, next actions, and authoritative lineage.",
+    "Define explicit omission and truncation metadata so compressed representations do not imply completeness.",
+    "Define at least two named representation profiles: a richer immediate-neighbor profile and a more concise second-level profile.",
+    "Treat candidate ranges of approximately 250-500 estimated tokens for the richer profile and 80-200 estimated tokens for the more concise profile as hypotheses to test, not fixed production limits.",
+    "Define deterministic path, filename, serialization, ordering, and validation rules for sidecars.",
+    "Define source-change detection, staleness, regeneration, supersession, and deletion semantics.",
+    "Define fidelity checks covering critical claim retention, provenance, constraint and uncertainty preservation, and prohibited unsupported invention.",
+    "Define how sidecar validation distinguishes schema validity, provenance validity, token profile compliance, and semantic fidelity.",
+    "Use synthetic or explicitly designated sample fixtures to validate the contract without creating corpus-wide sidecars.",
+    "Keep GAP-0002 open unless a later separate verification and warrant support closure."
+  ],
+  "source_capability_id": "CAP-0012",
+  "source_capability_ids": [
+    "CAP-0005",
+    "CAP-0009",
+    "CAP-0011",
+    "CAP-0012"
+  ],
+  "source_gap_id": "GAP-0002",
+  "status": "proposed",
+  "success_criteria": [
+    "The proposed plan validates through the self-model schema and is indexed as proposed and open.",
+    "The plan cites GAP-0002, CAP-0012, PLAN-20260716-0002, and EVAL-20260716-0001.",
+    "The proposal clearly keeps canonical source artifacts authoritative and sidecars derived.",
+    "The contract scope includes semantic fields, provenance, versioning, token profiles, omission metadata, staleness, regeneration, and fidelity tests.",
+    "The richer and more concise profiles are distinguished without hard-coding unvalidated production token limits.",
+    "Any admitted implementation uses bounded fixtures only and does not bulk-generate sidecars.",
+    "No context-selection, provider, prompt, CLI, automatic-inclusion, graph-persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest behavior changes.",
+    "Self-model tests, the full repository suite, and the self-model audit pass before admission or implementation.",
+    "GAP-0002 remains open."
+  ],
+  "summary": "Propose a separately governed contract for derived, AI-optimized compact sidecars attached to canonical repository artifacts. The contract will define semantic fields, provenance, versioning, token profiles, regeneration and staleness rules, and fidelity tests. This proposal does not generate sidecars or change context selection.",
+  "title": "Define an AI-optimized compact artifact sidecar contract"
+}

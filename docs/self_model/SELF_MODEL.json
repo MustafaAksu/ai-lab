@@ -160,7 +160,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-17T16:09:28+00:00",
+  "generated_at": "2026-07-17T16:42:22+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -402,15 +402,23 @@
       "risk": "The principal risk is treating existing summaries as suitable graph-local representations without measuring coverage or semantic fitness. A second risk is treating hypothetical compact scenarios as implemented behavior. A third risk is conflating lineage isolation with budget starvation.",
       "source_field": "risk",
       "source_record": "PLAN-20260716-0002"
+    },
+    {
+      "risk": "A compact sidecar contract can create false confidence if token reduction is optimized without measurable semantic fidelity. A weak contract may omit critical claims, constraints, negative results, provenance, uncertainty, or supersession state. A second risk is allowing derived sidecars to become an accidental second canonical corpus.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260717-0001"
     }
   ],
   "model_type": "self_model",
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260717-0001"
+  ],
   "plan_counts": {
-    "completed": 18
+    "completed": 18,
+    "proposed": 1
   },
   "plans": [
     {
@@ -538,6 +546,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260716-0002.json",
       "status": "completed",
       "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
+    },
+    {
+      "plan_id": "PLAN-20260717-0001",
+      "source_gap_id": "GAP-0002",
+      "source_path": "docs/self_model/plans/PLAN-20260717-0001.json",
+      "status": "proposed",
+      "title": "Define an AI-optimized compact artifact sidecar contract"
     }
   ],
   "recommended_next_targets": [
@@ -547,7 +562,7 @@
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
     }
   ],
-  "repo_head": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+  "repo_head": "370333b20ff5c2cc96c03bebefce06673d4efbc3",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
