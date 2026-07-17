@@ -1,0 +1,96 @@
+{
+  "capability_id": "CAP-0012",
+  "category": "memory_context",
+  "created_at": "2026-07-17T16:09:27.682678+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260716-0002",
+        "path": "docs/self_model/plans/PLAN-20260716-0002.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260716-0006",
+        "path": "docs/self_model/warrants/WARR-20260716-0006.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "5ef7902a8622a31a03ab231119b791f1de1ddfb5",
+        "role": "compact graph representation evaluator implementation"
+      },
+      {
+        "commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+        "role": "deterministic compact representation evidence artifacts"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "aa01fae28f9f602750f8712cdda003d32244ddb21a6e6a52aef91bc9c590ade1",
+        "path": "ai_lab/documentation/compact_graph_representation_evaluation.py",
+        "role": "read-only evaluator implementation"
+      },
+      {
+        "content_hash": "7b500ac1cb1c4ff5fd10d52d3a148c88b235e83910a960d868a8503093598f39",
+        "path": "tests/test_compact_graph_representation_evaluation.py",
+        "role": "evaluator and evidence tests"
+      },
+      {
+        "content_hash": "83e3afa3c231adef9742823d4cc943c9ea6c36595f0cae6cd8e651963c6f664a",
+        "path": "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.json",
+        "role": "machine-readable evaluation evidence"
+      },
+      {
+        "content_hash": "72614b556752bdf7ba6068617ec47ee92a72f68da81aa15afab07c7fe5a51e91",
+        "path": "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.md",
+        "role": "human-readable evaluation evidence"
+      }
+    ],
+    "memory_records": [
+      {
+        "id": "VERIFY-20260716-0005",
+        "path": "docs/self_model/verifications/VERIFY-20260716-0005.json",
+        "role": "completion and capability verification"
+      }
+    ]
+  },
+  "interfaces": [
+    "ai_lab.documentation.compact_graph_representation_evaluation.evaluate_compact_graph_representations",
+    "ai_lab.documentation.compact_graph_representation_evaluation.format_compact_graph_representation_report",
+    "ai_lab.documentation.compact_graph_representation_evaluation.CompactGraphRepresentationReport.to_dict"
+  ],
+  "last_verified": {
+    "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260716-0005.json",
+    "verified_at": "2026-07-17T16:09:27.682678+00:00"
+  },
+  "limits": [
+    "The evaluator is evidence-only and has selection_effect none.",
+    "The frozen evaluation corpus contains 43 artifacts and explicitly excludes post-audit COMP-0027.",
+    "The whitespace_word_count_v1 estimator is a deterministic graph-budget estimate, not a model tokenizer.",
+    "Existing semantic compact coverage is limited to 17 of 43 artifacts: 14 SYNCOMP synthesis sections and 3 ABS abstraction sections.",
+    "Persisted L0 records, canonically linked L1 records, and persisted ArtifactSummary records were unavailable in the audited corpus.",
+    "The metadata lower-bound scenario is semantically insufficient and is not an implemented compact context representation.",
+    "The capability does not create or persist compact representations.",
+    "The capability does not modify ContextPackManifest.items, context selection, providers, prompts, CLI behavior, authoritative lineage, graph persistence, retrieval, embeddings, reranking, indexes, memory stores, or runtime manifests.",
+    "The capability does not satisfy or close GAP-0002."
+  ],
+  "name": "Compact graph representation coverage and packing evaluator",
+  "recommended_next_actions": [
+    "Keep GAP-0002 open because this capability measures representation fitness but does not implement graph-local scoped memory.",
+    "Propose a separate governed compact representation contract for AI-optimized artifact sidecars before changing context selection.",
+    "Define required semantic fields, provenance, versioning, token targets, regeneration rules, and fidelity tests for immediate-neighbor and second-level representations.",
+    "Treat generation of sidecars, integration into graph packing, provider exposure, and automatic inclusion as later separately admitted slices."
+  ],
+  "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+  "risks": [
+    "Whitespace token estimates may differ from actual provider tokenizer costs.",
+    "The frozen corpus protects reproducibility but does not automatically evaluate later artifacts.",
+    "Metadata-only packing can overstate practical coverage because metadata is not semantically sufficient graph-local context.",
+    "A future compact sidecar contract could lose critical claims, provenance, constraints, or uncertainty unless separately specified and validated."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provides a deterministic, read-only evaluator for compact representation coverage and hypothetical distance-aware graph-neighborhood packing. It inventories existing L0, L1, ArtifactSummary, SYNCOMP synthesis, and ABS abstraction representations; evaluates a frozen 43-artifact corpus across five graph budgets; separates lineage isolation from budget exclusion; and emits reproducible JSON and Markdown evidence. It has selection_effect none and changes no context selection or runtime behavior."
+}

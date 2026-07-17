@@ -1,0 +1,27 @@
+{
+  "author": "assistant",
+  "created_at": "2026-07-17T16:09:27.682678+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260716-0002.json",
+    "docs/self_model/warrants/WARR-20260716-0006.json",
+    "docs/self_model/capabilities/CAP-0012.json",
+    "docs/self_model/verifications/VERIFY-20260716-0005.json",
+    "ai_lab/documentation/compact_graph_representation_evaluation.py",
+    "tests/test_compact_graph_representation_evaluation.py",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.md",
+    "docs/self_model/gaps/GAP-0002.json",
+    "5ef7902",
+    "b17482b06b7af55e6460dfa92d039d6ec1e8828c"
+  ],
+  "reason": "PLAN-20260716-0002 is complete because CAP-0012 implements the admitted deterministic, read-only compact representation coverage and distance-aware packing evaluator, while VERIFY-20260716-0005 confirms the implementation and repository-tracked JSON and Markdown evidence meet the plan boundaries and success criteria. The evaluation inventories the frozen 43-artifact corpus, separates 10 lineage-isolated targets from budget exclusion, preserves selection_effect none, and supports proposing a separate compact representation contract. Completion does not close GAP-0002.",
+  "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+  "schema_version": "v1",
+  "scope": "Supports completion of PLAN-20260716-0002 only. This warrant recognizes CAP-0012 and EVAL-20260716-0001 as evidence-only evaluation outputs. It does not create or persist compact sidecars; define a compact representation contract; modify ContextPackManifest.items, context selection, providers, prompts, CLI behavior, authoritative lineage, graph state, retrieval, embeddings, reranking, indexes, memory stores, or runtime manifests; enable automatic target selection or automatic graph-local inclusion; or close GAP-0002.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260716-0002",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260716-0007",
+  "warrant_state": "supported"
+}

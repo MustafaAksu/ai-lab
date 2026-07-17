@@ -2,6 +2,10 @@
   "admission_summary": "Admitted for an evidence-only inventory of existing compact representations and deterministic evaluation of hypothetical distance-aware graph-neighborhood packing. The admitted slice preserves selection_effect none, does not mutate ContextPackManifest.items, introduces no persisted compact representation contract, and makes no context-selection, provider, prompt, CLI, automatic inclusion, graph persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes. GAP-0002 remains open.",
   "admission_warrant_id": "WARR-20260716-0006",
   "admitted_at": "2026-07-16T21:09:01.097271+00:00",
+  "completed_at": "2026-07-17T16:09:27.682678+00:00",
+  "completion_summary": "Completed the admitted evidence-only compact representation coverage and distance-aware graph-neighborhood packing evaluation. CAP-0012 inventories the frozen 43-artifact corpus and emits deterministic JSON and Markdown evidence. The evaluation finds semantic compact coverage for only 17 of 43 artifacts, no persisted L0 records, no canonically linked L1 records, no persisted ArtifactSummary records, and no packing improvement from existing compact sections through the 1,500-token budget. The evidence recommends a separately governed compact representation contract. Selection effect remains none and GAP-0002 remains open.",
+  "completion_verification_id": "VERIFY-20260716-0005",
+  "completion_warrant_id": "WARR-20260716-0007",
   "constraints": [
     "Implementation is authorized only within the scope admitted by WARR-20260716-0006.",
     "Any scope expansion beyond WARR-20260716-0006 requires a separate proposed and admitted plan.",
@@ -42,7 +46,14 @@
     "ai_lab/documentation/context_pack_builder.py",
     "tests/test_graph_neighborhood.py",
     "tests/test_context_pack_builder.py",
-    "be6bceffea2b36852c3d39bb8429c7a2017b1544"
+    "be6bceffea2b36852c3d39bb8429c7a2017b1544",
+    "docs/self_model/capabilities/CAP-0012.json",
+    "docs/self_model/verifications/VERIFY-20260716-0005.json",
+    "docs/self_model/warrants/WARR-20260716-0007.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.md",
+    "5ef7902",
+    "b17482b06b7af55e6460dfa92d039d6ec1e8828c"
   ],
   "expected_outputs": [
     "A deterministic inventory of compact representation coverage across the audited artifact corpus.",
@@ -53,7 +64,7 @@
     "Capability, verification, warrant, tests, and self-model records if the admitted evaluation is implemented successfully."
   ],
   "mitigation": "Inventory representation coverage first within the admitted evidence slice, label all compact scenarios hypothetical, use deterministic token accounting, report isolated targets separately, and require a new governed plan before adding persisted representation contracts or context-selection behavior.",
-  "next_action": "Implement only the evidence-only inventory and evaluator admitted by WARR-20260716-0006. Keep GAP-0002 open and require new governance before any persisted compact contract or context-selection behavior.",
+  "next_action": "Keep GAP-0002 open. Propose a separate governed compact representation contract for AI-optimized artifact sidecars, including semantic fields, provenance, versioning, token targets, regeneration rules, and fidelity tests. Do not generate sidecars or integrate them into context selection without separate admission.",
   "non_goals": [
     "Implementing compact graph-neighbor summaries.",
     "Defining a persisted compact-summary contract.",
@@ -101,7 +112,7 @@
     "CAP-0011"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The admitted plan validates through the self-model schema, references WARR-20260716-0006, and is indexed as admitted and open.",
     "The admitted plan cites GAP-0002, CAP-0005, CAP-0009, CAP-0011, VERIFY-20260716-0004, WARR-20260716-0005, WARR-20260716-0006, and COMP-0027.",
@@ -115,6 +126,6 @@
     "Targeted tests, full repository tests, and self-model audit pass before any implementation capability is registered.",
     "GAP-0002 remains open."
   ],
-  "summary": "Admit an evidence-only evaluation of existing compact artifact representations and hypothetical distance-aware graph-neighborhood packing. The slice inventories available L0, L1, ABS, and other compact representations; compares the whole-artifact baseline against rich distance-one and compact distance-two scenarios; and diagnoses lineage-isolated targets separately. It preserves selection_effect none and introduces no context-selection, provider, prompt, CLI, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes.",
+  "summary": "Completed the evidence-only evaluation of existing compact artifact representations and hypothetical distance-aware graph-neighborhood packing. CAP-0012 and EVAL-20260716-0001 establish that current compact coverage is insufficient for general graph-local context and support a separate governed compact representation contract. No context-selection or runtime behavior changed, and GAP-0002 remains open.",
   "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
 }

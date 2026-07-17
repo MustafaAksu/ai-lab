@@ -10,7 +10,8 @@
     "CAP-0008",
     "CAP-0009",
     "CAP-0010",
-    "CAP-0011"
+    "CAP-0011",
+    "CAP-0012"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -36,7 +37,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 50,
+      "info": 56,
       "warn": 23
     }
   },
@@ -117,10 +118,17 @@
       "name": "Graph-neighborhood context-pack CLI exposure",
       "source_path": "docs/self_model/capabilities/CAP-0011.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0012",
+      "category": "memory_context",
+      "name": "Compact graph representation coverage and packing evaluator",
+      "source_path": "docs/self_model/capabilities/CAP-0012.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 11
+    "implemented": 12
   },
   "gap_counts": {
     "closed": 2,
@@ -152,7 +160,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-16T21:09:01+00:00",
+  "generated_at": "2026-07-17T16:09:28+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -271,6 +279,26 @@
       "source_record": "CAP-0011"
     },
     {
+      "risk": "Whitespace token estimates may differ from actual provider tokenizer costs.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0012"
+    },
+    {
+      "risk": "The frozen corpus protects reproducibility but does not automatically evaluate later artifacts.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0012"
+    },
+    {
+      "risk": "Metadata-only packing can overstate practical coverage because metadata is not semantically sufficient graph-local context.",
+      "source_field": "risks[2]",
+      "source_record": "CAP-0012"
+    },
+    {
+      "risk": "A future compact sidecar contract could lose critical claims, provenance, constraints, or uncertainty unless separately specified and validated.",
+      "source_field": "risks[3]",
+      "source_record": "CAP-0012"
+    },
+    {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
       "source_field": "risk",
       "source_record": "GAP-0001"
@@ -380,12 +408,9 @@
   "open_gaps": [
     "GAP-0002"
   ],
-  "open_plans": [
-    "PLAN-20260716-0002"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 17
+    "completed": 18
   },
   "plans": [
     {
@@ -511,7 +536,7 @@
       "plan_id": "PLAN-20260716-0002",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260716-0002.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Evaluate compact representation coverage and distance-aware graph-neighborhood packing"
     }
   ],
@@ -522,7 +547,7 @@
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
     }
   ],
-  "repo_head": "c8935ca33520896ff8deeebd3179ad41264057d8",
+  "repo_head": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -660,10 +685,15 @@
       "repo_commit": "c936a8a8de34c64308584173cd7b191225304af6",
       "source_path": "docs/self_model/verifications/VERIFY-20260716-0004.json",
       "verification_id": "VERIFY-20260716-0004"
+    },
+    {
+      "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+      "source_path": "docs/self_model/verifications/VERIFY-20260716-0005.json",
+      "verification_id": "VERIFY-20260716-0005"
     }
   ],
   "warrant_counts": {
-    "supported": 47
+    "supported": 48
   },
   "warrants": [
     {
@@ -1040,6 +1070,14 @@
       "target_item_id": "PLAN-20260716-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260716-0006",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260716-0007.json",
+      "target_item_id": "PLAN-20260716-0002",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260716-0007",
       "warrant_state": "supported"
     }
   ]

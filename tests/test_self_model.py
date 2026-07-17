@@ -4437,7 +4437,7 @@ def test_validate_warr_20260716_0005_graph_governance_reconciliation():
     assert "close GAP-0002" in record["scope"]
 
 
-def test_validate_plan_20260716_0002_admitted():
+def test_validate_plan_20260716_0002_completed():
     from ai_lab.documentation.self_model import (
         validate_plan_record,
     )
@@ -4452,59 +4452,36 @@ def test_validate_plan_20260716_0002_admitted():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260716-0002"
-    assert record["status"] == "admitted"
+    assert record["status"] == "completed"
     assert record["source_gap_id"] == "GAP-0002"
-    assert record["source_capability_id"] == "CAP-0011"
-
     assert (
         record["admission_warrant_id"]
         == "WARR-20260716-0006"
     )
-    assert record["admitted_at"]
     assert (
-        "selection_effect none"
-        in record["admission_summary"]
+        record["completion_verification_id"]
+        == "VERIFY-20260716-0005"
+    )
+    assert (
+        record["completion_warrant_id"]
+        == "WARR-20260716-0007"
+    )
+    assert record["completed_at"]
+    assert (
+        "CAP-0012"
+        in record["completion_summary"]
     )
     assert (
         "GAP-0002 remains open"
-        in record["admission_summary"]
-    )
-
-    assert "CAP-0005" in record[
-        "source_capability_ids"
-    ]
-    assert "CAP-0009" in record[
-        "source_capability_ids"
-    ]
-    assert "CAP-0011" in record[
-        "source_capability_ids"
-    ]
-
-    assert (
-        "Implementation is authorized only"
-        in record["constraints"][0]
+        in record["completion_summary"]
     )
     assert (
-        "WARR-20260716-0006"
-        in record["constraints"][0]
-    )
-    assert (
-        "Proposal only in this checkpoint."
-        not in record["constraints"]
+        "compact representation contract"
+        in record["next_action"]
     )
 
-    assert (
-        "docs/comparisons/"
-        "COMP-0027-gap-0002-next-governed-slice-review.md"
-        in record["evidence_ids"]
-    )
 
-    assert "completed_at" not in record
-    assert "completion_verification_id" not in record
-    assert "completion_warrant_id" not in record
-
-
-def test_build_self_model_index_records_plan_20260716_0002_admitted():
+def test_build_self_model_index_records_plan_20260716_0002_completed():
     from ai_lab.documentation.self_model import (
         SelfModelRegistry,
         build_self_model_index,
@@ -4516,14 +4493,14 @@ def test_build_self_model_index_records_plan_20260716_0002_admitted():
 
     assert any(
         plan["plan_id"] == "PLAN-20260716-0002"
-        and plan["status"] == "admitted"
+        and plan["status"] == "completed"
         and plan["source_gap_id"] == "GAP-0002"
         for plan in index["plans"]
     )
 
     assert (
         "PLAN-20260716-0002"
-        in index["open_plans"]
+        not in index["open_plans"]
     )
     assert (
         "PLAN-20260716-0002"
@@ -4535,12 +4512,10 @@ def test_build_self_model_index_records_plan_20260716_0002_admitted():
     plan = registry.require("PLAN-20260716-0002")
     gap = registry.require("GAP-0002")
 
-    assert plan.status == "admitted"
-    assert registry.is_open(plan.record_id)
-
+    assert plan.status == "completed"
+    assert not registry.is_open(plan.record_id)
     assert gap.status == "open"
     assert registry.is_open(gap.record_id)
-
     assert registry.unresolved_references() == ()
 
 
@@ -4625,6 +4600,125 @@ def test_build_self_model_index_records_warr_20260716_0006_admission():
     plan = registry.require("PLAN-20260716-0002")
 
     assert warrant.status == "supported"
-    assert plan.status == "admitted"
-    assert registry.is_open(plan.record_id)
+
+    # The admission warrant remains historical evidence after
+    # the admitted plan progresses to completion.
+    assert plan.status == "completed"
+    assert not registry.is_open(plan.record_id)
     assert registry.unresolved_references() == ()
+
+
+def test_validate_cap_0012_compact_graph_evaluator():
+    from ai_lab.documentation.self_model import (
+        validate_capability_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/capabilities/"
+            "CAP-0012.json"
+        )
+    )
+
+    validate_capability_record(record)
+
+    assert record["capability_id"] == "CAP-0012"
+    assert record["status"] == "implemented"
+    assert record["category"] == "memory_context"
+    assert record["repo_commit"].startswith("b17482b")
+    assert (
+        "evaluate_compact_graph_representations"
+        in " ".join(record["interfaces"])
+    )
+    assert (
+        record["last_verified"][
+            "verification_artifact"
+        ]
+        == (
+            "docs/self_model/verifications/"
+            "VERIFY-20260716-0005.json"
+        )
+    )
+    assert any(
+        "selection_effect none" in limit
+        for limit in record["limits"]
+    )
+    assert any(
+        "17 of 43" in limit
+        for limit in record["limits"]
+    )
+    assert any(
+        "GAP-0002" in action
+        for action in record[
+            "recommended_next_actions"
+        ]
+    )
+
+
+def test_validate_verify_20260716_0005_completion():
+    from ai_lab.documentation.self_model import (
+        validate_verification_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/verifications/"
+            "VERIFY-20260716-0005.json"
+        )
+    )
+
+    validate_verification_record(record)
+
+    assert (
+        record["verification_id"]
+        == "VERIFY-20260716-0005"
+    )
+    assert (
+        record["target_item_id"]
+        == "PLAN-20260716-0002"
+    )
+    assert record["target_item_type"] == "plan"
+    assert record["status"] == "passed"
+    assert record["repo_commit"].startswith("b17482b")
+    assert any(
+        "49 tests" in command["summary"]
+        for command in record["commands"]
+    )
+    assert any(
+        "548 tests" in command["summary"]
+        for command in record["commands"]
+    )
+    assert (
+        "GAP-0002 remains open"
+        in record["summary"]
+    )
+
+
+def test_validate_warr_20260716_0007_completion():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260716-0007.json"
+        )
+    )
+
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260716-0007"
+    assert (
+        record["target_item_id"]
+        == "PLAN-20260716-0002"
+    )
+    assert record["target_item_type"] == "plan"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert "CAP-0012" in record["reason"]
+    assert (
+        "does not create or persist"
+        in record["scope"]
+    )
+    assert "close GAP-0002" in record["scope"]

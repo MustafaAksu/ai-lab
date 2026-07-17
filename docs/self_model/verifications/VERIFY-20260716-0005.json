@@ -1,0 +1,48 @@
+{
+  "artifacts_checked": [
+    "docs/self_model/plans/PLAN-20260716-0002.json",
+    "docs/self_model/warrants/WARR-20260716-0006.json",
+    "ai_lab/documentation/compact_graph_representation_evaluation.py",
+    "tests/test_compact_graph_representation_evaluation.py",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.json",
+    "docs/reviews/compact_graph_representation_evaluation/EVAL-20260716-0001.md",
+    "docs/self_model/gaps/GAP-0002.json",
+    "5ef7902",
+    "b17482b06b7af55e6460dfa92d039d6ec1e8828c"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_compact_graph_representation_evaluation.py tests/test_graph_neighborhood.py tests/test_artifact_history.py tests/test_artifact_summary.py tests/test_abstraction.py tests/test_l0_summary.py -x",
+      "exit_code": 0,
+      "summary": "Focused evaluator, graph, artifact, abstraction, and L0 tests passed with 49 tests."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "The complete repository test suite passed with 548 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py --repo-root .",
+      "exit_code": 0,
+      "summary": "The self-model index audit returned ok true."
+    },
+    {
+      "command": "Recompute EVAL-20260716-0001 from frozen artifact IDs and compare JSON and Markdown outputs exactly.",
+      "exit_code": 0,
+      "summary": "Machine-readable and human-readable evidence reproduced exactly."
+    }
+  ],
+  "created_at": "2026-07-17T16:09:27.682678+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion readiness for PLAN-20260716-0002 and implementation of CAP-0012. The evaluator and repository-tracked evidence are deterministic and reproducible; the frozen corpus contains 43 artifacts, 33 connected targets, and 10 lineage-isolated targets; existing semantic compact coverage is 17 of 43; persisted L0, canonically linked L1, and persisted ArtifactSummary coverage is absent; and existing compact representations do not improve packing through the 1,500-token budget. The evidence supports proposing a separate compact representation contract. Selection effect remains none and GAP-0002 remains open.",
+  "target_item_id": "PLAN-20260716-0002",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260716-0005"
+}
