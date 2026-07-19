@@ -4883,7 +4883,15 @@ def test_validate_plan_20260717_0001_admitted():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260717-0001"
-    assert record["status"] == "admitted"
+    assert record["status"] == "completed"
+    assert (
+        record["completion_verification_id"]
+        == "VERIFY-20260719-0002"
+    )
+    assert (
+        record["completion_warrant_id"]
+        == "WARR-20260719-0003"
+    )
     assert record["source_gap_id"] == "GAP-0002"
     assert record["source_capability_id"] == "CAP-0012"
     assert (
@@ -4914,9 +4922,7 @@ def test_validate_plan_20260717_0001_admitted():
         in record["evidence_ids"]
     )
 
-    assert "completed_at" not in record
-    assert "completion_verification_id" not in record
-    assert "completion_warrant_id" not in record
+    assert record["completed_at"]
 
 
 def test_build_self_model_index_records_plan_20260717_0001_admitted():
@@ -4931,13 +4937,13 @@ def test_build_self_model_index_records_plan_20260717_0001_admitted():
 
     assert any(
         plan["plan_id"] == "PLAN-20260717-0001"
-        and plan["status"] == "admitted"
+        and plan["status"] == "completed"
         and plan["source_gap_id"] == "GAP-0002"
         for plan in index["plans"]
     )
     assert (
         "PLAN-20260717-0001"
-        in index["open_plans"]
+        not in index["open_plans"]
     )
     assert (
         "PLAN-20260717-0001"
@@ -4949,8 +4955,8 @@ def test_build_self_model_index_records_plan_20260717_0001_admitted():
     warrant = registry.require("WARR-20260717-0001")
     gap = registry.require("GAP-0002")
 
-    assert plan.status == "admitted"
-    assert registry.is_open(plan.record_id)
+    assert plan.status == "completed"
+    assert not registry.is_open(plan.record_id)
     assert warrant.status == "supported"
     assert gap.status == "open"
     assert registry.is_open(gap.record_id)
