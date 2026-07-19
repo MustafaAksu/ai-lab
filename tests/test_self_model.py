@@ -505,6 +505,132 @@ def test_audit_self_model_index_detects_stale_content(tmp_path):
     )
 
 
+def _copy_self_model_tree(tmp_path):
+    import shutil
+
+    destination = tmp_path / "docs" / "self_model"
+    shutil.copytree(Path("docs/self_model"), destination)
+    return tmp_path
+
+
+def test_audit_self_model_index_no_git_is_unverifiable(tmp_path):
+    """Zip-export case: evidence unavailable must not masquerade as drift.
+
+    PLAN-20260719-0001 success criterion: no-git fixture reports
+    verification_outcome unverifiable, ok false, zero error findings,
+    and at least one warn evidence-unavailable finding.
+    """
+
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    repo_root = _copy_self_model_tree(tmp_path)
+
+    result = audit_self_model_index(repo_root=repo_root)
+
+    assert result["verification_outcome"] == "unverifiable"
+    assert result["ok"] is False
+    assert result.get("evidence_status") == "no_git_dir"
+    assert not any(
+        finding["severity"] == "error" for finding in result["findings"]
+    )
+    assert any(
+        finding["severity"] == "warn"
+        and finding["class"] == "evidence_unavailable"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_self_model_index_drift_with_git_is_stale(tmp_path):
+    """Genuine drift with git evidence available stays error severity."""
+
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    original = json.loads(
+        Path("docs/self_model/SELF_MODEL.json").read_text()
+    )
+    original["open_plans"] = ["PLAN-20260709-0001", "PLAN-20260709-0002"]
+
+    index_path = tmp_path / "SELF_MODEL.json"
+    index_path.write_text(json.dumps(original), encoding="utf-8")
+
+    result = audit_self_model_index(
+        repo_root=Path("."),
+        index_path=index_path,
+    )
+
+    assert result["verification_outcome"] == "stale"
+    assert result["ok"] is False
+    assert any(
+        finding["code"] == "SELF_MODEL_INDEX_CONTENT_STALE"
+        and finding["severity"] == "error"
+        and finding["class"] == "drift"
+        for finding in result["findings"]
+    )
+
+
+def test_audit_self_model_index_current_repository_is_verified_current():
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    result = audit_self_model_index(Path("."))
+
+    assert result["verification_outcome"] == "verified_current"
+    assert result["ok"] is True
+
+
+def test_audit_self_model_index_mixed_case_rolls_up_to_stale(tmp_path):
+    """Confirmed drift beats unavailable evidence in one audit.
+
+    Stored repo_head is a well-formed hash absent from history (evidence
+    unavailable) while stored content also differs from a rebuild with
+    git present (confirmed drift): rollup must report stale.
+    """
+
+    from ai_lab.documentation.self_model import audit_self_model_index
+
+    original = json.loads(
+        Path("docs/self_model/SELF_MODEL.json").read_text()
+    )
+    original["open_plans"] = ["PLAN-20260709-0001", "PLAN-20260709-0002"]
+    original["repo_head"] = "a" * 40
+
+    index_path = tmp_path / "SELF_MODEL.json"
+    index_path.write_text(json.dumps(original), encoding="utf-8")
+
+    result = audit_self_model_index(
+        repo_root=Path("."),
+        index_path=index_path,
+    )
+
+    assert result["verification_outcome"] == "stale"
+    assert result["ok"] is False
+    assert any(
+        finding["class"] == "evidence_unavailable"
+        for finding in result["findings"]
+    )
+    assert any(
+        finding["class"] == "drift" for finding in result["findings"]
+    )
+
+
+def test_audit_self_model_registry_missing_target_is_stale(tmp_path):
+    from ai_lab.documentation.self_model import audit_self_model_registry
+
+    _write_registry_relation_fixture_record(
+        tmp_path,
+        Path("docs/self_model/gaps/GAP-0003.json"),
+    )
+
+    result = audit_self_model_registry(tmp_path)
+
+    assert result["verification_outcome"] == "stale"
+    assert result["ok"] is False
+    assert all(
+        finding["class"] == "drift"
+        for finding in result["findings"]
+        if finding["severity"] == "error"
+    )
+
+
 def test_audit_self_model_index_missing_file_is_error(tmp_path):
     from ai_lab.documentation.self_model import audit_self_model_index
 
@@ -514,12 +640,14 @@ def test_audit_self_model_index_missing_file_is_error(tmp_path):
     )
 
     assert result["ok"] is False
+    assert result["verification_outcome"] == "stale"
     assert result["findings"] == [
         {
             "severity": "error",
             "code": "SELF_MODEL_INDEX_MISSING",
             "target": str(tmp_path / "missing.json"),
             "message": "SELF_MODEL.json is missing.",
+            "class": "drift",
         }
     ]
 
@@ -3567,6 +3695,7 @@ def test_audit_self_model_registry_accepts_valid_fixture(
     assert result == {
         "schema_version": "v1",
         "ok": True,
+        "verification_outcome": "verified_current",
         "findings": [],
     }
 
@@ -3708,6 +3837,7 @@ def test_audit_self_model_registry_current_repository_has_no_errors():
     assert result == {
         "schema_version": "v1",
         "ok": True,
+        "verification_outcome": "verified_current",
         "findings": [],
     }
 
