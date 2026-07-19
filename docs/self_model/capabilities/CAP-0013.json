@@ -1,0 +1,79 @@
+{
+  "capability_id": "CAP-0013",
+  "category": "self_model_infrastructure",
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260719-0001",
+        "path": "docs/self_model/plans/PLAN-20260719-0001.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260719-0001",
+        "path": "docs/self_model/warrants/WARR-20260719-0001.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "71abadcc799dae5d1087efd9a3bdf58ccfdbcb79",
+        "role": "shared verification-outcome vocabulary module with focused tests"
+      },
+      {
+        "commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
+        "role": "classified index and registry audits, outcome fixtures, documentation, dead-duplicate removal"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "4ee1511fb1c5e92b3faec7352c3036789b93c555d80a745cd3c3bf79d9104f02",
+        "path": "ai_lab/documentation/verification_outcome.py",
+        "role": "shared vocabulary module"
+      },
+      {
+        "content_hash": "e11cc3e40404f4ee4d62c6d0c5f22042bad80862dccf855faed14ff2799fee38",
+        "path": "ai_lab/documentation/self_model.py",
+        "role": "classified index and registry audits"
+      },
+      {
+        "content_hash": "4286be8d2be8cbb5b76698b8716b957d3518a2d6ca4b477f4862e61b0724850b",
+        "path": "tests/test_verification_outcome.py",
+        "role": "vocabulary rollup and fail-closed tests"
+      },
+      {
+        "content_hash": "a899a7b6c2d789bd02fbd3972a75991a422968eb2831331b5d41f60b7b39eb91",
+        "path": "docs/self_model/VERIFICATION_OUTCOMES.md",
+        "role": "consumer documentation and registry scope note"
+      }
+    ],
+    "memory_records": []
+  },
+  "interfaces": [
+    "ai_lab.documentation.verification_outcome (rollup_outcome, rollup_from_findings, ok_from_outcome, outcome and class constants)",
+    "ai_lab.documentation.self_model.audit_self_model_index (verification_outcome, evidence_status, per-finding class fields)",
+    "ai_lab.documentation.self_model.audit_self_model_registry (verification_outcome, per-finding class fields)",
+    "scripts/audit_self_model_index.py (JSON output including verification_outcome)"
+  ],
+  "last_verified": {
+    "repo_commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260719-0001.json",
+    "verified_at": "2026-07-19T00:00:00+00:00"
+  },
+  "limits": [
+    "The registry audit performs no git-evidence verification, so it reports only verified_current or stale; an unverifiable registry outcome would require an evidence-dependent registry check that does not exist.",
+    "The compact artifact sidecar contract (PLAN-20260717-0001) has not yet adopted the vocabulary; cross-subsystem harmonization completes only when its implementation imports verification_outcome.",
+    "Consumers gating on error counts by finding code rather than the ok or verification_outcome fields will observe reduced error counts in evidence-free environments; this is the documented intentional severity reclassification."
+  ],
+  "name": "Three-valued verification outcome vocabulary in self-model audits",
+  "recommended_next_actions": [
+    "Implement the admitted sidecar contract (PLAN-20260717-0001) importing verification_outcome for its staleness semantics, then close GAP-0004 with a verification confirming both subsystems share one vocabulary."
+  ],
+  "risks": [
+    "If a future audit emits findings without a class field, rollup treats them as other and they cannot influence the outcome; new emission sites must classify explicitly.",
+    "Divergence risk persists until the sidecar implementation consumes the shared module, tracked by keeping GAP-0004 open."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "The self-model index and registry audits distinguish confirmed drift from unavailable evidence using a shared three-valued verification_outcome vocabulary (verified_current, stale, unverifiable) defined in ai_lab/documentation/verification_outcome.py, which imports from neither the self-model module nor any sidecar implementation. Every finding carries a class (drift, evidence_unavailable, other); evidence-unavailable findings carry warn severity with an evidence_status cause (no_git_dir, unreachable_repo_head); content-stale and repo-head-missing classification is deterministic from git-evidence availability captured at emission; rollup is deterministic with stale dominating unverifiable dominating verified_current; the ok field remains boolean and fail-closed, true only for verified_current."
+}

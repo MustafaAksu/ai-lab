@@ -11,7 +11,8 @@
     "CAP-0009",
     "CAP-0010",
     "CAP-0011",
-    "CAP-0012"
+    "CAP-0012",
+    "CAP-0013"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -39,7 +40,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 55,
+      "info": 61,
       "warn": 25
     }
   },
@@ -127,10 +128,17 @@
       "name": "Compact graph representation coverage and packing evaluator",
       "source_path": "docs/self_model/capabilities/CAP-0012.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0013",
+      "category": "self_model_infrastructure",
+      "name": "Three-valued verification outcome vocabulary in self-model audits",
+      "source_path": "docs/self_model/capabilities/CAP-0013.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 12
+    "implemented": 13
   },
   "gap_counts": {
     "closed": 2,
@@ -170,7 +178,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-19T18:26:38+00:00",
+  "generated_at": "2026-07-19T18:51:38+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -309,6 +317,16 @@
       "source_record": "CAP-0012"
     },
     {
+      "risk": "If a future audit emits findings without a class field, rollup treats them as other and they cannot influence the outcome; new emission sites must classify explicitly.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0013"
+    },
+    {
+      "risk": "Divergence risk persists until the sidecar implementation consumes the shared module, tracked by keeping GAP-0004 open.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0013"
+    },
+    {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
       "source_field": "risk",
       "source_record": "GAP-0001"
@@ -435,12 +453,11 @@
     "GAP-0004"
   ],
   "open_plans": [
-    "PLAN-20260717-0001",
-    "PLAN-20260719-0001"
+    "PLAN-20260717-0001"
   ],
   "plan_counts": {
-    "admitted": 2,
-    "completed": 18
+    "admitted": 1,
+    "completed": 19
   },
   "plans": [
     {
@@ -580,7 +597,7 @@
       "plan_id": "PLAN-20260719-0001",
       "source_gap_id": "GAP-0004",
       "source_path": "docs/self_model/plans/PLAN-20260719-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Introduce shared three-valued verification outcome vocabulary in self-model audits"
     }
   ],
@@ -596,7 +613,7 @@
       "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "71abadcc799dae5d1087efd9a3bdf58ccfdbcb79",
+  "repo_head": "bfaf694033942871876e02413d5d4c2875ea9e47",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -739,10 +756,15 @@
       "repo_commit": "b17482b06b7af55e6460dfa92d039d6ec1e8828c",
       "source_path": "docs/self_model/verifications/VERIFY-20260716-0005.json",
       "verification_id": "VERIFY-20260716-0005"
+    },
+    {
+      "repo_commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
+      "source_path": "docs/self_model/verifications/VERIFY-20260719-0001.json",
+      "verification_id": "VERIFY-20260719-0001"
     }
   ],
   "warrant_counts": {
-    "supported": 50
+    "supported": 51
   },
   "warrants": [
     {
@@ -1143,6 +1165,14 @@
       "target_item_id": "PLAN-20260719-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260719-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260719-0002.json",
+      "target_item_id": "PLAN-20260719-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260719-0002",
       "warrant_state": "supported"
     }
   ]

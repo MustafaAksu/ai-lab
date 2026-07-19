@@ -1,0 +1,29 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "GAP-0004 remains open until the sidecar contract implementation imports and uses the shared verification-outcome vocabulary and a closure verification exists.",
+    "Any new audit emission site must classify its findings explicitly; unclassified findings are treated as other and cannot influence the outcome.",
+    "The documented severity reclassification and consumer guidance in docs/self_model/VERIFICATION_OUTCOMES.md must be preserved through future audit changes."
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/verifications/VERIFY-20260719-0001.json",
+    "docs/self_model/capabilities/CAP-0013.json",
+    "docs/self_model/plans/PLAN-20260719-0001.json",
+    "docs/self_model/warrants/WARR-20260719-0001.json",
+    "docs/self_model/gaps/GAP-0004.json",
+    "docs/comparisons/COMP-0030-plan-20260719-0001-completion-review.md",
+    "docs/comparisons/COMP-0030-plan-20260719-0001-completion-review.context.json",
+    "docs/self_model/VERIFICATION_OUTCOMES.md"
+  ],
+  "reason": "VERIFY-20260719-0001 records 568 passing tests, an ok true verified_current repository audit, fixture evidence for all three outcomes and the mixed-case rollup in the index audit, registry adoption of the vocabulary, and independent cross-environment reproduction from the public repository. COMP-0030 records unanimous provider recommendation complete-and-keep-gap-open, with both providers independently classifying the registry-criterion deviation as justified inapplicability and the dead-duplicate removal as legitimate incidental work. All ten WARR-20260719-0001 admission conditions are satisfied within their applicable scope.",
+  "repo_commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
+  "schema_version": "v1",
+  "scope": "Completion warrant for PLAN-20260719-0001. Warrants marking the plan completed on the evidence of VERIFY-20260719-0001 and the unanimous COMP-0030 completion review, and registering CAP-0013. Adjudicates two points: the reviewer-added registry-audit no-git unverifiable success criterion is a justified inapplicability because audit_self_model_registry performs no git-evidence verification, documented in docs/self_model/VERIFICATION_OUTCOMES.md; and removal of the dead shadowed duplicate definition of audit_self_model_index was legitimate incidental work with behavior unchanged. GAP-0004 remains open pending sidecar adoption of the shared vocabulary by the PLAN-20260717-0001 implementation. No further implementation is warranted by this record.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260719-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260719-0002",
+  "warrant_state": "supported"
+}

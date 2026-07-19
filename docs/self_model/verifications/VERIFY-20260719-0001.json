@@ -1,0 +1,43 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/verification_outcome.py",
+    "ai_lab/documentation/self_model.py",
+    "tests/test_verification_outcome.py",
+    "tests/test_self_model.py",
+    "docs/self_model/VERIFICATION_OUTCOMES.md",
+    "docs/self_model/SELF_MODEL.json",
+    "docs/self_model/plans/PLAN-20260719-0001.json",
+    "docs/self_model/warrants/WARR-20260719-0001.json",
+    "docs/comparisons/COMP-0030-plan-20260719-0001-completion-review.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository suite passed with 568 tests, including nine vocabulary-module tests and five new outcome fixtures (no-git unverifiable, drift-with-git stale, current-repository verified_current, mixed-case rollup to stale, registry missing-target stale)."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "Repository audit returned ok true with verification_outcome verified_current after the index rebuild committed at bfaf694."
+    },
+    {
+      "command": "python -m pytest (independent clone of github.com/MustafaAksu/ai-lab at bfaf694)",
+      "exit_code": 0,
+      "summary": "Cross-environment verification: the pushed commit reproduced 568 passing tests and an ok true, verified_current audit in a separate sandbox environment."
+    }
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260719-0001 at commits 71abadc (shared verification-outcome vocabulary module with nine focused tests) and bfaf694 (classified index and registry audits, outcome fixtures, documentation). The full suite passes with 568 tests; the repository audit reports ok true and verification_outcome verified_current; the no-git zip-export fixture reports unverifiable with warn severity, evidence_status no_git_dir, and zero error findings; the drift-with-git fixture reports stale with an error-severity drift-classified content-stale finding; the mixed drift-plus-evidence-unavailable fixture rolls up to stale; the registry audit adopts the shared vocabulary with drift-only findings. The reviewer-added success criterion requiring a registry-audit no-git unverifiable fixture is recorded as justified inapplicability: audit_self_model_registry performs no git-evidence verification, so unverifiable is correctly unreachable, documented in docs/self_model/VERIFICATION_OUTCOMES.md. Removal of the dead shadowed duplicate definition of audit_self_model_index is recorded as legitimate incidental work with behavior unchanged. COMP-0030 records unanimous provider adjudication of both points and a complete-and-keep-gap-open recommendation. Independent cross-verification: the pushed commit was pulled from the public GitHub repository into a separate environment where the full suite and audit reproduced identical results.",
+  "target_item_id": "PLAN-20260719-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260719-0001"
+}
