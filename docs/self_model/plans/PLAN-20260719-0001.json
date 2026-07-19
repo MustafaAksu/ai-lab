@@ -3,6 +3,7 @@
     "All schema changes are additive; no existing audit output fields, finding codes, or messages are removed, renamed, or repurposed.",
     "The ok field remains boolean and false unless verification_outcome is verified_current; ok=null is prohibited.",
     "The classification table must be built from the actual finding codes present in ai_lab/documentation/self_model.py, not from provider-suggested codes.",
+    "Classification of content-stale findings into drift versus evidence_unavailable must be deterministic from context captured when the finding is emitted (e.g. a git-evidence-available flag or distinct code variants); retroactive inference is prohibited.",
     "The shared vocabulary module must not import from self_model.py or the sidecar implementation; both import from it.",
     "No CLI flags, provider paths, context selection, prompt rendering, or automatic remediation changes.",
     "Sidecar contract integration is limited to the vocabulary module being importable; this plan does not implement sidecar staleness itself.",
@@ -17,7 +18,8 @@
     "COMP-0028 records provider consensus that conflating unverifiable with stale is an epistemic defect: the audit currently verifies git availability, not staleness.",
     "SYNCOMP-0016 resolves naming to verification_outcome and confirms the additive-only, fail-closed-preserving approach.",
     "PLAN-20260717-0001 is admitted and its staleness semantics are about to be implemented; defining the vocabulary in a shared importable module now prevents two incompatible verification vocabularies and a later cross-subsystem retrofit.",
-    "The observed zip-export case (SELF_MODEL_INDEX_REPO_HEAD_MISSING plus content-stale errors and 4 test failures despite matching record content) demonstrates the defect concretely."
+    "The observed zip-export case (SELF_MODEL_INDEX_REPO_HEAD_MISSING plus content-stale errors and 4 test failures despite matching record content) demonstrates the defect concretely.",
+    "COMP-0029 admission review: both providers returned admit_with_warning; their convergent revisions (mixed-case rollup test, registry-audit success criteria, content-stale emission-context determinism, operator guidance) are incorporated in this revision while the plan remains proposed."
   ],
   "risk": "Severity downgrades for evidence-unavailable findings could silently relax pipelines that count error findings by code rather than reading the ok field; consumers ignoring the new field will continue failing gates on unverifiable environments, which is intended but may prompt local suppressions. Mitigated by leaving ok semantics unchanged, keeping all existing finding codes and messages intact, documenting the classification table built from the actual auditor codes, and asserting in tests that a genuine-drift fixture still yields error severity and ok false.",
   "schema_version": "v1",
@@ -28,6 +30,9 @@
     "A genuine-drift fixture audit reports verification_outcome stale, ok false, and at least one error-severity drift finding.",
     "A clean git-backed fixture audit reports verification_outcome verified_current and ok true.",
     "The current repository audit still reports ok true and verification_outcome verified_current.",
+    "A mixed-case fixture audit containing both a confirmed-drift finding and an evidence-unavailable finding reports verification_outcome stale and ok false.",
+    "The registry audit (audit_self_model_registry) emits verification_outcome using the same shared vocabulary module and classification rules as the index audit, verified by at least one registry-audit fixture per outcome including a no-git unverifiable case with zero error-severity evidence-unavailable findings.",
+    "Documentation explains the severity reclassification and advises consumers to gate on the ok or verification_outcome fields rather than error counts by finding code.",
     "All existing tests pass unchanged except any that assert specific severities for evidence-unavailable findings, which are updated with justification.",
     "The vocabulary is defined once in a shared module with no imports from audit or sidecar implementations.",
     "Self-model index rebuild, full test suite, and audit pass before completion is claimed."

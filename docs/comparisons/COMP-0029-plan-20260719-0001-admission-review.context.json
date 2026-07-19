@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "require_admission": false
+  },
+  "admission_summary": {
+    "admit": 0,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 0
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-19T16:27:23.638967+00:00",
+  "exclusions": [],
+  "full_prompt_hash": "349140a40b61b915e52741b5cdda83dd3cc896fdcb65e40b7f4d7b282a05fa26",
+  "items": [
+    {
+      "item_id": "L1-20260707-l0-discovery-advisor-threshold-completion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260707-l0-discovery-advisor-threshold-completion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260707-l0-discovery-advisor-threshold-completion.json",
+      "token_estimate": 509
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    },
+    {
+      "item_id": "SYNCOMP-0016",
+      "item_type": "synthesis",
+      "reason": "SYNCOMP context seed: Audit Verification Outcome Vocabulary",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/syntheses/SYNCOMP-0016-audit-verification-outcome-vocabulary.md",
+      "token_estimate": 8170
+    },
+    {
+      "item_id": "COMP-0028",
+      "item_type": "comparison",
+      "reason": "COMP context seed: audit-verification-outcome-vocabulary",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/COMP-0028-audit-verification-outcome-vocabulary.md",
+      "token_estimate": 5867
+    }
+  ],
+  "manifest_id": "0fe6a2ff8ff67628",
+  "task": "PLAN-20260719-0001 is proposed under GAP-0004 and is included below. Review it for admission. Do not implement anything and do not assume it is admitted. Assess specifically: 1. Whether the shared vocabulary module (ai_lab/documentation/verification_outcome.py) with the constraint that it imports from neither self_model.py nor the sidecar implementation is the right dependency direction, or whether the vocabulary belongs inside self_model.py or the sidecar contract instead. 2. Whether the det...",
+  "task_label": "plan-20260719-0001-is-proposed-under-gap-0004-and-is-included-below-review-it-fo",
+  "total_token_estimate": 16483
+}
