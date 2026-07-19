@@ -186,7 +186,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-19T20:33:21+00:00",
+  "generated_at": "2026-07-19T20:33:52+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -622,7 +622,7 @@
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
     }
   ],
-  "repo_head": "4c41f50e0c2e20694356ff38b0177517157a6179",
+  "repo_head": "930e63762e2f17e61d3ef9ca8cb4dd2602a8c8a9",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
