@@ -169,7 +169,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-19T15:10:55+00:00",
+  "generated_at": "2026-07-19T15:22:41+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -421,6 +421,11 @@
       "risk": "A compact sidecar contract can create false confidence if token reduction is optimized without measurable semantic fidelity. A weak contract may omit critical claims, constraints, negative results, provenance, uncertainty, or supersession state. A second risk is allowing derived sidecars to become an accidental second canonical corpus.",
       "source_field": "risk",
       "source_record": "PLAN-20260717-0001"
+    },
+    {
+      "risk": "Severity downgrades for evidence-unavailable findings could silently relax pipelines that count error findings by code rather than reading the ok field; consumers ignoring the new field will continue failing gates on unverifiable environments, which is intended but may prompt local suppressions. Mitigated by leaving ok semantics unchanged, keeping all existing finding codes and messages intact, documenting the classification table built from the actual auditor codes, and asserting in tests that a genuine-drift fixture still yields error severity and ok false.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260719-0001"
     }
   ],
   "model_type": "self_model",
@@ -429,11 +434,13 @@
     "GAP-0004"
   ],
   "open_plans": [
-    "PLAN-20260717-0001"
+    "PLAN-20260717-0001",
+    "PLAN-20260719-0001"
   ],
   "plan_counts": {
     "admitted": 1,
-    "completed": 18
+    "completed": 18,
+    "proposed": 1
   },
   "plans": [
     {
@@ -568,6 +575,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260717-0001.json",
       "status": "admitted",
       "title": "Define an AI-optimized compact artifact sidecar contract"
+    },
+    {
+      "plan_id": "PLAN-20260719-0001",
+      "source_gap_id": "GAP-0004",
+      "source_path": "docs/self_model/plans/PLAN-20260719-0001.json",
+      "status": "proposed",
+      "title": "Introduce shared three-valued verification outcome vocabulary in self-model audits"
     }
   ],
   "recommended_next_targets": [
@@ -582,7 +596,7 @@
       "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "5319bd96a0c542a93c9c34a5aebca6db7c6ce5b1",
+  "repo_head": "07c0abebd23e10f9c6804638c1f60ead0b078ca6",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
