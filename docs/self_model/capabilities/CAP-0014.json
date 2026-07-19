@@ -1,0 +1,73 @@
+{
+  "capability_id": "CAP-0014",
+  "category": "documentation",
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260717-0001",
+        "path": "docs/self_model/plans/PLAN-20260717-0001.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260717-0001",
+        "path": "docs/self_model/warrants/WARR-20260717-0001.json",
+        "role": "admission warrant"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+        "role": "sidecar contract module, warrant fixture tests, contract documentation"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "06ca2bf876e9f43cf5b9fb152ececf7ec87cf3237719894b0f62b5e2f875b172",
+        "path": "ai_lab/documentation/artifact_sidecar.py",
+        "role": "contract module"
+      },
+      {
+        "content_hash": "dafc29f280aac81abf3eca779ccfc4c3c181b005ca502893ae6c57289812c312",
+        "path": "tests/test_artifact_sidecar.py",
+        "role": "warrant fixture tests"
+      },
+      {
+        "content_hash": "a56216c2352254e2d6846559af4074ac43a134507114d1c27f9b848596f52c8b",
+        "path": "docs/self_model/SIDECAR_CONTRACT.md",
+        "role": "contract documentation"
+      }
+    ],
+    "memory_records": []
+  },
+  "interfaces": [
+    "ai_lab.documentation.artifact_sidecar.validate_sidecar_record (schema and provenance validity)",
+    "ai_lab.documentation.artifact_sidecar.assess_profile_compliance (token-hypothesis findings)",
+    "ai_lab.documentation.artifact_sidecar.assess_staleness (three-valued verification_outcome)",
+    "ai_lab.documentation.artifact_sidecar.sidecar_id_for and sidecar_relative_path (deterministic identity and path)",
+    "ai_lab.documentation.artifact_sidecar.canonical_sidecar_json (deterministic serialization)"
+  ],
+  "last_verified": {
+    "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260719-0002.json",
+    "verified_at": "2026-07-19T00:00:00+00:00"
+  },
+  "limits": [
+    "Contract only: no sidecar generation, bulk processing, fidelity assessment, graph-packing, context-selection integration, provider exposure, or persistence exists; each is a later separately governed slice documented in SIDECAR_CONTRACT.md.",
+    "Token ranges are validation hypotheses estimated with whitespace_word_count_v1 and are not calibrated against provider tokenizers; the token-estimator sensitivity check remains parked.",
+    "fidelity_category defaults to unassessed; no mechanism assesses semantic fidelity yet.",
+    "Staleness compares source content hashes only; it does not verify source_repo_commit against git history."
+  ],
+  "name": "Compact artifact sidecar contract",
+  "recommended_next_actions": [
+    "Propose the sidecar generation slice under GAP-0002, consuming the structured generator field for provenance and validate_sidecar_record as its acceptance gate.",
+    "Run the parked token-estimator sensitivity check before any decision consumes profile-compliance findings."
+  ],
+  "risks": [
+    "If future generation produces sidecars without running validate_sidecar_record, invalid records could enter docs/sidecars undetected until an audit slice exists.",
+    "Whitespace token estimates may diverge materially from provider tokenizers, making the profile hypotheses misleading until calibrated."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "A static, generation-agnostic contract for derived AI-optimized compact sidecars attached to canonical repository artifacts: schema v1 with thirteen semantic fields and full provenance including a structured generator (provider, identity, version); deterministic identity <source_artifact_id>::<profile>, deterministic path docs/sidecars/<id>.<profile>.json, and byte-stable canonical serialization; profiles rich_immediate (token hypothesis 250-500, no omission) and concise_second_level (80-200, omission allowed only with every omitted field listed in omitted_fields); token hypotheses reported as findings never schema failures; fidelity categories carried but unassessed; and three-valued staleness assessment via the shared verification-outcome vocabulary. Canonical human-readable artifacts remain the sole authoritative source; sidecars are derived and regenerable."
+}

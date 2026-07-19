@@ -1,0 +1,56 @@
+{
+  "admission_policy": {
+    "require_admission": false
+  },
+  "admission_summary": {
+    "admit": 0,
+    "admit_with_warning": 1,
+    "excluded_by_policy": 0
+  },
+  "assembly_policy": "latest_context",
+  "created_at": "2026-07-19T20:19:14.829676+00:00",
+  "exclusions": [],
+  "full_prompt_hash": "6a5ed28fb788b39805908e4c36fa4c3ff3e7780a1d80fea0cda4affcdf186f38",
+  "items": [
+    {
+      "item_id": "L1-20260707-l0-discovery-advisor-threshold-completion",
+      "item_type": "episode_l1",
+      "reason": "Episode L1 context seed: EP-20260707-l0-discovery-advisor-threshold-completion (fresh)",
+      "relevance_score": 0.92,
+      "source_path": "docs/memory/l1/L1-20260707-l0-discovery-advisor-threshold-completion.json",
+      "token_estimate": 509
+    },
+    {
+      "admission_decision": "admit_with_warning",
+      "admission_verdict_id": "CADM-ea8838115838",
+      "freshness_state": "unknown",
+      "item_id": "ABS-0003",
+      "item_type": "abstraction",
+      "reason": "ABS-L1 context seed: AI-Lab Reconciled Memory Implementation Loop",
+      "relevance_score": 0.9,
+      "source_path": "docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md",
+      "token_estimate": 1937,
+      "warrant_state": "supported"
+    },
+    {
+      "item_id": "SYNCOMP-0016",
+      "item_type": "synthesis",
+      "reason": "SYNCOMP context seed: Audit Verification Outcome Vocabulary",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/syntheses/SYNCOMP-0016-audit-verification-outcome-vocabulary.md",
+      "token_estimate": 8170
+    },
+    {
+      "item_id": "COMP-0030",
+      "item_type": "comparison",
+      "reason": "COMP context seed: plan-20260719-0001-completion-review",
+      "relevance_score": 0.9,
+      "source_path": "docs/comparisons/COMP-0030-plan-20260719-0001-completion-review.md",
+      "token_estimate": 6099
+    }
+  ],
+  "manifest_id": "f1f29b431bf6fc9d",
+  "task": "PLAN-20260717-0001 (compact artifact sidecar contract, admitted via WARR-20260717-0001 under GAP-0002) has been implemented at commit 4c41f50. Current state: 580 tests pass (12 new); the repository audit reports ok true and verification_outcome verified_current. Delivered: ai_lab/documentation/artifact_sidecar.py defines schema v1, validate_sidecar_record, deterministic identity (<source_artifact_id>::<profile>), deterministic path (docs/sidecars/<id>.<profile>.json), byte-stable canonical se...",
+  "task_label": "plan-20260717-0001-compact-artifact-sidecar-contract-admitted-via-warr-20260717",
+  "total_token_estimate": 16715
+}

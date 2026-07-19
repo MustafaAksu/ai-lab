@@ -2,6 +2,9 @@
   "admission_summary": "Admitted for contract-only implementation of a derived AI-optimized compact artifact-sidecar schema, validator, deterministic serialization and identity rules, provenance and source-hash requirements, rich and concise profile definitions, staleness and regeneration semantics, fidelity validation, documentation, and bounded fixtures. No corpus-wide sidecar generation, graph-packing integration, context selection, provider exposure, automatic inclusion, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes are admitted. GAP-0002 remains open.",
   "admission_warrant_id": "WARR-20260717-0001",
   "admitted_at": "2026-07-17T16:52:51.343485+00:00",
+  "completed_at": "2026-07-19T20:33:20.842228+00:00",
+  "completion_verification_id": "VERIFY-20260719-0002",
+  "completion_warrant_id": "WARR-20260719-0003",
   "constraints": [
     "Implementation is authorized only within the scope admitted by WARR-20260717-0001.",
     "Any scope expansion beyond WARR-20260717-0001 requires a separate proposed and admitted plan.",
@@ -55,7 +58,7 @@
     "Documentation identifying later separately governed slices for generation, evaluation, graph-packing integration, and provider exposure."
   ],
   "mitigation": "Keep source artifacts canonical; require source hashes, schema and generator versions, explicit omission metadata, deterministic serialization, staleness rules, and independent fidelity tests. Validate the contract on bounded fixtures before any bulk generation or context integration is proposed.",
-  "next_action": "Implement only the contract, validator, deterministic serialization rules, documentation, and bounded fixtures admitted by WARR-20260717-0001. Do not bulk-generate sidecars or integrate them into graph packing or context selection. Keep GAP-0002 open.",
+  "next_action": "None. Completed via VERIFY-20260719-0002 and WARR-20260719-0003; CAP-0014 registered. Generation, fidelity evaluation, graph-packing, context-selection integration, provider exposure, and persistence are later separately governed slices under GAP-0002, which remains open.",
   "non_goals": [
     "Bulk generation of sidecars for repository documents.",
     "Provider- or model-driven sidecar generation.",
@@ -106,7 +109,7 @@
     "CAP-0012"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "admitted",
+  "status": "completed",
   "success_criteria": [
     "The admitted plan validates through the self-model schema, references WARR-20260717-0001, and is indexed as admitted and open.",
     "The plan cites GAP-0002, CAP-0012, PLAN-20260716-0002, and EVAL-20260716-0001.",

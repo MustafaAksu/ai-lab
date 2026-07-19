@@ -12,7 +12,8 @@
     "CAP-0010",
     "CAP-0011",
     "CAP-0012",
-    "CAP-0013"
+    "CAP-0013",
+    "CAP-0014"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -40,7 +41,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 61,
+      "info": 66,
       "warn": 26
     }
   },
@@ -135,14 +136,21 @@
       "name": "Three-valued verification outcome vocabulary in self-model audits",
       "source_path": "docs/self_model/capabilities/CAP-0013.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0014",
+      "category": "documentation",
+      "name": "Compact artifact sidecar contract",
+      "source_path": "docs/self_model/capabilities/CAP-0014.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 13
+    "implemented": 14
   },
   "gap_counts": {
-    "closed": 2,
-    "open": 2
+    "closed": 3,
+    "open": 1
   },
   "gaps": [
     {
@@ -175,10 +183,10 @@
       "name": "Audit verification outcomes conflate missing evidence with confirmed drift",
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0004.json",
-      "status": "open"
+      "status": "closed"
     }
   ],
-  "generated_at": "2026-07-19T18:59:29+00:00",
+  "generated_at": "2026-07-19T20:33:21+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -327,6 +335,16 @@
       "source_record": "CAP-0013"
     },
     {
+      "risk": "If future generation produces sidecars without running validate_sidecar_record, invalid records could enter docs/sidecars undetected until an audit slice exists.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0014"
+    },
+    {
+      "risk": "Whitespace token estimates may diverge materially from provider tokenizers, making the profile hypotheses misleading until calibrated.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0014"
+    },
+    {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
       "source_field": "risk",
       "source_record": "GAP-0001"
@@ -449,15 +467,11 @@
   ],
   "model_type": "self_model",
   "open_gaps": [
-    "GAP-0002",
-    "GAP-0004"
+    "GAP-0002"
   ],
-  "open_plans": [
-    "PLAN-20260717-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 19
+    "completed": 20
   },
   "plans": [
     {
@@ -590,7 +604,7 @@
       "plan_id": "PLAN-20260717-0001",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260717-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Define an AI-optimized compact artifact sidecar contract"
     },
     {
@@ -606,14 +620,9 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
-    },
-    {
-      "source_field": "recommended_first_slice",
-      "source_record": "GAP-0004",
-      "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "91d5e2436366752e93a579c837691524373a24eb",
+  "repo_head": "4c41f50e0c2e20694356ff38b0177517157a6179",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -761,10 +770,20 @@
       "repo_commit": "bfaf694033942871876e02413d5d4c2875ea9e47",
       "source_path": "docs/self_model/verifications/VERIFY-20260719-0001.json",
       "verification_id": "VERIFY-20260719-0001"
+    },
+    {
+      "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+      "source_path": "docs/self_model/verifications/VERIFY-20260719-0002.json",
+      "verification_id": "VERIFY-20260719-0002"
+    },
+    {
+      "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+      "source_path": "docs/self_model/verifications/VERIFY-20260719-0003.json",
+      "verification_id": "VERIFY-20260719-0003"
     }
   ],
   "warrant_counts": {
-    "supported": 51
+    "supported": 53
   },
   "warrants": [
     {
@@ -1173,6 +1192,22 @@
       "target_item_id": "PLAN-20260719-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260719-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260719-0003.json",
+      "target_item_id": "PLAN-20260717-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260719-0003",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260719-0004.json",
+      "target_item_id": "GAP-0004",
+      "target_item_type": "gap",
+      "warrant_id": "WARR-20260719-0004",
       "warrant_state": "supported"
     }
   ]

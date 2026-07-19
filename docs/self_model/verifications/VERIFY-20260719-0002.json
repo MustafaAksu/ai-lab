@@ -1,0 +1,46 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/artifact_sidecar.py",
+    "tests/test_artifact_sidecar.py",
+    "docs/self_model/SIDECAR_CONTRACT.md",
+    "ai_lab/documentation/verification_outcome.py",
+    "docs/self_model/plans/PLAN-20260717-0001.json",
+    "docs/self_model/warrants/WARR-20260717-0001.json",
+    "docs/comparisons/COMP-0031-plan-20260717-0001-completion-review.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_artifact_sidecar.py",
+      "exit_code": 0,
+      "summary": "Twelve sidecar contract tests passed: valid rich record, deterministic identity and path, stable canonical serialization, concise omission listing required, rich omission forbidden, present-and-omitted rejected, structured generator required, over-budget as finding not schema failure, staleness verified_current, staleness stale on hash mismatch with drift classification, staleness unverifiable on missing source with zero errors, semantic fields matching the warrant list."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository suite passed with 580 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "Repository audit returned ok true with verification_outcome verified_current at commit 4c41f50."
+    },
+    {
+      "command": "python -m pytest (independent clone of github.com/MustafaAksu/ai-lab at 4c41f50)",
+      "exit_code": 0,
+      "summary": "Cross-environment verification reproduced 580 passing tests, the verified_current audit, and identical md5 checksums for the three new files."
+    }
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260717-0001 at commit 4c41f50: the compact artifact sidecar contract. ai_lab/documentation/artifact_sidecar.py delivers schema v1, validate_sidecar_record, deterministic identity <source_artifact_id>::<profile>, deterministic path docs/sidecars/<id>.<profile>.json, byte-stable canonical serialization, profiles rich_immediate (token hypothesis 250-500) and concise_second_level (80-200) with non-compliance reported as findings never schema failures, the thirteen warrant semantic fields, structured generator provenance (provider, identity, version), the approved omission rule (rich forbids omission; concise requires every omitted field listed in omitted_fields; present-and-omitted and silent absence rejected), fidelity categories with assessment deferred, and assess_staleness returning the shared three-valued verification_outcome imported from ai_lab/documentation/verification_outcome.py: hash match verified_current, hash mismatch stale with an error drift finding, missing or unreadable source unverifiable with a warn evidence-unavailable finding. docs/self_model/SIDECAR_CONTRACT.md documents regeneration, supersession, deletion semantics and the mandated later separately governed slices. No generation, bulk processing, or context integration was implemented. Twelve new tests cover the warrant fixture cases; the full suite passes with 580 tests; the repository audit reports ok true verified_current. COMP-0031 records unanimous provider recommendations: plan complete, omission rule and structured generator within admitted scope, GAP-0004 close, GAP-0002 keep open. Independent cross-verification: commit 4c41f50 pulled from the public GitHub repository into a separate environment reproduced 580 passing tests, the verified_current audit, and byte-identical file checksums.",
+  "target_item_id": "PLAN-20260717-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260719-0002"
+}

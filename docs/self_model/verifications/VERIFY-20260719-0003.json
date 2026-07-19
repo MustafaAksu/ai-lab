@@ -1,0 +1,52 @@
+{
+  "artifacts_checked": [
+    "ai_lab/documentation/verification_outcome.py",
+    "ai_lab/documentation/self_model.py",
+    "ai_lab/documentation/artifact_sidecar.py",
+    "tests/test_verification_outcome.py",
+    "tests/test_self_model.py",
+    "tests/test_artifact_sidecar.py",
+    "docs/self_model/VERIFICATION_OUTCOMES.md",
+    "docs/self_model/SIDECAR_CONTRACT.md",
+    "docs/self_model/gaps/GAP-0004.json",
+    "docs/self_model/capabilities/CAP-0013.json",
+    "docs/self_model/verifications/VERIFY-20260719-0001.json",
+    "docs/self_model/warrants/WARR-20260719-0002.json",
+    "docs/comparisons/COMP-0031-plan-20260717-0001-completion-review.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_verification_outcome.py tests/test_self_model.py tests/test_artifact_sidecar.py",
+      "exit_code": 0,
+      "summary": "Vocabulary module tests, index and registry audit outcome fixtures (no-git unverifiable, drift stale, current verified_current, mixed rollup to stale, registry missing-target stale), and sidecar three-valued staleness tests all passed."
+    },
+    {
+      "command": "python -m pytest",
+      "exit_code": 0,
+      "summary": "Full repository suite passed with 580 tests."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "Repository audit returned ok true with verification_outcome verified_current."
+    },
+    {
+      "command": "python inline import-direction verification",
+      "exit_code": 0,
+      "summary": "Confirmed ai_lab/documentation/verification_outcome.py imports from neither ai_lab/documentation/self_model.py nor ai_lab/documentation/artifact_sidecar.py, while both consumers import the shared vocabulary."
+    }
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified that the deficiency described by GAP-0004 is resolved: audit verification outcomes no longer conflate missing evidence with confirmed drift, and no second incompatible verification vocabulary exists. Milestone 1 (commits 71abadc, bfaf694; PLAN-20260719-0001, CAP-0013, VERIFY-20260719-0001, WARR-20260719-0002): the self-model index and registry audits report the shared three-valued verification_outcome from ai_lab/documentation/verification_outcome.py with per-finding classification, warn severity for evidence-unavailable findings, emission-time evidence capture, deterministic rollup, and fail-closed boolean ok. Milestone 2 (commit 4c41f50; PLAN-20260717-0001): the sidecar contract adopts the same vocabulary; ai_lab/documentation/artifact_sidecar.py imports CLASS_DRIFT, CLASS_EVIDENCE_UNAVAILABLE, CLASS_OTHER, EVIDENCE_STATUS_NO_GIT_DIR, ok_from_outcome, and rollup_from_findings from the shared module, and assess_staleness returns verified_current on source hash match, stale with an error drift finding on mismatch, and unverifiable with a warn evidence-unavailable finding on a missing or unreadable source. The dependency direction is acyclic: audits and sidecar import the vocabulary; the vocabulary imports from neither. Vocabulary, severity policy, and rollup are identical across all three consumers. The original zip-export incident scenario now reports unverifiable with zero error findings instead of spurious drift errors, covered by fixture tests. COMP-0031 records unanimous provider recommendation to close GAP-0004 citing exactly this evidence. Tests: 580 passing including outcome fixtures in tests/test_self_model.py and three-valued staleness tests in tests/test_artifact_sidecar.py; repository audit ok true verified_current, reproduced in an independent clone.",
+  "target_item_id": "GAP-0004",
+  "target_item_type": "gap",
+  "verification_id": "VERIFY-20260719-0003"
+}

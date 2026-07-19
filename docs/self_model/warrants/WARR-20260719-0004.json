@@ -1,0 +1,29 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Any new audit emission site must classify its findings explicitly using the shared vocabulary; unclassified findings cannot influence outcomes.",
+    "Reopening or superseding this gap requires new evidence of vocabulary divergence or a new consumer bypassing the shared module."
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/verifications/VERIFY-20260719-0003.json",
+    "docs/self_model/verifications/VERIFY-20260719-0001.json",
+    "docs/self_model/capabilities/CAP-0013.json",
+    "docs/self_model/capabilities/CAP-0014.json",
+    "docs/self_model/warrants/WARR-20260719-0002.json",
+    "docs/self_model/gaps/GAP-0004.json",
+    "docs/comparisons/COMP-0031-plan-20260717-0001-completion-review.md",
+    "docs/self_model/VERIFICATION_OUTCOMES.md",
+    "docs/self_model/SIDECAR_CONTRACT.md"
+  ],
+  "reason": "VERIFY-20260719-0003 records commit-level evidence for both milestones, the acyclic dependency direction (both consumers import the vocabulary; the vocabulary imports neither), identical vocabulary, severity policy, and rollup across all three consumers, fixture coverage of the original zip-export incident scenario now reporting unverifiable with zero errors, 580 passing tests, a verified_current repository audit, and independent cross-environment reproduction. COMP-0031 records unanimous provider recommendation to close GAP-0004 citing exactly this evidence chain.",
+  "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
+  "schema_version": "v1",
+  "scope": "Closure warrant for GAP-0004. Warrants closing the gap on the evidence of VERIFY-20260719-0003: both milestones are complete and the deficiency is resolved. The self-model index and registry audits distinguish confirmed drift from unavailable evidence via the shared three-valued vocabulary (milestone 1: PLAN-20260719-0001, CAP-0013), and the sidecar contract adopts the same vocabulary for its staleness assessment (milestone 2: PLAN-20260717-0001, CAP-0014), eliminating the risk of two incompatible verification vocabularies. Registry-audit unverifiable outcomes remain unreachable by documented scope (the registry audit performs no git-evidence verification), adjudicated as justified inapplicability in WARR-20260719-0002. Future evidence-dependent registry checks or new audit emission sites requiring vocabulary changes need new governance, not this gap.",
+  "substrate": "conversation",
+  "target_item_id": "GAP-0004",
+  "target_item_type": "gap",
+  "warrant_id": "WARR-20260719-0004",
+  "warrant_state": "supported"
+}
