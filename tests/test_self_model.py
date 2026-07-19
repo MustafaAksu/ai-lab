@@ -4724,7 +4724,7 @@ def test_validate_warr_20260716_0007_completion():
     assert "close GAP-0002" in record["scope"]
 
 
-def test_validate_plan_20260717_0001_proposed():
+def test_validate_plan_20260717_0001_admitted():
     from ai_lab.documentation.self_model import (
         validate_plan_record,
     )
@@ -4739,21 +4739,21 @@ def test_validate_plan_20260717_0001_proposed():
     validate_plan_record(record)
 
     assert record["plan_id"] == "PLAN-20260717-0001"
-    assert record["status"] == "proposed"
+    assert record["status"] == "admitted"
     assert record["source_gap_id"] == "GAP-0002"
     assert record["source_capability_id"] == "CAP-0012"
     assert (
-        "AI-optimized compact artifact sidecar"
-        in record["title"]
+        record["admission_warrant_id"]
+        == "WARR-20260717-0001"
+    )
+    assert record["admitted_at"]
+    assert (
+        "contract-only implementation"
+        in record["admission_summary"]
     )
     assert (
-        "Proposal only in this checkpoint."
-        in record["constraints"]
-    )
-    assert any(
-        "canonical" in constraint.lower()
-        and "source of truth" in constraint.lower()
-        for constraint in record["constraints"]
+        "WARR-20260717-0001"
+        in record["constraints"][0]
     )
     assert any(
         "250-500" in item
@@ -4765,20 +4765,17 @@ def test_validate_plan_20260717_0001_proposed():
         for item in record["expected_outputs"]
     )
     assert (
-        "docs/reviews/"
-        "compact_graph_representation_evaluation/"
-        "EVAL-20260716-0001.json"
+        "docs/self_model/warrants/"
+        "WARR-20260717-0001.json"
         in record["evidence_ids"]
     )
 
-    assert "admission_warrant_id" not in record
-    assert "admitted_at" not in record
     assert "completed_at" not in record
     assert "completion_verification_id" not in record
     assert "completion_warrant_id" not in record
 
 
-def test_build_self_model_index_records_plan_20260717_0001_open():
+def test_build_self_model_index_records_plan_20260717_0001_admitted():
     from ai_lab.documentation.self_model import (
         SelfModelRegistry,
         build_self_model_index,
@@ -4790,7 +4787,7 @@ def test_build_self_model_index_records_plan_20260717_0001_open():
 
     assert any(
         plan["plan_id"] == "PLAN-20260717-0001"
-        and plan["status"] == "proposed"
+        and plan["status"] == "admitted"
         and plan["source_gap_id"] == "GAP-0002"
         for plan in index["plans"]
     )
@@ -4800,15 +4797,58 @@ def test_build_self_model_index_records_plan_20260717_0001_open():
     )
     assert (
         "PLAN-20260717-0001"
-        not in index["admitted_plans"]
+        in index["admitted_plans"]
     )
 
     registry = SelfModelRegistry(Path(".").resolve())
     plan = registry.require("PLAN-20260717-0001")
+    warrant = registry.require("WARR-20260717-0001")
     gap = registry.require("GAP-0002")
 
-    assert plan.status == "proposed"
+    assert plan.status == "admitted"
     assert registry.is_open(plan.record_id)
+    assert warrant.status == "supported"
     assert gap.status == "open"
     assert registry.is_open(gap.record_id)
     assert registry.unresolved_references() == ()
+
+
+def test_validate_warr_20260717_0001_admission():
+    from ai_lab.documentation.self_model import (
+        validate_warrant_record,
+    )
+
+    record = read_json(
+        Path(
+            "docs/self_model/warrants/"
+            "WARR-20260717-0001.json"
+        )
+    )
+
+    validate_warrant_record(record)
+
+    assert record["warrant_id"] == "WARR-20260717-0001"
+    assert (
+        record["target_item_id"]
+        == "PLAN-20260717-0001"
+    )
+    assert record["target_item_type"] == "plan"
+    assert record["decision"] == "admit"
+    assert record["warrant_state"] == "supported"
+    assert (
+        "17 of 43"
+        in record["reason"]
+    )
+    assert any(
+        "bounded fixtures" in condition
+        for condition in record["conditions"]
+    )
+    assert any(
+        "GAP-0002 must remain open"
+        in condition
+        for condition in record["conditions"]
+    )
+    assert (
+        "No bulk or production sidecars"
+        in record["scope"]
+    )

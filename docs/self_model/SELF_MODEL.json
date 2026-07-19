@@ -31,7 +31,8 @@
     "PLAN-20260710-0003",
     "PLAN-20260710-0004",
     "PLAN-20260716-0001",
-    "PLAN-20260716-0002"
+    "PLAN-20260716-0002",
+    "PLAN-20260717-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -160,7 +161,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-07-17T16:45:59+00:00",
+  "generated_at": "2026-07-17T16:52:51+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -417,8 +418,8 @@
     "PLAN-20260717-0001"
   ],
   "plan_counts": {
-    "completed": 18,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 18
   },
   "plans": [
     {
@@ -551,7 +552,7 @@
       "plan_id": "PLAN-20260717-0001",
       "source_gap_id": "GAP-0002",
       "source_path": "docs/self_model/plans/PLAN-20260717-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Define an AI-optimized compact artifact sidecar contract"
     }
   ],
@@ -562,7 +563,7 @@
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
     }
   ],
-  "repo_head": "e9e400954f9dc216f2b152d7615cd522c3f0783b",
+  "repo_head": "539d76981a14895442776d5f7a1b2dcb003344e4",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -708,7 +709,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 48
+    "supported": 49
   },
   "warrants": [
     {
@@ -1093,6 +1094,14 @@
       "target_item_id": "PLAN-20260716-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260716-0007",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260717-0001.json",
+      "target_item_id": "PLAN-20260717-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260717-0001",
       "warrant_state": "supported"
     }
   ]

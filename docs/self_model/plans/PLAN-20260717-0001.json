@@ -1,7 +1,10 @@
 {
+  "admission_summary": "Admitted for contract-only implementation of a derived AI-optimized compact artifact-sidecar schema, validator, deterministic serialization and identity rules, provenance and source-hash requirements, rich and concise profile definitions, staleness and regeneration semantics, fidelity validation, documentation, and bounded fixtures. No corpus-wide sidecar generation, graph-packing integration, context selection, provider exposure, automatic inclusion, persistence, retrieval, embedding, reranking, index, memory-store, or runtime-manifest changes are admitted. GAP-0002 remains open.",
+  "admission_warrant_id": "WARR-20260717-0001",
+  "admitted_at": "2026-07-17T16:52:51.343485+00:00",
   "constraints": [
-    "Proposal only in this checkpoint.",
-    "Do not implement the sidecar contract before a separate admission warrant.",
+    "Implementation is authorized only within the scope admitted by WARR-20260717-0001.",
+    "Any scope expansion beyond WARR-20260717-0001 requires a separate proposed and admitted plan.",
     "Canonical human-readable artifacts must remain the source of truth.",
     "Sidecars must be explicitly derived, versioned, provenance-bearing, and regenerable.",
     "No sidecar may claim semantic completeness without explicit fidelity evidence.",
@@ -38,7 +41,9 @@
     "docs/software_spec.md",
     "docs/development_directions.md",
     "docs/proposals/P-0001-AI-Lab-Documentation-Architecture-v0.3.md",
-    "370333b20ff5c2cc96c03bebefce06673d4efbc3"
+    "370333b20ff5c2cc96c03bebefce06673d4efbc3",
+    "docs/self_model/warrants/WARR-20260717-0001.json",
+    "539d76981a14895442776d5f7a1b2dcb003344e4"
   ],
   "expected_outputs": [
     "A static compact artifact-sidecar schema and validator.",
@@ -50,7 +55,7 @@
     "Documentation identifying later separately governed slices for generation, evaluation, graph-packing integration, and provider exposure."
   ],
   "mitigation": "Keep source artifacts canonical; require source hashes, schema and generator versions, explicit omission metadata, deterministic serialization, staleness rules, and independent fidelity tests. Validate the contract on bounded fixtures before any bulk generation or context integration is proposed.",
-  "next_action": "Review and, if supported, admit PLAN-20260717-0001 through a separate warrant. Do not implement a sidecar schema, generate sidecars, or change context selection while the plan remains proposed.",
+  "next_action": "Implement only the contract, validator, deterministic serialization rules, documentation, and bounded fixtures admitted by WARR-20260717-0001. Do not bulk-generate sidecars or integrate them into graph packing or context selection. Keep GAP-0002 open.",
   "non_goals": [
     "Bulk generation of sidecars for repository documents.",
     "Provider- or model-driven sidecar generation.",
@@ -101,9 +106,9 @@
     "CAP-0012"
   ],
   "source_gap_id": "GAP-0002",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
-    "The proposed plan validates through the self-model schema and is indexed as proposed and open.",
+    "The admitted plan validates through the self-model schema, references WARR-20260717-0001, and is indexed as admitted and open.",
     "The plan cites GAP-0002, CAP-0012, PLAN-20260716-0002, and EVAL-20260716-0001.",
     "The proposal clearly keeps canonical source artifacts authoritative and sidecars derived.",
     "The contract scope includes semantic fields, provenance, versioning, token profiles, omission metadata, staleness, regeneration, and fidelity tests.",
@@ -113,6 +118,6 @@
     "Self-model tests, the full repository suite, and the self-model audit pass before admission or implementation.",
     "GAP-0002 remains open."
   ],
-  "summary": "Propose a separately governed contract for derived, AI-optimized compact sidecars attached to canonical repository artifacts. The contract will define semantic fields, provenance, versioning, token profiles, regeneration and staleness rules, and fidelity tests. This proposal does not generate sidecars or change context selection.",
+  "summary": "Admit a separately governed contract for derived, AI-optimized compact sidecars attached to canonical repository artifacts. The admitted slice defines and validates the contract with bounded fixtures only; it does not generate production sidecars or change context selection.",
   "title": "Define an AI-optimized compact artifact sidecar contract"
 }
