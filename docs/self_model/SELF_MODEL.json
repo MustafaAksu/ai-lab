@@ -41,7 +41,7 @@
     "severity_counts": {
       "error": 0,
       "info": 61,
-      "warn": 25
+      "warn": 26
     }
   },
   "capabilities": [
@@ -178,7 +178,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-19T18:51:38+00:00",
+  "generated_at": "2026-07-19T18:59:29+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -613,7 +613,7 @@
       "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "bfaf694033942871876e02413d5d4c2875ea9e47",
+  "repo_head": "91d5e2436366752e93a579c837691524373a24eb",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
