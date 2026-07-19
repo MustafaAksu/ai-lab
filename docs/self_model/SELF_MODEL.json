@@ -32,7 +32,8 @@
     "PLAN-20260710-0004",
     "PLAN-20260716-0001",
     "PLAN-20260716-0002",
-    "PLAN-20260717-0001"
+    "PLAN-20260717-0001",
+    "PLAN-20260719-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -169,7 +170,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-19T17:35:53+00:00",
+  "generated_at": "2026-07-19T17:39:17+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -438,9 +439,8 @@
     "PLAN-20260719-0001"
   ],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 18,
-    "proposed": 1
+    "admitted": 2,
+    "completed": 18
   },
   "plans": [
     {
@@ -580,7 +580,7 @@
       "plan_id": "PLAN-20260719-0001",
       "source_gap_id": "GAP-0004",
       "source_path": "docs/self_model/plans/PLAN-20260719-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Introduce shared three-valued verification outcome vocabulary in self-model audits"
     }
   ],
@@ -596,7 +596,7 @@
       "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "bba62600de78c0ce43f9e9c299b0fa0a7424c4f3",
+  "repo_head": "c8ab347510563a2b86af7875a8d17077558974b3",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -742,7 +742,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 49
+    "supported": 50
   },
   "warrants": [
     {
@@ -1135,6 +1135,14 @@
       "target_item_id": "PLAN-20260717-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260717-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260719-0001.json",
+      "target_item_id": "PLAN-20260719-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260719-0001",
       "warrant_state": "supported"
     }
   ]

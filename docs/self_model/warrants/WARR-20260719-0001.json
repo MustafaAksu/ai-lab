@@ -1,0 +1,35 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Implementation must remain confined to the shared vocabulary module, additive audit output extensions, severity reclassification, fixtures, focused tests, documentation, and self-model records.",
+    "The ok field must remain boolean with unchanged computation: false unless verification_outcome is verified_current; ok=null is prohibited.",
+    "All existing audit finding codes and messages must remain intact; no removals, renames, or repurposing.",
+    "Classification of content-stale findings must be deterministic from context captured at emission time; retroactive inference is prohibited; if determinism cannot be achieved with one code, split the emission site into distinct code variants.",
+    "The shared vocabulary module must import from neither self_model.py nor any sidecar implementation; both must import from it, and the module must contain no auditor-specific classification tables.",
+    "The severity reclassification of evidence-unavailable findings from error to warn is an acknowledged intentional behavior change; documentation must advise consumers to gate on ok or verification_outcome rather than error counts by finding code, and no findings may be suppressed in unverifiable contexts.",
+    "Both the index audit and the registry audit must adopt the vocabulary in this slice, verified by fixtures for each of the three outcomes and the mixed case.",
+    "The current repository audit must still report ok true and verification_outcome verified_current after implementation.",
+    "GAP-0004 must remain open until a separate completion verification and completion warrant exist.",
+    "Any scope expansion beyond this warrant requires a separate proposed and admitted plan."
+  ],
+  "created_at": "2026-07-19T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260719-0001.json",
+    "docs/self_model/gaps/GAP-0004.json",
+    "docs/comparisons/COMP-0028-audit-verification-outcome-vocabulary.md",
+    "docs/comparisons/syntheses/SYNCOMP-0016-audit-verification-outcome-vocabulary.md",
+    "docs/comparisons/COMP-0029-plan-20260719-0001-admission-review.md",
+    "docs/comparisons/COMP-0029-plan-20260719-0001-admission-review.context.json",
+    "docs/self_model/plans/PLAN-20260717-0001.json"
+  ],
+  "reason": "PLAN-20260719-0001 responds to GAP-0004 with the additive three-valued verification outcome vocabulary that COMP-0028 provider consensus and SYNCOMP-0016 synthesis recommended. The COMP-0029 admission review returned unanimous admit_with_warning from both providers, and all four convergent revision requests (mixed-case rollup criterion, registry-audit success criteria, content-stale emission-context determinism constraint, operator-guidance criterion) were incorporated into the revised plan at commit c8ab347510563a2b86af7875a8d17077558974b3 before this admission. The ok field's fail-closed semantics are preserved and the shared module prevents the sidecar contract (PLAN-20260717-0001) from inventing a divergent vocabulary.",
+  "repo_commit": "c8ab347510563a2b86af7875a8d17077558974b3",
+  "schema_version": "v1",
+  "scope": "Admit only the implementation described by revised PLAN-20260719-0001: a shared verification-outcome vocabulary module (ai_lab/documentation/verification_outcome.py) defining the three-valued outcome enum (verified_current, stale, unverifiable), per-finding evidence classification (drift, evidence_unavailable, other), and deterministic rollup; additive extension of audit_self_model_index and audit_self_model_registry output with verification_outcome, optional evidence_status, and per-finding classification fields; severity reclassification of evidence-unavailable findings from error to warn with deterministic emission-context classification of content-stale findings; controlled fixtures and focused tests for all three outcomes, the mixed case, and both audits; and consumer-facing documentation of the severity change. No CLI behavior changes, no provider or context-selection changes, no sidecar staleness implementation, no finding-code removals or renames, no automatic remediation, and no GAP-0004 closure are admitted.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260719-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260719-0001",
+  "warrant_state": "supported"
+}
