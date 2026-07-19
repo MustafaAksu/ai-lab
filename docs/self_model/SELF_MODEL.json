@@ -133,7 +133,7 @@
   },
   "gap_counts": {
     "closed": 2,
-    "open": 1
+    "open": 2
   },
   "gaps": [
     {
@@ -159,9 +159,17 @@
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0003.json",
       "status": "closed"
+    },
+    {
+      "category": "self_model_infrastructure",
+      "gap_id": "GAP-0004",
+      "name": "Audit verification outcomes conflate missing evidence with confirmed drift",
+      "priority": "medium",
+      "source_path": "docs/self_model/gaps/GAP-0004.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-07-17T16:52:51+00:00",
+  "generated_at": "2026-07-19T15:10:55+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -315,6 +323,11 @@
       "source_record": "GAP-0003"
     },
     {
+      "risk": "Consumers of audit output cannot distinguish confirmed drift from missing evidence, so legitimate evidence-free environments (zip exports, shallow CI clones) either fail gates spuriously or train operators to ignore audit errors, weakening the value of genuine drift findings. The imminent sidecar staleness implementation would independently invent a second incompatible verification vocabulary, requiring a later cross-subsystem retrofit.",
+      "source_field": "risk",
+      "source_record": "GAP-0004"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -412,7 +425,8 @@
   ],
   "model_type": "self_model",
   "open_gaps": [
-    "GAP-0002"
+    "GAP-0002",
+    "GAP-0004"
   ],
   "open_plans": [
     "PLAN-20260717-0001"
@@ -561,9 +575,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0004",
+      "target": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation."
     }
   ],
-  "repo_head": "539d76981a14895442776d5f7a1b2dcb003344e4",
+  "repo_head": "5319bd96a0c542a93c9c34a5aebca6db7c6ce5b1",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

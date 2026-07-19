@@ -1,0 +1,31 @@
+{
+  "blocked_by": [],
+  "category": "self_model_infrastructure",
+  "evidence": {
+    "files_checked": [
+      "docs/comparisons/COMP-0028-audit-verification-outcome-vocabulary.md",
+      "docs/comparisons/COMP-0028-audit-verification-outcome-vocabulary.context.json",
+      "docs/comparisons/syntheses/SYNCOMP-0016-audit-verification-outcome-vocabulary.md",
+      "docs/self_model/plans/PLAN-20260717-0001.json",
+      "docs/self_model/warrants/WARR-20260717-0001.json",
+      "ai_lab/documentation/self_model.py"
+    ],
+    "reason": "A zip export of the repository without .git produced SELF_MODEL_INDEX_REPO_HEAD_MISSING and content-stale error findings plus 4 test failures although record content matched a normalized rebuild except repo_head and generated_at. The audit therefore verified git availability, not staleness. COMP-0028 records provider consensus that this conflation is an epistemic defect and that an additive three-valued outcome vocabulary should be introduced and shared with the sidecar contract."
+  },
+  "gap_id": "GAP-0004",
+  "name": "Audit verification outcomes conflate missing evidence with confirmed drift",
+  "notes": [
+    "Provider consensus in COMP-0028: additive-only schema change; keep ok field semantics unchanged; unverifiable findings carry warn severity; split content-stale classification by evidence availability; adopt the same vocabulary in the sidecar contract now.",
+    "Recorded corrections to provider outputs: the Claude response misidentified GAP-0003 scope (it is the closed parametric-registry gap, not a lineage gap) and cited nonexistent finding codes (e.g. SELF_MODEL_INDEX_SHALLOW_HISTORY); the SYNCOMP-0016 synthesis inherited both errors. Classification tables must be built from the actual finding codes in ai_lab/documentation/self_model.py.",
+    "Naming resolved per synthesis: top-level field verification_outcome, not status. The ok field remains boolean and false when outcome is unverifiable; ok=null is prohibited."
+  ],
+  "priority": "medium",
+  "recommended_first_slice": "Additive-only schema change to the index and registry audits: add a top-level verification_outcome enum (verified_current, stale, unverifiable) and per-finding classification, downgrade evidence-unavailable findings to warn severity, split content-stale classification by evidence availability using the actual existing finding codes, and keep the ok field boolean with unchanged fail-closed semantics (false unless verified_current; null prohibited). Define the shared vocabulary where the sidecar contract implementation can import it. No finding codes removed or renamed, no CLI behavior changes, no automatic remediation.",
+  "related_capabilities": [
+    "CAP-0010"
+  ],
+  "risk": "Consumers of audit output cannot distinguish confirmed drift from missing evidence, so legitimate evidence-free environments (zip exports, shallow CI clones) either fail gates spuriously or train operators to ignore audit errors, weakening the value of genuine drift findings. The imminent sidecar staleness implementation would independently invent a second incompatible verification vocabulary, requiring a later cross-subsystem retrofit.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "The self-model index and registry audits emit error-severity findings when git evidence is unavailable (no .git, shallow history, unreachable repo_head), making an environment where verification is impossible indistinguishable from a repository where verification succeeded and confirmed drift. A three-valued verification outcome vocabulary (verified_current, stale, unverifiable) is missing, and the admitted compact artifact sidecar contract (PLAN-20260717-0001) is about to implement staleness semantics that should share this vocabulary rather than retrofit it later."
+}

@@ -380,22 +380,36 @@ def test_build_self_model_index_is_aggregation_only_for_seed_records():
 
 
 def test_build_self_model_index_recommendations_are_copied_from_gaps():
-    from ai_lab.documentation.self_model import build_self_model_index
+    from ai_lab.documentation.self_model import (
+        SelfModelRegistry,
+        build_self_model_index,
+    )
 
     index = build_self_model_index(
         Path("."),
         generated_at="2026-07-05T00:00:00+00:00",
     )
 
-    assert index["recommended_next_targets"] == [
+    registry = SelfModelRegistry(Path("."))
+    expected = [
         {
             "source_field": "recommended_first_slice",
-            "source_record": "GAP-0002",
-            "target": read_json(
-                Path("docs/self_model/gaps/GAP-0002.json")
-            )["recommended_first_slice"],
-        },
+            "source_record": entry.record_id,
+            "target": entry.record["recommended_first_slice"],
+        }
+        for entry in sorted(
+            (
+                e
+                for e in registry.entries(record_type="gap")
+                if e.status == "open"
+                and e.record.get("recommended_first_slice")
+            ),
+            key=lambda e: e.record_id,
+        )
     ]
+
+    assert index["recommended_next_targets"] == expected
+    assert expected, "expected at least one open gap with a recommendation"
 
 
 def test_build_self_model_index_risks_keep_source_pointers():
