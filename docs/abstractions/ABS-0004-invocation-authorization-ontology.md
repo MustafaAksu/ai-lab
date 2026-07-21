@@ -4,9 +4,18 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v3` (v1, v2 superseded during drafting; neither entered the record)
+- version: `v4` (v1, v2 superseded during drafting and never entered the
+  record; v3 entered the record at commit 6802cf7, underwent the COMP-0032
+  challenge round, and is superseded by this revision, which applies the
+  twelve findings the operator adjudicated accept-all as accountable
+  principal)
 - abstraction_level: `2`
-- status: `draft-for-challenge-round`
+- status: `admitted`
+- admitted_at: `2026-07-20`
+- admission basis: survived the COMP-0032 challenge round; all twelve
+  adjudicated findings applied in this revision; admitted by the operator
+  as accountable principal in session (recorded in conversation; structural
+  DecisionRecord representation awaits Slice C)
 - authors: operator (adjudicating principal); drafting executor self-reported
   as "Claude" (reported identity claim, not an independently verified
   ModelIdentity); with attributed advisor contributions (see Evidence Inputs)
@@ -42,6 +51,13 @@
   questions only, no review history. Constructions matching the
   configuration-hijack pattern of question 13 require independent derivation
   to count as corroboration.
+- COMP-0032 (challenge round on v3; isolated inputs; both witnesses
+  independently ranked the claim-level lineage gap and undeclared external
+  authority as the two most severe defects; one witness reported honest
+  failure to construct a derivation-based laundering path, sharpening the
+  surviving attack class to selection- and copying-based paths outside the
+  recorded graph; incident chain of response truncation and one
+  confabulated continuation recorded in the artifact itself).
 - COMP-0028/0029/0030/0031 and SYNCOMP-0016 as recorded evidence of fluent,
   internally consistent, cross-witness-contagious model error.
 - GAP-0004 closure chain as evidence that shared vocabularies prevent
@@ -104,6 +120,14 @@ executor events. Execution authorization and output admission are separate:
 an experimental executor may be authorized to run while its outputs remain
 inadmissible as governed evidence.
 
+`[DEF]` Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
 `[OPEN]` Authorization-chain bootstrap: how an authorization chain terminates
 in a standing policy, delegated authority, or AccountablePrincipal authority
 scope rather than requiring an infinite sequence of prior authorizations.
@@ -142,15 +166,18 @@ recorded as unresolved, never silently substituted.
 ### 4.4 CatalogSnapshot and CatalogAssertion
 
 `[DEF]` CatalogSnapshot: `snapshot_id`, provider surface, `observed_at`,
-source set, assertions[]. Each CatalogAssertion is atomic:
-`assertion_subject`, `assertion_predicate`, `assertion_value_or_target`,
-unit, scope, `valid_from`, `valid_until`/superseded, source,
+source set, assertions[]. Each CatalogAssertion is atomic and records ONLY
+the claim: `assertion_subject`, `assertion_predicate`,
+`assertion_value_or_target`, unit, scope, `valid_from`,
+`valid_until`/superseded, source. Verification is an AI-Lab assessment,
+never a property of the provider's claim; it attaches as a separate
+CatalogVerification record referencing the assertion, carrying
 `verification_outcome` (the shared three-valued vocabulary of
-`ai_lab/documentation/verification_outcome.py`), `verified_at`. An assertion
-may concern an API alias, an endpoint, a price, a region, or a model
-identity; verification attaches per claim (alias resolution may be
-`unverifiable` while pricing is `verified_current`). Example atomic
-assertions: (api-name-X, resolves_to, model-identity-Y);
+`ai_lab/documentation/verification_outcome.py`), `verified_at`, and a
+verifier reference. Verification attaches per claim (alias resolution may
+be `unverifiable` while pricing is `verified_current`). An assertion may
+concern an API alias, an endpoint, a price, a region, or a model identity.
+Example atomic assertions: (api-name-X, resolves_to, model-identity-Y);
 (api-name-X, context_limit, 400000, tokens).
 
 `[DEF]` Catalog assertions record what a provider claims; they never record
@@ -176,15 +203,18 @@ adjudication authority.
 
 `[DEF]` An Invocation is an event performed by an executor: `ModelIdentity`,
 `ToolIdentity`, or `HumanIdentity`, each with distinct verification
-requirements. `[OPEN]` Whether an `ExecutorIdentity` superclass is needed
-(a proposal to close this by fiat was rejected as conflating identity with
-runtime instance; the question stands for the challenge round).
+requirements. `[OPEN]` Whether an `ExecutorIdentity` superclass is needed.
+A proposal to close this by fiat was rejected as conflating identity with
+runtime instance; COMP-0032 reopened the question with a stronger argument:
+a superclass with identity-equivalence semantics defined per subtype would
+make constraints such as C3 properly polymorphic across executor kinds.
+The question stands, now with that argument on record.
 
 `[ADOPTED_CONSTRAINT]` Composite-executor disclosure: an invocation may not
 acquire authority by encapsulating an undisclosed subordinate executor.
 Every epistemically or operationally material subordinate execution (model,
 tool, or human) capable of influencing the output or external effect must be
-represented as an Invocation linked to its parent (`spawned`/`called`). A
+represented as an Invocation linked to its parent (`spawned`). A
 tool that invokes a model cannot be represented as a purely deterministic
 ToolIdentity. Nondeterminism itself is not prohibited; undeclared authority
 and hidden composition are.
@@ -197,6 +227,21 @@ in its EffectiveInputManifest. Undeclared configuration access capable of
 altering the execution path defeats the tool's deterministic standing
 (session-state mode `unknown_state`). This constraint is scoped to
 governed-evidence production, not to every utility execution.
+
+`[ADOPTED_CONSTRAINT]` External-interaction disclosure: an invocation's
+action-authority surface includes its interactions with external systems
+that are not executors — network calls, external writes, and systems that
+render, fetch, or execute its outputs with privileges (ambient consumers).
+For executors producing governed evidence or holding above-read_only action
+authority, material external interactions must be declared; undeclared
+external interaction defeats deterministic standing and constitutes
+undisclosed `external_actuator` authority, violating P4 regardless of
+whether the returned output bytes were affected. Hardcoded interaction
+targets are interactions, not exemptions. COMP-0032 produced three distinct
+constructions defeating the previous two disclosure constraints alone
+(configuration hijack, ambient output-triggered actuation, hardcoded
+exfiltration); this constraint closes the class. Enforcement object:
+OutboundInteractionLog (Section 11).
 
 ### 4.8 ExecutionProfile
 
@@ -229,7 +274,10 @@ evidence.
 `[DEF]` RoleDefinition constraint fields: allowed input/output classes,
 required independence, minimum catalog status, maximum consequence class,
 tool permissions, may_assign_epistemic_status, action_authority bounds,
-requires_external_verification.
+requires_external_verification, `required_verified_properties` (the
+properties that must be established by admissible verification before this
+role's outputs enter governed evidence; schema conformance is not claim
+accuracy).
 
 ### 4.10 Invocation
 
@@ -286,7 +334,9 @@ ModelIdentity attributes.
 `[DEF]` EvidenceAdmissionDecision (decision_kind evidence_admission)
 additionally carries: admitted artifact or claim, admitted epistemic
 status, lineage and independence findings relied on, disclosed provenance
-limitations.
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
 
 `[DEF]` AccountablePrincipal: `principal_id`, `principal_kind` (delegated
 role, governance body, pseudonymous operator identity, organization, or
@@ -325,14 +375,44 @@ observation, copied finding, new inference, and paraphrase; artifact-level
 lineage cannot distinguish them. Until claim-level derivation exists, the
 system provides artifact-level potential-dependence detection, not
 claim-level independence proof; Section 7 imposes the conservative
-inheritance this gap requires.
+inheritance this gap requires, and C11 imposes the interim
+high-consequence disclosure this gap requires.
 
-### 4.16 RoutingPolicy (defined, deferred)
+### 4.16 RoutingPolicy and AuthorizationPolicy (defined, deferred)
 
-`[DEF]` A versioned durable rule specifying eligible roles, qualification
-requirements, escalation triggers, independence requirements, cost and
-latency boundaries, fallback behavior, consequence classes, catalog
-freshness requirements.
+`[DEF]` RoutingPolicy: a versioned durable rule specifying eligible roles,
+qualification requirements, escalation triggers, independence requirements,
+cost and latency boundaries, fallback behavior, consequence classes,
+catalog freshness requirements.
+
+`[DEF]` AuthorizationPolicy: a versioned durable rule governing invocation
+authorization: role eligibility conditions, consequence ceilings,
+subordinate-execution classes permitted for inheritance (Section 3),
+required qualifications and independence, exception procedures. All policy
+references in DecisionRecords (`applicable policy`, `issued_under`,
+`policy authority`) are typed references to a versioned policy object,
+never untyped strings.
+
+### 4.17 VerificationRun (defined, deferred)
+
+`[DEF]` The typed record C10 requires: verifier executor reference,
+verifier version, rule/test version, inputs (content-addressed),
+execution environment, result, and `verifier_lineage_status`
+(`independent` | `self_authored_with_review` | `self_authored_unreviewed`).
+Self-authored-unreviewed verification cannot satisfy admission for
+high-consequence outputs; the named independent review artifact converts
+the status to `self_authored_with_review`.
+
+### 4.18 IndependenceAssessment (defined, deferred)
+
+`[DEF]` The typed record C5 requires: one field per dimension (information
+path, source, executor identity, provider/organization correlation, prompt
+common cause, session-state confidence, claim-lineage completeness), each
+with an enumerated outcome (`disqualified` | `degraded` | `independent` |
+`unresolved`) and a reason reference. Derivation rule: any dimension
+`disqualified` yields overall status `dependent`; any dimension
+`unresolved` without a named compensating control yields overall
+`unresolved`; otherwise `qualified_independent` with degradations listed.
 
 ## 5. Canonical Relations
 
@@ -359,13 +439,26 @@ Candidate Slice B predicates:
     invocation resolved_to model_identity
     catalog_assertion asserted_by provider_organization
     catalog_assertion concerns catalog_entity
+    catalog_verification verifies catalog_assertion
 
 Notes: `executed_with` is dropped (duplicated `executed_by`); alias
 resolution is `resolved_to`; `describes` was replaced by `concerns`
 because an atomic assertion does not always concern a ModelIdentity;
 catalog reliance attaches to selection and authorization events
 (`routing_decision relied_on catalog_snapshot`, `authorization relied_on
-role_qualification`), not to the invocation.
+role_qualification`), not to the invocation. Predicate clarifications from
+COMP-0032: `spawned` is the sole subordinate-execution predicate for all
+executor kinds; `called` is dropped as an undefined duplicate.
+`resolved_to` is exclusively the invocation-level runtime resolution edge,
+valid as of `occurred_at`; catalog alias resolution is data inside an
+assertion (`assertion_predicate: resolves_to`), never a graph edge, so the
+two resolution concepts cannot be conflated by implementations.
+`used_inputs` targets exactly one EffectiveInputManifest (never individual
+artifacts directly); the manifest carries a `completeness_attestation`
+field stating whether it is declared exhaustive for all effective-input
+channels, and blind-witness qualification requires that attestation.
+`concerns` target types are constrained per assertion_predicate in the
+predicate registry.
 
 Full vocabulary (defined now, wired later): `used_prompt`,
 `continued_from` (session/execution continuity only), the derivation family
@@ -374,10 +467,10 @@ dependence), `copied_from` (direct inheritance), `summarized_from` (lossy
 representation); `assigned_role`; `authorized_by`/`authorizes`;
 `admitted_by`; routing predicates; `decision issued_by invocation`;
 `decision approved_by accountable_principal`; `decision evaluates
-claim_or_artifact`; `invocation verified_by invocation`;
-`evaluation_outcome observed_for executor_identity`; the reified
-role-qualification predicates (4.6); `tool_identity uses_executor
-executor_identity`; `called` (subordinate execution).
+claim_or_artifact`; `invocation verified_by invocation` (targets a
+VerificationRun-bearing invocation); `evaluation_outcome observed_for
+executor_identity`; the reified role-qualification predicates (4.6);
+`tool_identity uses_executor executor_identity`.
 
 `[DEF]` Status assignment is a field on DecisionRecord
 (`recommended_status`, `effective_status`), not a graph edge: a literal
@@ -403,13 +496,19 @@ governed role only when the role's required catalog claims are satisfied at
 the role's freshness requirements. Experimental execution is permitted;
 experimental outputs cannot silently enter governed evidence.
 
-`[ADOPTED_CONSTRAINT]` C3 No self-adjudication: an invocation cannot
-adjudicate a claim whose evidence ancestry contains an invocation resolved
-to the same ModelIdentity. Direct lineage conflict: hard prohibition, no
-exception. Model-identity conflict: hard prohibition absent a future
-explicitly governed exceptional procedure. Unknown or unresolved model
-equivalence cannot establish model-identity independence; it yields
-`independence_unresolved`, never an independent path.
+`[ADOPTED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an
+invocation cannot adjudicate a claim whose evidence ancestry contains an
+invocation by an equivalent executor identity, with equivalence defined
+per executor kind: ModelIdentity resolution equality for models;
+tool identity and version equality for tools; principal equality for
+humans. Direct lineage conflict: hard prohibition, no exception.
+Equivalent-identity conflict: hard prohibition absent a future explicitly
+governed exceptional procedure. Unknown or unresolved executor equivalence
+cannot establish identity independence; it yields
+`independence_unresolved`, never an independent path. An identity
+unresolved at one endpoint and resolved at another is treated as distinct
+until equivalence is affirmatively established; distinctness never
+increases independence (P5).
 
 `[PROPOSED_CONSTRAINT]` C4 No hidden witness reuse: an invocation that
 consumed another witness's output is not an independent confirmation of
@@ -432,7 +531,14 @@ correlation factor.
 
 `[ADOPTED_CONSTRAINT]` C6 Authority separation across all three role axes:
 epistemic authority, action authority, and accountable authority are
-assigned independently and none implies another.
+assigned independently and none implies another. Assignment independence
+is not exercise license: adjudicator-level epistemic authority and
+above-read_only action authority may not both be exercised within a single
+invocation against the same target unless the adjudication is covered by
+an independent verification edge; an invocation that mutates state it also
+adjudicates collapses the separation C6 exists to preserve. COMP-0032
+produced two constructions satisfying the axis definitions while defeating
+separation; this sentence closes both.
 
 `[ADOPTED_CONSTRAINT]` C7 Implementation separation: an executor with
 repository or external action authority may implement an admitted plan but
@@ -452,6 +558,29 @@ provenance class of the information transformed. Extraction from
 pre-provenance sources is permitted; its outputs carry
 `source_provenance_status: pre_provenance`, `claim_lineage_status:
 source_lineage_partial`, `independent_observation: false`.
+
+Selection provenance (COMP-0032 finding): an invocation's effective inputs
+include the selection criteria and priors used to choose its sources.
+Undisclosed selection priors derived from pre-provenance or
+lineage-incomplete material taint the selection even when every selected
+source is independently clean; at high consequence, claims whose source
+selection lacks disclosed selection provenance carry `claim_lineage_status:
+source_lineage_partial`. Honest limitation: offline human reading is
+unobservable, so this rule is only partially enforceable ever;
+HumanActionRecord (Section 11) narrows but cannot close the gap, and the
+ontology states this rather than pretending otherwise.
+
+`[ADOPTED_CONSTRAINT]` C11 Interim independence disclosure: until
+claim-level lineage exists, witness-path independence counts are
+artifact-level approximations, and both COMP-0032 witnesses independently
+identified the resulting silent failure mode (N "independent" paths
+satisfied by N copies of one unrecorded shared claim). Therefore any
+high-consequence decision relying on a minimum number of independent
+witness paths must disclose in its DecisionRecord that independence was
+assessed at artifact level only, and must name the compensating controls
+relied on (operator adjudication, source disclosure, deterministic
+verification of the claims where available). Absent that disclosure, the
+independence requirement is unmet, not silently satisfied.
 
 `[ADOPTED_CONSTRAINT]` C10 Validator lineage independence (property-scoped
 P2 hardening): verifier provenance (identity, version, rule/test version,
@@ -510,14 +639,15 @@ plans exist.
 | --- | --- | --- | --- | --- | --- | --- |
 | C1 staged provenance | proposed | none | none | validator per profile | profile activation decision after capability ships | invocation records; manifests; profiles |
 | C2 catalog admission | proposed | none | none | validator + runtime gate | catalog capability ships | catalog snapshots; identities; qualifications |
-| C3 no self-adjudication | adopted-manual | partial | named attestation in completion warrants (for example WARR-20260719-0002 scope adjudications) | lineage traversal | already active manually | ancestry capture |
+| C3 no self-adjudication (executor-generic) | adopted-manual | partial | named attestation in completion warrants (for example WARR-20260719-0002 scope adjudications) | per-kind equivalence check + lineage traversal | already active manually | ancestry capture; executor-equivalence semantics |
 | C4 hidden witness reuse | proposed | none | none | context-lineage inspection | lineage capability ships | manifests; ancestry |
 | C5 lineage independence | proposed | none | none | categorical assessment with reasons | lineage capability ships | ancestry; claim lineage |
 | C6 authority separation | adopted, not currently evidenced | partial | none (no current record names the check) | artifact validator | already practiced; evidence begins with role records | role records |
 | C7 implementation separation | adopted-manual | partial | VERIFY records (cross-environment verification) | validator on VERIFY records | already active | none; strengthened later |
 | C8 decision traceability | proposed | none | none | RoutingDecision validation | routing capability ships | routing records |
 | C9 lineage inheritance | adopted-manual | partial | named disclosure statements in records | inheritance propagation | already active manually | claim lineage (full) |
-| C10 validator lineage | adopted-manual | partial | verifier identity in VERIFY command records; independence via cross-environment and operator review | verifier-ancestry check | already active manually | ancestry capture |
+| C10 validator lineage | adopted-manual | partial | verifier identity in VERIFY command records; independence via cross-environment and operator review | VerificationRun with verifier-ancestry check | already active manually | ancestry capture |
+| C11 interim independence disclosure | adopted-manual | partial | disclosure statements in DecisionRecords/warrants | admission validator requiring disclosure + named controls | already active manually | none; retired when claim lineage ships |
 
 ## 10. Proposed Implementation Sequence
 
@@ -526,13 +656,18 @@ admission, and review; not commitments:
 
 - Slice A, invocation provenance capture on exactly one path
   (`scripts/compare_providers.py`): atomic InvocationRecord; executor
-  reference; requested API model name; endpoint surface; minimal
+  reference with identity-verification status; requested API model name;
+  endpoint surface; session identity (not mode alone; shared
+  provider-managed state is undetectable from a mode flag); minimal
   EffectiveInputManifest containing rendered prompt digest,
   system/developer instruction digests, ContextManifest reference, exposed
-  tool-schema digest, prior tool-result references, and session-state mode
-  (only fields applicable to this path populated); ExecutionProfile
-  reference; `produced_by`; status; validator and integration fixture. No
-  routing, no catalog enforcement.
+  tool-schema digest, prior tool-result references, session-state mode,
+  and completeness_attestation (only fields applicable to this path
+  populated); ExecutionProfile reference including output-token limits
+  (motivated by the COMP-0032 truncation incident, which the record could
+  not explain from its own contents); `spawned` edges for subordinate
+  executions; experimental-versus-governed marker; `produced_by`; status;
+  validator and integration fixture. No routing, no catalog enforcement.
 - Slice B, catalog identity resolution: ModelIdentity,
   ServiceEndpointIdentity, atomic assertions in snapshots, requested-name
   to resolved-identity linkage, freshness/verification validator.
@@ -545,12 +680,19 @@ admission, and review; not commitments:
 
 ## 11. Defined but Deferred
 
-Run/ProtocolRound, Claim/EvidenceItem, RoutingPolicy, RoutingDecision
-enforcement, formal independence assessment beyond categorical statuses,
-automatic consequence assignment, full ancestry enforcement,
-provider-diversity thresholds, escalation, third-provider integration,
-session-mode cataloging per provider API, endpoint mutable-property
-assertions.
+Run/ProtocolRound, Claim/EvidenceItem, RoutingPolicy and
+AuthorizationPolicy enforcement, RoutingDecision enforcement,
+VerificationRun and IndependenceAssessment record implementation,
+OutboundInteractionLog (content-addressed declaration of a tool's external
+interactions: network targets, external writes, privileged output
+consumers; the enforcement object for external-interaction disclosure),
+HumanActionRecord (audited human actions that shape effective inputs
+without issuing a DecisionRecord; privacy-preserving, principal-referenced;
+the partial enforcement object for selection provenance), formal
+independence assessment beyond categorical statuses, automatic consequence
+assignment, full ancestry enforcement, provider-diversity thresholds,
+escalation, third-provider integration, session-mode cataloging per
+provider API, endpoint mutable-property assertions.
 
 ## 12. Open Questions
 
@@ -563,8 +705,11 @@ endpoint data governance. `[OPEN]` Session-state reconstructibility per
 provider API. `[OPEN]` AccountablePrincipal contents and privacy-preserving
 human decision records. `[OPEN]` EvaluationOutcome sufficiency per
 authority level; who admits evaluators. `[OPEN]` ExecutorIdentity
-superclass. `[OPEN]` DecisionRecord: extend warrants or new family;
-subtypes or one family. `[OPEN]` Per-provider escalation ladders: entirely
+superclass (reopened by COMP-0032 with the polymorphic-equivalence
+argument). `[OPEN]` EvaluationOutcome typing: DecisionRecord kind, or
+Claim/EvidenceItem with provenance; as defined it cannot carry lineage
+into governed evidence. `[OPEN]` DecisionRecord: extend warrants or new
+family; subtypes or one family. `[OPEN]` Per-provider escalation ladders: entirely
 deferred to the post-ontology comparison with live catalog verification.
 
 ## 13. Challenge-Round Questions
