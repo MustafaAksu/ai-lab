@@ -4,11 +4,12 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v4` (v1, v2 superseded during drafting and never entered the
-  record; v3 entered the record at commit 6802cf7, underwent the COMP-0032
-  challenge round, and is superseded by this revision, which applies the
-  twelve findings the operator adjudicated accept-all as accountable
-  principal)
+- version: `v5` (v1, v2 superseded during drafting and never entered the
+  record; v3 entered the record at commit 6802cf7 and underwent the
+  COMP-0032 challenge round; v4 applied the twelve adjudicated findings and
+  was admitted at 56f18a2; v5 is a narrow amendment replacing
+  CatalogVerification with CatalogCapture on the COMP-0035 finding, adopted
+  by the operator as accountable principal)
 - abstraction_level: `2`
 - status: `admitted`
 - admitted_at: `2026-07-20`
@@ -163,25 +164,56 @@ assertions. `[ADOPTED_CONSTRAINT]` An invocation records the most precise
 ModelIdentity establishable at execution time; unresolved requested names are
 recorded as unresolved, never silently substituted.
 
-### 4.4 CatalogSnapshot and CatalogAssertion
+### 4.4 CatalogSnapshot, CatalogAssertion, and CatalogCapture
 
 `[DEF]` CatalogSnapshot: `snapshot_id`, provider surface, `observed_at`,
 source set, assertions[]. Each CatalogAssertion is atomic and records ONLY
 the claim: `assertion_subject`, `assertion_predicate`,
 `assertion_value_or_target`, unit, scope, `valid_from`,
-`valid_until`/superseded, source. Verification is an AI-Lab assessment,
-never a property of the provider's claim; it attaches as a separate
-CatalogVerification record referencing the assertion, carrying
-`verification_outcome` (the shared three-valued vocabulary of
-`ai_lab/documentation/verification_outcome.py`), `verified_at`, and a
-verifier reference. Verification attaches per claim (alias resolution may
-be `unverifiable` while pricing is `verified_current`). An assertion may
-concern an API alias, an endpoint, a price, a region, or a model identity.
-Example atomic assertions: (api-name-X, resolves_to, model-identity-Y);
+`valid_until`/superseded, source. An assertion may concern an API alias, an
+endpoint, a price, a region, or a model identity. Example atomic
+assertions: (api-name-X, resolves_to, model-identity-Y);
 (api-name-X, context_limit, 400000, tokens).
+
+`[DEF]` CatalogCapture: the record of how and when an assertion was
+obtained. Fields: `capture_method`, `source_type`, `captured_at`,
+`capture_success`, `capturing_executor`, `content_digest` of the retrieved
+payload, and two independently scoped status fields that must never be
+merged:
+
+- `channel_authentication_status`: what was independently established about
+  the channel the claim arrived through (for example endpoint identity via
+  a certificate chain or key digest). This is genuine evidence: it is not
+  controlled by the content of the provider's catalog claim.
+- `content_evidence_status`: what was established about the truth of the
+  claim itself. When the only source is the provider describing its own
+  catalog, this is `self_asserted` and nothing stronger, regardless of how
+  well the channel authenticated.
+
+`[ADOPTED_CONSTRAINT]` A capture whose `source_type` is
+`provider_self_report` may never record a content-evidence status implying
+independent confirmation. Authenticating the channel establishes who said
+it, not whether it is true.
+
+`[DEF]` The shared three-valued vocabulary of
+`ai_lab/documentation/verification_outcome.py` applies to
+`channel_authentication_status` and to freshness assessment. It does not
+apply to `content_evidence_status`, whose values describe evidence class
+(`self_asserted`, `independently_corroborated`, `contradicted`,
+`unassessed`), not verification currency.
 
 `[DEF]` Catalog assertions record what a provider claims; they never record
 suitability for an AI-Lab role.
+
+`[PRINCIPLE]` P6. Naming may not exceed evidence. A record whose name or
+status field implies independent confirmation, where none exists, is a
+defect regardless of the correctness of its contents: consumers read the
+label, not the caveat. v4 named this record CatalogVerification; both
+COMP-0035 witnesses independently identified that name as circular
+self-attestation, a provider's own assertion relabelled as its own
+verification. The rename to CatalogCapture is the remedy, and the
+principle generalizes: prefer a blunt name that cannot be misread over a
+precise one that will be.
 
 ### 4.5 EvaluationOutcome
 
@@ -439,7 +471,7 @@ Candidate Slice B predicates:
     invocation resolved_to model_identity
     catalog_assertion asserted_by provider_organization
     catalog_assertion concerns catalog_entity
-    catalog_verification verifies catalog_assertion
+    catalog_capture captured catalog_assertion
 
 Notes: `executed_with` is dropped (duplicated `executed_by`); alias
 resolution is `resolved_to`; `describes` was replaced by `concerns`
