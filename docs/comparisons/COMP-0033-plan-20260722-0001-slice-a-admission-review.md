@@ -308,3 +308,40 @@ With these conditions met, the plan is admissible: it is small, scoped, verifiab
 **How to sever:** Route AI_LAB_CLAUDE_MAX_TOKENS as a separate decision item:
 - Create a short governance note or
 ```
+
+---
+
+## Addendum: this round is INVALID as admission evidence
+
+The context manifest for this round
+(COMP-0033-...context.json) contains five items: an episode L1 seed,
+ABS-0003, ABS-0004, SYNCOMP-0016, and COMP-0032. It does NOT contain
+docs/self_model/plans/PLAN-20260722-0001.json or
+docs/self_model/gaps/GAP-0005.json. The --latest-context pack seeds from
+abstractions, syntheses, and comparisons; it did not include the
+self-model records named in the task. Neither reviewer could read the
+plan under review.
+
+Consequences:
+
+1. The OpenAI response opens by stating that the plan and gap texts are
+   not visible and confines itself to ABS-0004 Section 10, framing its
+   conclusions as conditions to verify. Its ontology-derived points
+   remain usable as advisory input; its statements about what the plan
+   does or does not contain are inference, not observation.
+2. The Claude response presents extensive verbatim "quotations" of plan
+   scope, deliverables, non-goals, risks, and success criteria, and a
+   field-by-field table against those deliverables. No such text exists
+   in PLAN-20260722-0001. The review is confabulated on missing input:
+   fluent, internally consistent, and false. It is the second such
+   incident in this session from the same provider, the first being a
+   continuation invocation that received an instruction without its
+   document (recorded in the COMP-0032 addendum).
+3. No admission decision may rest on this round. A re-run with the plan
+   and gap texts explicitly attached is required (expected COMP-0034).
+
+This artifact is retained, not deleted: it is direct evidence for
+ABS-0004 P2 (internal consistency cannot detect coherent error) and for
+the C11 rationale, and it is the strongest available demonstration that
+attaching a document by name in a task string is not the same as
+attaching it to the context.
