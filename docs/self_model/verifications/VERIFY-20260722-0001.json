@@ -1,0 +1,49 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/invocation_record.py",
+    "ai_lab/providers/invocation_capture.py",
+    "ai_lab/providers/settings.py",
+    "scripts/compare_providers.py",
+    "tests/test_invocation_record.py",
+    "docs/self_model/PREDICATE_REGISTRY.md",
+    "docs/self_model/INVOCATION_RECORDS.md",
+    "docs/invocations/INV-9fd60000b4da1499.json",
+    "docs/invocations/INV-23b4d4298e0aa443.json",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "635 passed, up from 580 at admission; 55 new tests across schema, rejection classes, conditions, and integration."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "ok true, verification_outcome verified_current."
+    },
+    {
+      "command": "python scripts/compare_providers.py --title 'Slice B scoping: catalog identity resolution' ...",
+      "exit_code": 0,
+      "summary": "First real capture: two InvocationRecords written, one per provider, sharing session SESSION-8fec5f5628df484b, with produced_by references recorded in COMP-0035."
+    },
+    {
+      "command": "git fetch origin main && git reset --hard origin/main && python3 -m pytest -q",
+      "exit_code": 0,
+      "summary": "Independent cross-environment reproduction from the public repository at 7f8eacf: 635 passing, verified_current audit, byte-identical file checksums."
+    }
+  ],
+  "created_at": "2026-07-22T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260722-0001 at commit 7f8eacf: ABS-0004 Slice A invocation provenance capture on the scripts/compare_providers.py path. ai_lab/providers/invocation_record.py delivers schema v1 for InvocationRecord, minimal EffectiveInputManifest, and ExecutionProfile, with validate_invocation_record as the acceptance gate, byte-stable canonical JSON matching the sidecar precedent, deterministic paths under docs/invocations/, and identity computed over the enumerated version-scoped subset IDENTITY_FIELDS_V1. ai_lab/providers/invocation_capture.py wires emission on the admitted path only and returns a (record, error) pair so capture failure is reported without aborting the provider call. All eight WARR-20260722-0001 conditions are evidenced by tests: condition 1 by the capture_path validator rejection plus source assertions that scripts/ask_provider.py neither imports the capture module nor emits records; condition 2 by byte-identity of canonical serialization for semantically identical records and distinctness of identities across prompt, session, and timestamp variation; condition 3 by a capture failure against an unwritable root that is reported to stderr while the provider result survives; condition 4 by a test that simulated Slice B and C field additions leave an existing identity unchanged and by the documented versioning rule; condition 5 by session identity as a scalar field with Run and ProtocolRound absent; condition 6 by tests that the environment override wins over the raised default, that no other default moved, and that the governance marker defaults to experimental; condition 7 by required session identity, per-rejection-class fixtures, and GraphRelation-only relation emission; condition 8 by SLICE_A_PREDICATES enforcement that rejects any predicate outside the ABS-0004 Section 5 list. The governed settings rider raised AI_LAB_CLAUDE_MAX_TOKENS from 4096 to 16000. First real capture at COMP-0035 produced two valid records sharing one session with matching prompt digests and produced_by references in the artifact; those records revalidate, recompute their identities, and are byte-identical to canonical form on disk. The first run also exposed three fidelity gaps no fixture caught, fixed at 7f8eacf: ambiguous null token limits now carry an explicit max_tokens_source, runtime_version is populated from SDK metadata, and structured artifact metadata serializes as JSON rather than a Python repr. Tests grew from 580 to 635; the repository audit reports ok true verified_current; commit 7f8eacf pulled from the public GitHub repository into a separate environment reproduced 635 passing tests, the verified_current audit, and byte-identical checksums for every delivered file.",
+  "target_item_id": "PLAN-20260722-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260722-0001"
+}

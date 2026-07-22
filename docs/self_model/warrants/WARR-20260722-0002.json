@@ -1,0 +1,30 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Slice A remains capture-only. Any consumer of these records, including audit checks or admission gates, requires a separately admitted plan.",
+    "Field names and semantics remain bound to ABS-0004; a schema change requires an ABS revision first, and an identity-bearing field addition requires a new schema version with its own enumerated subset.",
+    "The COMP-0035 finding on CatalogVerification naming must be adjudicated before Slice B is admitted, since Slice B would implement the record whose name is disputed.",
+    "Capture must remain non-fatal: a future change that lets capture failure abort a provider call violates this warrant."
+  ],
+  "created_at": "2026-07-22T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/verifications/VERIFY-20260722-0001.json",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "docs/self_model/plans/PLAN-20260722-0001.json",
+    "docs/self_model/warrants/WARR-20260722-0001.json",
+    "docs/comparisons/COMP-0034-plan-20260722-0001-slice-a-admission-review-documents-attached.md",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+    "docs/invocations/INV-9fd60000b4da1499.json",
+    "docs/invocations/INV-23b4d4298e0aa443.json"
+  ],
+  "reason": "VERIFY-20260722-0001 records 635 passing tests, an ok true verified_current repository audit, evidence for each of the eight WARR-20260722-0001 conditions, a first real capture producing two valid records that revalidate and recompute their identities, and independent cross-environment reproduction from the public repository with byte-identical checksums. The plan's success criteria are met: records are emitted per provider call and validate, ExecutionProfiles record the output-token limit with the raised default appearing in captured profiles, manifests carry the prompt digest and completeness attestation, the seven predicates have registry entries with full semantics, and the suite and audit are green.",
+  "repo_commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
+  "schema_version": "v1",
+  "scope": "Completion warrant for PLAN-20260722-0001. Marks the plan completed on the evidence of VERIFY-20260722-0001 and registers CAP-0015. Adjudicates the capture-fidelity commit 7f8eacf as within admitted scope: it populates already-admitted fields (provider_request_flags, runtime_version) more honestly and corrects the serialization of an already-admitted metadata field, adding no structure, no path, and no consumer. GAP-0005 remains open; Slices B, C, and D are unimplemented and separately governed. No consumer of the captured records is warranted by this record, and C1 provenance_v1 activation remains a later decision.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260722-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260722-0002",
+  "warrant_state": "supported"
+}

@@ -1,0 +1,97 @@
+{
+  "capability_id": "CAP-0015",
+  "category": "provider_infrastructure",
+  "created_at": "2026-07-22T00:00:00+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260722-0001",
+        "path": "docs/self_model/plans/PLAN-20260722-0001.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260722-0001",
+        "path": "docs/self_model/warrants/WARR-20260722-0001.json",
+        "role": "admission warrant with eight binding conditions"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "dfb3aecde4f56b977ba3df90437e2b5d27229556",
+        "role": "Slice A implementation: record module, capture module, wiring, settings rider, tests, registry and documentation"
+      },
+      {
+        "commit": "8a0be993ec8a5b4cca576f12e7696e446905a1a1",
+        "role": "First real capture: COMP-0035 and two InvocationRecords"
+      },
+      {
+        "commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
+        "role": "Capture fidelity fixes from first-run findings"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "5633e4caed3220aa1c493c90f62874e6fd9d8bf6e5f6f8c6f8711b0afb6487c9",
+        "path": "ai_lab/providers/invocation_record.py",
+        "role": "schema, validator, identity, serialization, relations"
+      },
+      {
+        "content_hash": "f492d2eccd483d7908e85bf149f269d3a76bd38b03d091c94aa8414456e6c5e1",
+        "path": "ai_lab/providers/invocation_capture.py",
+        "role": "capture surface for the admitted path"
+      },
+      {
+        "content_hash": "e7c6db441840f5fc5cf7b8f8866c7f9eb5d24a41216aedba151154d24473f4ae",
+        "path": "tests/test_invocation_record.py",
+        "role": "schema, rejection class, condition, and integration tests"
+      },
+      {
+        "content_hash": "b03ce4d2860dd83938258efe906495877b2db3e57dafda2db7442811ff503a78",
+        "path": "docs/self_model/PREDICATE_REGISTRY.md",
+        "role": "predicate registry for the seven Slice A predicates"
+      },
+      {
+        "content_hash": "d685e2be37c66aedbeb1569e8e147c6be85ec2e102b904f62e849b646f18ba7b",
+        "path": "docs/self_model/INVOCATION_RECORDS.md",
+        "role": "record family documentation and stated limitations"
+      }
+    ],
+    "memory_records": []
+  },
+  "interfaces": [
+    "ai_lab.providers.invocation_record.validate_invocation_record (acceptance gate for every emitted record)",
+    "ai_lab.providers.invocation_record.build_invocation_record (assemble and validate a Slice A record)",
+    "ai_lab.providers.invocation_record.invocation_id_for and invocation_relative_path (deterministic identity and path)",
+    "ai_lab.providers.invocation_record.canonical_invocation_json (byte-stable serialization)",
+    "ai_lab.providers.invocation_record.invocation_relations (GraphRelation-shaped Slice A relations)",
+    "ai_lab.providers.invocation_capture.capture_provider_invocation (capture on the admitted path, returns record and error)"
+  ],
+  "last_verified": {
+    "repo_commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260722-0001.json",
+    "verified_at": "2026-07-22T00:00:00+00:00"
+  },
+  "limits": [
+    "Capture is restricted to scripts/compare_providers.py. No other path emits records, and the validator rejects records claiming any other capture_path.",
+    "completeness_attestation is partial_declared_channels_only on this path: the manifest is not declared exhaustive for all effective-input channels, so no captured record qualifies as blind-witness evidence.",
+    "identity_verification_status is unresolved for every model executor; no resolution mechanism exists until Slice B.",
+    "governance_marker defaults to experimental and stays there until an admission consumer exists.",
+    "Relations are emitted with authoritative false and relation_source future_edge_seed; they are diagnostic seeds, not authoritative graph edges.",
+    "Nothing reads the records. C1 provenance_v1 activation, catalog resolution, roles and authorization, and lineage and admission remain unimplemented.",
+    "Records are prospective only; invocations before this capability fall under the ABS-0004 Section 7 pre-provenance boundary."
+  ],
+  "name": "Invocation provenance capture (ABS-0004 Slice A)",
+  "recommended_next_actions": [
+    "Propose Slice B (catalog identity resolution) against GAP-0005, incorporating the COMP-0035 finding that naming a provider self-report CatalogVerification is circular self-attestation.",
+    "Decide whether ABS-0004 requires a v5 amendment renaming CatalogVerification or scoping the term to what endpoint authentication actually proves.",
+    "Consider a check that execution-profile fidelity has not silently degraded after provider refactors."
+  ],
+  "risks": [
+    "Schema v1 field choices are load-bearing for Slices B to D; a field misdesign propagates, mitigated by copying ABS-0004 v4 names verbatim and by the enumerated identity subset that isolates later additions.",
+    "Capture depends on reading private provider attributes for execution configuration; a provider refactor could silently reduce profile fidelity, which no current check would catch.",
+    "The governed rider raised the Claude output-token default to 16000, increasing the cost ceiling per call."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provider calls on the scripts/compare_providers.py path emit atomic InvocationRecords in schema v1: executor reference with identity verification status, requested API model name, service endpoint, session identity, occurred_at, status, governance marker, spawned edges, a minimal EffectiveInputManifest (rendered prompt digest, instruction and tool-schema digests, ContextManifest reference, prior tool-result references, session-state mode, completeness attestation), and an ExecutionProfile (endpoint, requested model name, output-token limit and its source, sampling and reasoning parameters, request flags, SDK runtime version). Records are validated by validate_invocation_record, serialized as byte-stable canonical JSON at deterministic paths under docs/invocations/, and identified by a digest over the enumerated version-scoped subset IDENTITY_FIELDS_V1 so that later slices cannot alter existing identities. Relations are emitted only in GraphRelation shape and only for the seven ABS-0004 Section 5 Slice A predicates. Capture is additive: failures are reported and never abort a provider call, and no consumer reads the records."
+}

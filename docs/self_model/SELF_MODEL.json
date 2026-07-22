@@ -13,7 +13,8 @@
     "CAP-0011",
     "CAP-0012",
     "CAP-0013",
-    "CAP-0014"
+    "CAP-0014",
+    "CAP-0015"
   ],
   "admitted_plans": [
     "PLAN-20260705-0001",
@@ -42,7 +43,7 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 66,
+      "info": 73,
       "warn": 28
     }
   },
@@ -144,10 +145,17 @@
       "name": "Compact artifact sidecar contract",
       "source_path": "docs/self_model/capabilities/CAP-0014.json",
       "status": "implemented"
+    },
+    {
+      "capability_id": "CAP-0015",
+      "category": "provider_infrastructure",
+      "name": "Invocation provenance capture (ABS-0004 Slice A)",
+      "source_path": "docs/self_model/capabilities/CAP-0015.json",
+      "status": "implemented"
     }
   ],
   "capability_counts": {
-    "implemented": 14
+    "implemented": 15
   },
   "gap_counts": {
     "closed": 3,
@@ -195,7 +203,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-22T20:11:49+00:00",
+  "generated_at": "2026-07-22T21:06:57+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -354,6 +362,21 @@
       "source_record": "CAP-0014"
     },
     {
+      "risk": "Schema v1 field choices are load-bearing for Slices B to D; a field misdesign propagates, mitigated by copying ABS-0004 v4 names verbatim and by the enumerated identity subset that isolates later additions.",
+      "source_field": "risks[0]",
+      "source_record": "CAP-0015"
+    },
+    {
+      "risk": "Capture depends on reading private provider attributes for execution configuration; a provider refactor could silently reduce profile fidelity, which no current check would catch.",
+      "source_field": "risks[1]",
+      "source_record": "CAP-0015"
+    },
+    {
+      "risk": "The governed rider raised the Claude output-token default to 16000, increasing the cost ceiling per call.",
+      "source_field": "risks[2]",
+      "source_record": "CAP-0015"
+    },
+    {
       "risk": "If documentation says L0 is automatically retrieved, that would overstate current behavior.",
       "source_field": "risk",
       "source_record": "GAP-0001"
@@ -489,12 +512,9 @@
     "GAP-0002",
     "GAP-0005"
   ],
-  "open_plans": [
-    "PLAN-20260722-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 20
+    "completed": 21
   },
   "plans": [
     {
@@ -641,7 +661,7 @@
       "plan_id": "PLAN-20260722-0001",
       "source_gap_id": "GAP-0005",
       "source_path": "docs/self_model/plans/PLAN-20260722-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Invocation provenance capture on the provider-comparison path (ABS-0004 Slice A)"
     }
   ],
@@ -657,7 +677,7 @@
       "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "c2233dc92af343adab5cc57b3ea100dddb4fc18e",
+  "repo_head": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -815,10 +835,15 @@
       "repo_commit": "4c41f50e0c2e20694356ff38b0177517157a6179",
       "source_path": "docs/self_model/verifications/VERIFY-20260719-0003.json",
       "verification_id": "VERIFY-20260719-0003"
+    },
+    {
+      "repo_commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
+      "source_path": "docs/self_model/verifications/VERIFY-20260722-0001.json",
+      "verification_id": "VERIFY-20260722-0001"
     }
   ],
   "warrant_counts": {
-    "supported": 54
+    "supported": 55
   },
   "warrants": [
     {
@@ -1251,6 +1276,14 @@
       "target_item_id": "PLAN-20260722-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260722-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260722-0002.json",
+      "target_item_id": "PLAN-20260722-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260722-0002",
       "warrant_state": "supported"
     }
   ]
