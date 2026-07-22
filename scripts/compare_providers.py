@@ -130,7 +130,13 @@ def build_markdown_artifact(
 
     if extra_metadata:
         for key, value in extra_metadata.items():
-            lines.append(f"- {key}: `{value}`")
+            if isinstance(value, (list, dict)):
+                # Structured provenance metadata is JSON, not a Python repr,
+                # so consumers can json.loads it directly.
+                rendered = json.dumps(value, sort_keys=True)
+            else:
+                rendered = str(value)
+            lines.append(f"- {key}: `{rendered}`")
 
     lines.extend(
         [

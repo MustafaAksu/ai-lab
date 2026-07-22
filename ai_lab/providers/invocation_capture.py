@@ -60,6 +60,26 @@ def session_state_mode_for_run(has_context_pack: bool) -> str:
     return SESSION_EXPLICIT_REPLAYED if has_context_pack else SESSION_STATELESS
 
 
+SDK_MODULES = {
+    "OpenAI": "openai",
+    "Claude": "anthropic",
+}
+
+
+def runtime_version_for(provider: Any) -> str | None:
+    """SDK version in effect, for reproducibility of the call."""
+
+    module_name = SDK_MODULES.get(getattr(provider, "name", ""))
+    if not module_name:
+        return None
+    try:
+        from importlib.metadata import version
+
+        return f"{module_name}=={version(module_name)}"
+    except Exception:
+        return None
+
+
 def execution_profile_inputs(provider: Any) -> dict[str, Any]:
     """Read the execution configuration actually in effect for this call."""
 
@@ -77,7 +97,12 @@ def execution_profile_inputs(provider: Any) -> dict[str, Any]:
     if isinstance(limit, bool) or not isinstance(limit, int):
         limit = None
 
-    if limit is not None:
+    # A null limit is ambiguous between "AI-Lab set none" and "not captured".
+    # Record which, explicitly: unknown facts must stay representable and must
+    # not be inferable only from an empty object (ABS-0004 P5).
+    if limit is None:
+        flags["max_tokens_source"] = "provider_default_unset"
+    else:
         flags["max_tokens_source"] = (
             "environment"
             if os.getenv("AI_LAB_CLAUDE_MAX_TOKENS")
@@ -89,6 +114,7 @@ def execution_profile_inputs(provider: Any) -> dict[str, Any]:
         "sampling_parameters": sampling,
         "reasoning_parameters": reasoning,
         "provider_request_flags": flags,
+        "runtime_version": runtime_version_for(provider),
     }
 
 

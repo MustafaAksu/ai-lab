@@ -698,3 +698,101 @@ def test_comparison_run_reports_capture_failure_and_still_completes(
     )
 
     assert compare_providers.main() == 0
+
+
+# --- capture fidelity (findings from the first real run) ---------------
+
+
+def test_absent_token_limit_is_recorded_as_explicitly_unset(tmp_path):
+    from ai_lab.providers.invocation_capture import capture_provider_invocation
+
+    class _NoLimitProvider:
+        name = "OpenAI"
+        model = "gpt-5"
+
+        def ask(self, prompt):
+            return "answer"
+
+    record, error = capture_provider_invocation(
+        repo_root=tmp_path,
+        provider=_NoLimitProvider(),
+        rendered_prompt="prompt",
+        session_id="SESSION-nolimitcase",
+        session_state_mode=SESSION_STATELESS,
+        occurred_at="2026-07-22T12:00:00+00:00",
+        status=STATUS_SUCCESS,
+    )
+
+    assert error is None
+    profile = record["execution_profile"]
+    assert profile["output_token_limit"] is None
+    # Null must not be ambiguous between "unset" and "not captured".
+    assert profile["provider_request_flags"]["max_tokens_source"] == "provider_default_unset"
+
+
+def test_environment_sourced_limit_is_labelled(tmp_path, monkeypatch):
+    from ai_lab.providers.invocation_capture import capture_provider_invocation
+
+    monkeypatch.setenv("AI_LAB_CLAUDE_MAX_TOKENS", "2048")
+
+    record, error = capture_provider_invocation(
+        repo_root=tmp_path,
+        provider=_StubProvider(),
+        rendered_prompt="prompt",
+        session_id="SESSION-envsourced1",
+        session_state_mode=SESSION_STATELESS,
+        occurred_at="2026-07-22T12:00:00+00:00",
+        status=STATUS_SUCCESS,
+    )
+
+    assert error is None
+    assert (
+        record["execution_profile"]["provider_request_flags"]["max_tokens_source"]
+        == "environment"
+    )
+
+
+def test_runtime_version_is_captured_when_the_sdk_is_known(tmp_path):
+    from ai_lab.providers.invocation_capture import capture_provider_invocation
+
+    record, error = capture_provider_invocation(
+        repo_root=tmp_path,
+        provider=_StubProvider(),
+        rendered_prompt="prompt",
+        session_id="SESSION-runtimevers",
+        session_state_mode=SESSION_STATELESS,
+        occurred_at="2026-07-22T12:00:00+00:00",
+        status=STATUS_SUCCESS,
+    )
+
+    assert error is None
+    runtime = record["execution_profile"]["runtime_version"]
+    assert runtime is None or runtime.startswith("anthropic==")
+
+
+def test_structured_artifact_metadata_is_json_not_python_repr():
+    import json as _json
+
+    from scripts.compare_providers import build_markdown_artifact
+
+    artifact = build_markdown_artifact(
+        prompt="p",
+        responses={"Claude": {"model": "m", "response": "r"}},
+        created_at="2026-07-22T00:00:00+00:00",
+        command="cmd",
+        comparison_id="COMP-9999",
+        title="t",
+        extra_metadata={
+            "invocation_produced_by": [
+                {"source_id": "COMP-9999", "predicate": "produced_by", "authoritative": False}
+            ]
+        },
+    )
+
+    line = next(
+        l for l in artifact.splitlines() if l.startswith("- invocation_produced_by:")
+    )
+    payload = line.split("`", 1)[1].rsplit("`", 1)[0]
+    parsed = _json.loads(payload)
+    assert parsed[0]["source_id"] == "COMP-9999"
+    assert parsed[0]["authoritative"] is False
