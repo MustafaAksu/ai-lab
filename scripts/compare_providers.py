@@ -27,10 +27,22 @@ from ai_lab.documentation.prompt_context import (
     resolve_provider_warning_admission_cap,
 )
 from ai_lab.providers.claude_provider import ClaudeProvider
+from ai_lab.providers.invocation_capture import (
+    capture_provider_invocation,
+    new_session_id,
+    produced_by_references,
+    report_capture_failure,
+    session_state_mode_for_run,
+)
 from ai_lab.providers.openai_provider import OpenAIProvider
 
 
 DEFAULT_COMPARISON_DIR = Path("docs/comparisons")
+
+# Repository root under which invocation records are written. Module-level so
+# tests can redirect capture without touching the repository (ABS-0004
+# Slice A, WARR-20260722-0001).
+CAPTURE_REPO_ROOT = PROJECT_ROOT
 
 
 def utc_now_iso() -> str:
@@ -501,10 +513,56 @@ def main() -> int:
     print(raw_prompt)
     print()
 
+    # ABS-0004 Slice A invocation provenance capture (WARR-20260722-0001).
+    # Capture is additive: a failure is reported and never aborts the call.
+    session_id = new_session_id()
+    session_state_mode = session_state_mode_for_run(context_manifest is not None)
+    invocation_records = []
+
     for provider in providers:
         model = getattr(provider, "model", "unknown")
         print(f"=== {provider.name} ({model}) ===")
-        answer = provider.ask(provider_prompt)
+        occurred_at = utc_now_iso()
+        try:
+            answer = provider.ask(provider_prompt)
+            call_status = "success"
+        except Exception:
+            record, capture_error = capture_provider_invocation(
+                repo_root=CAPTURE_REPO_ROOT,
+                provider=provider,
+                rendered_prompt=provider_prompt,
+                session_id=session_id,
+                session_state_mode=session_state_mode,
+                occurred_at=occurred_at,
+                status="failure",
+                context_manifest_reference=(
+                    str(context_manifest_path) if context_manifest_path else None
+                ),
+            )
+            if capture_error:
+                report_capture_failure(provider.name, capture_error)
+            elif record is not None:
+                invocation_records.append(record)
+            raise
+
+        record, capture_error = capture_provider_invocation(
+            repo_root=CAPTURE_REPO_ROOT,
+            provider=provider,
+            rendered_prompt=provider_prompt,
+            session_id=session_id,
+            session_state_mode=session_state_mode,
+            occurred_at=occurred_at,
+            status=call_status,
+            context_manifest_reference=(
+                str(context_manifest_path) if context_manifest_path else None
+            ),
+        )
+        if capture_error:
+            report_capture_failure(provider.name, capture_error)
+        elif record is not None:
+            invocation_records.append(record)
+            print(f"Captured invocation: {record['invocation_id']}")
+
         responses[provider.name] = {
             "model": model,
             "response": answer,
@@ -526,6 +584,20 @@ def main() -> int:
             title=title,
             extra_metadata=extra_metadata or None,
         )
+
+        if invocation_records:
+            extra_metadata["invocation_produced_by"] = produced_by_references(
+                invocation_records, comparison_id
+            )
+            artifact = build_markdown_artifact(
+                prompt=raw_prompt,
+                responses=responses,
+                created_at=created_at,
+                command=command,
+                comparison_id=comparison_id,
+                title=title,
+                extra_metadata=extra_metadata or None,
+            )
 
         save_path.parent.mkdir(parents=True, exist_ok=True)
         save_path.write_text(artifact, encoding="utf-8")

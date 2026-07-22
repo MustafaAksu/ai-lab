@@ -63,6 +63,15 @@ def test_slugify_creates_filesystem_safe_slug():
     assert slugify("Model Metadata & Provenance!") == "model-metadata-provenance"
 
 
+@pytest.fixture(autouse=True)
+def _redirect_invocation_capture(tmp_path, monkeypatch):
+    """Keep Slice A invocation capture out of the repository during tests."""
+
+    from scripts import compare_providers
+
+    monkeypatch.setattr(compare_providers, "CAPTURE_REPO_ROOT", tmp_path)
+
+
 def test_next_comparison_id_uses_existing_files(tmp_path: Path):
     (tmp_path / "COMP-0001-first.md").write_text("", encoding="utf-8")
     (tmp_path / "COMP-0007-seventh.md").write_text("", encoding="utf-8")

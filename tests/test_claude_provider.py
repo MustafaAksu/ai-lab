@@ -29,7 +29,10 @@ def test_claude_provider_ask_returns_text_blocks():
 
         assert answer == "Hello from Claude."
         provider._client.messages.create.assert_called_once()
-        assert provider._client.messages.create.call_args.kwargs["max_tokens"] == 4096
+        # Default raised to 16000 by the governed settings rider of
+        # PLAN-20260722-0001 (WARR-20260722-0001) after the COMP-0032
+        # truncation incident.
+        assert provider._client.messages.create.call_args.kwargs["max_tokens"] == 16000
 
 
 def test_claude_provider_accepts_custom_max_tokens():
