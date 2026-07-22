@@ -1,0 +1,38 @@
+{
+  "capture_path": "scripts/compare_providers.py",
+  "effective_input_manifest": {
+    "completeness_attestation": "partial_declared_channels_only",
+    "context_manifest_reference": null,
+    "developer_instruction_digest": null,
+    "prior_tool_result_references": [],
+    "rendered_prompt_digest": "sha256:59b088a3e7c1edd1325ae4c79a10b120beacac0d90b665376e3ea5bd197d8698",
+    "session_state_mode": "stateless",
+    "system_instruction_digest": null,
+    "tool_schema_digest": null
+  },
+  "execution_profile": {
+    "output_token_limit": 16000,
+    "provider_request_flags": {
+      "max_tokens_source": "settings_default"
+    },
+    "reasoning_parameters": {},
+    "requested_model_name": "claude-sonnet-4-5",
+    "runtime_version": null,
+    "sampling_parameters": {},
+    "service_endpoint": "anthropic.messages"
+  },
+  "executor": {
+    "identity_verification_status": "unresolved",
+    "kind": "model",
+    "reference": "claude-sonnet-4-5"
+  },
+  "governance_marker": "experimental",
+  "invocation_id": "INV-23b4d4298e0aa443",
+  "occurred_at": "2026-07-22T20:47:49.197085+00:00",
+  "requested_model_name": "claude-sonnet-4-5",
+  "schema_version": "v1",
+  "service_endpoint": "anthropic.messages",
+  "session_id": "SESSION-8fec5f5628df484b",
+  "spawned": [],
+  "status": "success"
+}
