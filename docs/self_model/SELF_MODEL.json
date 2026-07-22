@@ -194,7 +194,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-22T15:08:47+00:00",
+  "generated_at": "2026-07-22T15:21:42+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -476,6 +476,11 @@
       "risk": "Severity downgrades for evidence-unavailable findings could silently relax pipelines that count error findings by code rather than reading the ok field; consumers ignoring the new field will continue failing gates on unverifiable environments, which is intended but may prompt local suppressions. Mitigated by leaving ok semantics unchanged, keeping all existing finding codes and messages intact, documenting the classification table built from the actual auditor codes, and asserting in tests that a genuine-drift fixture still yields error severity and ok false.",
       "source_field": "risk",
       "source_record": "PLAN-20260719-0001"
+    },
+    {
+      "risk": "Schema decisions made here become load-bearing for Slices B-D; a field misdesign propagates. Digest and serialization choices could diverge from the sidecar contract's canonical-JSON precedent if not aligned. The settings rider changes live provider behavior (longer responses, higher cost ceiling per call).",
+      "source_field": "risk",
+      "source_record": "PLAN-20260722-0001"
     }
   ],
   "model_type": "self_model",
@@ -483,9 +488,12 @@
     "GAP-0002",
     "GAP-0005"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260722-0001"
+  ],
   "plan_counts": {
-    "completed": 20
+    "completed": 20,
+    "proposed": 1
   },
   "plans": [
     {
@@ -627,6 +635,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260719-0001.json",
       "status": "completed",
       "title": "Introduce shared three-valued verification outcome vocabulary in self-model audits"
+    },
+    {
+      "plan_id": "PLAN-20260722-0001",
+      "source_gap_id": "GAP-0005",
+      "source_path": "docs/self_model/plans/PLAN-20260722-0001.json",
+      "status": "proposed",
+      "title": "Invocation provenance capture on the provider-comparison path (ABS-0004 Slice A)"
     }
   ],
   "recommended_next_targets": [
@@ -641,7 +656,7 @@
       "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "1457fa980c966403d1df6609d38be3ece1235fb8",
+  "repo_head": "c49dec9de04cf59a330a6c205ebe8624f3e8849d",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

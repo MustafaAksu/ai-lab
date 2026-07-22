@@ -1,0 +1,71 @@
+{
+  "constraints": [
+    "Implementation is authorized only within the scope admitted by the future admission warrant for this plan; any expansion requires a separate proposed and admitted plan.",
+    "All relations use the GraphRelation shape of ai_lab/documentation/graph_neighborhood.py; no parallel edge vocabulary (ABS-0004 Section 5 adopted constraint).",
+    "Record capture must never alter provider-call semantics beyond the settings-default rider; capture failure is reported as an error, not silently swallowed and not fatal to the underlying call.",
+    "Field names and semantics follow ABS-0004 v4 exactly; deviations require an ABS revision first.",
+    "The settings rider changes only the AI_LAB_CLAUDE_MAX_TOKENS default; per-call overrides and other defaults are untouched."
+  ],
+  "created_at": "2026-07-22T00:00:00+00:00",
+  "created_from": {
+    "repo_commit": "c49dec9de04cf59a330a6c205ebe8624f3e8849d",
+    "source_gap_id": "GAP-0005"
+  },
+  "depends_on_capability_ids": [
+    "CAP-0014"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/comparisons/COMP-0032-abs-0004-invocation-authorization-ontology-challenge-round.md",
+    "docs/self_model/capabilities/CAP-0014.json"
+  ],
+  "mitigation": "Field subset is copied from ABS-0004 v4 verbatim with deferred fields documented rather than invented; canonical serialization reuses the sidecar contract's approach; the validator is the acceptance gate for every emitted record from the first fixture onward; the settings rider is a default only, env-overridable, and its motivation and value are recorded in the plan and captured profiles.",
+  "next_action": "Run the admission comparison round (expected COMP-0033) with this plan and GAP-0005 as the subject; on operator adjudication, issue the admission warrant and flip status to admitted.",
+  "non_goals": [
+    "Routing, escalation, or model selection of any kind.",
+    "Catalog objects, catalog verification, or identity resolution (Slice B).",
+    "RoleDefinition, RoleQualification, InvocationAuthorization, or consequence classes (Slice C).",
+    "Lineage traversal, independence assessment, or evidence-admission enforcement (Slice D).",
+    "Capture on any path other than compare_providers.py (ask_provider.py directly, memory pipelines, or future paths).",
+    "Any consumer of the captured records, including audit checks; C1 provenance_v1 activation is a later decision.",
+    "Retroactive records for past invocations; the pre-provenance boundary of ABS-0004 Section 7 applies."
+  ],
+  "objective": "Make provider invocations on one real path representable exactly as ABS-0004 defines them, so that later slices (catalog resolution, roles and authorization, lineage and admission) attach to captured provenance instead of retrofitting it, and so that execution conditions that shape evidence (such as output-token limits) are recorded rather than reconstructed from incidents.",
+  "plan_id": "PLAN-20260722-0001",
+  "proposed_change": "After a separate admission checkpoint: add ai_lab/providers/invocation_record.py (schema v1, validator, canonical serialization, identity and path rules), wire emission into the compare_providers.py path, add the predicate-registry artifact for the seven Slice A predicates, raise the AI_LAB_CLAUDE_MAX_TOKENS default to 16000, and add tests and fixtures. No behavior of provider calls changes except the settings default; capture is additive and failure to write a record is reported, never silently swallowed.",
+  "rationale": [
+    "GAP-0005 records that no invocation, identity, manifest, or profile object exists in the running system, and ABS-0004's enforcement matrix lists representability none for C1/C2/C4/C5/C8; Slice A is the admitted ontology's own proposed first boundary.",
+    "The slice is deliberately scoped to one path with no routing and no catalog enforcement, matching the sidecar-contract precedent of contract-plus-validator-first slices that verified cleanly.",
+    "The COMP-0032 truncation incident is the concrete exhibit: the evidence record could not explain its own truncation because the output-token cap was captured nowhere; this slice makes that class of execution condition part of the record.",
+    "Capturing provenance before building catalog, roles, or routing prevents the retrofit debt GAP-0004 was opened to prevent, now at the provider layer."
+  ],
+  "repo_commit": "c49dec9de04cf59a330a6c205ebe8624f3e8849d",
+  "risk": "Schema decisions made here become load-bearing for Slices B-D; a field misdesign propagates. Digest and serialization choices could diverge from the sidecar contract's canonical-JSON precedent if not aligned. The settings rider changes live provider behavior (longer responses, higher cost ceiling per call).",
+  "schema_version": "v1",
+  "scope": [
+    "An invocation-record module defining schema v1 for InvocationRecord, minimal EffectiveInputManifest, and ExecutionProfile as ABS-0004 Sections 4.8, 4.10, and 4.12 specify for Slice A, with a validate_invocation_record entrypoint, deterministic canonical serialization, and deterministic identity and path rules under docs/invocations/.",
+    "Emission wired into the scripts/compare_providers.py call path (including its ask-provider substrate) so each provider call on that path produces one InvocationRecord; the comparison artifact records produced_by references to the emitting invocations.",
+    "Session identity capture and session-state mode for that path (expected explicit_replayed_context or stateless; recorded, not assumed).",
+    "Rendered prompt digest, instruction digests, tool-schema digest where applicable, prior tool-result references, ContextManifest reference when a context pack is used, and completeness_attestation on the manifest.",
+    "ExecutionProfile capture including provider request parameters and output-token limits in effect at call time.",
+    "spawned edges for subordinate executions on the path; experimental-versus-governed marker defaulting to experimental until an admission consumer exists.",
+    "Predicate-registry entries (GraphRelation shape) for the seven Slice A predicates: produced_by, executed_by, requested_via, used_execution_profile, used_inputs, member_of, spawned.",
+    "Governed settings rider: raise the AI_LAB_CLAUDE_MAX_TOKENS default from 4096 to 16000 with the change recorded in this plan's completion evidence and reflected in captured profiles.",
+    "Validator fixtures covering valid records, each rejection class, and an integration fixture demonstrating end-to-end capture on the compare_providers.py path without network access."
+  ],
+  "source_capability_ids": [
+    "CAP-0014"
+  ],
+  "source_gap_id": "GAP-0005",
+  "status": "proposed",
+  "success_criteria": [
+    "A run of scripts/compare_providers.py on the covered path produces one InvocationRecord per provider call, each validating through validate_invocation_record, with the comparison artifact carrying produced_by references.",
+    "Captured ExecutionProfiles record the output-token limit in effect, and the new default 16000 appears in profiles captured after the settings change.",
+    "EffectiveInputManifests carry the rendered prompt digest and completeness_attestation; a fixture demonstrates that a record with attestation absent fails blind-witness-eligibility checks by construction (field-level, no enforcement logic in this slice).",
+    "The seven Slice A predicates have registry entries specifying source type, target type, meaning, cardinality, and temporal semantics; relations serialize in GraphRelation shape.",
+    "All new behavior covered by tests; the full suite passes; the repository audit remains ok true verified_current; cross-environment reproduction from the public repository succeeds byte-identically."
+  ],
+  "summary": "Implement ABS-0004 Slice A as admitted and as recommended by GAP-0005: invocation provenance capture on the scripts/compare_providers.py path only. Provider calls on that path emit atomic InvocationRecords with executor reference and identity-verification status, requested API model name, endpoint surface, session identity, a minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation), an ExecutionProfile reference including output-token limits, spawned edges where subordinate executions occur, an experimental-versus-governed marker, a produced_by relation from the comparison artifact, and success/failure status. Records are validated by a dedicated validator, serialized deterministically, and covered by fixtures; the seven Slice A predicates receive predicate-registry entries in GraphRelation shape. As a governed rider, the AI_LAB_CLAUDE_MAX_TOKENS default is raised so the first captured ExecutionProfile records the corrected limit (motivated by the COMP-0032 truncation incident). Pure capture: nothing reads these records in this slice.",
+  "title": "Invocation provenance capture on the provider-comparison path (ABS-0004 Slice A)"
+}
