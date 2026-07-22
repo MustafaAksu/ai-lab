@@ -1,4 +1,7 @@
 {
+  "admission_summary": "Admitted by WARR-20260722-0001 on the evidence of COMP-0034, in which both providers reviewed the plan, GAP-0005, and ABS-0004 Sections 9 to 11 as attached text and recommended admission with conditions. Eight conditions are binding, covering the emission gate, determinism, capture-failure reporting, schema versioning, session identity as a field, rider discipline, criteria tightening, and predicate scope. COMP-0033 is excluded from the evidence as an invalid round.",
+  "admission_warrant_id": "WARR-20260722-0001",
+  "admitted_at": "2026-07-22T00:00:00+00:00",
   "constraints": [
     "Implementation is authorized only within the scope admitted by the future admission warrant for this plan; any expansion requires a separate proposed and admitted plan.",
     "All relations use the GraphRelation shape of ai_lab/documentation/graph_neighborhood.py; no parallel edge vocabulary (ABS-0004 Section 5 adopted constraint).",
@@ -29,7 +32,7 @@
     "Documentation of the record family, its Slice A field subset, and the deferred fields under docs/self_model/ or docs/architecture/."
   ],
   "mitigation": "Field subset is copied from ABS-0004 v4 verbatim with deferred fields documented rather than invented; canonical serialization reuses the sidecar contract's approach; the validator is the acceptance gate for every emitted record from the first fixture onward; the settings rider is a default only, env-overridable, and its motivation and value are recorded in the plan and captured profiles.",
-  "next_action": "Run the admission comparison round (expected COMP-0033) with this plan and GAP-0005 as the subject; on operator adjudication, issue the admission warrant and flip status to admitted.",
+  "next_action": "Implement the nine admitted scope items subject to the eight warrant conditions, then verify, then close out with a completion verification and warrant.",
   "non_goals": [
     "Routing, escalation, or model selection of any kind.",
     "Catalog objects, catalog verification, or identity resolution (Slice B).",
@@ -67,7 +70,7 @@
     "CAP-0014"
   ],
   "source_gap_id": "GAP-0005",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "A run of scripts/compare_providers.py on the covered path produces one InvocationRecord per provider call, each validating through validate_invocation_record, with the comparison artifact carrying produced_by references.",
     "Captured ExecutionProfiles record the output-token limit in effect, and the new default 16000 appears in profiles captured after the settings change.",

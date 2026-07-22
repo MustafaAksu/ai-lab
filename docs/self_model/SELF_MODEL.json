@@ -35,7 +35,8 @@
     "PLAN-20260716-0001",
     "PLAN-20260716-0002",
     "PLAN-20260717-0001",
-    "PLAN-20260719-0001"
+    "PLAN-20260719-0001",
+    "PLAN-20260722-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -194,7 +195,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-22T15:30:45+00:00",
+  "generated_at": "2026-07-22T20:10:38+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -492,8 +493,8 @@
     "PLAN-20260722-0001"
   ],
   "plan_counts": {
-    "completed": 20,
-    "proposed": 1
+    "admitted": 1,
+    "completed": 20
   },
   "plans": [
     {
@@ -640,7 +641,7 @@
       "plan_id": "PLAN-20260722-0001",
       "source_gap_id": "GAP-0005",
       "source_path": "docs/self_model/plans/PLAN-20260722-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "Invocation provenance capture on the provider-comparison path (ABS-0004 Slice A)"
     }
   ],
@@ -656,7 +657,7 @@
       "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "4d54e299cc53d61c5df4397953189d9e20635936",
+  "repo_head": "4e50c7e30b705c31148639a0052af5afaa1a3ec0",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -817,7 +818,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 53
+    "supported": 54
   },
   "warrants": [
     {
@@ -1242,6 +1243,14 @@
       "target_item_id": "GAP-0004",
       "target_item_type": "gap",
       "warrant_id": "WARR-20260719-0004",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260722-0001.json",
+      "target_item_id": "PLAN-20260722-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260722-0001",
       "warrant_state": "supported"
     }
   ]

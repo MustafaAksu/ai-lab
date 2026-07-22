@@ -1,0 +1,32 @@
+{
+  "author": "operator",
+  "conditions": [
+    "Emission gate: capture activates only on the scripts/compare_providers.py path; a test must demonstrate that scripts/ask_provider.py invoked directly emits no InvocationRecord, closing the shared-substrate fence gap.",
+    "Determinism: a test must demonstrate that two records with identical semantic content serialize to identical bytes, and that distinct records produce distinct identities.",
+    "Capture failure: a test must demonstrate that an emission failure is reported as an error while the underlying provider call still returns its result.",
+    "Schema versioning: the identity and path rules must document how later field additions under Slices B to D affect record identity and digest stability, stating explicitly whether identities are version-scoped or content-digest-based with a documented exclusion mechanism.",
+    "Session identity is a simple field on InvocationRecord, not a Run or ProtocolRound object; Run and ProtocolRound remain deferred per ABS-0004 Section 11.",
+    "Rider discipline: tests must demonstrate that environment and per-call overrides still take precedence over the changed default, that no other default is altered, and that the experimental-versus-governed marker defaults to experimental.",
+    "Criteria tightening: success criteria must additionally require that session identity is present in every record (not mode alone), that each validator rejection class has a dedicated fixture, and that only GraphRelation-shaped relations are emitted.",
+    "Predicate scope is settled by ABS-0004 Section 5, which lists all seven Slice A predicates; the reviewers could not verify this because Section 5 was not attached to the round. No predicate outside that list may be introduced by this slice."
+  ],
+  "created_at": "2026-07-22T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260722-0001.json",
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/comparisons/COMP-0034-plan-20260722-0001-slice-a-admission-review-documents-attached.md",
+    "docs/comparisons/COMP-0033-plan-20260722-0001-slice-a-admission-review.md",
+    "docs/self_model/capabilities/CAP-0014.json"
+  ],
+  "reason": "COMP-0034 records both providers recommending admission with conditions after reviewing the plan, GAP-0005, and ABS-0004 Sections 9 to 11 as attached text. Both independently confirmed scope coherence with the ABS-0004 Section 10 Slice A boundary, clean fencing of Slices B to D and other call paths, and mechanical verifiability of the success criteria, and both concluded that the settings rider belongs in this plan rather than severed, citing the GAP-0005 note and the narrowing constraint. Their conditions are recorded below and are binding. The operator adjudicated the findings and admits the plan as accountable principal. COMP-0033 is excluded from this warrant's evidence: its context pack omitted the plan and gap texts, one reviewer disclosed the missing input and the other confabulated plan text that does not exist; that round is retained only as an incident record.",
+  "repo_commit": "4e50c7e30b705c31148639a0052af5afaa1a3ec0",
+  "schema_version": "v1",
+  "scope": "Admission warrant for PLAN-20260722-0001, ABS-0004 Slice A invocation provenance capture on the scripts/compare_providers.py path. Authorizes implementation of exactly the plan's nine scope items: the invocation-record module (InvocationRecord, minimal EffectiveInputManifest, ExecutionProfile schema v1 with validate_invocation_record, canonical serialization, and identity and path rules), emission wiring on the covered path with produced_by references from the comparison artifact, session identity and session-state mode capture, manifest digests and completeness_attestation, ExecutionProfile capture including output-token limits, spawned edges and the experimental-versus-governed marker, predicate-registry entries for the seven Slice A predicates, the AI_LAB_CLAUDE_MAX_TOKENS default rider, and validator and integration fixtures. The plan's seven non-goals bound this authorization: no routing or model selection, no catalog objects or identity resolution, no roles or authorization objects, no lineage or admission enforcement, no other call path, no consumer of the captured records, and no retroactive records. Run and ProtocolRound objects are additionally excluded: session identity is a field on the record, not a structured object. Any expansion requires a separate proposed and admitted plan.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260722-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260722-0001",
+  "warrant_state": "supported"
+}
