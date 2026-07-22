@@ -150,7 +150,7 @@
   },
   "gap_counts": {
     "closed": 3,
-    "open": 1
+    "open": 2
   },
   "gaps": [
     {
@@ -184,9 +184,17 @@
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0004.json",
       "status": "closed"
+    },
+    {
+      "category": "provider_infrastructure",
+      "gap_id": "GAP-0005",
+      "name": "Provider invocations lack ontology-mandated representation and governance",
+      "priority": "high",
+      "source_path": "docs/self_model/gaps/GAP-0005.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-07-19T20:33:52+00:00",
+  "generated_at": "2026-07-22T15:07:40+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -365,6 +373,11 @@
       "source_record": "GAP-0004"
     },
     {
+      "risk": "Without invocation provenance, every governed decision that relies on provider outputs rests on undisclosed execution conditions: truncations, configuration differences, session contamination, and model substitutions are invisible after the fact, as COMP-0032's truncation incident showed. Without catalog verification, unverifiable provider claims (ADVISOR-0000 class) can only be excluded by operator vigilance. Without structural authority separation, the C3/C6/C7 disciplines depend entirely on session practice and degrade silently if practice slips. Deferring representation while building routing or escalation would recreate the retrofit debt GAP-0004 was opened to prevent.",
+      "source_field": "risk",
+      "source_record": "GAP-0005"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -467,7 +480,8 @@
   ],
   "model_type": "self_model",
   "open_gaps": [
-    "GAP-0002"
+    "GAP-0002",
+    "GAP-0005"
   ],
   "open_plans": [],
   "plan_counts": {
@@ -620,9 +634,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0002",
       "target": "Propose a separate evidence-only evaluation of distance-aware graph-neighborhood representation. Evaluate rich distance-one representation, compact distance-two representation, deterministic token accounting, isolated-target diagnostics, and local/global context balance using existing repository artifacts. Keep all behavior default-off and do not modify provider prompts, automatic target selection, automatic context inclusion, persisted graph state, retrieval, embeddings, reranking, production indexes, memory stores, or runtime manifests without a later separate admitted implementation plan."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0005",
+      "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "930e63762e2f17e61d3ef9ca8cb4dd2602a8c8a9",
+  "repo_head": "56f18a2ab7b66b1855b631a32d540f654c62b2c2",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

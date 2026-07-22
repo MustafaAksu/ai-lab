@@ -1,0 +1,32 @@
+{
+  "blocked_by": [],
+  "category": "provider_infrastructure",
+  "evidence": {
+    "files_checked": [
+      "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "docs/comparisons/COMP-0032-abs-0004-invocation-authorization-ontology-challenge-round.md",
+      "docs/abstractions/evidence/ADVISOR-MANIFEST.md",
+      "docs/abstractions/evidence/ADVISOR-0000-sol-model-stack-proposal.md",
+      "ai_lab/providers/settings.py",
+      "ai_lab/providers/claude_provider.py",
+      "scripts/ask_provider.py",
+      "scripts/compare_providers.py"
+    ],
+    "reason": "ABS-0004 v4 was admitted at commit 56f18a2 with enforcement-matrix rows C1, C2, C4, C5, and C8 marked proposed with representability none: the admitted ontology itself records that its subject matter cannot yet be represented. ai_lab/providers/settings.py holds model identity as environment-overridable strings and AI_LAB_CLAUDE_MAX_TOKENS with default 4096; no identity, endpoint, catalog, invocation, or manifest object exists anywhere in ai_lab/. COMP-0032's Claude response was truncated by that 4096 cap and the saved artifact could not explain the truncation from its own contents; the incident chain recorded in the artifact's addendum is cited in ABS-0004 Slice A as motivation for ExecutionProfile capture. ADVISOR-0000 consists largely of catalog assertions with verification_outcome unverifiable at capture, and no mechanism exists to verify, date, or supersede such claims. C3, C6, C7, C9, C10, and C11 are adopted-manual; their current enforcement evidence is attestations and disclosure statements in warrants, not structural checks."
+  },
+  "gap_id": "GAP-0005",
+  "last_reviewed_at": "2026-07-20T00:00:00+00:00",
+  "name": "Provider invocations lack ontology-mandated representation and governance",
+  "notes": [
+    "Expressed against admitted ABS-0004 v4 per the agreed sequence (ontology first, challenge round, then the gap). Candidate remediation path is Slices A-D of ABS-0004 Section 10, each a separately governed plan; this gap does not pre-admit any of them.",
+    "The deferred provider comparison (third-provider decision per the C5 witness-path framing, per-provider escalation ladders, live catalog verification) is intentionally sequenced after Slice B, because its subject matter is catalog assertions and identities that only Slice B makes representable.",
+    "The parked CLAUDE_MAX_TOKENS default change should ride with Slice A as a governed settings change, so the new ExecutionProfile capture records the corrected limit from its first use."
+  ],
+  "priority": "high",
+  "recommended_first_slice": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates.",
+  "related_capabilities": [],
+  "risk": "Without invocation provenance, every governed decision that relies on provider outputs rests on undisclosed execution conditions: truncations, configuration differences, session contamination, and model substitutions are invisible after the fact, as COMP-0032's truncation incident showed. Without catalog verification, unverifiable provider claims (ADVISOR-0000 class) can only be excluded by operator vigilance. Without structural authority separation, the C3/C6/C7 disciplines depend entirely on session practice and degrade silently if practice slips. Deferring representation while building routing or escalation would recreate the retrofit debt GAP-0004 was opened to prevent.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "The admitted invocation authorization ontology ABS-0004 v4 (commit 56f18a2) defines the objects, relations, and constraints under which AI-Lab authorizes invocations for roles, but none of it is representable or enforceable in the running system. Concretely: provider calls made through ask_provider.py and compare_providers.py leave no InvocationRecord, no executor identity, no ExecutionProfile, no EffectiveInputManifest, and no session identity; model identity is a settings string with no ModelIdentity, ServiceEndpointIdentity, CatalogSnapshot, or CatalogVerification behind it, so every catalog claim (including the entire ADVISOR-0000 model stack) is unverifiable by construction; roles, qualifications, and InvocationAuthorization have no record forms, so the epistemic-authority separation practiced in sessions is testimonial rather than structural; and lineage, independence assessment, and evidence admission (C3-C5, C9-C11) are enforced only by manual discipline with no ancestry capture. The COMP-0032 round demonstrated the operational cost concretely: a response truncation shaped the evidence record and nothing in the record could explain it, because the output-token limit that caused it was captured nowhere. The deficiency blocks the deferred provider comparison (third-provider decision, escalation ladders, live catalog verification), the sidecar generation slice under GAP-0002 (which needs structured generator provenance), and any future routing or escalation policy."
+}
