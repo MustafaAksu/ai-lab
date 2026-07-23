@@ -452,16 +452,55 @@ def test_environment_override_takes_precedence_over_the_default(monkeypatch):
         importlib.reload(settings)
 
 
-def test_rider_alters_no_other_default():
+def test_model_defaults_are_the_adjudicated_ones():
+    """Defaults advanced by DECISION-20260723-0001.
+
+    The prior values (gpt-5, claude-sonnet-4-5) were unrevisited literals;
+    claude-sonnet-4-5 was absent from the provider listing captured on
+    2026-07-23 while still accepted by the endpoint. claude-opus-4-8 is
+    deliberately not chosen: it is the drafting executor's own reported
+    identity, and selecting it would collapse reviewer and author into one
+    ModelIdentity under ABS-0004 C3.
+    """
+
     import importlib
 
     import ai_lab.providers.settings as settings
 
     importlib.reload(settings)
-    assert settings.OPENAI_MODEL == "gpt-5"
-    assert settings.CLAUDE_MODEL == "claude-sonnet-4-5"
+    assert settings.CLAUDE_MODEL == "claude-sonnet-5"
+    assert settings.OPENAI_MODEL == "gpt-5.6-terra"
+    assert settings.CLAUDE_MODEL != "claude-opus-4-8"
     assert settings.OPENAI_REASONING_EFFORT is None
     assert settings.CLAUDE_EFFORT is None
+
+
+def test_chosen_defaults_are_present_in_the_captured_listings():
+    """The defaults are names the providers actually listed.
+
+    This is the check that would have caught claude-sonnet-4-5 drifting out
+    of the catalog. It reads the retained payloads, not the network.
+    """
+
+    payload_dir = Path("docs/catalog/payloads")
+    if not payload_dir.exists():  # pragma: no cover - captures not present
+        pytest.skip("no retained catalog payloads in this checkout")
+
+    import importlib
+
+    import ai_lab.providers.settings as settings
+
+    importlib.reload(settings)
+
+    listed: dict[str, set[str]] = {}
+    for path in sorted(payload_dir.glob("*.json")):
+        body = json.loads(path.read_text(encoding="utf-8"))
+        listed.setdefault(body["surface"], set()).update(
+            entry["id"] for entry in body["payload"]["data"]
+        )
+
+    assert settings.CLAUDE_MODEL in listed["anthropic"]
+    assert settings.OPENAI_MODEL in listed["openai"]
 
 
 def test_per_call_override_takes_precedence_over_the_default():

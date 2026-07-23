@@ -1,0 +1,49 @@
+{
+  "authorized_effects": [
+    "Changing the two model default literals in ai_lab/providers/settings.py.",
+    "Updating the tests that asserted the previous defaults, and adding a test that both defaults appear in the retained catalog payloads.",
+    "Recording the reasoning in source comments beside each default so a future reader sees why the value was chosen without leaving the file."
+  ],
+  "blocked_effects": [
+    "No routing, escalation, or per-role model selection: those remain Slice C and later.",
+    "No change to provider call semantics, parameters, or the max-tokens default.",
+    "No claim that the chosen models are better, cheaper, or more capable than the prior ones: no captured evidence supports any such comparison.",
+    "No inference that gpt-5.6-terra is a middle tier; that account is unverified and is recorded as such."
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "decision": "advance_model_defaults_to_listed_current_models",
+  "decision_id": "DECISION-20260723-0001",
+  "evidence_refs": [
+    "docs/catalog/payloads/anthropic-20260723T184516.json",
+    "docs/catalog/payloads/openai-20260723T184518.json",
+    "docs/catalog/snap/SNAP-c111fceb0ec3809f.json",
+    "docs/catalog/snap/SNAP-35fbd338ad148fb9.json",
+    "docs/abstractions/evidence/ADVISOR-0000-sol-model-stack-proposal.md",
+    "docs/self_model/CATALOG_RECORDS.md",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+  ],
+  "rationale": [
+    "claude-sonnet-4-5 was absent from the captured Anthropic listing, which carries claude-sonnet-4-5-20250929 instead, while every AI-Lab call using the bare alias succeeded. The default was simultaneously stale (released 2025-09-29 per the provider's own created_at, ten months before this decision) and unlisted.",
+    "claude-sonnet-5 is present in the captured listing with created_at 2026-06-29, the most recent Sonnet-tier entry.",
+    "claude-opus-4-8 was deliberately NOT chosen although it is the most recent Opus-tier entry. The drafting executor in AI-Lab sessions reports itself as Claude Opus 4.8. Configuring the reviewer slot to that identity would collapse reviewer and author into one ModelIdentity, firing ABS-0004 C3 (no self-adjudication, executor-generic) on every review of drafted work, and the collapse would be invisible to every existing test. Preserving identity separation outranks tier recency for this slot.",
+    "gpt-5.6-terra is present in the captured OpenAI listing. Its tier relative to gpt-5.6-luna and gpt-5.6-sol is NOT established by any captured evidence: the OpenAI listing carries only id and owned_by, with no dates, display names, tiers, capabilities, or pricing.",
+    "The tier account used to choose terra comes from ADVISOR-0000, whose property claims are classified unverifiable and whose existence claims were confirmed only as names present in the listing. Acting on it here is disclosed rather than concealed: a model default is low consequence, immediately reversible, and self-testing, because a wrong name fails on first call.",
+    "Cost is unknown for both new defaults. No captured source publishes pricing, so no cost comparison against the prior defaults is possible from evidence AI-Lab holds."
+  ],
+  "repo_commit": "a3a180fdf91f3b161f00f03c2d98fd8502cbfa6d",
+  "required_next_governance": [
+    "If cost matters to a future decision, a source that publishes pricing must be admitted first; the models listing does not carry it.",
+    "If a later slice gates on catalog presence (C2 catalog admission), it must not treat listing absence as invalidity: AI-Lab's own prior default was absent from the listing while working.",
+    "Any future move of the Claude slot to the drafting executor's own reported identity requires explicit adjudication of the C3 consequence recorded here."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "Provider calls on all AI-Lab paths now default to claude-sonnet-5 and gpt-5.6-terra. Environment overrides AI_LAB_CLAUDE_MODEL and AI_LAB_OPENAI_MODEL continue to take precedence, and per-call overrides are unchanged.",
+  "source_capability_ids": [
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0001",
+  "status": "recorded",
+  "summary": "AI_LAB_CLAUDE_MODEL moves from claude-sonnet-4-5 to claude-sonnet-5 and AI_LAB_OPENAI_MODEL from gpt-5 to gpt-5.6-terra. Both prior values were literals chosen when ai_lab/providers/settings.py was written and never revisited, which is the deficiency GAP-0005 describes: model identity as a settings string with no ModelIdentity behind it. The first live catalog capture (2026-07-23) supplied the evidence for revisiting them. Both new values are present in the captured listings; a test now checks that fact against the retained payloads on every run.",
+  "title": "Provider model defaults advanced on first live catalog evidence"
+}

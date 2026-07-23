@@ -13,6 +13,7 @@
       }
     ]
   },
-  "provenance": "Shape-faithful recording of a models-list response as observed by the operator on the recorded_at date. Retained as a fixture for offline replay. Entries are provider self-report and are not independently corroborated; the recording may be stale relative to the live catalog. Corrected after the first live capture (2026-07-23): the recorded entries originally carried context_window, which no live models-list response returns. A fixture must not exercise a path live capture cannot reach.",
-  "recorded_at": "2026-07-22T00:00:00+00:00"
+  "provenance": "SYNTHETIC test data, not an observation. Entries are constructed to exercise the models-list response shape; no operator observed this content and no capture produced it. The field shape is derived from real captures retained under docs/catalog/payloads/, so a fixture cannot exercise a path live capture would not reach. An earlier version of this file described itself as a recording observed by the operator, which was false: the shape was faithful, the content was invented, and the sentence claiming observation exceeded its evidence. Corrected 2026-07-23.",
+  "recorded_at": "2026-07-22T00:00:00+00:00",
+  "recorded_at_meaning": "The date this synthetic fixture is dated to for freshness-window tests. It is not an observation date."
 }

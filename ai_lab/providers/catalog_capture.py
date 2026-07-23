@@ -169,6 +169,10 @@ def load_fixture(name: str, repo_root: Path | str = ".") -> dict[str, Any]:
     for field in ("recorded_at", "operating_organization", "endpoint_identifier", "payload"):
         if field not in fixture:
             raise CatalogCaptureError(f"fixture {name!r} lacks {field}")
+    # A fixture must say what it is. Synthetic content is legitimate test
+    # data; a synthetic file describing itself as an observation is not.
+    if "provenance" not in fixture:
+        raise CatalogCaptureError(f"fixture {name!r} lacks a provenance statement")
     return fixture
 
 

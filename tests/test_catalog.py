@@ -865,17 +865,44 @@ def test_fixture_observed_at_is_the_recording_date_not_now():
     assert capture["captured_at"] == fixture["recorded_at"]
 
 
-def test_recorded_fixtures_declare_their_provenance():
+def test_fixtures_declare_themselves_synthetic_not_observed():
+    """A fixture may be invented; it may not claim to be an observation."""
+
     from ai_lab.providers.catalog_capture import FIXTURE_DIR
 
     fixtures = sorted(Path(FIXTURE_DIR).glob("*.json"))
-    assert fixtures, "expected recorded catalog fixtures"
+    assert fixtures, "expected catalog fixtures"
 
     for path in fixtures:
         fixture = json.loads(path.read_text(encoding="utf-8"))
         assert fixture["recorded_at"]
-        assert "provenance" in fixture
-        assert "self-report" in fixture["provenance"]
+        provenance = fixture["provenance"]
+        assert "SYNTHETIC" in provenance
+        assert "not an observation" in provenance
+        # The word that made the earlier version false.
+        assert "as observed by the operator" not in provenance
+
+
+def test_fixture_without_provenance_is_rejected(tmp_path, monkeypatch):
+    from ai_lab.providers import catalog_capture
+
+    fixture_dir = tmp_path / "fixtures"
+    fixture_dir.mkdir()
+    (fixture_dir / "nameless.json").write_text(
+        json.dumps(
+            {
+                "recorded_at": "2026-07-22T00:00:00+00:00",
+                "operating_organization": "org",
+                "endpoint_identifier": "org.endpoint",
+                "payload": {"data": [{"id": "model-alpha"}]},
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(catalog_capture, "FIXTURE_DIR", str(fixture_dir.relative_to(tmp_path)))
+
+    with pytest.raises(catalog_capture.CatalogCaptureError, match="provenance"):
+        catalog_capture.load_fixture("nameless", tmp_path)
 
 
 def test_fixture_replay_and_live_capture_share_one_parsing_path():
