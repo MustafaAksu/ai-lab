@@ -1,0 +1,35 @@
+{
+  "author": "operator",
+  "conditions": [
+    "Contradiction is a fifth enumerated non-resolution reason: a capture whose content_evidence_status is contradicted blocks resolution rather than resolving mechanically. The resolver must not make an implicit admissibility decision that belongs to Slice D.",
+    "Canonical serialization must place content_evidence_status immediately before channel_authentication_status, in that fixed order, so that any display of channel strength is preceded by the content-evidence weakness. CATALOG_RECORDS.md must state honestly that this is a mitigation and not a control: a downstream renderer can still misrepresent, and a rendering rule is deferred until consumers exist.",
+    "A test must demonstrate that the two capture status fields are independent: neither may be defaulted from, derived from, or merged with the other.",
+    "The freshness window is declared, not deferred: default thirty days, configurable, with boundary tests at the cutoff and on both sides of it.",
+    "Determinism tests are required for identity generation, path generation, canonical serialization bytes, and repeated resolution over identical inputs producing identical output modulo the resolution timestamp.",
+    "A test must demonstrate that an IdentityResolution annotation carries the evidence class inherited from the capture it relied on.",
+    "Tests must demonstrate that only GraphRelation-shaped relations are emitted and that no predicate outside the registered Slice A and Slice B lists appears.",
+    "A regression test must demonstrate that InvocationRecords captured before this slice remain byte-identical when loaded and revalidated under Slice B code.",
+    "Timestamp precision for the temporal precedence check must be documented, including tie-breaking when snapshot observation and invocation occurrence fall on the same precision boundary."
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/plans/PLAN-20260723-0001.json",
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/comparisons/COMP-0036-plan-20260723-0001-slice-b-admission-review.md",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "docs/invocations/INV-0ae13a18453a458f.json",
+    "docs/invocations/INV-08687f806100ba12.json"
+  ],
+  "reason": "COMP-0036 records both providers recommending admission with conditions after reviewing the plan, GAP-0005, and ABS-0004 v5 Sections 4.2 to 4.4 and 10 as attached text. Both confirmed the scope stays inside the Slice B boundary with Slices C and D explicitly excluded, and both independently produced the round's most consequential finding: the v5 provider_self_report constraint is fully satisfiable while still conveying false confidence, because the attack lies in presentation rather than in the record. One reviewer additionally identified that contradicted assertions are absent from the four enumerated non-resolution reasons, leaving the resolver to either proceed mechanically over contradicted evidence or make an implicit Slice D admissibility decision. The operator adjudicated all nine consolidated conditions accept-all as accountable principal. This round was the first in AI-Lab to capture its own invocation provenance: INV-0ae13a18453a458f and INV-08687f806100ba12 record the two calls that produced it.",
+  "repo_commit": "1f259ff65086f325dda9b0340e6c2fcd4e9fcb51",
+  "schema_version": "v1",
+  "scope": "Admission warrant for PLAN-20260723-0001, ABS-0004 v5 Slice B catalog identity resolution. Authorizes exactly the plan's nine scope items: the catalog module (ModelIdentity, ServiceEndpointIdentity, CatalogAssertion, CatalogSnapshot, CatalogCapture schemas with validators, canonical serialization, and deterministic identity and path rules under docs/catalog/), atomic-assertion enforcement, the two independently scoped capture status fields with the provider_self_report rejection rule, the pure resolution function with enumerated non-resolution reasons, append-only IdentityResolution annotations, the freshness validator, predicate-registry entries for resolved_to, asserted_by, concerns, and captured, the opt-in live capture path with recorded fixtures, and validator and integration fixtures. The plan's eight non-goals bound this authorization, including that captured InvocationRecords are never mutated, that no consumer gates a decision on resolution results, and that Slice A behavior is unchanged. Any expansion requires a separate proposed and admitted plan.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260723-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260723-0001",
+  "warrant_state": "supported"
+}

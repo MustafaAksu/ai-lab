@@ -1,4 +1,7 @@
 {
+  "admission_summary": "Admitted by WARR-20260723-0001 on the evidence of COMP-0036, in which both providers reviewed the plan, GAP-0005, and ABS-0004 v5 Sections 4.2 to 4.4 and 10 as attached text and recommended admission with conditions. Nine conditions are binding: contradiction as a fifth non-resolution reason, serialization adjacency of the two status fields with an honest statement that it is a mitigation rather than a control, status-field independence, a declared thirty-day freshness window, determinism tests, evidence-class inheritance, predicate and relation-shape tests, a Slice A invariance regression, and documented timestamp precision.",
+  "admission_warrant_id": "WARR-20260723-0001",
+  "admitted_at": "2026-07-23T00:00:00+00:00",
   "constraints": [
     "Implementation is authorized only within the scope admitted by the future admission warrant; any expansion requires a separate proposed and admitted plan.",
     "Field names and semantics follow ABS-0004 v5 exactly; deviations require an ABS revision first.",
@@ -31,7 +34,7 @@
     "tests/test_catalog.py and tests/test_catalog_resolution.py with schema, rejection, non-resolution, and integration fixtures."
   ],
   "mitigation": "Non-resolution is explicit and enumerated rather than defaulted; the temporal rule requires the snapshot to precede the invocation, so a later snapshot can never retroactively verify an earlier call; ambiguity blocks resolution rather than picking a winner; fixtures record their capture date and the freshness validator reports currency against it rather than assuming it.",
-  "next_action": "Run the admission comparison round with this plan, GAP-0005, and ABS-0004 v5 Sections 4.2 to 4.4 attached as text; on operator adjudication, issue the admission warrant and flip status to admitted.",
+  "next_action": "Implement the nine admitted scope items subject to the nine warrant conditions, then verify, then close out with a completion verification and warrant.",
   "non_goals": [
     "Mutating captured InvocationRecords; resolution is append-only annotation.",
     "Any claim of independent verification of catalog content while the only source is provider self-report.",
@@ -69,7 +72,7 @@
     "CAP-0015"
   ],
   "source_gap_id": "GAP-0005",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "A stored Slice A InvocationRecord resolves to a ModelIdentity through the pure resolution function using a stored snapshot, producing an append-only IdentityResolution annotation; the InvocationRecord file is byte-identical before and after.",
     "Each non-resolution reason is exercised by a fixture: no applicable assertion, snapshot observed after the invocation, ambiguous applicable assertions, and expired freshness window; each yields an explicit reason, never a silent default to resolved.",
