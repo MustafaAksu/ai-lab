@@ -120,9 +120,74 @@ be introduced by that slice (WARR-20260722-0001 condition 8).
 - evidence requirement: the invocation record path
 - authoritative default: false
 
+## Slice B predicates (ABS-0004 v5, PLAN-20260723-0001)
+
+Registered by WARR-20260723-0001. These four complete the Slice B set; no
+predicate outside it may be emitted by that slice.
+
+### resolved_to
+
+- source type: invocation id
+- target type: ModelIdentity id
+- meaning: the invocation's requested name resolved to that identity,
+  according to a dated catalog assertion. Resolution is not verification:
+  the assertion's evidence class travels with the annotation, and every
+  currently obtainable class is `self_asserted`.
+- cardinality: at most one per invocation per resolution annotation; an
+  invocation may carry several annotations over time
+- inverse: resolved_from (not emitted)
+- temporal semantics: valid as of the annotation's `resolved_at` against a
+  snapshot observed no later than the invocation; never revised in place
+- transitive: no
+- evidence requirement: the resolution annotation path
+- authoritative default: false
+
+### asserted_by
+
+- source type: CatalogAssertion (by snapshot and index)
+- target type: ProviderOrganization or source identifier
+- meaning: who made the claim. Defined now; not emitted until assertions
+  carry organizational attribution beyond their `source` string.
+- cardinality: exactly one per assertion
+- inverse: asserted (not emitted)
+- temporal semantics: fixed at capture time
+- transitive: no
+- evidence requirement: the snapshot path
+- authoritative default: false
+
+### concerns
+
+- source type: CatalogAssertion
+- target type: any catalog entity (API alias, endpoint, model identity,
+  price, region)
+- meaning: what the claim is about. Deliberately broad in target type
+  because an atomic assertion may concern any of these; the
+  `assertion_predicate` constrains the target type per assertion.
+- cardinality: exactly one per assertion
+- inverse: concerned_by (not emitted)
+- temporal semantics: fixed at capture time
+- transitive: no
+- evidence requirement: the snapshot path
+- authoritative default: false
+
+### captured
+
+- source type: CatalogCapture id
+- target type: CatalogSnapshot id
+- meaning: the capture records how and when that snapshot was obtained.
+  The capture's two status fields state, separately, what the channel
+  established and what the content evidence amounts to.
+- cardinality: exactly one snapshot per capture
+- inverse: captured_by (not emitted)
+- temporal semantics: fixed at capture time
+- transitive: no
+- evidence requirement: the resolution or capture path
+- authoritative default: false
+
 ## Deferred predicates
 
-`resolved_to`, `asserted_by`, `concerns`, and `verifies` belong to Slice B;
+`verifies` was dropped with the v5 rename: captures capture, they do not
+verify. Remaining deferred:
 `assigned_role`, `authorized_by`, `authorizes` to Slice C; `admitted_by`,
 `claim_derived_from`, `transformed_from`, `copied_from`, `summarized_from`,
 `used_prompt`, `continued_from`, and the decision predicates to Slice D or
