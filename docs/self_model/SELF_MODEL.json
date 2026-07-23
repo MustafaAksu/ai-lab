@@ -212,7 +212,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-23T19:57:01+00:00",
+  "generated_at": "2026-07-23T20:23:32+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -534,6 +534,11 @@
       "risk": "Resolution semantics decided here determine what identity independence can mean in Slice D: if resolution is loose, C3's per-kind equivalence check inherits the looseness. A permissive freshness window would let stale assertions discharge unresolved statuses that should remain open. Recorded fixtures of provider catalogs age, and an aged fixture can encode a mapping the provider has since changed.",
       "source_field": "risk",
       "source_record": "PLAN-20260723-0001"
+    },
+    {
+      "risk": "An authorization system that classifies but never refuses can create a false sense of control: readers may assume governed means checked when it means covered by a record. The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision. Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260723-0002"
     }
   ],
   "model_type": "self_model",
@@ -541,9 +546,12 @@
     "GAP-0002",
     "GAP-0005"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260723-0002"
+  ],
   "plan_counts": {
-    "completed": 22
+    "completed": 22,
+    "proposed": 1
   },
   "plans": [
     {
@@ -699,6 +707,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260723-0001.json",
       "status": "completed",
       "title": "Catalog identity resolution with honest evidence classing (ABS-0004 Slice B)"
+    },
+    {
+      "plan_id": "PLAN-20260723-0002",
+      "source_gap_id": "GAP-0005",
+      "source_path": "docs/self_model/plans/PLAN-20260723-0002.json",
+      "status": "proposed",
+      "title": "Roles, qualification, and invocation authorization (ABS-0004 Slice C)"
     }
   ],
   "recommended_next_targets": [
@@ -713,7 +728,7 @@
       "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "22683688edf7b6b050e9920295f3e108fbaa6229",
+  "repo_head": "96209e95a722c5e1f6d18061e746ff75b33b3fca",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

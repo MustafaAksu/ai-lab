@@ -1,0 +1,87 @@
+{
+  "constraints": [
+    "Implementation is authorized only within the scope admitted by the future admission warrant; any expansion requires a separate proposed and admitted plan.",
+    "Field names and semantics follow ABS-0004 v6 exactly; deviations require an ABS revision first.",
+    "All relations use the GraphRelation shape; no predicate outside the registered Slice A, B, and C lists.",
+    "authorize() is pure over stored records: no I/O, no clock, no network; the decision timestamp is supplied by the caller.",
+    "Slice A capture and Slice B resolution behavior are unchanged: no field, path, or default of either is altered.",
+    "Standing authority may not be asserted implicitly. A principal record must declare its authority_scope, and an authorization outside that scope is refused rather than downgraded."
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "created_from": {
+    "repo_commit": "96209e95a722c5e1f6d18061e746ff75b33b3fca",
+    "source_gap_id": "GAP-0005"
+  },
+  "depends_on_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/self_model/decisions/DECISION-20260723-0001.json",
+    "docs/self_model/verifications/VERIFY-20260723-0002.json",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "docs/self_model/capabilities/CAP-0016.json"
+  ],
+  "expected_outputs": [
+    "ai_lab/governance/roles.py (role, qualification, and principal schemas with validators).",
+    "ai_lab/governance/authorization.py (authorization records, pure authorize(), consequence classification, governed/experimental classifier, one-hop self-adjudication check).",
+    "docs/self_model/PREDICATE_REGISTRY.md extended with the Slice C predicates.",
+    "docs/self_model/AUTHORIZATION_RECORDS.md documenting the record family, the standing-authority termination rule, and stated limitations including the one-hop bound.",
+    "tests/test_roles.py and tests/test_authorization.py with schema, rejection, refusal-reason, and integration fixtures.",
+    "Seed records: the operator's AccountablePrincipal record and the role definitions AI-Lab already uses in practice (drafting actuator, comparison advisor, adjudicating principal, deterministic verifier)."
+  ],
+  "mitigation": "Both limits are stated in the documentation and in the capability record rather than left to inference: governed means an authorization covers the invocation, and the self-adjudication check is one hop. Refusal reasons are enumerated so that a permitted outcome is never a silent default. The role vocabulary is copied from ABS-0004 v6 verbatim rather than invented, and the seed roles describe practice already visible in the record.",
+  "next_action": "Run the admission comparison round with this plan, the ABS-0004 v6 amendment, GAP-0005, and the relevant ontology sections attached as text; on operator adjudication, admit the v6 amendment and issue the plan's admission warrant.",
+  "non_goals": [
+    "Refusing or blocking any execution. Authorization classifies; it does not gate. Execution refusal requires a separately admitted plan.",
+    "Routing, escalation, or model selection (RoutingDecision remains deferred).",
+    "Multi-hop lineage traversal, independence assessment, or evidence admission (Slice D).",
+    "Retroactive authorization of invocations captured before this slice; they remain experimental, and the pre-provenance boundary applies.",
+    "Any claim that the one-hop check implements C3. It implements C3's most direct case only, and the documentation must say so.",
+    "Automatic consequence assignment from artifact content; consequence is declared per authorization with the default derived from target type.",
+    "Cryptographic attestation of principals; ABS-0004 records it as a later implementation mechanism, not an ontology requirement."
+  ],
+  "objective": "Make the authority separation AI-Lab has practised in conversation structural: who may perform what, under which role, at what consequence, on whose standing authority, recorded as evidence rather than as testimony. The immediate motivation is concrete: on 2026-07-23 a model-default change would have set the reviewer slot to the drafting executor's own identity, collapsing reviewer and author under C3. Nothing in the system would have noticed; it was caught because a human happened to be told. Slice C makes the most direct case of that collision detectable by machine.",
+  "plan_id": "PLAN-20260723-0002",
+  "proposed_change": "After a separate admission checkpoint, and after ABS-0004 v6 is admitted: add ai_lab/governance/roles.py (RoleDefinition, RoleQualification, AccountablePrincipal schemas and validators), ai_lab/governance/authorization.py (InvocationAuthorization records, the pure authorize() function, consequence classification, the experimental-versus-governed classifier, and the one-hop self-adjudication check), predicate-registry entries, documentation, and tests. No change to provider-call behavior, no change to Slice A capture or Slice B resolution, and no refusal of any execution.",
+  "rationale": [
+    "ABS-0004's enforcement matrix records C6 authority separation as 'adopted, not currently evidenced': no artifact names the check. Slice C is what lets that row cite something.",
+    "The near-miss of 2026-07-23 is the exhibit: identity collision between reviewer and author was invisible to every test, and was avoided by chance rather than by control.",
+    "Slice A supplies produced_by and executed_by, so a one-hop identity collision is detectable now without the ancestry traversal that belongs to Slice D. The cheap case is available; the expensive case stays deferred.",
+    "ABS-0004 v6 closes the authorization-bootstrap open question by terminating chains at a principal's declared standing authority, so the regress is resolved in the ontology before any code depends on it."
+  ],
+  "repo_commit": "96209e95a722c5e1f6d18061e746ff75b33b3fca",
+  "risk": "An authorization system that classifies but never refuses can create a false sense of control: readers may assume governed means checked when it means covered by a record. The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision. Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate.",
+  "schema_version": "v1",
+  "scope": [
+    "A roles module defining schema v1 for RoleDefinition (task_function, epistemic_authority, action_authority, and the constraint fields ABS-0004 4.9 enumerates), with a validator, canonical serialization, and deterministic identity and path rules under docs/roles/.",
+    "RoleQualification records, execution-scoped as ABS-0004 4.6 requires: qualified executor, role, service endpoint scope, permitted ExecutionProfile constraints, session-state constraints, policy version, and the evaluation evidence relied on. A qualification never transfers implicitly to another endpoint or a materially different profile, and the validator rejects a qualification lacking an execution scope.",
+    "AccountablePrincipal records with principal_id, principal_kind, authority_scope, and delegation_reference, carrying no personal identifying data.",
+    "InvocationAuthorization as a DecisionRecord kind: invocation request, authorized executor, assigned role, consequence class, applicable policy, qualifications relied on, independence requirements, conditions, issuing principal, and the standing-authority or chained-authorization reference that terminates its chain.",
+    "A pure authorize() function over stored records returning an authorization outcome or one of the enumerated refusal reasons: no qualification for this executor and role, qualification out of execution scope, consequence above the role ceiling, unterminated authorization chain, standing authority claimed outside its declared scope, and self-adjudication conflict.",
+    "The one-hop self-adjudication check: for an adjudicator-authority role over a target artifact, if the artifact carries a produced_by relation to an InvocationRecord whose executed_by equals the executor under authorization, refuse. Scoped explicitly to one hop; multi-hop ancestry is Slice D.",
+    "Consequence classification per ABS-0004 Section 8: default by target type, effective consequence as the maximum of the default and applicable modifier levels, modifiers only raising, and downward adjustment only as a governed exception carrying reason, principal, scope, evidence, and review condition.",
+    "The experimental-versus-governed boundary: a classify function marking an invocation governed only when a valid authorization covers it, experimental otherwise. Classification only; no invocation is refused execution by this slice.",
+    "Predicate-registry entries for the Slice C predicates: assigned_role, authorized_by, authorizes, qualifies_executor, qualifies_for, issued_under, based_on, approved_by.",
+    "Validator fixtures covering valid records, each rejection class, and each refusal reason, plus an integration fixture authorizing an invocation against stored role, qualification, and principal records offline."
+  ],
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "status": "proposed",
+  "success_criteria": [
+    "A stored invocation is classified governed when a valid authorization covers it and experimental otherwise, demonstrated by fixtures for both outcomes.",
+    "Each enumerated refusal reason is exercised by a fixture and yields an explicit reason; authorization never fails silently and never defaults to permitted.",
+    "An authorization whose chain terminates nowhere is refused, and an authorization issued outside a principal's declared authority_scope is refused, each with its own reason.",
+    "The one-hop self-adjudication check refuses an adjudicator authorization over an artifact produced by the same executor identity, demonstrated against a real captured InvocationRecord, and permits it when the identities differ.",
+    "Consequence is monotonic: modifiers only raise the class, a downward adjustment without a recorded governed exception is refused, and a test asserts the maximum rule over an ordinal scale rather than arithmetic.",
+    "A qualification lacking an execution scope is rejected, and a qualification is not honoured for an endpoint or execution profile outside its scope.",
+    "All new behavior covered by tests; the full suite passes offline; the repository audit remains ok true verified_current; cross-environment reproduction succeeds byte-identically."
+  ],
+  "summary": "Implement ABS-0004 v6 Slice C: RoleDefinition records on the three admitted axes, execution-scoped RoleQualification, InvocationAuthorization as a DecisionRecord kind, consequence classification, and the experimental-versus-governed boundary. An authorization is issued by an AccountablePrincipal holding standing authority within a declared scope, or chains to one; an authorization that chains to nothing is unauthorized rather than permitted. Authorization has one consequence in this slice and no others: an invocation is classified governed only when an authorization covers it, and experimental otherwise. Nothing is refused execution. The authorization function additionally performs a one-hop self-adjudication check using Slice A provenance: if the artifact under adjudication carries an InvocationRecord whose executor identity equals the executor being authorized, authorization is refused with an enumerated reason.",
+  "title": "Roles, qualification, and invocation authorization (ABS-0004 Slice C)"
+}

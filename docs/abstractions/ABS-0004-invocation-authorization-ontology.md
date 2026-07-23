@@ -4,11 +4,12 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v5` (v1, v2 superseded during drafting and never entered the
+- version: `v6` (v1, v2 superseded during drafting and never entered the
   record; v3 entered the record at commit 6802cf7 and underwent the
   COMP-0032 challenge round; v4 applied the twelve adjudicated findings and
-  was admitted at 56f18a2; v5 is a narrow amendment replacing
-  CatalogVerification with CatalogCapture on the COMP-0035 finding, adopted
+  was admitted at 56f18a2; v5 replaced CatalogVerification with
+  CatalogCapture on the COMP-0035 finding; v6 closes the
+  authorization-bootstrap open question ahead of the Slice C plan, adopted
   by the operator as accountable principal)
 - abstraction_level: `2`
 - status: `admitted`
@@ -129,9 +130,30 @@ execution outside the declared classes requires its own authorization.
 Undeclared subordinate execution is a disclosure violation under 4.7, not
 an implicitly authorized act.
 
-`[OPEN]` Authorization-chain bootstrap: how an authorization chain terminates
-in a standing policy, delegated authority, or AccountablePrincipal authority
-scope rather than requiring an infinite sequence of prior authorizations.
+`[DEF]` Authorization-chain termination. An authorization chain terminates at
+an AccountablePrincipal's standing authority. A principal holds standing
+authority within a declared `authority_scope`; authorizations the principal
+issues inside that scope are self-standing and require no prior
+authorization. Every other authorization must chain, through one or more
+steps, to a standing authority. An authorization that chains to nothing is
+not thereby permitted: it is unauthorized.
+
+`[ADOPTED_CONSTRAINT]` Standing authority is declared, bounded, and
+recorded. A principal may not assert standing authority implicitly, by
+practice, or for a scope wider than its declared `authority_scope`; an
+authorization issued outside that scope does not terminate a chain and is
+unauthorized. This is what prevents the regress from being closed by
+convenience: the terminating step is a recorded human or organizational
+commitment with stated bounds, not an executor exempting itself.
+
+`[DEF]` Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13.
+
+`[OPEN]` Whether standing authority requires periodic re-declaration or
+review, and what evidence a scope declaration must carry beyond its own
+statement.
 
 ## 4. Object Definitions
 
