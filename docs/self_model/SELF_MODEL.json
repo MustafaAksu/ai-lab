@@ -203,7 +203,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-23T15:52:08+00:00",
+  "generated_at": "2026-07-23T15:53:17+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -692,7 +692,7 @@
       "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
     }
   ],
-  "repo_head": "6d7dfeefb58cbf0a58ea2cd50a8c90795d3f41bf",
+  "repo_head": "f63b556b27df9b5a37c4d33fc9189efe6dc01d2e",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
