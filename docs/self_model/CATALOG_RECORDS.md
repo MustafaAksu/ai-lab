@@ -115,6 +115,29 @@ Superseded resolutions are recorded, never retroactively applied. If a
 later catalog shows a different mapping, that is a new annotation; the
 earlier one stands as what was believed on the evidence available then.
 
+## Capture: opt-in live, fixture replay by default
+
+`ai_lab/providers/catalog_capture.py` provides both paths through one
+parsing function, so the offline tests exercise the same code the live
+path uses.
+
+- **Fixture replay** is the default and needs no network and no opt-in.
+  Recorded payloads live under `tests/fixtures/catalog/`, each carrying a
+  `recorded_at` date and a `provenance` statement. A snapshot built from a
+  fixture takes its `observed_at` from the recording date, never from the
+  current time, so a stale fixture correctly fails the freshness window
+  instead of silently passing.
+- **Live fetch** requires `AI_LAB_ENABLE_LIVE_CATALOG=1`. Attempting it
+  while disabled raises rather than falling back. The transport is
+  injected as a callable, so no HTTP client is embedded here.
+
+Every capture from either path is `provider_self_report` /
+`self_asserted`, and `channel_authentication_status` is recorded as
+`unverifiable`: this slice does not inspect certificate chains or key
+digests, so nothing has been independently established about the channel.
+Recording a stronger channel status without performing the check would be
+the overclaim P6 forbids.
+
 ## Known limitations
 
 - Every obtainable catalog claim is currently `self_asserted`. AI-Lab has
@@ -123,7 +146,7 @@ earlier one stands as what was believed on the evidence available then.
 - A provider that silently substitutes a model without updating its
   catalog is undetectable from catalog evidence alone. Resolution records
   what the catalog said, not what the provider did.
-- Channel authentication is representable but not yet performed: the live
-  capture path is opt-in and disabled by default, and no TLS chain or key
-  digest is currently recorded.
+- Channel authentication is representable but not yet performed: no TLS
+  chain or key digest is recorded, so every capture reads `unverifiable`
+  on that axis.
 - No consumer reads these records. Resolution results gate nothing.

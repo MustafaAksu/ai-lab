@@ -769,3 +769,189 @@ def test_catalog_documentation_states_the_mitigation_honestly():
     assert "not a control" in doc
     assert "self_asserted" in doc
     assert "thirty days" in doc or "30 days" in doc
+
+
+# --- capture path: opt-in live, fixture replay by default --------------
+
+
+def test_live_capture_is_disabled_by_default(monkeypatch):
+    from ai_lab.providers.catalog_capture import LIVE_CAPTURE_ENV, live_capture_enabled
+
+    monkeypatch.delenv(LIVE_CAPTURE_ENV, raising=False)
+    assert live_capture_enabled() is False
+
+
+def test_live_capture_refuses_while_disabled(monkeypatch):
+    from ai_lab.providers.catalog_capture import (
+        LIVE_CAPTURE_ENV,
+        CatalogCaptureError,
+        capture_live,
+    )
+
+    monkeypatch.delenv(LIVE_CAPTURE_ENV, raising=False)
+
+    def fetcher():  # pragma: no cover - must never run
+        raise AssertionError("network access attempted while disabled")
+
+    with pytest.raises(CatalogCaptureError, match="disabled"):
+        capture_live(
+            fetcher=fetcher,
+            operating_organization="org",
+            endpoint_identifier="org.endpoint",
+        )
+
+
+def test_live_capture_runs_only_when_explicitly_enabled(monkeypatch):
+    from ai_lab.providers.catalog_capture import LIVE_CAPTURE_ENV, capture_live
+
+    monkeypatch.setenv(LIVE_CAPTURE_ENV, "1")
+    payload = {"data": [{"id": "model-alpha", "owned_by": "org", "context_window": 1000}]}
+
+    endpoint, snapshot, capture, identities = capture_live(
+        fetcher=lambda: payload,
+        operating_organization="org",
+        endpoint_identifier="provider.endpoint",
+    )
+
+    validate_catalog_record(endpoint)
+    validate_catalog_record(snapshot)
+    validate_catalog_record(capture)
+    assert capture["capture_method"] == "live_fetch"
+    assert identities[0]["canonical_name"] == "model-alpha"
+
+
+def test_captured_catalogs_are_always_self_asserted(monkeypatch):
+    from ai_lab.providers.catalog_capture import LIVE_CAPTURE_ENV, capture_live
+
+    monkeypatch.setenv(LIVE_CAPTURE_ENV, "1")
+    payload = {"data": [{"id": "model-alpha", "owned_by": "org"}]}
+
+    _, _, capture, _ = capture_live(
+        fetcher=lambda: payload,
+        operating_organization="org",
+        endpoint_identifier="provider.endpoint",
+    )
+
+    assert capture["source_type"] == SOURCE_PROVIDER_SELF_REPORT
+    assert capture["content_evidence_status"] == EVIDENCE_SELF_ASSERTED
+    # Nothing has authenticated the channel in this slice, so claiming
+    # anything stronger would be the overclaim P6 forbids.
+    assert capture["channel_authentication_status"] == UNVERIFIABLE
+
+
+def test_fixture_replay_needs_no_network_and_no_opt_in(monkeypatch):
+    from ai_lab.providers.catalog_capture import LIVE_CAPTURE_ENV, capture_from_fixture
+
+    monkeypatch.delenv(LIVE_CAPTURE_ENV, raising=False)
+
+    endpoint, snapshot, capture, identities = capture_from_fixture(
+        "anthropic-models-20260722"
+    )
+
+    validate_catalog_record(endpoint)
+    validate_catalog_record(snapshot)
+    validate_catalog_record(capture)
+    assert capture["capture_method"].startswith("fixture_replay:")
+    assert any(i["canonical_name"] == "claude-sonnet-4-5" for i in identities)
+
+
+def test_fixture_observed_at_is_the_recording_date_not_now():
+    from ai_lab.providers.catalog_capture import capture_from_fixture, load_fixture
+
+    fixture = load_fixture("openai-models-20260722")
+    _, snapshot, capture, _ = capture_from_fixture("openai-models-20260722")
+
+    assert snapshot["observed_at"] == fixture["recorded_at"]
+    assert capture["captured_at"] == fixture["recorded_at"]
+
+
+def test_recorded_fixtures_declare_their_provenance():
+    from ai_lab.providers.catalog_capture import FIXTURE_DIR
+
+    fixtures = sorted(Path(FIXTURE_DIR).glob("*.json"))
+    assert fixtures, "expected recorded catalog fixtures"
+
+    for path in fixtures:
+        fixture = json.loads(path.read_text(encoding="utf-8"))
+        assert fixture["recorded_at"]
+        assert "provenance" in fixture
+        assert "self-report" in fixture["provenance"]
+
+
+def test_fixture_replay_and_live_capture_share_one_parsing_path():
+    import inspect
+
+    from ai_lab.providers.catalog_capture import (
+        capture_from_fixture,
+        capture_live,
+        snapshot_from_payload,
+    )
+
+    for function in (capture_from_fixture, capture_live):
+        assert "snapshot_from_payload" in inspect.getsource(function)
+
+
+def test_stale_fixture_does_not_resolve_a_recent_invocation():
+    from ai_lab.providers.catalog_capture import capture_from_fixture
+
+    _, snapshot, capture, identities = capture_from_fixture("anthropic-models-20260722")
+    invocation = {
+        "invocation_id": "INV-5151515151515151",
+        "requested_model_name": "claude-sonnet-4-5",
+        "service_endpoint": "anthropic.messages",
+        "occurred_at": "2027-01-01T00:00:00+00:00",
+    }
+
+    outcome = resolve_identity(invocation=invocation, snapshot=snapshot, capture=capture)
+
+    assert outcome["reason"] == REASON_EXPIRED_FRESHNESS_WINDOW
+
+
+def test_fixture_resolves_an_invocation_inside_the_window():
+    from ai_lab.providers.catalog_capture import capture_from_fixture
+
+    _, snapshot, capture, identities = capture_from_fixture("anthropic-models-20260722")
+    invocation = {
+        "invocation_id": "INV-5252525252525252",
+        "requested_model_name": "claude-sonnet-4-5",
+        "service_endpoint": "anthropic.messages",
+        "occurred_at": "2026-07-25T00:00:00+00:00",
+    }
+
+    outcome = resolve_identity(invocation=invocation, snapshot=snapshot, capture=capture)
+
+    assert outcome["resolved"] is True
+    assert outcome["content_evidence_status"] == EVIDENCE_SELF_ASSERTED
+    assert outcome["resolved_identity"] in {i["record_id"] for i in identities}
+
+
+def test_catalog_records_write_to_deterministic_paths(tmp_path):
+    from ai_lab.providers.catalog_capture import capture_from_fixture, write_catalog_records
+
+    endpoint, snapshot, capture, identities = capture_from_fixture(
+        "openai-models-20260722"
+    )
+
+    written = write_catalog_records([endpoint, snapshot, capture, *identities], tmp_path)
+
+    assert len(written) == 3 + len(identities)
+    for path in written:
+        assert path.exists()
+        validate_catalog_record(json.loads(path.read_text(encoding="utf-8")))
+
+
+def test_payload_without_entries_is_rejected(monkeypatch):
+    from ai_lab.providers.catalog_capture import (
+        LIVE_CAPTURE_ENV,
+        CatalogCaptureError,
+        capture_live,
+    )
+
+    monkeypatch.setenv(LIVE_CAPTURE_ENV, "1")
+
+    with pytest.raises(CatalogCaptureError, match="no model entries"):
+        capture_live(
+            fetcher=lambda: {"data": []},
+            operating_organization="org",
+            endpoint_identifier="provider.endpoint",
+        )

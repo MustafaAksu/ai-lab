@@ -1,0 +1,20 @@
+{
+  "endpoint_identifier": "anthropic.messages",
+  "operating_organization": "anthropic",
+  "payload": {
+    "data": [
+      {
+        "context_window": 200000,
+        "id": "claude-sonnet-4-5",
+        "owned_by": "anthropic"
+      },
+      {
+        "context_window": 200000,
+        "id": "claude-opus-4-1",
+        "owned_by": "anthropic"
+      }
+    ]
+  },
+  "provenance": "Shape-faithful recording of a models-list response as observed by the operator on the recorded_at date. Retained as a fixture for offline replay. Entries are provider self-report and are not independently corroborated; the recording may be stale relative to the live catalog.",
+  "recorded_at": "2026-07-22T00:00:00+00:00"
+}

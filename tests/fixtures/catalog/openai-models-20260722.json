@@ -1,0 +1,20 @@
+{
+  "endpoint_identifier": "openai.responses",
+  "operating_organization": "openai",
+  "payload": {
+    "data": [
+      {
+        "context_window": 400000,
+        "id": "gpt-5",
+        "owned_by": "openai"
+      },
+      {
+        "context_window": 400000,
+        "id": "gpt-5-mini",
+        "owned_by": "openai"
+      }
+    ]
+  },
+  "provenance": "Shape-faithful recording of a models-list response as observed by the operator on the recorded_at date. Retained as a fixture for offline replay. Entries are provider self-report and are not independently corroborated; the recording may be stale relative to the live catalog.",
+  "recorded_at": "2026-07-22T00:00:00+00:00"
+}
