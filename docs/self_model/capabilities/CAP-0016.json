@@ -23,6 +23,14 @@
       {
         "commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
         "role": "capture path: fixture replay and opt-in live fetch"
+      },
+      {
+        "commit": "e2942276f890330070444e203c263d90e0d46d12",
+        "role": "live-fetch transport and governed runner, closing the partly delivered scope item"
+      },
+      {
+        "commit": "22683688edf7b6b050e9920295f3e108fbaa6229",
+        "role": "fixture provenance correction, unreachable branch removal, model-default advance"
       }
     ],
     "files": [
@@ -37,12 +45,12 @@
         "role": "pure resolution, non-resolution reasons, annotations"
       },
       {
-        "content_hash": "a5f5f7b19ebddd8fbc9d150a158c8a6d654dd02a7d839671092793510ff32746",
+        "content_hash": "d19c2c31545a49925344befddf08fbfb72c0e0dd6cea3195baa2883b90293076",
         "path": "ai_lab/providers/catalog_capture.py",
         "role": "fixture replay and opt-in live capture"
       },
       {
-        "content_hash": "4edb1c5ff66ef189bb92261e32350a076c7f472c2a7bb06426e9bad1c6d60620",
+        "content_hash": "dca3737a4809ee5547e5b341cbf7bf1a069a0ccab09225b1c061c5beb2740ac0",
         "path": "tests/test_catalog.py",
         "role": "schema, rejection, non-resolution, condition, and capture tests"
       },
@@ -55,6 +63,11 @@
         "content_hash": "72a2f92204435848236a93a5aa00b59bfbb5b76ab4d6f20e264bddb023ec457b",
         "path": "docs/self_model/PREDICATE_REGISTRY.md",
         "role": "Slice A and Slice B predicate registry"
+      },
+      {
+        "content_hash": "b7b65ad87d6737198d45bb9ee77c9bfe1e54229dcb78c55688b5a794683eb710",
+        "path": "ai_lab/providers/catalog_transport.py",
+        "role": "SDK-backed fetchers, payload retention, governed capture run"
       }
     ],
     "memory_records": []
@@ -69,8 +82,8 @@
     "ai_lab.providers.catalog_capture.capture_from_fixture and capture_live (fixture replay, opt-in live fetch)"
   ],
   "last_verified": {
-    "repo_commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
-    "verification_artifact": "docs/self_model/verifications/VERIFY-20260723-0001.json",
+    "repo_commit": "22683688edf7b6b050e9920295f3e108fbaa6229",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260723-0002.json",
     "verified_at": "2026-07-23T00:00:00+00:00"
   },
   "limits": [
@@ -86,7 +99,7 @@
   ],
   "name": "Catalog identity resolution with honest evidence classing (ABS-0004 v5 Slice B)",
   "notes": [
-    "Evidence content hashes for ai_lab/providers/catalog_capture.py, docs/self_model/CATALOG_RECORDS.md were updated by the 2026-07-23 correction work. The re-verification supporting those hashes is recorded in VERIFY-20260723-0002; last_verified is advanced to it in the commit that adds that record."
+    "Evidence advanced by the 2026-07-23 correction work recorded in VERIFY-20260723-0002. The live-fetch scope item of PLAN-20260723-0001 was partly delivered when VERIFY-20260723-0001 recorded it complete; the transport that closes it is now included in this record's evidence. Hashes updated for ai_lab/providers/catalog_capture.py, tests/test_catalog.py."
   ],
   "recommended_next_actions": [
     "Consider a slice that performs channel authentication (certificate chain or key digest capture) so channel_authentication_status can carry earned evidence rather than unverifiable.",

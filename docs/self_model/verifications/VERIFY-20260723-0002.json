@@ -1,0 +1,62 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/catalog_transport.py",
+    "ai_lab/providers/catalog_capture.py",
+    "ai_lab/providers/settings.py",
+    "scripts/capture_catalog.py",
+    "tests/test_catalog.py",
+    "tests/test_catalog_transport.py",
+    "tests/fixtures/catalog/anthropic-models-20260722.json",
+    "tests/fixtures/catalog/openai-models-20260722.json",
+    "docs/catalog/payloads/anthropic-20260723T184516.json",
+    "docs/catalog/payloads/openai-20260723T184518.json",
+    "docs/self_model/CATALOG_RECORDS.md",
+    "docs/self_model/decisions/DECISION-20260723-0001.json",
+    "docs/self_model/verifications/VERIFY-20260723-0001.json",
+    "docs/self_model/capabilities/CAP-0016.json"
+  ],
+  "commands": [
+    {
+      "command": "AI_LAB_ENABLE_LIVE_CATALOG=1 python scripts/capture_catalog.py anthropic",
+      "exit_code": 0,
+      "summary": "9 identities, 9 assertions, SNAP-c111fceb0ec3809f; payload retained."
+    },
+    {
+      "command": "AI_LAB_ENABLE_LIVE_CATALOG=1 python scripts/capture_catalog.py openai",
+      "exit_code": 0,
+      "summary": "123 identities, 123 assertions, SNAP-35fbd338ad148fb9; payload retained."
+    },
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "713 passed, up from 703; transport, fixture-honesty, and default-presence tests added."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "ok true, verified_current. The same audit reported content-stale twice during this work, once for an edit that did not belong in the file and once for one that did."
+    },
+    {
+      "command": "git fetch origin main && git reset --hard origin/main && python3 -m pytest -q",
+      "exit_code": 0,
+      "summary": "Cross-environment reproduction at 2268368: 713 passing, verified_current, byte-identical checksums."
+    }
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "notes": [
+    "This record corrects VERIFY-20260723-0001; it does not supersede it. The plan remains completed and CAP-0016 remains implemented, with the live-fetch scope item now genuinely delivered.",
+    "Five findings are recorded above. Three concern the drafting executor's own work: an overclaimed completion, a fabricated provenance statement, and a fixture asserting a field reality does not return. All three were caught by review or by the repository audit, none by a test written in advance, which is itself the finding worth carrying forward."
+  ],
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "22683688edf7b6b050e9920295f3e108fbaa6229",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Correction and completion of the live-fetch scope item of PLAN-20260723-0001, and the record of five findings from the cleanup that followed. VERIFY-20260723-0001 recorded all nine scope items as delivered; one was delivered only in part. That record is not rewritten: a disclosure note is appended to it, so the original claim stays visible beside its correction.\n\nFINDING 1, the overclaim. The live-fetch scope item read 'A live catalog fetch path behind an explicit opt-in (environment flag), disabled by default'. What shipped at 40bc540 was capture_live() accepting an injected fetcher, with no transport anywhere in the repository: the mechanism existed, the path had no way to reach a provider. The overclaim was made by the executor that wrote the code under verification, the self-authored-verification pattern ABS-0004 C10 names, and it was caught by review rather than by any control. Closed at e294227: ai_lab/providers/catalog_transport.py supplies SDK-backed fetchers for both surfaces and retains the payload verbatim; scripts/capture_catalog.py is the governed runner; both refuse and construct no client while live capture is disabled.\n\nFINDING 2, evidence-hash drift, caught by the audit. Appending transport tests to tests/test_catalog.py invalidated the content hash CAP-0016 records for that file; the repository audit reported content-stale within minutes. The tests were moved to tests/test_catalog_transport.py, restoring the file to the exact bytes CAP-0016 attests, rather than updating the hash to imply a re-verification that had not occurred. A second, legitimate instance followed: removing the unreachable branch from catalog_capture.py changed a file whose content CAP-0016 also attests, and there the honest response was the opposite, to update the hash and re-verify, which this record does.\n\nFINDING 3, the first live capture. Two governed captures were run (SNAP-c111fceb0ec3809f, 9 Anthropic identities; SNAP-35fbd338ad148fb9, 123 OpenAI identities), payloads retained, satisfying the WARR-20260723-0002 condition. Both are provider_self_report, self_asserted, with channel authentication unverifiable.\n\nFINDING 4, non-resolution is not invalidity, the most consequential result. AI-Lab's own configured default at the time, claude-sonnet-4-5, is absent from the Anthropic listing, which carries claude-sonnet-4-5-20250929 instead, while every AI-Lab call using the bare alias succeeded. A listing is therefore a partial account of an endpoint's accepted names, not a complete one, and no_applicable_assertion reports the catalog's silence rather than a name's validity. A future C2 catalog-admission gate keyed on listing presence would have blocked AI-Lab's own working configuration. Recorded in CATALOG_RECORDS.md. The same reasoning applies to third-party alias claims: ADVISOR-0000's gpt-5.6 alias is absent from the listing and is therefore unverifiable, not refuted. ADVISOR-0000's other existence claims were checked against the snapshots and are present; its pricing, context, and capability claims remain unverifiable because no captured source publishes them.\n\nFINDING 5, false provenance in the fixtures, the most uncomfortable. The recorded fixtures described themselves as 'Shape-faithful recording of a models-list response as observed by the operator'. No operator observed that content; the drafting executor invented it. The shape was faithful, the content was fabricated, and the sentence claiming observation exceeded its evidence, which is exactly the defect P6 names, inside the file family built to prevent it. Corrected at 2268368: the fixtures declare themselves SYNTHETIC and not an observation, state that the earlier description was false, and the loader now rejects any fixture lacking a provenance statement. The operator adjudicated the general question: synthetic test fixtures are legitimate when honestly labelled, and invented values may not enter governed catalog records, where absence is recorded as absence.\n\nA related fixture defect was found and fixed: the fixtures carried a context_window field that no live listing returns, so the suite exercised a context_limit branch live capture could not reach. The branch was removed and its reason recorded in the source; AI-Lab now records no claim about context limits rather than a claim it cannot obtain.\n\nModel defaults were advanced under DECISION-20260723-0001 on this evidence: claude-sonnet-5 and gpt-5.6-terra, both present in the captured listings, with claude-opus-4-8 deliberately declined because it is the drafting executor's own reported identity and would collapse reviewer and author into one ModelIdentity under C3. A test now checks both defaults against the retained payloads on every run.\n\nTests grew from 703 to 713. The repository audit reports ok true verified_current. Commit 2268368 pulled from the public GitHub repository into a separate environment reproduced 713 passing tests, the verified_current audit, and byte-identical checksums.",
+  "target_item_id": "PLAN-20260723-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260723-0002"
+}
