@@ -1,0 +1,109 @@
+{
+  "assertions": [
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-sonnet-5",
+      "assertion_value_or_target": "MID-105b9070b0bfc3e4",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-fable-5",
+      "assertion_value_or_target": "MID-33c6116a707a4422",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-opus-4-8",
+      "assertion_value_or_target": "MID-6f191baafcc1a8de",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-opus-4-7",
+      "assertion_value_or_target": "MID-e111d89e9c7e159a",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-sonnet-4-6",
+      "assertion_value_or_target": "MID-cb58ac2f2ed5d789",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-opus-4-6",
+      "assertion_value_or_target": "MID-5ed6782e5cf8d44b",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-opus-4-5-20251101",
+      "assertion_value_or_target": "MID-b1c6e8a1313c3dd9",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-haiku-4-5-20251001",
+      "assertion_value_or_target": "MID-3472bba2daed90f3",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    },
+    {
+      "assertion_predicate": "resolves_to",
+      "assertion_subject": "claude-sonnet-4-5-20250929",
+      "assertion_value_or_target": "MID-20d9d75eff5249df",
+      "scope": null,
+      "source": "live fetch anthropic.messages",
+      "superseded_by": null,
+      "unit": null,
+      "valid_from": "2026-07-23T18:45:16.162007+00:00",
+      "valid_until": null
+    }
+  ],
+  "observed_at": "2026-07-23T18:45:16.162007+00:00",
+  "record_id": "SNAP-c111fceb0ec3809f",
+  "record_kind": "catalog_snapshot",
+  "schema_version": "v1",
+  "service_endpoint_id": "EID-beff998d7cb8945f",
+  "source_set_digest": "sha256:8095763d4f215afdcfbc9280e3ce382cd1f48e70194b82d8629392b7f65c4b58"
+}

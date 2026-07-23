@@ -1,0 +1,8 @@
+{
+  "canonical_name": "tts-1",
+  "originator_id": "openai-internal",
+  "record_id": "MID-12ed583863c4c6a4",
+  "record_kind": "model_identity",
+  "release_identity": "unknown",
+  "schema_version": "v1"
+}

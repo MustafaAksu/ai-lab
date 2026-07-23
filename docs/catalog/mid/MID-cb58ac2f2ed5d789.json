@@ -1,0 +1,8 @@
+{
+  "canonical_name": "claude-sonnet-4-6",
+  "originator_id": "anthropic",
+  "record_id": "MID-cb58ac2f2ed5d789",
+  "record_kind": "model_identity",
+  "release_identity": "unknown",
+  "schema_version": "v1"
+}

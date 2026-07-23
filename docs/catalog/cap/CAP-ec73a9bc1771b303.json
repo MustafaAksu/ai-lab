@@ -1,0 +1,14 @@
+{
+  "capture_method": "live_fetch",
+  "capture_success": true,
+  "content_evidence_status": "self_asserted",
+  "channel_authentication_status": "unverifiable",
+  "captured_at": "2026-07-23T18:45:18.796600+00:00",
+  "capturing_executor": "tool:catalog_transport",
+  "content_digest": "sha256:e41730ca8e7111c8d42e59e10da8baadc4eafed8c1f5b48bf854eb2d459dc378",
+  "record_id": "CAP-ec73a9bc1771b303",
+  "record_kind": "catalog_capture",
+  "schema_version": "v1",
+  "snapshot_id": "SNAP-35fbd338ad148fb9",
+  "source_type": "provider_self_report"
+}

@@ -1,0 +1,8 @@
+{
+  "canonical_name": "text-embedding-ada-002",
+  "originator_id": "openai-internal",
+  "record_id": "MID-54bd367064d1f923",
+  "record_kind": "model_identity",
+  "release_identity": "unknown",
+  "schema_version": "v1"
+}

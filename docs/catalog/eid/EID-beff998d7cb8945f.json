@@ -1,0 +1,7 @@
+{
+  "endpoint_identifier": "anthropic.messages",
+  "operating_organization": "anthropic",
+  "record_id": "EID-beff998d7cb8945f",
+  "record_kind": "service_endpoint_identity",
+  "schema_version": "v1"
+}

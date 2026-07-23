@@ -1,0 +1,7 @@
+{
+  "endpoint_identifier": "openai.responses",
+  "operating_organization": "openai",
+  "record_id": "EID-4f3c9d6be930ec02",
+  "record_kind": "service_endpoint_identity",
+  "schema_version": "v1"
+}
