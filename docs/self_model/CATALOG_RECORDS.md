@@ -81,6 +81,34 @@ silent default:
   resolver declines to act rather than proceeding mechanically. Declining
   is not an admissibility judgment; admissibility belongs to Slice D.
 
+### Non-resolution is not invalidity
+
+`no_applicable_assertion` means the requested name is **not in the listing**.
+It does not mean the name is invalid, unsupported, or wrong.
+
+This is not a theoretical caveat. The first live capture (2026-07-23)
+established it directly: AI-Lab's own configured default at the time,
+`claude-sonnet-4-5`, does not appear in the provider's models listing, which
+carries `claude-sonnet-4-5-20250929` instead. Every AI-Lab call using the
+bare alias had been succeeding. So the endpoint accepts names the listing
+does not enumerate, and a listing is therefore a partial account of an
+endpoint's accepted names, not a complete one.
+
+Consequences that must not be lost:
+
+- A reader may not infer from `no_applicable_assertion` that a model does
+  not exist or that a call would fail. The only supported inference is that
+  the catalog, as captured, does not carry an assertion binding that name.
+- Any future consumer that gates on resolution (C2 catalog admission is the
+  obvious candidate, and is deferred) would have blocked AI-Lab's own
+  working configuration. A gate keyed on catalog presence must therefore
+  treat absence as a prompt for review, never as a refusal, unless and
+  until a source that enumerates aliases is admitted.
+- The same reasoning applies to third-party catalog claims about aliases.
+  ADVISOR-0000 asserted that a `gpt-5.6` alias routes to a specific model;
+  that alias is absent from the captured listing, and by the rule above its
+  absence is not evidence against the claim. It remains unverifiable.
+
 ### Freshness window
 
 Default **thirty days**, configurable per call. A snapshot older than the
@@ -150,3 +178,11 @@ the overclaim P6 forbids.
   chain or key digest is recorded, so every capture reads `unverifiable`
   on that axis.
 - No consumer reads these records. Resolution results gate nothing.
+- Recorded fixtures are only as faithful as the recording. The original
+  fixtures carried a `context_window` field that no live response returns,
+  which made the suite exercise a branch live capture could not reach.
+  Corrected on 2026-07-23; the lesson is that a fixture asserts a shape, and
+  an unverified shape is a claim like any other.
+- Context limits are not captured. Neither provider's models listing carries
+  one, so AI-Lab records no claim about context windows rather than a claim
+  it cannot obtain. This is a gap in the source, not in the schema.

@@ -37,7 +37,7 @@
         "role": "pure resolution, non-resolution reasons, annotations"
       },
       {
-        "content_hash": "a3c023cd0726a68e457456412919be9aceeefb0cd3528e4230347040df6a9562",
+        "content_hash": "a5f5f7b19ebddd8fbc9d150a158c8a6d654dd02a7d839671092793510ff32746",
         "path": "ai_lab/providers/catalog_capture.py",
         "role": "fixture replay and opt-in live capture"
       },
@@ -47,7 +47,7 @@
         "role": "schema, rejection, non-resolution, condition, and capture tests"
       },
       {
-        "content_hash": "dd6db1f881815c4c73d8660bb31b3ed67fcf341c7eec2795b36b07cce77a0faa",
+        "content_hash": "0345341cf8a606fd3c8931c70b2135d22951ca171e2a3b2994be0519bc218a2c",
         "path": "docs/self_model/CATALOG_RECORDS.md",
         "role": "record family documentation and stated limitations"
       },
@@ -80,9 +80,14 @@
     "Serialization adjacency of the two status fields is a mitigation and not a control: a downstream renderer can still display channel strength without the content weakness, an attack both COMP-0036 reviewers constructed independently.",
     "Consumers must join an InvocationRecord to its IdentityResolution annotations; a reader of the invocation alone sees unresolved forever, which is materially misleading once an annotation exists.",
     "Nothing reads these records. Resolution results gate no decision, and C2 catalog admission remains unactivated.",
-    "Recorded fixtures are shape-faithful recordings with stated provenance, not live captures, and they age: an aged fixture can encode a mapping the provider has since changed."
+    "Recorded fixtures are shape-faithful recordings with stated provenance, not live captures, and they age: an aged fixture can encode a mapping the provider has since changed.",
+    "The context_limit assertion path was removed on 2026-07-23: the first live capture confirmed that neither provider's models listing carries a context window, so the branch was reachable only from a fixture that invented the field. AI-Lab records no claim about context limits rather than a claim it cannot obtain.",
+    "A requested name absent from a listing is not thereby invalid: AI-Lab's own working default at the time of the first live capture, claude-sonnet-4-5, was absent from the provider's listing while every call using it succeeded. Non-resolution reports the catalog's silence, not the name's validity."
   ],
   "name": "Catalog identity resolution with honest evidence classing (ABS-0004 v5 Slice B)",
+  "notes": [
+    "Evidence content hashes for ai_lab/providers/catalog_capture.py, docs/self_model/CATALOG_RECORDS.md were updated by the 2026-07-23 correction work. The re-verification supporting those hashes is recorded in VERIFY-20260723-0002; last_verified is advanced to it in the commit that adds that record."
+  ],
   "recommended_next_actions": [
     "Consider a slice that performs channel authentication (certificate chain or key digest capture) so channel_authentication_status can carry earned evidence rather than unverifiable.",
     "Run one governed live capture with the opt-in enabled, to test the parser against a real payload and to date the first genuine CatalogSnapshot.",

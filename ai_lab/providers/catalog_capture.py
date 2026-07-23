@@ -112,18 +112,14 @@ def snapshot_from_payload(
                 source=source_set,
             )
         )
-        context_limit = entry.get("context_window")
-        if isinstance(context_limit, int) and not isinstance(context_limit, bool):
-            assertions.append(
-                build_assertion(
-                    assertion_subject=api_name,
-                    assertion_predicate="context_limit",
-                    assertion_value_or_target=context_limit,
-                    unit="tokens",
-                    valid_from=observed_at,
-                    source=source_set,
-                )
-            )
+        # No context_limit assertion is emitted. The first live capture
+        # (2026-07-23) confirmed that neither provider's models-list response
+        # carries a context window, so a branch keyed on one would be
+        # unreachable from live capture and reachable only from a fixture that
+        # invented the field. Context limits are a real catalog claim, but they
+        # require a source that actually publishes them; until such a source is
+        # admitted, AI-Lab records no claim about them rather than a claim it
+        # cannot obtain.
 
     snapshot = build_snapshot(
         service_endpoint_id=endpoint["record_id"],
