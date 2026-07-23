@@ -29,6 +29,9 @@
     }
   ],
   "created_at": "2026-07-23T00:00:00+00:00",
+  "notes": [
+    "CORRECTION: this record states that all nine scope items were delivered. One was delivered only in part. The plan's live-fetch scope item read 'A live catalog fetch path behind an explicit opt-in (environment flag), disabled by default'; what shipped at 40bc540 was capture_live() taking an injected fetcher, with no transport anywhere in the repository. A path with no transport is arguably not a fetch path. The overclaim was made by the same executor that wrote the code being verified, which is the self-authored-verification pattern ABS-0004 C10 exists to flag; it was caught by review rather than by any control. See VERIFY-20260723-0002 for the delivered transport and the corrected completion evidence. This record is not rewritten: the original claim stays visible."
+  ],
   "recorded_by": {
     "peer_id": "claude",
     "role": "assistant",
