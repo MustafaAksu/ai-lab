@@ -1,0 +1,44 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/catalog.py",
+    "ai_lab/providers/catalog_resolution.py",
+    "ai_lab/providers/catalog_capture.py",
+    "tests/test_catalog.py",
+    "tests/fixtures/catalog/anthropic-models-20260722.json",
+    "tests/fixtures/catalog/openai-models-20260722.json",
+    "docs/self_model/CATALOG_RECORDS.md",
+    "docs/self_model/PREDICATE_REGISTRY.md",
+    "docs/invocations/INV-23b4d4298e0aa443.json",
+    "docs/invocations/INV-9fd60000b4da1499.json"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "703 passed, up from 635 at admission; 68 new tests across the record family, every rejection class, all five non-resolution reasons, the nine conditions, and the capture path."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "ok true, verification_outcome verified_current."
+    },
+    {
+      "command": "git fetch origin main && git reset --hard origin/main && python3 -m pytest -q",
+      "exit_code": 0,
+      "summary": "Independent cross-environment reproduction from the public repository at 40bc540: 703 passing, verified_current audit, byte-identical file checksums."
+    }
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified completion of PLAN-20260723-0001 at commit 40bc540: ABS-0004 v5 Slice B catalog identity resolution. All nine scope items are delivered. ai_lab/providers/catalog.py defines schema v1 for ModelIdentity, ServiceEndpointIdentity, atomic CatalogAssertion, CatalogSnapshot, and CatalogCapture with validators, deterministic identities and paths, and canonical serialization. ai_lab/providers/catalog_resolution.py provides the pure resolution function, the five enumerated non-resolution reasons, and the append-only IdentityResolution annotation. ai_lab/providers/catalog_capture.py provides fixture replay by default and live fetch behind an explicit opt-in. All nine WARR-20260723-0001 conditions are evidenced by tests: condition 1 by contradicted_evidence blocking resolution before any other check; condition 2 by asserting the channel status line is exactly one line after the content status line in both capture and annotation serializations, with CATALOG_RECORDS.md stating that adjacency is a mitigation and not a control; condition 3 by disjoint status vocabularies checked at import, by both build_capture status parameters having no defaults, and by tests that each field rejects the other's values and that the two vary independently; condition 4 by the declared thirty-day window with tests exactly at the boundary, one second past it, and reconfigured to one hundred eighty days; condition 5 by determinism tests for identity, path, canonical bytes, and fifty repeated resolutions; condition 6 by annotations inheriting the capture's evidence class including the unassessed case; condition 7 by GraphRelation-shaped emission restricted to the four registered Slice B predicates; condition 8 by a regression that resolves every real captured InvocationRecord in the repository and asserts each file is byte-identical afterward; condition 9 by documented microsecond precision with tests for the inclusive boundary, one microsecond past, and offset normalization. The provider_self_report constraint of ABS-0004 v5 is enforced: a self-report capture carrying independently_corroborated is rejected, and a strong channel status does not license a strong content status. Resolution operates on real data: the invocation records captured at COMP-0035 and COMP-0036 resolve to ModelIdentities carrying self_asserted evidence, with their files unchanged. Tests grew from 635 to 703; the repository audit reports ok true verified_current; commit 40bc540 pulled from the public GitHub repository into a separate environment reproduced 703 passing tests, the verified_current audit, and byte-identical checksums for every delivered file.",
+  "target_item_id": "PLAN-20260723-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260723-0001"
+}

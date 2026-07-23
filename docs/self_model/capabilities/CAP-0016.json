@@ -1,0 +1,99 @@
+{
+  "capability_id": "CAP-0016",
+  "category": "provider_infrastructure",
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "evidence": {
+    "admissions": [
+      {
+        "id": "PLAN-20260723-0001",
+        "path": "docs/self_model/plans/PLAN-20260723-0001.json",
+        "role": "admitted implementation plan"
+      },
+      {
+        "id": "WARR-20260723-0001",
+        "path": "docs/self_model/warrants/WARR-20260723-0001.json",
+        "role": "admission warrant with nine binding conditions"
+      }
+    ],
+    "commits": [
+      {
+        "commit": "7dbc45160e692460cdf084b7af0b6ebea164eeca",
+        "role": "catalog record family, resolution engine, tests, documentation, predicate registry"
+      },
+      {
+        "commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
+        "role": "capture path: fixture replay and opt-in live fetch"
+      }
+    ],
+    "files": [
+      {
+        "content_hash": "21fd95bd1839ed62b6588555a8cc5df4092a3aa69fd023257a7b51c00629f96c",
+        "path": "ai_lab/providers/catalog.py",
+        "role": "record family, validators, identities, serialization"
+      },
+      {
+        "content_hash": "4559f65d8aedadfe3fa5a29c982ab5f50140433fa4e3274a4f196f991e6fd146",
+        "path": "ai_lab/providers/catalog_resolution.py",
+        "role": "pure resolution, non-resolution reasons, annotations"
+      },
+      {
+        "content_hash": "a3c023cd0726a68e457456412919be9aceeefb0cd3528e4230347040df6a9562",
+        "path": "ai_lab/providers/catalog_capture.py",
+        "role": "fixture replay and opt-in live capture"
+      },
+      {
+        "content_hash": "4edb1c5ff66ef189bb92261e32350a076c7f472c2a7bb06426e9bad1c6d60620",
+        "path": "tests/test_catalog.py",
+        "role": "schema, rejection, non-resolution, condition, and capture tests"
+      },
+      {
+        "content_hash": "dd6db1f881815c4c73d8660bb31b3ed67fcf341c7eec2795b36b07cce77a0faa",
+        "path": "docs/self_model/CATALOG_RECORDS.md",
+        "role": "record family documentation and stated limitations"
+      },
+      {
+        "content_hash": "72a2f92204435848236a93a5aa00b59bfbb5b76ab4d6f20e264bddb023ec457b",
+        "path": "docs/self_model/PREDICATE_REGISTRY.md",
+        "role": "Slice A and Slice B predicate registry"
+      }
+    ],
+    "memory_records": []
+  },
+  "interfaces": [
+    "ai_lab.providers.catalog.validate_catalog_record (acceptance gate for every catalog record)",
+    "ai_lab.providers.catalog.build_model_identity, build_endpoint_identity, build_assertion, build_snapshot, build_capture",
+    "ai_lab.providers.catalog.canonical_catalog_json (byte-stable serialization with mandated status-field adjacency)",
+    "ai_lab.providers.catalog_resolution.resolve_identity (pure resolution over stored snapshots)",
+    "ai_lab.providers.catalog_resolution.build_resolution_record and write_resolution_record (append-only annotations)",
+    "ai_lab.providers.catalog_resolution.resolution_relations (GraphRelation-shaped Slice B relations)",
+    "ai_lab.providers.catalog_capture.capture_from_fixture and capture_live (fixture replay, opt-in live fetch)"
+  ],
+  "last_verified": {
+    "repo_commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260723-0001.json",
+    "verified_at": "2026-07-23T00:00:00+00:00"
+  },
+  "limits": [
+    "Channel evidence is representable but not obtained: this slice inspects no certificate chain or key digest, so every capture records channel_authentication_status unverifiable. The capability delivers the representation of channel evidence, not the evidence.",
+    "Every obtainable catalog claim is provider self-report and therefore self_asserted. AI-Lab has no independent source against which to corroborate a provider's account of its own catalog, so no resolution can currently carry a stronger evidence class.",
+    "A provider that silently substitutes a model without updating its catalog is undetectable from catalog evidence alone; resolution records what the catalog said, not what the provider did.",
+    "Serialization adjacency of the two status fields is a mitigation and not a control: a downstream renderer can still display channel strength without the content weakness, an attack both COMP-0036 reviewers constructed independently.",
+    "Consumers must join an InvocationRecord to its IdentityResolution annotations; a reader of the invocation alone sees unresolved forever, which is materially misleading once an annotation exists.",
+    "Nothing reads these records. Resolution results gate no decision, and C2 catalog admission remains unactivated.",
+    "Recorded fixtures are shape-faithful recordings with stated provenance, not live captures, and they age: an aged fixture can encode a mapping the provider has since changed."
+  ],
+  "name": "Catalog identity resolution with honest evidence classing (ABS-0004 v5 Slice B)",
+  "recommended_next_actions": [
+    "Consider a slice that performs channel authentication (certificate chain or key digest capture) so channel_authentication_status can carry earned evidence rather than unverifiable.",
+    "Run one governed live capture with the opt-in enabled, to test the parser against a real payload and to date the first genuine CatalogSnapshot.",
+    "Propose Slice C (roles and authorization) against ABS-0004 v5, or Slice D (lineage and evidence admission), under GAP-0005."
+  ],
+  "risks": [
+    "Resolution granularity propagates to Slice D: if two distinguishable releases resolve to one ModelIdentity, the C3 per-kind equivalence check inherits that coarseness.",
+    "The thirty-day freshness window is a judgment about alias drift, not a measurement; if drift is faster in practice, stale assertions can discharge unresolved statuses that should have stayed open.",
+    "Live capture is untested against real provider responses because it is opt-in and disabled; the first live run may reveal payload shapes the parser does not handle."
+  ],
+  "schema_version": "v1",
+  "status": "implemented",
+  "summary": "Provider identity claims are representable, datable, and resolvable. ModelIdentity and ServiceEndpointIdentity carry stable identities; atomic CatalogAssertions carry exactly one claim each and are grouped into CatalogSnapshots observed at a stated moment; CatalogCapture records how and when a snapshot was obtained, with two independently scoped status fields whose vocabularies are disjoint sets. A pure resolution function maps an invocation's endpoint, requested name, and occurrence instant to a ModelIdentity or to one of five enumerated non-resolution reasons, and records the outcome as an append-only IdentityResolution annotation that inherits the capture's evidence class. Captured InvocationRecords are never mutated. Catalog payloads are obtained by fixture replay by default or by live fetch behind an explicit opt-in."
+}

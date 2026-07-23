@@ -1,0 +1,30 @@
+{
+  "author": "assistant",
+  "conditions": [
+    "Slice B remains representation-only. Any consumer that gates a decision on a resolution result, including C2 catalog admission, requires a separately admitted plan.",
+    "Channel authentication must not be recorded as anything stronger than unverifiable until a slice actually performs the check. Recording earned-sounding channel evidence without performing the check would violate P6 and this warrant.",
+    "Resolution granularity is load-bearing for Slice D: any change to what counts as one ModelIdentity requires review against C3's per-kind equivalence semantics before Slice D is admitted.",
+    "The thirty-day freshness window is a declared judgment, not a measurement. Evidence that provider aliases drift faster than the window requires revisiting it rather than silently accepting stale resolutions.",
+    "The first live capture must be run under governance and its payload retained, since the live path has never been exercised against a real provider response."
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "docs/self_model/verifications/VERIFY-20260723-0001.json",
+    "docs/self_model/capabilities/CAP-0016.json",
+    "docs/self_model/plans/PLAN-20260723-0001.json",
+    "docs/self_model/warrants/WARR-20260723-0001.json",
+    "docs/comparisons/COMP-0036-plan-20260723-0001-slice-b-admission-review.md",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+    "docs/self_model/CATALOG_RECORDS.md"
+  ],
+  "reason": "VERIFY-20260723-0001 records 703 passing tests, an ok true verified_current repository audit, per-condition test evidence for each of the nine binding conditions, resolution operating on the real invocation records captured at COMP-0035 and COMP-0036 with those files unchanged, and independent cross-environment reproduction from the public repository with byte-identical checksums. The plan's success criteria are met: a stored invocation resolves through the pure function into an append-only annotation while its file stays byte-identical, every non-resolution reason is exercised by a fixture, the provider_self_report rejection holds, assertions are atomic, the two status vocabularies are disjoint, and the suite passes offline with the live path disabled.",
+  "repo_commit": "40bc5408f4f548192da26d3642b07ffa29790c64",
+  "schema_version": "v1",
+  "scope": "Completion warrant for PLAN-20260723-0001. Marks the plan completed on the evidence of VERIFY-20260723-0001 and registers CAP-0016. All nine scope items are delivered and all nine WARR-20260723-0001 conditions are evidenced by tests. GAP-0005 remains open with Slices C and D unimplemented. No consumer of catalog or resolution records is warranted by this record; C2 catalog admission remains unactivated, and resolution results gate no decision.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260723-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260723-0002",
+  "warrant_state": "supported"
+}
