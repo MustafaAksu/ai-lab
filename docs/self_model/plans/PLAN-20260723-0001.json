@@ -1,0 +1,84 @@
+{
+  "constraints": [
+    "Implementation is authorized only within the scope admitted by the future admission warrant; any expansion requires a separate proposed and admitted plan.",
+    "Field names and semantics follow ABS-0004 v5 exactly; deviations require an ABS revision first.",
+    "All relations use the GraphRelation shape; no parallel edge vocabulary; no predicate outside the registered Slice A and Slice B lists.",
+    "The two CatalogCapture status fields may never be merged, defaulted from one another, or derived from one another.",
+    "Live network access is opt-in, disabled by default, and no test may require it.",
+    "Slice A behavior is unchanged: no field, path, or default of invocation capture is altered by this slice."
+  ],
+  "created_at": "2026-07-23T00:00:00+00:00",
+  "created_from": {
+    "repo_commit": "6d7dfeefb58cbf0a58ea2cd50a8c90795d3f41bf",
+    "source_gap_id": "GAP-0005"
+  },
+  "depends_on_capability_ids": [
+    "CAP-0015"
+  ],
+  "evidence_ids": [
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "docs/self_model/warrants/WARR-20260722-0002.json"
+  ],
+  "expected_outputs": [
+    "ai_lab/providers/catalog.py (identity, assertion, snapshot, and capture schemas with validators).",
+    "ai_lab/providers/catalog_resolution.py (pure resolution, freshness, and annotation records).",
+    "Opt-in live capture path with recorded fixtures under tests/fixtures/catalog/.",
+    "docs/self_model/PREDICATE_REGISTRY.md extended with the Slice B predicates.",
+    "docs/self_model/CATALOG_RECORDS.md documenting the record family, the evidence-class separation, and stated limitations.",
+    "tests/test_catalog.py and tests/test_catalog_resolution.py with schema, rejection, non-resolution, and integration fixtures."
+  ],
+  "mitigation": "Non-resolution is explicit and enumerated rather than defaulted; the temporal rule requires the snapshot to precede the invocation, so a later snapshot can never retroactively verify an earlier call; ambiguity blocks resolution rather than picking a winner; fixtures record their capture date and the freshness validator reports currency against it rather than assuming it.",
+  "next_action": "Run the admission comparison round with this plan, GAP-0005, and ABS-0004 v5 Sections 4.2 to 4.4 attached as text; on operator adjudication, issue the admission warrant and flip status to admitted.",
+  "non_goals": [
+    "Mutating captured InvocationRecords; resolution is append-only annotation.",
+    "Any claim of independent verification of catalog content while the only source is provider self-report.",
+    "RoleDefinition, RoleQualification, InvocationAuthorization, or consequence classes (Slice C).",
+    "Lineage traversal, independence assessment, or evidence-admission enforcement (Slice D).",
+    "Routing, escalation, model selection, or provider recommendation of any kind.",
+    "Any consumer that gates a decision on resolution results; C2 catalog admission activation is a later decision.",
+    "Capture on any path other than the admitted Slice A path; Slice B adds catalog capture, not invocation capture.",
+    "Automatic re-resolution of previously annotated invocations when catalogs change; supersession is recorded, not retroactively applied."
+  ],
+  "objective": "Make provider identity claims representable and datable so that the unresolved status Slice A records everywhere can be discharged honestly, and so that ADVISOR-0000-class catalog claims can be dated, superseded, and contradicted instead of merely believed or disbelieved.",
+  "plan_id": "PLAN-20260723-0001",
+  "proposed_change": "After a separate admission checkpoint: add ai_lab/providers/catalog.py (schema, validators, canonical serialization, identity and path rules), ai_lab/providers/catalog_resolution.py (pure resolution and freshness functions, annotation records), an opt-in live capture path, predicate-registry entries, recorded fixtures, tests, and documentation. No change to Slice A capture, no change to provider-call behavior, and no consumer that gates any decision on resolution results.",
+  "rationale": [
+    "GAP-0005 records that model identity is a settings string with no identity, endpoint, or catalog object behind it, so every catalog claim is unverifiable by construction; Slice B is the admitted ontology's second proposed boundary.",
+    "Slice A now emits identity_verification_status unresolved on every record with no mechanism to discharge it; the status is honest but permanently stuck without this slice.",
+    "COMP-0035 supplied the design constraints both witnesses converged on: temporal bounding, unambiguous resolution, append-only annotation for stale assertions, and separation of what the channel proves from what the content claims.",
+    "ABS-0004 v5 renamed CatalogVerification to CatalogCapture and added P6 precisely because this slice would otherwise build a record whose name overstates its evidence; the amendment is upstream of the implementation, as intended."
+  ],
+  "repo_commit": "6d7dfeefb58cbf0a58ea2cd50a8c90795d3f41bf",
+  "risk": "Resolution semantics decided here determine what identity independence can mean in Slice D: if resolution is loose, C3's per-kind equivalence check inherits the looseness. A permissive freshness window would let stale assertions discharge unresolved statuses that should remain open. Recorded fixtures of provider catalogs age, and an aged fixture can encode a mapping the provider has since changed.",
+  "schema_version": "v1",
+  "scope": [
+    "A catalog module defining schema v1 for ModelIdentity, ServiceEndpointIdentity, CatalogAssertion, CatalogSnapshot, and CatalogCapture as ABS-0004 v5 Sections 4.2, 4.3, and 4.4 specify, with validate_catalog_record entrypoints, canonical serialization reusing the invocation-record precedent, and deterministic identity and path rules under docs/catalog/.",
+    "Atomic assertions only: one claim per assertion with assertion_subject, assertion_predicate, assertion_value_or_target, unit, scope, valid_from, valid_until or superseded, and source; heterogeneous multi-claim records are rejected by the validator.",
+    "CatalogCapture with the two independently scoped status fields; the validator rejects any capture whose source_type is provider_self_report and whose content_evidence_status is stronger than self_asserted (ABS-0004 v5 adopted constraint).",
+    "A resolution function, pure over stored snapshots, mapping (service_endpoint, requested_model_name, occurred_at) to a ModelIdentity or to an explicit non-resolution reason: no applicable assertion, snapshot observed after the invocation, ambiguous multiple applicable assertions, or expired freshness window.",
+    "An append-only IdentityResolution annotation record referencing an InvocationRecord by id and carrying the resolved identity, the snapshot and assertion relied on, the resolution timestamp, and the evidence class inherited from the capture; captured invocation records are never mutated.",
+    "A freshness validator reporting per-assertion currency using the shared verification-outcome vocabulary for channel authentication and freshness only, never for content evidence.",
+    "Predicate-registry entries for the Slice B predicates: resolved_to, asserted_by, concerns, and captured.",
+    "A live catalog fetch path behind an explicit opt-in (environment flag), disabled by default, writing CatalogCaptures with source_type provider_self_report; recorded fixtures of real catalog payloads for offline tests.",
+    "Validator fixtures covering valid records, each rejection class, each non-resolution reason, and an integration fixture resolving a stored Slice A invocation record offline."
+  ],
+  "source_capability_ids": [
+    "CAP-0015"
+  ],
+  "source_gap_id": "GAP-0005",
+  "status": "proposed",
+  "success_criteria": [
+    "A stored Slice A InvocationRecord resolves to a ModelIdentity through the pure resolution function using a stored snapshot, producing an append-only IdentityResolution annotation; the InvocationRecord file is byte-identical before and after.",
+    "Each non-resolution reason is exercised by a fixture: no applicable assertion, snapshot observed after the invocation, ambiguous applicable assertions, and expired freshness window; each yields an explicit reason, never a silent default to resolved.",
+    "The validator rejects a CatalogCapture whose source_type is provider_self_report and whose content_evidence_status is independently_corroborated, and accepts the same capture with self_asserted.",
+    "Assertions are atomic: a record carrying two claims is rejected.",
+    "Freshness reporting uses the shared verification-outcome vocabulary for channel authentication and freshness; a test asserts that content_evidence_status never takes a verification-outcome value.",
+    "The full suite passes offline with no network access; the live capture path is disabled by default and its absence does not fail any test.",
+    "The repository audit remains ok true verified_current, and cross-environment reproduction from the public repository succeeds byte-identically."
+  ],
+  "summary": "Implement ABS-0004 v5 Slice B: catalog identity resolution for the invocation records Slice A already captures. Adds ModelIdentity and ServiceEndpointIdentity records; atomic CatalogAssertions grouped into CatalogSnapshots; CatalogCapture records carrying capture_method, source_type, captured_at, capture_success, capturing_executor, content_digest, and the two independently scoped status fields channel_authentication_status and content_evidence_status; requested-name to resolved-identity linkage; and a freshness and resolution validator. An already-captured InvocationRecord may move from identity_verification_status unresolved to resolved only when an applicable assertion binds its endpoint and requested name at its occurrence time, unambiguously and from a snapshot observed no later than the invocation. Resolution is recorded as an append-only annotation referencing the invocation, never by mutating the captured record. Live catalog fetching is a separate opt-in path; the resolution and freshness logic is a pure function over stored snapshots and is tested offline against recorded fixtures.",
+  "title": "Catalog identity resolution with honest evidence classing (ABS-0004 Slice B)"
+}
