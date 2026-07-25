@@ -4,13 +4,16 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v6` (v1, v2 superseded during drafting and never entered the
+- version: `v7` (v1, v2 superseded during drafting and never entered the
   record; v3 entered the record at commit 6802cf7 and underwent the
   COMP-0032 challenge round; v4 applied the twelve adjudicated findings and
   was admitted at 56f18a2; v5 replaced CatalogVerification with
-  CatalogCapture on the COMP-0035 finding; v6 closes the
-  authorization-bootstrap open question ahead of the Slice C plan, adopted
-  by the operator as accountable principal)
+  CatalogCapture on the COMP-0035 finding; v6 proposed an
+  authorization-chain termination that both COMP-0037 reviewers broke
+  independently, and whose claim to prevent convenient closure of the
+  regress was an overclaim; v7 replaces it with an honest account of where
+  root authority comes from, adopted by the operator as accountable
+  principal)
 - abstraction_level: `2`
 - status: `admitted`
 - admitted_at: `2026-07-20`
@@ -130,30 +133,61 @@ execution outside the declared classes requires its own authorization.
 Undeclared subordinate execution is a disclosure violation under 4.7, not
 an implicitly authorized act.
 
-`[DEF]` Authorization-chain termination. An authorization chain terminates at
-an AccountablePrincipal's standing authority. A principal holds standing
-authority within a declared `authority_scope`; authorizations the principal
-issues inside that scope are self-standing and require no prior
-authorization. Every other authorization must chain, through one or more
-steps, to a standing authority. An authorization that chains to nothing is
-not thereby permitted: it is unauthorized.
+`[PRINCIPLE]` P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
 
-`[ADOPTED_CONSTRAINT]` Standing authority is declared, bounded, and
-recorded. A principal may not assert standing authority implicitly, by
-practice, or for a scope wider than its declared `authority_scope`; an
-authorization issued outside that scope does not terminate a chain and is
-unauthorized. This is what prevents the regress from being closed by
-convenience: the terminating step is a recorded human or organizational
-commitment with stated bounds, not an executor exempting itself.
+`[DEF]` Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+`[ADOPTED_CONSTRAINT]` A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims; it has no means to do so, and pretending otherwise
+would be the overclaim P6 forbids. What the record provides is visibility:
+the claim, its declared scope, and every authorization resting on it are
+legible and attributable. Visibility is the whole of what this constraint
+achieves, and it is not prevention.
+
+`[ADOPTED_CONSTRAINT]` Scope breadth is visible, not bounded by fiat. A
+declared `authority_scope` may be arbitrarily wide, including universal. A
+wide scope is permitted and must be legible as wide; it may not be
+described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is the defect this constraint exists to
+prevent.
+
+`[ADOPTED_CONSTRAINT]` Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+A self-issued authorization is not refused: at the root of any chain, the
+accountable party necessarily authorizes work it is also responsible for.
+It is instead disqualified from counting as independent authorization
+wherever independence is required, and it is countable as such.
 
 `[DEF]` Standing authority is not a capability of executors. A model, tool,
 or human acting as an executor never holds standing authority by virtue of
 executing; it holds it only as an AccountablePrincipal within a declared
-scope, which is a separate role under Section 4.13.
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
 
 `[OPEN]` Whether standing authority requires periodic re-declaration or
-review, and what evidence a scope declaration must carry beyond its own
-statement.
+review. COMP-0037 established what v6 got wrong here: both reviewers
+independently constructed the same self-authorization path, and v6's claim
+to prevent convenient closure of the regress was false. v7 does not close
+the question by asserting a stronger internal control; it records that no
+internal control can close it, and asks instead what external evidence a
+scope declaration should carry.
 
 ## 4. Object Definitions
 
