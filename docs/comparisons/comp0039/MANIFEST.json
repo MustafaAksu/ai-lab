@@ -65,9 +65,30 @@
     }
   },
   "independence_note": "Every invocation record in this repository carries identity_verification_status unresolved, permanently by design (catalog_resolution.py). Per constraint C3, unresolved executor equivalence yields independence_unresolved and never an independent path. Cross-question and cross-round independence claims are therefore not established by this round's records.",
-  "member_comparison_ids": "assigned at run time by next_comparison_id(); record here after the run",
+  "member_comparison_ids": [
+    "COMP-0040",
+    "COMP-0041",
+    "COMP-0042",
+    "COMP-0043",
+    "COMP-0039",
+    "COMP-0044",
+    "COMP-0045",
+    "COMP-0046"
+  ],
   "questions": [
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-50bc0e8f14b161d9",
+          "response_chars": 6688
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-56d31d5bfca54e6d",
+          "response_chars": 5595
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0040-slice-c-admission-q1-honest-terminus-or-capitulation.md",
+      "comparison_id": "COMP-0040",
       "est_input_tokens_calibrated": 2990,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -82,6 +103,18 @@
       "slug": "honest-terminus-or-capitulation"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-35815ed716886f1c",
+          "response_chars": 4241
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-f8d5120327f1d564",
+          "response_chars": 7071
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0041-slice-c-admission-q2-new-overclaim-in-v7.md",
+      "comparison_id": "COMP-0041",
       "est_input_tokens_calibrated": 2823,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -96,6 +129,18 @@
       "slug": "new-overclaim-in-v7"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-00966c9ed3510c6d",
+          "response_chars": 5573
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-eaa6bda0606982af",
+          "response_chars": 2380
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0042-slice-c-admission-q3-attack-v7-independently.md",
+      "comparison_id": "COMP-0042",
       "est_input_tokens_calibrated": 2807,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -110,6 +155,18 @@
       "slug": "attack-v7-independently"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-bc052fff304f7e80",
+          "response_chars": 5857
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-3e7bc88549b7f5ac",
+          "response_chars": 4921
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0043-slice-c-admission-q4-refusal-completeness.md",
+      "comparison_id": "COMP-0043",
       "est_input_tokens_calibrated": 8748,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -125,6 +182,18 @@
       "slug": "refusal-completeness"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-534bb2275b5b2728",
+          "response_chars": 5180
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-bd98440b1d15fd36",
+          "response_chars": 2555
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0039-slice-c-admission-q5-check-depth-and-two-hop.md",
+      "comparison_id": "COMP-0039",
       "est_input_tokens_calibrated": 7481,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -140,6 +209,18 @@
       "slug": "check-depth-and-two-hop"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-a7fc235164c665fc",
+          "response_chars": 3930
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-84f23fa7b98a9895",
+          "response_chars": 2978
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0044-slice-c-admission-q6-does-slice-evidence-c6.md",
+      "comparison_id": "COMP-0044",
       "est_input_tokens_calibrated": 7669,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -156,6 +237,18 @@
       "slug": "does-slice-evidence-c6"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-dafb3f854d8fcffa",
+          "response_chars": 7562
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-f0fc3f53f3eb5ee8",
+          "response_chars": 10644
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0045-slice-c-admission-q7-success-criteria-checkability.md",
+      "comparison_id": "COMP-0045",
       "est_input_tokens_calibrated": 7483,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -171,6 +264,18 @@
       "slug": "success-criteria-checkability"
     },
     {
+      "answers": {
+        "claude-sonnet-5": {
+          "invocation_id": "INV-a7aa0d4b2a67252f",
+          "response_chars": 7577
+        },
+        "gpt-5.6-terra": {
+          "invocation_id": "INV-e9cc2ca90d7fd906",
+          "response_chars": 13175
+        }
+      },
+      "artifact_path": "docs/comparisons/COMP-0046-slice-c-admission-q8-slice-d-constraints.md",
+      "comparison_id": "COMP-0046",
       "est_input_tokens_calibrated": 8211,
       "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
       "evidence_units": [
@@ -199,6 +304,12 @@
     }
   ],
   "round_label": "atomic-slice-c-admission-round",
+  "round_outcome": {
+    "note": "Every tier-1 invocation returned a complete response. The monolithic predecessor COMP-0038 returned one complete witness and one empty. Note that the absence of truncation here is observed from response content only: InvocationRecord still carries no stop_reason or output-token field.",
+    "questions_asked": 8,
+    "responses_complete": 16,
+    "responses_empty": 0
+  },
   "structure": "atomic: one question per invocation, per-question evidence scope",
   "supersedes": "COMP-0038",
   "supersession_reason": "COMP-0038 was an incomplete round: the claude-sonnet-5 invocation consumed its entire 16000-token output budget in thinking and returned no text block (INV-b59b93ec9cd8dbe6, stop_reason max_tokens). The round carries one complete witness, not two."

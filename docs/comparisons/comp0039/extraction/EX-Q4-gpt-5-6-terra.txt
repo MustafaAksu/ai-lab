@@ -1,0 +1,62 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+The question that was asked, and the answer given to it, are below. Extract every distinct claim the answer makes.
+
+Rules:
+
+1. One assertion per claim. If a sentence makes two assertions, split it.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. For each claim give "quote": a short verbatim passage from the answer, under 30 words, that states it. The quote must appear in the answer exactly.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}]}
+
+If the answer makes no extractable claim, output {"claims":[]}.
+
+=== QUESTION THAT WAS ASKED (Q4) ===
+The plan enumerates ten refusal reasons for authorize(). Are they complete for the meaning of "valid authorization" the plan adopts?
+
+Note specifically that the plan does not state whether Section 4.7's disclosure constraints -- undisclosed material subordinate execution, undeclared execution-path-changing tool configuration, undeclared material external interaction -- are checked here, excluded from the meaning of valid authorization, or deferred. Name the disposition the plan should state.
+
+Then name any further case that should refuse and has no enumerated reason. If any of the ten is broad enough to conceal materially distinct failures, say which.
+
+=== ANSWER TO EXTRACT FROM ===
+No. The ten reasons are not complete for the plan’s stated meaning of a “valid authorization.”
+
+The plan says an invocation is governed only when “a valid authorization covers it,” follows ABS-0004 v7 “exactly,” and makes authorization depend on stored records. But it neither incorporates nor excludes or defers the Section 4.7 disclosure constraints. That omission is material.
+
+The plan should state that the Section 4.7 constraints are **checked by `authorize()` as validity conditions**, from stored declarations and records, with refusal when the applicable constraint is violated. This is an authorization-result refusal, not a refusal to execute. In particular:
+
+* **Undisclosed material subordinate execution:** refuse where a material subordinate execution capable of influencing the output or external effect is not represented as an Invocation linked to its parent by `spawned`. The existing reason, “subordinate execution outside the classes its parent authorization declares,” covers a *declared* subordinate that exceeds declared executor kinds, roles, or consequence ceiling. It does not cover an undisclosed subordinate at all.
+* **Undeclared execution-path-changing tool configuration:** for a ToolIdentity whose output enters governed evidence, refuse where a configuration file, environment variable, or local dependency capable of altering execution path is not declared and content-addressed in its EffectiveInputManifest. This is distinct from qualification scope and from ordinary unmet authorization conditions.
+* **Undeclared material external interaction:** for executors producing governed evidence or holding above-read_only action authority, refuse where material external interactions are undeclared. This includes network calls, external writes, and privileged ambient consumers, including hardcoded targets. The plan should say that the relevant stored enforcement evidence is the `OutboundInteractionLog`; `authorize()` remains pure by evaluating stored records rather than performing I/O.
+
+If the plan instead intends to exclude these checks from validity or defer them, it must say so expressly and must not describe its result as a valid authorization under the adopted v7 meaning. Deferral would leave the invocation experimental, or otherwise require a clearly narrower, Slice-C-only term rather than silently treating disclosure-noncompliant work as governed.
+
+Further refusal cases absent from the enumerated ten include:
+
+1. **No matching authorization covers the invocation.**  
+   The plan says a permitted outcome cannot occur without “a matching authorization record,” and its classifier calls an invocation experimental absent valid coverage. But no listed refusal reason is “no authorization covers this invocation.” “Authorized executor does not match” presupposes an authorization; it does not identify the absence of one.
+
+2. **An independence requirement is unmet.**  
+   The proposed record contains “independence requirements,” and the plan says a self-issued authorization is “disqualified from counting as independent authorization wherever independence is required.” Yet the only related reason is “self-adjudication conflict,” explicitly limited to a direct, one-hop produced_by/executed_by collision. A self-issued authorization where independent authorization is required must refuse even if that particular one-hop artifact test does not trigger. More generally, the plan expressly defers “independence assessment,” so it cannot silently pass an authorization that requires independence but cannot establish it.
+
+The following listed reasons are overly broad enough to conceal materially distinct failures:
+
+* **“authorization conditions unmet, malformed, or absent”** combines a substantive failed condition, malformed authorization data, and missing conditions. These differ in both diagnosis and remediation. It also must not serve as an unstated catch-all for the three Section 4.7 disclosure violations.
+* **“the authorization or a record it relies on is inactive or superseded”** combines status failure of the authorization itself with status failure of a relied-on record. A superseded qualification, an inactive principal record, and an inactive authorization are materially different failures.
+* **“subordinate execution outside the classes its parent authorization declares”** aggregates exceeding declared executor kind, role, and consequence ceiling, while omitting the separate case of undisclosed subordinate execution.
+
+The supplied evidence is sufficient to identify these omissions. A complete assessment of every possible validity refusal is not possible from this evidence alone: Section 4.9 would be needed for the full RoleDefinition constraint fields, Section 4.13 for all inherited DecisionRecord requirements, and the referenced Section 11 definition of `OutboundInteractionLog` for its exact required fields and validation conditions.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

@@ -1,0 +1,67 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+The question that was asked, and the answer given to it, are below. Extract every distinct claim the answer makes.
+
+Rules:
+
+1. One assertion per claim. If a sentence makes two assertions, split it.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. For each claim give "quote": a short verbatim passage from the answer, under 30 words, that states it. The quote must appear in the answer exactly.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}]}
+
+If the answer makes no extractable claim, output {"claims":[]}.
+
+=== QUESTION THAT WAS ASKED (Q4) ===
+The plan enumerates ten refusal reasons for authorize(). Are they complete for the meaning of "valid authorization" the plan adopts?
+
+Note specifically that the plan does not state whether Section 4.7's disclosure constraints -- undisclosed material subordinate execution, undeclared execution-path-changing tool configuration, undeclared material external interaction -- are checked here, excluded from the meaning of valid authorization, or deferred. Name the disposition the plan should state.
+
+Then name any further case that should refuse and has no enumerated reason. If any of the ten is broad enough to conceal materially distinct failures, say which.
+
+=== ANSWER TO EXTRACT FROM ===
+**Short answer: No — completeness cannot be confirmed, because the plan never states which meaning of "valid authorization" the ten reasons are meant to satisfy, and specifically leaves the 4.7 disclosure constraints undisposed.**
+
+**1. The disposition the plan should state**
+
+The plan should state that the Section 4.7 disclosure constraints are **excluded** from what `authorize()` checks in this slice — not "checked here" and not "deferred" to a named future slice.
+
+Support for "excluded" rather than the other two options:
+
+- `authorize()` is constrained to be "pure over stored records: no I/O, no clock, no network," and "Slice A capture and Slice B resolution behavior are unchanged: no field, path, or default of either is altered." The 4.7 constraints (composite-executor disclosure, tool-configuration disclosure, external-interaction disclosure) are enforced through artifacts the plan does not touch: representation as a `spawned` Invocation, the `EffectiveInputManifest`, and the `OutboundInteractionLog` ("Enforcement object: OutboundInteractionLog (Section 11)"). Nothing in `scope` or `expected_outputs` builds or reads these.
+- "Deferred" would imply a named later slice picks this up. The `non_goals` list names what is deferred (multi-hop lineage, independence assessment, evidence admission — Slice D) and does not mention the 4.7 disclosure constraints anywhere, including there.
+- Section 3 itself already draws the relevant line for the one disclosure item the plan's reason #9 does touch: "Undeclared subordinate execution is a disclosure violation under 4.7, not an implicitly authorized act." That sentence separates disclosure violations from authorization-scope violations, and `authorize()` as scoped operates only on the latter.
+
+The plan currently says none of this. Because 4.7 ties these violations to consequential effects — "defeats the tool's deterministic standing," "constitutes undisclosed `external_actuator` authority, violating P4" — silence invites a reader to assume "governed" means "disclosure-checked." The plan should say explicitly that `authorize()`'s "valid authorization" means only "covered by an authorization record," and does not certify disclosure compliance, which is checked (if at all) elsewhere.
+
+**2. A further case that should refuse and has no enumerated reason**
+
+An invocation whose stored record itself carries a 4.7 disclosure violation — an undisclosed material subordinate execution never represented as a `spawned` Invocation at all, an undeclared execution-path-changing tool configuration, or an undeclared material external interaction — has no corresponding refusal reason among the ten. Reason #9 ("subordinate execution outside the classes its parent authorization declares") only reaches a subordinate that **is** represented and merely falls outside the declared classes; it does not reach a subordinate that was never disclosed as an Invocation at all, which 4.7 treats as categorically different ("not an implicitly authorized act"). Under the current ten, such an invocation could pass every check and be classified governed, since nothing enumerated inspects for the absence of required disclosure.
+
+**3. Which enumerated reason is broad enough to conceal materially distinct failures**
+
+Reason #9 is the clearest case. It is written to cover "subordinate execution outside the classes its parent authorization declares," but the ontology text it draws from distinguishes two failures that are not the same kind of problem:
+- a declared, represented subordinate execution whose class falls outside what the parent authorization enumerates (a scope-boundary failure, curable by obtaining its own authorization), versus
+- a subordinate execution that was never represented as an Invocation at all (a disclosure violation under 4.7, which the ontology explicitly says is *not* "an implicitly authorized act" and therefore not simply a scope problem to be patched with a second authorization).
+
+Collapsing both under one refusal reason would report the same code for a remediable scope gap and for a disclosure violation with P4-level consequences, which the ontology itself keeps apart in Section 3 and Section 4.7. Reason #2 ("qualification out of execution scope") is a secondary candidate: it bundles at least three distinct scope dimensions — service endpoint, ExecutionProfile constraints, and session-state constraints — and, if 4.7's tool-configuration disclosure defeat (`unknown_state`) is ever surfaced through a qualification's session-state field, that disclosure-driven failure would be reported identically to an ordinary endpoint/profile mismatch.
+
+**Missing evidence to flag**
+
+- **Section 4.9** (RoleDefinition constraint fields) and **Section 4.13** (DecisionRecord field set) are referenced by the plan's `scope` but not included here; needed to confirm whether the ten reasons reconcile against every field the ontology requires a valid `InvocationAuthorization` to carry.
+- **Section 8** (consequence classification) and **Section 11** (OutboundInteractionLog) are cited but not provided; Section 11 in particular would show whether the log is structurally positioned to feed `authorize()` at all, which bears directly on whether "excluded" (vs. some future coupling) is the right disposition.
+- The **COMP-0037** record itself (only summarized here) — needed to see the reviewers' own account of the four reasons added, and whether disclosure-driven refusal was considered and knowingly left out or simply not raised.
+- **GAP-0005, DECISION-20260723-0001, VERIFY-20260723-0002, CAP-0015, CAP-0016** are listed as evidence_ids but not supplied; any of these could contain the "meaning of valid authorization the plan adopts" that the question asks me to test the ten reasons against, and its absence is exactly why completeness cannot be certified here.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

@@ -1,0 +1,130 @@
+[
+  {
+    "claude-sonnet-5_claims": 32,
+    "extraction_id": "EX-Q1-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 58,
+    "quote_overlap": 29,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q1"
+  },
+  {
+    "claude-sonnet-5_claims": 39,
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 62,
+    "quote_overlap": 37,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "claude-sonnet-5_claims": 13,
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 32,
+    "quote_overlap": 12,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "claude-sonnet-5_claims": 36,
+    "extraction_id": "EX-Q2-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 69,
+    "quote_overlap": 27,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q2"
+  },
+  {
+    "claude-sonnet-5_claims": 24,
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 43,
+    "quote_overlap": 17,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "claude-sonnet-5_claims": 23,
+    "extraction_id": "EX-Q3-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 38,
+    "quote_overlap": 23,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q3"
+  },
+  {
+    "claude-sonnet-5_claims": 31,
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 52,
+    "quote_overlap": 28,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "claude-sonnet-5_claims": 43,
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 46,
+    "quote_overlap": 37,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "claude-sonnet-5_claims": 34,
+    "extraction_id": "EX-Q5-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 57,
+    "quote_overlap": 33,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q5"
+  },
+  {
+    "claude-sonnet-5_claims": 23,
+    "extraction_id": "EX-Q5-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 36,
+    "quote_overlap": 23,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q5"
+  },
+  {
+    "claude-sonnet-5_claims": 25,
+    "extraction_id": "EX-Q6-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 46,
+    "quote_overlap": 25,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q6"
+  },
+  {
+    "claude-sonnet-5_claims": 22,
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 35,
+    "quote_overlap": 19,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "claude-sonnet-5_claims": 34,
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 73,
+    "quote_overlap": 33,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "claude-sonnet-5_claims": 0,
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 143,
+    "quote_overlap": 0,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "claude-sonnet-5_claims": 30,
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "gpt-5.6-terra_claims": 64,
+    "quote_overlap": 26,
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "claude-sonnet-5_claims": 0,
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "gpt-5.6-terra_claims": 116,
+    "quote_overlap": 0,
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  }
+]

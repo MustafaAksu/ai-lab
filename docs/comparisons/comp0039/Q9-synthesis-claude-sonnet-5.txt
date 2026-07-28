@@ -1,0 +1,299 @@
+You previously answered eight questions about the ABS-0004 v7 amendment and PLAN-20260723-0002. Each was asked in a separate call with its own evidence set, and none of those calls could see any of the others. Your own eight answers are reproduced below verbatim.
+
+This call is a coherence check on your own output. It is not an independent review: its evidence is entirely your own prior invocations, and it is recorded as independence_unresolved. It will not be counted as corroborating anything it reviews.
+
+Two tasks, in order.
+
+1. INCONSISTENCY. Identify any place where your answers conflict, where one depends on an assumption another undermines, or where an argument you made in one answer would change given what you found in another. You are the only party who can do this, since each answer was written without sight of the rest. Be specific: name the answers and quote the conflicting passages. If you find none, say so rather than manufacturing one.
+
+2. RECOMMENDATION. Give a recommendation on the amendment and the plan separately: admit as written, admit with named conditions (state each condition), or revise first. Where a recommendation depends on a finding you now consider unreliable after task 1, say so.
+
+Do not certify or praise. No provider product recommendations.
+
+
+=== YOUR ANSWER TO Q1 (invocation INV-50bc0e8f14b161d9, COMP-0040) ===
+**Reading argued: (b), with a boundary on how far it extends**
+
+The evidence does not support a single verdict across all three `[ADOPTED_CONSTRAINT]` clauses; it supports (a) for one of them and (b) for another, and the plan's move is to let the justification for the first cover the second without earning it.
+
+Take the standing-authority claim first. P7 says: "Any design that appears to derive root authority from internal evidence has merely moved the regress and disguised it." Given that, the constraint that "A standing-authority claim is recorded, never verified" is correctly described as a terminus — there is no internal fact that could verify an extra-systemic entitlement, so refusing to pretend otherwise is honest, not weak. Reading (a) is right about *this* clause.
+
+But the scope-breadth constraint is a different claim, and P7 does not entail it. "A declared `authority_scope` may be arbitrarily wide, including universal" is not a statement about what can be *verified* — it is a statement about what the system will *accept and act on*. Verifying that a claimed universal scope is true is indeed impossible; that says nothing about whether the system must accept a universal scope claim as usable. The constraint's own text concedes the target of the worry — "A boundary that no one can fail to satisfy is not a boundary, and calling it one is the defect this constraint exists to prevent" — and then prevents only the *mislabeling*, not the unbounded acceptance: "must be legible as wide" is the entire remedy. That is exactly reading (b)'s complaint: "permitting a universal scope while requiring only that it be legible as wide converts a control into a label."
+
+The self-issued clause shows the alternative was available and was in fact taken elsewhere in the same section. There too, verification is refused ("not refused... instead disqualified from counting as independent authorization wherever independence is required"), but disqualification is a real downstream consequence, not a label — it changes what the record can be used for. Nothing in P7 forced v7 to stop at labeling for scope breadth; it could have attached an analogous consequence (e.g., a universal or unusually wide scope disqualified from serving as sole basis for some class of authorization, mirroring how self-issuance is disqualified from independence). That it didn't is a design choice, not an epistemic necessity, and the section offers no argument for the asymmetry.
+
+The `[OPEN]` paragraph's justification for the retreat compounds this: it grounds the whole shift in COMP-0037, where "both reviewers independently constructed the same self-authorization path" — a fact about self-issuance, not about scope breadth. Generalizing from one defeated mechanism (attempted closure of the self-authorization path) to also abandon bounding of a distinct attribute (declared scope width) is an overreach the text asserts but does not demonstrate. Per the disclosure, this break should not be treated as the only one available or as controlling the plan's characterization; here it is being used to do more work than it can support — covering the scope-breadth retreat with a defeat that was actually about self-issuance.
+
+So: (a) for the standing-authority-verification clause, (b) for the scope-breadth clause, and the plan's error is presenting v7 as a single honest terminus when it is actually two different moves bundled under one justification.
+
+**What would make this decidable rather than a matter of taste**
+
+Construct a candidate mechanical control on `authority_scope` breadth that (i) does not require verifying the extra-systemic entitlement claim (i.e., it operates only on record-internal facts: scope text, count of independent co-declaring principals, consequence class invoked, disqualification consequences), and (ii) actually narrows acceptance or downstream use rather than just requiring a label — e.g., "a universal or organization-wide scope is disqualified from independently satisfying independence requirements at the highest consequence class, in the same way self-issuance is disqualified" or "scope breadth above a threshold requires co-declaration by more than one AccountablePrincipal, recorded and disqualified from independence if it later collapses to one."
+
+- If such a control can be specified without smuggling in a verification requirement, and it would do real work (change what a wide-scope authorization can be used for), then its absence in v7 is unexplained by P7, and (b) is confirmed for the scope-breadth clause.
+- If every such candidate, on inspection, secretly reduces to needing to verify something extra-systemic (e.g., "independent co-declaration" is meaningless if the system cannot verify that the co-declaring principals are not the same accountable party under different labels — which is exactly the self-authorization path COMP-0037 found), then no mechanical bound on breadth is available either, and (a) is vindicated across the board.
+
+That test is answerable from the ontology's own resources (does a proposed control require verification, yes/no) and does not depend on adjudicating intent.
+
+**Evidence gaps**
+
+- **COMP-0037 itself** is not in evidence, only the `[OPEN]` paragraph's summary of it. I would use the full record to check whether the two reviewers' self-authorization path also implicated scope breadth, or only self-issuance — this is load-bearing for the argument above and I only have the summary's characterization.
+- **v6's actual rule text** is absent. Without it, I can't verify what mechanism v6 used or exactly what "prevent convenient closure" meant mechanically, which limits how precisely I can compare v6's failed control to what v7 could have kept.
+- **Section 4.7** (disclosure violation) is referenced ("Undeclared subordinate execution is a disclosure violation under 4.7") but not included; it might bear on whether an undisclosed universal-scope claim would itself trigger a disclosure violation, which would be a form of mechanical consequence I haven't accounted for.
+- **P1 and P6**, referenced but not quoted, would clarify the "overclaim P6 forbids" language used to justify non-verification, and P1's content (invoked for why InvocationAuthorization must exist) — needed to fully assess whether P6 forbids *only* claiming verification, or also forbids weaker mechanical bounds of the kind I proposed above.
+- A definition of **"wherever independence is required"** is not in evidence; without knowing which decisions require independence, I can't assess how much real work the self-issued disqualification actually does, which weakens my contrast between it and the scope-breadth label.
+
+=== YOUR ANSWER TO Q2 (invocation INV-35815ed716886f1c, COMP-0041) ===
+## Overclaims in v7's adopted text
+
+**1. The visibility claim in the standing-authority constraint overclaims completeness.**
+
+> `[ADOPTED_CONSTRAINT]` "What the record provides is visibility: the claim, its declared scope, and every authorization resting on it are legible and attributable. Visibility is the whole of what this constraint achieves, and it is not prevention."
+
+The mechanism actually described is: a claim is *recorded*, and a scope is *declared*. Nothing in this section (or in what's provided from Section 4.13) establishes a mechanism that guarantees "every authorization resting on it" is in fact legible and attributable. The chain-termination rule requires that non-root authorizations "must chain... to such a standing authority," but a requirement is not an enforcement mechanism, and the subordinate-inheritance rule concedes the gap directly: undeclared subordinate execution is merely "a disclosure violation under 4.7," not something the mechanism prevents or automatically surfaces. A violation that must be caught and disclosed by some other process is not the same as an authorization that "is legible and attributable" by virtue of this constraint. So "every authorization resting on it" is stated as an achieved property when the described mechanism only supports a weaker claim: authorizations that are correctly declared and not defeated by omission are legible.
+
+Honest version: *"What the record provides is visibility for authorizations that are declared and correctly chained: the claim, its declared scope, and the authorizations that comply with disclosure requirements are legible and attributable. Undeclared or non-conforming authorizations are not made visible by this constraint; they depend on separate detection under 4.7."*
+
+I'd want Section 4.7 (disclosure-violation handling) in evidence to check whether it actually closes this gap — if it does, the overclaim is smaller than I'm treating it; if it doesn't (e.g., if 4.7 is itself only a classification, not a detection mechanism), the overclaim stands as written.
+
+**2. The retraction itself overclaims a general impossibility from a single defeated instance.**
+
+> `[OPEN]` "v7 does not close the question by asserting a stronger internal control; it records that no internal control can close it, and asks instead what external evidence a scope declaration should carry."
+
+The evidence given for this is COMP-0037: "both reviewers independently constructed the same self-authorization path, and v6's claim to prevent convenient closure of the regress was false." That shows one specific rule was defeated by one specific maneuver. It does not show — and nothing in the evidence set demonstrates — that *no possible internal control* could close the regress. The sentence converts a demonstrated failure of one rule into a flat universal claim ("no internal control can close it"), stated as something v7 "records," i.e., as settled, rather than as a hypothesis consistent with P7 but not established by the cited case. This is the same move the disclosure instructs me not to accept when the plan makes it; v7's own text makes it too.
+
+Honest version: *"v7 does not assert a stronger internal control; the one control tried (v6) was defeated by two independent reviewers using the same path, and v7 does not know of an internal control that would survive that path. Whether some other internal control could close the regress is unresolved; P7 treats this as expected in principle, but that is a stated position, not something demonstrated by COMP-0037 alone."*
+
+**Missing evidence I'd want:**
+- **P6's actual text.** The standing-authority constraint says "pretending otherwise would be the overclaim P6 forbids" — I can't check whether this characterization of P6 is itself accurate without P6.
+- **Section 4.7** (disclosure violations) — needed to know whether undeclared subordinate execution is actually detected/surfaced, which bears directly on whether the visibility claim in item 1 is closer to true than I've assessed.
+- **COMP-0037 itself** (not just the summary sentence) — to check whether "two reviewers independently defeated it" supports only "this rule failed" or something closer to the broader claim v7 draws from it.
+
+=== YOUR ANSWER TO Q3 (invocation INV-00966c9ed3510c6d, COMP-0042) ===
+## Constructed path
+
+**Step 1 — Establish a self-declared, universal root.**
+A single party declares itself an `AccountablePrincipal` with `authority_scope` set to universal. Section 3 explicitly permits this: *"A declared `authority_scope` may be arbitrarily wide, including universal. A wide scope is permitted and must be legible as wide."* The record shows the scope as universal, not disguised as bounded — satisfying that sentence exactly.
+
+**Step 2 — Self-issue the InvocationAuthorization.**
+The same party, acting as executor, is authorized by itself to perform the invocation. Section 3 requires this be marked: *"Where the issuing principal and the authorized executor are the same party... the authorization records `self_issued: true`."* The record does so. Section 3 also says this is expected, not forbidden: *"A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for."*
+
+**Step 3 — Never trigger the one operative check.**
+The disqualification clause reads: *"It is instead disqualified from counting as independent authorization wherever independence is required."* This is conditional. `InvocationAuthorization` carries an `independence requirements` field (4.13), but nothing in Section 3 specifies who sets that field's content or which consequence classes must carry a nonzero independence requirement. Since the issuing principal is also the one populating its own authorization record, it can declare — truthfully, on the record — that no independence requirement applies to this consequence class. The disqualification clause then has nothing to bite: it disqualifies self-issuance *from independence*, but does not itself impose independence. Where none is declared required, the self-issued authorization is fully countable, standing authority under the chain-termination rule: *"Authorizations the principal issues inside that scope are self-standing."*
+
+**Step 4 — Chain termination and P7 are satisfied, not violated.**
+The record never claims to verify or establish the principal's standing authority — it only asserts it, per *"A standing-authority claim is recorded, never verified... Visibility is the whole of what this constraint achieves, and it is not prevention."* P7 is likewise satisfied rather than defeated: the record does not attempt to derive root authority from internal evidence; it simply records an extra-systemic claim, exactly as P7 contemplates.
+
+**Result.** Every sentence of Section 3 is individually satisfiable while the same party (a) declares itself universally scoped, (b) authorizes its own execution, (c) is marked self-issued as required, and (d) faces no independence check because none was ever declared applicable — yielding unchecked effective authority over an arbitrarily wide domain, built entirely from compliant, honestly-marked records.
+
+## Does the self_issued + disqualification rule block this?
+
+**No — not as written.** The rule's force is entirely conditional on independence being "required," and Section 3 contains no provision establishing *when* independence is required for a given role or consequence class. That determination is pushed to "applicable policy" (named as a field in `InvocationAuthorization`, 4.13) and possibly to Section 4.7 (referenced but not included), neither of which is in evidence. The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate. So the construction is not forced through a defeat of the self_issued rule — it goes around it, using exactly the gap the rule leaves open.
+
+## A second, weaker path (flagged as less certain)
+
+The subordinate-authorization-inheritance `[DEF]` requires a parent authorization's conditions to "declare the permitted subordinate execution classes," but — unlike `authority_scope` — there is no sentence in Section 3 requiring that breadth to be "legible as wide" or barred from being described as narrow when it is not. A parent authorization could declare very broad subordinate execution classes inside ordinary "conditions" text without triggering any visibility obligation analogous to the scope-breadth constraint. This could let later subordinate invocations be recorded as authorized-by-inheritance in a way the original accountable approver did not meaningfully contemplate — a misrepresentation of who authorized what, though softer than the primary path since it depends on drafting, not a clean structural gap.
+
+## What's missing from the evidence set
+
+1. **The content of "applicable policy" / "independence requirements"** — whatever document specifies which consequence classes or roles mandate independent authorization. Without it, I cannot tell whether the primary path is available for *all* consequence classes or only some; I would use it to check whether high-consequence invocations are structurally forced to declare an independence requirement (which would close Step 3 for those cases while leaving it open elsewhere).
+2. **Section 4.7** (disclosure violations), referenced by the subordinate-inheritance `[DEF]` — needed to know whether undeclared or overbroad subordinate class declarations carry any consequence, which bears on the second path.
+3. **Any visibility/breadth constraint on subordinate execution classes** analogous to the `authority_scope` breadth constraint — its absence here is what makes the second path possible, but I cannot confirm it is truly absent from the full ontology rather than merely absent from this excerpt.
+
+=== YOUR ANSWER TO Q4 (invocation INV-bc052fff304f7e80, COMP-0043) ===
+**Short answer: No — completeness cannot be confirmed, because the plan never states which meaning of "valid authorization" the ten reasons are meant to satisfy, and specifically leaves the 4.7 disclosure constraints undisposed.**
+
+**1. The disposition the plan should state**
+
+The plan should state that the Section 4.7 disclosure constraints are **excluded** from what `authorize()` checks in this slice — not "checked here" and not "deferred" to a named future slice.
+
+Support for "excluded" rather than the other two options:
+
+- `authorize()` is constrained to be "pure over stored records: no I/O, no clock, no network," and "Slice A capture and Slice B resolution behavior are unchanged: no field, path, or default of either is altered." The 4.7 constraints (composite-executor disclosure, tool-configuration disclosure, external-interaction disclosure) are enforced through artifacts the plan does not touch: representation as a `spawned` Invocation, the `EffectiveInputManifest`, and the `OutboundInteractionLog` ("Enforcement object: OutboundInteractionLog (Section 11)"). Nothing in `scope` or `expected_outputs` builds or reads these.
+- "Deferred" would imply a named later slice picks this up. The `non_goals` list names what is deferred (multi-hop lineage, independence assessment, evidence admission — Slice D) and does not mention the 4.7 disclosure constraints anywhere, including there.
+- Section 3 itself already draws the relevant line for the one disclosure item the plan's reason #9 does touch: "Undeclared subordinate execution is a disclosure violation under 4.7, not an implicitly authorized act." That sentence separates disclosure violations from authorization-scope violations, and `authorize()` as scoped operates only on the latter.
+
+The plan currently says none of this. Because 4.7 ties these violations to consequential effects — "defeats the tool's deterministic standing," "constitutes undisclosed `external_actuator` authority, violating P4" — silence invites a reader to assume "governed" means "disclosure-checked." The plan should say explicitly that `authorize()`'s "valid authorization" means only "covered by an authorization record," and does not certify disclosure compliance, which is checked (if at all) elsewhere.
+
+**2. A further case that should refuse and has no enumerated reason**
+
+An invocation whose stored record itself carries a 4.7 disclosure violation — an undisclosed material subordinate execution never represented as a `spawned` Invocation at all, an undeclared execution-path-changing tool configuration, or an undeclared material external interaction — has no corresponding refusal reason among the ten. Reason #9 ("subordinate execution outside the classes its parent authorization declares") only reaches a subordinate that **is** represented and merely falls outside the declared classes; it does not reach a subordinate that was never disclosed as an Invocation at all, which 4.7 treats as categorically different ("not an implicitly authorized act"). Under the current ten, such an invocation could pass every check and be classified governed, since nothing enumerated inspects for the absence of required disclosure.
+
+**3. Which enumerated reason is broad enough to conceal materially distinct failures**
+
+Reason #9 is the clearest case. It is written to cover "subordinate execution outside the classes its parent authorization declares," but the ontology text it draws from distinguishes two failures that are not the same kind of problem:
+- a declared, represented subordinate execution whose class falls outside what the parent authorization enumerates (a scope-boundary failure, curable by obtaining its own authorization), versus
+- a subordinate execution that was never represented as an Invocation at all (a disclosure violation under 4.7, which the ontology explicitly says is *not* "an implicitly authorized act" and therefore not simply a scope problem to be patched with a second authorization).
+
+Collapsing both under one refusal reason would report the same code for a remediable scope gap and for a disclosure violation with P4-level consequences, which the ontology itself keeps apart in Section 3 and Section 4.7. Reason #2 ("qualification out of execution scope") is a secondary candidate: it bundles at least three distinct scope dimensions — service endpoint, ExecutionProfile constraints, and session-state constraints — and, if 4.7's tool-configuration disclosure defeat (`unknown_state`) is ever surfaced through a qualification's session-state field, that disclosure-driven failure would be reported identically to an ordinary endpoint/profile mismatch.
+
+**Missing evidence to flag**
+
+- **Section 4.9** (RoleDefinition constraint fields) and **Section 4.13** (DecisionRecord field set) are referenced by the plan's `scope` but not included here; needed to confirm whether the ten reasons reconcile against every field the ontology requires a valid `InvocationAuthorization` to carry.
+- **Section 8** (consequence classification) and **Section 11** (OutboundInteractionLog) are cited but not provided; Section 11 in particular would show whether the log is structurally positioned to feed `authorize()` at all, which bears directly on whether "excluded" (vs. some future coupling) is the right disposition.
+- The **COMP-0037** record itself (only summarized here) — needed to see the reviewers' own account of the four reasons added, and whether disclosure-driven refusal was considered and knowingly left out or simply not raised.
+- **GAP-0005, DECISION-20260723-0001, VERIFY-20260723-0002, CAP-0015, CAP-0016** are listed as evidence_ids but not supplied; any of these could contain the "meaning of valid authorization the plan adopts" that the question asks me to test the ten reasons against, and its absence is exactly why completeness cannot be certified here.
+
+=== YOUR ANSWER TO Q5 (invocation INV-534bb2275b5b2728, COMP-0039) ===
+**Does the field prevent the reading, or only allow the system to point at something afterward?**
+
+A field is data, not a control. `check_depth` is written by the same `authorize()` call that already decided to permit; nothing about its presence changes what the check inspected, and nothing about its presence forces a downstream consumer to branch on it. The plan's own scope text confirms the check inspects only "the artifact carries a produced_by relation to an InvocationRecord whose executed_by equals the executor under authorization" — a single relation, checked once. `check_depth` is appended to the outcome to *record* that fact. Whether a consumer reads the outcome correctly depends entirely on whether the consumer's logic treats `check_depth != full-ancestry` as a reason to withhold a broader conclusion — which is downstream behavior this plan does not implement (the plan is explicit elsewhere that "Authorization classifies; it does not gate"). So: the field gives the system somewhere honest to point when asked; it does not stop a consumer from reading a permitted, undifferentiated-looking result as clearance. The plan's sentence — "a consumer cannot read a permitted result as a general independence finding" — overstates what a field does. Nothing about a field's mere presence makes a misreading impossible; it makes a misreading *avoidable by an attentive reader*, which is a different and weaker claim.
+
+**Two-hop case the one-hop check misses**
+
+Let executor A produce artifact X (`X produced_by A`). Executor B, reviewing or transforming X, produces artifact Y, where Y's evidence ancestry includes X (Y derived from/spawned from X, X `produced_by` A). A is now asked to adjudicate a claim resting on Y.
+
+The one-hop check looks only at Y's direct `produced_by` relation, which names B, not A. A ≠ B, so the check passes and authorization is permitted — even though A sits in Y's evidence ancestry exactly two hops back, which is precisely the condition C3 prohibits: "an invocation cannot adjudicate a claim whose evidence ancestry contains an invocation by an equivalent executor identity." C3's own language is ancestry-wide ("evidence ancestry contains"), not one-hop; the plan's non-goals concede this directly — "the one-hop check implements C3's most direct case only."
+
+**Is `check_depth` sufficient disclosure for this case?**
+
+Only in a narrow, self-referential sense: it correctly tells a reader that the check that produced this outcome examined a single hop and no further. That is honest disclosure of the *check's* limitation. It is not disclosure of *this case*: `check_depth` is a fixed label attached to every outcome, permitted or refused — it carries no information about whether an actual two-hop collision exists for this particular artifact. A consumer who wants to know "is A independent of everything that fed into Y" gets no signal from `check_depth` beyond "this result didn't check that." It cannot distinguish the two-hop-clean case from the two-hop-colliding case above; both come back permitted, both carry the identical `check_depth: direct` value. So the field discloses the shape of the gap, not the presence of a gap instance. That is necessary but not sufficient to prevent the independence misreading in the actual two-hop case — the actual prevention would require either (a) a consumer that refuses to treat any `check_depth: direct` permitted-result as evidence for adjudicator independence, or (b) the ancestry traversal itself, which is explicitly deferred to Slice D.
+
+**Honest replacement for the plan's wording**
+
+Replace "a consumer cannot read a permitted result as a general independence finding" with something like: *"the outcome discloses that the self-adjudication check examined only the artifact's direct producer relation; a consumer that treats a permitted result as ruling out same-executor conflicts further back in the evidence ancestry is misusing the field, and no mechanism in this slice prevents that misuse — only Slice D's ancestry traversal can establish or rule out such a conflict."* This keeps the field's actual function (an honest, checkable label of scope) without claiming it does the work of a control it isn't.
+
+**Evidence gaps worth naming**
+
+- No definition in the evidence set of what values `check_depth` may take beyond "direct" (is it an enum anticipating future multi-hop depths, or a constant?) — needed to know whether this field is designed to compose with a future Slice D depth value or is a one-off marker.
+- No Slice D specification present (traversal rules, what "evidence ancestry" resolves to as a graph operation, termination conditions for cycles/joins). Needed to evaluate how the two-hop case above would actually be caught once implemented, and whether `check_depth` values would need to change retroactively for records produced under Slice C.
+- No documentation excerpt from `AUTHORIZATION_RECORDS.md` (an expected output, not included here) showing how the "stated limitations including the one-hop bound" are worded for consumers — needed to check whether the *documentation* makes the honest claim this answer recommends, independent of the field.
+
+=== YOUR ANSWER TO Q6 (invocation INV-a7fc235164c665fc, COMP-0044) ===
+**Short answer: only partially, and the plan's phrasing overstates it.**
+
+**What Slice C would actually produce for C6.** The C6 row's dependency is "role records," and the activation condition is "already practiced; evidence begins with role records." Slice C's scope delivers exactly that dependency: RoleDefinition records on the three axes (`ABS-0004:v7:S4.9`), RoleQualification, AccountablePrincipal, and InvocationAuthorization records. So Slice C would satisfy the *precondition* named in the row — it produces the role records C6's activation condition names as where evidence begins.
+
+**What it would not produce.** The row's *target enforcement* is "artifact validator" — something that checks C6 itself, not merely records that name roles. C6's actual constraint (`ABS-0004:v7:C6`) is an exercise restriction: an invocation may not have *both* adjudicator-level epistemic authority *and* above-read_only action authority exercised against the same target "unless the adjudication is covered by an independent verification edge." Checking that requires (a) knowing the axis values a role assigns — which RoleDefinition supplies — and (b) evaluating whether an independent verification edge covers the adjudication — which is not in Slice C's scope. The plan's non-goals explicitly exclude "multi-hop lineage traversal, independence assessment" as Slice D work, and the one check Slice C does implement (the one-hop self-adjudication check) is scoped by identity — `produced_by`/`executed_by` collision — which the plan itself says implements only "C3's most direct case," disclaiming any broader independence claim.
+
+So the artifact Slice C would leave is a role record naming that a role holds `adjudicator` epistemic authority and `repository_mutator`/`external_actuator` action authority — that names the *assignment*, satisfying "role records" — but it is not evidence that the *exercise restriction* (same invocation, same target, no independent verification edge) was ever checked. Per the matrix's own rule, "manual enforcement counts only when the check leaves a named artifact; the claim that a check happens is not evidence." A RoleDefinition or InvocationAuthorization record is evidence that roles and authorizations were *named*; it is not evidence that the axis-collision check the C6 text describes was *performed*, because no component in Slice C's scope performs that check — the closest analog (one-hop self-adjudication) checks executor identity, not epistemic/action axis co-exercise, and is explicitly disclaimed as not implementing even C3 in general, let alone C6.
+
+**Conclusion on the rationale's claim.** "Slice C is what lets that row cite something" is true only in the narrow sense that it supplies the named dependency (role records) the activation condition requires — it moves C6 from having no dependency artifacts at all to having them. It is not true in the sense the sentence implies, that Slice C gives the row a citable *enforcement* artifact for the C6 check itself; the target enforcement ("artifact validator") for the axis-exercise restriction remains unbuilt, and part of what it would need (independent-verification-edge assessment) is out of scope until a later slice.
+
+**Missing evidence I'd want.** CAP-0015 and CAP-0016 (the capabilities Slice C depends on) and GAP-0005 are listed in the plan's `evidence_ids` but not included here; I'd have used them to check whether either capability defines any check closer to C6's actual axis-collision restriction than the one-hop self-adjudication check, since that would change whether the row could cite something beyond the role-record dependency. Also absent is ABS-0004 v7 Section 4.13 (DecisionRecord fields) and Section 8 (consequence classification), referenced by the plan's scope items — not decisive for this question but relevant to confirming exactly what InvocationAuthorization records would and wouldn't attest to.
+
+=== YOUR ANSWER TO Q7 (invocation INV-dafb3f854d8fcffa, COMP-0045) ===
+## Mechanically checkable vs. not, by criterion (in the order given in `success_criteria`)
+
+**1. Governed/experimental classification (fixtures for both outcomes).**
+Checkable. The classify function and its two outcomes are fully specified in `scope`, and the criterion asks only for fixture demonstration of a binary condition.
+
+**2. Ten refusal reasons, each exercised by fixture; no permitted outcome without a matching authorization record.**
+Checkable. The ten reasons are enumerated in `scope`, `authorize()` is specified as pure, and "yields that reason" / "no fixture path returns permitted without a match" are both binary, fixture-testable conditions.
+
+**3. Chain-terminates-nowhere refusal; authority-scope-violation refusal.**
+Checkable. Both conditions are named refusal reasons over stored records, testable by constructing the corresponding fixture.
+
+**4. One-hop self-adjudication check.**
+Partially checkable, partially not. The mechanical parts — refuse when executor identities match, permit when they differ, `check_depth` field present and marked direct-only — are testable against any fixture InvocationRecord; nothing about that logic requires a "real" one. But **"demonstrated against a real captured InvocationRecord"** supplies no record identifier, no source, and no acceptance rule distinguishing a "real captured" record from a synthetic fixture. As written there is no check that can fail this clause specifically — a reviewer cannot tell whether a given fixture satisfies "real" or not. This sub-clause is not mechanically checkable; the identity-collision logic around it is.
+
+**5. Consequence classification over the enumerated modifier set.**
+Checkable only in the narrow sense the plan itself claims ("enumerated-fixture coverage... not a proof of monotonicity"). Section 8 defines `effective_consequence = max(default_consequence, applicable_modifier_levels)` precisely, so a fixture asserting the max-formula holds for a *given* set of modifier levels is testable, and "downward adjustment without a recorded governed exception is refused" is testable against the `[ADOPTED_CONSTRAINT]` on governed exceptions.
+However, Section 8 also marks `[OPEN] Detailed classification function` — there is no adopted rule for *deriving* which modifier levels apply to a given invocation's actual content. So the fixtures can only assert internal consistency of the combination formula for levels the test author assigns by hand; they cannot check that the classification of any real invocation is correct, because the mapping from invocation facts to modifier levels doesn't yet exist as governance text. The criterion is checkable as a formula-consistency test, not as a classification-correctness test, and the plan's own hedge ("not a proof of monotonicity over all inputs") is doing real work here — it is narrower than "consequence classification is exercised," which could be misread as testing the classifier itself.
+
+**6. Qualification execution-scope rejection.**
+Checkable. Section 4.6 gives the scope fields explicitly (endpoint, ExecutionProfile constraints, session-state constraints, policy version); "lacking an execution scope" and "outside its scope" are both testable against the validator.
+
+**7. Self-issued authorization: accepted, `self_issued` true, reported not-independent.**
+Checkable, given the plan's own stated rule (mitigation: "exact identifier equality only"). That rule supplies the missing semantics that a bare "same party" test would otherwise lack.
+
+**8. Regression: byte-identical Slice A/B outputs before and after.**
+Checkable. "Byte-identical" is an unambiguous, mechanically comparable output; the fixture procedure (run before/after import) is stated.
+
+**9. Coverage criterion ("every public entrypoint and every enumerated outcome," full suite passes offline).**
+Not fully checkable as written. "The full suite passes offline with no network access" is checkable (pass/fail, no network calls). But "covered by tests exercising every public entrypoint and every enumerated outcome" supplies no completeness procedure: no coverage tool, no threshold, no enumerated list of "public entrypoints" against which fixtures are checked off, no definition of what counts as an "enumerated outcome" beyond the ten refusal reasons already covered by criterion 2. Whether a given test suite satisfies "every" entrypoint is a judgment call, not a mechanical check, absent a named coverage instrument or an explicit checklist artifact.
+
+**10. Audit criterion and cross-environment reproduction.**
+Not mechanically checkable as written, on both halves:
+- "The repository audit reports `ok true verified_current`" — no procedure, command, tool, or semantics for `verified_current` appears anywhere in the evidence set. There is no audit specification to check this against. **Missing:** an audit-tool specification or schema document (not present in evidence) that would define what `verified_current` asserts and how it's computed — needed to know whether this is even a boolean flag, a timestamp comparison, a hash check, or something else.
+- "commit-level cross-environment reproduction... yields byte-identical checksums for every delivered file" — no environments are named, no build inputs are specified, and no normalization rules (line endings, timestamps, path separators, toolchain/interpreter versions) are given. Without at least two named environments and a build procedure, "reproduction" cannot be executed, let alone checked. **Missing:** an environment/build specification (e.g., a CI matrix or reproducibility spec) that is not present in this evidence set.
+
+## Constraints with no corresponding check
+
+Checking the plan's top-level `constraints` list against the ten success criteria:
+
+- **"Implementation is authorized only within the scope admitted by the future admission warrant; any expansion requires a separate proposed and admitted plan."** No success criterion tests scope containment against a warrant; there is nothing to check this against until a warrant exists, and none of the ten criteria references warrant scope at all.
+- **"Field names and semantics follow ABS-0004 v7 exactly; deviations require an ABS revision first."** No criterion checks field-name/semantic conformance to the ontology text. "Field reconciliation with ABS-0004 4.13" appears in `scope`, not in `success_criteria` — it is a deliverable, not a checked outcome.
+- **"All relations use the GraphRelation shape; no predicate outside the registered Slice A, B, and C lists."** No criterion checks predicate-registry conformance or relation shape; the predicate-registry entries appear as an expected output, not as something any success criterion verifies.
+- **"authorize() is pure over stored records: no I/O, no clock, no network; the decision timestamp is supplied by the caller."** Only the network half is indirectly covered ("full suite passes offline with no network access" in criterion 9). "No I/O," "no clock," and "timestamp supplied by caller" have no corresponding fixture or check anywhere in the ten criteria.
+
+## What I would have used but don't have
+
+- ABS-0004 v7 Section 4.9 (RoleDefinition constraint fields) and Section 4.13 (DecisionRecord inherited fields) — referenced in `scope` but not in evidence; needed to assess whether criterion 3's "own reason" and the field-reconciliation deliverable are actually checkable against defined field lists.
+- Any audit-tool or CI/reproducibility specification — not in evidence — needed to assess criterion 10 at all, beyond noting its absence.
+
+=== YOUR ANSWER TO Q8 (invocation INV-a7aa0d4b2a67252f, COMP-0046) ===
+## Decisions in this slice that constrain later evidence-admission / lineage work
+
+**1. The DecisionRecord record-family shape (ABS-0004 v7 §4.13), instantiated now by InvocationAuthorization.**
+
+Section 4.13 marks the family design as unresolved:
+
+> `[OPEN]` Whether existing warrant/admission records are extended to fulfill this or a new record family is created, and whether kinds are subtypes or one record family.
+
+The plan nonetheless persists `InvocationAuthorization` as a concrete `DecisionRecord` kind now (scope item: *"InvocationAuthorization as a DecisionRecord kind... alongside its kind-specific fields"*), and the plan itself notes the reconciliation gap was still open at review time:
+
+> "COMP-0037 found the plan's field list and the ontology's inherited list unreconciled."
+
+**Category: migration-required.** Once InvocationAuthorization records exist under one field layout, and `EvidenceAdmissionDecision` (Slice D) is later built under whichever family design the `[OPEN]` item resolves to, existing authorization records may need structural migration to conform — this is not a validator change, it is a change to persisted record shape.
+
+**2. RoleDefinition's three axes and `required_verified_properties` (§4.9).**
+
+> "`required_verified_properties` (the properties that must be established by admissible verification before this role's outputs enter governed evidence...)"
+
+This field is the direct hook `EvidenceAdmissionDecision` (§4.13) uses: *"an enumeration of verified properties against the receiving role's `required_verified_properties`."* The plan seeds real role records now (drafting actuator, comparison advisor, adjudicating principal, deterministic verifier) with this field populated, and the plan's own risk section says as much:
+
+> "Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate."
+
+**Category: migration-required.** Seed role records are persisted artifacts (`docs/roles/`). If the vocabulary or `required_verified_properties` semantics needs revision once Slice D's admission logic is built against it, those stored role records — and anything that already cites them as authority for a governed classification — need migration, not just a validator update.
+
+**3. AccountablePrincipal shape (§4.13), seeded now.**
+
+The plan creates a real seed record ("the operator's AccountablePrincipal record"). `EvidenceAdmissionDecision` and future admission work will reference `AccountablePrincipal` as accountable approver. 
+
+**Category: migration-required.** Changing `principal_id`/`principal_kind`/`authority_scope`/`delegation_reference` semantics later means migrating the persisted seed record and anything chaining to it.
+
+**4. `self_issued` computed by exact-identifier party sameness only.**
+
+> "Party sameness is decided on exact identifier equality only, and the documentation states that broader sameness is not detected."
+
+This flag is stored per authorization record at issue time, not recomputed on demand. Independence findings for evidence admission (§4.13: *"lineage and independence findings relied on"*) will eventually need a broader sameness notion for lineage work.
+
+**Category: migration-required.** If broader-sameness detection is adopted later, previously persisted `self_issued=false` records that are actually same-party under the broader rule are now wrong and must be recomputed/migrated — this is a record-content problem, not a code-only fix, because the flag was written once and consumed downstream (independence checks) as a fact.
+
+**5. The one-hop `check_depth` bound on the self-adjudication check.**
+
+> "the self-adjudication outcome carries an explicit `check_depth` field naming it a direct check, so a consumer cannot read a permitted result as a general independence finding."
+
+**Category: validation-code-only (with a caveat).** As long as Slice D's multi-hop check is additive — new records/new `check_depth` values sitting alongside existing one-hop results — existing records remain valid instances and need no migration. This only becomes migration-required if the eventual multi-hop design requires reinterpreting or restructuring the existing `check_depth` enum rather than extending it; the evidence set doesn't show that design, so I can't rule it out.
+
+**6. Refusal-reason enumeration and predicate registry entries.**
+
+Both are described as enumerable/extensible ("Ten reasons, each with a fixture," "no predicate outside the registered Slice A, B, and C lists" — extended by later slices). Adding refusal reasons or Slice D predicates is additive to an enum/registry.
+
+**Category: validation-code-only.** Nothing about existing records is invalidated by adding new reasons or predicates; only validators/consumers need updating.
+
+**7. Consequence classification (default by target type, modifiers only raise).**
+
+Effective consequence is computed and stored per authorization at issue time (a decision fact), not derived live.
+
+**Category: migration-required if the default/modifier table changes**, since past records embed the old computation as a governance fact; **validation-code-only if only new modifiers are added going forward** without touching already-issued records' stored effective class.
+
+---
+
+## What would be needed but is not in this evidence set
+
+- **ABS-0004 v7 Section 8** (consequence classification detail) — needed to judge how tightly the stored effective-consequence value is coupled to the classification table, i.e., whether a table change is migration-required or re-derivable.
+- **ABS-0004 v7 Section 11** (OutboundInteractionLog) — referenced as the enforcement object for external-interaction disclosure; needed to judge whether Slice D lineage work depends on that log's shape and whether it's already schema-frozen.
+- **The full text of the `[OPEN]` DecisionRecord resolution**, and **COMP-0037's record itself** — the plan quotes findings from COMP-0037 but the review artifact isn't in evidence; I'd want it to confirm exactly what field reconciliation was left unresolved before implementation, since that bears directly on migration cost for InvocationAuthorization records.
+- **Any schema-versioning/migration policy document for AI-Lab's self_model records** — none is in evidence. Without it I can't confirm whether "migration" here means a one-time backfill script or a harder irreversible-record problem; I've assumed the latter is the relevant risk given the plan's own framing of role/consequence vocabulary as "load-bearing."
+
+---
+
+## On the disclosure
+
+The plan frames the v6→v7 break narrowly, as a self-authorization/chain-termination problem solved by declaring root authority extra-systemic. I'm not treating that as the only break relevant to this slice's lineage exposure: Section 4.7 records a second, separate open construction — the `ExecutorIdentity` superclass question reopened by COMP-0032 ("a superclass with identity-equivalence semantics defined per subtype would make constraints such as C3 properly polymorphic across executor kinds") — which is unresolved and bears directly on lineage/independence comparison across `ModelIdentity`/`ToolIdentity`/`HumanIdentity`. Whether resolving it later is validation-code-only or migration-required depends on whether identity-equivalence semantics can be added as a code-level interface over existing subtype records or requires new persisted fields on them; that determination isn't answerable from the evidence here and is a second, independent risk from the one the plan foregrounds.
+
+--- END OF YOUR PRIOR ANSWERS ---
+
+Begin with task 1, then task 2.

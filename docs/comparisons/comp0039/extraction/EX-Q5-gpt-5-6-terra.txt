@@ -1,0 +1,56 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+The question that was asked, and the answer given to it, are below. Extract every distinct claim the answer makes.
+
+Rules:
+
+1. One assertion per claim. If a sentence makes two assertions, split it.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. For each claim give "quote": a short verbatim passage from the answer, under 30 words, that states it. The quote must appear in the answer exactly.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}]}
+
+If the answer makes no extractable claim, output {"claims":[]}.
+
+=== QUESTION THAT WAS ASKED (Q5) ===
+The plan makes the one-hop bound machine-visible through a check_depth field on the authorization outcome, and states that as a result "a consumer cannot read a permitted result as a general independence finding."
+
+Does a field on the result prevent that reading, or does it only give the system somewhere to point afterwards? Construct a two-hop case the one-hop check misses, and say whether check_depth is sufficient disclosure for that case. If the plan's wording claims more than a field can do, give the honest replacement.
+
+=== ANSWER TO EXTRACT FROM ===
+No. A `check_depth` field does not prevent a consumer from treating a permitted outcome as a general independence finding. It records the limit of the check; it does not constrain a consumer’s interpretation or make the unexamined ancestry safe.
+
+A two-hop case:
+
+1. Invocation A, executed by executor identity X, produces evidence used in preparing a target artifact.
+2. Invocation B, executed by executor identity Y, produces the target artifact from that evidence.
+3. Executor identity X is authorized to adjudicate a claim about the target artifact.
+
+The proposed one-hop check examines the target artifact’s direct `produced_by` invocation, B. Since B was executed by Y rather than X, it permits the authorization.
+
+But the target artifact’s evidence ancestry contains A, executed by X. Under proposed C3, that is a conflict: “an invocation cannot adjudicate a claim whose evidence ancestry contains an invocation by an equivalent executor identity.” The fact that X appears one hop farther back does not make X independent. The plan itself recognizes that “The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision.”
+
+`check_depth` is useful disclosure only if its semantics unambiguously state that the outcome reflects a direct-only check and that no conclusion about deeper ancestry follows. It is not sufficient disclosure to support the stronger proposition that a consumer cannot misread the result. A consumer still can ignore, misunderstand, drop, or fail to propagate the field; and a “permitted” result still does not establish independence across untraversed lineage.
+
+An honest replacement for the plan’s wording is:
+
+> The self-adjudication outcome records that only a direct check was performed. A permitted result establishes no general independence finding and does not exclude equivalent-executor conflicts in deeper evidence ancestry.
+
+The supplied evidence is sufficient to identify the conceptual two-hop miss and the overclaim. It is insufficient to determine whether the implementation would make the disclosure effective for downstream consumers. For that, the missing material is:
+
+- the authorization-outcome schema and normative semantics for `check_depth`, including its permitted values and whether it is mandatory;
+- the consumer/API/UI contract governing how consumers must retain and interpret `check_depth`; and
+- the Slice D lineage representation and traversal rules needed to detect the two-hop conflict rather than merely disclose that it was not checked.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

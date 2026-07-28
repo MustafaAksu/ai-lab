@@ -1,0 +1,277 @@
+{
+  "dual_extraction_note": "Every answer is extracted by both providers because compare_providers sends one prompt to both. This is retained deliberately: extraction is interpretive, and disagreement between the two extractions marks claims that are ambiguously stated in the source answer.",
+  "extractions": [
+    {
+      "est_input_tokens": 1649,
+      "extraction_id": "EX-Q5-gpt-5-6-terra",
+      "prompt_chars": 4949,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q5-gpt-5-6-terra.txt",
+      "prompt_sha256": "f77d46eaeb390ede9dbfa682ded5a708e1808e7ac9a2ddf1d2100875ac3a2005",
+      "source_answer_chars": 2555,
+      "source_comparison_id": "COMP-0039",
+      "source_evidence_units": [
+        "ABS-0004:v7:C3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-bd98440b1d15fd36",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q5"
+    },
+    {
+      "est_input_tokens": 2524,
+      "extraction_id": "EX-Q5-claude-sonnet-5",
+      "prompt_chars": 7574,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q5-claude-sonnet-5.txt",
+      "prompt_sha256": "8745b00d49acc02dccfae7e5437e3470c5a155b256a9e42dbef6f091e4572a81",
+      "source_answer_chars": 5180,
+      "source_comparison_id": "COMP-0039",
+      "source_evidence_units": [
+        "ABS-0004:v7:C3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-534bb2275b5b2728",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q5"
+    },
+    {
+      "est_input_tokens": 2799,
+      "extraction_id": "EX-Q1-gpt-5-6-terra",
+      "prompt_chars": 8398,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q1-gpt-5-6-terra.txt",
+      "prompt_sha256": "eeebb7793e837dfc4e0850e694036e3c6046b6a9531e60d41f09e49be15ee361",
+      "source_answer_chars": 5595,
+      "source_comparison_id": "COMP-0040",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "est_input_tokens": 3163,
+      "extraction_id": "EX-Q1-claude-sonnet-5",
+      "prompt_chars": 9491,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q1-claude-sonnet-5.txt",
+      "prompt_sha256": "b7606ef9fbf72c5653f4caac1e530377f595d57996a3d4db9906527b039cc14b",
+      "source_answer_chars": 6688,
+      "source_comparison_id": "COMP-0040",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "est_input_tokens": 3125,
+      "extraction_id": "EX-Q2-gpt-5-6-terra",
+      "prompt_chars": 9375,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q2-gpt-5-6-terra.txt",
+      "prompt_sha256": "c170b929395d9ee89d77f3524e1e842c4ca81b7a16aae97e2e65f5af2c4e1f7f",
+      "source_answer_chars": 7071,
+      "source_comparison_id": "COMP-0041",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "est_input_tokens": 2181,
+      "extraction_id": "EX-Q2-claude-sonnet-5",
+      "prompt_chars": 6545,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q2-claude-sonnet-5.txt",
+      "prompt_sha256": "d5a5475c5d1f26874eaa3cec80222c2f7e2b01cadca24e6b70aa66d646ace7e6",
+      "source_answer_chars": 4241,
+      "source_comparison_id": "COMP-0041",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "est_input_tokens": 1545,
+      "extraction_id": "EX-Q3-gpt-5-6-terra",
+      "prompt_chars": 4635,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q3-gpt-5-6-terra.txt",
+      "prompt_sha256": "e613d578dadfeeaf103741c93fa8a4ba205c75eb20e587d8f7b49b8f09105948",
+      "source_answer_chars": 2380,
+      "source_comparison_id": "COMP-0042",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "est_input_tokens": 2609,
+      "extraction_id": "EX-Q3-claude-sonnet-5",
+      "prompt_chars": 7828,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q3-claude-sonnet-5.txt",
+      "prompt_sha256": "15fbb0e9141768cbe5b1e55531d1ac4863cb9b12722bbdd5bb0b59e4f4472606",
+      "source_answer_chars": 5573,
+      "source_comparison_id": "COMP-0042",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "est_input_tokens": 2481,
+      "extraction_id": "EX-Q4-gpt-5-6-terra",
+      "prompt_chars": 7445,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q4-gpt-5-6-terra.txt",
+      "prompt_sha256": "9780b326a7e40887cc2f179d4bbf9b3596cb431a2a1d57d094d945fdb6848714",
+      "source_answer_chars": 4921,
+      "source_comparison_id": "COMP-0043",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-3e7bc88549b7f5ac",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q4"
+    },
+    {
+      "est_input_tokens": 2793,
+      "extraction_id": "EX-Q4-claude-sonnet-5",
+      "prompt_chars": 8381,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q4-claude-sonnet-5.txt",
+      "prompt_sha256": "e2f77c58c9cfce0afdb4bdcda085f02b2169ffc1bfd17b06862f1c2d0403d295",
+      "source_answer_chars": 5857,
+      "source_comparison_id": "COMP-0043",
+      "source_evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-bc052fff304f7e80",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q4"
+    },
+    {
+      "est_input_tokens": 1853,
+      "extraction_id": "EX-Q6-gpt-5-6-terra",
+      "prompt_chars": 5559,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q6-gpt-5-6-terra.txt",
+      "prompt_sha256": "8a80854432d2d37cf3d9d530d79bfe07644bc8da7f90970d4bcb34a3cc17f959",
+      "source_answer_chars": 2978,
+      "source_comparison_id": "COMP-0044",
+      "source_evidence_units": [
+        "ABS-0004:v7:S9",
+        "ABS-0004:v7:C6",
+        "ABS-0004:v7:S4.9",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-84f23fa7b98a9895",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q6"
+    },
+    {
+      "est_input_tokens": 2170,
+      "extraction_id": "EX-Q6-claude-sonnet-5",
+      "prompt_chars": 6511,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q6-claude-sonnet-5.txt",
+      "prompt_sha256": "6f77ca0df6ada3c7de11c8321b2809debcd461707064d9bd672de8d9689d09f5",
+      "source_answer_chars": 3930,
+      "source_comparison_id": "COMP-0044",
+      "source_evidence_units": [
+        "ABS-0004:v7:S9",
+        "ABS-0004:v7:C6",
+        "ABS-0004:v7:S4.9",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-a7fc235164c665fc",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q6"
+    },
+    {
+      "est_input_tokens": 4393,
+      "extraction_id": "EX-Q7-gpt-5-6-terra",
+      "prompt_chars": 13179,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q7-gpt-5-6-terra.txt",
+      "prompt_sha256": "a70623d1c628bda0e2590209f63339ab0fd7c623e2cd1b9b4bee5cf3f91af5cb",
+      "source_answer_chars": 10644,
+      "source_comparison_id": "COMP-0045",
+      "source_evidence_units": [
+        "ABS-0004:v7:S8",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q7"
+    },
+    {
+      "est_input_tokens": 3365,
+      "extraction_id": "EX-Q7-claude-sonnet-5",
+      "prompt_chars": 10097,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q7-claude-sonnet-5.txt",
+      "prompt_sha256": "0637622d3e18cba093ca4b43d2a3e410320b04274264b4413348066fc594bb47",
+      "source_answer_chars": 7562,
+      "source_comparison_id": "COMP-0045",
+      "source_evidence_units": [
+        "ABS-0004:v7:S8",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-dafb3f854d8fcffa",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q7"
+    },
+    {
+      "est_input_tokens": 5118,
+      "extraction_id": "EX-Q8-gpt-5-6-terra",
+      "prompt_chars": 15356,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q8-gpt-5-6-terra.txt",
+      "prompt_sha256": "27f10f9c2d94cc07ec68a1b75a1cd0c72f1e81dcb7259a29b79f09243fd66dd7",
+      "source_answer_chars": 13175,
+      "source_comparison_id": "COMP-0046",
+      "source_evidence_units": [
+        "ABS-0004:v7:S4.13",
+        "ABS-0004:v7:S4.9",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-e9cc2ca90d7fd906",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q8"
+    },
+    {
+      "est_input_tokens": 3252,
+      "extraction_id": "EX-Q8-claude-sonnet-5",
+      "prompt_chars": 9758,
+      "prompt_path": "docs/comparisons/comp0039/extraction/EX-Q8-claude-sonnet-5.txt",
+      "prompt_sha256": "158f676563b363c011ec3c6c03b605f8b929b7458d66ec2549fcb1741a20d769",
+      "source_answer_chars": 7577,
+      "source_comparison_id": "COMP-0046",
+      "source_evidence_units": [
+        "ABS-0004:v7:S4.13",
+        "ABS-0004:v7:S4.9",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "source_invocation_id": "INV-a7aa0d4b2a67252f",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q8"
+    }
+  ],
+  "purpose": "claim extraction from COMP-0039..0046 tier-1 answers",
+  "record_type_note": "These runs go through scripts/compare_providers.py and will therefore be recorded as COMP-* comparison artifacts. They are extraction operations, not review rounds. The comparison record type is being used for an act it was not designed for; a distinct ExtractionRun type is a candidate for the graph ontology and should not be invented ad hoc here."
+}

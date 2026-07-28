@@ -1,0 +1,356 @@
+You previously answered eight questions about the ABS-0004 v7 amendment and PLAN-20260723-0002. Each was asked in a separate call with its own evidence set, and none of those calls could see any of the others. Your own eight answers are reproduced below verbatim.
+
+This call is a coherence check on your own output. It is not an independent review: its evidence is entirely your own prior invocations, and it is recorded as independence_unresolved. It will not be counted as corroborating anything it reviews.
+
+Two tasks, in order.
+
+1. INCONSISTENCY. Identify any place where your answers conflict, where one depends on an assumption another undermines, or where an argument you made in one answer would change given what you found in another. You are the only party who can do this, since each answer was written without sight of the rest. Be specific: name the answers and quote the conflicting passages. If you find none, say so rather than manufacturing one.
+
+2. RECOMMENDATION. Give a recommendation on the amendment and the plan separately: admit as written, admit with named conditions (state each condition), or revise first. Where a recommendation depends on a finding you now consider unreliable after task 1, say so.
+
+Do not certify or praise. No provider product recommendations.
+
+
+=== YOUR ANSWER TO Q1 (invocation INV-56d31d5bfca54e6d, COMP-0040) ===
+I favor **(a)**, but only for the specific claim v6 purported to make: that an internal authorization structure can prevent convenient closure of the *extra-systemic* authorization regress.
+
+Section 3 states the decisive premise: “Root authority is extra-systemic.” Whether a principal is actually entitled to govern AI-Lab is a fact about “who controls the repository and answers for it,” and the evidence says that no internal record arrangement can make or verify that fact. On that premise, a required non-universal scope, a fixed number of delegations, or a prohibition on self-issuance cannot establish that the root claimant has legitimate authority. It can only constrain the shape of records produced by a claimant.
+
+The same applies to self-authorization. A rule refusing self-issued authorization cannot eliminate the root’s self-standing character; it can require the root to use another identity or another record path. Since a party may occupy both executor and AccountablePrincipal roles, the relevant truthful fact is the coincidence, which v7 records as `self_issued: true`. Where independence is required, v7 says that record is disqualified from counting as independent. That is a substantive limitation on an independence finding, even though it is not a test of root entitlement.
+
+On this reading, permitting a universal `authority_scope` is not itself the terminus. The terminus is the explicit statement that a universal declaration does not become a real boundary merely because it is represented in a scope field. The operative result claimed by v7 is limited: attribution and legibility of the claim, its breadth, and the authorizations resting on it. It does not claim prevention.
+
+That does not make (b) incoherent; it identifies a different objective. A system can mechanically reject universal scopes, reject self-issued records, or require a finite delegation chain. Such rules can bound which records the system accepts. They cannot, on the supplied evidence, establish that the accepted root is entitled to govern. Calling that latter effect prevention of the extra-systemic regress would be the error. Calling it a restriction on record admissibility or operational participation would be a different, potentially testable claim.
+
+The readings can be distinguished by an explicit construction and a stated success condition:
+
+1. **Paired-world construction for the regress claim.**  
+   Construct two cases with identical repository records:
+   - the same `AccountablePrincipal`,
+   - the same `authority_scope`,
+   - the same delegation and authorization chain,
+   - the same `self_issued` markings, and
+   - the same DecisionRecords.
+   
+   In one case, the recorded principal really is accountable in the world; in the other, it is not. If the internal rule reaches the same result in both cases, it cannot verify or establish the difference in actual root authority. This would support (a) for any claimed internal solution to the regress.
+
+2. **Acceptance-language construction for (b)’s narrower control claim.**  
+   Define an enforceable system rule such as: an InvocationAuthorization is ineffective unless its chain terminates in a scope satisfying specified limits, and universal scope is rejected. Then test whether records violating that condition can produce an `effective_status` permitting invocation or admission. If they cannot, the system has implemented a genuine internal acceptance bound. That would support (b) only if the disputed claim is “the system bounds what it will operationally accept,” not “the system establishes the root’s real authority.”
+
+3. **External-evidence test for a non-theatrical scope declaration.**  
+   The distinction ultimately turns on whether declared scope is compared to evidence outside the authorization chain. Section 3 itself leaves open “what external evidence a scope declaration should carry.” A decision rule would need to specify:
+   - the external source or accountable process against which the declared scope is assessed;
+   - who may assess it;
+   - what constitutes sufficient evidence of the principal’s authority and scope;
+   - what happens when that evidence is absent, contested, expired, or narrower than the declaration; and
+   - whether the result affects only visibility, invocation authorization, evidence admission, or all of them.
+
+The evidence set is sufficient to decide the conceptual point that internal records cannot establish the extra-systemic fact described in P7. It is insufficient to decide whether v7’s visibility-only approach is preferable to an operational scope-bound regime, because the following are absent:
+
+- the v6 rule that allegedly prevented convenient closure, including its exact enforcement semantics;
+- the two reviewers’ constructions in `COMP-0037`, needed to determine precisely what path defeated v6 and whether other failure modes remain;
+- any definition of `authority_scope` semantics, including whether scopes are machine-evaluable;
+- the policy rules governing when an InvocationAuthorization becomes effective or when an EvidenceAdmissionDecision may admit output;
+- the external evidence model contemplated by the Section 3 open question; and
+- a threat model and success criterion distinguishing prevention of false claims, prevention of unauthorized system actions, and mere disclosure of claims.
+
+Without those materials, the defensible conclusion is narrow: v7 is correct not to represent its internal records as establishing root authority. Whether it has abandoned a useful operational control cannot be decided from the supplied text.
+
+=== YOUR ANSWER TO Q2 (invocation INV-f8d5120327f1d564, COMP-0041) ===
+The following sentences claim outcomes that the described record fields and rules do not, on the supplied text, establish.
+
+1. **Visibility of the whole authorization dependency set**
+
+> “What the record provides is visibility: the claim, its declared scope, and every authorization resting on it are legible and attributable.”
+
+Section 4.13 supplies `authority_scope`, `delegation_reference`, and DecisionRecord fields, but it does not specify a required chain-link representation, completeness condition, traversal rule, or attribution rule that would ensure that **every** downstream authorization is recorded, discoverable, legible, and attributable. A record can expose what it contains; it cannot by itself establish completeness of what rests on a claim.
+
+Honest version:
+
+> “The record can make a declared claim and scope visible, and can make authorizations visible and attributable to the extent that they are recorded and linked. This text does not establish completeness of that visibility.”
+
+The immediately following sentence therefore also overstates the achieved result:
+
+> “Visibility is the whole of what this constraint achieves, and it is not prevention.”
+
+The constraint as shown may prescribe recording and non-validation, but it does not demonstrate that visibility has been achieved. It should say that visibility is the intended and limited function, subject to complete and usable recording.
+
+2. **Legibility of breadth and control of descriptions outside the field**
+
+> “A wide scope is permitted and must be legible as wide; it may not be described, in a record or in a summary, as bounded merely because a scope field was populated.”
+
+An `authority_scope` field can record a declaration, but the supplied text gives no scope language, interpretation rules, validation, rendering requirement, summary-generation rule, or review process that would make an arbitrarily wide declaration legible as wide. Nor is there a shown mechanism governing what a record or summary may say about that field.
+
+Honest version:
+
+> “A scope declaration should be recorded in a form that permits its breadth to be assessed; this section does not by itself ensure that records or summaries present an arbitrarily wide scope as wide.”
+
+3. **The asserted effect of a `self_issued` mark**
+
+> “It is instead disqualified from counting as independent authorization wherever independence is required, and it is countable as such.”
+
+The shown mechanism records `self_issued: true`. Section 4.13 says that InvocationAuthorization carries “independence requirements,” but it does not state a validation, decision, or admission rule requiring a consumer of the record to reject a self-issued authorization when independence is required. A mark supports disclosure; it does not itself produce disqualification. Also, “countable as such” is ambiguous after “disqualified from counting as independent authorization”: it should specify whether it remains countable as an authorization while not countable as independent authorization.
+
+Honest version:
+
+> “A self-issued authorization must be marked. Where a receiving rule requires independent authorization, that rule should not count a marked self-issued authorization as independent; the authorization may still be recorded and counted as self-issued authorization.”
+
+This sentence also gives an unsupported rationale:
+
+> “A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for.”
+
+The definitions distinguish the AccountablePrincipal role from the executor role and expressly allow, but do not require, one party to hold both. An accountable principal can authorize an invocation performed by another executor. Responsibility for work is not the same thing as performing or self-authorizing it.
+
+Honest version:
+
+> “A root authorization may be self-issued when the accountable principal also performs the invocation, but root authorization need not be self-issued.”
+
+4. **The absolute claim about AI-Lab’s means**
+
+> “AI-Lab does not validate that a declared principal is entitled to the authority it claims; it has no means to do so, and pretending otherwise would be the overclaim P6 forbids.”
+
+P7 supports the narrower proposition that repository arrangements cannot make the extra-systemic fact of root authority true or verify it. It does not, on the text supplied, establish that AI-Lab has **no means** at all—for example, no external investigation, institutional process, or evidence outside repository records. The reference to what “P6 forbids” cannot be assessed because P6 is not included.
+
+Honest version:
+
+> “AI-Lab does not validate entitlement to standing authority through the repository records described here. Those records cannot establish or verify the extra-systemic fact of root authority.”
+
+To determine whether the P6 reference is accurate, **P6** is needed.
+
+5. **The overstatement in the retraction**
+
+> “v7 does not close the question by asserting a stronger internal control; it records that no internal control can close it, and asks instead what external evidence a scope declaration should carry.”
+
+The first clause is a description of v7’s posture. The second converts the demonstrated failure of v6’s particular anti-regress rule into a universal impossibility claim: “no internal control can close it.” The supplied evidence shows that internal records cannot establish or verify the real-world fact of root authority, but it does not establish that no internal control can close every relevant authorization question, impose internal consequences, or require external evidence before a record receives a given status. Nor does the supplied text establish that the prior self-authorization path is the only possible failure mode.
+
+Honest version:
+
+> “v7 does not claim that its internal records establish root authority. The prior v6 control did not prevent the identified self-authorization path; whether, and for what limited purpose, internal controls combined with external evidence can constrain authorization remains open.”
+
+The factual assertion in the same paragraph—
+
+> “COMP-0037 established what v6 got wrong here: both reviewers independently constructed the same self-authorization path, and v6’s claim to prevent convenient closure of the regress was false.”
+
+—cannot be independently assessed from the supplied evidence. **COMP-0037** and the relevant **v6 rule** are needed to assess what the reviewers constructed, what v6 actually claimed, and whether the description of that break is complete rather than selective.
+
+Finally, this claim depends on an absent section:
+
+> “Undeclared subordinate execution is a disclosure violation under 4.7, not an implicitly authorized act.”
+
+The preceding sentence defines when subordinate authorization coverage applies, but the claimed classification as a “disclosure violation under 4.7” requires **Section 4.7**. It would be needed to determine whether that section actually imposes the stated violation, on whom, and with what consequence.
+
+=== YOUR ANSWER TO Q3 (invocation INV-eaa6bda0606982af, COMP-0042) ===
+A path exists within the record system; it does not establish real-world root authority.
+
+1. Party X creates an `AccountablePrincipal` record declaring X’s `authority_scope` as universal (or broad enough to cover the intended invocation).
+2. X records a standing-authority claim for that principal. The claim is recorded rather than verified, and scope breadth may be arbitrarily wide.
+3. X, acting as principal, issues an `InvocationAuthorization` for invocation I to X, acting as executor, within that declared scope.
+4. The authorization is marked `self_issued: true`, because the issuing principal also performs the invocation.
+5. The record identifies the decision as an invocation authorization and supplies the authorized executor, role, consequence class, policy, qualifications, independence requirements, and conditions.
+6. X performs I.
+
+On the ontology’s chain rule, that authorization terminates at X’s recorded standing authority and is therefore self-standing within the declared scope. The system does not validate whether X is actually entitled to that standing authority. Thus, a false or opportunistic standing-authority claim can yield effective authorization *in the repository’s authorization records* while leaving the real-world authority claim unverified.
+
+The self-issued marking does not block this construction. It requires disclosure and disqualifies the authorization from counting as independent where independence is required. Section 3 does not impose an independence requirement on every invocation authorization. The path therefore works where no applicable authorization condition requires independent authorization. If such a condition does apply, the self-issued record cannot satisfy that independent-authorization condition.
+
+This can also misrepresent who authorized what in the practically important sense that the record attributes the authorization to X’s standing authority even when X lacks that authority in the world. The record remains legible and attributable, but the stated constraint expressly makes visibility rather than prevention its effect.
+
+Missing evidence: the applicable policy and any invocation-specific conditions or independence requirements are not provided. They would be needed to determine whether the particular planned invocation requires independent authorization and therefore defeats the self-issued path.
+
+=== YOUR ANSWER TO Q4 (invocation INV-3e7bc88549b7f5ac, COMP-0043) ===
+No. The ten reasons are not complete for the plan’s stated meaning of a “valid authorization.”
+
+The plan says an invocation is governed only when “a valid authorization covers it,” follows ABS-0004 v7 “exactly,” and makes authorization depend on stored records. But it neither incorporates nor excludes or defers the Section 4.7 disclosure constraints. That omission is material.
+
+The plan should state that the Section 4.7 constraints are **checked by `authorize()` as validity conditions**, from stored declarations and records, with refusal when the applicable constraint is violated. This is an authorization-result refusal, not a refusal to execute. In particular:
+
+* **Undisclosed material subordinate execution:** refuse where a material subordinate execution capable of influencing the output or external effect is not represented as an Invocation linked to its parent by `spawned`. The existing reason, “subordinate execution outside the classes its parent authorization declares,” covers a *declared* subordinate that exceeds declared executor kinds, roles, or consequence ceiling. It does not cover an undisclosed subordinate at all.
+* **Undeclared execution-path-changing tool configuration:** for a ToolIdentity whose output enters governed evidence, refuse where a configuration file, environment variable, or local dependency capable of altering execution path is not declared and content-addressed in its EffectiveInputManifest. This is distinct from qualification scope and from ordinary unmet authorization conditions.
+* **Undeclared material external interaction:** for executors producing governed evidence or holding above-read_only action authority, refuse where material external interactions are undeclared. This includes network calls, external writes, and privileged ambient consumers, including hardcoded targets. The plan should say that the relevant stored enforcement evidence is the `OutboundInteractionLog`; `authorize()` remains pure by evaluating stored records rather than performing I/O.
+
+If the plan instead intends to exclude these checks from validity or defer them, it must say so expressly and must not describe its result as a valid authorization under the adopted v7 meaning. Deferral would leave the invocation experimental, or otherwise require a clearly narrower, Slice-C-only term rather than silently treating disclosure-noncompliant work as governed.
+
+Further refusal cases absent from the enumerated ten include:
+
+1. **No matching authorization covers the invocation.**  
+   The plan says a permitted outcome cannot occur without “a matching authorization record,” and its classifier calls an invocation experimental absent valid coverage. But no listed refusal reason is “no authorization covers this invocation.” “Authorized executor does not match” presupposes an authorization; it does not identify the absence of one.
+
+2. **An independence requirement is unmet.**  
+   The proposed record contains “independence requirements,” and the plan says a self-issued authorization is “disqualified from counting as independent authorization wherever independence is required.” Yet the only related reason is “self-adjudication conflict,” explicitly limited to a direct, one-hop produced_by/executed_by collision. A self-issued authorization where independent authorization is required must refuse even if that particular one-hop artifact test does not trigger. More generally, the plan expressly defers “independence assessment,” so it cannot silently pass an authorization that requires independence but cannot establish it.
+
+The following listed reasons are overly broad enough to conceal materially distinct failures:
+
+* **“authorization conditions unmet, malformed, or absent”** combines a substantive failed condition, malformed authorization data, and missing conditions. These differ in both diagnosis and remediation. It also must not serve as an unstated catch-all for the three Section 4.7 disclosure violations.
+* **“the authorization or a record it relies on is inactive or superseded”** combines status failure of the authorization itself with status failure of a relied-on record. A superseded qualification, an inactive principal record, and an inactive authorization are materially different failures.
+* **“subordinate execution outside the classes its parent authorization declares”** aggregates exceeding declared executor kind, role, and consequence ceiling, while omitting the separate case of undisclosed subordinate execution.
+
+The supplied evidence is sufficient to identify these omissions. A complete assessment of every possible validity refusal is not possible from this evidence alone: Section 4.9 would be needed for the full RoleDefinition constraint fields, Section 4.13 for all inherited DecisionRecord requirements, and the referenced Section 11 definition of `OutboundInteractionLog` for its exact required fields and validation conditions.
+
+=== YOUR ANSWER TO Q5 (invocation INV-bd98440b1d15fd36, COMP-0039) ===
+No. A `check_depth` field does not prevent a consumer from treating a permitted outcome as a general independence finding. It records the limit of the check; it does not constrain a consumer’s interpretation or make the unexamined ancestry safe.
+
+A two-hop case:
+
+1. Invocation A, executed by executor identity X, produces evidence used in preparing a target artifact.
+2. Invocation B, executed by executor identity Y, produces the target artifact from that evidence.
+3. Executor identity X is authorized to adjudicate a claim about the target artifact.
+
+The proposed one-hop check examines the target artifact’s direct `produced_by` invocation, B. Since B was executed by Y rather than X, it permits the authorization.
+
+But the target artifact’s evidence ancestry contains A, executed by X. Under proposed C3, that is a conflict: “an invocation cannot adjudicate a claim whose evidence ancestry contains an invocation by an equivalent executor identity.” The fact that X appears one hop farther back does not make X independent. The plan itself recognizes that “The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision.”
+
+`check_depth` is useful disclosure only if its semantics unambiguously state that the outcome reflects a direct-only check and that no conclusion about deeper ancestry follows. It is not sufficient disclosure to support the stronger proposition that a consumer cannot misread the result. A consumer still can ignore, misunderstand, drop, or fail to propagate the field; and a “permitted” result still does not establish independence across untraversed lineage.
+
+An honest replacement for the plan’s wording is:
+
+> The self-adjudication outcome records that only a direct check was performed. A permitted result establishes no general independence finding and does not exclude equivalent-executor conflicts in deeper evidence ancestry.
+
+The supplied evidence is sufficient to identify the conceptual two-hop miss and the overclaim. It is insufficient to determine whether the implementation would make the disclosure effective for downstream consumers. For that, the missing material is:
+
+- the authorization-outcome schema and normative semantics for `check_depth`, including its permitted values and whether it is mandatory;
+- the consumer/API/UI contract governing how consumers must retain and interpret `check_depth`; and
+- the Slice D lineage representation and traversal rules needed to detect the two-hop conflict rather than merely disclose that it was not checked.
+
+=== YOUR ANSWER TO Q6 (invocation INV-84f23fa7b98a9895, COMP-0044) ===
+No. Slice C as described would not, merely by adding role and authorization records, give C6’s matrix row current enforcement evidence.
+
+The row distinguishes an enforcement check from the records it would inspect. Its rule is explicit: “Manual enforcement counts only when the check leaves a named artifact; the claim that a check happens is not evidence.” Accordingly:
+
+- **Role records and authorization records** can name assignments, scopes, issuers, executors, and perhaps the three authority-axis values. They are evidence of what was recorded or asserted.
+- They are **not by themselves evidence that C6 was checked**—i.e., that independence across epistemic, action, and accountable authority was evaluated for a particular invocation, or that the C6 exercise restriction was applied.
+- A plan statement that the system performs such a check, and fixtures showing intended behavior, likewise do not establish that the check was performed in current practice.
+
+The matrix wording—“already practiced; evidence begins with role records”—can support role records as the starting inputs and traceability for C6 evidence. It does not override the matrix’s own requirement that manual enforcement leave a named artifact. For the row to cite actual enforcement evidence, Slice C would need to produce and retain named artifacts that identify, at minimum, the invocation or target, relevant role/authority assignments, the C6 rule evaluated, and the result. For example, a named authorization decision or validator result recording the C6 evaluation could be evidence of a performed check. The plan does not expressly specify such a C6-result artifact.
+
+Moreover, the proposed one-hop check is not a general C6 check. It checks whether an “adjudicator-authority role” is being authorized over an artifact whose direct `produced_by` invocation has the same executor identity. That addresses a direct adjudicator/executor collision. C6 also requires independent assignment across “epistemic authority, action authority, and accountable authority,” and prohibits specified co-exercise absent “an independent verification edge.” The supplied plan does not state that its one-hop outcome evaluates all three axes, accountable authority, or the independent-verification-edge condition. Indeed, it describes the check as “one-hop” and “direct-only.”
+
+Thus, after admission and actual use, the plan could potentially create **partial** C6 enforcement evidence only if it emits named records of C6 evaluations. Its existing proposed outputs and seed role records would not alone turn “none (no current record names the check)” into evidence that the check was performed.
+
+No additional evidence is needed to reach that distinction. To determine whether the planned schemas actually can represent every relevant C6 condition, I would need the referenced but unsupplied Section 4.13 material on accountable authority and the definition/representation of an “independent verification edge.”
+
+=== YOUR ANSWER TO Q7 (invocation INV-f0fc3f53f3eb5ee8, COMP-0045) ===
+The criteria are not uniformly mechanically checkable as written. Several specify fixture-level assertions that can be automated; others depend on undefined terms, missing procedures, or ontology material explicitly left open.
+
+| Criterion | Mechanical status | Reason |
+|---|---|---|
+| 1. Governed versus experimental classification | **Checkable at the stated fixture level** | It supplies an operational outcome rule—“governed when a valid authorization covers it and experimental otherwise”—and requires fixtures for both outcomes. The meaning of “valid authorization” must be supplied by the authorization validator and `authorize()` rules, but the two requested fixture outcomes are mechanically assertable. |
+| 2. Ten refusal reasons and no unauthorised permitted fixture path | **Mostly checkable** | The ten reasons are enumerated in scope, so a fixture can invoke each condition and assert the returned reason. The requirement that no fixture path permits without a matching authorization record can also be checked over the defined fixtures. It is not a proof that *all possible* implementation paths behave so, because neither a path model nor exhaustive-input domain is specified. |
+| 3. Unterminated chain and out-of-scope standing authority | **Only partly checkable as a general criterion** | A fixture can create a chain that terminates nowhere and can create a chosen out-of-scope case. But `authority_scope` has no supplied grammar or matching semantics. Without those, a machine cannot generally determine that a particular authorization is “outside” a declared scope; it can only test implementation-selected examples. |
+| 4. One-hop self-adjudication, including a “real captured InvocationRecord” | **Partly checkable; not fully checkable as written** | Same-identity refusal, different-identity permission, and `check_depth` equal to a direct-only value are fixture-testable. The required demonstration “against a real captured InvocationRecord” is not: no InvocationRecord is named, no capture record is supplied, and no acceptance rule distinguishes “real captured” from a constructed fixture. The evidence set would need the identified InvocationRecord and a rule or provenance criterion establishing that it is a captured record. |
+| 5. Consequence classification | **Not fully mechanically checkable against Section 8 as it stands** | A test can assert selected ordinal results for selected fixture values and can reject a downward adjustment lacking the stated exception data. But Section 8 labels the “Detailed classification function” `[OPEN]`. In particular, the evidence does not define how the listed modifiers acquire `applicable_modifier_levels`, how applicability is determined, or a complete record-level validation procedure for a governed downward exception. The ordinal ordering supports a chosen `max` implementation, but not a complete classifier for the named modifiers. Thus this can test an implementation’s chosen fixture mapping, not conformity to a complete Section 8 classification function. |
+| 6. Qualification scope | **Partly checkable** | Rejecting an absent execution scope is direct. Testing a chosen endpoint or ExecutionProfile outside a declared scope is also direct. General enforcement is underspecified because the supplied material does not define matching semantics for “permitted ExecutionProfile constraints” or what makes a profile “materially different.” |
+| 7. Self-issued marking and independence | **Partly checkable** | Exact-identifier cases can be automated: the plan states that party sameness uses “exact identifier equality only,” and a fixture can assert `self_issued true`. But “reported as not independent by any check that asks for independent authorization” has no supplied interface, set of such checks, or complete semantics of independence. It is therefore not mechanically bounded as written. |
+| 8. Slice A/B regression | **Checkable at the stated fixture level** | A defined fixture can run Slice A and Slice B before and after the authorization code is importable and compare bytes. This checks the stated fixture and byte-identity condition. It does not establish the broader constraint that “no field, path, or default of either is altered” for all inputs, but the success criterion itself is mechanically executable. |
+| 9. Test coverage and offline suite | **Not fully mechanically checkable as written** | Tests can enumerate public functions and listed outcomes, and a suite can be run with network access blocked. However, “every public entrypoint” lacks a definition of public API, and “covered by tests” lacks a coverage rule. “The full suite passes offline” also names no test command, runner, dependency-installation conditions, or offline enforcement method. It is an automatable goal only after those are specified. |
+| 10. Audit and cross-environment reproduction | **Not mechanically checkable as written** | The audit clause gives no audit procedure, command, report schema, or semantics for `ok true verified_current`. The reproduction clause names no environments, build inputs, dependency-resolution rules, file-selection rule, checksum algorithm, or normalization rules. “Byte-identical checksums” is itself incomplete without those definitions. |
+
+## Specifically on criterion 10
+
+The audit condition cannot be evaluated from the plan because it only says:
+
+> “The repository audit reports ok true verified_current”
+
+There is no identified audit record, command, evaluator, report schema, meaning of `verified_current`, or rule for determining the relevant current state.
+
+The cross-environment condition cannot be reproduced because it only says:
+
+> “commit-level cross-environment reproduction from the public repository yields byte-identical checksums for every delivered file.”
+
+It does not identify the environments, operating-system or architecture variation, interpreter and dependency versions, build command, whether dependencies may be fetched, how generated metadata is normalized, which files count as “delivered,” or the checksum method. Those omissions are material, especially for byte identity.
+
+## Consequence-classification limitation
+
+Criterion 5 invokes “the enumerated modifier set,” and Section 8 names the modifiers, but Section 8 also says:
+
+> `[OPEN]` Detailed classification function.
+
+That leaves no complete machine-testable definition for assigning modifier levels or determining applicability. The criterion can support enumerated fixtures whose expected values are chosen in advance, but the evidence does not support treating those fixtures as a complete test of the Section 8 rule.
+
+To make this criterion mechanically checkable, the missing material would be a completed Section 8 classification function defining, at minimum:
+
+- the level assigned by each modifier;
+- when each modifier is applicable;
+- the representation and validation rules for modifier evidence;
+- the ordering and `max` behavior over absent and multiple modifiers; and
+- the machine-validatable form of the governed downward exception, including its “reason, accountable principal, scope, evidence, expiry/review.”
+
+## Plan constraints lacking a corresponding success-criterion check
+
+The following plan constraints have no corresponding direct success-criterion check:
+
+1. **Admission-warrant scope and expansion**  
+   The constraint that implementation is authorized only within a future admission warrant, and that expansion needs a separate plan, has no success criterion that checks an admission warrant or compares implementation scope against it.
+
+2. **Exact ABS-0004 v7 field names and semantics**  
+   No criterion performs a general conformance comparison against v7. Moreover, the supplied evidence omits the referenced Sections 4.9 and 4.13 and leaves Section 8’s detailed function open, so a complete conformance check could not be constructed from this evidence set.
+
+3. **GraphRelation and registered Slice A/B/C predicate restriction**  
+   No criterion checks that all relations use `GraphRelation` or that no predicate falls outside the registered lists. The `GraphRelation` shape and the Slice A, B, and C lists are not supplied; they would be needed to perform that check.
+
+4. **Purity of `authorize()`**  
+   No criterion directly checks that `authorize()` has “no I/O, no clock, no network,” or that its timestamp is supplied by the caller. Criterion 9’s offline-suite condition does not establish purity: code can access a clock or attempt I/O without requiring successful network access.
+
+5. **No alteration of Slice A/B fields, paths, or defaults**  
+   Criterion 8 checks byte-identical output for one stored-record fixture, but does not directly check the constraint’s stronger prohibition on changing any field, path, or default.
+
+6. **No provider-call behavior change and no execution refusal**  
+   The proposed change says there is “No change to provider-call behavior” and the non-goals say authorization “does not gate” and no invocation is refused execution by this slice. No success criterion executes an invocation flow and verifies that classification or authorization refusal does not block execution.
+
+The standing-authority constraint does have a partial corresponding check in criterion 3: declared scope is required and an out-of-scope authorization is meant to be refused. Its general mechanical adequacy remains limited by the missing `authority_scope` grammar and matching semantics.
+
+## Missing evidence needed for the unresolved checks
+
+The evidence set is insufficient for full assessment of the following claimed checks. Needed material is:
+
+- a completed Section 8 detailed classification function, for criterion 5;
+- the `authority_scope` grammar and scope-matching rules, for criteria 3 and 6;
+- the named captured InvocationRecord and a rule establishing “real captured,” for criterion 4;
+- a definition of independence checks and their public interfaces, for criterion 7;
+- a public-API definition, test command, runner, and offline execution procedure, for criterion 9;
+- the audit procedure, command, report schema, and `verified_current` semantics, for criterion 10;
+- named reproduction environments, build inputs, dependency rules, normalization rules, delivered-file set, and checksum procedure, for criterion 10;
+- the `GraphRelation` shape and registered Slice A/B/C predicate lists, for the relation constraint;
+- the referenced ABS-0004 Sections 4.9 and 4.13, for the claimed exact field-and-semantics conformance check.
+
+Because both the amendment and plan remain proposed and not admitted, none of these criteria or constraints presently has governance force.
+
+=== YOUR ANSWER TO Q8 (invocation INV-e9cc2ca90d7fd906, COMP-0046) ===
+Neither proposed instrument has governance force. The following are therefore prospective design commitments, not admitted requirements.
+
+| Decision in this slice | Constraint on later evidence admission / lineage work | Reversal category once records exist |
+|---|---|---|
+| `RoleDefinition` uses the three axes and carries constraint fields, especially `required_verified_properties`, `required_independence`, `requires_external_verification`, and `may_assign_epistemic_status` | `EvidenceAdmissionDecision` must enumerate verified properties against the receiving role’s `required_verified_properties`; it cannot treat an uncovered property as established. Role definitions therefore determine what later admission must prove and which outputs can carry epistemic status. | **Existing-record migration and reassessment.** Changing axes, values, or the meaning of a required property would require updating role records and re-evaluating admission decisions that relied on those roles. Adding a validator for an unchanged role schema is **validation-code only**. |
+| The distinction between task, epistemic, action, and accountable authority | Admission cannot infer acceptance authority from artifact production, and later lineage work must retain the distinction between an executor, an approver, and an accountable principal. | **Existing-record migration** if identities or fields have been collapsed in stored records. A new validator enforcing an already-recorded separation is **validation-code only**, though historical records may need reclassification if their prior status depended on the collapse. |
+| `DecisionRecord` inherited fields, including distinct `recommended_status` and `effective_status`, issuer invocation, accountable approver, evidence, policy authority, activation state, and supersession | Later admission requires a record that distinguishes a recommendation from accountable final status and can identify the evidence, authority, and supersession state on which admission relied. | **Existing-record migration.** Adding inherited fields or splitting a previously conflated status changes persisted decision meaning and requires backfill or explicit unknown values for old records. |
+| `EvidenceAdmissionDecision` has admitted artifact or claim, epistemic status, lineage and independence findings, provenance limitations, and verified-property enumeration | This is the direct future admission schema. It fixes the evidence needed to explain why an artifact or claim entered governed evidence and prevents unsupported property assertions. | **Existing-record migration and re-adjudication.** Records admitted without these fields cannot simply be treated as if they contained lineage, independence, or verification findings. Validators alone can enforce the rule only for new decisions. |
+| The open choice whether existing warrant/admission records are extended or a new record family is created, and whether kinds are subtypes or one family | This unresolved choice controls record identity, references, query patterns, supersession, and how authorization and admission records relate. | **Expensive existing-record migration if records are created before resolution.** A later family split, merge, or subtype conversion would require transforming records and their references. This is not merely a validator change. |
+| Execution-scoped `RoleQualification`: endpoint, `ExecutionProfile` constraints, session-state constraints, and policy version; no implicit transfer | Admission and lineage work can rely only on qualifications tied to the executor’s actual execution context. A later admission cannot safely treat an executor as qualified merely because it was qualified elsewhere. | **Existing-record migration/revalidation** if the scope fields or transfer rule change, because old qualification records and authorizations relying on them must be rechecked. Rejecting new out-of-scope qualifications under the unchanged representation is **validation-code only**. |
+| `AccountablePrincipal` with `authority_scope` and `delegation_reference`; authorization chains terminate at a recorded standing-authority claim within scope | Later admission has a recorded authority path and can distinguish an in-scope authority claim from an unterminated or out-of-scope authorization. The plan also makes root authority extra-systemic rather than internally verified. | **Existing-record migration and re-evaluation** if scope or delegation semantics change, because authorization-chain conclusions depend on them. Adding scope validation for records already containing the needed fields is **validation-code only** for future use, but historical governed classifications would need recomputation if they are retained as conclusions. |
+| `self_issued` marking and the rule that self-issued authorization cannot count as independent where independence is required | This directly constrains later independence findings in evidence admission. A self-issued authorization may exist, but cannot supply the independent authorization that a receiving role requires. | **Mixed.** Recording `self_issued` and changing the meaning of independence for existing authorizations requires **migration or derived-result backfill**. Improving detection while retaining the same stored identifiers is **validation-code only** prospectively; prior independence findings need re-evaluation. |
+| Exact identifier equality is the plan’s only party-sameness test, with broader sameness explicitly not detected | Later lineage and independence work will miss collisions represented by different identifiers unless identity-equivalence work is added. This bounds the evidentiary meaning of the plan’s self-adjudication and self-issued results. | **Primarily validation/identity-resolution code**, if original identifiers remain intact. But any historical “independent” result or permitted one-hop result based on exact equality would require **re-evaluation and likely migration of derived findings** if broader equivalence is later adopted. |
+| One-hop self-adjudication check, explicitly marked `check_depth` as direct-only | It supplies only the direct producer/executor collision check. It does not establish multi-hop lineage independence, which the plan defers to Slice D. Consumers of later admission records must not interpret a permitted result as a general independence finding. | **Mixed.** Extending traversal is initially **validation-code only** if complete lineage edges already exist. However, old direct-only outcomes and any downstream admission findings relying on them require **re-evaluation or migration of derived records**. Missing ancestry links cannot be repaired by code alone. |
+| Composite-executor disclosure through `spawned` invocation links | Future lineage must represent material model, tool, and human subexecutions rather than allowing authority or influence to disappear inside a tool or composite executor. This is foundational for later multi-hop lineage analysis. | **Expensive existing-record migration, and potentially irrecoverable historical gaps.** New validation can reject undisclosed composition going forward, but it cannot reconstruct unrecorded subordinate executions in existing lineage. |
+| Tool-configuration disclosure through `EffectiveInputManifest`, including content-addressed configuration, environment, and local dependencies | Future evidence admission and deterministic-standing assessments depend on knowing the effective inputs to a governed-evidence-producing tool. | **Expensive migration/backfill; potentially impossible.** A validator can enforce manifests for new records, but historical configuration, environment, or dependency state may not be recoverable. |
+| External-interaction disclosure and `OutboundInteractionLog` | Later lineage and evidence admission must account for material external interactions and ambient consumers, not merely returned output bytes. This affects whether an invocation can be considered deterministic and whether undeclared `external_actuator` authority existed. | **Expensive migration/backfill; potentially impossible.** Enforcement can be added in validation or capture code for future invocations, but absent historical interaction logs generally cannot be recreated reliably. |
+| Invocation executor kinds remain distinct, while the `ExecutorIdentity` superclass question is open | Later lineage constraints may need polymorphic rules across models, tools, and humans. The open superclass question affects how uniformly constraints such as identity and executor checks can be expressed. | **Potentially expensive schema migration** if records are first stored under one identity model and later require a superclass or subtype-specific equivalence semantics. Implementing polymorphic validation without changing stored identity shapes could be **validation-code only**, but that depends on identity fields and relations not supplied here. |
+| Fixed Slice C predicates and the plan’s requirement that relations use `GraphRelation` and registered predicate lists | Admission and lineage records will need stable relation names and shapes for such matters as authorization, qualification, approval, production, execution, and ancestry. | **Existing-record migration** if persisted predicates or relation shapes are renamed, split, merged, or reinterpreted. Registering a new predicate without changing existing ones is generally **schema/validation-code only**. |
+| Governed versus experimental classification: governed only when a valid authorization covers the invocation; pre-slice invocations remain experimental | Later admission work inherits a provenance boundary: an invocation without valid authorization is not retroactively made governed by this slice. This limits what future admission can claim about earlier records. | **Reclassification and possibly migration of stored labels/derived decisions** if the boundary changes. Altering the classifier alone is **validation-code only** only if historical classifications are retained as time-versioned results rather than overwritten. |
+| Consequence classes, role ceilings, modifiers that only raise, and controlled downward adjustment | These determine which roles and authorization conditions are applicable to later evidence-producing or admitting actions. They are described as load-bearing for Slice D. | **Existing-record migration and re-evaluation** if vocabulary ordering, defaults, modifier semantics, or exception requirements change, because stored authorization and admission conclusions may change. Adding checks for unchanged rules is **validation-code only** prospectively. |
+| Authorization is classification only and does not refuse execution | This means later evidence admission cannot equate execution occurrence with a successfully governed authorization check. It also preserves a population of executed but experimental invocations that Slice D may need to handle explicitly. | **Primarily validation/workflow code** to change prospectively. If records or policies have relied on the distinction between executed, governed, and experimental, changing it would require **reclassification of existing records**, but not necessarily rewriting invocation capture. |
+
+The decisions most expensive to reverse are the ones that determine what was captured at execution time: material subordinate invocations, `spawned` lineage links, effective input manifests, and outbound interaction logs. A later validator can reject future omissions, but cannot reliably reconstruct omitted historical provenance. The next most expensive are record-family, role-vocabulary, identity, qualification-scope, and authority-chain choices, because they affect the meaning and references of authorization and future admission records.
+
+The plan’s one-hop check is comparatively cheap to extend in code only if the required lineage has already been captured. It is not cheap to upgrade the evidentiary meaning of existing direct-only results: those results would need re-evaluation, and missing lineage would remain missing.
+
+Several needed materials are absent if a more precise migration assessment is required:
+
+- Section 8, to determine the full consequence-class vocabulary, modifier set, and compatibility/migration consequences.
+- Section 11, to determine the required shape, retention, and linkage rules for `OutboundInteractionLog`.
+- The definitions of `GraphRelation`, the Slice A/B/C predicate lists, and the `produced_by`, `executed_by`, and `spawned` record shapes, to assess whether future multi-hop traversal can be added without changing stored records.
+- The applicable definitions of C3, P1, P4, and P7, to determine the precise scope of independence, authority, disclosure, and root-authority claims.
+- Any retention, versioning, supersession, and migration rules for existing records, to determine whether changed validation should preserve historical outcomes under their original policy versions or rewrite/reclassify them.
+- The existing warrant/admission record schemas, needed to resolve the expressly open choice between extending them and creating a new `DecisionRecord` family.
+
+--- END OF YOUR PRIOR ANSWERS ---
+
+Begin with task 1, then task 2.

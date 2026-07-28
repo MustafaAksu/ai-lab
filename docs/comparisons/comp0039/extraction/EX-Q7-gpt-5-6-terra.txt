@@ -1,0 +1,119 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+The question that was asked, and the answer given to it, are below. Extract every distinct claim the answer makes.
+
+Rules:
+
+1. One assertion per claim. If a sentence makes two assertions, split it.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. For each claim give "quote": a short verbatim passage from the answer, under 30 words, that states it. The quote must appear in the answer exactly.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}]}
+
+If the answer makes no extractable claim, output {"claims":[]}.
+
+=== QUESTION THAT WAS ASKED (Q7) ===
+Which of the plan's ten success criteria are mechanically checkable as written, and which are not?
+
+Address specifically: the audit criterion, which supplies no procedure, command, or semantics for verified_current; the cross-environment reproduction criterion, which names no environments, build inputs, or normalization rules; the coverage criterion; and criterion 4's "demonstrated against a real captured InvocationRecord", which names no record and gives no acceptance rule for "real".
+
+Consider also whether the consequence-classification criterion can be tested at all given the state of Section 8. Name any constraint in the plan that has no corresponding check.
+
+=== ANSWER TO EXTRACT FROM ===
+The criteria are not uniformly mechanically checkable as written. Several specify fixture-level assertions that can be automated; others depend on undefined terms, missing procedures, or ontology material explicitly left open.
+
+| Criterion | Mechanical status | Reason |
+|---|---|---|
+| 1. Governed versus experimental classification | **Checkable at the stated fixture level** | It supplies an operational outcome rule—“governed when a valid authorization covers it and experimental otherwise”—and requires fixtures for both outcomes. The meaning of “valid authorization” must be supplied by the authorization validator and `authorize()` rules, but the two requested fixture outcomes are mechanically assertable. |
+| 2. Ten refusal reasons and no unauthorised permitted fixture path | **Mostly checkable** | The ten reasons are enumerated in scope, so a fixture can invoke each condition and assert the returned reason. The requirement that no fixture path permits without a matching authorization record can also be checked over the defined fixtures. It is not a proof that *all possible* implementation paths behave so, because neither a path model nor exhaustive-input domain is specified. |
+| 3. Unterminated chain and out-of-scope standing authority | **Only partly checkable as a general criterion** | A fixture can create a chain that terminates nowhere and can create a chosen out-of-scope case. But `authority_scope` has no supplied grammar or matching semantics. Without those, a machine cannot generally determine that a particular authorization is “outside” a declared scope; it can only test implementation-selected examples. |
+| 4. One-hop self-adjudication, including a “real captured InvocationRecord” | **Partly checkable; not fully checkable as written** | Same-identity refusal, different-identity permission, and `check_depth` equal to a direct-only value are fixture-testable. The required demonstration “against a real captured InvocationRecord” is not: no InvocationRecord is named, no capture record is supplied, and no acceptance rule distinguishes “real captured” from a constructed fixture. The evidence set would need the identified InvocationRecord and a rule or provenance criterion establishing that it is a captured record. |
+| 5. Consequence classification | **Not fully mechanically checkable against Section 8 as it stands** | A test can assert selected ordinal results for selected fixture values and can reject a downward adjustment lacking the stated exception data. But Section 8 labels the “Detailed classification function” `[OPEN]`. In particular, the evidence does not define how the listed modifiers acquire `applicable_modifier_levels`, how applicability is determined, or a complete record-level validation procedure for a governed downward exception. The ordinal ordering supports a chosen `max` implementation, but not a complete classifier for the named modifiers. Thus this can test an implementation’s chosen fixture mapping, not conformity to a complete Section 8 classification function. |
+| 6. Qualification scope | **Partly checkable** | Rejecting an absent execution scope is direct. Testing a chosen endpoint or ExecutionProfile outside a declared scope is also direct. General enforcement is underspecified because the supplied material does not define matching semantics for “permitted ExecutionProfile constraints” or what makes a profile “materially different.” |
+| 7. Self-issued marking and independence | **Partly checkable** | Exact-identifier cases can be automated: the plan states that party sameness uses “exact identifier equality only,” and a fixture can assert `self_issued true`. But “reported as not independent by any check that asks for independent authorization” has no supplied interface, set of such checks, or complete semantics of independence. It is therefore not mechanically bounded as written. |
+| 8. Slice A/B regression | **Checkable at the stated fixture level** | A defined fixture can run Slice A and Slice B before and after the authorization code is importable and compare bytes. This checks the stated fixture and byte-identity condition. It does not establish the broader constraint that “no field, path, or default of either is altered” for all inputs, but the success criterion itself is mechanically executable. |
+| 9. Test coverage and offline suite | **Not fully mechanically checkable as written** | Tests can enumerate public functions and listed outcomes, and a suite can be run with network access blocked. However, “every public entrypoint” lacks a definition of public API, and “covered by tests” lacks a coverage rule. “The full suite passes offline” also names no test command, runner, dependency-installation conditions, or offline enforcement method. It is an automatable goal only after those are specified. |
+| 10. Audit and cross-environment reproduction | **Not mechanically checkable as written** | The audit clause gives no audit procedure, command, report schema, or semantics for `ok true verified_current`. The reproduction clause names no environments, build inputs, dependency-resolution rules, file-selection rule, checksum algorithm, or normalization rules. “Byte-identical checksums” is itself incomplete without those definitions. |
+
+## Specifically on criterion 10
+
+The audit condition cannot be evaluated from the plan because it only says:
+
+> “The repository audit reports ok true verified_current”
+
+There is no identified audit record, command, evaluator, report schema, meaning of `verified_current`, or rule for determining the relevant current state.
+
+The cross-environment condition cannot be reproduced because it only says:
+
+> “commit-level cross-environment reproduction from the public repository yields byte-identical checksums for every delivered file.”
+
+It does not identify the environments, operating-system or architecture variation, interpreter and dependency versions, build command, whether dependencies may be fetched, how generated metadata is normalized, which files count as “delivered,” or the checksum method. Those omissions are material, especially for byte identity.
+
+## Consequence-classification limitation
+
+Criterion 5 invokes “the enumerated modifier set,” and Section 8 names the modifiers, but Section 8 also says:
+
+> `[OPEN]` Detailed classification function.
+
+That leaves no complete machine-testable definition for assigning modifier levels or determining applicability. The criterion can support enumerated fixtures whose expected values are chosen in advance, but the evidence does not support treating those fixtures as a complete test of the Section 8 rule.
+
+To make this criterion mechanically checkable, the missing material would be a completed Section 8 classification function defining, at minimum:
+
+- the level assigned by each modifier;
+- when each modifier is applicable;
+- the representation and validation rules for modifier evidence;
+- the ordering and `max` behavior over absent and multiple modifiers; and
+- the machine-validatable form of the governed downward exception, including its “reason, accountable principal, scope, evidence, expiry/review.”
+
+## Plan constraints lacking a corresponding success-criterion check
+
+The following plan constraints have no corresponding direct success-criterion check:
+
+1. **Admission-warrant scope and expansion**  
+   The constraint that implementation is authorized only within a future admission warrant, and that expansion needs a separate plan, has no success criterion that checks an admission warrant or compares implementation scope against it.
+
+2. **Exact ABS-0004 v7 field names and semantics**  
+   No criterion performs a general conformance comparison against v7. Moreover, the supplied evidence omits the referenced Sections 4.9 and 4.13 and leaves Section 8’s detailed function open, so a complete conformance check could not be constructed from this evidence set.
+
+3. **GraphRelation and registered Slice A/B/C predicate restriction**  
+   No criterion checks that all relations use `GraphRelation` or that no predicate falls outside the registered lists. The `GraphRelation` shape and the Slice A, B, and C lists are not supplied; they would be needed to perform that check.
+
+4. **Purity of `authorize()`**  
+   No criterion directly checks that `authorize()` has “no I/O, no clock, no network,” or that its timestamp is supplied by the caller. Criterion 9’s offline-suite condition does not establish purity: code can access a clock or attempt I/O without requiring successful network access.
+
+5. **No alteration of Slice A/B fields, paths, or defaults**  
+   Criterion 8 checks byte-identical output for one stored-record fixture, but does not directly check the constraint’s stronger prohibition on changing any field, path, or default.
+
+6. **No provider-call behavior change and no execution refusal**  
+   The proposed change says there is “No change to provider-call behavior” and the non-goals say authorization “does not gate” and no invocation is refused execution by this slice. No success criterion executes an invocation flow and verifies that classification or authorization refusal does not block execution.
+
+The standing-authority constraint does have a partial corresponding check in criterion 3: declared scope is required and an out-of-scope authorization is meant to be refused. Its general mechanical adequacy remains limited by the missing `authority_scope` grammar and matching semantics.
+
+## Missing evidence needed for the unresolved checks
+
+The evidence set is insufficient for full assessment of the following claimed checks. Needed material is:
+
+- a completed Section 8 detailed classification function, for criterion 5;
+- the `authority_scope` grammar and scope-matching rules, for criteria 3 and 6;
+- the named captured InvocationRecord and a rule establishing “real captured,” for criterion 4;
+- a definition of independence checks and their public interfaces, for criterion 7;
+- a public-API definition, test command, runner, and offline execution procedure, for criterion 9;
+- the audit procedure, command, report schema, and `verified_current` semantics, for criterion 10;
+- named reproduction environments, build inputs, dependency rules, normalization rules, delivered-file set, and checksum procedure, for criterion 10;
+- the `GraphRelation` shape and registered Slice A/B/C predicate lists, for the relation constraint;
+- the referenced ABS-0004 Sections 4.9 and 4.13, for the claimed exact field-and-semantics conformance check.
+
+Because both the amendment and plan remain proposed and not admitted, none of these criteria or constraints presently has governance force.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

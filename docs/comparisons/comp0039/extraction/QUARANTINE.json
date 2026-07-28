@@ -1,0 +1,1811 @@
+[
+  {
+    "about": "OPEN paragraph's generalization from COMP-0037",
+    "claim_id": "CLAIM-e24f7282118257f0",
+    "claim_text": "Generalizing from one defeated mechanism (self-authorization path) to also abandon bounding of a distinct attribute (scope breadth) is an overreach the text asserts but does not demonstrate.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0047",
+    "extraction_id": "EX-Q1-claude-sonnet-5",
+    "extractor_invocation_id": "INV-02a6dacc37cf1c68",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Generalizing from one defeated mechanism ... to also abandon bounding of a distinct attribute (declared scope width) is an overreach the text asserts but does not demonstrate.",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-50bc0e8f14b161d9",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "proposed test for deciding between readings (a) and (b)",
+    "claim_id": "CLAIM-855d7c2e727809d1",
+    "claim_text": "A decidable test requires constructing a candidate mechanical control on authority_scope breadth that does not require verifying the extra-systemic entitlement claim and that actually narrows acceptance or downstream use rather than just requiring a label.",
+    "claim_type": "recommendation",
+    "extraction_comparison_id": "COMP-0047",
+    "extraction_id": "EX-Q1-claude-sonnet-5",
+    "extractor_invocation_id": "INV-02a6dacc37cf1c68",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Construct a candidate mechanical control on `authority_scope` breadth that (i) does not require verifying the extra-systemic entitlement claim ... and (ii) actually narrows acceptance or downstream use rather than just requiring a label",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-50bc0e8f14b161d9",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "AI-Lab principal entitlement",
+    "claim_id": "CLAIM-39098702324da02f",
+    "claim_text": "Whether a principal is actually entitled to govern AI-Lab is a fact about who controls the repository and answers for it.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0048",
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-00a792010da66fd5",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Whether a principal is actually entitled to govern AI-Lab is a fact about \u201cwho controls the repository and answers for it\u201d",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-56d31d5bfca54e6d",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "required non-universal authority scope",
+    "claim_id": "CLAIM-6effc44ec3b217be",
+    "claim_text": "A required non-universal scope cannot establish that the root claimant has legitimate authority.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0048",
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-00a792010da66fd5",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "a required non-universal scope... cannot establish that the root claimant has legitimate authority",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-56d31d5bfca54e6d",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "fixed number of delegations",
+    "claim_id": "CLAIM-bb90f7d7a3432a89",
+    "claim_text": "A fixed number of delegations cannot establish that the root claimant has legitimate authority.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0048",
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-00a792010da66fd5",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "a fixed number of delegations... cannot establish that the root claimant has legitimate authority",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-56d31d5bfca54e6d",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "reading (b) narrower control claim",
+    "claim_id": "CLAIM-ada28de4774243a0",
+    "claim_text": "A genuine internal acceptance bound would support (b) only if the disputed claim is that the system bounds what it will operationally accept.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0048",
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-00a792010da66fd5",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "That would support (b) only if the disputed claim is \u201cthe system bounds what it will operationally accept\u201d",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-56d31d5bfca54e6d",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "external-evidence test construction requirements",
+    "claim_id": "CLAIM-e1eadf05d3c8e7ca",
+    "claim_text": "A decision rule would need to specify the external source or accountable process against which declared scope is assessed, who may assess it, what counts as sufficient evidence, what happens when evidence is absent/contested/expired/narrower, and whether the result affects visibility, invocation authorization, evidence admission, or all of them.",
+    "claim_type": "recommendation",
+    "extraction_comparison_id": "COMP-0048",
+    "extraction_id": "EX-Q1-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-383f0dd72c34f978",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "A decision rule would need to specify: the external source or accountable process against which the declared scope is assessed",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-56d31d5bfca54e6d",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "v7 chain-termination rule",
+    "claim_id": "CLAIM-e61de6682f39197b",
+    "claim_text": "The chain-termination rule requires non-root authorizations to chain to a standing authority.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-11183837f55f1f48",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "non-root authorizations \"must chain... to such a standing authority\"",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "v7 subordinate-inheritance rule and Section 4.7",
+    "claim_id": "CLAIM-01df848da597e07c",
+    "claim_text": "Undeclared subordinate execution is merely a disclosure violation under 4.7.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-11183837f55f1f48",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "undeclared subordinate execution is merely \"a disclosure violation under 4.7\"",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "COMP-0037 underlying record",
+    "claim_id": "CLAIM-be080ac21fc0ed7a",
+    "claim_text": "COMP-0037 itself is needed to check whether two reviewers independently defeating the rule supports only that the rule failed or something closer to v7's broader claim.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-11183837f55f1f48",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "COMP-0037 itself (not just the summary sentence)",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "P6 original text",
+    "claim_id": "CLAIM-15a51af66e917366",
+    "claim_text": "P6's actual text is missing evidence needed to check whether v7's characterization of P6 (\"pretending otherwise would be the overclaim P6 forbids\") is accurate",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-3bc1f749d7e93167",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "P6's actual text. The standing-authority constraint says \"pretending otherwise would be the overclaim P6 forbids\" \u2014 I can't check whether this characterization of P6 is itself accurate without P6.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "Section 4.7 disclosure violations",
+    "claim_id": "CLAIM-810fa7182af34db0",
+    "claim_text": "Section 4.7 is needed to know whether undeclared subordinate execution is actually detected/surfaced, bearing on whether the visibility claim overclaim assessment is accurate",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-3bc1f749d7e93167",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Section 4.7 (disclosure violations) \u2014 needed to know whether undeclared subordinate execution is actually detected/surfaced, which bears directly on whether the visibility claim in item 1 is closer to true than I've assessed.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "COMP-0037 source document",
+    "claim_id": "CLAIM-553d3ae20765e983",
+    "claim_text": "COMP-0037 itself (not just the summary sentence) is needed to check whether it supports only \"this rule failed\" or something closer to the broader claim v7 draws from it",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0049",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-3bc1f749d7e93167",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "COMP-0037 itself (not just the summary sentence) \u2014 to check whether \"two reviewers independently defeated it\" supports only \"this rule failed\" or something closer to the broader claim v7 draws from it.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "Section 3 independence disqualification clause",
+    "claim_id": "CLAIM-32e0ad4e5ec6f6e4",
+    "claim_text": "The disqualification clause disqualifies self-issuance from independence but does not itself impose independence.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-a7f138246da4c7b2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "it disqualifies self-issuance from independence, but does not itself impose independence",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "Section 3 independence requirement triggers",
+    "claim_id": "CLAIM-5dbb146a7897b28a",
+    "claim_text": "Section 3 contains no provision establishing when independence is required for a given role or consequence class.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-a7f138246da4c7b2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Section 3 contains no provision establishing when independence is required",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "subordinate-authorization-inheritance [DEF]",
+    "claim_id": "CLAIM-1057a06c9e4816de",
+    "claim_text": "The subordinate-authorization-inheritance `[DEF]` requires a parent authorization's conditions to declare the permitted subordinate execution classes.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-a7f138246da4c7b2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "requires a parent authorization's conditions to \"declare the permitted subordinate execution classes\"",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "primary path availability across consequence classes",
+    "claim_id": "CLAIM-4c6b5a35375cfbed",
+    "claim_text": "Without applicable policy and independence requirements, the answer cannot tell whether the primary path is available for all consequence classes or only some.",
+    "claim_type": "limitation",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-a7f138246da4c7b2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "I cannot tell whether the primary path is available for all consequence classes or only some",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "subordinate execution class breadth legibility requirement",
+    "claim_id": "CLAIM-30d17c3c7b98badc",
+    "claim_text": "Unlike authority_scope, there is no sentence in Section 3 requiring subordinate execution class breadth to be legible as wide or barring it from being described as narrow when it is not.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-80c7ee90d10b032b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "unlike `authority_scope`, there is no sentence in Section 3 requiring that breadth to be \"legible as wide\" or barred from being described as narrow when it is not",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "applicable policy / independence requirements content",
+    "claim_id": "CLAIM-ab854402a5c0d510",
+    "claim_text": "The content of 'applicable policy' / 'independence requirements' \u2014 the document specifying which consequence classes or roles mandate independent authorization \u2014 is missing from the evidence set.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-80c7ee90d10b032b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The content of \"applicable policy\" / \"independence requirements\" \u2014 whatever document specifies which consequence classes or roles mandate independent authorization.",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "Section 4.7 disclosure violations",
+    "claim_id": "CLAIM-83de92b8d2aa8e5c",
+    "claim_text": "Section 4.7 (disclosure violations), referenced by the subordinate-inheritance [DEF], is needed to know whether undeclared or overbroad subordinate class declarations carry any consequence, and is missing from the evidence.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-80c7ee90d10b032b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Section 4.7 (disclosure violations), referenced by the subordinate-inheritance `[DEF]` \u2014 needed to know whether undeclared or overbroad subordinate class declarations carry any consequence, which bears on the second path.",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "visibility/breadth constraint on subordinate execution classes",
+    "claim_id": "CLAIM-4e13e25a84868a03",
+    "claim_text": "Any visibility/breadth constraint on subordinate execution classes analogous to the authority_scope breadth constraint is missing from the evidence set, and its absence is what makes the second path possible.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0051",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-80c7ee90d10b032b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Any visibility/breadth constraint on subordinate execution classes analogous to the `authority_scope` breadth constraint \u2014 its absence here is what makes the second path possible",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "applicable policy",
+    "claim_id": "CLAIM-805c4573beb6570b",
+    "claim_text": "The applicable policy is not provided.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0052",
+    "extraction_id": "EX-Q3-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-eae87f14e532731e",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "the applicable policy ... [is] not provided",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-eaa6bda0606982af",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "Section 4.7 disclosure constraints in authorize()",
+    "claim_id": "CLAIM-727e08df2ba75a52",
+    "claim_text": "The plan should state that the Section 4.7 disclosure constraints are excluded from what authorize() checks in this slice.",
+    "claim_type": "recommendation",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The plan should state that the Section 4.7 disclosure constraints are excluded from what `authorize()` checks in this slice",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "Slice A capture behavior",
+    "claim_id": "CLAIM-97e54b6c3ef0972b",
+    "claim_text": "Slice A capture behavior is unchanged.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Slice A capture ... behavior are unchanged",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's scope and Section 4.7 enforcement artifacts",
+    "claim_id": "CLAIM-571b9e4b2acd1264",
+    "claim_text": "Nothing in scope builds or reads the artifacts enforcing the Section 4.7 constraints.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Nothing in `scope` ... builds or reads these",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's expected_outputs and Section 4.7 enforcement artifacts",
+    "claim_id": "CLAIM-3a4bdfdc6648bb47",
+    "claim_text": "Nothing in expected_outputs builds or reads the artifacts enforcing the Section 4.7 constraints.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Nothing in ... `expected_outputs` builds or reads these",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's silence on Section 4.7 disclosure constraints",
+    "claim_id": "CLAIM-4d1815d0c62cc546",
+    "claim_text": "Silence invites a reader to assume that governed means disclosure-checked.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "silence invites a reader to assume \"governed\" means \"disclosure-checked\"",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "authorize() definition of valid authorization",
+    "claim_id": "CLAIM-37be755de9118c86",
+    "claim_text": "The plan should explicitly say that authorize()'s valid authorization means only covered by an authorization record.",
+    "claim_type": "recommendation",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The plan should say explicitly that `authorize()`'s \"valid authorization\" means only \"covered by an authorization record\"",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "refusal reason #9",
+    "claim_id": "CLAIM-95a980e04564c683",
+    "claim_text": "Reason #9 only reaches a subordinate that is represented and falls outside the declared classes.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "only reaches a subordinate that is represented and merely falls outside the declared classes",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "refusal reason #2",
+    "claim_id": "CLAIM-679a09e7615f024a",
+    "claim_text": "Reason #2 is a secondary candidate for concealing materially distinct failures.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Reason #2 ... is a secondary candidate",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "Section 8 and Section 11",
+    "claim_id": "CLAIM-16801152bbdc1e79",
+    "claim_text": "Section 8 and Section 11 are cited but not provided.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Section 8 ... and Section 11 ... are cited but not provided",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "GAP-0005, DECISION-20260723-0001, VERIFY-20260723-0002, CAP-0015, and CAP-0016",
+    "claim_id": "CLAIM-5138f7f4a9379291",
+    "claim_text": "Any of GAP-0005, DECISION-20260723-0001, VERIFY-20260723-0002, CAP-0015, and CAP-0016 could contain the meaning of valid authorization that the question asks to test the ten reasons against.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-cf4d6b7a328ec8ad",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "any of these could contain the \"meaning of valid authorization\"",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "plan's non_goals list",
+    "claim_id": "CLAIM-37527a1da106eea5",
+    "claim_text": "The non_goals list names what is deferred: multi-hop lineage, independence assessment, evidence admission \u2014 Slice D",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-53385f8a4e9a4e08",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The \"non_goals\" list names what is deferred (multi-hop lineage, independence assessment, evidence admission \u2014 Slice D)",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "refusal reason #9 conflated failure types",
+    "claim_id": "CLAIM-4dbae0f63a361cf3",
+    "claim_text": "Reason #9 collapses a declared, represented subordinate execution whose class falls outside the parent's enumeration (a scope-boundary failure) with a subordinate execution never represented as an Invocation at all (a disclosure violation)",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0053",
+    "extraction_id": "EX-Q4-claude-sonnet-5",
+    "extractor_invocation_id": "INV-53385f8a4e9a4e08",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "a declared, represented subordinate execution whose class falls outside what the parent authorization enumerates (a scope-boundary failure, curable by obtaining its own authorization), versus a subordinate execution that was never represented as an Invocation at all (a disclosure violation under 4.7",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-bc052fff304f7e80",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's invocation governance condition",
+    "claim_id": "CLAIM-27cfd0ce0876ac7c",
+    "claim_text": "The plan says an invocation is governed only when \u201ca valid authorization covers it.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The plan says an invocation is governed only when \u201ca valid authorization covers it\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's stated relationship to ABS-0004 v7",
+    "claim_id": "CLAIM-c76fa646758f8ced",
+    "claim_text": "The plan follows ABS-0004 v7 \u201cexactly.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "follows ABS-0004 v7 \u201cexactly\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "Section 4.7 disclosure constraints in authorize()",
+    "claim_id": "CLAIM-0d888ffdba2de15f",
+    "claim_text": "The plan should state that the Section 4.7 constraints are checked by authorize() as validity conditions.",
+    "claim_type": "recommendation",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The plan should state that the Section 4.7 constraints are checked by `authorize()` as validity conditions",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the listed subordinate-execution refusal reason",
+    "claim_id": "CLAIM-ded48e80b96bbff2",
+    "claim_text": "The existing reason \u201csubordinate execution outside the classes its parent authorization declares\u201d covers a declared subordinate that exceeds declared executor kinds, roles, or consequence ceiling.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "covers a declared subordinate that exceeds declared executor kinds, roles, or consequence ceiling",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's permitted-outcome condition",
+    "claim_id": "CLAIM-cca4e4dadb43e699",
+    "claim_text": "The plan says a permitted outcome cannot occur without \u201ca matching authorization record.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The plan says a permitted outcome cannot occur without \u201ca matching authorization record\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the proposed record",
+    "claim_id": "CLAIM-3c04f3c229ddafbd",
+    "claim_text": "The proposed record contains \u201cindependence requirements.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The proposed record contains \u201cindependence requirements\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's enumerated refusal reasons concerning independence",
+    "claim_id": "CLAIM-e0502fd94eca01b7",
+    "claim_text": "The only related reason is \u201cself-adjudication conflict.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "the only related reason is \u201cself-adjudication conflict\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "the plan's treatment of independence assessment",
+    "claim_id": "CLAIM-a1a09ae81365147f",
+    "claim_text": "The plan expressly defers \u201cindependence assessment.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0054",
+    "extraction_id": "EX-Q4-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-921b249953098de8",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "the plan expressly defers \u201cindependence assessment\u201d",
+    "source_comparison_id": "COMP-0043",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-3e7bc88549b7f5ac",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q4"
+  },
+  {
+    "about": "ABS-0004:v7:C6 constraint",
+    "claim_id": "CLAIM-01a9d332f864b9ec",
+    "claim_text": "C6's actual constraint is an exercise restriction: an invocation may not have both adjudicator-level epistemic authority and above-read_only action authority exercised against the same target unless the adjudication is covered by an independent verification edge.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0057",
+    "extraction_id": "EX-Q6-claude-sonnet-5",
+    "extractor_invocation_id": "INV-1be75181a2c3b8df",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "an invocation may not have *both* adjudicator-level epistemic authority *and* above-read_only action authority exercised against the same target unless the adjudication is covered by an independent verification edge.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7fc235164c665fc",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "role records and authorization records",
+    "claim_id": "CLAIM-aadadb648eea1b26",
+    "claim_text": "Role records and authorization records can name assignments.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Role records and authorization records can name assignments",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "role records and authorization records",
+    "claim_id": "CLAIM-f91e57873b896325",
+    "claim_text": "Role records and authorization records can name scopes.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Role records and authorization records can name assignments, scopes",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "role records and authorization records as C6 evidence",
+    "claim_id": "CLAIM-c7d575df79996a0c",
+    "claim_text": "Role records and authorization records are not by themselves evidence that C6 was checked.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "They are not by themselves evidence that C6 was checked",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "plan statement about performing a C6 check",
+    "claim_id": "CLAIM-4bdb99d801ea56d2",
+    "claim_text": "A plan statement that the system performs such a check does not establish that the check was performed in current practice.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "A plan statement that the system performs such a check... do not establish that the check was performed in current practice.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "named authorization decision recording C6 evaluation",
+    "claim_id": "CLAIM-8b029b2e161b7c2e",
+    "claim_text": "A named authorization decision recording the C6 evaluation could be evidence of a performed check.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "a named authorization decision... recording the C6 evaluation could be evidence of a performed check.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "plan C6 enforcement evidence after admission and actual use",
+    "claim_id": "CLAIM-65d4a34837429238",
+    "claim_text": "After admission and actual use, the plan could potentially create partial C6 enforcement evidence only if it emits named records of C6 evaluations.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-41376d16d73aa866",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "the plan could potentially create partial C6 enforcement evidence only if it emits named records of C6 evaluations.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "content of role and authorization records",
+    "claim_id": "CLAIM-3444fa4002f0cdfa",
+    "claim_text": "Role records and authorization records can name assignments, scopes, issuers, executors, and perhaps the three authority-axis values.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-d8c7bd8e8f2fe75c",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Role records and authorization records can name assignments, scopes, issuers, executors, and perhaps the three authority-axis values.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "limits of role/authorization records as C6 evidence",
+    "claim_id": "CLAIM-94efc646426bf68a",
+    "claim_text": "Role and authorization records are not by themselves evidence that C6 was checked - i.e. that independence across epistemic, action, and accountable authority was evaluated for a particular invocation, or that the C6 exercise restriction was applied.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0058",
+    "extraction_id": "EX-Q6-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-d8c7bd8e8f2fe75c",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "They are not by themselves evidence that C6 was checked\u2014i.e., that independence across epistemic, action, and accountable authority was evaluated for a particular invocation, or that the C6 exercise restriction was applied.",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-84f23fa7b98a9895",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "success criterion 2 refusal-reason outcome",
+    "claim_id": "CLAIM-dbde63c4c6d9f79d",
+    "claim_text": "\u201cYields that reason\u201d is a binary, fixture-testable condition.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"yields that reason\" ... [is a] binary, fixture-testable condition",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "success criterion 2 authorization matching",
+    "claim_id": "CLAIM-2a931985ef24bc4c",
+    "claim_text": "\u201cNo fixture path returns permitted without a match\u201d is a binary, fixture-testable condition.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"no fixture path returns permitted without a match\" [is a] binary, fixture-testable condition",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "success criterion 5 plan hedge",
+    "claim_id": "CLAIM-91fff1e6b363e7e8",
+    "claim_text": "The plan's hedge \u201cnot a proof of monotonicity over all inputs\u201d is narrower than \u201cconsequence classification is exercised.\u201d",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "it is narrower than \"consequence classification is exercised\"",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "success criterion 6 missing execution scope",
+    "claim_id": "CLAIM-b4266b375a04fb4a",
+    "claim_text": "\u201cLacking an execution scope\u201d is testable against the validator.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"lacking an execution scope\" ... [is] testable against the validator",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "success criterion 6 out-of-scope execution",
+    "claim_id": "CLAIM-5ef5887ab0900e29",
+    "claim_text": "\u201cOutside its scope\u201d is testable against the validator.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"outside its scope\" [is] testable against the validator",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "success criterion 10 cross-environment reproduction",
+    "claim_id": "CLAIM-5c784805142cddb3",
+    "claim_text": "No normalization rules are given for criterion 10's cross-environment reproduction requirement.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "no normalization rules ... are given",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "environment/build specification",
+    "claim_id": "CLAIM-f9b22ebd8b8f8651",
+    "claim_text": "An environment/build specification is not present in this evidence set.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "an environment/build specification ... that is not present in this evidence set",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "environment/build specification",
+    "claim_id": "CLAIM-cd32ea6bbd1e221e",
+    "claim_text": "An environment/build specification would be needed for criterion 10's cross-environment reproduction requirement.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Missing: an environment/build specification",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "top-level authorize() no-I/O constraint",
+    "claim_id": "CLAIM-8454c23ca8c5bf4f",
+    "claim_text": "\u201cNo I/O\u201d has no corresponding fixture or check anywhere in the ten criteria.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"No I/O\" ... [has] no corresponding fixture or check anywhere in the ten criteria",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "top-level authorize() no-clock constraint",
+    "claim_id": "CLAIM-206bfa5344431d63",
+    "claim_text": "\u201cNo clock\u201d has no corresponding fixture or check anywhere in the ten criteria.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"no clock\" ... [has] no corresponding fixture or check anywhere in the ten criteria",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "top-level authorize() caller-supplied timestamp constraint",
+    "claim_id": "CLAIM-e95f131093ed24a8",
+    "claim_text": "\u201cTimestamp supplied by caller\u201d has no corresponding fixture or check anywhere in the ten criteria.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "\"timestamp supplied by caller\" [has] no corresponding fixture or check anywhere in the ten criteria",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "ABS-0004 v7 Sections 4.9 and 4.13",
+    "claim_id": "CLAIM-241c08182d72f4af",
+    "claim_text": "ABS-0004 v7 Section 4.9 and Section 4.13 are needed to assess whether criterion 3's \u201cown reason\u201d is actually checkable against defined field lists.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "needed to assess whether criterion 3's \"own reason\" ... [is] actually checkable against defined field lists",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "ABS-0004 v7 Sections 4.9 and 4.13",
+    "claim_id": "CLAIM-e9cdd7aee85e236b",
+    "claim_text": "ABS-0004 v7 Section 4.9 and Section 4.13 are needed to assess whether the field-reconciliation deliverable is actually checkable against defined field lists.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0059",
+    "extraction_id": "EX-Q7-claude-sonnet-5",
+    "extractor_invocation_id": "INV-19de482eccd96cb7",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "needed to assess whether ... the field-reconciliation deliverable [is] actually checkable against defined field lists",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-dafb3f854d8fcffa",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "criterion 10 audit condition",
+    "claim_id": "CLAIM-e709a42173dd237f",
+    "claim_text": "The audit condition only says that the repository audit reports ok true verified_current.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-dde8444865138ba2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "it only says: \u201cThe repository audit reports ok true verified_current\u201d",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "criterion 10 cross-environment condition",
+    "claim_id": "CLAIM-ed7fa15b4aa82a38",
+    "claim_text": "The cross-environment condition only says that commit-level reproduction from the public repository yields byte-identical checksums for every delivered file.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-dde8444865138ba2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "it only says: \u201ccommit-level cross-environment reproduction from the public repository yields byte-identical checksums for every delivered file.\u201d",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "criterion 10 delivered files",
+    "claim_id": "CLAIM-e153a22ac0020fa8",
+    "claim_text": "The cross-environment condition does not identify which files count as delivered.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-dde8444865138ba2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "which files count as \u201cdelivered\u201d",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "admission-warrant scope and expansion constraint",
+    "claim_id": "CLAIM-0174316c7ded73a7",
+    "claim_text": "The admission-warrant scope and expansion constraint has no corresponding direct success-criterion check.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-dde8444865138ba2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "has no corresponding direct success-criterion check",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "GraphRelation relation constraint",
+    "claim_id": "CLAIM-2dcc4ed3de34e7b6",
+    "claim_text": "The GraphRelation shape is not supplied.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-dde8444865138ba2",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "The `GraphRelation` shape ... [is] not supplied",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "extraction_comparison_id": "COMP-0060",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor": "claude-sonnet-5",
+    "extractor_invocation_id": "INV-1dbd7efc4f540bd4",
+    "raw_head": "{\"claims\":[\n{\"text\":\"The ten success criteria are not uniformly mechanically checkable as written.\",\"type\":\"finding\",\"about\":\"the plan's ten success criteria overall\",\"quote\":\"The criteria are not uniformly mechanically checkable as written.\"},\n{\"text\":\"Several criteria specify fixture-level asserti",
+    "reason": "unparseable_extractor_output"
+  },
+  {
+    "about": "RoleDefinition \u00a74.9 required_verified_properties",
+    "claim_id": "CLAIM-35b00b38faca4cfb",
+    "claim_text": "RoleDefinition's required_verified_properties field is defined as the properties that must be established by admissible verification before a role's outputs enter governed evidence.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0061",
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "extractor_invocation_id": "INV-8fa74ed9d6ca5e67",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "required_verified_properties (the properties that must be established by admissible verification before this role's outputs enter governed evidence...)",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7aa0d4b2a67252f",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "independence findings and broader sameness",
+    "claim_id": "CLAIM-425385ee1743d8bd",
+    "claim_text": "Independence findings for evidence admission will eventually need a broader sameness notion for lineage work.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0061",
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "extractor_invocation_id": "INV-8fa74ed9d6ca5e67",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "Independence findings for evidence admission (\u00a74.13: \"lineage and independence findings relied on\") will eventually need a broader sameness notion for lineage work.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7aa0d4b2a67252f",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "consequence classification migration category (table change)",
+    "claim_id": "CLAIM-0ff0db9a06fca48a",
+    "claim_text": "Consequence classification is migration-required if the default/modifier table changes, since past records embed the old computation as a governance fact.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0061",
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "extractor_invocation_id": "INV-8fa74ed9d6ca5e67",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "migration-required if the default/modifier table changes, since past records embed the old computation as a governance fact",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7aa0d4b2a67252f",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "consequence classification migration category (new modifiers)",
+    "claim_id": "CLAIM-67825e06cb2554b8",
+    "claim_text": "Consequence classification is validation-code-only if only new modifiers are added going forward without touching already-issued records' stored effective class.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0061",
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "extractor_invocation_id": "INV-8fa74ed9d6ca5e67",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "validation-code-only if only new modifiers are added going forward without touching already-issued records' stored effective class",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7aa0d4b2a67252f",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "answer's stance on scope of relevant breaks",
+    "claim_id": "CLAIM-832e8407f33dee2a",
+    "claim_text": "The answer is not treating that framing as the only break relevant to this slice's lineage exposure.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0061",
+    "extraction_id": "EX-Q8-claude-sonnet-5",
+    "extractor_invocation_id": "INV-8fa74ed9d6ca5e67",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "I'm not treating that as the only break relevant to this slice's lineage exposure.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7aa0d4b2a67252f",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "EvidenceAdmissionDecision verified-property enumeration",
+    "claim_id": "CLAIM-585653e4ead8e143",
+    "claim_text": "EvidenceAdmissionDecision must enumerate verified properties against the receiving role\u2019s required_verified_properties.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0062",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-5efa47963fb44b53",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "quote_not_in_source"
+    ],
+    "quote": "EvidenceAdmissionDecision must enumerate verified properties against the receiving role\u2019s `required_verified_properties`",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-e9cc2ca90d7fd906",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  },
+  {
+    "extraction_comparison_id": "COMP-0062",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor": "claude-sonnet-5",
+    "extractor_invocation_id": "INV-828db1aa0199f6d6",
+    "raw_head": "{\"claims\":[\n{\"text\":\"Neither proposed instrument has governance force.\",\"type\":\"finding\",\"about\":\"the two proposed instruments discussed in the slice\",\"quote\":\"Neither proposed instrument has governance force.\"},\n{\"text\":\"The table's decisions are prospective design commitments, not admitted require",
+    "reason": "unparseable_extractor_output"
+  }
+]
