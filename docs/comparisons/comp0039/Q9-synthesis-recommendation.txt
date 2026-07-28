@@ -1,0 +1,11 @@
+PLACEHOLDER. Tier 2 is assembled after tier 1 completes, from the provider's own eight answers.
+
+Question text:
+
+You previously answered eight questions about the ABS-0004 v7 amendment and PLAN-20260723-0002, each in a separate call with its own evidence set. Your own answers are reproduced below.
+
+1. Flag any inconsistency among them. You are the only party who can, since each was produced without sight of the others.
+
+2. Then give a recommendation on the plan and the amendment: admit as written, admit with named conditions (state them), or revise first. If you recommend admission while holding reading (b) of question 1, state explicitly what the admission concedes.
+
+This call is a coherence check on your own output, not an independent witness. It is recorded as independence_unresolved and will not be counted as corroboration of the claims below.

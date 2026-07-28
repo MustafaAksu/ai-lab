@@ -1,0 +1,205 @@
+{
+  "evidence_units": {
+    "ABS-0004:v7:C3": {
+      "chars": 848,
+      "label": "ABS-0004 v7 constraint C3 (no self-adjudication, executor-generic)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "5fd89c63a4539d12df79eb23e2433906ea9a78a4a04b46dac0fae7a38988b48d"
+    },
+    "ABS-0004:v7:C6": {
+      "chars": 690,
+      "label": "ABS-0004 v7 constraint C6 (authority separation)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "533157fd9c4bae84f24388fcad2b456a9477358bb30a05f526f1fa665c343881"
+    },
+    "ABS-0004:v7:S3": {
+      "chars": 4523,
+      "label": "ABS-0004 v7 Section 3 (three decisions, P7, chain termination)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "607ef872127f25d0cf4940b40191e46b89be909e3276eba55b502f463ce5135f"
+    },
+    "ABS-0004:v7:S4.13": {
+      "chars": 1991,
+      "label": "ABS-0004 v7 Section 4.13 (DecisionRecord, AccountablePrincipal)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "36d3a4ee1a875be043d03412a219241f0d6c6508d7561fb17cc84b1ef5ae143e"
+    },
+    "ABS-0004:v7:S4.6-4.7": {
+      "chars": 3256,
+      "label": "ABS-0004 v7 Sections 4.6-4.7 (qualification, executor identities, disclosure)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "eaf3546b0d4056df59e524d1ef79f2dc3f23a1a0e437ca6b3fb04bfb6334698b"
+    },
+    "ABS-0004:v7:S4.9": {
+      "chars": 1167,
+      "label": "ABS-0004 v7 Section 4.9 (RoleDefinition, three axes)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "40ba1af77ae66ab582c44239c93fcf602126daebd0911729438b8fcaf5e3fbb5"
+    },
+    "ABS-0004:v7:S8": {
+      "chars": 735,
+      "label": "ABS-0004 v7 Section 8 (consequence classes)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "12e7e8572fa60f3910f1b7586334b8941ae2e93732468937c96caba707a939ab"
+    },
+    "ABS-0004:v7:S9": {
+      "chars": 2591,
+      "label": "ABS-0004 v7 Section 9 (enforcement matrix)",
+      "source_path": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "source_sha256": "4599f52e496ee7f7081747fcc0eec376222cb55441bb7e04dd6f66025b81fae1",
+      "unit_sha256": "28c80c8e01e284da313f90f58c3129e039580a0bc2d31427c76f3b216d482cc9"
+    },
+    "PLAN-20260723-0002": {
+      "chars": 16180,
+      "label": "PLAN-20260723-0002 (revised, corrected at fee90da)",
+      "source_path": "docs/self_model/plans/PLAN-20260723-0002.json",
+      "source_sha256": "8f988e70b5becf849b7344af897a538878cda7dade22082becff556f1dcc90e0",
+      "unit_sha256": "b94a2779a0c0364804ae3ebd1084f24c6f2ea1aa1daee01496c3d45795625b9f"
+    }
+  },
+  "independence_note": "Every invocation record in this repository carries identity_verification_status unresolved, permanently by design (catalog_resolution.py). Per constraint C3, unresolved executor equivalence yields independence_unresolved and never an independent path. Cross-question and cross-round independence claims are therefore not established by this round's records.",
+  "member_comparison_ids": "assigned at run time by next_comparison_id(); record here after the run",
+  "questions": [
+    {
+      "est_input_tokens_calibrated": 2990,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "prompt_chars_on_disk": 8971,
+      "prompt_chars_sent": 8970,
+      "prompt_path": "docs/comparisons/comp0039/Q1-honest-terminus-or-capitulation.txt",
+      "prompt_sha256_sent": "cef740c759cbd149881d7b74d2e3e0e6d7ccf18e4b7e1991b4dbf8df664f86a8",
+      "question_id": "Q1",
+      "slug": "honest-terminus-or-capitulation"
+    },
+    {
+      "est_input_tokens_calibrated": 2823,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "prompt_chars_on_disk": 8472,
+      "prompt_chars_sent": 8471,
+      "prompt_path": "docs/comparisons/comp0039/Q2-new-overclaim-in-v7.txt",
+      "prompt_sha256_sent": "6e281144a1bc24f3f38a78cc29c96b82ead919d17fa291b367d6c15f5dcd84dc",
+      "question_id": "Q2",
+      "slug": "new-overclaim-in-v7"
+    },
+    {
+      "est_input_tokens_calibrated": 2807,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.13"
+      ],
+      "prompt_chars_on_disk": 8423,
+      "prompt_chars_sent": 8422,
+      "prompt_path": "docs/comparisons/comp0039/Q3-attack-v7-independently.txt",
+      "prompt_sha256_sent": "80938c30734635ee9e498b65f8afc0d3cfd7be68379d3f968e93d033ed50dfd3",
+      "question_id": "Q3",
+      "slug": "attack-v7-independently"
+    },
+    {
+      "est_input_tokens_calibrated": 8748,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "prompt_chars_on_disk": 26246,
+      "prompt_chars_sent": 26245,
+      "prompt_path": "docs/comparisons/comp0039/Q4-refusal-completeness.txt",
+      "prompt_sha256_sent": "8be54921d39e6caac9a09c8ee9b1c027b489d4906e67368142268a6d0bab9031",
+      "question_id": "Q4",
+      "slug": "refusal-completeness"
+    },
+    {
+      "est_input_tokens_calibrated": 7481,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:C3",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "prompt_chars_on_disk": 22445,
+      "prompt_chars_sent": 22444,
+      "prompt_path": "docs/comparisons/comp0039/Q5-check-depth-and-two-hop.txt",
+      "prompt_sha256_sent": "5f14212724b0a2043814c481d92892d173df3d42edfa14f4d9b4e592543101d8",
+      "question_id": "Q5",
+      "slug": "check-depth-and-two-hop"
+    },
+    {
+      "est_input_tokens_calibrated": 7669,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S9",
+        "ABS-0004:v7:C6",
+        "ABS-0004:v7:S4.9",
+        "PLAN-20260723-0002"
+      ],
+      "prompt_chars_on_disk": 23009,
+      "prompt_chars_sent": 23008,
+      "prompt_path": "docs/comparisons/comp0039/Q6-does-slice-evidence-c6.txt",
+      "prompt_sha256_sent": "662e17e6e5f0559bbe7f0dce795fa4e06a77a7b9d80e195dd93c282c5baef179",
+      "question_id": "Q6",
+      "slug": "does-slice-evidence-c6"
+    },
+    {
+      "est_input_tokens_calibrated": 7483,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S8",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "prompt_chars_on_disk": 22450,
+      "prompt_chars_sent": 22449,
+      "prompt_path": "docs/comparisons/comp0039/Q7-success-criteria-checkability.txt",
+      "prompt_sha256_sent": "acc86cf682303a2de82d400354bfc376c0b0c962938bd83f47fdf68d00fa5701",
+      "question_id": "Q7",
+      "slug": "success-criteria-checkability"
+    },
+    {
+      "est_input_tokens_calibrated": 8211,
+      "estimator_note": "3.00 chars/token, measured against COMP-0038 (37538ch/12496tok) and atomic Q4 (26245ch/8789tok). chars//4 underestimates ~25%.",
+      "evidence_units": [
+        "ABS-0004:v7:S4.13",
+        "ABS-0004:v7:S4.9",
+        "ABS-0004:v7:S4.6-4.7",
+        "PLAN-20260723-0002"
+      ],
+      "prompt_chars_on_disk": 24634,
+      "prompt_chars_sent": 24633,
+      "prompt_path": "docs/comparisons/comp0039/Q8-slice-d-constraints.txt",
+      "prompt_sha256_sent": "2d348b6ab34c85fe7f42bfb8449cb5b0e4d448228f068c667bc8d0ec37844e9e",
+      "question_id": "Q8",
+      "slug": "slice-d-constraints"
+    },
+    {
+      "evidence_units": [
+        "<tier-1 answers of the same provider>"
+      ],
+      "independence": "independence_unresolved",
+      "note": "coherence check on own output; not counted as corroboration",
+      "prompt_path": "docs/comparisons/comp0039/Q9-synthesis-recommendation.txt",
+      "question_id": "Q9",
+      "slug": "synthesis-recommendation",
+      "tier": 2
+    }
+  ],
+  "round_label": "atomic-slice-c-admission-round",
+  "structure": "atomic: one question per invocation, per-question evidence scope",
+  "supersedes": "COMP-0038",
+  "supersession_reason": "COMP-0038 was an incomplete round: the claude-sonnet-5 invocation consumed its entire 16000-token output budget in thinking and returned no text block (INV-b59b93ec9cd8dbe6, stop_reason max_tokens). The round carries one complete witness, not two."
+}
