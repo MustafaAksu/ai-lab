@@ -1,0 +1,114 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+WHAT COUNTS AS A CLAIM. A claim is an assertion a reader could accept, reject, or act on. It is defined by function, not by sentence boundaries. Do NOT extract:
+  - restatements of the material the answer was given;
+  - intermediate steps of an argument whose conclusion you are already extracting;
+  - transitions, framing, or summaries of what the answer is about.
+Extract the conclusions the answer asserts, not the reasoning that reaches them.
+
+HOW MANY. Most answers contain between 5 and 15 such claims. Extract at most 20. If more than 20 meet the definition, extract the 20 the answer's conclusions depend on most and report the number you left out in "claims_omitted". Do not pad toward 20 and do not split a claim to reach it.
+
+Rules:
+
+1. One assertion per claim.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. QUOTE RULES, applied strictly. "quote" must be ONE contiguous span copied character-for-character from the answer, under 30 words.
+   - No ellipsis. Never use "..." to bridge omitted material.
+   - Never join text across bullets, list items, paragraphs, or headings.
+   - Never add or remove quotation marks, brackets, or punctuation at either end.
+   If no single contiguous span states the claim, choose a shorter span that supports it, or extract a different claim. A quote that reads as verbatim while having been shortened or rejoined is worse than no quote, because it cannot be checked by eye.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}],
+ "claims_omitted":0}
+
+If the answer makes no extractable claim, output {"claims":[],"claims_omitted":0}.
+
+=== QUESTION THAT WAS ASKED (Q8) ===
+Which decisions in this slice constrain later evidence admission and lineage work, and which of them would be expensive to reverse once records exist?
+
+Distinguish decisions that only require changing validation code from decisions that would require migrating existing records, and say which category each falls in.
+
+=== ANSWER TO EXTRACT FROM ===
+## Decisions in this slice that constrain later evidence-admission / lineage work
+
+**1. The DecisionRecord record-family shape (ABS-0004 v7 §4.13), instantiated now by InvocationAuthorization.**
+
+Section 4.13 marks the family design as unresolved:
+
+> `[OPEN]` Whether existing warrant/admission records are extended to fulfill this or a new record family is created, and whether kinds are subtypes or one record family.
+
+The plan nonetheless persists `InvocationAuthorization` as a concrete `DecisionRecord` kind now (scope item: *"InvocationAuthorization as a DecisionRecord kind... alongside its kind-specific fields"*), and the plan itself notes the reconciliation gap was still open at review time:
+
+> "COMP-0037 found the plan's field list and the ontology's inherited list unreconciled."
+
+**Category: migration-required.** Once InvocationAuthorization records exist under one field layout, and `EvidenceAdmissionDecision` (Slice D) is later built under whichever family design the `[OPEN]` item resolves to, existing authorization records may need structural migration to conform — this is not a validator change, it is a change to persisted record shape.
+
+**2. RoleDefinition's three axes and `required_verified_properties` (§4.9).**
+
+> "`required_verified_properties` (the properties that must be established by admissible verification before this role's outputs enter governed evidence...)"
+
+This field is the direct hook `EvidenceAdmissionDecision` (§4.13) uses: *"an enumeration of verified properties against the receiving role's `required_verified_properties`."* The plan seeds real role records now (drafting actuator, comparison advisor, adjudicating principal, deterministic verifier) with this field populated, and the plan's own risk section says as much:
+
+> "Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate."
+
+**Category: migration-required.** Seed role records are persisted artifacts (`docs/roles/`). If the vocabulary or `required_verified_properties` semantics needs revision once Slice D's admission logic is built against it, those stored role records — and anything that already cites them as authority for a governed classification — need migration, not just a validator update.
+
+**3. AccountablePrincipal shape (§4.13), seeded now.**
+
+The plan creates a real seed record ("the operator's AccountablePrincipal record"). `EvidenceAdmissionDecision` and future admission work will reference `AccountablePrincipal` as accountable approver. 
+
+**Category: migration-required.** Changing `principal_id`/`principal_kind`/`authority_scope`/`delegation_reference` semantics later means migrating the persisted seed record and anything chaining to it.
+
+**4. `self_issued` computed by exact-identifier party sameness only.**
+
+> "Party sameness is decided on exact identifier equality only, and the documentation states that broader sameness is not detected."
+
+This flag is stored per authorization record at issue time, not recomputed on demand. Independence findings for evidence admission (§4.13: *"lineage and independence findings relied on"*) will eventually need a broader sameness notion for lineage work.
+
+**Category: migration-required.** If broader-sameness detection is adopted later, previously persisted `self_issued=false` records that are actually same-party under the broader rule are now wrong and must be recomputed/migrated — this is a record-content problem, not a code-only fix, because the flag was written once and consumed downstream (independence checks) as a fact.
+
+**5. The one-hop `check_depth` bound on the self-adjudication check.**
+
+> "the self-adjudication outcome carries an explicit `check_depth` field naming it a direct check, so a consumer cannot read a permitted result as a general independence finding."
+
+**Category: validation-code-only (with a caveat).** As long as Slice D's multi-hop check is additive — new records/new `check_depth` values sitting alongside existing one-hop results — existing records remain valid instances and need no migration. This only becomes migration-required if the eventual multi-hop design requires reinterpreting or restructuring the existing `check_depth` enum rather than extending it; the evidence set doesn't show that design, so I can't rule it out.
+
+**6. Refusal-reason enumeration and predicate registry entries.**
+
+Both are described as enumerable/extensible ("Ten reasons, each with a fixture," "no predicate outside the registered Slice A, B, and C lists" — extended by later slices). Adding refusal reasons or Slice D predicates is additive to an enum/registry.
+
+**Category: validation-code-only.** Nothing about existing records is invalidated by adding new reasons or predicates; only validators/consumers need updating.
+
+**7. Consequence classification (default by target type, modifiers only raise).**
+
+Effective consequence is computed and stored per authorization at issue time (a decision fact), not derived live.
+
+**Category: migration-required if the default/modifier table changes**, since past records embed the old computation as a governance fact; **validation-code-only if only new modifiers are added going forward** without touching already-issued records' stored effective class.
+
+---
+
+## What would be needed but is not in this evidence set
+
+- **ABS-0004 v7 Section 8** (consequence classification detail) — needed to judge how tightly the stored effective-consequence value is coupled to the classification table, i.e., whether a table change is migration-required or re-derivable.
+- **ABS-0004 v7 Section 11** (OutboundInteractionLog) — referenced as the enforcement object for external-interaction disclosure; needed to judge whether Slice D lineage work depends on that log's shape and whether it's already schema-frozen.
+- **The full text of the `[OPEN]` DecisionRecord resolution**, and **COMP-0037's record itself** — the plan quotes findings from COMP-0037 but the review artifact isn't in evidence; I'd want it to confirm exactly what field reconciliation was left unresolved before implementation, since that bears directly on migration cost for InvocationAuthorization records.
+- **Any schema-versioning/migration policy document for AI-Lab's self_model records** — none is in evidence. Without it I can't confirm whether "migration" here means a one-time backfill script or a harder irreversible-record problem; I've assumed the latter is the relevant risk given the plan's own framing of role/consequence vocabulary as "load-bearing."
+
+---
+
+## On the disclosure
+
+The plan frames the v6→v7 break narrowly, as a self-authorization/chain-termination problem solved by declaring root authority extra-systemic. I'm not treating that as the only break relevant to this slice's lineage exposure: Section 4.7 records a second, separate open construction — the `ExecutorIdentity` superclass question reopened by COMP-0032 ("a superclass with identity-equivalence semantics defined per subtype would make constraints such as C3 properly polymorphic across executor kinds") — which is unresolved and bears directly on lineage/independence comparison across `ModelIdentity`/`ToolIdentity`/`HumanIdentity`. Whether resolving it later is validation-code-only or migration-required depends on whether identity-equivalence semantics can be added as a code-level interface over existing subtype records or requires new persisted fields on them; that determination isn't answerable from the evidence here and is a second, independent risk from the one the plan foregrounds.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

@@ -1,0 +1,60 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+WHAT COUNTS AS A CLAIM. A claim is an assertion a reader could accept, reject, or act on. It is defined by function, not by sentence boundaries. Do NOT extract:
+  - restatements of the material the answer was given;
+  - intermediate steps of an argument whose conclusion you are already extracting;
+  - transitions, framing, or summaries of what the answer is about.
+Extract the conclusions the answer asserts, not the reasoning that reaches them.
+
+HOW MANY. Most answers contain between 5 and 15 such claims. Extract at most 20. If more than 20 meet the definition, extract the 20 the answer's conclusions depend on most and report the number you left out in "claims_omitted". Do not pad toward 20 and do not split a claim to reach it.
+
+Rules:
+
+1. One assertion per claim.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. QUOTE RULES, applied strictly. "quote" must be ONE contiguous span copied character-for-character from the answer, under 30 words.
+   - No ellipsis. Never use "..." to bridge omitted material.
+   - Never join text across bullets, list items, paragraphs, or headings.
+   - Never add or remove quotation marks, brackets, or punctuation at either end.
+   If no single contiguous span states the claim, choose a shorter span that supports it, or extract a different claim. A quote that reads as verbatim while having been shortened or rejoined is worse than no quote, because it cannot be checked by eye.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}],
+ "claims_omitted":0}
+
+If the answer makes no extractable claim, output {"claims":[],"claims_omitted":0}.
+
+=== QUESTION THAT WAS ASKED (Q3) ===
+Construct a path by which an executor or principal obtains effective authority, or by which the record misrepresents who authorized what, while satisfying every sentence of Section 3 as written.
+
+Build it from the attached text. If the self_issued marking together with the disqualification-from-independence rule blocks your construction, report that plainly rather than forcing an attack.
+
+=== ANSWER TO EXTRACT FROM ===
+A path exists within the record system; it does not establish real-world root authority.
+
+1. Party X creates an `AccountablePrincipal` record declaring X’s `authority_scope` as universal (or broad enough to cover the intended invocation).
+2. X records a standing-authority claim for that principal. The claim is recorded rather than verified, and scope breadth may be arbitrarily wide.
+3. X, acting as principal, issues an `InvocationAuthorization` for invocation I to X, acting as executor, within that declared scope.
+4. The authorization is marked `self_issued: true`, because the issuing principal also performs the invocation.
+5. The record identifies the decision as an invocation authorization and supplies the authorized executor, role, consequence class, policy, qualifications, independence requirements, and conditions.
+6. X performs I.
+
+On the ontology’s chain rule, that authorization terminates at X’s recorded standing authority and is therefore self-standing within the declared scope. The system does not validate whether X is actually entitled to that standing authority. Thus, a false or opportunistic standing-authority claim can yield effective authorization *in the repository’s authorization records* while leaving the real-world authority claim unverified.
+
+The self-issued marking does not block this construction. It requires disclosure and disqualifies the authorization from counting as independent where independence is required. Section 3 does not impose an independence requirement on every invocation authorization. The path therefore works where no applicable authorization condition requires independent authorization. If such a condition does apply, the self-issued record cannot satisfy that independent-authorization condition.
+
+This can also misrepresent who authorized what in the practically important sense that the record attributes the authorization to X’s standing authority even when X lacks that authority in the world. The record remains legible and attributable, but the stated constraint expressly makes visibility rather than prevention its effect.
+
+Missing evidence: the applicable policy and any invocation-specific conditions or independence requirements are not provided. They would be needed to determine whether the particular planned invocation requires independent authorization and therefore defeats the self-issued path.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

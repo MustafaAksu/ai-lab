@@ -1,0 +1,55 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+WHAT COUNTS AS A CLAIM. A claim is an assertion a reader could accept, reject, or act on. It is defined by function, not by sentence boundaries. Do NOT extract:
+  - restatements of the material the answer was given;
+  - intermediate steps of an argument whose conclusion you are already extracting;
+  - transitions, framing, or summaries of what the answer is about.
+Extract the conclusions the answer asserts, not the reasoning that reaches them.
+
+HOW MANY. Most answers contain between 5 and 15 such claims. Extract at most 20. If more than 20 meet the definition, extract the 20 the answer's conclusions depend on most and report the number you left out in "claims_omitted". Do not pad toward 20 and do not split a claim to reach it.
+
+Rules:
+
+1. One assertion per claim.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. QUOTE RULES, applied strictly. "quote" must be ONE contiguous span copied character-for-character from the answer, under 30 words.
+   - No ellipsis. Never use "..." to bridge omitted material.
+   - Never join text across bullets, list items, paragraphs, or headings.
+   - Never add or remove quotation marks, brackets, or punctuation at either end.
+   If no single contiguous span states the claim, choose a shorter span that supports it, or extract a different claim. A quote that reads as verbatim while having been shortened or rejoined is worse than no quote, because it cannot be checked by eye.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}],
+ "claims_omitted":0}
+
+If the answer makes no extractable claim, output {"claims":[],"claims_omitted":0}.
+
+=== QUESTION THAT WAS ASKED (Q6) ===
+Slice C classifies invocations as governed or experimental and refuses no execution. The enforcement matrix records C6 authority separation as "adopted, not currently evidenced" with current enforcement evidence "none (no current record names the check)", target enforcement "artifact validator", and activation condition "already practiced; evidence begins with role records".
+
+The plan's rationale claims Slice C "is what lets that row cite something." Would it? Distinguish evidence that a check was performed from records that name roles and authorizations. Note the matrix's own rule that manual enforcement counts only when the check leaves a named artifact, and that the claim a check happens is not evidence.
+
+=== ANSWER TO EXTRACT FROM ===
+**Short answer: only partially, and the plan's phrasing overstates it.**
+
+**What Slice C would actually produce for C6.** The C6 row's dependency is "role records," and the activation condition is "already practiced; evidence begins with role records." Slice C's scope delivers exactly that dependency: RoleDefinition records on the three axes (`ABS-0004:v7:S4.9`), RoleQualification, AccountablePrincipal, and InvocationAuthorization records. So Slice C would satisfy the *precondition* named in the row — it produces the role records C6's activation condition names as where evidence begins.
+
+**What it would not produce.** The row's *target enforcement* is "artifact validator" — something that checks C6 itself, not merely records that name roles. C6's actual constraint (`ABS-0004:v7:C6`) is an exercise restriction: an invocation may not have *both* adjudicator-level epistemic authority *and* above-read_only action authority exercised against the same target "unless the adjudication is covered by an independent verification edge." Checking that requires (a) knowing the axis values a role assigns — which RoleDefinition supplies — and (b) evaluating whether an independent verification edge covers the adjudication — which is not in Slice C's scope. The plan's non-goals explicitly exclude "multi-hop lineage traversal, independence assessment" as Slice D work, and the one check Slice C does implement (the one-hop self-adjudication check) is scoped by identity — `produced_by`/`executed_by` collision — which the plan itself says implements only "C3's most direct case," disclaiming any broader independence claim.
+
+So the artifact Slice C would leave is a role record naming that a role holds `adjudicator` epistemic authority and `repository_mutator`/`external_actuator` action authority — that names the *assignment*, satisfying "role records" — but it is not evidence that the *exercise restriction* (same invocation, same target, no independent verification edge) was ever checked. Per the matrix's own rule, "manual enforcement counts only when the check leaves a named artifact; the claim that a check happens is not evidence." A RoleDefinition or InvocationAuthorization record is evidence that roles and authorizations were *named*; it is not evidence that the axis-collision check the C6 text describes was *performed*, because no component in Slice C's scope performs that check — the closest analog (one-hop self-adjudication) checks executor identity, not epistemic/action axis co-exercise, and is explicitly disclaimed as not implementing even C3 in general, let alone C6.
+
+**Conclusion on the rationale's claim.** "Slice C is what lets that row cite something" is true only in the narrow sense that it supplies the named dependency (role records) the activation condition requires — it moves C6 from having no dependency artifacts at all to having them. It is not true in the sense the sentence implies, that Slice C gives the row a citable *enforcement* artifact for the C6 check itself; the target enforcement ("artifact validator") for the axis-exercise restriction remains unbuilt, and part of what it would need (independent-verification-edge assessment) is out of scope until a later slice.
+
+**Missing evidence I'd want.** CAP-0015 and CAP-0016 (the capabilities Slice C depends on) and GAP-0005 are listed in the plan's `evidence_ids` but not included here; I'd have used them to check whether either capability defines any check closer to C6's actual axis-collision restriction than the one-hop self-adjudication check, since that would change whether the row could cite something beyond the role-record dependency. Also absent is ABS-0004 v7 Section 4.13 (DecisionRecord fields) and Section 8 (consequence classification), referenced by the plan's scope items — not decisive for this question but relevant to confirming exactly what InvocationAuthorization records would and wouldn't attest to.
+
+--- END OF ANSWER ---
+
+Output the JSON now.

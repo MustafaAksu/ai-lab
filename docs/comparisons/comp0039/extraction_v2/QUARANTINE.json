@@ -1,0 +1,335 @@
+[
+  {
+    "about": "COMP-0037 full record",
+    "claim_id": "CLAIM-46cce53eb3f54292",
+    "claim_text": "COMP-0037 itself is not in evidence, only the [OPEN] paragraph's summary of it, which is load-bearing for the argument and only the summary's characterization is available.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0063",
+    "extraction_id": "EX-Q1-claude-sonnet-5",
+    "extractor_invocation_id": "INV-7eb53d69eb00ea8b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "COMP-0037 itself is not in evidence, only the `[OPEN]` paragraph's summary of it",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-50bc0e8f14b161d9",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "v6's rule text",
+    "claim_id": "CLAIM-85adeedfd09830b7",
+    "claim_text": "v6's actual rule text is absent, so it cannot be verified what mechanism v6 used or exactly what 'prevent convenient closure' meant mechanically, limiting comparison to what v7 could have kept.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0063",
+    "extraction_id": "EX-Q1-claude-sonnet-5",
+    "extractor_invocation_id": "INV-7eb53d69eb00ea8b",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "v6's actual rule text is absent. Without it, I can't verify what mechanism v6 used or exactly what \"prevent convenient closure\" meant mechanically",
+    "source_comparison_id": "COMP-0040",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-50bc0e8f14b161d9",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q1"
+  },
+  {
+    "about": "v7 retraction statement on internal controls",
+    "claim_id": "CLAIM-e3b60b2a36ccdcd9",
+    "claim_text": "The claim that no internal control can close the regress is not demonstrated by the cited case.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0065",
+    "extraction_id": "EX-Q2-claude-sonnet-5",
+    "extractor_invocation_id": "INV-5b602b2c2d111b52",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "nothing in the evidence set demonstrates \u2014 that no possible internal control could close the regress.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-35815ed716886f1c",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "AI-Lab means to validate entitlement to standing authority",
+    "claim_id": "CLAIM-8762b49b164d0d10",
+    "claim_text": "The claim that AI-Lab has no means at all to validate a declared principal's entitlement is not established on the supplied text.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0066",
+    "extraction_id": "EX-Q2-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-86f249dbfe4ee061",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "it does not, on the text supplied, establish that AI-Lab has no means at all",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-f8d5120327f1d564",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "P6 reference",
+    "claim_id": "CLAIM-1c660c4440f200c4",
+    "claim_text": "P6 is needed to determine whether the reference to what P6 forbids is accurate.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0066",
+    "extraction_id": "EX-Q2-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-86f249dbfe4ee061",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "To determine whether the P6 reference is accurate, P6 is needed.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-f8d5120327f1d564",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "COMP-0037 and the relevant v6 rule",
+    "claim_id": "CLAIM-c97b3a91534624fd",
+    "claim_text": "COMP-0037 and the relevant v6 rule are needed to assess what reviewers constructed, what v6 claimed, and whether the description is complete rather than selective.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0066",
+    "extraction_id": "EX-Q2-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-86f249dbfe4ee061",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "COMP-0037 and the relevant v6 rule are needed to assess",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-f8d5120327f1d564",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "Section 4.7 classification of undeclared subordinate execution",
+    "claim_id": "CLAIM-10932b681cecf97d",
+    "claim_text": "The classification of undeclared subordinate execution as a disclosure violation under 4.7 requires Section 4.7.",
+    "claim_type": "evidence_gap",
+    "extraction_comparison_id": "COMP-0066",
+    "extraction_id": "EX-Q2-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-86f249dbfe4ee061",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "the claimed classification as a \u201cdisclosure violation under 4.7\u201d requires Section 4.7.",
+    "source_comparison_id": "COMP-0041",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-f8d5120327f1d564",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q2"
+  },
+  {
+    "about": "self-issued InvocationAuthorization chain-termination status",
+    "claim_id": "CLAIM-1fd3171f1d4c9e01",
+    "claim_text": "Where no independence requirement is declared, a self-issued authorization is fully countable standing authority.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0067",
+    "extraction_id": "EX-Q3-claude-sonnet-5",
+    "extractor_invocation_id": "INV-f1e576e6642c3116",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "Where none is declared required, the self-issued authorization is fully countable, standing authority under the chain-termination rule\u3011\u3010\uff1a\u3011\u3010\u201c\u3011\u3010",
+    "source_comparison_id": "COMP-0042",
+    "source_evidence_units": [
+      "ABS-0004:v7:S3",
+      "ABS-0004:v7:S4.13"
+    ],
+    "source_invocation_id": "INV-00966c9ed3510c6d",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q3"
+  },
+  {
+    "about": "RoleDefinition/InvocationAuthorization records vs C6 check evidence",
+    "claim_id": "CLAIM-5ab378d6ec8c1ebe",
+    "claim_text": "A RoleDefinition or InvocationAuthorization record is evidence that roles and authorizations were named, but not evidence that the axis-collision check described in C6 was performed.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0073",
+    "extraction_id": "EX-Q6-claude-sonnet-5",
+    "extractor_invocation_id": "INV-0994b6b2317819a8",
+    "extractor_provider": "claude-sonnet-5",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "A RoleDefinition or InvocationAuthorization record is evidence that roles and authorizations were named, but it is not evidence that the axis-collision check the C6 text describes was *performed*",
+    "source_comparison_id": "COMP-0044",
+    "source_evidence_units": [
+      "ABS-0004:v7:S9",
+      "ABS-0004:v7:C6",
+      "ABS-0004:v7:S4.9",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-a7fc235164c665fc",
+    "source_provider": "claude-sonnet-5",
+    "source_question_id": "Q6"
+  },
+  {
+    "about": "standing-authority constraint and criterion 3",
+    "claim_id": "CLAIM-5e7db8c7ce76dec0",
+    "claim_text": "The standing-authority constraint has a partial corresponding check in criterion 3.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0076",
+    "extraction_id": "EX-Q7-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-c806e8609a358ce6",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "The standing-authority constraint does have a partial corresponding check in criterion 3\u3011\u3010\uff1a\u3011\u3010\u201c\u3011\u3010",
+    "source_comparison_id": "COMP-0045",
+    "source_evidence_units": [
+      "ABS-0004:v7:S8",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-f0fc3f53f3eb5ee8",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q7"
+  },
+  {
+    "about": "execution-scoped RoleQualification",
+    "claim_id": "CLAIM-8b0f38c046561b17",
+    "claim_text": "Changing RoleQualification scope fields or transfer rules requires migration or revalidation of old qualification records and dependent authorizations.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0078",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-cc3a82cbf5eba829",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "Existing-record migration/revalidation if the scope fields or transfer rule change, because old qualification records and authorizations relying on them must be rechecked.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-e9cc2ca90d7fd906",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "AccountablePrincipal authority_scope and delegation_reference semantics",
+    "claim_id": "CLAIM-06ae13bf317c860e",
+    "claim_text": "Changing AccountablePrincipal scope or delegation semantics requires migration and re-evaluation of authorization-chain conclusions.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0078",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-cc3a82cbf5eba829",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "Existing-record migration and re-evaluation if scope or delegation semantics change, because authorization-chain conclusions depend on them.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-e9cc2ca90d7fd906",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "exact identifier equality as the party-sameness test",
+    "claim_id": "CLAIM-930d2856a2976e0a",
+    "claim_text": "Exact-identifier party sameness is primarily a validation or identity-resolution-code issue if original identifiers remain intact.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0078",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-cc3a82cbf5eba829",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "Primarily validation/identity-resolution code, if original identifiers remain intact.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-e9cc2ca90d7fd906",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  },
+  {
+    "about": "governed versus experimental invocation classification",
+    "claim_id": "CLAIM-72e82b48997b970c",
+    "claim_text": "Changing the governed-versus-experimental boundary requires reclassification and possibly migration of stored labels or derived decisions.",
+    "claim_type": "finding",
+    "extraction_comparison_id": "COMP-0078",
+    "extraction_id": "EX-Q8-gpt-5-6-terra",
+    "extractor_invocation_id": "INV-cc3a82cbf5eba829",
+    "extractor_provider": "gpt-5.6-terra",
+    "independence": "independence_unresolved",
+    "problems": [
+      "reshaped_quote"
+    ],
+    "quote": "Reclassification and possibly migration of stored labels/derived decisions if the boundary changes.",
+    "source_comparison_id": "COMP-0046",
+    "source_evidence_units": [
+      "ABS-0004:v7:S4.13",
+      "ABS-0004:v7:S4.9",
+      "ABS-0004:v7:S4.6-4.7",
+      "PLAN-20260723-0002"
+    ],
+    "source_invocation_id": "INV-e9cc2ca90d7fd906",
+    "source_provider": "gpt-5.6-terra",
+    "source_question_id": "Q8"
+  }
+]

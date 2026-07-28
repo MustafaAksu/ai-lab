@@ -1,0 +1,73 @@
+You are extracting claims from a review answer so they can be recorded as separate, addressable records. You are not evaluating the answer and not deciding whether any claim is correct.
+
+WHAT COUNTS AS A CLAIM. A claim is an assertion a reader could accept, reject, or act on. It is defined by function, not by sentence boundaries. Do NOT extract:
+  - restatements of the material the answer was given;
+  - intermediate steps of an argument whose conclusion you are already extracting;
+  - transitions, framing, or summaries of what the answer is about.
+Extract the conclusions the answer asserts, not the reasoning that reaches them.
+
+HOW MANY. Most answers contain between 5 and 15 such claims. Extract at most 20. If more than 20 meet the definition, extract the 20 the answer's conclusions depend on most and report the number you left out in "claims_omitted". Do not pad toward 20 and do not split a claim to reach it.
+
+Rules:
+
+1. One assertion per claim.
+2. Extract only what the answer says. Do not add, infer, complete, or improve.
+3. PRESERVE HEDGES EXACTLY. If the answer says "may", "appears to", "I cannot determine", "only in the narrow sense that", or "less certain", the claim text must carry that same force. Never state a hedged claim flatly. A claim recorded more confidently than it was made is the most damaging error you can make here.
+4. Give each claim a type, one of:
+   - "finding": an assertion about the reviewed material
+   - "recommendation": something the answer says should be done or changed
+   - "evidence_gap": material the answer says it needed and did not have
+   - "limitation": a stated bound on the answer's own reliability or reach
+5. For each claim give "about": the specific thing it concerns, as precisely as the answer allows - for example "ABS-0004 v7 Section 3 visibility constraint", "PLAN-20260723-0002 scope[12]", "refusal reason 9". Use "unspecified" if the answer does not say.
+6. QUOTE RULES, applied strictly. "quote" must be ONE contiguous span copied character-for-character from the answer, under 30 words.
+   - No ellipsis. Never use "..." to bridge omitted material.
+   - Never join text across bullets, list items, paragraphs, or headings.
+   - Never add or remove quotation marks, brackets, or punctuation at either end.
+   If no single contiguous span states the claim, choose a shorter span that supports it, or extract a different claim. A quote that reads as verbatim while having been shortened or rejoined is worse than no quote, because it cannot be checked by eye.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences. Exactly this shape:
+
+{"claims":[{"text":"...","type":"finding","about":"...","quote":"..."}],
+ "claims_omitted":0}
+
+If the answer makes no extractable claim, output {"claims":[],"claims_omitted":0}.
+
+=== QUESTION THAT WAS ASKED (Q3) ===
+Construct a path by which an executor or principal obtains effective authority, or by which the record misrepresents who authorized what, while satisfying every sentence of Section 3 as written.
+
+Build it from the attached text. If the self_issued marking together with the disqualification-from-independence rule blocks your construction, report that plainly rather than forcing an attack.
+
+=== ANSWER TO EXTRACT FROM ===
+## Constructed path
+
+**Step 1 — Establish a self-declared, universal root.**
+A single party declares itself an `AccountablePrincipal` with `authority_scope` set to universal. Section 3 explicitly permits this: *"A declared `authority_scope` may be arbitrarily wide, including universal. A wide scope is permitted and must be legible as wide."* The record shows the scope as universal, not disguised as bounded — satisfying that sentence exactly.
+
+**Step 2 — Self-issue the InvocationAuthorization.**
+The same party, acting as executor, is authorized by itself to perform the invocation. Section 3 requires this be marked: *"Where the issuing principal and the authorized executor are the same party... the authorization records `self_issued: true`."* The record does so. Section 3 also says this is expected, not forbidden: *"A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for."*
+
+**Step 3 — Never trigger the one operative check.**
+The disqualification clause reads: *"It is instead disqualified from counting as independent authorization wherever independence is required."* This is conditional. `InvocationAuthorization` carries an `independence requirements` field (4.13), but nothing in Section 3 specifies who sets that field's content or which consequence classes must carry a nonzero independence requirement. Since the issuing principal is also the one populating its own authorization record, it can declare — truthfully, on the record — that no independence requirement applies to this consequence class. The disqualification clause then has nothing to bite: it disqualifies self-issuance *from independence*, but does not itself impose independence. Where none is declared required, the self-issued authorization is fully countable, standing authority under the chain-termination rule: *"Authorizations the principal issues inside that scope are self-standing."*
+
+**Step 4 — Chain termination and P7 are satisfied, not violated.**
+The record never claims to verify or establish the principal's standing authority — it only asserts it, per *"A standing-authority claim is recorded, never verified... Visibility is the whole of what this constraint achieves, and it is not prevention."* P7 is likewise satisfied rather than defeated: the record does not attempt to derive root authority from internal evidence; it simply records an extra-systemic claim, exactly as P7 contemplates.
+
+**Result.** Every sentence of Section 3 is individually satisfiable while the same party (a) declares itself universally scoped, (b) authorizes its own execution, (c) is marked self-issued as required, and (d) faces no independence check because none was ever declared applicable — yielding unchecked effective authority over an arbitrarily wide domain, built entirely from compliant, honestly-marked records.
+
+## Does the self_issued + disqualification rule block this?
+
+**No — not as written.** The rule's force is entirely conditional on independence being "required," and Section 3 contains no provision establishing *when* independence is required for a given role or consequence class. That determination is pushed to "applicable policy" (named as a field in `InvocationAuthorization`, 4.13) and possibly to Section 4.7 (referenced but not included), neither of which is in evidence. The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate. So the construction is not forced through a defeat of the self_issued rule — it goes around it, using exactly the gap the rule leaves open.
+
+## A second, weaker path (flagged as less certain)
+
+The subordinate-authorization-inheritance `[DEF]` requires a parent authorization's conditions to "declare the permitted subordinate execution classes," but — unlike `authority_scope` — there is no sentence in Section 3 requiring that breadth to be "legible as wide" or barred from being described as narrow when it is not. A parent authorization could declare very broad subordinate execution classes inside ordinary "conditions" text without triggering any visibility obligation analogous to the scope-breadth constraint. This could let later subordinate invocations be recorded as authorized-by-inheritance in a way the original accountable approver did not meaningfully contemplate — a misrepresentation of who authorized what, though softer than the primary path since it depends on drafting, not a clean structural gap.
+
+## What's missing from the evidence set
+
+1. **The content of "applicable policy" / "independence requirements"** — whatever document specifies which consequence classes or roles mandate independent authorization. Without it, I cannot tell whether the primary path is available for *all* consequence classes or only some; I would use it to check whether high-consequence invocations are structurally forced to declare an independence requirement (which would close Step 3 for those cases while leaving it open elsewhere).
+2. **Section 4.7** (disclosure violations), referenced by the subordinate-inheritance `[DEF]` — needed to know whether undeclared or overbroad subordinate class declarations carry any consequence, which bears on the second path.
+3. **Any visibility/breadth constraint on subordinate execution classes** analogous to the `authority_scope` breadth constraint — its absence here is what makes the second path possible, but I cannot confirm it is truly absent from the full ontology rather than merely absent from this excerpt.
+
+--- END OF ANSWER ---
+
+Output the JSON now.
