@@ -1,0 +1,217 @@
+You are linking extracted claims to the specific block of source text each claim is about. This is a matching task. Do not evaluate whether any claim is correct.
+
+Below are numbered claims, then a closed list of candidate blocks with their identifiers.
+
+For each claim, give the identifier of the ONE block the claim is about - the specific passage it asserts something concerning.
+
+Rules:
+
+1. Copy the block identifier exactly as written. Do not abbreviate or reformat it.
+2. If the claim concerns several blocks, choose the one it is most directly about.
+3. If the claim is about something NOT in the candidate list, answer null. This is expected and wanted. Do NOT choose the closest available block. A claim linked to the wrong block is worse than a claim left unlinked, because a wrong link reads as structure and will be trusted. Claims about a missing section, about the answer's own reasoning, or about material outside the list should all be null.
+4. When you answer null, give a short reason: what the claim is actually about.
+5. Answer for every claim number, once each.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences:
+
+{"links":[{"claim":1,"block":"<identifier or null>","reason_if_null":"..."}]}
+
+=== CLAIMS ===
+
+1. claim: A single party can declare itself an AccountablePrincipal with authority_scope set to universal, and Section 3 explicitly permits this.
+   quote: "A declared `authority_scope` may be arbitrarily wide, including universal. A wide scope is permitted and must be legible as wide."
+   extractor called it about: Section 3 authority_scope provision
+
+2. claim: The same party can self-issue an InvocationAuthorization to itself as executor, and Section 3 requires this be marked self_issued: true.
+   quote: "Where the issuing principal and the authorized executor are the same party... the authorization records `self_issued: true`."
+   extractor called it about: Section 3 self_issued marking requirement
+
+3. claim: Section 3 treats self-issued authorization as expected, not forbidden, since the accountable party at the root of a chain necessarily authorizes work it is responsible for.
+   quote: "A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for."
+   extractor called it about: Section 3 self-issuance provision
+
+4. claim: The disqualification clause is conditional and Section 3 does not specify who sets the independence requirements field's content or which consequence classes must carry a nonzero independence requirement.
+   quote: "It is instead disqualified from counting as independent authorization wherever independence is required."
+   extractor called it about: Section 3 disqualification clause / independence requirements field (4.13)
+
+5. claim: Because the issuing principal populates its own authorization record, it can truthfully declare that no independence requirement applies to a given consequence class, leaving the disqualification clause with nothing to bite and making the self-issued authorization fully countable, self-standing authority.
+   quote: "Where none is declared required, the self-issued authorization is fully countable, standing authority under the chain-termination rule"
+   extractor called it about: Section 3 disqualification clause interaction with self-issuance
+
+6. claim: The chain-termination rule is satisfied, not violated, because the record only asserts standing authority and never claims to verify or establish it.
+   quote: "A standing-authority claim is recorded, never verified... Visibility is the whole of what this constraint achieves, and it is not prevention."
+   extractor called it about: Section 3 chain-termination / standing-authority claim rule
+
+7. claim: P7 is satisfied rather than defeated because the record does not derive root authority from internal evidence but simply records an extra-systemic claim, as P7 contemplates.
+   quote: "P7 is likewise satisfied rather than defeated: the record does not attempt to derive root authority from internal evidence; it simply records an extra-systemic claim, exactly as P7 contemplates."
+   extractor called it about: P7 principle
+
+8. claim: The constructed path satisfies every sentence of Section 3 individually while yielding unchecked effective authority over an arbitrarily wide domain, built entirely from compliant, honestly-marked records.
+   quote: "Every sentence of Section 3 is individually satisfiable while the same party (a) declares itself universally scoped, (b) authorizes its own execution, (c) is marked self-issued as required, and (d) faces no independence check because none was ever declared applicable"
+   extractor called it about: overall constructed path result
+
+9. claim: The self_issued marking together with the disqualification-from-independence rule does not block the construction as written.
+   quote: "No — not as written."
+   extractor called it about: self_issued + disqualification rule (Q3 blocking question)
+
+10. claim: The disqualification rule's force is entirely conditional on independence being required, and Section 3 contains no provision establishing when independence is required for a given role or consequence class.
+   quote: "The rule's force is entirely conditional on independence being "required," and Section 3 contains no provision establishing *when* independence is required for a given role or consequence class."
+   extractor called it about: Section 3 disqualification rule scope
+
+11. claim: The disqualification rule is a labeling requirement plus a conditional disqualifier, not itself a substantive independence mandate, so the construction goes around the rule rather than defeating it.
+   quote: "The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate."
+   extractor called it about: Section 3 disqualification rule characterization
+
+12. claim: A second, weaker path exists: the subordinate-authorization-inheritance [DEF] lacks any sentence requiring subordinate execution class breadth to be legible as wide or barred from being described as narrow, unlike authority_scope.
+   quote: "there is no sentence in Section 3 requiring that breadth to be "legible as wide" or barred from being described as narrow when it is not"
+   extractor called it about: subordinate-authorization-inheritance [DEF]
+
+13. claim: This gap could let a parent authorization declare broad subordinate execution classes in ordinary conditions text without triggering a visibility obligation, allowing later subordinate invocations to be recorded as authorized-by-inheritance in a way the original approver did not meaningfully contemplate, though this path is softer/less certain since it depends on drafting rather than a clean structural gap.
+   quote: "a misrepresentation of who authorized what, though softer than the primary path since it depends on drafting, not a clean structural gap"
+   extractor called it about: second path via subordinate-authorization-inheritance
+
+14. claim: The content of 'applicable policy' / 'independence requirements' is missing from the evidence set, so it cannot be determined whether the primary path is available for all consequence classes or only some.
+   quote: "Without it, I cannot tell whether the primary path is available for *all* consequence classes or only some"
+   extractor called it about: applicable policy / independence requirements field content
+
+15. claim: Section 4.7 (disclosure violations), referenced by the subordinate-inheritance [DEF], is missing, and is needed to know whether undeclared or overbroad subordinate class declarations carry any consequence.
+   quote: "needed to know whether undeclared or overbroad subordinate class declarations carry any consequence, which bears on the second path"
+   extractor called it about: Section 4.7 disclosure violations
+
+16. claim: The answer cannot confirm that a visibility/breadth constraint on subordinate execution classes analogous to the authority_scope breadth constraint is truly absent from the full ontology rather than merely absent from the excerpt.
+   quote: "I cannot confirm it is truly absent from the full ontology rather than merely absent from this excerpt"
+   extractor called it about: absence of visibility/breadth constraint on subordinate execution classes
+
+=== CANDIDATE BLOCKS ===
+
+--- ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d ---
+The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+--- ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca ---
+A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+--- ABS-0004:v7:S3#def:subordinate-authorization-inherita ---
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi ---
+P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
+
+--- ABS-0004:v7:S3#def:authorization-chain-termination-a ---
+Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco ---
+A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims; it has no means to do so, and pretending otherwise
+would be the overclaim P6 forbids. What the record provides is visibility:
+the claim, its declared scope, and every authorization resting on it are
+legible and attributable. Visibility is the whole of what this constraint
+achieves, and it is not prevention.
+
+--- ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound ---
+Scope breadth is visible, not bounded by fiat. A
+declared `authority_scope` may be arbitrarily wide, including universal. A
+wide scope is permitted and must be legible as wide; it may not be
+described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is the defect this constraint exists to
+prevent.
+
+--- ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke ---
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+A self-issued authorization is not refused: at the root of any chain, the
+accountable party necessarily authorizes work it is also responsible for.
+It is instead disqualified from counting as independent authorization
+wherever independence is required, and it is countable as such.
+
+--- ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi ---
+Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
+
+--- ABS-0004:v7:S3#open:whether-standing-authority-require ---
+Whether standing authority requires periodic re-declaration or
+review. COMP-0037 established what v6 got wrong here: both reviewers
+independently constructed the same self-authorization path, and v6's claim
+to prevent convenient closure of the regress was false. v7 does not close
+the question by asserting a stronger internal control; it records that no
+internal control can close it, and asks instead what external evidence a
+scope declaration should carry.
+
+--- ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc ---
+DecisionRecord: `decision_kind` (invocation_authorization |
+routing_selection | evidence_admission | manual_override), target,
+`recommended_status` and `effective_status` (distinct: a model
+recommendation must not appear to have assigned final status before
+accountable approval), issuer invocation, accountable approver, evidence,
+policy authority, activation state, supersession. `[OPEN]` Whether existing
+warrant/admission records are extended to fulfill this or a new record
+family is created, and whether kinds are subtypes or one record family.
+
+--- ABS-0004:v7:S4.13#def:invocationauthorization-decision-k ---
+InvocationAuthorization (decision_kind invocation_authorization)
+additionally carries: invocation request, authorized executor, assigned
+role, consequence class, applicable policy, qualifications relied on,
+independence requirements, conditions. Without this kind, P1 is not
+represented by the ontology.
+
+--- ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout ---
+RoutingDecision (decision_kind routing_selection) additionally
+carries: candidates considered, rejection reasons including lineage
+conflicts, selected candidate, policy version, catalog snapshot. Tier
+labels are policy-derived under current evidence, never intrinsic
+ModelIdentity attributes.
+
+--- ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision ---
+EvidenceAdmissionDecision (decision_kind evidence_admission)
+additionally carries: admitted artifact or claim, admitted epistemic
+status, lineage and independence findings relied on, disclosed provenance
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
+
+--- ABS-0004:v7:S4.13#def:accountableprincipal-principal-id ---
+AccountablePrincipal: `principal_id`, `principal_kind` (delegated
+role, governance body, pseudonymous operator identity, organization, or
+other authorized entity), `authority_scope`, `delegation_reference`. No
+personal identifying data required. Cryptographic attestation is a later
+implementation mechanism, not an ontology requirement.
+
+--- END OF CANDIDATES ---
+
+Output the JSON now.

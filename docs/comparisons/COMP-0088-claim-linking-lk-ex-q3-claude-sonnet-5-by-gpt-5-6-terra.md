@@ -1,0 +1,457 @@
+# COMP-0088: Provider Comparison — Claim linking LK-EX-Q3-claude-sonnet-5-by-gpt-5-6-terra
+
+## Metadata
+
+- comparison_id: `COMP-0088`
+- title: `Claim linking LK-EX-Q3-claude-sonnet-5-by-gpt-5-6-terra`
+- invocation_produced_by: `[{"authoritative": false, "evidence": "docs/invocations/INV-c238d43551bda32e.json", "predicate": "produced_by", "relation_source": "future_edge_seed", "scope": "invocation_provenance_slice_a", "source_id": "COMP-0088", "target_id": "INV-c238d43551bda32e"}, {"authoritative": false, "evidence": "docs/invocations/INV-08365e4a5f8f0bc2.json", "predicate": "produced_by", "relation_source": "future_edge_seed", "scope": "invocation_provenance_slice_a", "source_id": "COMP-0088", "target_id": "INV-08365e4a5f8f0bc2"}]`
+- created_at: `2026-07-29T06:22:18.103732+00:00`
+- command: `scripts/compare_providers.py --title Claim linking LK-EX-Q3-claude-sonnet-5-by-gpt-5-6-terra You are linking extracted claims to the specific block of source text each claim is about. This is a matching task. Do not evaluate whether any claim is correct.
+
+Below are numbered claims, then a closed list of candidate blocks with their identifiers.
+
+For each claim, give the identifier of the ONE block the claim is about - the specific passage it asserts something concerning.
+
+Rules:
+
+1. Copy the block identifier exactly as written. Do not abbreviate or reformat it.
+2. If the claim concerns several blocks, choose the one it is most directly about.
+3. If the claim is about something NOT in the candidate list, answer null. This is expected and wanted. Do NOT choose the closest available block. A claim linked to the wrong block is worse than a claim left unlinked, because a wrong link reads as structure and will be trusted. Claims about a missing section, about the answer's own reasoning, or about material outside the list should all be null.
+4. When you answer null, give a short reason: what the claim is actually about.
+5. Answer for every claim number, once each.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences:
+
+{"links":[{"claim":1,"block":"<identifier or null>","reason_if_null":"..."}]}
+
+=== CLAIMS ===
+
+1. claim: Every sentence of Section 3 is individually satisfiable under the constructed path.
+   quote: "Every sentence of Section 3 is individually satisfiable"
+   extractor called it about: Section 3 constructed path
+
+2. claim: The constructed path yields unchecked effective authority over an arbitrarily wide domain.
+   quote: "yielding unchecked effective authority over an arbitrarily wide domain"
+   extractor called it about: Section 3 constructed path
+
+3. claim: The self_issued plus disqualification rule does not block the construction as written.
+   quote: "**No — not as written.**"
+   extractor called it about: self_issued and independence-disqualification rule
+
+4. claim: Section 3 contains no provision establishing when independence is required for a given role or consequence class.
+   quote: "Section 3 contains no provision establishing *when* independence is required for a given role or consequence class."
+   extractor called it about: Section 3 independence requirements
+
+5. claim: An issuing principal can declare that no independence requirement applies to its consequence class.
+   quote: "it can declare — truthfully, on the record — that no independence requirement applies to this consequence class."
+   extractor called it about: self-issued InvocationAuthorization independence requirements
+
+6. claim: The disqualification rule is a labeling requirement plus a conditional disqualifier, not a substantive independence mandate.
+   quote: "The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate."
+   extractor called it about: self_issued independence-disqualification rule
+
+7. claim: A parent authorization could declare very broad subordinate execution classes in ordinary conditions text without triggering a scope-like visibility obligation.
+   quote: "A parent authorization could declare very broad subordinate execution classes inside ordinary "conditions" text without triggering any visibility obligation analogous to the scope-breadth constraint."
+   extractor called it about: subordinate-authorization-inheritance [DEF]
+
+8. claim: The subordinate-inheritance path could cause later invocations to be recorded as authorized by inheritance when the original accountable approver did not meaningfully contemplate them, though it is less certain than the primary path.
+   quote: "This could let later subordinate invocations be recorded as authorized-by-inheritance in a way the original accountable approver did not meaningfully contemplate"
+   extractor called it about: subordinate-authorization-inheritance [DEF]
+
+9. claim: The content of applicable policy or independence requirements is missing from the evidence set.
+   quote: "**The content of "applicable policy" / "independence requirements"**"
+   extractor called it about: applicable policy and independence requirements
+
+10. claim: Without the applicable policy, the answer cannot determine whether the primary path is available for all consequence classes or only some.
+   quote: "Without it, I cannot tell whether the primary path is available for *all* consequence classes or only some;"
+   extractor called it about: primary path applicability across consequence classes
+
+11. claim: Section 4.7 is missing and is needed to determine consequences for undeclared or overbroad subordinate class declarations.
+   quote: "**Section 4.7** (disclosure violations), referenced by the subordinate-inheritance `[DEF]` — needed to know whether undeclared or overbroad subordinate class declarations carry any consequence"
+   extractor called it about: Section 4.7 disclosure violations
+
+12. claim: A visibility or breadth constraint on subordinate execution classes analogous to the authority_scope constraint is missing from the evidence set.
+   quote: "**Any visibility/breadth constraint on subordinate execution classes** analogous to the `authority_scope` breadth constraint"
+   extractor called it about: subordinate execution class visibility/breadth constraint
+
+13. claim: The answer cannot confirm that the absence of a subordinate-class visibility constraint is genuinely absent from the full ontology rather than merely absent from the excerpt.
+   quote: "I cannot confirm it is truly absent from the full ontology rather than merely absent from this excerpt."
+   extractor called it about: full ontology subordinate execution class constraints
+
+=== CANDIDATE BLOCKS ===
+
+--- ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d ---
+The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+--- ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca ---
+A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+--- ABS-0004:v7:S3#def:subordinate-authorization-inherita ---
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi ---
+P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
+
+--- ABS-0004:v7:S3#def:authorization-chain-termination-a ---
+Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco ---
+A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims; it has no means to do so, and pretending otherwise
+would be the overclaim P6 forbids. What the record provides is visibility:
+the claim, its declared scope, and every authorization resting on it are
+legible and attributable. Visibility is the whole of what this constraint
+achieves, and it is not prevention.
+
+--- ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound ---
+Scope breadth is visible, not bounded by fiat. A
+declared `authority_scope` may be arbitrarily wide, including universal. A
+wide scope is permitted and must be legible as wide; it may not be
+described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is the defect this constraint exists to
+prevent.
+
+--- ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke ---
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+A self-issued authorization is not refused: at the root of any chain, the
+accountable party necessarily authorizes work it is also responsible for.
+It is instead disqualified from counting as independent authorization
+wherever independence is required, and it is countable as such.
+
+--- ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi ---
+Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
+
+--- ABS-0004:v7:S3#open:whether-standing-authority-require ---
+Whether standing authority requires periodic re-declaration or
+review. COMP-0037 established what v6 got wrong here: both reviewers
+independently constructed the same self-authorization path, and v6's claim
+to prevent convenient closure of the regress was false. v7 does not close
+the question by asserting a stronger internal control; it records that no
+internal control can close it, and asks instead what external evidence a
+scope declaration should carry.
+
+--- ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc ---
+DecisionRecord: `decision_kind` (invocation_authorization |
+routing_selection | evidence_admission | manual_override), target,
+`recommended_status` and `effective_status` (distinct: a model
+recommendation must not appear to have assigned final status before
+accountable approval), issuer invocation, accountable approver, evidence,
+policy authority, activation state, supersession. `[OPEN]` Whether existing
+warrant/admission records are extended to fulfill this or a new record
+family is created, and whether kinds are subtypes or one record family.
+
+--- ABS-0004:v7:S4.13#def:invocationauthorization-decision-k ---
+InvocationAuthorization (decision_kind invocation_authorization)
+additionally carries: invocation request, authorized executor, assigned
+role, consequence class, applicable policy, qualifications relied on,
+independence requirements, conditions. Without this kind, P1 is not
+represented by the ontology.
+
+--- ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout ---
+RoutingDecision (decision_kind routing_selection) additionally
+carries: candidates considered, rejection reasons including lineage
+conflicts, selected candidate, policy version, catalog snapshot. Tier
+labels are policy-derived under current evidence, never intrinsic
+ModelIdentity attributes.
+
+--- ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision ---
+EvidenceAdmissionDecision (decision_kind evidence_admission)
+additionally carries: admitted artifact or claim, admitted epistemic
+status, lineage and independence findings relied on, disclosed provenance
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
+
+--- ABS-0004:v7:S4.13#def:accountableprincipal-principal-id ---
+AccountablePrincipal: `principal_id`, `principal_kind` (delegated
+role, governance body, pseudonymous operator identity, organization, or
+other authorized entity), `authority_scope`, `delegation_reference`. No
+personal identifying data required. Cryptographic attestation is a later
+implementation mechanism, not an ontology requirement.
+
+--- END OF CANDIDATES ---
+
+Output the JSON now.`
+- providers: `OpenAI, Claude`
+
+### Models
+
+- OpenAI: `gpt-5.6-terra`
+- Claude: `claude-sonnet-5`
+
+## Prompt
+
+You are linking extracted claims to the specific block of source text each claim is about. This is a matching task. Do not evaluate whether any claim is correct.
+
+Below are numbered claims, then a closed list of candidate blocks with their identifiers.
+
+For each claim, give the identifier of the ONE block the claim is about - the specific passage it asserts something concerning.
+
+Rules:
+
+1. Copy the block identifier exactly as written. Do not abbreviate or reformat it.
+2. If the claim concerns several blocks, choose the one it is most directly about.
+3. If the claim is about something NOT in the candidate list, answer null. This is expected and wanted. Do NOT choose the closest available block. A claim linked to the wrong block is worse than a claim left unlinked, because a wrong link reads as structure and will be trusted. Claims about a missing section, about the answer's own reasoning, or about material outside the list should all be null.
+4. When you answer null, give a short reason: what the claim is actually about.
+5. Answer for every claim number, once each.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences:
+
+{"links":[{"claim":1,"block":"<identifier or null>","reason_if_null":"..."}]}
+
+=== CLAIMS ===
+
+1. claim: Every sentence of Section 3 is individually satisfiable under the constructed path.
+   quote: "Every sentence of Section 3 is individually satisfiable"
+   extractor called it about: Section 3 constructed path
+
+2. claim: The constructed path yields unchecked effective authority over an arbitrarily wide domain.
+   quote: "yielding unchecked effective authority over an arbitrarily wide domain"
+   extractor called it about: Section 3 constructed path
+
+3. claim: The self_issued plus disqualification rule does not block the construction as written.
+   quote: "**No — not as written.**"
+   extractor called it about: self_issued and independence-disqualification rule
+
+4. claim: Section 3 contains no provision establishing when independence is required for a given role or consequence class.
+   quote: "Section 3 contains no provision establishing *when* independence is required for a given role or consequence class."
+   extractor called it about: Section 3 independence requirements
+
+5. claim: An issuing principal can declare that no independence requirement applies to its consequence class.
+   quote: "it can declare — truthfully, on the record — that no independence requirement applies to this consequence class."
+   extractor called it about: self-issued InvocationAuthorization independence requirements
+
+6. claim: The disqualification rule is a labeling requirement plus a conditional disqualifier, not a substantive independence mandate.
+   quote: "The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate."
+   extractor called it about: self_issued independence-disqualification rule
+
+7. claim: A parent authorization could declare very broad subordinate execution classes in ordinary conditions text without triggering a scope-like visibility obligation.
+   quote: "A parent authorization could declare very broad subordinate execution classes inside ordinary "conditions" text without triggering any visibility obligation analogous to the scope-breadth constraint."
+   extractor called it about: subordinate-authorization-inheritance [DEF]
+
+8. claim: The subordinate-inheritance path could cause later invocations to be recorded as authorized by inheritance when the original accountable approver did not meaningfully contemplate them, though it is less certain than the primary path.
+   quote: "This could let later subordinate invocations be recorded as authorized-by-inheritance in a way the original accountable approver did not meaningfully contemplate"
+   extractor called it about: subordinate-authorization-inheritance [DEF]
+
+9. claim: The content of applicable policy or independence requirements is missing from the evidence set.
+   quote: "**The content of "applicable policy" / "independence requirements"**"
+   extractor called it about: applicable policy and independence requirements
+
+10. claim: Without the applicable policy, the answer cannot determine whether the primary path is available for all consequence classes or only some.
+   quote: "Without it, I cannot tell whether the primary path is available for *all* consequence classes or only some;"
+   extractor called it about: primary path applicability across consequence classes
+
+11. claim: Section 4.7 is missing and is needed to determine consequences for undeclared or overbroad subordinate class declarations.
+   quote: "**Section 4.7** (disclosure violations), referenced by the subordinate-inheritance `[DEF]` — needed to know whether undeclared or overbroad subordinate class declarations carry any consequence"
+   extractor called it about: Section 4.7 disclosure violations
+
+12. claim: A visibility or breadth constraint on subordinate execution classes analogous to the authority_scope constraint is missing from the evidence set.
+   quote: "**Any visibility/breadth constraint on subordinate execution classes** analogous to the `authority_scope` breadth constraint"
+   extractor called it about: subordinate execution class visibility/breadth constraint
+
+13. claim: The answer cannot confirm that the absence of a subordinate-class visibility constraint is genuinely absent from the full ontology rather than merely absent from the excerpt.
+   quote: "I cannot confirm it is truly absent from the full ontology rather than merely absent from this excerpt."
+   extractor called it about: full ontology subordinate execution class constraints
+
+=== CANDIDATE BLOCKS ===
+
+--- ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d ---
+The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+--- ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca ---
+A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+--- ABS-0004:v7:S3#def:subordinate-authorization-inherita ---
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi ---
+P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
+
+--- ABS-0004:v7:S3#def:authorization-chain-termination-a ---
+Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco ---
+A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims; it has no means to do so, and pretending otherwise
+would be the overclaim P6 forbids. What the record provides is visibility:
+the claim, its declared scope, and every authorization resting on it are
+legible and attributable. Visibility is the whole of what this constraint
+achieves, and it is not prevention.
+
+--- ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound ---
+Scope breadth is visible, not bounded by fiat. A
+declared `authority_scope` may be arbitrarily wide, including universal. A
+wide scope is permitted and must be legible as wide; it may not be
+described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is the defect this constraint exists to
+prevent.
+
+--- ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke ---
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+A self-issued authorization is not refused: at the root of any chain, the
+accountable party necessarily authorizes work it is also responsible for.
+It is instead disqualified from counting as independent authorization
+wherever independence is required, and it is countable as such.
+
+--- ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi ---
+Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
+
+--- ABS-0004:v7:S3#open:whether-standing-authority-require ---
+Whether standing authority requires periodic re-declaration or
+review. COMP-0037 established what v6 got wrong here: both reviewers
+independently constructed the same self-authorization path, and v6's claim
+to prevent convenient closure of the regress was false. v7 does not close
+the question by asserting a stronger internal control; it records that no
+internal control can close it, and asks instead what external evidence a
+scope declaration should carry.
+
+--- ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc ---
+DecisionRecord: `decision_kind` (invocation_authorization |
+routing_selection | evidence_admission | manual_override), target,
+`recommended_status` and `effective_status` (distinct: a model
+recommendation must not appear to have assigned final status before
+accountable approval), issuer invocation, accountable approver, evidence,
+policy authority, activation state, supersession. `[OPEN]` Whether existing
+warrant/admission records are extended to fulfill this or a new record
+family is created, and whether kinds are subtypes or one record family.
+
+--- ABS-0004:v7:S4.13#def:invocationauthorization-decision-k ---
+InvocationAuthorization (decision_kind invocation_authorization)
+additionally carries: invocation request, authorized executor, assigned
+role, consequence class, applicable policy, qualifications relied on,
+independence requirements, conditions. Without this kind, P1 is not
+represented by the ontology.
+
+--- ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout ---
+RoutingDecision (decision_kind routing_selection) additionally
+carries: candidates considered, rejection reasons including lineage
+conflicts, selected candidate, policy version, catalog snapshot. Tier
+labels are policy-derived under current evidence, never intrinsic
+ModelIdentity attributes.
+
+--- ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision ---
+EvidenceAdmissionDecision (decision_kind evidence_admission)
+additionally carries: admitted artifact or claim, admitted epistemic
+status, lineage and independence findings relied on, disclosed provenance
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
+
+--- ABS-0004:v7:S4.13#def:accountableprincipal-principal-id ---
+AccountablePrincipal: `principal_id`, `principal_kind` (delegated
+role, governance body, pseudonymous operator identity, organization, or
+other authorized entity), `authority_scope`, `delegation_reference`. No
+personal identifying data required. Cryptographic attestation is a later
+implementation mechanism, not an ontology requirement.
+
+--- END OF CANDIDATES ---
+
+Output the JSON now.
+
+## OpenAI Response
+
+- model: `gpt-5.6-terra`
+
+```
+{"links":[{"claim":1,"block":null,"reason_if_null":"It concerns a constructed path and the satisfiability of Section 3 as a whole, rather than one specific candidate block."},{"claim":2,"block":"ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound"},{"claim":3,"block":"ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke"},{"claim":4,"block":"ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke"},{"claim":5,"block":"ABS-0004:v7:S4.13#def:invocationauthorization-decision-k"},{"claim":6,"block":"ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke"},{"claim":7,"block":"ABS-0004:v7:S3#def:subordinate-authorization-inherita"},{"claim":8,"block":"ABS-0004:v7:S3#def:subordinate-authorization-inherita"},{"claim":9,"block":null,"reason_if_null":"It concerns the missing substantive content of applicable policy and independence requirements, not a listed passage."},{"claim":10,"block":null,"reason_if_null":"It concerns what cannot be determined without the missing applicable policy."},{"claim":11,"block":null,"reason_if_null":"It concerns the missing Section 4.7 disclosure-violations provision."},{"claim":12,"block":null,"reason_if_null":"It concerns a missing visibility or breadth constraint for subordinate execution classes."},{"claim":13,"block":null,"reason_if_null":"It concerns the full ontology beyond the supplied excerpt."}]}
+```
+
+## Claude Response
+
+- model: `claude-sonnet-5`
+
+```
+{"links":[
+{"claim":1,"block":null,"reason_if_null":"This is a general assertion about the overall constructed path's satisfiability across all of Section 3, not about any single block's content."},
+{"claim":2,"block":"ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound","reason_if_null":null},
+{"claim":3,"block":"ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke","reason_if_null":null},
+{"claim":4,"block":null,"reason_if_null":"Concerns the absence of a provision on when independence is required, which is not a specific block's content but a claimed gap in the source material."},
+{"claim":5,"block":"ABS-0004:v7:S4.13#def:invocationauthorization-decision-k","reason_if_null":null},
+{"claim":6,"block":"ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke","reason_if_null":null},
+{"claim":7,"block":"ABS-0004:v7:S3#def:subordinate-authorization-inherita","reason_if_null":null},
+{"claim":8,"block":"ABS-0004:v7:S3#def:subordinate-authorization-inherita","reason_if_null":null},
+{"claim":9,"block":null,"reason_if_null":"Concerns the missing content/definition of 'applicable policy' and 'independence requirements' terms, which is asserted as absent from the evidence set rather than present in any given block."},
+{"claim":10,"block":null,"reason_if_null":"Concerns an inference that cannot be made due to missing policy content, not the content of any specific candidate block."},
+{"claim":11,"block":null,"reason_if_null":"Concerns the absence of Section 4.7 from the evidence set, which is not among the candidate blocks."},
+{"claim":12,"block":null,"reason_if_null":"Concerns the absence of a visibility/breadth constraint on subordinate execution classes, which is asserted as missing from the evidence set rather than being a candidate block's content."},
+{"claim":13,"block":null,"reason_if_null":"Concerns uncertainty about the full ontology beyond the excerpt, not the content of any specific candidate block."}
+]}
+```

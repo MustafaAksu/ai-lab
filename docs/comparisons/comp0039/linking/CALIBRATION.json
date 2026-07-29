@@ -1,0 +1,35 @@
+{
+  "calibration": {
+    "accuracy_upper_bound": 0.883,
+    "correct": 91,
+    "declined_null": 3,
+    "note": "held-out set is claims whose quote matches exactly one block verbatim; NOT randomly sampled, so accuracy is an upper bound",
+    "per_linker": {
+      "claude-sonnet-5": {
+        "accuracy": 0.942,
+        "correct": 49,
+        "null": 1,
+        "scored": 52
+      },
+      "gpt-5.6-terra": {
+        "accuracy": 0.824,
+        "correct": 42,
+        "null": 2,
+        "scored": 51
+      }
+    },
+    "scored_edges": 103,
+    "set_size": 52
+  },
+  "edges": 1042,
+  "linked": 823,
+  "linker_agreement": {
+    "differ": 100,
+    "same": 412
+  },
+  "problem_reasons": {
+    "block_id_not_in_vocabulary": 18
+  },
+  "problems": 18,
+  "unlinked_null": 219
+}
