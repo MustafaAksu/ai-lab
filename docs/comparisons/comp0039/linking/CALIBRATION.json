@@ -1,7 +1,7 @@
 {
   "calibration": {
-    "accuracy_upper_bound": 0.883,
-    "correct": 91,
+    "accuracy_upper_bound": 0.885,
+    "correct": 92,
     "declined_null": 3,
     "note": "held-out set is claims whose quote matches exactly one block verbatim; NOT randomly sampled, so accuracy is an upper bound",
     "per_linker": {
@@ -12,24 +12,22 @@
         "scored": 52
       },
       "gpt-5.6-terra": {
-        "accuracy": 0.824,
-        "correct": 42,
+        "accuracy": 0.827,
+        "correct": 43,
         "null": 2,
-        "scored": 51
+        "scored": 52
       }
     },
-    "scored_edges": 103,
+    "scored_edges": 104,
     "set_size": 52
   },
-  "edges": 1042,
-  "linked": 823,
+  "edges": 1060,
+  "linked": 841,
   "linker_agreement": {
-    "differ": 100,
-    "same": 412
+    "differ": 108,
+    "same": 422
   },
-  "problem_reasons": {
-    "block_id_not_in_vocabulary": 18
-  },
-  "problems": 18,
+  "problem_reasons": {},
+  "problems": 0,
   "unlinked_null": 219
 }
