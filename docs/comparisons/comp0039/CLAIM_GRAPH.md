@@ -59,9 +59,11 @@ threshold difference rather than a dispute about the target.
 
 ## Known limitations
 
-These are recorded rather than fixed, because fixing the second and third
-requires re-running all 64 linking invocations, and a re-link is already required
-when ABS-0004 v8 changes block hashes. They should ride with that re-link.
+Limitations 1 and 2 are recorded rather than fixed because fixing them requires
+re-running all 64 linking invocations, and a re-link is already required when
+ABS-0004 v8 changes block hashes; they should ride with that re-link. Limitation
+3 needs an addition to the edge model rather than a re-link. Limitation 4 is
+inherent to the calibration method and cannot be fixed, only stated.
 
 1. **One claim links to one block.** Some claims are inherently about several.
    The clearest case is the round's own central finding -- that v7 bundles three
@@ -75,7 +77,39 @@ when ABS-0004 v8 changes block hashes. They should ride with that re-link.
    because none was in an evidence set for the round. Superseded ontology
    versions and prior comparison records need to be citable evidence units.
 
-3. **Calibration is an upper bound on a biased sample**, as above.
+   This is not a theoretical gap. COMP-0037 was subsequently read and refuted a
+   claim the round had produced; see limitation 3.
+
+3. **A claim node cannot carry what later happened to it.** Edges record what a
+   claim is about. Nothing records that a claim was checked and found false,
+   superseded, or confirmed. The graph represents claims about blocks, not the
+   status of claims.
+
+   The worked example is in this round. `CLAIM-7f96b4ee3de269fc` (Q1,
+   claude-sonnet-5) asserts that v7's `[OPEN]` paragraph grounds its
+   scope-breadth retreat in COMP-0037, "which is a fact about self-issuance, not
+   about scope breadth." Reading COMP-0037 refutes this: Claude's own review
+   there found that nothing constrained "the content or breadth of what may be
+   declared as `authority_scope`", and gpt-5.6-terra recommended rejecting
+   universal scopes outright. Scope was squarely implicated.
+
+   Two properties of this case make it the right example. First, the same Q1
+   answer also produced `CLAIM-c80738608c9c0608` (extracted by the other
+   extractor), which states that COMP-0037 is needed to decide precisely this
+   question -- so the graph already contains both the claim and the condition
+   for checking it. Second, the record needed was committed in this repository
+   throughout.
+
+   Until a claim-status edge exists, a reader assembling ABS-0004 v8 from these
+   nodes will read the refuted premise with nothing attached to it. The
+   refutation is recorded in prose in the consolidated Slice C findings record;
+   it is not reachable from the claim.
+
+   Note what must NOT be done: COMP-0040 records what the reviewer answered and
+   is correct as a record of that. Amending the artifact to fix the reviewer's
+   premise would falsify it.
+
+4. **Calibration is an upper bound on a biased sample**, as above.
 
 ## Edge semantics
 
