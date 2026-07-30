@@ -120,8 +120,14 @@ changes its hash and breaks every edge citing it.
 That breakage is the mechanism, not a defect. A stable identifier would carry a
 claim forward onto text that no longer says what the claim responded to, and the
 edge would look sound while being false. Re-linking is part of amendment: when a
-block changes, each claim citing it is re-adjudicated as still-applies,
-superseded, or needs-re-review.
+block changes, each claim citing it is re-adjudicated. The v7 to v8
+amendment exercised this: 213 of 841 edges broke and 118 claims were
+dispositioned. The vocabulary needed five values, not the three named
+here when this was written -- adopted, corrected, still_applies, refuted,
+needs_re_review -- because 'superseded' conflated a recommendation being
+taken with a criticised sentence being deleted, and because six claims
+asserted something the record shows false, which an amendment contradicts
+rather than responds to. See CLAIM_IMPACT.json.
 
 Re-linking triggers on hash mismatch, not on id absence. The slug can survive a
 rewording; the hash cannot.

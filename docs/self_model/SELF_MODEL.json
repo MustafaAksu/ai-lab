@@ -220,7 +220,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-07-30T09:29:27+00:00",
+  "generated_at": "2026-07-30T12:08:24+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -747,7 +747,7 @@
       "target": "Additive outcome capture only, with no change to INVOCATION_STATUSES. Add an outcome object to InvocationRecord carrying stop_reason, output_tokens, and the content block types returned, populated on the scripts/compare_providers.py path. This makes the distinction between a completed response, a truncated response, and a response with no content legible without redefining status, and therefore requires no migration of existing records: records captured before the change simply lack the object, which is accurate, since their outcomes were not captured. Redefining INVOCATION_STATUSES to admit a third value is migration-required in the sense COMP-0046 identified, because previously persisted records asserting success would need re-adjudication, and no schema-versioning or migration policy exists for self-model records. That decision should be taken separately and explicitly rather than folded into a capture change."
     }
   ],
-  "repo_head": "1871bb3ead12fd1f3edd2fadb098d330ac6aac2a",
+  "repo_head": "441075cccd9aec7a1b3c1afb06fb4bc4ab3cbf73",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
