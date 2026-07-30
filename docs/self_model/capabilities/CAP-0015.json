@@ -78,13 +78,17 @@
     "governance_marker defaults to experimental and stays there until an admission consumer exists.",
     "Relations are emitted with authoritative false and relation_source future_edge_seed; they are diagnostic seeds, not authoritative graph edges.",
     "Nothing reads the records. C1 provenance_v1 activation, catalog resolution, roles and authorization, and lineage and admission remain unimplemented.",
-    "Records are prospective only; invocations before this capability fall under the ABS-0004 Section 7 pre-provenance boundary."
+    "Records are prospective only; invocations before this capability fall under the ABS-0004 Section 7 pre-provenance boundary.",
+    "Execution outcome is not captured. The record carries no stop_reason and no output-token count, and INVOCATION_STATUSES admits only success and failure, so an invocation that returned without exception and produced no content is recorded as success and is field-identical on status, governance_marker, execution_profile and spawned to one that produced a complete response. GAP-0006. Raising the Claude output-token default to 16000 under WARR-20260722-0001 reduced how often budget exhaustion occurs; it did not make exhaustion representable, and COMP-0038 exhausted 16000.",
+    "execution_profile records supplied rather than effective configuration. A parameter the provider defaulted, rather than one AI-Lab sent, is absent from the record even when it determines the outcome: reasoning_parameters is {} whenever no effort parameter is sent, which is accurate about the request and silent about the effort actually applied.",
+    "output_token_limit is recorded for the provider AI-Lab caps and is null for the provider it does not, with max_tokens_source provider_default_unset. No record captures the uncapped endpoint's effective limit, so a comparison round's records cannot establish that its two witnesses had comparable room to answer."
   ],
   "name": "Invocation provenance capture (ABS-0004 Slice A)",
   "recommended_next_actions": [
     "Propose Slice B (catalog identity resolution) against GAP-0005, incorporating the COMP-0035 finding that naming a provider self-report CatalogVerification is circular self-attestation.",
     "Decide whether ABS-0004 requires a v5 amendment renaming CatalogVerification or scoping the term to what endpoint authentication actually proves.",
-    "Consider a check that execution-profile fidelity has not silently degraded after provider refactors."
+    "Consider a check that execution-profile fidelity has not silently degraded after provider refactors.",
+    "Address GAP-0006 by additive outcome capture on the compare_providers path: an outcome object carrying stop_reason, output_tokens and returned content block types. Do not redefine INVOCATION_STATUSES in the same change; admitting a third status value is migration-required, since previously persisted records asserting success would need re-adjudication and no schema-versioning policy exists for self-model records."
   ],
   "risks": [
     "Schema v1 field choices are load-bearing for Slices B to D; a field misdesign propagates, mitigated by copying ABS-0004 v4 names verbatim and by the enumerated identity subset that isolates later additions.",
