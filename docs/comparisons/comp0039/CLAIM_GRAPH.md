@@ -59,11 +59,13 @@ threshold difference rather than a dispute about the target.
 
 ## Known limitations
 
-Limitations 1 and 2 are recorded rather than fixed because fixing them requires
-re-running all 64 linking invocations, and a re-link is already required when
-ABS-0004 v8 changes block hashes; they should ride with that re-link. Limitation
-3 needs an addition to the edge model rather than a re-link. Limitation 4 is
-inherent to the calibration method and cannot be fixed, only stated.
+Status after the v7 to v8 re-link, which exercised the graph rather than
+inspecting it. Each item below is annotated with what actually happened, because
+in two cases the limitation as originally written was wrong.
+
+Limitation 1 is CLOSED. Limitation 2 was WRONG as written and is corrected in
+place. Limitation 3 is partially addressed. Limitation 4 cannot be fixed, only
+stated. Limitations 5 and 6 were found by using the graph and are new.
 
 1. **One claim links to one block.** Some claims are inherently about several.
    The clearest case is the round's own central finding -- that v7 bundles three
@@ -72,13 +74,33 @@ inherent to the calibration method and cannot be fixed, only stated.
    conflates "about several blocks" with "about nothing identifiable"; these are
    different and should be distinguishable.
 
+   **CLOSED** in the v8 re-link, which permits up to three targets per claim,
+   each a separate (block_id, content_sha256) pair breaking independently. This
+   was not a marginal case: of 104 placements by the two linkers, 63 used one
+   block, 38 used two, and 3 used three. The single-target restriction had been
+   discarding 39% of the structure the linkers could see.
+
 2. **The vocabulary omits blocks the reviewers asked for.** 26 nulls name
    Section 4.7, Section 11, COMP-0037, or v6 text. None is in the vocabulary
    because none was in an evidence set for the round. Superseded ontology
    versions and prior comparison records need to be citable evidence units.
 
-   This is not a theoretical gap. COMP-0037 was subsequently read and refuted a
-   claim the round had produced; see limitation 3.
+   **CORRECTED.** The second sentence above is right and the first is wrong, and
+   they were run together. Superseded ontology versions and prior comparison
+   records do need to be citable, as evidence a future question can be given:
+   COMP-0037 was subsequently read and refuted a claim the round had produced,
+   which is limitation 3's worked example. But they are NOT the missing targets
+   for those 26 nulls. All 26 are evidence_gap claims, and an evidence_gap claim
+   is not about the named material's content; it is about what its question was
+   given. Adding COMP-0037 to the vocabulary would invite the linker to place a
+   claim about an absence onto the material that was absent. That is a wrong
+   edge, not a recovered one, and both linkers had already declined for exactly
+   that reason -- "it concerns the absence of v6 rule text", "the claim concerns
+   the underlying COMP-0037 source material itself". The null-is-first-class
+   design was protecting against the fix this limitation proposed.
+
+   Section 11 WAS added in the re-link, on the opposite reasoning: claims about
+   deferred enforcement objects are about its content.
 
 3. **A claim node cannot carry what later happened to it.** Edges record what a
    claim is about. Nothing records that a claim was checked and found false,
@@ -109,7 +131,43 @@ inherent to the calibration method and cannot be fixed, only stated.
    is correct as a record of that. Amending the artifact to fix the reviewer's
    premise would falsify it.
 
+   **PARTIALLY ADDRESSED.** The disposition vocabulary now carries 'refuted', and
+   six claims hold it, recorded in CLAIM_IMPACT.json with the reasoning. A
+   disposition is not an edge: it exists only for claims whose edges an amendment
+   broke, so a claim refuted without any amendment having touched its block still
+   has nowhere to record that.
+
 4. **Calibration is an upper bound on a biased sample**, as above.
+
+5. **Three claim categories the block vocabulary cannot hold.** Found one at a
+   time, by using the graph, and they are a pattern rather than three
+   coincidences: the vocabulary holds claims **about source text** and has no
+   node for claims about anything else.
+
+   - **Evidence-gap claims**, about what a question was given rather than about
+     any block's content. 26 instances; see limitation 2.
+   - **Refuted claims**, about another claim's truth. 6 instances; see
+     limitation 3.
+   - **Verdict claims**, about the answer's own position rather than about the
+     source. Found by the re-link cross-check, which reports claims
+     dispositioned still_applies that neither linker could place. It found
+     exactly one, and the disposition was right while the placement was
+     impossible: "The answer favors reading (a), but only for the specific claim
+     that an internal authorization structure can prevent convenient closure of
+     the extra-systemic authorization regress." That position does still hold. It
+     is not about a passage.
+
+   The three share a shape. A claim's target may be a block, a question's
+   evidence set, another claim, or the answer itself, and only the first exists.
+
+6. **The edge set is not self-describing about validity.** linking/EDGES.json
+   holds all 841 pass-one edges, including the 213 the v8 amendment broke, with
+   their pre-amendment hashes. relink/EDGES_V8.json holds the 148 replacements. A
+   reader needs three files -- EDGES.json, CLAIM_IMPACT.json and EDGES_V8.json --
+   to determine which edges are live, and nothing in EDGES.json says so. An edge
+   whose cited content_sha256 no longer matches its block is detectable, which is
+   the mechanism working; but detecting it is left to the reader rather than
+   recorded.
 
 ## Edge semantics
 
