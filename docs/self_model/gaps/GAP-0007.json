@@ -1,0 +1,36 @@
+{
+  "blocked_by": [],
+  "category": "governance_practice",
+  "evidence": {
+    "files_checked": [
+      "docs/comparisons/COMP-0038-abs-0004-v7-amendment-and-revised-plan-20260723-0002-slice-c-admission-review.md",
+      "docs/comparisons/comp0039/extraction/QUARANTINE.json",
+      "docs/comparisons/comp0039/extraction_v2/CLAIMS.json",
+      "docs/comparisons/comp0039/CLAIM_GRAPH.md",
+      "docs/comparisons/comp0039/CLAIM_IMPACT.json",
+      "docs/comparisons/comp0039/relink/RELINK_REPORT.json",
+      "docs/self_model/gaps/GAP-0006.json"
+    ],
+    "reason": "Enumerated over one session of 2026-07-27, in which sixteen checks were written and relied upon. Nine were shipped without a case constructed to make them fail. All nine failed in use. Seven were negative-tested before being relied upon, by constructing input the check should reject and confirming it did. None of those seven failed. The nine: a configuration ladder whose success criterion was the presence of text, which called a truncated response a working configuration; a section detector whose regex halted at the first markdown heading, reporting four complete answers as empty; quote normalisation that rejected sixteen valid quotes over trailing punctuation; the 'about' field designed for descriptive precision, which produced 485 singleton values across 530 claims and could not join; a 'retry at 21000' fallback contradicted by the token arithmetic already in hand; a tier-2 premise that a model is the only party able to reconcile its own prior answers, which is false because the model has no memory of writing them; a re-link scoped at 84 claims where 58 was correct, the difference being cases the linker had already declined for the right reason; a staleness scan that fired on a phrase quoted inside its own retraction; and a figure check that failed because the document it read was hard-wrapped."
+  },
+  "gap_id": "GAP-0007",
+  "last_reviewed_at": "2026-07-27T00:00:00+00:00",
+  "name": "No practice requires a check to state what would falsify it before the check is relied on",
+  "notes": [
+    "The confound is real and must be stated with the figures. Negative tests were written for the checks already believed load-bearing, so the correlation partly reflects which checks were taken seriously rather than what negative-testing causes. The failure set was also classified after the fact by the same executor that wrote the checks, so a failure in a negative-tested check could have gone unnoticed. Nine of nine against zero of seven is worth recording; it is not a controlled result.",
+    "The defect class is the one the COMP-0039..0046 round found in the material under review, which is why it is recorded rather than absorbed. ABS-0004 v7 asserted that visibility 'is the whole of what this constraint achieves' without a mechanism that delivers it; PLAN-20260723-0002 claimed a check_depth field prevents a misreading; v8 corrected that overclaim in one constraint and reproduced it in another two paragraphs later. In each case a criterion was stated that did not measure the thing it was for. The same shape appeared nine times in the tooling built to audit it.",
+    "One instance propagated before being caught. A claim that COMP-0037's break concerned self-issuance rather than scope breadth was relayed to the operator as a principal finding, and reading COMP-0037 refuted it. The record was one grep away throughout. It is now dispositioned refuted (CLAIM-7f96b4ee3de269fc) and the correction is in comp0039/SLICE_C_FINDINGS.md section 2.2.",
+    "A second instance was caught by a check that had been negative-tested: a fabricated content hash in a draft of the findings record, invented because the real one was not to hand. The citation verifier rejected it. That is the practice working, one hour after it had been written for exactly that reason.",
+    "Most of the enumerated instances are not separately recorded in the repository. They occurred in drafting and were corrected before delivery, so this record is their evidence. Where a committed artifact exists it is cited in files_checked: the ladder incident in the COMP-0038 addendum, the boundary rejections in extraction/QUARANTINE.json, the join failure measurable from extraction_v2/CLAIMS.json, and two limitations that were wrong as written in comp0039/CLAIM_GRAPH.md."
+  ],
+  "priority": "high",
+  "recommended_first_slice": "A stated practice rather than code, because the defect is in what gets written before a check is trusted, not in any module. Before a check is relied upon for a governance claim, record the input that should make it fail and the observed result of supplying that input. Applied to the checks this repository already depends on: the audit reports verified_current, so construct an evidence state where it must not and confirm it does not; the transfer-script md5 gates abort on mismatch, which is already tested and should stay tested; a parser that admits records must be shown rejecting a malformed one. This is not new machinery. It is the discipline the seven successful checks already followed, made a requirement instead of a habit.",
+  "related_capabilities": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "risk": "Governance in this repository rests on checks: the self-model audit, the test suite, the md5 gates on every transfer script, the parsers that admit claims and edges into the graph. A check whose success criterion measures something adjacent to its purpose reports success and is believed, and the artifact it guards is then cited as verified. The nine failures enumerated here were all caught, but not by the checks themselves: they were caught by reading output that looked wrong, which does not scale and did not always happen first. One reached the operator as a finding before the record that refuted it was read. The deeper risk is that a check reporting success is the point at which scrutiny stops, so an unfalsified check does not merely fail to catch its target, it actively suppresses the reading that would have.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "Sixteen checks were written and relied on during one session. The nine shipped without a constructed failing case all failed in use; the seven negative-tested before being relied on did not. Nothing in the repository's practice requires a check to state what would falsify it, or to demonstrate that it rejects such input, before its output is treated as evidence. The defect is not in any particular check but in the absence of that step, and it is the same class the round under review found in ABS-0004 v7 and in PLAN-20260723-0002: a criterion stated without regard to whether it measures what it is for."
+}
