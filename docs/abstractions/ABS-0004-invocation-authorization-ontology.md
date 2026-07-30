@@ -198,8 +198,18 @@ authorizations that were never declared. Undeclared subordinate execution is
 possible under this ontology — the inheritance rule above says so, and
 classifies it as a 4.7 disclosure violation rather than detecting it. v7
 claimed that "every authorization resting on it" is legible, which its own
-Section 3 contradicted two paragraphs earlier. Visibility of the declared is
-the whole of what this constraint achieves, and it is not prevention.
+Section 3 contradicted two paragraphs earlier.
+
+Visibility of the declared is the whole of what this constraint is for, and it
+is not prevention. Whether it is achieved is a further question this constraint
+does not settle. No chain-link representation, completeness condition,
+traversal rule, or attribution rule is specified anywhere in this ontology, so
+nothing here establishes that the authorizations resting on a claim can in fact
+be enumerated or followed. v7 asserted that visibility "is the whole of what
+this constraint achieves"; achievement was never demonstrated, and the earlier
+draft of v8 narrowed the scope of that assertion without withdrawing it. The
+constraint states an intended and bounded function. Delivering it depends on
+recording being complete and usable, which no rule in this document requires.
 
 `[ADOPTED_CONSTRAINT]` Scope breadth is visible, and breadth is not the
 defect. A declared `authority_scope` may be arbitrarily wide, including
@@ -207,6 +217,17 @@ universal. A wide scope is permitted and must be legible as wide; it may not
 be described, in a record or in a summary, as bounded merely because a scope
 field was populated. A boundary that no one can fail to satisfy is not a
 boundary, and calling it one is a defect P6 forbids.
+
+`[ADOPTED_CONSTRAINT]` The legibility requirement is unenforced, and saying so
+is part of stating it. Nothing in this ontology supplies a scope grammar, an
+interpretation rule, a validation step, a rendering requirement, or a rule
+governing what a summary may say about a scope field. The requirement above
+therefore binds whoever writes a record or a summary, and a violation is a
+defect discoverable by reading rather than one caught by a check. This
+constraint is included because the earlier draft of v8 corrected exactly this
+overclaim in the standing-authority constraint and reproduced it here two
+paragraphs later, which is the defect class P6 names and the third occurrence
+of it inside this document.
 
 `[OPEN]` What makes a scope declaration something other than self-assertion.
 COMP-0037 defeated v6's scope rule from two directions, not one. One reviewer
@@ -280,9 +301,13 @@ possible, and COMP-0037 does not demonstrate it.
 What would move this question is a specification of the external evidence a
 scope declaration carries: the external source or accountable process against
 which a declaration is assessed, who may assess it, what counts as
-sufficient, and what follows when that evidence is absent, contested,
-expired, or narrower than the declaration. None of that exists, and naming
-its absence is not progress toward it.
+sufficient, what follows when that evidence is absent, contested, expired, or
+narrower than the declaration, and which outputs the answer affects:
+visibility only, invocation authorization, evidence admission, or all three. A
+specification that names the evidence without naming what changes when the
+evidence fails states a requirement with no operative consequence, which is
+the defect this round found in four separate constraints. None of that exists,
+and naming its absence is not progress toward it.
 
 ## 4. Object Definitions
 

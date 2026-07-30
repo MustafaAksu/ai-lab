@@ -8,6 +8,7 @@
       "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread",
       "ABS-0004:v7:S3#adopted_constraint:the-decision-not-to-bound-breadth",
       "ABS-0004:v7:S3#adopted_constraint:the-disqualification-is-conditiona",
+      "ABS-0004:v7:S3#adopted_constraint:the-legibility-requirement-is-unen",
       "ABS-0004:v7:S3#open:what-makes-a-scope-declaration-som"
     ],
     "removed": [
@@ -56,14 +57,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -86,14 +87,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -131,10 +132,10 @@
       "claim_id": "CLAIM-069f57270dfdfadf",
       "claim_text": "The sentence requiring a wide scope to be legible as wide and restricting descriptions in records or summaries is not established by the shown mechanism.",
       "claim_type": "finding",
-      "disposition": "still_applies",
+      "disposition": "corrected",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "SB",
-      "disposition_note": "UNADDRESSED by v8, which retained 'must be legible as wide' with no mechanism added.",
+      "disposition_note": "Corrected in v8 draft 2 by a new constraint stating that the legibility requirement is unenforced, naming the absent scope grammar, interpretation rule, validation step, rendering requirement and summary rule.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "A wide scope is permitted and must be legible as wide;",
       "source_invocation_id": "INV-f8d5120327f1d564",
@@ -146,14 +147,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -176,7 +177,7 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -199,14 +200,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -229,14 +230,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -244,10 +245,10 @@
       "claim_id": "CLAIM-1a5a5d5701eeb01d",
       "claim_text": "An external-evidence test construction is needed, specifying the external source, who may assess it, sufficiency of evidence, handling of absent/contested/expired/narrower evidence, and which outputs (visibility, invocation, admission) are affected, to determine whether a scope declaration is non-theatrical.",
       "claim_type": "recommendation",
-      "disposition": "needs_re_review",
+      "disposition": "adopted",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "OP",
-      "disposition_note": "v8 adopts four of the five named dimensions and omits which outputs are affected (visibility, invocation, admission) \u2014 the same shape as the defect the round found: a constraint whose operative consequence is unspecified.",
+      "disposition_note": "Adopted in v8 draft 2, which adds the fifth dimension: which outputs the answer affects -- visibility only, invocation authorization, evidence admission, or all three.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "A decision rule would need to specify:",
       "source_invocation_id": "INV-56d31d5bfca54e6d",
@@ -259,7 +260,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -312,14 +313,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -372,7 +373,7 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -515,14 +516,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -568,7 +569,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -644,14 +645,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -674,14 +675,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -734,7 +735,7 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -787,14 +788,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -847,14 +848,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -937,14 +938,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -967,14 +968,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1057,14 +1058,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1140,14 +1141,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1155,10 +1156,10 @@
       "claim_id": "CLAIM-6553320f2fd28989",
       "claim_text": "The sentence claiming that visibility is the whole achieved function of the constraint overstates the achieved result.",
       "claim_type": "finding",
-      "disposition": "still_applies",
+      "disposition": "corrected",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "SA",
-      "disposition_note": "v8 narrowed scope to visibility of the declared but retained 'is the whole of what this constraint achieves'. The finding was about asserting an achieved result, not about scope. UNADDRESSED by v8.",
+      "disposition_note": "Corrected in v8 draft 2, which states visibility as an intended function whose delivery depends on complete and usable recording that no rule requires. Draft 1 narrowed the scope of the achievement claim without withdrawing it.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "Visibility is the whole of what this constraint achieves, and it is not prevention.",
       "source_invocation_id": "INV-f8d5120327f1d564",
@@ -1193,14 +1194,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1253,14 +1254,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1449,14 +1450,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1464,10 +1465,10 @@
       "claim_id": "CLAIM-7b92dae2e2d780d7",
       "claim_text": "The following sentence claiming that visibility is the whole of what the constraint achieves also overstates the achieved result, since the constraint may prescribe recording and non-validation without demonstrating that visibility has actually been achieved.",
       "claim_type": "finding",
-      "disposition": "still_applies",
+      "disposition": "corrected",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "SA",
-      "disposition_note": "Same as 6553320f. UNADDRESSED by v8.",
+      "disposition_note": "Corrected in v8 draft 2. See 6553320f.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "Visibility is the whole of what this constraint achieves, and it is not prevention.",
       "source_invocation_id": "INV-f8d5120327f1d564",
@@ -1479,14 +1480,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1509,14 +1510,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1585,14 +1586,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1615,14 +1616,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1645,7 +1646,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -1691,14 +1692,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1721,14 +1722,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1781,7 +1782,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -1804,7 +1805,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1827,14 +1828,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1887,14 +1888,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1917,14 +1918,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1947,14 +1948,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -1977,14 +1978,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2090,14 +2091,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2240,14 +2241,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2300,14 +2301,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2330,14 +2331,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2390,14 +2391,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2450,14 +2451,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2468,7 +2469,7 @@
       "disposition": "corrected",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "SA",
-      "disposition_note": "Corrected by withdrawal, not by remedy: the absence of any chain-link, completeness, traversal or attribution rule that grounded this finding persists in v8.",
+      "disposition_note": "Corrected. Draft 1 fixed the sentence by withdrawing the claim; draft 2 names the absent chain-link, completeness, traversal and attribution rules explicitly. Still not a remedy -- those rules do not exist -- but stated rather than implied.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "What the record provides is visibility: the claim, its declared scope, and every authorization resting on it are legible and attributable.",
       "source_invocation_id": "INV-f8d5120327f1d564",
@@ -2525,10 +2526,10 @@
       "claim_id": "CLAIM-c1d6df29eecbd2ae",
       "claim_text": "The sentence requiring that a wide scope be legible as wide overstates what an authority_scope field can accomplish, since the supplied text gives no scope language, interpretation rules, validation, rendering requirement, or summary-generation rule to enforce this.",
       "claim_type": "finding",
-      "disposition": "still_applies",
+      "disposition": "corrected",
       "disposition_approved_by": "operator, as accountable principal",
       "disposition_cluster": "SB",
-      "disposition_note": "UNADDRESSED by v8. Same defect class as 6553320f and 7b92dae2 in the standing-authority cluster: a sentence asserting an achieved result the mechanism does not deliver. v8 corrected it in one constraint and reproduced it two paragraphs later.",
+      "disposition_note": "Corrected in v8 draft 2. See 069f5727.",
       "disposition_proposed_by": "drafting executor (claude-sonnet-5 session)",
       "quote": "A wide scope is permitted and must be legible as wide; it may not be described, in a record or in a summary, as bounded merely because a scope field was populated.",
       "source_invocation_id": "INV-f8d5120327f1d564",
@@ -2570,7 +2571,7 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         }
@@ -2623,14 +2624,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2683,14 +2684,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2713,14 +2714,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2819,14 +2820,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2849,14 +2850,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2879,14 +2880,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2909,14 +2910,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2939,14 +2940,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2969,14 +2970,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -2999,14 +3000,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3029,7 +3030,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3052,14 +3053,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3112,7 +3113,7 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3135,14 +3136,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3225,14 +3226,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3285,14 +3286,14 @@
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
           "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
-          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "current_content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3345,14 +3346,14 @@
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "gpt-5.6-terra",
           "reason": "block_reworded"
         },
         {
           "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
           "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
-          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "current_content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
           "linker_provider": "claude-sonnet-5",
           "reason": "block_reworded"
         }
@@ -3406,9 +3407,9 @@
       "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
       "cluster_note": "All six COMP-0037 and v6 evidence gaps resolve as corrected: those records were read this session. c8073860 asked whether the break implicated scope breadth; reading COMP-0037 answered yes, which refuted 7f96b4ee and the two claims resting on it. The same Q1 answer produced both the assertion and, via the other extractor, the request for the evidence that kills it.",
       "counts": {
-        "adopted": 5,
+        "adopted": 6,
         "corrected": 12,
-        "needs_re_review": 1,
+        "needs_re_review": 0,
         "refuted": 3,
         "still_applies": 5
       },
@@ -3419,10 +3420,10 @@
       "cluster_note": null,
       "counts": {
         "adopted": 6,
-        "corrected": 9,
+        "corrected": 11,
         "needs_re_review": 1,
         "refuted": 0,
-        "still_applies": 19
+        "still_applies": 17
       },
       "successor_blocks": null
     },
@@ -3431,10 +3432,10 @@
       "cluster_note": "v8 changed this block the most (one block became three) and disposed of the least: 15 of 20 claims still apply, because the change was a reframing rather than a remedy. Successor established by reading, not by the graph: the slug changed, so no edge connects these claims to any successor.",
       "counts": {
         "adopted": 0,
-        "corrected": 2,
+        "corrected": 4,
         "needs_re_review": 3,
         "refuted": 0,
-        "still_applies": 15
+        "still_applies": 13
       },
       "successor_blocks": [
         "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread",
@@ -3463,38 +3464,80 @@
     "refuted",
     "needs_re_review"
   ],
-  "findings_v8_did_not_address": [
-    {
-      "claims": [
-        "CLAIM-6553320f2fd28989",
-        "CLAIM-7b92dae2e2d780d7"
-      ],
-      "disposition": "still_applies",
-      "finding": "'Visibility ... is the whole of what this constraint achieves' asserts an achieved result the mechanism does not demonstrate. v8 narrowed the scope to 'of the declared' and retained the assertion of achievement, which was never the object of the finding."
-    },
-    {
-      "claims": [
-        "CLAIM-069f57270dfdfadf",
-        "CLAIM-c1d6df29eecbd2ae"
-      ],
-      "disposition": "still_applies",
-      "finding": "'Must be legible as wide' is not established by any mechanism: no scope language, interpretation rule, validation, rendering requirement or summary-generation rule enforces it. v8 retained the requirement and added no mechanism.",
-      "note": "Same defect class as the pair above. v8 corrected this overclaim in the standing-authority constraint and reproduced it in the scope-breadth constraint two paragraphs later."
-    },
-    {
-      "claims": [
-        "CLAIM-bd44671ec5be105f"
-      ],
-      "disposition": "corrected",
-      "finding": "No chain-link, completeness, traversal or attribution rule is specified. v8 fixed the sentence by withdrawing the claim rather than adding the rule; the absence persists."
-    },
-    {
-      "claims": [
-        "CLAIM-1a5a5d5701eeb01d"
-      ],
-      "disposition": "needs_re_review",
-      "finding": "The external-evidence specification omits which outputs are affected \u2014 visibility, invocation, admission \u2014 so v8 says what evidence a scope declaration should carry and not what changes if it is absent."
+  "draft_revisions": {
+    "v8_draft_2": {
+      "moves": {
+        "069f5727": {
+          "cluster": "SB",
+          "from": "still_applies",
+          "to": "corrected"
+        },
+        "1a5a5d57": {
+          "cluster": "OP",
+          "from": "needs_re_review",
+          "to": "adopted"
+        },
+        "6553320f": {
+          "cluster": "SA",
+          "from": "still_applies",
+          "to": "corrected"
+        },
+        "7b92dae2": {
+          "cluster": "SA",
+          "from": "still_applies",
+          "to": "corrected"
+        },
+        "c1d6df29": {
+          "cluster": "SB",
+          "from": "still_applies",
+          "to": "corrected"
+        }
+      },
+      "note_updates": {
+        "069f5727": "Corrected in v8 draft 2 by a new constraint stating that the legibility requirement is unenforced, naming the absent scope grammar, interpretation rule, validation step, rendering requirement and summary rule.",
+        "1a5a5d57": "Adopted in v8 draft 2, which adds the fifth dimension: which outputs the answer affects -- visibility only, invocation authorization, evidence admission, or all three.",
+        "6553320f": "Corrected in v8 draft 2, which states visibility as an intended function whose delivery depends on complete and usable recording that no rule requires. Draft 1 narrowed the scope of the achievement claim without withdrawing it.",
+        "7b92dae2": "Corrected in v8 draft 2. See 6553320f.",
+        "bd44671e": "Corrected. Draft 1 fixed the sentence by withdrawing the claim; draft 2 names the absent chain-link, completeness, traversal and attribution rules explicitly. Still not a remedy -- those rules do not exist -- but stated rather than implied.",
+        "c1d6df29": "Corrected in v8 draft 2. See 069f5727."
+      },
+      "reason": "The disposition pass recorded four findings v8 draft 1 left unaddressed. Draft 2 addresses them, so these dispositions change. Done before any re-link, when revising a draft costs no edge breakage: the affected blocks carry no edges until the vocabulary is re-linked."
     }
-  ],
+  },
+  "findings_v8_left_unaddressed_in_draft_1": {
+    "items": [
+      {
+        "claims": [
+          "CLAIM-6553320f2fd28989",
+          "CLAIM-7b92dae2e2d780d7"
+        ],
+        "closed_in_draft_2": true,
+        "finding": "'Visibility ... is the whole of what this constraint achieves' asserts an achieved result the mechanism does not demonstrate. Draft 1 narrowed the scope and retained the assertion."
+      },
+      {
+        "claims": [
+          "CLAIM-069f57270dfdfadf",
+          "CLAIM-c1d6df29eecbd2ae"
+        ],
+        "closed_in_draft_2": true,
+        "finding": "'Must be legible as wide' is enforced by nothing. Draft 1 retained the requirement and added no mechanism. This is the same overclaim draft 1 corrected in the standing-authority constraint two paragraphs earlier."
+      },
+      {
+        "claims": [
+          "CLAIM-bd44671ec5be105f"
+        ],
+        "closed_in_draft_2": "stated, not remedied",
+        "finding": "No chain-link, completeness, traversal or attribution rule is specified. Draft 1 withdrew the claim; draft 2 names the absence. The rules still do not exist -- that is Slice D."
+      },
+      {
+        "claims": [
+          "CLAIM-1a5a5d5701eeb01d"
+        ],
+        "closed_in_draft_2": true,
+        "finding": "The external-evidence specification omitted which outputs are affected, stating a requirement with no operative consequence."
+      }
+    ],
+    "note": "Recorded by the disposition pass against v8 draft 1, and closed by draft 2. Kept because the sequence is the finding: v8 draft 1 corrected an overclaim in one constraint and reproduced it in another, and the disposition review is what surfaced that."
+  },
   "rule": "Edges carry (block_id, content_sha256). An amendment that changes a block's text changes its hash and breaks every edge citing it. Re-linking triggers on hash mismatch, not id absence. Breakage forces per-claim re-adjudication rather than silent carry-forward onto text that no longer says what the claim responded to."
 }
