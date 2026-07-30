@@ -1,0 +1,682 @@
+# COMP-0111: Provider Comparison — Claim relink RL-Q1-claude-sonnet-5-p1
+
+## Metadata
+
+- comparison_id: `COMP-0111`
+- title: `Claim relink RL-Q1-claude-sonnet-5-p1`
+- invocation_produced_by: `[{"authoritative": false, "evidence": "docs/invocations/INV-16a6a4728697eb1c.json", "predicate": "produced_by", "relation_source": "future_edge_seed", "scope": "invocation_provenance_slice_a", "source_id": "COMP-0111", "target_id": "INV-16a6a4728697eb1c"}, {"authoritative": false, "evidence": "docs/invocations/INV-eebfec442a2565ef.json", "predicate": "produced_by", "relation_source": "future_edge_seed", "scope": "invocation_provenance_slice_a", "source_id": "COMP-0111", "target_id": "INV-eebfec442a2565ef"}]`
+- created_at: `2026-07-30T13:32:38.120782+00:00`
+- command: `scripts/compare_providers.py --title Claim relink RL-Q1-claude-sonnet-5-p1 You are linking claims to the block of source text each claim is about. The source document has been amended since these claims were written, and the blocks below are the amended text. This is a matching task. Do not evaluate whether any claim is correct.
+
+For each numbered claim, give the identifiers of the blocks it is about — the specific passages it asserts something concerning.
+
+Rules:
+
+1. Copy identifiers exactly as written. Do not abbreviate or reformat them.
+2. A claim may concern more than one block. List up to three, most directly concerned first. Most claims concern one; do not pad the list.
+3. If the claim is about something NOT in the candidate list, answer an empty list. This is expected and wanted. Do NOT choose the closest available block. A claim linked to the wrong block is worse than a claim left unlinked, because a wrong link reads as structure and will be trusted.
+4. Note that the text has been amended. If a claim was clearly written about wording that no longer appears, and no block now carries what it concerns, answer an empty list and say so in the reason.
+5. When you answer an empty list, give a short reason: what the claim is actually about.
+6. Answer for every claim number, once each.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences:
+
+{"links":[{"claim":1,"blocks":["<id>"],"reason_if_empty":""}]}
+
+=== CLAIMS ===
+
+1. claim: The plan presents v7 as a single honest terminus even though it bundles two different moves under one justification.
+   quote: "the plan's error is presenting v7 as a single honest terminus when it is actually two different moves bundled under one justification."
+   extractor called it about: v7 plan characterization
+
+2. claim: P1 and P6 are referenced but not quoted, and are needed to assess whether P6 forbids only claiming verification or also weaker mechanical bounds.
+   quote: "**P1 and P6**, referenced but not quoted"
+   extractor called it about: P1 and P6
+
+3. claim: Permitting universal scope while only requiring that it be legible as wide converts a control into a label.
+   quote: "permitting a universal scope while requiring only that it be legible as wide converts a control into a label."
+   extractor called it about: universal declared authority_scope
+
+4. claim: The scope-breadth constraint is a different claim from the standing-authority one, and P7 does not entail it, since it concerns what the system will accept and act on rather than what can be verified.
+   quote: "the scope-breadth constraint is a different claim, and P7 does not entail it"
+   extractor called it about: authority_scope breadth constraint vs P7
+
+5. claim: P7 does not entail the scope-breadth constraint.
+   quote: "But the scope-breadth constraint is a different claim, and P7 does not entail it."
+   extractor called it about: P7 and declared authority_scope breadth
+
+6. claim: P1 and P6 are referenced but not quoted, and their content is needed to fully assess whether P6 forbids only claiming verification or also forbids weaker mechanical bounds of the kind proposed.
+   quote: "needed to fully assess whether P6 forbids *only* claiming verification, or also forbids weaker mechanical bounds of the kind I proposed above"
+   extractor called it about: P1 and P6 content
+
+7. claim: Allowing an arbitrarily wide authority_scope concerns what the system will accept and act on, not what can be verified.
+   quote: "it is a statement about what the system will *accept and act on*."
+   extractor called it about: declared authority_scope including universal scope
+
+8. claim: Reading (a) is right about the standing-authority-verification clause.
+   quote: "Reading (a) is right about *this* clause."
+   extractor called it about: standing-authority claim recorded and never verified
+
+9. claim: The scope-breadth remedy prevents mislabeling but not unbounded acceptance.
+   quote: "then prevents only the *mislabeling*, not the unbounded acceptance"
+   extractor called it about: requirement that wide authority_scope be legible as wide
+
+10. claim: The standing-authority constraint (recorded, never verified) is correctly described as a terminus because no internal fact could verify an extra-systemic entitlement, so reading (a) is right about this clause.
+   quote: "the constraint that "A standing-authority claim is recorded, never verified" is correctly described as a terminus"
+   extractor called it about: standing-authority claim clause
+
+=== CANDIDATE BLOCKS (amended text) ===
+
+--- ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d ---
+The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+--- ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca ---
+A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+--- ABS-0004:v7:S3#def:subordinate-authorization-inherita ---
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- ABS-0004:v7:S3#adopted_constraint:declared-subordinate-execution-cla ---
+Declared subordinate execution classes carry the same
+breadth legibility as `authority_scope`. A broad declaration is permitted and
+must be legible as broad; it may not be described, in a record or a summary,
+as narrow because the field was populated. v7 imposed this on
+`authority_scope` alone. The asymmetry was a drafting omission, not a
+decision: nothing distinguishes the two cases, and a parent authorization
+declaring very broad subordinate classes was subject to no visibility
+obligation at all.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-disclosure-violation-under-4-7-i ---
+A disclosure violation under 4.7 is a classification,
+not a detection. Nothing in this ontology detects that a subordinate
+execution went undeclared. A violation is recorded when someone establishes
+it by other means. No statement in this document or in any summary of it may
+describe undeclared execution as surfaced, caught, or prevented by these
+constraints.
+
+--- ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi ---
+P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
+
+--- ABS-0004:v7:S3#def:authorization-chain-termination-a ---
+Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco ---
+A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims. No arrangement of records inside this repository can
+establish that entitlement, and presenting a record as though it had would be
+the overclaim P6 forbids.
+
+That is a statement about repository records. It is not a claim that no means
+of any kind exists: whether some external process could establish entitlement
+is a separate question this ontology neither answers nor forecloses. v7 said
+AI-Lab "has no means to do so", which asserted more than P7 supports.
+
+What the record provides is visibility of the declared: the claim, its
+declared scope, and those authorizations that are declared and correctly
+chained are legible and attributable. It does not provide visibility of
+authorizations that were never declared. Undeclared subordinate execution is
+possible under this ontology — the inheritance rule above says so, and
+classifies it as a 4.7 disclosure violation rather than detecting it. v7
+claimed that "every authorization resting on it" is legible, which its own
+Section 3 contradicted two paragraphs earlier.
+
+Visibility of the declared is the whole of what this constraint is for, and it
+is not prevention. Whether it is achieved is a further question this constraint
+does not settle. No chain-link representation, completeness condition,
+traversal rule, or attribution rule is specified anywhere in this ontology, so
+nothing here establishes that the authorizations resting on a claim can in fact
+be enumerated or followed. v7 asserted that visibility "is the whole of what
+this constraint achieves"; achievement was never demonstrated, and the earlier
+draft of v8 narrowed the scope of that assertion without withdrawing it. The
+constraint states an intended and bounded function. Delivering it depends on
+recording being complete and usable, which no rule in this document requires.
+
+--- ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread ---
+Scope breadth is visible, and breadth is not the
+defect. A declared `authority_scope` may be arbitrarily wide, including
+universal. A wide scope is permitted and must be legible as wide; it may not
+be described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is a defect P6 forbids.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-legibility-requirement-is-unen ---
+The legibility requirement is unenforced, and saying so
+is part of stating it. Nothing in this ontology supplies a scope grammar, an
+interpretation rule, a validation step, a rendering requirement, or a rule
+governing what a summary may say about a scope field. The requirement above
+therefore binds whoever writes a record or a summary, and a violation is a
+defect discoverable by reading rather than one caught by a check. This
+constraint is included because the earlier draft of v8 corrected exactly this
+overclaim in the standing-authority constraint and reproduced it here two
+paragraphs later, which is the defect class P6 names and the third occurrence
+of it inside this document.
+
+--- ABS-0004:v7:S3#open:what-makes-a-scope-declaration-som ---
+What makes a scope declaration something other than self-assertion.
+COMP-0037 defeated v6's scope rule from two directions, not one. One reviewer
+declared a scope wide enough to cover the intended invocation; the other
+declared one narrowly tailored to authorize exactly itself, observing that a
+declaration so tailored "should not be an acceptable root merely because it
+has a stated scope". A maximum-breadth rule stops the first construction and
+not the second. Breadth is therefore not the property at fault. What both
+constructions share is that the declarant fixed its own scope, and that is
+the open question this ontology does not answer.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-decision-not-to-bound-breadth ---
+The decision not to bound breadth is recorded as an
+override, not as an absence. COMP-0037 recommended that AI-Lab "reject scopes
+that are universal, unparseable, or circular", and this ontology does not
+adopt that. The reason is that the recommendation addresses one of the two
+constructions its own round produced, so adopting it would report progress
+against a defect it does not close. v7 declined the same recommendation
+without recording that it was declining anything, and described COMP-0037
+only as "the same self-authorization path", which under-reported what that
+round found. An override that is not recorded is indistinguishable from an
+oversight.
+
+--- ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke ---
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+
+A self-issued authorization is not refused. At the root of a chain the
+accountable party may authorize work it also performs, and commonly will.
+v7 said it "necessarily" does; that is false. This ontology separates the
+AccountablePrincipal role from the executor role and permits one party to
+hold both without requiring it, so a root authorization need not be
+self-issued.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-disqualification-is-conditiona ---
+The disqualification is conditional, is currently
+inert, and must be described as such. A self-issued authorization does not
+count as independent authorization wherever independence is required. Nothing
+in this ontology establishes when independence is required: that belongs to
+AuthorizationPolicy, which Section 4.16 defines and defers. The issuing
+principal populates its own authorization's independence requirements, so
+until an external policy fixes them, a self-issued authorization may be
+recorded with no independence requirement against it, and nothing is
+disqualified. Until AuthorizationPolicy exists the marking is a label, and it
+may not be presented, in a record or a summary or an implementation plan, as
+a control.
+
+--- ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi ---
+Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
+
+--- ABS-0004:v7:S3#open:whether-standing-authority-require ---
+Whether standing authority requires periodic re-declaration or
+review. COMP-0037 established what v6 got wrong: two reviewers independently
+defeated v6's claim to prevent convenient closure of the regress, by
+different constructions, and both recommended mechanical scope bounding.
+This ontology declines that recommendation for the reason recorded above,
+and records the declining.
+
+v8 does not assert that no internal control could close the regress. v7 did,
+and drew a universal claim from a single defeated rule. What is established is
+narrower: the one control v6 attempted was defeated, and no internal control
+is known that survives either COMP-0037 construction. Whether some other
+control could is unresolved. P7 gives a reason to expect not, since
+entitlement is a fact about the world — but P7 is a stated position about what
+records can establish, not a demonstrated result about what controls are
+possible, and COMP-0037 does not demonstrate it.
+
+What would move this question is a specification of the external evidence a
+scope declaration carries: the external source or accountable process against
+which a declaration is assessed, who may assess it, what counts as
+sufficient, what follows when that evidence is absent, contested, expired, or
+narrower than the declaration, and which outputs the answer affects:
+visibility only, invocation authorization, evidence admission, or all three. A
+specification that names the evidence without naming what changes when the
+evidence fails states a requirement with no operative consequence, which is
+the defect this round found in four separate constraints. None of that exists,
+and naming its absence is not progress toward it.
+
+--- ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc ---
+DecisionRecord: `decision_kind` (invocation_authorization |
+routing_selection | evidence_admission | manual_override), target,
+`recommended_status` and `effective_status` (distinct: a model
+recommendation must not appear to have assigned final status before
+accountable approval), issuer invocation, accountable approver, evidence,
+policy authority, activation state, supersession. `[OPEN]` Whether existing
+warrant/admission records are extended to fulfill this or a new record
+family is created, and whether kinds are subtypes or one record family.
+
+--- ABS-0004:v7:S4.13#def:invocationauthorization-decision-k ---
+InvocationAuthorization (decision_kind invocation_authorization)
+additionally carries: invocation request, authorized executor, assigned
+role, consequence class, applicable policy, qualifications relied on,
+independence requirements, conditions. Without this kind, P1 is not
+represented by the ontology.
+
+--- ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout ---
+RoutingDecision (decision_kind routing_selection) additionally
+carries: candidates considered, rejection reasons including lineage
+conflicts, selected candidate, policy version, catalog snapshot. Tier
+labels are policy-derived under current evidence, never intrinsic
+ModelIdentity attributes.
+
+--- ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision ---
+EvidenceAdmissionDecision (decision_kind evidence_admission)
+additionally carries: admitted artifact or claim, admitted epistemic
+status, lineage and independence findings relied on, disclosed provenance
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
+
+--- ABS-0004:v7:S4.13#def:accountableprincipal-principal-id ---
+AccountablePrincipal: `principal_id`, `principal_kind` (delegated
+role, governance body, pseudonymous operator identity, organization, or
+other authorized entity), `authority_scope`, `delegation_reference`. No
+personal identifying data required. Cryptographic attestation is a later
+implementation mechanism, not an ontology requirement.
+
+--- ABS-0004:v8:S11#whole ---
+## 11. Defined but Deferred
+
+Run/ProtocolRound, Claim/EvidenceItem, RoutingPolicy and
+AuthorizationPolicy enforcement, RoutingDecision enforcement,
+VerificationRun and IndependenceAssessment record implementation,
+OutboundInteractionLog (content-addressed declaration of a tool's external
+interactions: network targets, external writes, privileged output
+consumers; the enforcement object for external-interaction disclosure),
+HumanActionRecord (audited human actions that shape effective inputs
+without issuing a DecisionRecord; privacy-preserving, principal-referenced;
+the partial enforcement object for selection provenance), formal
+independence assessment beyond categorical statuses, automatic consequence
+assignment, full ancestry enforcement, provider-diversity thresholds,
+escalation, third-provider integration, session-mode cataloging per
+provider API, endpoint mutable-property assertions.
+
+--- END OF CANDIDATES ---
+
+Output the JSON now.`
+- providers: `OpenAI, Claude`
+
+### Models
+
+- OpenAI: `gpt-5.6-terra`
+- Claude: `claude-sonnet-5`
+
+## Prompt
+
+You are linking claims to the block of source text each claim is about. The source document has been amended since these claims were written, and the blocks below are the amended text. This is a matching task. Do not evaluate whether any claim is correct.
+
+For each numbered claim, give the identifiers of the blocks it is about — the specific passages it asserts something concerning.
+
+Rules:
+
+1. Copy identifiers exactly as written. Do not abbreviate or reformat them.
+2. A claim may concern more than one block. List up to three, most directly concerned first. Most claims concern one; do not pad the list.
+3. If the claim is about something NOT in the candidate list, answer an empty list. This is expected and wanted. Do NOT choose the closest available block. A claim linked to the wrong block is worse than a claim left unlinked, because a wrong link reads as structure and will be trusted.
+4. Note that the text has been amended. If a claim was clearly written about wording that no longer appears, and no block now carries what it concerns, answer an empty list and say so in the reason.
+5. When you answer an empty list, give a short reason: what the claim is actually about.
+6. Answer for every claim number, once each.
+
+Output STRICT JSON and nothing else. No preamble, no commentary, no markdown fences:
+
+{"links":[{"claim":1,"blocks":["<id>"],"reason_if_empty":""}]}
+
+=== CLAIMS ===
+
+1. claim: The plan presents v7 as a single honest terminus even though it bundles two different moves under one justification.
+   quote: "the plan's error is presenting v7 as a single honest terminus when it is actually two different moves bundled under one justification."
+   extractor called it about: v7 plan characterization
+
+2. claim: P1 and P6 are referenced but not quoted, and are needed to assess whether P6 forbids only claiming verification or also weaker mechanical bounds.
+   quote: "**P1 and P6**, referenced but not quoted"
+   extractor called it about: P1 and P6
+
+3. claim: Permitting universal scope while only requiring that it be legible as wide converts a control into a label.
+   quote: "permitting a universal scope while requiring only that it be legible as wide converts a control into a label."
+   extractor called it about: universal declared authority_scope
+
+4. claim: The scope-breadth constraint is a different claim from the standing-authority one, and P7 does not entail it, since it concerns what the system will accept and act on rather than what can be verified.
+   quote: "the scope-breadth constraint is a different claim, and P7 does not entail it"
+   extractor called it about: authority_scope breadth constraint vs P7
+
+5. claim: P7 does not entail the scope-breadth constraint.
+   quote: "But the scope-breadth constraint is a different claim, and P7 does not entail it."
+   extractor called it about: P7 and declared authority_scope breadth
+
+6. claim: P1 and P6 are referenced but not quoted, and their content is needed to fully assess whether P6 forbids only claiming verification or also forbids weaker mechanical bounds of the kind proposed.
+   quote: "needed to fully assess whether P6 forbids *only* claiming verification, or also forbids weaker mechanical bounds of the kind I proposed above"
+   extractor called it about: P1 and P6 content
+
+7. claim: Allowing an arbitrarily wide authority_scope concerns what the system will accept and act on, not what can be verified.
+   quote: "it is a statement about what the system will *accept and act on*."
+   extractor called it about: declared authority_scope including universal scope
+
+8. claim: Reading (a) is right about the standing-authority-verification clause.
+   quote: "Reading (a) is right about *this* clause."
+   extractor called it about: standing-authority claim recorded and never verified
+
+9. claim: The scope-breadth remedy prevents mislabeling but not unbounded acceptance.
+   quote: "then prevents only the *mislabeling*, not the unbounded acceptance"
+   extractor called it about: requirement that wide authority_scope be legible as wide
+
+10. claim: The standing-authority constraint (recorded, never verified) is correctly described as a terminus because no internal fact could verify an extra-systemic entitlement, so reading (a) is right about this clause.
+   quote: "the constraint that "A standing-authority claim is recorded, never verified" is correctly described as a terminus"
+   extractor called it about: standing-authority claim clause
+
+=== CANDIDATE BLOCKS (amended text) ===
+
+--- ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d ---
+The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+--- ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca ---
+A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+--- ABS-0004:v7:S3#def:subordinate-authorization-inherita ---
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- ABS-0004:v7:S3#adopted_constraint:declared-subordinate-execution-cla ---
+Declared subordinate execution classes carry the same
+breadth legibility as `authority_scope`. A broad declaration is permitted and
+must be legible as broad; it may not be described, in a record or a summary,
+as narrow because the field was populated. v7 imposed this on
+`authority_scope` alone. The asymmetry was a drafting omission, not a
+decision: nothing distinguishes the two cases, and a parent authorization
+declaring very broad subordinate classes was subject to no visibility
+obligation at all.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-disclosure-violation-under-4-7-i ---
+A disclosure violation under 4.7 is a classification,
+not a detection. Nothing in this ontology detects that a subordinate
+execution went undeclared. A violation is recorded when someone establishes
+it by other means. No statement in this document or in any summary of it may
+describe undeclared execution as surfaced, caught, or prevented by these
+constraints.
+
+--- ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi ---
+P7. Root authority is extra-systemic. An authorization chain
+terminates at a standing authority that the system records and does not
+establish. Who is accountable for AI-Lab is a fact about the world, about
+who controls the repository and answers for it, and no arrangement of
+records inside the repository can make that fact true or verify it. Any
+design that appears to derive root authority from internal evidence has
+merely moved the regress and disguised it.
+
+--- ABS-0004:v7:S3#def:authorization-chain-termination-a ---
+Authorization-chain termination. A chain terminates at an
+AccountablePrincipal's standing authority within a declared
+`authority_scope`. Authorizations the principal issues inside that scope
+are self-standing. Every other authorization must chain, through one or
+more steps, to such a standing authority. An authorization that chains to
+nothing is not thereby permitted: it is unauthorized.
+
+--- ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco ---
+A standing-authority claim is recorded, never
+verified. AI-Lab does not validate that a declared principal is entitled to
+the authority it claims. No arrangement of records inside this repository can
+establish that entitlement, and presenting a record as though it had would be
+the overclaim P6 forbids.
+
+That is a statement about repository records. It is not a claim that no means
+of any kind exists: whether some external process could establish entitlement
+is a separate question this ontology neither answers nor forecloses. v7 said
+AI-Lab "has no means to do so", which asserted more than P7 supports.
+
+What the record provides is visibility of the declared: the claim, its
+declared scope, and those authorizations that are declared and correctly
+chained are legible and attributable. It does not provide visibility of
+authorizations that were never declared. Undeclared subordinate execution is
+possible under this ontology — the inheritance rule above says so, and
+classifies it as a 4.7 disclosure violation rather than detecting it. v7
+claimed that "every authorization resting on it" is legible, which its own
+Section 3 contradicted two paragraphs earlier.
+
+Visibility of the declared is the whole of what this constraint is for, and it
+is not prevention. Whether it is achieved is a further question this constraint
+does not settle. No chain-link representation, completeness condition,
+traversal rule, or attribution rule is specified anywhere in this ontology, so
+nothing here establishes that the authorizations resting on a claim can in fact
+be enumerated or followed. v7 asserted that visibility "is the whole of what
+this constraint achieves"; achievement was never demonstrated, and the earlier
+draft of v8 narrowed the scope of that assertion without withdrawing it. The
+constraint states an intended and bounded function. Delivering it depends on
+recording being complete and usable, which no rule in this document requires.
+
+--- ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread ---
+Scope breadth is visible, and breadth is not the
+defect. A declared `authority_scope` may be arbitrarily wide, including
+universal. A wide scope is permitted and must be legible as wide; it may not
+be described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is a defect P6 forbids.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-legibility-requirement-is-unen ---
+The legibility requirement is unenforced, and saying so
+is part of stating it. Nothing in this ontology supplies a scope grammar, an
+interpretation rule, a validation step, a rendering requirement, or a rule
+governing what a summary may say about a scope field. The requirement above
+therefore binds whoever writes a record or a summary, and a violation is a
+defect discoverable by reading rather than one caught by a check. This
+constraint is included because the earlier draft of v8 corrected exactly this
+overclaim in the standing-authority constraint and reproduced it here two
+paragraphs later, which is the defect class P6 names and the third occurrence
+of it inside this document.
+
+--- ABS-0004:v7:S3#open:what-makes-a-scope-declaration-som ---
+What makes a scope declaration something other than self-assertion.
+COMP-0037 defeated v6's scope rule from two directions, not one. One reviewer
+declared a scope wide enough to cover the intended invocation; the other
+declared one narrowly tailored to authorize exactly itself, observing that a
+declaration so tailored "should not be an acceptable root merely because it
+has a stated scope". A maximum-breadth rule stops the first construction and
+not the second. Breadth is therefore not the property at fault. What both
+constructions share is that the declarant fixed its own scope, and that is
+the open question this ontology does not answer.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-decision-not-to-bound-breadth ---
+The decision not to bound breadth is recorded as an
+override, not as an absence. COMP-0037 recommended that AI-Lab "reject scopes
+that are universal, unparseable, or circular", and this ontology does not
+adopt that. The reason is that the recommendation addresses one of the two
+constructions its own round produced, so adopting it would report progress
+against a defect it does not close. v7 declined the same recommendation
+without recording that it was declining anything, and described COMP-0037
+only as "the same self-authorization path", which under-reported what that
+round found. An override that is not recorded is indistinguishable from an
+oversight.
+
+--- ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke ---
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+
+A self-issued authorization is not refused. At the root of a chain the
+accountable party may authorize work it also performs, and commonly will.
+v7 said it "necessarily" does; that is false. This ontology separates the
+AccountablePrincipal role from the executor role and permits one party to
+hold both without requiring it, so a root authorization need not be
+self-issued.
+
+--- ABS-0004:v7:S3#adopted_constraint:the-disqualification-is-conditiona ---
+The disqualification is conditional, is currently
+inert, and must be described as such. A self-issued authorization does not
+count as independent authorization wherever independence is required. Nothing
+in this ontology establishes when independence is required: that belongs to
+AuthorizationPolicy, which Section 4.16 defines and defers. The issuing
+principal populates its own authorization's independence requirements, so
+until an external policy fixes them, a self-issued authorization may be
+recorded with no independence requirement against it, and nothing is
+disqualified. Until AuthorizationPolicy exists the marking is a label, and it
+may not be presented, in a record or a summary or an implementation plan, as
+a control.
+
+--- ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi ---
+Standing authority is not a capability of executors. A model, tool,
+or human acting as an executor never holds standing authority by virtue of
+executing; it holds it only as an AccountablePrincipal within a declared
+scope, which is a separate role under Section 4.13. One party may hold both
+roles; the ontology separates the roles, not the parties, and the
+`self_issued` marking is how the coincidence is recorded rather than
+denied.
+
+--- ABS-0004:v7:S3#open:whether-standing-authority-require ---
+Whether standing authority requires periodic re-declaration or
+review. COMP-0037 established what v6 got wrong: two reviewers independently
+defeated v6's claim to prevent convenient closure of the regress, by
+different constructions, and both recommended mechanical scope bounding.
+This ontology declines that recommendation for the reason recorded above,
+and records the declining.
+
+v8 does not assert that no internal control could close the regress. v7 did,
+and drew a universal claim from a single defeated rule. What is established is
+narrower: the one control v6 attempted was defeated, and no internal control
+is known that survives either COMP-0037 construction. Whether some other
+control could is unresolved. P7 gives a reason to expect not, since
+entitlement is a fact about the world — but P7 is a stated position about what
+records can establish, not a demonstrated result about what controls are
+possible, and COMP-0037 does not demonstrate it.
+
+What would move this question is a specification of the external evidence a
+scope declaration carries: the external source or accountable process against
+which a declaration is assessed, who may assess it, what counts as
+sufficient, what follows when that evidence is absent, contested, expired, or
+narrower than the declaration, and which outputs the answer affects:
+visibility only, invocation authorization, evidence admission, or all three. A
+specification that names the evidence without naming what changes when the
+evidence fails states a requirement with no operative consequence, which is
+the defect this round found in four separate constraints. None of that exists,
+and naming its absence is not progress toward it.
+
+--- ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc ---
+DecisionRecord: `decision_kind` (invocation_authorization |
+routing_selection | evidence_admission | manual_override), target,
+`recommended_status` and `effective_status` (distinct: a model
+recommendation must not appear to have assigned final status before
+accountable approval), issuer invocation, accountable approver, evidence,
+policy authority, activation state, supersession. `[OPEN]` Whether existing
+warrant/admission records are extended to fulfill this or a new record
+family is created, and whether kinds are subtypes or one record family.
+
+--- ABS-0004:v7:S4.13#def:invocationauthorization-decision-k ---
+InvocationAuthorization (decision_kind invocation_authorization)
+additionally carries: invocation request, authorized executor, assigned
+role, consequence class, applicable policy, qualifications relied on,
+independence requirements, conditions. Without this kind, P1 is not
+represented by the ontology.
+
+--- ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout ---
+RoutingDecision (decision_kind routing_selection) additionally
+carries: candidates considered, rejection reasons including lineage
+conflicts, selected candidate, policy version, catalog snapshot. Tier
+labels are policy-derived under current evidence, never intrinsic
+ModelIdentity attributes.
+
+--- ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision ---
+EvidenceAdmissionDecision (decision_kind evidence_admission)
+additionally carries: admitted artifact or claim, admitted epistemic
+status, lineage and independence findings relied on, disclosed provenance
+limitations, and an enumeration of verified properties against the
+receiving role's `required_verified_properties`; admission may not treat a
+property as established that no named verification record covers.
+
+--- ABS-0004:v7:S4.13#def:accountableprincipal-principal-id ---
+AccountablePrincipal: `principal_id`, `principal_kind` (delegated
+role, governance body, pseudonymous operator identity, organization, or
+other authorized entity), `authority_scope`, `delegation_reference`. No
+personal identifying data required. Cryptographic attestation is a later
+implementation mechanism, not an ontology requirement.
+
+--- ABS-0004:v8:S11#whole ---
+## 11. Defined but Deferred
+
+Run/ProtocolRound, Claim/EvidenceItem, RoutingPolicy and
+AuthorizationPolicy enforcement, RoutingDecision enforcement,
+VerificationRun and IndependenceAssessment record implementation,
+OutboundInteractionLog (content-addressed declaration of a tool's external
+interactions: network targets, external writes, privileged output
+consumers; the enforcement object for external-interaction disclosure),
+HumanActionRecord (audited human actions that shape effective inputs
+without issuing a DecisionRecord; privacy-preserving, principal-referenced;
+the partial enforcement object for selection provenance), formal
+independence assessment beyond categorical statuses, automatic consequence
+assignment, full ancestry enforcement, provider-diversity thresholds,
+escalation, third-provider integration, session-mode cataloging per
+provider API, endpoint mutable-property assertions.
+
+--- END OF CANDIDATES ---
+
+Output the JSON now.
+
+## OpenAI Response
+
+- model: `gpt-5.6-terra`
+
+```
+{"links":[{"claim":1,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco---","ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---"],"reason_if_empty":""},{"claim":2,"blocks":["ABS-0004:v7:S4.13#def:invocationauthorization-decision-k---","ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco---"],"reason_if_empty":""},{"claim":3,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---"],"reason_if_empty":""},{"claim":4,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---","ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi---","ABS-0004:v7:S3#def:authorization-chain-termination-a---"],"reason_if_empty":""},{"claim":5,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---","ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi---"],"reason_if_empty":""},{"claim":6,"blocks":["ABS-0004:v7:S4.13#def:invocationauthorization-decision-k---","ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco---"],"reason_if_empty":""},{"claim":7,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---","ABS-0004:v7:S3#def:authorization-chain-termination-a---"],"reason_if_empty":""},{"claim":8,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco---"],"reason_if_empty":""},{"claim":9,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread---"],"reason_if_empty":""},{"claim":10,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco---","ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi---"],"reason_if_empty":""}]}
+```
+
+## Claude Response
+
+- model: `claude-sonnet-5`
+
+```
+{"links":[
+{"claim":1,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco","ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread"],"reason_if_empty":""},
+{"claim":2,"blocks":[],"reason_if_empty":"P1 and P6 are cited principle texts, but only P7 appears among the candidate blocks; no block presents P1 or P6 content."},
+{"claim":3,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread"],"reason_if_empty":""},
+{"claim":4,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread","ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi"],"reason_if_empty":""},
+{"claim":5,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread","ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi"],"reason_if_empty":""},
+{"claim":6,"blocks":[],"reason_if_empty":"P1 and P6 are cited principle texts, but only P7 appears among the candidate blocks; no block presents P1 or P6 content."},
+{"claim":7,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread"],"reason_if_empty":""},
+{"claim":8,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco"],"reason_if_empty":""},
+{"claim":9,"blocks":["ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread","ABS-0004:v7:S3#adopted_constraint:the-legibility-requirement-is-unen"],"reason_if_empty":""},
+{"claim":10,"blocks":["ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco"],"reason_if_empty":""}
+]}
+```

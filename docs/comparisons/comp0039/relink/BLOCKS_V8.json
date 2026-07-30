@@ -1,0 +1,567 @@
+{
+  "ABS-0004:v7:C3": [
+    {
+      "block_id": "ABS-0004:v7:C3#whole",
+      "content_sha256": "5fd89c63a4539d12df79eb23e2433906ea9a78a4a04b46dac0fae7a38988b48d",
+      "text": "`[ADOPTED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an\ninvocation cannot adjudicate a claim whose evidence ancestry contains an\ninvocation by an equivalent executor identity, with equivalence defined\nper executor kind: ModelIdentity resolution equality for models;\ntool identity and version equality for tools; principal equality for\nhumans. Direct lineage conflict: hard prohibition, no exception.\nEquivalent-identity conflict: hard prohibition absent a future explicitly\ngoverned exceptional procedure. Unknown or unresolved executor equivalence\ncannot establish identity independence; it yields\n`independence_unresolved`, never an independent path. An identity\nunresolved at one endpoint and resolved at another is treated as distinct\nuntil equivalence is affirmatively established; distinctness never\nincreases independence (P5)."
+    }
+  ],
+  "ABS-0004:v7:C6": [
+    {
+      "block_id": "ABS-0004:v7:C6#whole",
+      "content_sha256": "533157fd9c4bae84f24388fcad2b456a9477358bb30a05f526f1fa665c343881",
+      "text": "`[ADOPTED_CONSTRAINT]` C6 Authority separation across all three role axes:\nepistemic authority, action authority, and accountable authority are\nassigned independently and none implies another. Assignment independence\nis not exercise license: adjudicator-level epistemic authority and\nabove-read_only action authority may not both be exercised within a single\ninvocation against the same target unless the adjudication is covered by\nan independent verification edge; an invocation that mutates state it also\nadjudicates collapses the separation C6 exists to preserve. COMP-0032\nproduced two constructions satisfying the axis definitions while defeating\nseparation; this sentence closes both."
+    }
+  ],
+  "ABS-0004:v7:S3": [
+    {
+      "block_id": "ABS-0004:v7:S3#def:the-ontology-distinguishes-three-d",
+      "content_sha256": "515600fb260d53fd1cb52cf0e02423af51259bcf47e5564cef307834bafb820b",
+      "text": "The ontology distinguishes three decision kinds:\n\n1. Invocation authorization (ex ante): may executor E perform invocation I\n   under role R, consequence C, and conditions K?\n2. Routing selection: why was executor E selected rather than alternatives?\n3. Evidence admission (ex post): may output O enter governed evidence, and\n   with what epistemic status?"
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#def:a-decision-making-act-is-an-invoca",
+      "content_sha256": "c7cb8c99cd7a67c593a3b7bc50eca114a3b5e569696832a0a5505cd96fef3e9b",
+      "text": "A decision-making act is an Invocation. Its governed output is a\nDecisionRecord. InvocationAuthorization, RoutingDecision, and\nEvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not\nexecutor events. Execution authorization and output admission are separate:\nan experimental executor may be authorized to run while its outputs remain\ninadmissible as governed evidence."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#def:subordinate-authorization-inherita",
+      "content_sha256": "0796e537fbb1cabc819420c23e2bcaad4ac4cc0d46922b1cdb3ffae1a59bc90b",
+      "text": "Subordinate authorization inheritance: a subordinate invocation is\ncovered by its parent's InvocationAuthorization only when that\nauthorization's conditions declare the permitted subordinate execution\nclasses (executor kinds, roles, consequence ceiling). A subordinate\nexecution outside the declared classes requires its own authorization.\nUndeclared subordinate execution is a disclosure violation under 4.7, not\nan implicitly authorized act."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:declared-subordinate-execution-cla",
+      "content_sha256": "535a2351e6e6de53ebb9059899180975aa928b9b92526e07468d1fda9cefb9e1",
+      "text": "Declared subordinate execution classes carry the same\nbreadth legibility as `authority_scope`. A broad declaration is permitted and\nmust be legible as broad; it may not be described, in a record or a summary,\nas narrow because the field was populated. v7 imposed this on\n`authority_scope` alone. The asymmetry was a drafting omission, not a\ndecision: nothing distinguishes the two cases, and a parent authorization\ndeclaring very broad subordinate classes was subject to no visibility\nobligation at all."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:a-disclosure-violation-under-4-7-i",
+      "content_sha256": "6b39783a2ef36985cd955af142c9fb18ecb4fda166b5c512aaa680d5faaf4c02",
+      "text": "A disclosure violation under 4.7 is a classification,\nnot a detection. Nothing in this ontology detects that a subordinate\nexecution went undeclared. A violation is recorded when someone establishes\nit by other means. No statement in this document or in any summary of it may\ndescribe undeclared execution as surfaced, caught, or prevented by these\nconstraints."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#principle:p7-root-authority-is-extra-systemi",
+      "content_sha256": "33f116f58bd33c2fb240600d100e61f6c4f332ab8db1ec60d1c785303aff4c42",
+      "text": "P7. Root authority is extra-systemic. An authorization chain\nterminates at a standing authority that the system records and does not\nestablish. Who is accountable for AI-Lab is a fact about the world, about\nwho controls the repository and answers for it, and no arrangement of\nrecords inside the repository can make that fact true or verify it. Any\ndesign that appears to derive root authority from internal evidence has\nmerely moved the regress and disguised it."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#def:authorization-chain-termination-a",
+      "content_sha256": "0a5a3ec1f3ddf514ff55093e44d88bacd09cefbff95d2f03a3d1eda3d75749b0",
+      "text": "Authorization-chain termination. A chain terminates at an\nAccountablePrincipal's standing authority within a declared\n`authority_scope`. Authorizations the principal issues inside that scope\nare self-standing. Every other authorization must chain, through one or\nmore steps, to such a standing authority. An authorization that chains to\nnothing is not thereby permitted: it is unauthorized."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+      "content_sha256": "32f0421f99d5827b8d79b570ed1875315f80e9fa551a177445d48840f3b251f0",
+      "text": "A standing-authority claim is recorded, never\nverified. AI-Lab does not validate that a declared principal is entitled to\nthe authority it claims. No arrangement of records inside this repository can\nestablish that entitlement, and presenting a record as though it had would be\nthe overclaim P6 forbids.\n\nThat is a statement about repository records. It is not a claim that no means\nof any kind exists: whether some external process could establish entitlement\nis a separate question this ontology neither answers nor forecloses. v7 said\nAI-Lab \"has no means to do so\", which asserted more than P7 supports.\n\nWhat the record provides is visibility of the declared: the claim, its\ndeclared scope, and those authorizations that are declared and correctly\nchained are legible and attributable. It does not provide visibility of\nauthorizations that were never declared. Undeclared subordinate execution is\npossible under this ontology \u2014 the inheritance rule above says so, and\nclassifies it as a 4.7 disclosure violation rather than detecting it. v7\nclaimed that \"every authorization resting on it\" is legible, which its own\nSection 3 contradicted two paragraphs earlier.\n\nVisibility of the declared is the whole of what this constraint is for, and it\nis not prevention. Whether it is achieved is a further question this constraint\ndoes not settle. No chain-link representation, completeness condition,\ntraversal rule, or attribution rule is specified anywhere in this ontology, so\nnothing here establishes that the authorizations resting on a claim can in fact\nbe enumerated or followed. v7 asserted that visibility \"is the whole of what\nthis constraint achieves\"; achievement was never demonstrated, and the earlier\ndraft of v8 narrowed the scope of that assertion without withdrawing it. The\nconstraint states an intended and bounded function. Delivering it depends on\nrecording being complete and usable, which no rule in this document requires."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread",
+      "content_sha256": "a2ac6ff9b353980f0f808abb37b0bc55f1ebeb239729b3dbe51aec644cd1e473",
+      "text": "Scope breadth is visible, and breadth is not the\ndefect. A declared `authority_scope` may be arbitrarily wide, including\nuniversal. A wide scope is permitted and must be legible as wide; it may not\nbe described, in a record or in a summary, as bounded merely because a scope\nfield was populated. A boundary that no one can fail to satisfy is not a\nboundary, and calling it one is a defect P6 forbids."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:the-legibility-requirement-is-unen",
+      "content_sha256": "fb17c0724249169043b1107cf11e6c384815ce7289f293cb075bd79b2e191ed5",
+      "text": "The legibility requirement is unenforced, and saying so\nis part of stating it. Nothing in this ontology supplies a scope grammar, an\ninterpretation rule, a validation step, a rendering requirement, or a rule\ngoverning what a summary may say about a scope field. The requirement above\ntherefore binds whoever writes a record or a summary, and a violation is a\ndefect discoverable by reading rather than one caught by a check. This\nconstraint is included because the earlier draft of v8 corrected exactly this\noverclaim in the standing-authority constraint and reproduced it here two\nparagraphs later, which is the defect class P6 names and the third occurrence\nof it inside this document."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#open:what-makes-a-scope-declaration-som",
+      "content_sha256": "e5d3cbf2a3d0236afdf0b20cf5791469275deb6b3fe1518a1b7fe266b9a14326",
+      "text": "What makes a scope declaration something other than self-assertion.\nCOMP-0037 defeated v6's scope rule from two directions, not one. One reviewer\ndeclared a scope wide enough to cover the intended invocation; the other\ndeclared one narrowly tailored to authorize exactly itself, observing that a\ndeclaration so tailored \"should not be an acceptable root merely because it\nhas a stated scope\". A maximum-breadth rule stops the first construction and\nnot the second. Breadth is therefore not the property at fault. What both\nconstructions share is that the declarant fixed its own scope, and that is\nthe open question this ontology does not answer."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:the-decision-not-to-bound-breadth",
+      "content_sha256": "60bcd78f745a56fcee5da36e2e28f6baa0351b513fcac900e7724a9b7b6639f7",
+      "text": "The decision not to bound breadth is recorded as an\noverride, not as an absence. COMP-0037 recommended that AI-Lab \"reject scopes\nthat are universal, unparseable, or circular\", and this ontology does not\nadopt that. The reason is that the recommendation addresses one of the two\nconstructions its own round produced, so adopting it would report progress\nagainst a defect it does not close. v7 declined the same recommendation\nwithout recording that it was declining anything, and described COMP-0037\nonly as \"the same self-authorization path\", which under-reported what that\nround found. An override that is not recorded is indistinguishable from an\noversight."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+      "content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+      "text": "Self-issued authorization is marked, never silently\naccepted. Where the issuing principal and the authorized executor are the\nsame party, or where a principal issues an authorization covering an\ninvocation it also performs, the authorization records `self_issued: true`.\n\nA self-issued authorization is not refused. At the root of a chain the\naccountable party may authorize work it also performs, and commonly will.\nv7 said it \"necessarily\" does; that is false. This ontology separates the\nAccountablePrincipal role from the executor role and permits one party to\nhold both without requiring it, so a root authorization need not be\nself-issued."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#adopted_constraint:the-disqualification-is-conditiona",
+      "content_sha256": "26241301c6bdf4910064c8049632a4010586a19910900cfc10c67359b1c1eda6",
+      "text": "The disqualification is conditional, is currently\ninert, and must be described as such. A self-issued authorization does not\ncount as independent authorization wherever independence is required. Nothing\nin this ontology establishes when independence is required: that belongs to\nAuthorizationPolicy, which Section 4.16 defines and defers. The issuing\nprincipal populates its own authorization's independence requirements, so\nuntil an external policy fixes them, a self-issued authorization may be\nrecorded with no independence requirement against it, and nothing is\ndisqualified. Until AuthorizationPolicy exists the marking is a label, and it\nmay not be presented, in a record or a summary or an implementation plan, as\na control."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#def:standing-authority-is-not-a-capabi",
+      "content_sha256": "9c633df1ffa4e892dcdbdbc7917e8825af4b48803a315595536cc9076534fb96",
+      "text": "Standing authority is not a capability of executors. A model, tool,\nor human acting as an executor never holds standing authority by virtue of\nexecuting; it holds it only as an AccountablePrincipal within a declared\nscope, which is a separate role under Section 4.13. One party may hold both\nroles; the ontology separates the roles, not the parties, and the\n`self_issued` marking is how the coincidence is recorded rather than\ndenied."
+    },
+    {
+      "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+      "content_sha256": "1a5240f4f031606d31e37c4da3a460b82eaf8d18989afbbcc0a6026f46929591",
+      "text": "Whether standing authority requires periodic re-declaration or\nreview. COMP-0037 established what v6 got wrong: two reviewers independently\ndefeated v6's claim to prevent convenient closure of the regress, by\ndifferent constructions, and both recommended mechanical scope bounding.\nThis ontology declines that recommendation for the reason recorded above,\nand records the declining.\n\nv8 does not assert that no internal control could close the regress. v7 did,\nand drew a universal claim from a single defeated rule. What is established is\nnarrower: the one control v6 attempted was defeated, and no internal control\nis known that survives either COMP-0037 construction. Whether some other\ncontrol could is unresolved. P7 gives a reason to expect not, since\nentitlement is a fact about the world \u2014 but P7 is a stated position about what\nrecords can establish, not a demonstrated result about what controls are\npossible, and COMP-0037 does not demonstrate it.\n\nWhat would move this question is a specification of the external evidence a\nscope declaration carries: the external source or accountable process against\nwhich a declaration is assessed, who may assess it, what counts as\nsufficient, what follows when that evidence is absent, contested, expired, or\nnarrower than the declaration, and which outputs the answer affects:\nvisibility only, invocation authorization, evidence admission, or all three. A\nspecification that names the evidence without naming what changes when the\nevidence fails states a requirement with no operative consequence, which is\nthe defect this round found in four separate constraints. None of that exists,\nand naming its absence is not progress toward it."
+    }
+  ],
+  "ABS-0004:v7:S4.13": [
+    {
+      "block_id": "ABS-0004:v7:S4.13#def:decisionrecord-decision-kind-invoc",
+      "content_sha256": "28004cc537cd0b3bc56937c31dd13621c2c85491018d8ced1d9ced498e9e1c00",
+      "text": "DecisionRecord: `decision_kind` (invocation_authorization |\nrouting_selection | evidence_admission | manual_override), target,\n`recommended_status` and `effective_status` (distinct: a model\nrecommendation must not appear to have assigned final status before\naccountable approval), issuer invocation, accountable approver, evidence,\npolicy authority, activation state, supersession. `[OPEN]` Whether existing\nwarrant/admission records are extended to fulfill this or a new record\nfamily is created, and whether kinds are subtypes or one record family."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.13#def:invocationauthorization-decision-k",
+      "content_sha256": "fe46ab34464fb6cd11257610a25e20d397d2aec8de194b44e44359aa0ee70a05",
+      "text": "InvocationAuthorization (decision_kind invocation_authorization)\nadditionally carries: invocation request, authorized executor, assigned\nrole, consequence class, applicable policy, qualifications relied on,\nindependence requirements, conditions. Without this kind, P1 is not\nrepresented by the ontology."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.13#def:routingdecision-decision-kind-rout",
+      "content_sha256": "d645d5404151f06400eb759a30d34269419ce364016096e92207ef507929d162",
+      "text": "RoutingDecision (decision_kind routing_selection) additionally\ncarries: candidates considered, rejection reasons including lineage\nconflicts, selected candidate, policy version, catalog snapshot. Tier\nlabels are policy-derived under current evidence, never intrinsic\nModelIdentity attributes."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.13#def:evidenceadmissiondecision-decision",
+      "content_sha256": "2791511d860d7ad3ac4e7cff1abc49e4a34121f6afcbb7b3486be8dd65e1382f",
+      "text": "EvidenceAdmissionDecision (decision_kind evidence_admission)\nadditionally carries: admitted artifact or claim, admitted epistemic\nstatus, lineage and independence findings relied on, disclosed provenance\nlimitations, and an enumeration of verified properties against the\nreceiving role's `required_verified_properties`; admission may not treat a\nproperty as established that no named verification record covers."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.13#def:accountableprincipal-principal-id",
+      "content_sha256": "d967670a1911b1b9c77809e293ee518c795df64bf3a7224a4905bf4ae911908f",
+      "text": "AccountablePrincipal: `principal_id`, `principal_kind` (delegated\nrole, governance body, pseudonymous operator identity, organization, or\nother authorized entity), `authority_scope`, `delegation_reference`. No\npersonal identifying data required. Cryptographic attestation is a later\nimplementation mechanism, not an ontology requirement."
+    }
+  ],
+  "ABS-0004:v7:S4.6-4.7": [
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#def:a-reified-policy-conclusion-that-q",
+      "content_sha256": "63a0190463524573226105306ee40e19a8154d082b34411b4c421fef9876d436",
+      "text": "A reified policy conclusion that qualifies an executor for a\nRoleDefinition only within an explicit execution scope: service endpoint,\npermitted ExecutionProfile constraints, session-state constraints, and\npolicy version. A qualification never transfers implicitly to another\nendpoint or a materially different execution profile. Predicates:\n`qualifies_executor`, `qualifies_for`, `issued_under`, `based_on`."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#adopted_constraint:provider-claims-alone-never-qualif",
+      "content_sha256": "bd5bd3b8f13a2e30d34621b38256dca4cfbf9abd3b6075d1570a1bcc6717a74e",
+      "text": "Provider claims alone never qualify an executor for\nadjudication authority.\n\n### 4.7 Executor identities"
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#def:an-invocation-is-an-event-performe",
+      "content_sha256": "f4bfead4fc9a9dc8011d22565af0803ff92dc1d41e1fb238cc772c664897cd93",
+      "text": "An Invocation is an event performed by an executor: `ModelIdentity`,\n`ToolIdentity`, or `HumanIdentity`, each with distinct verification\nrequirements. `[OPEN]` Whether an `ExecutorIdentity` superclass is needed.\nA proposal to close this by fiat was rejected as conflating identity with\nruntime instance; COMP-0032 reopened the question with a stronger argument:\na superclass with identity-equivalence semantics defined per subtype would\nmake constraints such as C3 properly polymorphic across executor kinds.\nThe question stands, now with that argument on record."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#adopted_constraint:composite-executor-disclosure-an-i",
+      "content_sha256": "a6e562448a1f49a57f1da01971caa8627481cfa685dac67ee22f835f0e922b19",
+      "text": "Composite-executor disclosure: an invocation may not\nacquire authority by encapsulating an undisclosed subordinate executor.\nEvery epistemically or operationally material subordinate execution (model,\ntool, or human) capable of influencing the output or external effect must be\nrepresented as an Invocation linked to its parent (`spawned`). A\ntool that invokes a model cannot be represented as a purely deterministic\nToolIdentity. Nondeterminism itself is not prohibited; undeclared authority\nand hidden composition are."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#adopted_constraint:tool-configuration-disclosure-for",
+      "content_sha256": "c2f6516a84e3873ca97912bbd23ab1b577847e9fd7b5c9a227ee98dc9837d34d",
+      "text": "Tool-configuration disclosure: for a ToolIdentity\nwhose output enters governed evidence, the tool's effective inputs include\nevery configuration file, environment variable, and local dependency capable\nof altering its execution path; these must be declared and content-addressed\nin its EffectiveInputManifest. Undeclared configuration access capable of\naltering the execution path defeats the tool's deterministic standing\n(session-state mode `unknown_state`). This constraint is scoped to\ngoverned-evidence production, not to every utility execution."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.6-4.7#adopted_constraint:external-interaction-disclosure-an",
+      "content_sha256": "f74c082bee11653081c64ad32e0a11c6a40a4aaea0954dd5f63b94f9fe41cf91",
+      "text": "External-interaction disclosure: an invocation's\naction-authority surface includes its interactions with external systems\nthat are not executors \u2014 network calls, external writes, and systems that\nrender, fetch, or execute its outputs with privileges (ambient consumers).\nFor executors producing governed evidence or holding above-read_only action\nauthority, material external interactions must be declared; undeclared\nexternal interaction defeats deterministic standing and constitutes\nundisclosed `external_actuator` authority, violating P4 regardless of\nwhether the returned output bytes were affected. Hardcoded interaction\ntargets are interactions, not exemptions. COMP-0032 produced three distinct\nconstructions defeating the previous two disclosure constraints alone\n(configuration hijack, ambient output-triggered actuation, hardcoded\nexfiltration); this constraint closes the class. Enforcement object:\nOutboundInteractionLog (Section 11)."
+    }
+  ],
+  "ABS-0004:v7:S4.9": [
+    {
+      "block_id": "ABS-0004:v7:S4.9#def:a-role-composes-three-independent",
+      "content_sha256": "b810933bef14c2782ee3874f82ce199b783e43f5d762ed5860c846e564396e00",
+      "text": "A Role composes three independent axes:\n\n- `task_function`: extract | classify | retrieve | generate | compare |\n  synthesize | evaluate | plan | implement | verify\n- `epistemic_authority`: none | witness | advisor | adjudicator\n- `action_authority`: read_only | repository_mutator | external_actuator\n\nAccountable authority remains separate from all three (Section 4.13)."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.9#adopted_constraint:producing-an-artifact-does-not-gra",
+      "content_sha256": "9264e3538feb2d418afc1eb19cb587d610da77f8665d62afd22db04ca4f6f976",
+      "text": "Producing an artifact does not grant authority to\naccept it."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.9#adopted_constraint:witness-grounding-witness-outputs",
+      "content_sha256": "87093b7d7d6e37ad326fd3a7790b11e57ed765aaa602710b36b51f27c45d39a7",
+      "text": "Witness grounding: witness outputs must identify\ntheir observation source, source span, measurement, or deterministic\nderivation. Unsupported hypotheses are advisor outputs, not witness\nevidence."
+    },
+    {
+      "block_id": "ABS-0004:v7:S4.9#def:roledefinition-constraint-fields-a",
+      "content_sha256": "16c216317fa8b1cb8bc39ef4046db9fce1d39960d4c8c751f50dd7e383d928a2",
+      "text": "RoleDefinition constraint fields: allowed input/output classes,\nrequired independence, minimum catalog status, maximum consequence class,\ntool permissions, may_assign_epistemic_status, action_authority bounds,\nrequires_external_verification, `required_verified_properties` (the\nproperties that must be established by admissible verification before this\nrole's outputs enter governed evidence; schema conformance is not claim\naccuracy)."
+    }
+  ],
+  "ABS-0004:v7:S8": [
+    {
+      "block_id": "ABS-0004:v7:S8#def:ordinal-classes-low-medium-high-no",
+      "content_sha256": "25970f5837b87d2e09cc30c722a30625e0bdbd34a262179416fe10ca4631bd54",
+      "text": "Ordinal classes (low | medium | high), not numbers.\n`default_consequence` derives from target type (gap closure, plan\nadmission: high; comparison/synthesis: medium; extraction/classification:\nlow). `effective_consequence = max(default_consequence,\napplicable_modifier_levels)`; modifiers (repository mutation, external side\neffect, irreversibility, warrant/capability status change,\nsecurity/privacy/legal/financial impact) only raise. `[ADOPTED_CONSTRAINT]`\nDownward adjustment is a separate governed exception (reason, accountable\nprincipal, scope, evidence, expiry/review) and can never override hard\nprohibitions such as disqualifying lineage conflicts. `[OPEN]` Detailed\nclassification function."
+    }
+  ],
+  "ABS-0004:v7:S9": [
+    {
+      "block_id": "ABS-0004:v7:S9#def:normative-state-proposed-adopted-m",
+      "content_sha256": "3734460f2fbe94244c548cc866726cba04b9d09b53d2b00a8b76fa0e6662e270",
+      "text": "Normative state: proposed | adopted-manual | machine-enforced.\nRepresentability: none | partial | full. Manual enforcement counts only\nwhen the check leaves a named artifact; the claim that a check happens is\nnot evidence. Capability dependencies replace slice numbers until admitted\nplans exist.\n\n| Constraint | Normative state | Representability | Current enforcement evidence | Target enforcement | Activation condition | Dependencies |\n| --- | --- | --- | --- | --- | --- | --- |\n| C1 staged provenance | proposed | none | none | validator per profile | profile activation decision after capability ships | invocation records; manifests; profiles |\n| C2 catalog admission | proposed | none | none | validator + runtime gate | catalog capability ships | catalog snapshots; identities; qualifications |\n| C3 no self-adjudication (executor-generic) | adopted-manual | partial | named attestation in completion warrants (for example WARR-20260719-0002 scope adjudications) | per-kind equivalence check + lineage traversal | already active manually | ancestry capture; executor-equivalence semantics |\n| C4 hidden witness reuse | proposed | none | none | context-lineage inspection | lineage capability ships | manifests; ancestry |\n| C5 lineage independence | proposed | none | none | categorical assessment with reasons | lineage capability ships | ancestry; claim lineage |\n| C6 authority separation | adopted, not currently evidenced | partial | none (no current record names the check) | artifact validator | already practiced; evidence begins with role records | role records |\n| C7 implementation separation | adopted-manual | partial | VERIFY records (cross-environment verification) | validator on VERIFY records | already active | none; strengthened later |\n| C8 decision traceability | proposed | none | none | RoutingDecision validation | routing capability ships | routing records |\n| C9 lineage inheritance | adopted-manual | partial | named disclosure statements in records | inheritance propagation | already active manually | claim lineage (full) |\n| C10 validator lineage | adopted-manual | partial | verifier identity in VERIFY command records; independence via cross-environment and operator review | VerificationRun with verifier-ancestry check | already active manually | ancestry capture |\n| C11 interim independence disclosure | adopted-manual | partial | disclosure statements in DecisionRecords/warrants | admission validator requiring disclosure + named controls | already active manually | none; retired when claim lineage ships |"
+    }
+  ],
+  "ABS-0004:v8:S11": [
+    {
+      "block_id": "ABS-0004:v8:S11#whole",
+      "content_sha256": "340f3d734fdfa73968a59f1ca3680a8d2368dab4ed8a0c4e9711febab25ade75",
+      "text": "## 11. Defined but Deferred\n\nRun/ProtocolRound, Claim/EvidenceItem, RoutingPolicy and\nAuthorizationPolicy enforcement, RoutingDecision enforcement,\nVerificationRun and IndependenceAssessment record implementation,\nOutboundInteractionLog (content-addressed declaration of a tool's external\ninteractions: network targets, external writes, privileged output\nconsumers; the enforcement object for external-interaction disclosure),\nHumanActionRecord (audited human actions that shape effective inputs\nwithout issuing a DecisionRecord; privacy-preserving, principal-referenced;\nthe partial enforcement object for selection provenance), formal\nindependence assessment beyond categorical statuses, automatic consequence\nassignment, full ancestry enforcement, provider-diversity thresholds,\nescalation, third-provider integration, session-mode cataloging per\nprovider API, endpoint mutable-property assertions."
+    }
+  ],
+  "PLAN-20260723-0002": [
+    {
+      "block_id": "PLAN-20260723-0002#constraints[0]",
+      "content_sha256": "3c32fc6444837c461313dca068bf683f824cab3ec38d1f103057d74bfc4069d0",
+      "text": "Implementation is authorized only within the scope admitted by the future admission warrant; any expansion requires a separate proposed and admitted plan."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#constraints[1]",
+      "content_sha256": "e2fb68458494524ca1c1e6bd214f2fe0b58e2c7b31b391f78824fc9f8effee5e",
+      "text": "Field names and semantics follow ABS-0004 v8 exactly; deviations require an ABS revision first."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#constraints[2]",
+      "content_sha256": "98e89462eeab5936c78bce8df98dbfc969e7fee78907039b17daa768f9d6f026",
+      "text": "All relations use the GraphRelation shape; no predicate outside the registered Slice A, B, and C lists."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#constraints[3]",
+      "content_sha256": "b1cdb392215121c6385079edeffd4f91e8e3d72a0db1b1d4006c4849319d528e",
+      "text": "authorize() is pure over stored records: no I/O, no clock, no network; the decision timestamp is supplied by the caller."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#constraints[4]",
+      "content_sha256": "a1d0a40f42fcbf7546e861455a96143e06c397284ecffacda29670967996525a",
+      "text": "Slice A capture and Slice B resolution behavior are unchanged: no field, path, or default of either is altered."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#constraints[5]",
+      "content_sha256": "65291eda2aa5edffad32e0b298f18039dfad988e4d3d5f465de771afff4f5225",
+      "text": "Standing authority may not be asserted implicitly. A principal record must declare its authority_scope, and an authorization outside that scope is refused rather than downgraded."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#created_at",
+      "content_sha256": "1c5bc77676b8604ec8b17505f3211f746fed7f5efc56560b54c9c6a620bb2f59",
+      "text": "2026-07-23T00:00:00+00:00"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#depends_on_capability_ids[0]",
+      "content_sha256": "76351501123a9d2346128ae72d6eb1d059f3978f0b302ef5e8b7441a242ca27f",
+      "text": "CAP-0015"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#depends_on_capability_ids[1]",
+      "content_sha256": "1cba68b07ec0c575636dcc0d0e1dc3aad7a91095e85f97384a420b64a42d18ac",
+      "text": "CAP-0016"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[0]",
+      "content_sha256": "92d002ed548d3670e5f33c0c39e0a6770bd596261e4cedbabd5f59bc4405fdc0",
+      "text": "docs/self_model/gaps/GAP-0005.json"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[1]",
+      "content_sha256": "cef8e2367f90209c494cba12efe132cff6a725b77dda5af5a01a728621386f4f",
+      "text": "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[2]",
+      "content_sha256": "f33279325a60414f6eb9a77ff9d70597b83398820903bf9f5f2e5f390f1ec96e",
+      "text": "docs/self_model/decisions/DECISION-20260723-0001.json"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[3]",
+      "content_sha256": "d09de01953f9e51eae299e1811430ebb768322a374a2c88991b05ead8c7ef466",
+      "text": "docs/self_model/verifications/VERIFY-20260723-0002.json"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[4]",
+      "content_sha256": "208405788a10b67e6cd813fd4820cd1be56755ab97d31e9a962c0a4e2d10229b",
+      "text": "docs/self_model/capabilities/CAP-0015.json"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#evidence_ids[5]",
+      "content_sha256": "acde962f40317fff6592514ecdbcb1eae9467892b87cb43eb3acb93723c398a5",
+      "text": "docs/self_model/capabilities/CAP-0016.json"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[0]",
+      "content_sha256": "2db1626aef812804b74d568bc7e57746cac3869da297f20376bf5cd874ed5d7c",
+      "text": "ai_lab/governance/roles.py (role, qualification, and principal schemas with validators)."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[1]",
+      "content_sha256": "95bee74ba5452cb4f5122cc740cbe6b60da114d2d4caa52512bfea1eca87231c",
+      "text": "ai_lab/governance/authorization.py (authorization records, pure authorize(), consequence classification, governed/experimental classifier, one-hop self-adjudication check)."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[2]",
+      "content_sha256": "cb095aedf485105bef838a423b28ac5fbac9110a1749644a755295b3d2d2fb7d",
+      "text": "docs/self_model/PREDICATE_REGISTRY.md extended with the Slice C predicates."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[3]",
+      "content_sha256": "a994bbb456563a5bd0293853d58ac6dec6cc7380b7469156f87424ff4843f2a8",
+      "text": "docs/self_model/AUTHORIZATION_RECORDS.md documenting the record family, the standing-authority termination rule, and stated limitations including the one-hop bound."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[4]",
+      "content_sha256": "72524dd54c1fb1fddd1ede85017ffb4f956f04e61ca08b0e9d18d556873f8f98",
+      "text": "tests/test_roles.py and tests/test_authorization.py with schema, rejection, refusal-reason, and integration fixtures."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#expected_outputs[5]",
+      "content_sha256": "03eb470b9f474e348fafb4ff144c415c3b8130f29cc994cb3be3baee011df953",
+      "text": "Seed records: the operator's AccountablePrincipal record and the role definitions AI-Lab already uses in practice (drafting actuator, comparison advisor, adjudicating principal, deterministic verifier)."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#mitigation",
+      "content_sha256": "1b1175edded7db58b475d63bda0af69353125d40f2dfb0c2028670d3e68007e7",
+      "text": "Both limits are stated in the documentation and in the capability record rather than left to inference: governed means an authorization covers the invocation, and the self-adjudication check is one hop. Refusal reasons are enumerated so that a permitted outcome is never a silent default. The role vocabulary is copied from ABS-0004 v8 verbatim rather than invented, and the seed roles describe practice already visible in the record. The fourteen refusal reasons replace the original six: COMP-0037 found four missing, and COMP-0043 found three further defects in the resulting ten. authorize()'s valid authorization means only that an authorization record covers the invocation; it does not certify disclosure compliance, and the Section 4.7 constraints are expressly excluded from what is checked. Success criteria are restated to claim only enumerated-fixture coverage rather than universal properties, per the same round's finding that 'never fails silently' and 'is monotonic' are not mechanically checkable as written. Party sameness is decided on exact identifier equality only, and the documentation states that broader sameness is not detected."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#next_action",
+      "content_sha256": "24ee1e06a35efe948d1ab4e0db797e80b4d4011beec9ba6eced1c6b14bc5c682",
+      "text": "Re-run the admission comparison round with the revised plan and the ABS-0004 v8 amendment attached as text; on operator adjudication, admit v8 and issue the plan's admission warrant."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[0]",
+      "content_sha256": "2cb9a1f52193e8d51b7d68d5accd496b0ec395de73de2ba1767b79dc607b3df3",
+      "text": "Refusing or blocking any execution. Authorization classifies; it does not gate. Execution refusal requires a separately admitted plan."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[1]",
+      "content_sha256": "6d4803f2b1e26a6054d6c7095dd6c39efbeadf8f8e3fcae8ffff23d726df1a71",
+      "text": "Routing, escalation, or model selection (RoutingDecision remains deferred)."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[2]",
+      "content_sha256": "cd34cf30543c348c21796e733f3acf66c81bd4c05829bf17c099991f1512f577",
+      "text": "Multi-hop lineage traversal, independence assessment, or evidence admission (Slice D)."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[3]",
+      "content_sha256": "06c52bdd7cee373a00201b514430cdc8efab0922794e8d9639870fc7a91602ac",
+      "text": "Retroactive authorization of invocations captured before this slice; they remain experimental, and the pre-provenance boundary applies."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[4]",
+      "content_sha256": "fe3cb5a124eaa92857114fcd676bf2a0f29bbbd9babd038cbe1c73682241197e",
+      "text": "Any claim that the one-hop check implements C3. It implements C3's most direct case only, and the documentation must say so."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[5]",
+      "content_sha256": "3368038402e48473c931edc3c537929749954cf9606ed03ad77010e1139e31eb",
+      "text": "Automatic consequence assignment from artifact content; consequence is declared per authorization with the default derived from target type."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[6]",
+      "content_sha256": "6cb79c22e66aa6ac22efe9c496f109b2176242c636442cbee9bd35d8231a8ba0",
+      "text": "Cryptographic attestation of principals; ABS-0004 records it as a later implementation mechanism, not an ontology requirement."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[7]",
+      "content_sha256": "e478e194b2ccc4c98a8c9f106306e72fa12a981343a394cf2fafe651aff1e8cc",
+      "text": "Any claim that AI-Lab validates a standing-authority declaration. Per ABS-0004 v8 P7, root authority is extra-systemic: the system records the claim and cannot verify it, and no record, scope grammar, or internal approval step may be presented as verification."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[8]",
+      "content_sha256": "d15ac17ec354733e90727d4700162dc15fa4a799cd3ef475b1ef4d28053b9fab",
+      "text": "Refusing a self-issued authorization. Self-issue is marked and disqualified from independence, not blocked: at the root of any chain the accountable party necessarily authorizes work it is responsible for."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#non_goals[9]",
+      "content_sha256": "db502430429e6e7369d5a5d889e0c165c747334b9e217a1b3e801ea37ebb1e4d",
+      "text": "Any claim that check_depth prevents a consumer from misreading a permitted result. It records the scope of the check that ran. Preventing the misreading would require either a consumer that refuses to treat a direct-only permitted result as evidence of adjudicator independence, or Slice D's ancestry traversal."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#objective",
+      "content_sha256": "af2abad394850f6186ad9f985f392785dc3c36bb70094ae22417bea09ad0289a",
+      "text": "Make the authority separation AI-Lab has practised in conversation structural: who may perform what, under which role, at what consequence, on whose standing authority, recorded as evidence rather than as testimony. The immediate motivation is concrete: on 2026-07-23 a model-default change would have set the reviewer slot to the drafting executor's own identity, collapsing reviewer and author under C3. Nothing in the system would have noticed; it was caught because a human happened to be told. Slice C makes the most direct case of that collision detectable by machine."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#plan_id",
+      "content_sha256": "0a1d25ae01cef36278284cf7b32aea9bec45d07435527da158c0c38a59562045",
+      "text": "PLAN-20260723-0002"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#proposed_change",
+      "content_sha256": "191e093811a94a70b2d11f1c4b321ec73318579946159e352768b6b1ac5bb438",
+      "text": "After a separate admission checkpoint, and after ABS-0004 v8 is admitted: add ai_lab/governance/roles.py (RoleDefinition, RoleQualification, AccountablePrincipal schemas and validators), ai_lab/governance/authorization.py (InvocationAuthorization records, the pure authorize() function, consequence classification, the experimental-versus-governed classifier, and the one-hop self-adjudication check), predicate-registry entries, documentation, and tests. No change to provider-call behavior, no change to Slice A capture or Slice B resolution, and no refusal of any execution."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#rationale[0]",
+      "content_sha256": "4efc8798c2a5648f959d3f8fecd5c4d5441bf6207cb99b46b60b728772c8974d",
+      "text": "ABS-0004's enforcement matrix records C6 authority separation as 'adopted, not currently evidenced': no artifact names the check. Slice C supplies the role records the matrix names as C6's activation dependency. It does not supply an enforcement artifact: the one-hop check is identity-based, not axis-based, and does not touch C6's restriction on exercising authority outside an assigned role. For the C6 row to cite enforcement evidence rather than a satisfied dependency, Slice C would additionally need to produce and retain named artifacts identifying the invocation or target, the role assignment relied on, and the separation actually checked. It does not."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#rationale[1]",
+      "content_sha256": "71aadc3990bf5f422eb21b40cd2df39133dfc1e3460e24409de7f6e5c1afeb0f",
+      "text": "The near-miss of 2026-07-23 is the exhibit: identity collision between reviewer and author was invisible to every test, and was avoided by chance rather than by control."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#rationale[2]",
+      "content_sha256": "e0c03e0e8b8562ed008efe3eaadc5d0ba32a602c45536be5683320ded0df730a",
+      "text": "Slice A supplies produced_by and executed_by, so a one-hop identity collision is detectable now without the ancestry traversal that belongs to Slice D. The cheap case is available; the expensive case stays deferred."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#rationale[3]",
+      "content_sha256": "da0402222720357d51b4c3ea5caec5b10450dcd1ee70d6bfc7a732a29029e5da",
+      "text": "ABS-0004 v8 fixes where authorization chains terminate - at an AccountablePrincipal's recorded standing-authority claim within a declared scope - and states plainly that this does not close the bootstrap regress. The open question remains open. v8 does not claim that no internal control could close it: it records that none is known to survive either COMP-0037 construction, and that whether some other could is unresolved. An earlier revision of this plan attributed the stronger claim to v7, which v7 did make and v8 withdrew. The constraint supplies visibility of the declared, not prevention. What is settled before any code depends on it is the termination rule and an honest account of its limits, not a resolution of the regress."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#rationale[4]",
+      "content_sha256": "f39efb858d0718bdfeccaa56b24f2c24aaa46f02337a433ff898b794032b13bf",
+      "text": "COMP-0037 split: one reviewer recommended revise-first, the other admit-with-conditions, and both independently defeated v6's chain termination. They did so by DIFFERENT constructions: one declared a scope wide enough to cover the intended invocation, the other declared one narrowly tailored to authorize exactly itself. Both also recommended mechanical scope bounding. This plan previously described them as constructing \"the same self-authorization path\", which under-reported the round and was the same mischaracterization ABS-0004 v8 corrected in its own [OPEN] paragraph. Because the two constructions run in opposite directions, breadth is not the property at fault; what they share is that the declarant fixed its own scope. v8 declines the scope-bounding recommendation for that reason and records the declining. v8 does not claim that no internal control could answer the break; it records that none is known to survive either construction, and makes the coincidence of issuer and executor visible instead."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#repo_commit",
+      "content_sha256": "5bd501314ad9447fc9b6ad6c80b6bc048d053c3518388427359f33dc18312fd3",
+      "text": "96209e95a722c5e1f6d18061e746ff75b33b3fca"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#risk",
+      "content_sha256": "bdb95bf57fcd82970c7386fd87f1b13a2b76605b25bc2933e789a866a876ae42",
+      "text": "An authorization system that classifies but never refuses can create a false sense of control: readers may assume governed means checked when it means covered by a record. The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision. Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate. Beyond those: v8 makes the honest limitation explicit rather than closing it, so a reader who wants an assurance AI-Lab cannot give will find the system declining to give it, which is correct and may be mistaken for a defect. v8 also records that its self-issued disqualification is inert until AuthorizationPolicy exists, so this slice must not present the self_issued marking as a control. The self_issued marking depends on identifying when two records name the same party, which is straightforward for exact identifiers and undecidable in general; the implementation must not claim to detect sameness it cannot establish."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#schema_version",
+      "content_sha256": "3bfc269594ef649228e9a74bab00f042efc91d5acc6fbee31a382e80d42388fe",
+      "text": "v1"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[0]",
+      "content_sha256": "98dd9a308ca1fe6e96165e04f51f3c5253f652a4094a6e7c659153d665a3a5b7",
+      "text": "A roles module defining schema v1 for RoleDefinition (task_function, epistemic_authority, action_authority, and the constraint fields ABS-0004 4.9 enumerates), with a validator, canonical serialization, and deterministic identity and path rules under docs/roles/."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[1]",
+      "content_sha256": "07039810861ba9481dff632d2d30792ce10050caf214016224fbc43a616a77ac",
+      "text": "RoleQualification records, execution-scoped as ABS-0004 4.6 requires: qualified executor, role, service endpoint scope, permitted ExecutionProfile constraints, session-state constraints, policy version, and the evaluation evidence relied on. A qualification never transfers implicitly to another endpoint or a materially different profile, and the validator rejects a qualification lacking an execution scope."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[2]",
+      "content_sha256": "512ca786f304ca764929d73ca375a0e1a7cfa547637f472dd9fab5a815b9d481",
+      "text": "AccountablePrincipal records with principal_id, principal_kind, authority_scope, and delegation_reference, carrying no personal identifying data."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[3]",
+      "content_sha256": "556a868b4ed5175b19e05abe841fd32dccb0ec4f331b8d8cd5b8a145471f0ec8",
+      "text": "InvocationAuthorization as a DecisionRecord kind: invocation request, authorized executor, assigned role, consequence class, applicable policy, qualifications relied on, independence requirements, conditions, issuing principal, and the standing-authority or chained-authorization reference that terminates its chain."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[4]",
+      "content_sha256": "a3bfc815910c737437f5afe7ef5cf379e579578595dd12e685be35b7e9f4b03a",
+      "text": "A pure authorize() function over stored records returning an authorization outcome or one of the enumerated refusal reasons: (1) no qualification for this executor and role; (2) qualification out of execution scope; (3) consequence above the role ceiling; (4) unterminated authorization chain; (5) standing authority claimed outside its declared scope; (6) an authorization condition is unmet; (7) the authorization is malformed; (8) required conditions are absent; (9) authorized executor does not match the executor performing the invocation; (10) the authorization or a record it relies on is inactive or superseded; (11) subordinate execution represented as an Invocation but outside the classes its parent authorization declares; (12) self-adjudication conflict; (13) no authorization record covers this invocation; (14) an independence requirement recorded on the authorization is unmet. Fourteen reasons, each with a fixture. COMP-0037 found four missing from the six originally proposed. COMP-0043 found three further defects in the resulting ten: reasons 6 to 8 above were a single reason combining a failed condition, malformed data, and absent conditions, which differ in diagnostic and remedial meaning; reason 13 was absent, since \"authorized executor does not match\" presupposes an authorization exists; and reason 14 was absent, so an unmet independence requirement could not refuse unless the one-hop artifact test happened to trigger. EXCLUDED, EXPRESSLY: the three ABS-0004 Section 4.7 disclosure constraints are not checked by authorize() in this slice. They are not checkable from stored records: OutboundInteractionLog is in Section 11, Defined but Deferred, so no such record exists; EffectiveInputManifest carries completeness_attestation partial_declared_channels_only on every record, so a manifest attesting its own partiality cannot ground a refusal for undeclared configuration; and an undisclosed subordinate execution requires detecting an absence, which no stored record supplies. Reason 11 therefore reaches a subordinate that IS represented and exceeds its declared classes, and does not reach one never disclosed as an Invocation at all, which ABS-0004 Section 3 calls not an implicitly authorized act. An invocation with a required disclosure absent can pass every check in this slice and be classified governed. That is a stated limit of the slice, not a gap the fixtures will catch."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[5]",
+      "content_sha256": "3f95507cfed9190616ca1529491b89640eae9381d417c55d1854aea2390599c9",
+      "text": "The one-hop self-adjudication check: for an adjudicator-authority role over a target artifact, if the artifact carries a produced_by relation to an InvocationRecord whose executed_by equals the executor under authorization, refuse. Scoped explicitly to one hop; multi-hop ancestry is Slice D."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[6]",
+      "content_sha256": "2ebc4192a195fd1963baf9001fe4076f2c5106edd765782b24cc4c8d98c3c878",
+      "text": "Consequence classification per ABS-0004 Section 8: default by target type, effective consequence as the maximum of the default and applicable modifier levels, modifiers only raising, and downward adjustment only as a governed exception carrying reason, principal, scope, evidence, and review condition."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[7]",
+      "content_sha256": "879aa4b0bc8f250b324719c11e6ba0f9c207b9b817b2ae317efd3f3f8212df1c",
+      "text": "The experimental-versus-governed boundary: a classify function marking an invocation governed only when a valid authorization covers it, experimental otherwise. Classification only; no invocation is refused execution by this slice. \"Valid authorization\" here means only that an authorization record covers the invocation and none of the fourteen refusal reasons applies. It does not certify disclosure compliance, and a governed classification asserts nothing about whether ABS-0004 Section 4.7's constraints were met. Neither the documentation nor any summary may describe a governed result as a valid authorization under the full set of adopted ABS-0004 constraints, because the Section 4.7 constraints are excluded from what is checked."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[8]",
+      "content_sha256": "2625da81cd203f5844d89cc48b44aaff9dcb4b368daa640241ba9cc5b225c0fa",
+      "text": "Predicate-registry entries for the Slice C predicates: assigned_role, authorized_by, authorizes, qualifies_executor, qualifies_for, issued_under, based_on, approved_by."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[9]",
+      "content_sha256": "1a8a378cd2310bd0d61719d25e22765fc3a602d0801a921368fc20554226edb5",
+      "text": "Validator fixtures covering valid records, each rejection class, and each refusal reason, plus an integration fixture authorizing an invocation against stored role, qualification, and principal records offline."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[10]",
+      "content_sha256": "a737f98f484d603d74248559379431f58f2d352b7f05c285e6af34bfdf6ee9b5",
+      "text": "Field reconciliation with ABS-0004 4.13: InvocationAuthorization carries the inherited DecisionRecord fields (target, recommended_status and effective_status, issuer invocation, accountable approver, evidence, policy authority, activation state, supersession) alongside its kind-specific fields, and the documentation states how issuing principal, issuer invocation, and accountable approver relate. COMP-0037 found the plan's field list and the ontology's inherited list unreconciled."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[11]",
+      "content_sha256": "6746d1b5f80547ba1f005cb428f8394de1253a7eee4af07c1c3ce7e9a93535dc",
+      "text": "Self-issued marking per ABS-0004 v8: where the issuing principal and the authorized executor are the same party, the authorization records self_issued true. Self-issued authorizations are permitted and are disqualified from counting as independent authorization wherever independence is required."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#scope[12]",
+      "content_sha256": "bfc2f5ab96a3a94ddc92bd2eab730d7db263e7bdd02eedf3a6a338437f5981d5",
+      "text": "The one-hop bound is recorded on the outcome: the self-adjudication result carries a check_depth field marking the check as direct-only. The field discloses the scope of the check that ran. It does not prevent a consumer from misreading a permitted result, and it carries no information about whether a deeper collision exists for the artifact in question: a two-hop-clean and a two-hop-colliding artifact both return permitted with the identical value. A permitted result establishes no general independence finding and does not exclude equivalent-executor conflicts further back in the evidence ancestry. Nothing in this slice prevents that misuse; only Slice D's ancestry traversal could establish or rule out such a conflict. The earlier wording claimed a consumer cannot misread the result, which asserted a control a field cannot provide and contradicted ABS-0004 P6, under which a label implying confirmation where none exists is a defect regardless of the correctness of its contents."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#source_capability_ids[0]",
+      "content_sha256": "76351501123a9d2346128ae72d6eb1d059f3978f0b302ef5e8b7441a242ca27f",
+      "text": "CAP-0015"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#source_capability_ids[1]",
+      "content_sha256": "1cba68b07ec0c575636dcc0d0e1dc3aad7a91095e85f97384a420b64a42d18ac",
+      "text": "CAP-0016"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#source_gap_id",
+      "content_sha256": "1213aa031b7fb2f946281ff37529402d2938bda66ca143ef2d3a7f2b5b8507e4",
+      "text": "GAP-0005"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#status",
+      "content_sha256": "81e766d8978e574dc9655e6143e02bb7826dd82dbe0b84c7c969e91abee021c5",
+      "text": "proposed"
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[0]",
+      "content_sha256": "851d049e2f922a64c4197d47e29f649fdb57a7ab3d9f5f377a5ed73f54dec121",
+      "text": "A stored invocation is classified governed when a valid authorization covers it and experimental otherwise, demonstrated by fixtures for both outcomes."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[1]",
+      "content_sha256": "3bcb0287499968219f527f1abdb4e11a6f2817051c3abcb13d7e17a0cd131093",
+      "text": "Each of the fourteen enumerated refusal reasons is exercised by a fixture and yields that reason; no fixture path returns a permitted outcome without a matching authorization record. This is enumerated-fixture coverage of the fourteen named reasons; it does not establish that no implementation path can return permitted without a matching authorization."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[2]",
+      "content_sha256": "99432cd9f889cdc59901effc48c8c4553ee1658a3dbffb023fc4c85361f98856",
+      "text": "An authorization whose chain terminates nowhere is refused, and an authorization issued outside a principal's declared authority_scope is refused, each with its own reason. Checkable for the chain-termination case. The authority_scope case is checkable only against fixtures whose scopes are hand-constructed: ABS-0004 supplies no scope grammar and no matching semantics, so \"outside its declared scope\" cannot be evaluated in general."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[3]",
+      "content_sha256": "ac3f7cacec7582061e29d139539bbe53c3b9f4c2a9c9cb8a5465ee56d19af4d2",
+      "text": "The one-hop self-adjudication check refuses an adjudicator authorization over an artifact produced by the same executor identity, demonstrated against a real captured InvocationRecord, permits it when the identities differ, and carries a check_depth field marking the result as direct-only in both cases. The identity-collision logic and the presence and value of check_depth are mechanically checkable against any fixture InvocationRecord. The requirement to demonstrate against a real captured InvocationRecord is not: no record is named and no selection rule is given. The criterion is met by naming the specific InvocationRecord used."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[4]",
+      "content_sha256": "e396a84e248cb36c884bd54124c97e72308273f9f7171634e8db6a42d167748b",
+      "text": "Consequence classification is exercised over the enumerated modifier set: for each modifier, a fixture asserts the effective class equals the maximum of the default and the modifier level, and a downward adjustment without a recorded governed exception is refused. This is enumerated-fixture coverage of the named cases, not a proof of monotonicity over all inputs."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[5]",
+      "content_sha256": "feecae0a11b38f745e63feb2a4bf96ffec6dbc8db26c7114ece44b515d22297c",
+      "text": "A qualification lacking an execution scope is rejected, and a qualification is not honoured for an endpoint or execution profile outside its scope. Checkable only against fixtures whose ExecutionProfile constraints are hand-constructed: ABS-0004 Section 4.6 gives the scope fields but no matching semantics for \"permitted ExecutionProfile constraints\" and no definition of a materially different profile."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[6]",
+      "content_sha256": "1394bd1066dbd4e4cd25c3aea75500d61f4713af5d040342c0e912f1aa89f0fb",
+      "text": "A self-issued authorization is accepted, carries self_issued true, and is reported as not independent by any check that asks for independent authorization. Checkable under the plan's exact-identifier-equality rule for party sameness. \"Any check that asks for independent authorization\" is unbounded and is not checkable as written; the criterion is met against the enumerated checks this slice defines."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[7]",
+      "content_sha256": "547f0a44ac00f2b3016dc43694df0e77b2749c4db663e74be32dff0a98aae089",
+      "text": "Regression: Slice A capture and Slice B resolution are unchanged, demonstrated by a fixture that runs both against stored records before and after authorization code is importable and asserts byte-identical outputs. COMP-0037 found this constraint had no corresponding check. Byte-identical output over the fixture set is unambiguous and checkable. It does not establish the broader constraint that no field, path, or default of Slice A or Slice B was altered."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[8]",
+      "content_sha256": "c833b044ee4de595b1e5077819eb3c657b7ce293907205100318076b2a11c019",
+      "text": "The new modules are covered by tests exercising every public entrypoint and every enumerated outcome; the full suite passes offline with no network access. The offline-with-no-network condition is checkable as pass or fail. \"Every public entrypoint\" is not checkable as written: the criterion is met against an enumerated list of entrypoints recorded with the tests."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#success_criteria[9]",
+      "content_sha256": "b58ddae897240f9691534dc612a095beb19e8159c82aad90c86650007c0aff18",
+      "text": "The repository audit reports ok true verified_current, and commit-level cross-environment reproduction from the public repository yields byte-identical checksums for every delivered file. Not mechanically checkable as written and restated as two conditions with named procedures: the audit reports ok true and verification_outcome verified_current when scripts/audit_self_model_index.py is run at the delivered commit; and a second clone of the public repository at that commit yields identical sha256 for each delivered file under a recorded file list. Without the procedure, the commands, and the semantics of verified_current, neither clause could be evaluated."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#summary",
+      "content_sha256": "fe89e4173952a00cb0b29ad0f9f8d66214cc30f08da4ba9fbb8dfb5dc8f9c1e7",
+      "text": "Implement ABS-0004 v8 Slice C: RoleDefinition records on the three admitted axes, execution-scoped RoleQualification, InvocationAuthorization as a DecisionRecord kind, consequence classification, and the experimental-versus-governed boundary. An authorization is issued by an AccountablePrincipal holding standing authority within a declared scope, or chains to one; an authorization that chains to nothing is unauthorized rather than permitted. Authorization has one consequence in this slice and no others: an invocation is classified governed only when an authorization covers it, and experimental otherwise. Nothing is refused execution. The authorization function additionally performs a one-hop self-adjudication check using Slice A provenance: if the artifact under adjudication carries an InvocationRecord whose executor identity equals the executor being authorized, authorization is refused with an enumerated reason."
+    },
+    {
+      "block_id": "PLAN-20260723-0002#title",
+      "content_sha256": "3aac028c93fb5a95bf96d6f41975ab45ee80887afd9f6f983ec413aeae14aa1c",
+      "text": "Roles, qualification, and invocation authorization (ABS-0004 Slice C)"
+    }
+  ]
+}

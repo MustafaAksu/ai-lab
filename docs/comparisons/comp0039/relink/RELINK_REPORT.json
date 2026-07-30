@@ -1,0 +1,34 @@
+{
+  "claims_answered": 58,
+  "claims_in_scope": 58,
+  "cross_check": {
+    "claims": [
+      {
+        "claim_id": "CLAIM-ee996c0ec58ad2e1",
+        "claim_text": "The answer favors reading (a), but only for the specific claim that an internal authorization structure can prevent convenient closure of the extra-systemic authorization regress.",
+        "disposition": "still_applies",
+        "linker_reasons": [
+          "The claim is about a choice between readings (a) and (b), which does not appear in the amended candidate blocks.",
+          "The claim references a framing of 'reading (a)' vs 'reading (b)' that does not appear anywhere in the amended candidate text; no block carries this dichotomy."
+        ],
+        "source_question_id": "Q1"
+      }
+    ],
+    "count": 1,
+    "note": "Claims dispositioned still_applies that BOTH linkers declined to place in the amended text. Either the disposition was wrong or the vocabulary does not cover what the claim is about. Not resolved here."
+  },
+  "edges": 160,
+  "edges_empty": 12,
+  "edges_linked": 148,
+  "linker_agreement_on_target_set": {
+    "identical": 32,
+    "overlapping": 15
+  },
+  "problem_reasons": {},
+  "problems": 0,
+  "targets_per_claim_per_linker": {
+    "1": 63,
+    "2": 38,
+    "3": 3
+  }
+}
