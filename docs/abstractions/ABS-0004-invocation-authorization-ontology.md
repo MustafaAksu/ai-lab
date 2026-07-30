@@ -4,23 +4,39 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v7` (v1, v2 superseded during drafting and never entered the
-  record; v3 entered the record at commit 6802cf7 and underwent the
-  COMP-0032 challenge round; v4 applied the twelve adjudicated findings and
-  was admitted at 56f18a2; v5 replaced CatalogVerification with
-  CatalogCapture on the COMP-0035 finding; v6 proposed an
-  authorization-chain termination that both COMP-0037 reviewers broke
-  independently, and whose claim to prevent convenient closure of the
-  regress was an overclaim; v7 replaces it with an honest account of where
-  root authority comes from, adopted by the operator as accountable
-  principal)
+- version: `v8`
 - abstraction_level: `2`
-- status: `admitted`
-- admitted_at: `2026-07-20`
-- admission basis: survived the COMP-0032 challenge round; all twelve
-  adjudicated findings applied in this revision; admitted by the operator
-  as accountable principal in session (recorded in conversation; structural
-  DecisionRecord representation awaits Slice C)
+- status: `proposed` — this version only. A single status field cannot
+  describe a document amended repeatedly, and until v8 this one did not try:
+  the metadata carried `status: admitted` and `admitted_at: 2026-07-20`
+  directly beneath `version: v7`, while its stated admission basis described
+  the COMP-0032 round that produced v4. A reader would take v7 as admitted.
+  No record establishes that. The table below replaces the single field.
+- version admission table:
+
+  | version | state | basis |
+  | --- | --- | --- |
+  | v1, v2 | superseded during drafting | never entered the record |
+  | v3 | superseded | entered the record at 6802cf7; underwent the COMP-0032 challenge round |
+  | v4 | **admitted** 2026-07-20 | twelve adjudicated COMP-0032 findings applied; admitted at 56f18a2 by the operator as accountable principal in session, recorded in conversation only |
+  | v5 | amended, not separately admitted | replaced CatalogVerification with CatalogCapture on the COMP-0035 finding, at 6d7dfee |
+  | v6 | amended, not separately admitted; superseded | proposed an authorization-chain termination that both COMP-0037 reviewers broke independently, at 8a1399f |
+  | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
+  | v8 | **proposed** | this revision, applying the COMP-0039..0046 findings and the drafting finding recorded below |
+
+- admission record gap: no admission warrant exists for any ABS-0004
+  amendment. The four warrants naming ABS-0004 — WARR-20260722-0001,
+  WARR-20260722-0002, WARR-20260723-0001, WARR-20260723-0002 — are
+  plan-implementation warrants for Slices A and B, not ontology amendments.
+  v4's admission is recorded in conversation only, as its own basis states.
+  Until a DecisionRecord kind exists to carry amendment admission (Slice C,
+  Section 4.13), this table is an honest substitute for a record that cannot
+  yet be represented; it is not a claim that the gap is closed.
+- review basis for v8: COMP-0039..0046, eight questions asked in separate
+  invocations with per-question declared evidence, two providers, sixteen
+  complete responses. Findings consolidated in
+  `docs/comparisons/comp0039/SLICE_C_FINDINGS.md`. Under constraint C3 that
+  round is `independence_unresolved`, not two-witness corroboration.
 - authors: operator (adjudicating principal); drafting executor self-reported
   as "Claude" (reported identity claim, not an independently verified
   ModelIdentity); with attributed advisor contributions (see Evidence Inputs)
@@ -133,6 +149,22 @@ execution outside the declared classes requires its own authorization.
 Undeclared subordinate execution is a disclosure violation under 4.7, not
 an implicitly authorized act.
 
+`[ADOPTED_CONSTRAINT]` Declared subordinate execution classes carry the same
+breadth legibility as `authority_scope`. A broad declaration is permitted and
+must be legible as broad; it may not be described, in a record or a summary,
+as narrow because the field was populated. v7 imposed this on
+`authority_scope` alone. The asymmetry was a drafting omission, not a
+decision: nothing distinguishes the two cases, and a parent authorization
+declaring very broad subordinate classes was subject to no visibility
+obligation at all.
+
+`[ADOPTED_CONSTRAINT]` A disclosure violation under 4.7 is a classification,
+not a detection. Nothing in this ontology detects that a subordinate
+execution went undeclared. A violation is recorded when someone establishes
+it by other means. No statement in this document or in any summary of it may
+describe undeclared execution as surfaced, caught, or prevented by these
+constraints.
+
 `[PRINCIPLE]` P7. Root authority is extra-systemic. An authorization chain
 terminates at a standing authority that the system records and does not
 establish. Who is accountable for AI-Lab is a fact about the world, about
@@ -150,28 +182,76 @@ nothing is not thereby permitted: it is unauthorized.
 
 `[ADOPTED_CONSTRAINT]` A standing-authority claim is recorded, never
 verified. AI-Lab does not validate that a declared principal is entitled to
-the authority it claims; it has no means to do so, and pretending otherwise
-would be the overclaim P6 forbids. What the record provides is visibility:
-the claim, its declared scope, and every authorization resting on it are
-legible and attributable. Visibility is the whole of what this constraint
-achieves, and it is not prevention.
+the authority it claims. No arrangement of records inside this repository can
+establish that entitlement, and presenting a record as though it had would be
+the overclaim P6 forbids.
 
-`[ADOPTED_CONSTRAINT]` Scope breadth is visible, not bounded by fiat. A
-declared `authority_scope` may be arbitrarily wide, including universal. A
-wide scope is permitted and must be legible as wide; it may not be
-described, in a record or in a summary, as bounded merely because a scope
+That is a statement about repository records. It is not a claim that no means
+of any kind exists: whether some external process could establish entitlement
+is a separate question this ontology neither answers nor forecloses. v7 said
+AI-Lab "has no means to do so", which asserted more than P7 supports.
+
+What the record provides is visibility of the declared: the claim, its
+declared scope, and those authorizations that are declared and correctly
+chained are legible and attributable. It does not provide visibility of
+authorizations that were never declared. Undeclared subordinate execution is
+possible under this ontology — the inheritance rule above says so, and
+classifies it as a 4.7 disclosure violation rather than detecting it. v7
+claimed that "every authorization resting on it" is legible, which its own
+Section 3 contradicted two paragraphs earlier. Visibility of the declared is
+the whole of what this constraint achieves, and it is not prevention.
+
+`[ADOPTED_CONSTRAINT]` Scope breadth is visible, and breadth is not the
+defect. A declared `authority_scope` may be arbitrarily wide, including
+universal. A wide scope is permitted and must be legible as wide; it may not
+be described, in a record or in a summary, as bounded merely because a scope
 field was populated. A boundary that no one can fail to satisfy is not a
-boundary, and calling it one is the defect this constraint exists to
-prevent.
+boundary, and calling it one is a defect P6 forbids.
+
+`[OPEN]` What makes a scope declaration something other than self-assertion.
+COMP-0037 defeated v6's scope rule from two directions, not one. One reviewer
+declared a scope wide enough to cover the intended invocation; the other
+declared one narrowly tailored to authorize exactly itself, observing that a
+declaration so tailored "should not be an acceptable root merely because it
+has a stated scope". A maximum-breadth rule stops the first construction and
+not the second. Breadth is therefore not the property at fault. What both
+constructions share is that the declarant fixed its own scope, and that is
+the open question this ontology does not answer.
+
+`[ADOPTED_CONSTRAINT]` The decision not to bound breadth is recorded as an
+override, not as an absence. COMP-0037 recommended that AI-Lab "reject scopes
+that are universal, unparseable, or circular", and this ontology does not
+adopt that. The reason is that the recommendation addresses one of the two
+constructions its own round produced, so adopting it would report progress
+against a defect it does not close. v7 declined the same recommendation
+without recording that it was declining anything, and described COMP-0037
+only as "the same self-authorization path", which under-reported what that
+round found. An override that is not recorded is indistinguishable from an
+oversight.
 
 `[ADOPTED_CONSTRAINT]` Self-issued authorization is marked, never silently
 accepted. Where the issuing principal and the authorized executor are the
 same party, or where a principal issues an authorization covering an
 invocation it also performs, the authorization records `self_issued: true`.
-A self-issued authorization is not refused: at the root of any chain, the
-accountable party necessarily authorizes work it is also responsible for.
-It is instead disqualified from counting as independent authorization
-wherever independence is required, and it is countable as such.
+
+A self-issued authorization is not refused. At the root of a chain the
+accountable party may authorize work it also performs, and commonly will.
+v7 said it "necessarily" does; that is false. This ontology separates the
+AccountablePrincipal role from the executor role and permits one party to
+hold both without requiring it, so a root authorization need not be
+self-issued.
+
+`[ADOPTED_CONSTRAINT]` The disqualification is conditional, is currently
+inert, and must be described as such. A self-issued authorization does not
+count as independent authorization wherever independence is required. Nothing
+in this ontology establishes when independence is required: that belongs to
+AuthorizationPolicy, which Section 4.16 defines and defers. The issuing
+principal populates its own authorization's independence requirements, so
+until an external policy fixes them, a self-issued authorization may be
+recorded with no independence requirement against it, and nothing is
+disqualified. Until AuthorizationPolicy exists the marking is a label, and it
+may not be presented, in a record or a summary or an implementation plan, as
+a control.
 
 `[DEF]` Standing authority is not a capability of executors. A model, tool,
 or human acting as an executor never holds standing authority by virtue of
@@ -182,12 +262,27 @@ roles; the ontology separates the roles, not the parties, and the
 denied.
 
 `[OPEN]` Whether standing authority requires periodic re-declaration or
-review. COMP-0037 established what v6 got wrong here: both reviewers
-independently constructed the same self-authorization path, and v6's claim
-to prevent convenient closure of the regress was false. v7 does not close
-the question by asserting a stronger internal control; it records that no
-internal control can close it, and asks instead what external evidence a
-scope declaration should carry.
+review. COMP-0037 established what v6 got wrong: two reviewers independently
+defeated v6's claim to prevent convenient closure of the regress, by
+different constructions, and both recommended mechanical scope bounding.
+This ontology declines that recommendation for the reason recorded above,
+and records the declining.
+
+v8 does not assert that no internal control could close the regress. v7 did,
+and drew a universal claim from a single defeated rule. What is established is
+narrower: the one control v6 attempted was defeated, and no internal control
+is known that survives either COMP-0037 construction. Whether some other
+control could is unresolved. P7 gives a reason to expect not, since
+entitlement is a fact about the world — but P7 is a stated position about what
+records can establish, not a demonstrated result about what controls are
+possible, and COMP-0037 does not demonstrate it.
+
+What would move this question is a specification of the external evidence a
+scope declaration carries: the external source or accountable process against
+which a declaration is assessed, who may assess it, what counts as
+sufficient, and what follows when that evidence is absent, contested,
+expired, or narrower than the declaration. None of that exists, and naming
+its absence is not progress toward it.
 
 ## 4. Object Definitions
 

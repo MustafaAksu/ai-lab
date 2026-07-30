@@ -1,0 +1,3056 @@
+{
+  "amendment": "ABS-0004 v7 -> v8 (proposed)",
+  "assigned_by": "the accountable principal, not this script: deciding whether a claim still applies to reworded text is adjudication, not computation",
+  "block_summary": {
+    "added": [
+      "ABS-0004:v7:S3#adopted_constraint:a-disclosure-violation-under-4-7-i",
+      "ABS-0004:v7:S3#adopted_constraint:declared-subordinate-execution-cla",
+      "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-and-bread",
+      "ABS-0004:v7:S3#adopted_constraint:the-decision-not-to-bound-breadth",
+      "ABS-0004:v7:S3#adopted_constraint:the-disqualification-is-conditiona",
+      "ABS-0004:v7:S3#open:what-makes-a-scope-declaration-som"
+    ],
+    "removed": [
+      "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound"
+    ],
+    "reworded": [
+      "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+      "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+      "ABS-0004:v7:S3#open:whether-standing-authority-require"
+    ],
+    "unchanged": 97
+  },
+  "claims_requiring_disposition": [
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-00d26cab2d645963",
+      "claim_text": "The claim that a self-issued mark disqualifies an authorization from counting as independent wherever independence is required overstates the mechanism, since Section 4.13 records self_issued:true but states no validation, decision, or admission rule requiring rejection.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It is instead disqualified from counting as independent authorization wherever independence is required, and it is countable as such.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-0103d67936c212fe",
+      "claim_text": "The honest version should state that v7 does not claim its internal records establish root authority, rather than claiming that no internal control can ever close the question.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "v7 does not claim that its internal records establish root authority.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-03b63159e8a89b13",
+      "claim_text": "The visibility claim in the standing-authority constraint overclaims completeness.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The visibility claim in the standing-authority constraint overclaims completeness.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-069f57270dfdfadf",
+      "claim_text": "The sentence requiring a wide scope to be legible as wide and restricting descriptions in records or summaries is not established by the shown mechanism.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A wide scope is permitted and must be legible as wide;",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-0e892138ef33e2d8",
+      "claim_text": "The honest version would state that visibility applies to authorizations that are declared and correctly chained, and that undeclared or non-conforming authorizations are not made visible by this constraint but depend on separate detection under 4.7.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "What the record provides is visibility for authorizations that are declared and correctly chained: the claim, its declared scope, and the authorizations that comply with disclosure requirements are legible and attributable.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-1355a6cb6165a4ad",
+      "claim_text": "The defensible conclusion is narrow: v7 is correct not to represent its internal records as establishing root authority.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the defensible conclusion is narrow: v7 is correct not to represent its internal records as establishing root authority",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-163e431f91a5462c",
+      "claim_text": "The honest version would say v7 does not assert a stronger internal control, that the one control tried (v6) was defeated by two independent reviewers using the same path, that v7 does not know of an internal control that would survive that path, and that whether some other internal control could close the regress is unresolved, with P7 treating this as expected in principle but as a stated position rather than something demonstrated by COMP-0037 alone.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "v7 does not assert a stronger internal control; the one control tried (v6) was defeated by two independent reviewers using the same path, and v7 does not know of an internal control that would survive that path.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-1a5a5d5701eeb01d",
+      "claim_text": "An external-evidence test construction is needed, specifying the external source, who may assess it, sufficiency of evidence, handling of absent/contested/expired/narrower evidence, and which outputs (visibility, invocation, admission) are affected, to determine whether a scope declaration is non-theatrical.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A decision rule would need to specify:",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-1b80889c79ff1e89",
+      "claim_text": "The plan presents v7 as a single honest terminus even though it bundles two different moves under one justification.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the plan's error is presenting v7 as a single honest terminus when it is actually two different moves bundled under one justification.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-1c2039c18539f391",
+      "claim_text": "The self-issued marking requires disclosure and disqualifies the authorization from counting as independent where independence is required.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It requires disclosure and disqualifies the authorization from counting as independent where independence is required.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-1e40bb0070402c43",
+      "claim_text": "P1 and P6 are referenced but not quoted, and are needed to assess whether P6 forbids only claiming verification or also weaker mechanical bounds.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "**P1 and P6**, referenced but not quoted",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-22fed302c386d707",
+      "claim_text": "The rationale that the accountable party necessarily authorizes work it is also responsible for is unsupported because responsibility is not the same as performing or self-authorizing work.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Responsibility for work is not the same thing as performing or self-authorizing it.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-23120eb4e88d3f9b",
+      "claim_text": "A false or opportunistic standing-authority claim can yield effective authorization in the repository\u2019s authorization records while leaving the real-world authority claim unverified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "a false or opportunistic standing-authority claim can yield effective authorization *in the repository\u2019s authorization records* while leaving the real-world authority claim unverified.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-2aee2e1912f16665",
+      "claim_text": "Permitting universal scope while only requiring that it be legible as wide converts a control into a label.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "permitting a universal scope while requiring only that it be legible as wide converts a control into a label.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-2d22d1486a30f8d6",
+      "claim_text": "A scope declaration should be recorded in a form that permits its breadth to be assessed, without claiming that records or summaries ensure arbitrarily wide scope is presented as wide.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "this section does not by itself ensure that records or summaries present an arbitrarily wide scope as wide.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-2f410ddff0ccb0f5",
+      "claim_text": "The scope-breadth constraint is a different claim from the standing-authority one, and P7 does not entail it, since it concerns what the system will accept and act on rather than what can be verified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the scope-breadth constraint is a different claim, and P7 does not entail it",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-302d37b2bded1124",
+      "claim_text": "The disqualification rule is a labeling requirement plus a conditional disqualifier, not itself a substantive independence mandate, so the construction goes around the rule rather than defeating it.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-325da06955752238",
+      "claim_text": "The honest retraction should state that whether another internal control could close the regress is unresolved.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Whether some other internal control could close the regress is unresolved;",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-3265f2b7bcf55a36",
+      "claim_text": "Section 3 does not impose an independence requirement on every invocation authorization.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Section 3 does not impose an independence requirement on every invocation authorization.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-3938ad2a84612c43",
+      "claim_text": "COMP-0037 itself is needed to determine whether its evidence supports only the failure of one rule or a broader claim.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "to check whether \"two reviewers independently defeated it\" supports only \"this rule failed\" or something closer to the broader claim",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-399205bb092408e6",
+      "claim_text": "P7 does not entail the scope-breadth constraint.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "But the scope-breadth constraint is a different claim, and P7 does not entail it.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-39c8d5dacf044538",
+      "claim_text": "The stated rationale that a self-issued authorization is not refused because the accountable party at the root of any chain necessarily authorizes work it is also responsible for is unsupported, since the definitions distinguish the AccountablePrincipal role from the executor role and allow but do not require one party to hold both.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-3acb1516f9b03cea",
+      "claim_text": "The stated constraint makes visibility rather than prevention its effect.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the stated constraint expressly makes visibility rather than prevention its effect.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-40b90eedf07b18f0",
+      "claim_text": "The system does not validate whether X is actually entitled to that standing authority.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The system does not validate whether X is actually entitled to that standing authority.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-4157f61ed68b67a1",
+      "claim_text": "The same party can self-issue an InvocationAuthorization to itself as executor, and Section 3 requires this be marked self_issued: true.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Where the issuing principal and the authorized executor are the same party... the authorization records `self_issued: true`.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-43e69f09dc55d347",
+      "claim_text": "P1 and P6 are referenced but not quoted, and their content is needed to fully assess whether P6 forbids only claiming verification or also forbids weaker mechanical bounds of the kind proposed.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "needed to fully assess whether P6 forbids *only* claiming verification, or also forbids weaker mechanical bounds of the kind I proposed above",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-44656dde1f39c595",
+      "claim_text": "The definition of \"wherever independence is required\" is not in evidence, weakening the contrast between self-issued disqualification and the scope-breadth label.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A definition of **\"wherever independence is required\"** is not in evidence",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-4921f4b7f6e06720",
+      "claim_text": "\"Every authorization resting on it\" is stated as an achieved property when the described mechanism only supports the weaker claim that authorizations correctly declared and not defeated by omission are legible.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "authorizations that are correctly declared and not defeated by omission are legible",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-4ffd64de25ee0f86",
+      "claim_text": "The self-issued authorization clause shows that disqualification is a real downstream consequence rather than a mere label, since it changes what the record can be used for.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "disqualification is a real downstream consequence, not a label \u2014 it changes what the record can be used for",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-515b5f98cc31bab4",
+      "claim_text": "Generalizing from the defeated self-authorization mechanism to abandon bounding declared scope width is an overreach that the text asserts but does not demonstrate.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "is an overreach the text asserts but does not demonstrate.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-531ac541950086f5",
+      "claim_text": "The honest version should state that a scope declaration should be recorded in a form permitting its breadth to be assessed, while acknowledging the section does not itself ensure wide scopes are presented as wide.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A scope declaration should be recorded in a form that permits its breadth to be assessed; this section does not by itself ensure that records or summaries present an arbitrarily wide scope as wide.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-549f540ba27653ae",
+      "claim_text": "A receiving rule requiring independent authorization should not count a marked self-issued authorization as independent.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "that rule should not count a marked self-issued authorization as independent;",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-570c4b9c88bec067",
+      "claim_text": "v7's claimed operative result is limited to attribution and legibility of the claim, its breadth, and the authorizations resting on it.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The operative result claimed by v7 is limited: attribution and legibility of the claim, its breadth, and the authorizations resting on it.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-58fd02b1dc7d98cd",
+      "claim_text": "The honest visibility claim should state that undeclared or non-conforming authorizations are not made visible by the constraint.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Undeclared or non-conforming authorizations are not made visible by this constraint;",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-5d862710b305e4c3",
+      "claim_text": "The honest version should state that where a receiving rule requires independent authorization, that rule should not count a marked self-issued authorization as independent.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Where a receiving rule requires independent authorization, that rule should not count a marked self-issued authorization as independent",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-6181ae24ce22e4f2",
+      "claim_text": "Permitting a universal authority_scope is not itself the terminus.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "permitting a universal `authority_scope` is not itself the terminus.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-61d281b805ebd96b",
+      "claim_text": "The retraction's claim that no internal control can close the question is a universal impossibility claim not established by the supplied evidence.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "\u201cno internal control can close it.\u201d",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-6400e2a6d8c3cb14",
+      "claim_text": "The path works where no applicable authorization condition requires independent authorization.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The path therefore works where no applicable authorization condition requires independent authorization.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-6539bcfb89c55e35",
+      "claim_text": "Allowing an arbitrarily wide authority_scope concerns what the system will accept and act on, not what can be verified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "it is a statement about what the system will *accept and act on*.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-6553320f2fd28989",
+      "claim_text": "The sentence claiming that visibility is the whole achieved function of the constraint overstates the achieved result.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Visibility is the whole of what this constraint achieves, and it is not prevention.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-66295ca23ca03cc6",
+      "claim_text": "The section offers no argument for treating self-issuance and scope breadth asymmetrically.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the section offers no argument for the asymmetry.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-66d22341cbfe79e5",
+      "claim_text": "A standing-authority claim is recorded rather than verified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The claim is recorded rather than verified",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-695fa6d89c79487c",
+      "claim_text": "The constructed path yields unchecked effective authority over an arbitrarily wide domain.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "yielding unchecked effective authority over an arbitrarily wide domain",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-6bc70309792f9855",
+      "claim_text": "v7 should not claim that its internal records establish root authority, and the limited purposes for which internal controls combined with external evidence can constrain authorization should remain open.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "whether, and for what limited purpose, internal controls combined with external evidence can constrain authorization remains open.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-6db0cae32617a674",
+      "claim_text": "Section 3 contains no provision establishing when independence is required for a given role or consequence class.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Section 3 contains no provision establishing *when* independence is required for a given role or consequence class.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-6e4dce3e8bc65018",
+      "claim_text": "Disqualification of self-issued authorization from independence is a real downstream consequence, not a label.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "disqualification is a real downstream consequence, not a label",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7000b4b8d77ec1f7",
+      "claim_text": "The path works where no applicable authorization condition requires independent authorization.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The path therefore works where no applicable authorization condition requires independent authorization.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7112f7d413acf615",
+      "claim_text": "The disqualification clause is conditional and Section 3 does not specify who sets the independence requirements field's content or which consequence classes must carry a nonzero independence requirement.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It is instead disqualified from counting as independent authorization wherever independence is required.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-77af5053ffed8fe2",
+      "claim_text": "The disqualification rule's force is entirely conditional on independence being required, and Section 3 contains no provision establishing when independence is required for a given role or consequence class.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The rule's force is entirely conditional on independence being \"required,\" and Section 3 contains no provision establishing *when* independence is required for a given role or consequence class.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-78dfcb34db385652",
+      "claim_text": "A root authorization may be self-issued when the accountable principal also performs the invocation, but it need not be self-issued.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A root authorization may be self-issued when the accountable principal also performs the invocation, but root authorization need not be self-issued.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7b92dae2e2d780d7",
+      "claim_text": "The following sentence claiming that visibility is the whole of what the constraint achieves also overstates the achieved result, since the constraint may prescribe recording and non-validation without demonstrating that visibility has actually been achieved.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Visibility is the whole of what this constraint achieves, and it is not prevention.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7be4cf0b7ad178eb",
+      "claim_text": "The operative result claimed by v7 is limited to attribution and legibility of the claim, its breadth, and the authorizations resting on it, and does not claim prevention.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The operative result claimed by v7 is limited: attribution and legibility of the claim, its breadth, and the authorizations resting on it. It does not claim prevention.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7dcc1ffbf19d8ccd",
+      "claim_text": "The claim that AI-Lab has no means at all to validate that a declared principal is entitled to the authority it claims goes beyond what the supplied text (P7) supports, which only shows that repository arrangements cannot make or verify the extra-systemic fact of root authority.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "AI-Lab does not validate that a declared principal is entitled to the authority it claims; it has no means to do so, and pretending otherwise would be the overclaim P6 forbids.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7deda9e4fc0733fb",
+      "claim_text": "A definition of 'wherever independence is required' is not in evidence, without which it cannot be assessed how much real work the self-issued disqualification does.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A definition of **\"wherever independence is required\"** is not in evidence",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7eb6727f1bcddba6",
+      "claim_text": "Section 3 does not impose an independence requirement on every invocation authorization.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Section 3 does not impose an independence requirement on every invocation authorization.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-7f96b4ee3de269fc",
+      "claim_text": "The [OPEN] paragraph's justification for the retreat grounds the whole shift in COMP-0037, which is a fact about self-issuance, not about scope breadth.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "it grounds the whole shift in COMP-0037, where \"both reviewers independently constructed the same self-authorization path\" \u2014 a fact about self-issuance, not about scope breadth",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-8163757556849c5b",
+      "claim_text": "The standing-authority constraint's visibility claim overclaims completeness.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "every authorization resting on it are legible and attributable.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-855efdbb5703de63",
+      "claim_text": "A decision rule would need to specify an external source or accountable process against which declared scope is assessed.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the external source or accountable process against which the declared scope is assessed;",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-8ab0fa500075679c",
+      "claim_text": "Nothing in P7 forced v7 to stop at labeling for scope breadth; it could have attached an analogous disqualification consequence, so the asymmetry is a design choice rather than an epistemic necessity.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "That it didn't is a design choice, not an epistemic necessity, and the section offers no argument for the asymmetry",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-8de14ca81776bd46",
+      "claim_text": "The retraction itself overclaims a general impossibility from a single defeated instance.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The retraction itself overclaims a general impossibility from a single defeated instance.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-8e0066cc48f2717a",
+      "claim_text": "The system does not validate whether X is actually entitled to that standing authority.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The system does not validate whether X is actually entitled to that standing authority.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-8fddd79e4b35df92",
+      "claim_text": "The breadth of a standing-authority scope may be arbitrarily wide.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "scope breadth may be arbitrarily wide.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-946d63597190d31a",
+      "claim_text": "The distinction ultimately turns on whether declared scope is compared to evidence outside the authorization chain.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The distinction ultimately turns on whether declared scope is compared to evidence outside the authorization chain.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-98b49c7d4f1434c0",
+      "claim_text": "The exact enforcement semantics of the v6 rule allegedly preventing convenient closure are absent.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the v6 rule that allegedly prevented convenient closure, including its exact enforcement semantics;",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-995456f5aaff5c0b",
+      "claim_text": "A false or opportunistic standing-authority claim can yield effective authorization in the repository's authorization records while leaving the real-world authority claim unverified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "a false or opportunistic standing-authority claim can yield effective authorization *in the repository\u2019s authorization records* while leaving the real-world authority claim unverified",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-997b24f3450fc404",
+      "claim_text": "The phrase describing what remains countable after disqualification is ambiguous and should specify whether the authorization remains countable as an authorization while not countable as an independent one.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "it should specify whether it remains countable as an authorization while not countable as independent authorization.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9aace51fbfd62432",
+      "claim_text": "The chain-termination rule is satisfied, not violated, because the record only asserts standing authority and never claims to verify or establish it.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A standing-authority claim is recorded, never verified... Visibility is the whole of what this constraint achieves, and it is not prevention.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9b5d57294c756762",
+      "claim_text": "Reading (a) is right about the standing-authority-verification clause.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Reading (a) is right about *this* clause.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9bc070a450fac54f",
+      "claim_text": "The sentence claiming visibility of every authorization resting on a claim overstates what the described record fields and rules establish.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "every authorization resting on it are legible and attributable.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9d5269eeb7979592",
+      "claim_text": "The record remains legible and attributable, but the stated constraint expressly makes visibility rather than prevention its effect.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The record remains legible and attributable, but the stated constraint expressly makes visibility rather than prevention its effect.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9fa1bd8b8668d7ea",
+      "claim_text": "A rule refusing self-issued authorization cannot eliminate the root's self-standing character; it can only require the root to use another identity or another record path.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A rule refusing self-issued authorization cannot eliminate the root\u2019s self-standing character; it can require the root to use another identity or another record path.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-9ff78b2c1ed772fb",
+      "claim_text": "The self_issued marking together with the disqualification-from-independence rule does not block the construction as written.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "No \u2014 not as written.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-a5ffea90625e2fb0",
+      "claim_text": "The disqualification rule is a labeling requirement plus a conditional disqualifier, not a substantive independence mandate.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The rule as given is a labeling requirement plus a conditional disqualifier; it is not itself a substantive independence mandate.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-a7503e5294db0c25",
+      "claim_text": "Generalizing from the defeat of one mechanism (self-authorization closure) to abandoning bounding of a distinct attribute (scope width) is an overreach the text asserts but does not demonstrate.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Generalizing from one defeated mechanism (attempted closure of the self-authorization path) to also abandon bounding of a distinct attribute (declared scope width) is an overreach the text asserts but does not demonstrate",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-a769a4920459d999",
+      "claim_text": "A universal or unusually wide scope could have been disqualified from serving as the sole basis for some authorization class.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "it could have attached an analogous consequence",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-a8161a19adc86b74",
+      "claim_text": "A single party can declare itself an AccountablePrincipal with authority_scope set to universal, and Section 3 explicitly permits this.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A declared `authority_scope` may be arbitrarily wide, including universal. A wide scope is permitted and must be legible as wide.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-a9146af7a85c4689",
+      "claim_text": "Where independence is required, v7 disqualifies a self-issued record from counting as independent.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Where independence is required, v7 says that record is disqualified from counting as independent.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-a95b4ba4119c3261",
+      "claim_text": "The constraint's remedy of requiring the scope to be 'legible as wide' addresses only mislabeling, not unbounded acceptance, which supports reading (b)'s complaint that this converts a control into a label.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "and then prevents only the *mislabeling*, not the unbounded acceptance: \"must be legible as wide\" is the entire remedy",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-ac4d41d43c225882",
+      "claim_text": "Internal authorization structures cannot prevent convenient closure of the extra-systemic authorization regress.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "that an internal authorization structure can prevent convenient closure of the *extra-systemic* authorization regress.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-aea7969d12a35ba9",
+      "claim_text": "Refusing self-issued authorization cannot eliminate the root's self-standing character.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A rule refusing self-issued authorization cannot eliminate the root\u2019s self-standing character;",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-b03ec914b724e6a2",
+      "claim_text": "The mechanism actually described only records a claim and declares a scope; nothing establishes a mechanism that guarantees every authorization resting on it is in fact legible and attributable.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The mechanism actually described is: a claim is *recorded*, and a scope is *declared*.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-b54e85c0e19bb4e0",
+      "claim_text": "The described mechanism only supports visibility for authorizations that are correctly declared and not defeated by omission.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "authorizations that are correctly declared and not defeated by omission are legible.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-b5d7a674de4c85e5",
+      "claim_text": "A universal declaration does not become a real boundary merely because it is represented in a scope field.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "a universal declaration does not become a real boundary merely because it is represented in a scope field.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-b8c75bcc4b43acd5",
+      "claim_text": "The honest version is that recorded and linked authorizations can be visible and attributable only to the extent they are recorded and linked, without establishing complete visibility.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "This text does not establish completeness of that visibility.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-bcc103acca967db2",
+      "claim_text": "The self-issued marking does not block this construction.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The self-issued marking does not block this construction.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-bd44671ec5be105f",
+      "claim_text": "The v7 sentence asserting that the claim, its declared scope, and every authorization resting on it are legible and attributable overstates what Section 4.13's fields and rules establish, since no chain-link, completeness, traversal, or attribution rule is specified.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "What the record provides is visibility: the claim, its declared scope, and every authorization resting on it are legible and attributable.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-bf93ba1e3b838ff3",
+      "claim_text": "A self-issued authorization requires disclosure and is disqualified from counting as independent where independence is required.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It requires disclosure and disqualifies the authorization from counting as independent where independence is required.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-c1d6df29eecbd2ae",
+      "claim_text": "The sentence requiring that a wide scope be legible as wide overstates what an authority_scope field can accomplish, since the supplied text gives no scope language, interpretation rules, validation, rendering requirement, or summary-generation rule to enforce this.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A wide scope is permitted and must be legible as wide; it may not be described, in a record or in a summary, as bounded merely because a scope field was populated.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-c4d8b67061f7ca05",
+      "claim_text": "Section 3 treats self-issued authorization as expected, not forbidden, since the accountable party at the root of a chain necessarily authorizes work it is responsible for.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A self-issued authorization is not refused: at the root of any chain, the accountable party necessarily authorizes work it is also responsible for.",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-c5dd3657dd9f939e",
+      "claim_text": "The record can misrepresent who authorized what by attributing authorization to X\u2019s standing authority even when X lacks that authority in the world.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the record attributes the authorization to X\u2019s standing authority even when X lacks that authority in the world.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-c7b1fec8c8f1bafd",
+      "claim_text": "The scope-breadth remedy prevents mislabeling but not unbounded acceptance.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "then prevents only the *mislabeling*, not the unbounded acceptance",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-c80738608c9c0608",
+      "claim_text": "COMP-0037 itself is not in evidence, and the full record is needed to determine whether the self-authorization path implicated scope breadth or only self-issuance.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "**COMP-0037 itself** is not in evidence, only the `[OPEN]` paragraph's summary of it.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-c8bd15cb6f8b5987",
+      "claim_text": "The phrase \u201ccountable as such\u201d is ambiguous after disqualification from counting as independent authorization.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "\u201ccountable as such\u201d is ambiguous after \u201cdisqualified from counting as independent authorization\u201d",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-cc48f420aa8ea414",
+      "claim_text": "Section 3 itself leaves open what external evidence a scope declaration should carry.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Section 3 itself leaves open \u201cwhat external evidence a scope declaration should carry.\u201d",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-cc94fa107e34c70c",
+      "claim_text": "The honest version should state that AI-Lab does not validate entitlement to standing authority through the repository records described, rather than claiming it has no means whatsoever.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "AI-Lab does not validate entitlement to standing authority through the repository records described here.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-cc9724b4f2fed5ec",
+      "claim_text": "If an applicable condition requires independent authorization, the self-issued record cannot satisfy that condition.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "If such a condition does apply, the self-issued record cannot satisfy that independent-authorization condition.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-d01caa65914d106f",
+      "claim_text": "The absence of an analogous scope-breadth consequence is a design choice, not an epistemic necessity.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "That it didn't is a design choice, not an epistemic necessity",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-d82e04ab938e88d1",
+      "claim_text": "Because the issuing principal populates its own authorization record, it can truthfully declare that no independence requirement applies to a given consequence class, leaving the disqualification clause with nothing to bite and making the self-issued authorization fully countable, self-standing authority.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "Where none is declared required, the self-issued authorization is fully countable, standing authority under the chain-termination rule",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-db57c881c5704cdb",
+      "claim_text": "v7 does not claim prevention.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It does not claim prevention.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-e031f6a63f21b5b4",
+      "claim_text": "The standing-authority constraint (recorded, never verified) is correctly described as a terminus because no internal fact could verify an extra-systemic entitlement, so reading (a) is right about this clause.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the constraint that \"A standing-authority claim is recorded, never verified\" is correctly described as a terminus",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-e0532d6723aa1abf",
+      "claim_text": "The evidence from COMP-0037 shows only that one specific rule was defeated by one specific maneuver, not that no possible internal control could close the regress.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "That shows one specific rule was defeated by one specific maneuver.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-e1101ec83a52378b",
+      "claim_text": "The assertion about COMP-0037 and v6 cannot be independently assessed from the supplied evidence.",
+      "claim_type": "limitation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "cannot be independently assessed from the supplied evidence.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-e176f0cbd681ce81",
+      "claim_text": "The constraint should describe visibility as its intended and limited function, subject to complete and usable recording.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "It should say that visibility is the intended and limited function, subject to complete and usable recording.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-e4cae903c9523f18",
+      "claim_text": "The two reviewers' constructions in COMP-0037 are absent.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "the two reviewers\u2019 constructions in `COMP-0037`",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-eacdd2640e432bd3",
+      "claim_text": "The construction can misrepresent who authorized what in the practically important sense that the record attributes the authorization to X's standing authority even when X lacks that authority in the world.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "This can also misrepresent who authorized what in the practically important sense that the record attributes the authorization to X\u2019s standing authority even when X lacks that authority in the world.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-ee996c0ec58ad2e1",
+      "claim_text": "The answer favors reading (a), but only for the specific claim that an internal authorization structure can prevent convenient closure of the extra-systemic authorization regress.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "I favor **(a)**, but only for the specific claim v6 purported to make",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-eeb2f0b92e3381b5",
+      "claim_text": "The honest version should state that the record can make a declared claim and scope visible, and can make authorizations visible and attributable only to the extent that they are recorded and linked.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The record can make a declared claim and scope visible, and can make authorizations visible and attributable to the extent that they are recorded and linked.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-ef4e55078f3fc39a",
+      "claim_text": "v7's marking of a self-issued record as disqualified from counting as independent is a substantive limitation on an independence finding, even though it is not a test of root entitlement.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "That is a substantive limitation on an independence finding, even though it is not a test of root entitlement.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f0214193834fb198",
+      "claim_text": "v6's actual rule text is absent, limiting precise comparison of v6's failed control with what v7 could have kept.",
+      "claim_type": "evidence_gap",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "**v6's actual rule text** is absent.",
+      "source_invocation_id": "INV-50bc0e8f14b161d9",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f040bbc6348f8fca",
+      "claim_text": "The retraction overclaims a general impossibility from a single defeated instance.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The retraction itself overclaims a general impossibility from a single defeated instance.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f13f087a79bb0a83",
+      "claim_text": "If an applicable condition does require independent authorization, the self-issued record cannot satisfy that independent-authorization condition.",
+      "claim_type": "limitation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "If such a condition does apply, the self-issued record cannot satisfy that independent-authorization condition.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f2eef4ca3c9c0ce4",
+      "claim_text": "A `self_issued: true` mark does not itself require a consumer to reject a self-issued authorization when independence is required.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "A mark supports disclosure; it does not itself produce disqualification.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f35505f85a139f37",
+      "claim_text": "The sentence converts a demonstrated failure of one rule into a flat universal claim, stated as something v7 \"records\" (i.e., as settled) rather than as a hypothesis consistent with P7 but not established by the cited case.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The sentence converts a demonstrated failure of one rule into a flat universal claim (\"no internal control can close it\"), stated as something v7 \"records,\" i.e., as settled, rather than as a hypothesis consistent with P7 but not established by the cited case.",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f506cf3bd08207c4",
+      "claim_text": "The self_issued plus disqualification rule does not block the construction as written.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "**No \u2014 not as written.**",
+      "source_invocation_id": "INV-00966c9ed3510c6d",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q3"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#open:whether-standing-authority-require",
+          "cited_content_sha256": "ede8eee7a4da97b37998b51c671499638f1b18968c37b9a79b440f8275d5ee76",
+          "current_content_sha256": "66c08a497ede3e19c83e0f3997f0686b97eaa576b086beec2df3d126ceba1d43",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f5b6887335899e66",
+      "claim_text": "The claim that v7 records that no internal control can close the authorization question converts the demonstrated failure of v6's specific anti-regress rule into an unsupported universal impossibility claim.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "v7 does not close the question by asserting a stronger internal control; it records that no internal control can close it, and asks instead what external evidence a scope declaration should carry.",
+      "source_invocation_id": "INV-f8d5120327f1d564",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_removed"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:scope-breadth-is-visible-not-bound",
+          "cited_content_sha256": "5f71607ef126889e79f685f40ef5f80194200e63313f39cbf74cadde4808c1d6",
+          "current_content_sha256": null,
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_removed"
+        }
+      ],
+      "claim_id": "CLAIM-f7acb917ee5a08b0",
+      "claim_text": "Permitting a universal authority_scope is not itself the terminus; the terminus is the explicit statement that a universal declaration does not become a real boundary merely because it is represented in a scope field.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The terminus is the explicit statement that a universal declaration does not become a real boundary merely because it is represented in a scope field.",
+      "source_invocation_id": "INV-56d31d5bfca54e6d",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q1"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:a-standing-authority-claim-is-reco",
+          "cited_content_sha256": "22d6ac40afc0ecb0dd0675c86a8cf0bdf96fd4540bac733f49c335586e33201a",
+          "current_content_sha256": "fb2dac48b1e918c09112e81281f89a7fbdd8b6d82423a5563efa167a561bafd6",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-f99cbf91f3bff6f2",
+      "claim_text": "The honest visibility claim should be limited to authorizations that are declared and correctly chained.",
+      "claim_type": "recommendation",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "visibility for authorizations that are declared and correctly chained",
+      "source_invocation_id": "INV-35815ed716886f1c",
+      "source_provider": "claude-sonnet-5",
+      "source_question_id": "Q2"
+    },
+    {
+      "broken_edges": [
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "gpt-5.6-terra",
+          "reason": "block_reworded"
+        },
+        {
+          "block_id": "ABS-0004:v7:S3#adopted_constraint:self-issued-authorization-is-marke",
+          "cited_content_sha256": "f74d8bb1fcbad44ee3e44ef2c8d6a74eaec394db4eddf174e4f4d4fd40110725",
+          "current_content_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "linker_provider": "claude-sonnet-5",
+          "reason": "block_reworded"
+        }
+      ],
+      "claim_id": "CLAIM-fe8f5c8cb53c62e0",
+      "claim_text": "The self-issued marking does not block this construction.",
+      "claim_type": "finding",
+      "disposition": null,
+      "disposition_note": null,
+      "quote": "The self-issued marking does not block this construction.",
+      "source_invocation_id": "INV-eaa6bda0606982af",
+      "source_provider": "gpt-5.6-terra",
+      "source_question_id": "Q3"
+    }
+  ],
+  "dispositions_available": [
+    "still_applies",
+    "superseded",
+    "needs_re_review"
+  ],
+  "rule": "Edges carry (block_id, content_sha256). An amendment that changes a block's text changes its hash and breaks every edge citing it. Re-linking triggers on hash mismatch, not id absence. Breakage forces per-claim re-adjudication rather than silent carry-forward onto text that no longer says what the claim responded to."
+}
