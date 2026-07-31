@@ -27,11 +27,19 @@ OPENAI_MODEL = os.getenv("AI_LAB_OPENAI_MODEL", "gpt-5.6-terra")
 OPENAI_REASONING_EFFORT = os.getenv("AI_LAB_OPENAI_REASONING_EFFORT") or None
 
 # claude-sonnet-5: present in the captured listing, released 2026-06-29 per
-# the provider's own created_at. Deliberately NOT claude-opus-4-8: the
-# drafting executor in AI-Lab sessions reports itself as Claude Opus 4.8, so
-# configuring the reviewer slot to that identity would collapse reviewer and
-# author into one ModelIdentity and fire ABS-0004 C3 on every review of
-# drafted work. Sonnet-5 keeps the two identities distinct.
+# the provider's own created_at. Deliberately NOT any identity that has acted
+# as drafting executor: configuring the reviewer slot to one would collapse
+# reviewer and author into one ModelIdentity and fire ABS-0004 C3 on every
+# review of drafted work.
+#
+# Those identities are listed in docs/self_model/DRAFTING_EXECUTORS.json and
+# asserted against by tests/test_invocation_record.py. DECISION-20260723-0001
+# named claude-opus-4-8 as a literal here; DECISION-20260727-0001 replaced the
+# literal with the list, because the 2026-07-27 drafting executor reported a
+# different identity and the literal guard kept passing while excluding an
+# identity that was not the drafter. The list is self-reported and unverified,
+# on the same footing as a standing-authority claim: recorded, never
+# established.
 CLAUDE_MODEL = os.getenv("AI_LAB_CLAUDE_MODEL", "claude-sonnet-5")
 CLAUDE_EFFORT = os.getenv("AI_LAB_CLAUDE_EFFORT") or None
 # Raised from 4096 by PLAN-20260722-0001 (WARR-20260722-0001) as a governed

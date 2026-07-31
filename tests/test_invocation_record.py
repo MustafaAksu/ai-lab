@@ -457,10 +457,20 @@ def test_model_defaults_are_the_adjudicated_ones():
 
     The prior values (gpt-5, claude-sonnet-4-5) were unrevisited literals;
     claude-sonnet-4-5 was absent from the provider listing captured on
-    2026-07-23 while still accepted by the endpoint. claude-opus-4-8 is
-    deliberately not chosen: it is the drafting executor's own reported
-    identity, and selecting it would collapse reviewer and author into one
-    ModelIdentity under ABS-0004 C3.
+    2026-07-23 while still accepted by the endpoint. No identity that has
+    acted as drafting executor may be chosen: selecting one would collapse
+    reviewer and author into one ModelIdentity under ABS-0004 C3.
+
+    The excluded identities are read from DRAFTING_EXECUTORS.json rather than
+    hardcoded. DECISION-20260723-0001 hardcoded claude-opus-4-8; the 2026-07-27
+    drafting executor reported a different identity, so that literal excluded
+    an identity that was not the drafter while the assertion kept passing.
+    DECISION-20260727-0001 replaced it with the list.
+
+    The comparison is on provider_id_form. The identities are self-reported as
+    display names ("Claude Opus 4.5") and CLAUDE_MODEL holds provider ids
+    ("claude-sonnet-5"); a guard comparing those two shapes would never fire
+    whatever it contained.
     """
 
     import importlib
@@ -470,7 +480,14 @@ def test_model_defaults_are_the_adjudicated_ones():
     importlib.reload(settings)
     assert settings.CLAUDE_MODEL == "claude-sonnet-5"
     assert settings.OPENAI_MODEL == "gpt-5.6-terra"
-    assert settings.CLAUDE_MODEL != "claude-opus-4-8"
+
+    declared = json.loads(
+        Path("docs/self_model/DRAFTING_EXECUTORS.json").read_text(encoding="utf-8")
+    )
+    drafting_ids = {d["provider_id_form"] for d in declared["declarations"]}
+    assert drafting_ids, "no drafting executor identities declared"
+    assert settings.CLAUDE_MODEL not in drafting_ids
+    assert settings.OPENAI_MODEL not in drafting_ids
     assert settings.OPENAI_REASONING_EFFORT is None
     assert settings.CLAUDE_EFFORT is None
 

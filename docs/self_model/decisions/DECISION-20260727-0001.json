@@ -1,0 +1,50 @@
+{
+  "authorized_effects": [
+    "Adding docs/self_model/DRAFTING_EXECUTORS.json, recording identities that have acted as drafting executor, self-reported and unverified.",
+    "Replacing the hardcoded literal in tests/test_invocation_record.py with a read of that file, comparing on provider_id_form.",
+    "Updating the source comment beside CLAUDE_MODEL in ai_lab/providers/settings.py to point at the list rather than name one identity.",
+    "Extending the guard to the OpenAI default as well, so a drafting identity cannot be selected into either reviewer slot."
+  ],
+  "blocked_effects": [
+    "No change to any model default. claude-sonnet-5 and gpt-5.6-terra are unchanged, and neither appears in the declared list.",
+    "No claim that the declared identities in fact produced any artifact. The file records self-reports and says so; nothing here verifies them.",
+    "No capture of conversational drafting as an Invocation. The gap that a machine check of C3 over a conversationally drafted artifact finds nothing remains open and is recorded in the file under unclosed_gap.",
+    "No change to provider call semantics, parameters, or the max-tokens default."
+  ],
+  "created_at": "2026-07-27T00:00:00+00:00",
+  "decision": "generalise_reviewer_slot_guard_from_literal_to_declared_list",
+  "decision_id": "DECISION-20260727-0001",
+  "evidence_refs": [
+    "ai_lab/providers/settings.py",
+    "tests/test_invocation_record.py",
+    "docs/self_model/DRAFTING_EXECUTORS.json",
+    "docs/self_model/decisions/DECISION-20260723-0001.json",
+    "docs/self_model/plans/PLAN-20260723-0002.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/self_model/gaps/GAP-0007.json"
+  ],
+  "rationale": [
+    "The guard installed on 2026-07-23 asserted CLAUDE_MODEL != 'claude-opus-4-8' on a self-report recorded in a source comment. The drafting executor of the 2026-07-27 session reported claude-opus-4-5. The literal therefore excluded an identity that was not that session's drafter and did not exclude the one that was, while the assertion continued to pass on every run.",
+    "Demonstrated rather than argued. Simulating a future default advance to claude-opus-4-5, with the equality assertion updated to match as it would be in a real change: the literal guard passes and does not catch it; the list guard fails and catches it. The exclusion assertion exists for exactly that case, because the equality assertion is updated whenever the default legitimately changes and cannot itself catch a bad new value.",
+    "The comparison is on provider_id_form because the identities are self-reported as display names such as 'Claude Opus 4.5' while the settings hold provider ids such as 'claude-sonnet-5'. A guard comparing those two shapes would never fire whatever it contained, which is the same defect class as the literal going stale.",
+    "The declaration is recorded, never verified, on the pattern ABS-0004 applies to standing authority. No arrangement of records inside this repository could establish which model produced a conversational draft. What the file changes is that the guard reads a maintained list instead of a literal frozen at the moment one session happened to be observed.",
+    "This is GAP-0007's failure mode found in a check the repository already depended on: a criterion that had drifted from its purpose while continuing to report success. It was found by checking the guard's premise rather than by the guard failing, which is what GAP-0007 says does not scale."
+  ],
+  "repo_commit": "22c1ec40e41beabf91287b9a60d647988d7f6db6",
+  "required_next_governance": [
+    "Adding an entry to DRAFTING_EXECUTORS.json is not capturing a drafting invocation. If a future slice claims that C3 is machine-checked over drafted artifacts, it must first show that a drafting act produces an InvocationRecord, or state plainly that conversationally drafted artifacts are outside the check.",
+    "PLAN-20260723-0002's objective cites the 2026-07-23 near-miss as its motivation and describes the collision as one Slice C makes detectable by machine. Slice C's one-hop check reads produced_by relations on the target artifact; a conversationally drafted artifact carries none. The plan should state that limit rather than leave a reader to infer the check covers this case.",
+    "The declared list grows only when a drafting executor reports a new identity. Nothing prompts that report, so the list can go stale the way the literal did. A future revision should state what would make an entry stale and how that would be noticed."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The reviewer-slot guard now excludes every identity declared in docs/self_model/DRAFTING_EXECUTORS.json, for both the Claude and OpenAI defaults, instead of one hardcoded Claude literal. Current defaults are unchanged and neither is declared. Environment overrides continue to take precedence at runtime, and the guard is a test assertion over the configured defaults, not a runtime refusal.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0007",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "The reviewer-slot guard that keeps reviewer and author distinct under ABS-0004 C3 was a single hardcoded literal, claude-opus-4-8, recorded on one session's self-report. A later session's drafting executor reported a different identity, so the guard excluded the wrong one and kept passing. It now reads a declared list of drafting-executor identities and applies to both provider defaults. The list is self-reported and unverified; what changes is that the guard is maintainable rather than frozen.",
+  "title": "Reviewer-slot guard reads declared drafting executors rather than one literal"
+}

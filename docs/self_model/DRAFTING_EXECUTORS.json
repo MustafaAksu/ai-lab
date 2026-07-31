@@ -1,0 +1,32 @@
+{
+  "declarations": [
+    {
+      "basis": "Self-report by the drafting executor in session, recorded in a source comment beside CLAUDE_MODEL under DECISION-20260723-0001 and asserted by tests/test_invocation_record.py. Not verified: no InvocationRecord captures a conversational drafting act.",
+      "declared_at": "2026-07-23",
+      "drafted": [
+        "ABS-0004 v5, v6, v7",
+        "PLAN-20260723-0001",
+        "PLAN-20260723-0002"
+      ],
+      "provider_id_form": "claude-opus-4-8",
+      "reported_display_name": "Claude Opus 4.8"
+    },
+    {
+      "basis": "Self-report by the drafting executor in the session of 2026-07-27, which drafted ABS-0004 v8 drafts 1 and 2, revised PLAN-20260723-0002, and built the claim-extraction, linking and re-link pipelines. Not verified, on the same footing as the 2026-07-23 declaration. Recorded because it differs from it: the guard installed on 2026-07-23 names only claude-opus-4-8, so it excluded an identity that was not this session's drafter and did not exclude the one that was.",
+      "declared_at": "2026-07-27",
+      "drafted": [
+        "ABS-0004 v8 (drafts 1 and 2)",
+        "PLAN-20260723-0002 (revision applying the COMP-0039..0046 findings)",
+        "docs/comparisons/comp0039/ pipeline artifacts and their tooling",
+        "GAP-0006, GAP-0007"
+      ],
+      "provider_id_form": "claude-opus-4-5",
+      "reported_display_name": "Claude Opus 4.5"
+    }
+  ],
+  "id_form_note": "provider_id_form is the value a provider default would actually carry, and is what the guard compares against. reported_display_name is what the executor states in prose. These differ in shape, and a guard comparing a display name against settings.CLAUDE_MODEL would never fire regardless of its contents.",
+  "not_a_verification": "This file records self-reports. It establishes nothing about which model in fact produced any artifact, and must not be cited as establishing it. The pattern is the one ABS-0004 applies to standing authority: the claim, its date, and what it covers are recorded and legible; the claim itself is not verified, and no arrangement of records here could verify it. What the file provides is that a reviewer-slot default can be checked against a maintained list rather than against one literal frozen at the moment a single session happened to be observed.",
+  "purpose": "Identities that have acted as drafting executor in AI-Lab sessions, so the reviewer-slot default can be checked against all of them rather than against one hardcoded literal. Under ABS-0004 C3 an invocation cannot adjudicate a claim whose evidence ancestry contains an invocation by an equivalent executor identity; configuring the reviewer slot to a drafting executor's identity would collapse reviewer and author.",
+  "schema_version": "v1",
+  "unclosed_gap": "Conversational drafting produces no InvocationRecord, so no record establishes who drafted any artifact. A machine check of C3 over ABS-0004 v8 finds no conflict, not because none exists but because the drafting act was never an Invocation. Slice C's one-hop check reads produced_by relations on the target artifact and would also find nothing. This file makes the reviewer-slot guard maintainable; it does not close that gap, and adding an entry here is not the same as capturing a drafting invocation."
+}
