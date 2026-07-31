@@ -1,0 +1,890 @@
+{
+  "admission": {
+    "admitted_by": "operator, as accountable principal",
+    "admitted_what": "the 29 live findings and their response classification, the 5 baseline preservations, the 9 unprobed surfaces, and the 4 resolution conditions",
+    "admitted_what_not": "no remedy, no v9 text, and no claim that a classification is correct rather than adjudicated",
+    "authorising_decision": "DECISION-20260727-0002",
+    "decision_id": "DECISION-20260727-0003"
+  },
+  "baseline_preservations": [
+    {
+      "finding": "Keep authorization, routing selection, and evidence admission distinct; selection is not permission and permission is not admission.",
+      "id": "V9B-001",
+      "note": "This is already a v4 baseline property, not a requested delta.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "\u00a73 Three Decisions."
+    },
+    {
+      "finding": "Endpoint, provider organization, mutable alias, and model release identity are separate; endpoint diversity never establishes model independence.",
+      "id": "V9B-002",
+      "note": "Preserve safe identity separation and unresolved failure behavior.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "\u00a74.1\u2013\u00a74.4."
+    },
+    {
+      "finding": "Unknown identity, state, or lineage blocks qualification or yields unresolved; it never increases independence.",
+      "id": "V9B-003",
+      "note": "Preserve as a baseline invariant.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "P5, \u00a74.14, C3/C5."
+    },
+    {
+      "finding": "Producing an artifact does not grant authority to accept it; role-axis assignment alone does not enforce exercise separation.",
+      "id": "V9B-004",
+      "note": "Preserve the distinction; enforcement evidence is addressed separately in V9L-018.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "\u00a74.9 and C6/C7."
+    },
+    {
+      "finding": "Decision and verification outputs must carry property scope, provenance, and accountable status distinctions rather than a generic verified label.",
+      "id": "V9B-005",
+      "note": "Preserve; concrete record schemas remain separately governed.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "P2, \u00a74.13, C10."
+    }
+  ],
+  "counts": {
+    "baseline_preservations": 5,
+    "by_response_class": {
+      "explicit limitation sufficient": 7,
+      "separate gap or policy required": 15,
+      "unresolved": 4,
+      "v4 change required": 3
+    },
+    "live_entries": 29,
+    "section_3_bearing_entries": {
+      "by_response_class": {
+        "explicit limitation sufficient": 3,
+        "separate gap or policy required": 6,
+        "unresolved": 4
+      },
+      "derived_finding": "Thirteen live findings bear on Section 3, and none is classified v4 change required. Their response classes are four unresolved, three explicit limitation sufficient, and six separate gap or policy required.",
+      "finding_ids": [
+        "V9L-004",
+        "V9L-005",
+        "V9L-006",
+        "V9L-007",
+        "V9L-008",
+        "V9L-009",
+        "V9L-010",
+        "V9L-011",
+        "V9L-012",
+        "V9L-013",
+        "V9L-014",
+        "V9L-015",
+        "V9L-017"
+      ],
+      "total": 13,
+      "v4_change_required": 0
+    },
+    "unprobed_surfaces": 9
+  },
+  "disposition_audit": {
+    "caution": "Dispositions were proposed by the drafting executor and operator-approved. They are recorded as later governance evidence, not allowed to erase the initial extraction.",
+    "claim_impact_counts": {
+      "adopted": 15,
+      "corrected": 35,
+      "needs_re_review": 4,
+      "refuted": 6,
+      "still_applies": 58
+    },
+    "important_refutations": [
+      {
+        "claim_id": "CLAIM-7f96b4ee3de269fc",
+        "effect": "Refutes the assertion that COMP-0037 concerned self-issuance rather than scope breadth."
+      },
+      {
+        "claim_id": "CLAIM-4ffd64de25ee0f86",
+        "effect": "Refutes the assertion that self-issued disqualification already had a real downstream consequence."
+      },
+      {
+        "claim_id": "CLAIM-6e4dce3e8bc65018",
+        "effect": "Near-duplicate refutation of the same claimed consequence."
+      },
+      {
+        "claim_id": "CLAIM-ef4e55078f3fc39a",
+        "effect": "Refutes calling the marking a substantive limitation when nothing requires an independence finding."
+      }
+    ]
+  },
+  "evidentiary_review": {
+    "checked": [
+      "both SHA-256 checksums against the supplied manifest",
+      "all 19 distinct source_rounds references resolve to committed artifacts",
+      "the four claim ids in disposition_audit carry disposition refuted",
+      "the reported claim_impact_counts match CLAIM_IMPACT.json exactly",
+      "all 29 entries scanned for prescriptive language; three matches, all false positives",
+      "no entry depends on ABS-0004 v8 still being a proposed document"
+    ],
+    "not_checked": "whether each finding is correctly extracted from the round it cites. That would require re-reading roughly 844KB of comparison artifacts, and the reviewer is the executor whose text those rounds reviewed.",
+    "reviewer": "drafting executor of v5 through v8, acting as evidentiary reviewer only"
+  },
+  "generated_at": "2026-07-31T21:13:51.091403+00:00",
+  "ledger_entries": [
+    {
+      "construction_or_example": "The system queries a provider-controlled catalog endpoint, stores the returned mapping, then marks the same provider assertion verified without any evidence independent of the asserting provider.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not copy v5 terminology or schema merely because it responded to this finding.",
+        "Do not use a scoped verified label without adjudicating whether its ordinary reading still overclaims."
+      ],
+      "finding": "Provider-returned catalog data establishes an authenticated provider self-report at a time; it does not independently verify the truth of the model identity or capability mapping. Calling that result simply verified creates verification collapse or circular attestation.",
+      "finding_id": "V9L-001",
+      "later_disposition": "Verified against the checkout by the evidentiary reviewer: commit 6d7dfee (2026-07-22) replaced CatalogVerification with CatalogCapture and introduced P6. Because v5 was not separately admitted and is excluded as a remedy source, that history establishes that a response occurred but does not determine v9\u2019s response. The underlying COMP-0035 finding remains live against a v4 reconstruction.",
+      "reason": "v9 starts from v4, whose CatalogVerification vocabulary can overstate what the available evidence establishes. The ledger does not choose replacement language or architecture.",
+      "required_response_class": "v4 change required",
+      "reviewer_split": "Both reviewers agree on the trust defect. OpenAI permits a scoped verification label that says endpoint-authenticated self-assertion; Claude argues the verification layer should not exist without independent evidence.",
+      "source_rounds": [
+        "COMP-0035"
+      ],
+      "v4_surface": "\u00a74.3 ModelIdentity; \u00a74.4 CatalogSnapshot, CatalogAssertion, and CatalogVerification; C2 catalog admission."
+    },
+    {
+      "construction_or_example": "An invocation was resolved using snapshot C0. Later evidence shows C0 stale or wrong. Recomputing against C1 changes the historical basis; doing nothing preserves an unqualified status now known to be suspect.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not import the specific resolution_quality enum proposed by a reviewer.",
+        "Do not mutate historical records in place or treat current re-resolution as the original event."
+      ],
+      "finding": "Historical identity resolution and current confidence are different facts. Later staleness or contradiction should not silently rewrite the event-time record, but leaving the original verified status unqualified also misleads.",
+      "finding_id": "V9L-002",
+      "later_disposition": "No later operator disposition for COMP-0035 was found in the attached snapshot.",
+      "reason": "The ontology needs to distinguish what was concluded at execution time from what is currently believed about that conclusion; otherwise status semantics are temporally ambiguous.",
+      "required_response_class": "v4 change required",
+      "reviewer_split": "Both reviewers favor append-only annotation/current-effective confidence while preserving the original resolution basis. They differ in field and record details, which are remedies and excluded here.",
+      "source_rounds": [
+        "COMP-0035"
+      ],
+      "v4_surface": "\u00a74.3 ModelIdentity verification status; \u00a74.4 time-bounded catalog assertions and invocation-to-snapshot linkage."
+    },
+    {
+      "construction_or_example": "A unit test that calls a live provider catalog becomes nondeterministic, credential-bearing, rate-limited, and time-sensitive; a fixture-only test cannot establish current live catalog truth.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not encode specific test frameworks, schedules, or provider fixture counts in the ontology."
+      ],
+      "finding": "Catalog acquisition is network-dependent and mutable, while resolution, freshness evaluation over captured data, and status logic can be deterministic and offline. The governance boundary must not be hidden inside ordinary tests.",
+      "finding_id": "V9L-003",
+      "later_disposition": "No later operator disposition for COMP-0035 was found in the attached snapshot.",
+      "reason": "This is mainly an execution and test-governance requirement rather than a new ontology claim.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both reviewers agree on the separation. Their proposed interfaces, annotations, fixture counts, and schedules are implementation preferences.",
+      "source_rounds": [
+        "COMP-0035"
+      ],
+      "v4_surface": "\u00a74.4 catalog objects; \u00a79 enforcement matrix; \u00a710 implementation sequence."
+    },
+    {
+      "construction_or_example": "Two worlds contain byte-identical principal, scope, delegation, and authorization records; in one world the principal is actually accountable, in the other it is not. An internal rule returns the same result in both.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not import v6-v8 standing-authority termination text.",
+        "Do not rename a recorded claim as verified entitlement."
+      ],
+      "finding": "Repository records cannot establish the extra-systemic fact that a root principal is genuinely entitled to govern. A record-only chain terminus can state and attribute a claim but cannot make the entitlement true.",
+      "finding_id": "V9L-004",
+      "later_disposition": "CLAIM_IMPACT retained the narrow conclusion that internal records do not establish root authority. Claims that went further and treated every internal control as impossible required correction or re-review.",
+      "reason": "v4 already exposes the bootstrap as open rather than pretending to solve it. The rounds support preserving that honesty unless separately governed external evidence semantics exist.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "The reviewers converge on the external-entitlement limit. They diverge on whether additional internal acceptance controls are nevertheless useful; that is separated into V9L-005.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0040",
+        "COMP-0042",
+        "COMP-0121"
+      ],
+      "v4_surface": "\u00a73 [OPEN] authorization-chain bootstrap; \u00a74.13 AccountablePrincipal and DecisionRecord."
+    },
+    {
+      "construction_or_example": "A rule can reject universal or otherwise disallowed scope records without proving that an accepted principal is genuinely entitled in the world. That closes an internal acceptance path but not the external regress.",
+      "evidence_strength": "disputed",
+      "excluded_remedies": [
+        "Do not infer that because a control is incomplete it has no value.",
+        "Do not describe an internal acceptance bound as proof of external entitlement."
+      ],
+      "finding": "The inability to establish real-world root entitlement does not by itself show that internal controls on which records the system accepts are useless. External truth and internal acceptance are distinct objectives.",
+      "finding_id": "V9L-005",
+      "later_disposition": "CLAIM_IMPACT kept claims that P7 does not entail a label-only scope regime, while several claims about what exact alternative should be adopted were marked needs_re_review.",
+      "reason": "The rounds establish the conceptual distinction but do not adjudicate which internal acceptance controls, if any, v9 should define.",
+      "required_response_class": "unresolved",
+      "resolution_condition": "Resolution requires an operator-adjudicated objective that explicitly distinguishes external entitlement truth from repository-internal record acceptance, together with comparative evidence from concrete constructions showing whether candidate internal acceptance rules close defined paths without being represented as proof of entitlement.",
+      "reviewer_split": "OpenAI emphasizes that internal bounds cannot solve the extra-systemic regress but may implement a narrower acceptance rule. Claude argues v7 improperly used the regress argument to justify a label-only breadth response.",
+      "source_rounds": [
+        "COMP-0040",
+        "COMP-0120"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap open question; P1 authorization framing; P4 anti-laundering principle."
+    },
+    {
+      "construction_or_example": "One construction declares a scope broad enough to cover the intended invocation; another declares a formally narrow scope tailored to authorize exactly itself.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not reduce the finding to universal breadth alone.",
+        "Do not treat pre-dating alone, external issuance alone, or parseability alone as a complete solution without separate evidence."
+      ],
+      "finding": "The scope attacks are not exhausted by breadth. The evidence supports at least an authority-source defect and a target-derived or reverse-fit defect, where scope is selected with knowledge of the act it is intended to authorize.",
+      "finding_id": "V9L-006",
+      "later_disposition": "The operator-approved refutation of CLAIM-7f96b4ee3de269fc confirms that COMP-0037 squarely implicated scope and was not only about self-issuance.",
+      "reason": "The evidence identifies attack classes but does not establish a complete ontology-level rule for scope legitimacy.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "OpenAI names absence of an independent source constraining scope-to-invocation fit. Claude distinguishes origin/self-assertion from reverse-fit correlation. These are compatible rather than identical diagnoses.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0120"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap open question; \u00a74.13 authority_scope and delegation_reference."
+    },
+    {
+      "construction_or_example": "A maximum-breadth rule blocks a universal-scope construction but not a scope tailored to one invocation. That makes it partial, not necessarily valueless.",
+      "evidence_strength": "disputed",
+      "excluded_remedies": [
+        "Do not treat any specific breadth threshold or co-approval scheme proposed in a review as established."
+      ],
+      "finding": "A breadth control may close one attack class even if it does not close narrow self-tailoring. Rejecting a partial control solely because it is not a complete solution is not supported by the evidence.",
+      "finding_id": "V9L-007",
+      "later_disposition": "CLAIM_IMPACT refuted claims that COMP-0037 was about self-issuance rather than breadth. It did not admit a breadth rule; alternative-control claims remained for re-review.",
+      "reason": "The operator must decide whether partial internal controls belong in the ontology, in policy, or nowhere.",
+      "required_response_class": "unresolved",
+      "resolution_condition": "Resolution requires evaluation of at least one precisely bounded partial-control hypothesis against an enumerated set of scope-attack families, with the paths closed and left open recorded separately, followed by operator adjudication of whether such defense-in-depth evidence belongs in ontology, policy, or neither.",
+      "reviewer_split": "OpenAI and Claude both distinguish external entitlement from internal acceptance, but neither round adjudicates a concrete breadth policy. The stronger defense-in-depth conclusion is an inference from their split, not reviewer consensus.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0040",
+        "COMP-0120"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap open question."
+    },
+    {
+      "construction_or_example": "The same party declares no independence requirement on its own authorization, records self_issued:true, and the conditional disqualification never fires.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not describe self_issued as an active control absent the external requirement and evaluator.",
+        "Do not copy either reviewer\u2019s keep/delete wording into v9 before adjudication."
+      ],
+      "finding": "A self_issued marker is descriptive, not an independence control, unless an external policy fixes when independence is required outside the issuing principal\u2019s discretion and a consumer or validator applies the consequence.",
+      "finding_id": "V9L-008",
+      "later_disposition": "CLAIM_IMPACT operator-refuted CLAIM-4ffd64de25ee0f86, CLAIM-6e4dce3e8bc65018, and CLAIM-ef4e55078f3fc39a, all of which treated the current marking as a real downstream consequence.",
+      "reason": "The missing operative semantics belong to independently governed policy and enforcement, not to a self-declared field on one authorization.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Reviewers disagree whether to retain future conditional semantics or delete control-shaped disqualification language. They agree the current marker does no operative work by itself.",
+      "source_rounds": [
+        "COMP-0041",
+        "COMP-0042",
+        "COMP-0119",
+        "COMP-0121"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap; \u00a74.13 InvocationAuthorization independence requirements; deferred AuthorizationPolicy concept."
+    },
+    {
+      "construction_or_example": "Executor E creates an InvocationAuthorization record attributing issuance to principal P, with E and P distinct so self_issued does not trigger. The chain appears to terminate at P although P never made the decision.",
+      "evidence_strength": "plausible",
+      "excluded_remedies": [
+        "Do not assume record authorship, issuer invocation, accountable approval, and principal identity are interchangeable.",
+        "Do not infer cryptographic design from the finding."
+      ],
+      "finding": "Section-level authorization semantics do not establish that the principal named as issuer actually made or approved the recorded decision. False decision attribution is a distinct attack from false root entitlement.",
+      "finding_id": "V9L-009",
+      "later_disposition": "No later operator disposition for COMP-0121 was found in the attached snapshot.",
+      "reason": "Attribution integrity, approval evidence, signatures or equivalent controls, and repository write authority require their own governed semantics.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "OpenAI constructs the attribution attack. Claude instead reconstructs the self-appointed-root path and does not address false attribution. The supplied Q4 evidence omitted the full DecisionRecord and authentication rules.",
+      "source_rounds": [
+        "COMP-0121"
+      ],
+      "v4_surface": "\u00a73 decision-kind distinction; \u00a74.13 DecisionRecord issuer invocation, accountable approver, and principal attribution."
+    },
+    {
+      "construction_or_example": "An undeclared subordinate invocation or an unlinked authorization exists outside the recorded chain; no field in the visible record enumerates the missing object.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not say every authorization is visible unless completeness and traversal are established."
+      ],
+      "finding": "Recording a claim and links does not establish complete visibility of every authorization resting on it. Visibility is bounded by what was declared, recorded, linked, traversable, and correctly attributed.",
+      "finding_id": "V9L-010",
+      "later_disposition": "CLAIM_IMPACT marked the v7 complete-visibility claims corrected and retained the narrower finding that only correctly declared and linked records can be visible.",
+      "reason": "The v4 open question does not need to become a visibility guarantee. A limitation can state the boundary without pretending completeness.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "Both reviewers reject present-tense claims of complete visibility. They differ only in the exact honest wording, which is excluded as drafting.",
+      "source_rounds": [
+        "COMP-0041",
+        "COMP-0118",
+        "COMP-0125"
+      ],
+      "v4_surface": "\u00a73 decision records and bootstrap open question; \u00a74.7 subordinate execution; \u00a75 canonical relations."
+    },
+    {
+      "construction_or_example": "Two readers can disagree whether free-text scope is broad or bounded, and the ontology supplies no criterion deciding the dispute.",
+      "evidence_strength": "disputed",
+      "excluded_remedies": [
+        "Do not import v8\u2019s legibility text.",
+        "Do not assume that manual readability is either sufficient or invalid without adjudication."
+      ],
+      "finding": "A requirement that scope be legible as wide is not mechanically usable without a scope grammar, interpretation rule, rendering rule, or adjudication procedure. Whether it remains a manual norm or should be withdrawn is disputed.",
+      "finding_id": "V9L-011",
+      "later_disposition": "CLAIM_IMPACT retained the missing-grammar and overclaim findings against v8; no operator adjudication between the keep/delete positions was found.",
+      "reason": "The round establishes missing semantics but not whether a manual anti-misrepresentation norm belongs in the ontology.",
+      "required_response_class": "unresolved",
+      "resolution_condition": "Resolution requires ambiguous scope examples to be assessed under a declared interpretation, rendering, or human-adjudication procedure. The evidence must show either reproducible judgments or an explicit operator acceptance of a deliberately non-mechanical norm and its evidentiary limits; reviewer preference alone is insufficient.",
+      "reviewer_split": "OpenAI treats the prohibition on falsely describing breadth as a legitimate unenforced manual constraint. Claude treats an uninterpretable must as an aspiration dressed as an obligation.",
+      "source_rounds": [
+        "COMP-0041",
+        "COMP-0118",
+        "COMP-0125"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap open question; \u00a74.13 authority_scope."
+    },
+    {
+      "construction_or_example": "A downstream plan cites \u201cdoes not count as independent\u201d but omits the separate passage stating that no policy triggers the rule and nothing is disqualified.",
+      "evidence_strength": "disputed",
+      "excluded_remedies": [
+        "Do not treat accurate disclaimer text as structural enforcement.",
+        "Do not copy either side\u2019s proposed replacement sentence."
+      ],
+      "finding": "A control-shaped clause followed by a disclaimer that it is inert can remain independently citable and may function as a decoy even when the disclaimer is accurate.",
+      "finding_id": "V9L-012",
+      "later_disposition": "The later v8 round did not adjudicate the reviewer split.",
+      "reason": "This is a document-design and downstream-consumer risk requiring operator choice, not an established wording solution.",
+      "required_response_class": "unresolved",
+      "resolution_condition": "Resolution requires downstream-consumer evidence: either a concrete repository instance of the control-shaped clause being cited without its inertness caveat, or a controlled interpretation comparison showing whether the clause-plus-disclaimer materially invites unsupported control inferences, followed by operator adjudication of the resulting risk.",
+      "reviewer_split": "OpenAI argues the future conditional fact is worth retaining with explicit inertness. Claude argues deletion is safer because the caveat is severable from the control-shaped sentence. Both agree the current clause is not a control.",
+      "source_rounds": [
+        "COMP-0119",
+        "COMP-0125"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap; sentence-discipline and normative-status semantics if retained in v9."
+    },
+    {
+      "construction_or_example": "A declared principal issues within self-declared scope; the record is called self-standing although the ontology says entitlement was never established.",
+      "evidence_strength": "plausible",
+      "excluded_remedies": [
+        "Do not import self-standing as a positive status from v7 or v8."
+      ],
+      "finding": "Calling an authorization self-standing can conflate a recorded chain-termination convention with substantive authorization, even when the root claim is explicitly unverified.",
+      "finding_id": "V9L-013",
+      "later_disposition": "No later operator disposition for this Q8 finding was found in the attached snapshot.",
+      "reason": "The distinction between \u201cthe recorded chain stops here\u201d and \u201cthe act is substantively authorized\u201d must remain visible if any chain-termination concept is introduced.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "OpenAI explicitly flags the ambiguity in Q8. Claude\u2019s attack demonstrates the practical path but treats it as compliant disclosure rather than a terminology analysis.",
+      "source_rounds": [
+        "COMP-0121",
+        "COMP-0125"
+      ],
+      "v4_surface": "\u00a73 authorization-chain bootstrap open question."
+    },
+    {
+      "construction_or_example": "v4 is recorded as admitted in conversation; v5-v7 are amendments with no separate warrants. The table reports the missing event but no rule says what that absence means.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not copy v8\u2019s table as the solution.",
+        "Do not infer inheritance or invalidation of admission from amendment without an explicit rule."
+      ],
+      "finding": "The absence of a separate admission event is not itself an admission status. A single current status field, or a row reading amended, not separately admitted, cannot determine whether an amendment inherited, lost, or never acquired governance force.",
+      "finding_id": "V9L-014",
+      "later_disposition": "The user reports that a later withdrawal decision deliberately exposed the same status-only consumer failure for a withdrawn plan. That current checkout is not present in the attached ZIP and is treated as supplied context, not independently verified here.",
+      "reason": "Version-governance state needs an admitted schema and transition rule; ontology prose should not invent status consequences from missing records.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both reviewers agree the table fixes the narrow v7 metadata conflation but relocates the larger status ambiguity. Claude additionally questions whether the v4 admission row visually overstates conversation-only evidence.",
+      "source_rounds": [
+        "COMP-0122"
+      ],
+      "v4_surface": "Artifact metadata and governance representation rather than substantive \u00a73 text; DecisionRecord/admission-record open choice in \u00a74.13."
+    },
+    {
+      "construction_or_example": "An invocation with an undisclosed subordinate execution, missing effective-input disclosure, or absent outbound-interaction evidence passes every enumerated authorization check and is classified governed.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not retain positive labels solely because a disclaimer exists at one definition site.",
+        "Do not force Section 4.7 into authorize() without adjudicating the functional boundary."
+      ],
+      "finding": "A Slice-C-local authorization result can be complete only for its self-defined checks while remaining incomplete under the ontology\u2019s broader disclosure constraints. Labels such as valid authorization or governed can exceed the checked property set.",
+      "finding_id": "V9L-015",
+      "later_disposition": "COMP-0123 confirms that fourteen can be complete by definition for the narrow slice but not for full ABS-0004 compliance.",
+      "reason": "The checked-property boundary and consumer-visible status semantics must be governed together.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Reviewers differ on whether disclosure constraints should be checked inside authorize() or explicitly excluded. They agree an unqualified positive label must not imply those checks occurred.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0043",
+        "COMP-0123"
+      ],
+      "v4_surface": "\u00a73 distinction between authorization and evidence admission; \u00a74.7 disclosure constraints; \u00a74.13 InvocationAuthorization; C1/C8; consequence/status vocabulary."
+    },
+    {
+      "construction_or_example": "Executor A produces X; executor B transforms X into Y; A adjudicates Y. The direct producer is B, so the one-hop check permits, while A remains in evidence ancestry.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not claim the field prevents misuse.",
+        "Do not treat direct-only permission as evidence of independence."
+      ],
+      "finding": "A direct-only check_depth field reports the inspection bound; it neither detects deeper collisions nor prevents consumers from treating a permitted result as a general independence finding.",
+      "finding_id": "V9L-016",
+      "later_disposition": "The v8 round retained this limitation; Q8 found that even claims about check_depth accurately disclosing the check require schema and production integrity not supplied in evidence.",
+      "reason": "A partial check can exist, but its result cannot be used as a full ancestry or independence conclusion.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both reviewers agree on the two-hop miss and on the field\u2019s disclosure-only nature. Claude further distinguishes disclosure of the gap\u2019s shape from disclosure that this artifact actually contains a deeper collision.",
+      "source_rounds": [
+        "COMP-0039",
+        "COMP-0037",
+        "COMP-0125"
+      ],
+      "v4_surface": "C3 no self-adjudication; \u00a74.15 claim/evidence ancestry; future authorization outcome schema."
+    },
+    {
+      "construction_or_example": "A subordinate invocation is never represented at all. A reason for represented-but-out-of-class subordinate execution does not describe the missing-record disclosure failure.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not use malformed or conditions unmet as an unstated catch-all for every omitted validity dimension."
+      ],
+      "finding": "Refusal enumerations omitted materially distinct cases, including absence of matching authorization, unmet independence requirements, undisclosed subordinate execution, and disclosure failures; broad catch-all reasons can conceal different diagnoses.",
+      "finding_id": "V9L-017",
+      "later_disposition": "COMP-0123 shows the later plan made the exclusion explicit, but retained labels whose portability remained in dispute.",
+      "reason": "The operator must define the validator boundary and diagnostic vocabulary before completeness can be claimed.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "OpenAI favored checking the disclosure constraints in authorization; Claude favored explicit exclusion for the scoped slice. Both reject silent conflation.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0043",
+        "COMP-0123"
+      ],
+      "v4_surface": "\u00a73 subordinate authorization distinction if introduced; \u00a74.7 disclosure constraints; \u00a74.13 authorization conditions and status."
+    },
+    {
+      "construction_or_example": "A RoleDefinition records adjudicator epistemic authority and repository-mutator action authority, but no artifact evaluates whether both were exercised against the same target without independent verification.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not cite existence of role records as proof that C6 was enforced."
+      ],
+      "finding": "Role and authorization records are inputs to an authority-separation check, not evidence that the C6 exercise restriction was actually evaluated. Enforcement evidence requires a named artifact recording the check and result.",
+      "finding_id": "V9L-018",
+      "later_disposition": "No later contrary disposition was found in the attached snapshot.",
+      "reason": "The enforcement matrix should distinguish dependency artifacts from performed-check evidence.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "Both reviewers agree Slice C would at most supply prerequisite role records, not the target enforcement evidence.",
+      "source_rounds": [
+        "COMP-0044"
+      ],
+      "v4_surface": "C6 authority separation; \u00a79 enforcement matrix."
+    },
+    {
+      "construction_or_example": "A test hand-assigns consequence modifiers and verifies max; it does not establish that the correct modifiers were applicable to the real invocation.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not treat example-based passing tests as proof of universal monotonicity, unchanged behavior, or general scope matching.",
+        "Do not require reviewers to author full test suites as part of independent review."
+      ],
+      "finding": "A bound makes a success criterion mechanically checkable only when it replaces the broad property with a finite specified oracle. Naming a limitation without naming fixtures, predicates, commands, manifests, and expected outputs does not create a test.",
+      "finding_id": "V9L-019",
+      "later_disposition": "COMP-0124 explicitly preserves the distinction between bounded fixture tests and general semantic claims.",
+      "reason": "Exact success oracles belong in implementation governance. Missing ontology semantics must be resolved or the corresponding conformity claim removed.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Claude accepts several fixture-bounded criteria as checkable; OpenAI requires a stricter distinction between testing chosen fixtures and establishing the property named. Both agree missing ontology semantics cannot be repaired by test wording.",
+      "source_rounds": [
+        "COMP-0037",
+        "COMP-0045",
+        "COMP-0124"
+      ],
+      "v4_surface": "\u00a78 consequence classes; \u00a79 enforcement matrix; \u00a710 implementation sequence; plan-governance layer."
+    },
+    {
+      "construction_or_example": "If subordinate invocations or outbound interactions were not captured at execution time, a later multi-hop validator cannot reconstruct them. If self_issued used exact identifier equality, later equivalence rules may invalidate stored results.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not treat every later validator improvement as retroactively repairing missing evidence."
+      ],
+      "finding": "Persisting record families, role vocabularies, identity-equality assumptions, scope semantics, and capture omissions before open choices are resolved creates migration costs; omitted historical provenance may be irrecoverable.",
+      "finding_id": "V9L-020",
+      "later_disposition": "No later operator disposition for COMP-0046 was found in the attached snapshot.",
+      "reason": "Migration/versioning policy and admission sequencing should be governed before load-bearing persisted records are seeded.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both reviewers agree capture-time omissions are most expensive; they differ on whether some later changes are schema migration or validation-only depending on final representation.",
+      "source_rounds": [
+        "COMP-0046"
+      ],
+      "v4_surface": "\u00a74.7 executor identities and disclosure; \u00a74.9 roles; \u00a74.13 DecisionRecord open family choice; \u00a75 relations; \u00a710 implementation sequence."
+    },
+    {
+      "construction_or_example": "Multiple independently produced artifacts repeat the same pre-provenance claim or select evidence using an unrecorded prior, while artifact-level produced_by edges appear independent.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not claim N artifact paths equal N independent claim paths."
+      ],
+      "finding": "Artifact-level production provenance cannot prove claim-level independence when one artifact mixes copied claims, observations, inferences, and paraphrases.",
+      "finding_id": "V9L-021",
+      "later_disposition": "The metadata says COMP-0032 findings were applied before v4 admission; no contrary later disposition was found.",
+      "reason": "v4 already states that artifact-level lineage provides potential-dependence detection, not claim-level independence proof. That limitation should remain rather than be converted into a control claim.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "Both reviewers ranked the claim-level lineage limitation among the most severe findings. One response sharpened the laundering path toward selection/copying where derivation cannot be represented.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "P3; \u00a74.15 Claim/EvidenceItem; C4, C5, C9."
+    },
+    {
+      "construction_or_example": "A prior artifact influences search terms offline or provider-managed state contains relevant history not represented in the manifest; the invocation is labeled blind despite the hidden channel.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not treat a completeness_attestation field as proof of completeness without evidence about the capture mechanism."
+      ],
+      "finding": "EffectiveInputManifest completeness and blind-witness status depend on every material information channel, including prompts, retrievals, attachments, tool outputs, session state, subordinate execution, and tool configuration. A self-asserted manifest cannot by itself prove completeness.",
+      "finding_id": "V9L-022",
+      "later_disposition": "The metadata says COMP-0032 findings were applied before v4 admission; the current implementation status is outside this ledger.",
+      "reason": "The ontology can state the limitation and safe failure; detection and completeness evidence require capture and validation mechanisms.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both reviewers agree unknown or unreconstructed state defeats blind status. Proposed attestation and instrumentation mechanisms are remedies, not established findings.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "\u00a74.7 executor disclosure; \u00a74.12 EffectiveInputManifest; \u00a74.14 Session; C4 and C5."
+    },
+    {
+      "construction_or_example": "A tool emits a URL that a privileged renderer fetches, triggering a merge; or it makes a hardcoded external call not represented as a subordinate executor or configuration input.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not claim disclosure constraints surface, catch, or prevent undeclared interactions.",
+        "Do not limit authority analysis to returned output bytes."
+      ],
+      "finding": "Composite-executor and external-interaction declarations cannot guarantee that all material calls or ambient effects were disclosed. A deterministic-looking tool can exercise undeclared authority through hardcoded network behavior or privileged downstream consumers.",
+      "finding_id": "V9L-023",
+      "later_disposition": "No later refutation was found; the v8 plan explicitly acknowledged that undisclosed execution could pass its slice checks.",
+      "reason": "Declarations classify discovered violations but do not detect omitted behavior. Capture/enforcement objects and consumer consequences require separate governance.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Both COMP-0032 reviewers identify the escape hatch. Later reviewers disagree whether authorization should check these constraints or explicitly exclude them, not whether the underlying disclosure gap exists.",
+      "source_rounds": [
+        "COMP-0032",
+        "COMP-0043",
+        "COMP-0046"
+      ],
+      "v4_surface": "P4; \u00a74.7 composite-executor, tool-configuration, and external-interaction disclosure; \u00a74.12 EffectiveInputManifest."
+    },
+    {
+      "construction_or_example": "An independent validator proves JSON schema compliance; the artifact is admitted as witness evidence even though source grounding and factual accuracy were never checked.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not let a generic verified flag travel without the property scope it establishes."
+      ],
+      "finding": "Property-scoped verification can be correct yet insufficient for the epistemic status granted. Admission must not infer unverified grounding, truth, calibration, privacy, or other properties from a narrower validator result.",
+      "finding_id": "V9L-024",
+      "later_disposition": "The metadata says COMP-0032 findings were applied before v4 admission.",
+      "reason": "The admitted baseline should preserve the property-to-status boundary; implementation of admission remains separate.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "Both reviewers identify the scope-sufficiency gap. Specific multi-verifier or schema proposals are remedies and excluded.",
+      "source_rounds": [
+        "COMP-0032"
+      ],
+      "v4_surface": "P2; \u00a74.9 RoleDefinition required_verified_properties; \u00a74.13 EvidenceAdmissionDecision; C10."
+    },
+    {
+      "construction_or_example": "The same model appears under different endpoint aliases, or one human/tool appears under distinct identifiers. Exact identifier inequality yields a false independent result.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not equate endpoint or identifier diversity with executor independence.",
+        "Do not require an ExecutorIdentity superclass solely from this finding."
+      ],
+      "finding": "Self-adjudication and independence rules require executor-kind-specific equivalence semantics across models, tools, and humans; unresolved equivalence must never increase independence.",
+      "finding_id": "V9L-025",
+      "later_disposition": "The current v8 text appears to carry executor-generic equivalence, but v8 is excluded as a remedy source and not the basis of this classification.",
+      "reason": "The baseline must preserve safe unresolved behavior and generic applicability without committing to one inheritance architecture.",
+      "required_response_class": "explicit limitation sufficient",
+      "reviewer_split": "COMP-0032 found the original model-only C3 scope incomplete. COMP-0046 notes that later broader sameness can require re-evaluation of stored results. The exact superclass design remains a preference/open choice.",
+      "source_rounds": [
+        "COMP-0032",
+        "COMP-0046"
+      ],
+      "v4_surface": "P5; \u00a74.3 ModelIdentity; \u00a74.7 executor identities; C3 and C5."
+    },
+    {
+      "construction_or_example": "The plan stores issuing principal while the ontology also requires issuer invocation and accountable approver; a graph approved_by edge and a field can disagree, with no precedence rule.",
+      "evidence_strength": "plausible",
+      "excluded_remedies": [
+        "Do not infer that a new record family, subtypes, or field-only representation is already selected."
+      ],
+      "finding": "DecisionRecord semantics risk dual sources of truth and premature schema lock-in: issuer invocation, issuing principal, accountable approver, status fields, graph relations, activation, supersession, and record-family inheritance were not fully reconciled.",
+      "finding_id": "V9L-026",
+      "later_disposition": "No later operator disposition resolving the record-family choice was found in the attached snapshot.",
+      "reason": "The ontology may identify the decision kinds while leaving concrete record-family resolution to separately governed schema work.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "OpenAI identified representation inconsistency in COMP-0032 and unreconciled fields in COMP-0037. Claude emphasizes migration cost if records are persisted before the family choice is resolved.",
+      "source_rounds": [
+        "COMP-0032",
+        "COMP-0037",
+        "COMP-0046"
+      ],
+      "v4_surface": "\u00a74.13 DecisionRecord and AccountablePrincipal; \u00a75 canonical relations; open choice between extending existing records and creating a new family."
+    },
+    {
+      "construction_or_example": "An InvocationAuthorization names an applicable policy as text and the issuing principal chooses its own independence requirements; no versioned external rule can be replayed or checked.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not copy v8\u2019s AuthorizationPolicy definition.",
+        "Do not claim a defined-but-deferred object makes current controls operative."
+      ],
+      "finding": "AuthorizationPolicy is a load-bearing missing object when authorization, qualifications, or independence requirements cite policy. Untyped strings or issuer-populated requirements cannot support replayable external constraints.",
+      "finding_id": "V9L-027",
+      "later_disposition": "v8 reportedly defined AuthorizationPolicy but deferred it; that unadmitted response is excluded as a remedy source.",
+      "reason": "v9 reconstruction from v4 must decide whether to define the object, remove dependent claims, or leave an explicit gap; an untyped load-bearing reference is not sufficient.",
+      "required_response_class": "v4 change required",
+      "reviewer_split": "COMP-0032 identifies the missing typed policy object. COMP-0119 confirms that without externally fixed policy the self-issued rule remains inert.",
+      "source_rounds": [
+        "COMP-0032",
+        "COMP-0119"
+      ],
+      "v4_surface": "\u00a74.13 InvocationAuthorization policy and independence fields; RoutingPolicy/deferred policy area; C2/C8."
+    },
+    {
+      "construction_or_example": "A fixture passes max(default, modifiers) after the test author selects modifier levels; nothing establishes that those modifiers should apply to the real target.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not treat ordinal max tests as a complete consequence classifier."
+      ],
+      "finding": "Consequence combination can be tested over supplied levels, but the correctness of consequence assignment remains undefined when modifier identity, applicability, evidence, and exception semantics are open.",
+      "finding_id": "V9L-028",
+      "later_disposition": "COMP-0124 preserves the distinction; no contrary adjudication was found.",
+      "reason": "A consequence policy and exact evidence semantics are needed before the result can carry substantive governance meaning.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Reviewers agree formula consistency is narrower than classifier correctness. They differ on how much fixture-level checkability is enough for a success criterion.",
+      "source_rounds": [
+        "COMP-0032",
+        "COMP-0045",
+        "COMP-0124"
+      ],
+      "v4_surface": "\u00a78 Consequence Classes and applicable modifiers; \u00a79 enforcement matrix."
+    },
+    {
+      "construction_or_example": "The plan says earlier wording contradicted ABS-0004 P6 while the reviewed ABS-0004 v8, including P6, is itself proposed and unadmitted.",
+      "evidence_strength": "established",
+      "excluded_remedies": [
+        "Do not use v8 content as v9 authority merely because it was reviewed."
+      ],
+      "finding": "A plan must not cite a proposed ontology revision as settled authority for condemning or validating its own behavior. Proposed text and admitted governance rules are different evidentiary states.",
+      "finding_id": "V9L-029",
+      "later_disposition": "The user reports a later decision withdrew v8 and the plan, consistent with this concern; the updated checkout is not present in the ZIP.",
+      "reason": "Dependencies must reference the admitted version and exact admitted rule, or explicitly state that a proposed text is only advisory.",
+      "required_response_class": "separate gap or policy required",
+      "reviewer_split": "Claude identifies the defect directly. OpenAI\u2019s Q8 response criticizes unsupported plan assertions but does not frame this exact governance-state issue.",
+      "source_rounds": [
+        "COMP-0125"
+      ],
+      "v4_surface": "Artifact-governance metadata; relation between ontology status and implementation-plan constraints."
+    }
+  ],
+  "ledger_id": "V9-CHANGE-LEDGER-DRAFT-0002",
+  "method": {
+    "consolidation_rule": "Closely overlapping reviewer claims are consolidated into one finding only when the construction and affected v4 surface are the same. Reviewer disagreement remains explicit.",
+    "initial_extraction_before_dispositions": true,
+    "reader_contamination_note": "The reviewing executor had inspected v8 and the plan in an earlier task before receiving this brief. To mitigate that unavoidable prior exposure, this ledger cites only the allowed rounds, v4 surfaces, CLAIM_IMPACT dispositions, and the user-supplied unprobed-surface list; it contains no proposed v9 text.",
+    "reading_order": [
+      "COMP-0032",
+      "COMP-0035",
+      "COMP-0037",
+      "COMP-0039..COMP-0046",
+      "COMP-0118..COMP-0125",
+      "CLAIM_IMPACT later dispositions"
+    ],
+    "refuted_entry_handling": "No live ledger entry uses evidence_strength=refuted. Refuted claims were checked and are recorded as corrections in later_disposition or disposition_audit rather than retained as live findings merely to populate the response or evidence-strength categories.",
+    "remedy_exclusion": "No v5-v8 sentence, schema, label, or architecture was used as candidate v9 language. Later versions are mentioned only as failed-response or disposition context.",
+    "response_classes": [
+      "v4 change required",
+      "explicit limitation sufficient",
+      "separate gap or policy required",
+      "unsupported or later refuted",
+      "unresolved"
+    ],
+    "revision_0002": "Adds the evidentiary reviewer\u2019s verified checkout correction for V9L-001, makes the derived Section 3 classification result explicit, and adds resolution-evidence conditions to the four unresolved entries. No finding, evidence-strength rating, response class, or excluded remedy was changed."
+  },
+  "not_indexed": "This ledger is not read by ai_lab/documentation/self_model.py, which aggregates capabilities, gaps, verifications, plans, warrants and decisions. It therefore does not appear in SELF_MODEL.json, and nothing reading the self-model index will find it. That is stated here rather than fixed by inventing a sixth record family, which would be a self-model schema change and belongs to its own governance act. DECISION-20260727-0003 carries this as required_next_governance.",
+  "purpose": "Determine the smallest honest delta from admitted ABS-0004 v4 using findings from the specified comparison rounds, without importing v5-v8 remedy text.",
+  "source_manifest": [
+    {
+      "bytes": 145760,
+      "path": "docs/comparisons/COMP-0032-abs-0004-invocation-authorization-ontology-challenge-round.md",
+      "sha256": "f5f8a32abbfb5bca065a36454da53e3011a5a7df996647e9549ac9095e0385d2",
+      "source_id": "COMP-0032"
+    },
+    {
+      "bytes": 25969,
+      "path": "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+      "sha256": "5f53fd5bd4a917d555b843ff7ad3ec95adc3d88ff2b65134b316123cbf107cc8",
+      "source_id": "COMP-0035"
+    },
+    {
+      "bytes": 76716,
+      "path": "docs/comparisons/COMP-0037-abs-0004-v6-amendment-and-plan-20260723-0002-slice-c-admission-review.md",
+      "sha256": "42ae294267ecb3cad665ba7d2f08060fef687d2a1acfa6404a175b67d9b6b8e1",
+      "source_id": "COMP-0037"
+    },
+    {
+      "bytes": 53762,
+      "path": "docs/comparisons/COMP-0039-slice-c-admission-q5-check-depth-and-two-hop.md",
+      "sha256": "ae68179a4275aa3de1f1e3c3b13c9c516f49b72042764656de880a5283bcc572",
+      "source_id": "COMP-0039"
+    },
+    {
+      "bytes": 31392,
+      "path": "docs/comparisons/COMP-0040-slice-c-admission-q1-honest-terminus-or-capitulation.md",
+      "sha256": "0485a72f5adeb44edf2069f01a1ddbcd5e8f4ce1390d2cd8ebb84ac8bfbb44af",
+      "source_id": "COMP-0040"
+    },
+    {
+      "bytes": 29443,
+      "path": "docs/comparisons/COMP-0041-slice-c-admission-q2-new-overclaim-in-v7.md",
+      "sha256": "c115a42880bd26f2e6bf8a0aaf84dd62d7543f3d10e3685a0906dee0c2e776e3",
+      "source_id": "COMP-0041"
+    },
+    {
+      "bytes": 25932,
+      "path": "docs/comparisons/COMP-0042-slice-c-admission-q3-attack-v7-independently.md",
+      "sha256": "470ba660fa670c1ceb0073af54225c3cf3f7c3d3e70e992b06469f9393583996",
+      "source_id": "COMP-0042"
+    },
+    {
+      "bytes": 64432,
+      "path": "docs/comparisons/COMP-0043-slice-c-admission-q4-refusal-completeness.md",
+      "sha256": "bad63a2ba6ead31efa95c1ff650b09cd5c36b7d7f69300f791afb11df683cff6",
+      "source_id": "COMP-0043"
+    },
+    {
+      "bytes": 54082,
+      "path": "docs/comparisons/COMP-0044-slice-c-admission-q6-does-slice-evidence-c6.md",
+      "sha256": "e7a9eee5ab0e53ff6e4017449d53a0beae52d67f40c2abfbf2b1b06982936382",
+      "source_id": "COMP-0044"
+    },
+    {
+      "bytes": 64353,
+      "path": "docs/comparisons/COMP-0045-slice-c-admission-q7-success-criteria-checkability.md",
+      "sha256": "203e6189b677de878afe339c5a9caa3c7e38669cd3c8e93908a2ef93172f7ec2",
+      "source_id": "COMP-0045"
+    },
+    {
+      "bytes": 71150,
+      "path": "docs/comparisons/COMP-0046-slice-c-admission-q8-slice-d-constraints.md",
+      "sha256": "09c78c55de47fb2c3a680d0b8d001dc1399d35b8fa90bcc98ce6c39594e6125e",
+      "source_id": "COMP-0046"
+    },
+    {
+      "bytes": 16361,
+      "path": "docs/comparisons/COMP-0118-v8-admission-q1-constraint-that-states-its-own-unenforceability.md",
+      "sha256": "776b1b82fedcd9a8fb4cc27e3cf31c607302cc991f8534e01c838a2f2ccc2854",
+      "source_id": "COMP-0118"
+    },
+    {
+      "bytes": 15535,
+      "path": "docs/comparisons/COMP-0119-v8-admission-q2-inert-clause-annotated-rather-than-removed.md",
+      "sha256": "9bb4793866344bc81288b384aa057920ba8a6740e315ae07ce7473ea1ed89eb8",
+      "source_id": "COMP-0119"
+    },
+    {
+      "bytes": 16933,
+      "path": "docs/comparisons/COMP-0120-v8-admission-q3-declarant-set-scope-and-the-recorded-override.md",
+      "sha256": "828c19069694d03b30111386925c7fe10c5640ced799c43ebfc5ab6f9631fdc0",
+      "source_id": "COMP-0120"
+    },
+    {
+      "bytes": 39498,
+      "path": "docs/comparisons/COMP-0121-v8-admission-q4-attack-v8-section-3.md",
+      "sha256": "55e7cde63a144a27a4bf1b929c17cd22ad29701e932d3d6f58a8c47954393d33",
+      "source_id": "COMP-0121"
+    },
+    {
+      "bytes": 18509,
+      "path": "docs/comparisons/COMP-0122-v8-admission-q5-per-version-admission-table.md",
+      "sha256": "e4e0399edd0b15b797168e80bb1e37e524ec1ed4c029916153292ed8ea11523b",
+      "source_id": "COMP-0122"
+    },
+    {
+      "bytes": 20947,
+      "path": "docs/comparisons/COMP-0123-v8-admission-q6-refusal-enumeration-and-the-4-7-exclusion.md",
+      "sha256": "d8430d9cca1ce8743f0ed634d8239b8badd89a117bdc943ca3d0bc3f3566c370",
+      "source_id": "COMP-0123"
+    },
+    {
+      "bytes": 31251,
+      "path": "docs/comparisons/COMP-0124-v8-admission-q7-do-stated-bounds-make-criteria-checkable.md",
+      "sha256": "e60819de8fd51f9d8d2852899aac167ef1be41dbbe5ebdf7ad249c005a259cfd",
+      "source_id": "COMP-0124"
+    },
+    {
+      "bytes": 42030,
+      "path": "docs/comparisons/COMP-0125-v8-admission-q8-what-the-revision-made-worse.md",
+      "sha256": "e5412bade4e39757ba4d575138d6ea546e003f56571117f2d34cf2a414e8ee97",
+      "source_id": "COMP-0125"
+    },
+    {
+      "bytes": 188865,
+      "path": "docs/comparisons/comp0039/CLAIM_IMPACT.json",
+      "sha256": "f15165fd3b77f9ffc4c7ff6d18bf4d74f4fc143b279e1e791136f6b0cf9d4e12",
+      "source_id": "CLAIM_IMPACT"
+    }
+  ],
+  "source_snapshot": {
+    "archive": "/mnt/data/ai-lab-main (6).zip",
+    "extracted_root": "/mnt/data/ai_lab_repo/ai-lab-main",
+    "note": "The attached snapshot predates the user-reported current checkout at 1914cf5. Current withdrawal records and v9 authorization are accepted only as supplied context, not independently verified from this ZIP."
+  },
+  "status": "admitted_as_evidence_input",
+  "unprobed_surfaces_for_future_review": [
+    {
+      "handling": "Do not treat as round-established; carry into the next review/adjudication input.",
+      "status": "independently confirmed in prior full-document review; not asked by the five rounds",
+      "surface": "Proposed status versus any sentence tag defined as adopted now.",
+      "surface_id": "UP-001"
+    },
+    {
+      "handling": "Treat as evidence of propagation risk, not as candidate v9 language.",
+      "status": "independently confirmed in prior full-document review; not asked by the five rounds",
+      "surface": "Plan propagation failure retaining the word necessarily after the ontology itself says the claim is false.",
+      "surface_id": "UP-002"
+    },
+    {
+      "handling": "Governance-process finding for future plan review.",
+      "status": "independently confirmed in prior full-document review; not asked by the five rounds",
+      "surface": "A next_action that collapses adjudication into approval.",
+      "surface_id": "UP-003"
+    },
+    {
+      "handling": "Retained in V9L-025 and should receive an unframed future attack.",
+      "status": "partly covered by COMP-0032 and COMP-0046 but not directly stress-tested in the two authored question sets",
+      "surface": "Executor identity equivalence under aliases, unresolved identities, and cross-kind identity collisions.",
+      "surface_id": "UP-004"
+    },
+    {
+      "handling": "Second-round review surface; no finding asserted yet.",
+      "status": "not directly probed by the selected rounds",
+      "surface": "Authorization graph cycles, conflicting records, expiry, retroactivity, and post-invocation authorization.",
+      "surface_id": "UP-005"
+    },
+    {
+      "handling": "Second-round review surface; no remedy inferred.",
+      "status": "partly adjacent to bootstrap attacks but not fully probed",
+      "surface": "Seed-authority bootstrap and provenance of who drafts, approves, activates, and then relies on root records.",
+      "surface_id": "UP-006"
+    },
+    {
+      "handling": "Captured in V9L-013 and V9L-015; consumer-only review still warranted.",
+      "status": "partly covered by COMP-0037, COMP-0123, and COMP-0125",
+      "surface": "Ordinary-language implications of governed, valid authorization, permitted, and self-standing when detached from disclaimers.",
+      "surface_id": "UP-007"
+    },
+    {
+      "handling": "Captured in V9L-015; terminology remains unresolved.",
+      "status": "partly covered by COMP-0037 but not adjudicated",
+      "surface": "Whether a classification-only system is authorization, authorization assessment, or record-coverage classification.",
+      "surface_id": "UP-008"
+    },
+    {
+      "handling": "Methodological constraint on the next review, not ontology text.",
+      "status": "disclosed by the user; supported by round metadata and process history",
+      "surface": "Question-author capture: the same executor wrote both reviewed text and the question set, narrowing what was probed.",
+      "surface_id": "UP-009"
+    }
+  ]
+}

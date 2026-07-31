@@ -1,0 +1,56 @@
+{
+  "authorized_effects": [
+    "Admitting docs/self_model/V9_CHANGE_LEDGER.json and its Markdown rendering as the evidence input to ABS-0004 v9 drafting, under DECISION-20260727-0002.",
+    "Accepting the ledger's classification of 29 live findings: 3 requiring a change to v4 text, 7 for which an explicit limitation is sufficient, 15 requiring a separate gap or policy, and 4 unresolved.",
+    "Accepting the ledger's five v4 baseline properties to preserve and its nine surfaces the rounds did not adequately probe, the latter as input to the next round's question set.",
+    "Recording the ledger's derived Section 3 result as an adjudicated finding: thirteen live findings bear on Section 3 and none is classified v4 change required.",
+    "Treating the four resolution_condition statements as the standard by which those unresolved entries may later be closed."
+  ],
+  "blocked_effects": [
+    "No authorization to draft ABS-0004 v9. This decision admits the evidence input; drafting remains authorized by DECISION-20260727-0002 and is not performed by this record.",
+    "No adoption of any remedy. The ledger proposes no sentences, schemas, labels or controls, and its excluded_remedies entries are binding on whoever drafts: in particular, no v5 catalog terminology, no v8 AuthorizationPolicy definition, and no reviewer-proposed enum.",
+    "No claim that the ledger's classifications are correct. They are adjudicated, which is what admission means here; a later round may show a classification wrong, and the resolution_condition fields exist so that the four unresolved entries cannot be closed by whoever happens to need them closed.",
+    "No creation of a new indexed record family. The ledger is not read by ai_lab/documentation/self_model.py and does not appear in SELF_MODEL.json; that is stated in the ledger's own metadata rather than fixed here.",
+    "No claim that a v9 close to v4 is a failure or that a larger v9 is progress. The ledger's purpose is the smallest honest delta from the last admitted text."
+  ],
+  "created_at": "2026-07-27T00:00:00+00:00",
+  "decision": "admit_v9_change_ledger_as_evidence_input",
+  "decision_id": "DECISION-20260727-0003",
+  "evidence_refs": [
+    "docs/self_model/V9_CHANGE_LEDGER.json",
+    "docs/self_model/V9_CHANGE_LEDGER.md",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "docs/comparisons/COMP-0032-abs-0004-invocation-authorization-ontology-challenge-round.md",
+    "docs/comparisons/COMP-0035-slice-b-scoping-catalog-identity-resolution.md",
+    "docs/comparisons/COMP-0037-abs-0004-v6-amendment-and-plan-20260723-0002-slice-c-admission-review.md",
+    "docs/comparisons/comp0039/SLICE_C_FINDINGS.md",
+    "docs/comparisons/comp0039/CLAIM_IMPACT.json",
+    "docs/comparisons/COMP-0125-v8-admission-q8-what-the-revision-made-worse.md"
+  ],
+  "rationale": [
+    "The ledger was constructed by a reviewing executor separate from the executor that drafted v5 through v8, from the five comparison rounds only, reading each round and recording an initial extraction before consulting any later adjudication of it. That ordering matters because the dispositions in CLAIM_IMPACT.json were proposed by the drafting executor whose text was under review, and reading them first would have determined what the extraction noticed.",
+    "Verified against the checkout before admission: all 19 distinct round references resolve to committed artifacts; the four claim ids in the disposition audit all carry disposition refuted; the reported disposition counts match CLAIM_IMPACT.json exactly; and no ledger entry depends on ABS-0004 v8 still being a proposed document. The ledger's snapshot predates commit 1914cf5 and says so; that lag does not affect any of its assertions.",
+    "Boundary compliance checked rather than assumed. All 29 entries were scanned for prescriptive language; the three matches are a decline to adjudicate what v9 should define and two uses of proposed text as a category name. The ledger proposes no remedy.",
+    "The distribution is the result. Three of 29 findings require changing v4's text, and two of those three come from COMP-0035, the round no later amendment revisited: catalog self-report represented as verification, and event-time identity resolution not distinguished from current confidence in it. The third is that AuthorizationPolicy is load-bearing and undefined.",
+    "Thirteen findings bear on Section 3 and none requires changing v4's text. Section 3 is where v5 through v8 spent their effort and where it grew from 1464 characters to 11043. The ledger's classification, reached entry by entry rather than argued, is that the correct response for that whole area is not ontology text. v4 named the authorization-chain bootstrap in a single [OPEN] and did not pretend to solve it.",
+    "Draft 0002 added only what the evidentiary review asked for: the refuted-class handling stated in method, a verified correction to V9L-001's later_disposition, the Section 3 result promoted from derivable to stated, and resolution_condition on the four unresolved entries. Its method records that no finding, evidence-strength rating, response class or excluded remedy was changed, which makes the revision auditable."
+  ],
+  "repo_commit": "1914cf505a5b5ce180444dd422b7b6a649e64d50",
+  "required_next_governance": [
+    "The fifteen findings classified separate gap or policy required are not yet gap records. Opening fifteen gaps at once would be a substantial change to the self-model's account of itself and should be adjudicated as its own act, not performed as a consequence of this admission.",
+    "The ledger is not indexed. ai_lab/documentation/self_model.py reads capabilities, gaps, verifications, plans, warrants and decisions; a ledger under docs/self_model/ appears in none of them, so nothing reading SELF_MODEL.json will find it. Either it is expressed in an indexed family or the absence stays stated where the ledger lives, as it now is.",
+    "Whoever drafts ABS-0004 v9 does not write the question set that reviews it, per DECISION-20260727-0002. Constructing the ledger is not drafting, so the reviewing executor remains eligible for either role; the assignment should be made deliberately and recorded before drafting begins.",
+    "The nine unprobed surfaces are inputs to the next round's question set and are not findings. They record what the two question sets did not ask, both having been written by the executor whose text was under review."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The v9 change ledger becomes the admitted evidence input for ABS-0004 v9 drafting. Its excluded_remedies entries bind the drafter. Its four resolution_condition statements become the standard for closing those entries. No ontology or plan text changes as a consequence of this record.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "The ABS-0004 v9 change ledger, constructed by a reviewing executor from the five comparison rounds without mining the withdrawn v5 through v8 for remedies, is admitted as the evidence input to v9 drafting. It carries 29 live findings, 5 v4 baseline properties to preserve and 9 surfaces the rounds did not adequately probe. Three findings require changing v4's text; thirteen bear on Section 3 and none of those does.",
+  "title": "Admit the ABS-0004 v9 change ledger as the evidence input to v9 drafting"
+}
