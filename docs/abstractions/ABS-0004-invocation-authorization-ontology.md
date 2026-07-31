@@ -6,7 +6,7 @@
 - title: `Invocation Authorization Ontology`
 - version: `v8`
 - abstraction_level: `2`
-- status: `proposed` — this version only. A single status field cannot
+- status: `withdrawn_after_admission_review` — this version only. A single status field cannot
   describe a document amended repeatedly, and until v8 this one did not try:
   the metadata carried `status: admitted` and `admitted_at: 2026-07-20`
   directly beneath `version: v7`, while its stated admission basis described
@@ -22,7 +22,8 @@
   | v5 | amended, not separately admitted | replaced CatalogVerification with CatalogCapture on the COMP-0035 finding, at 6d7dfee |
   | v6 | amended, not separately admitted; superseded | proposed an authorization-chain termination that both COMP-0037 reviewers broke independently, at 8a1399f |
   | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
-  | v8 | **proposed** | this revision, applying the COMP-0039..0046 findings and the drafting finding recorded below |
+  | v8 | **withdrawn_after_admission_review** | reviewed by COMP-0118..0125 and withdrawn under DECISION-20260727-0002; retained as evidence, not rejected, and not an implementation authority. Its Section 3 grew 7.5-fold from v4 across four unadmitted amendments and carries 24 constraints tagged as adopted now while the document is marked proposed |
+  | v9 | **not yet drafted** | to be reconstructed from v4's admitted text with a separate change ledger, under DECISION-20260727-0002 |
 
 - admission record gap: no admission warrant exists for any ABS-0004
   amendment. The four warrants naming ABS-0004 — WARR-20260722-0001,

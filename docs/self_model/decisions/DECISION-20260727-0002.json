@@ -1,0 +1,66 @@
+{
+  "authorized_effects": [
+    "Marking ABS-0004 v8 withdrawn_after_admission_review in the version admission table. It is retained in full as evidence of the failure modes the two rounds established, and is not rejected as a whole: no finding in either round was adjudicated as wrong.",
+    "Withdrawing PLAN-20260723-0002 from admission consideration. It is coupled to v8's semantics, still asserts a proposition v8 declares false, and its next_action presupposes its own approval.",
+    "Constructing ABS-0004 v9 by reconstruction from the admitted v4 text, not by further editing of v8. Section 3 of v9 begins from v4's Section 3 verbatim.",
+    "Re-reading v4's Section 3 against the findings of COMP-0037, COMP-0039..0046 and COMP-0118..0125 before it is treated as a baseline, rather than inheriting it as sound because it is admitted.",
+    "Creating a change ledger, separate from the ontology, carrying for each proposed change: the defect addressed, the v4 text changed, the replacement, the property the replacement establishes, what it explicitly does not establish, the review finding supporting it, and any dependence on a future policy or mechanism.",
+    "Requiring that v9 carry no sentence category meaning adopted now until v9 is itself admitted."
+  ],
+  "blocked_effects": [
+    "No incremental revision of v8. A v9 reached by deleting from v8 would preserve terminology, headings, sentence classifications and dependencies introduced across four unadmitted amendments, and the drafting executor has repeatedly failed smaller identification tasks of that kind.",
+    "No use of v8 as an implementation authority or as the semantic source for any plan. v8 is evidence, not a specification.",
+    "No treatment of v4 as correct because it is admitted. Admitted means adjudicated at the time, on the COMP-0032 findings; neither later round tested it.",
+    "No claim that the findings of the two rounds are resolved by this decision. They are carried into the ledger as inputs to v9, and remain open until v9 addresses each explicitly or records that it does not.",
+    "No implementation of Slice C under the withdrawn plan.",
+    "No claim that this decision was reached independently of the drafting executor. It follows a synthesis by a separate reviewing executor whose two load-bearing findings were verified against the checkout before the recommendation was accepted.",
+    "No extension of PLAN_STATUSES to admit a withdrawn value. That is a self-model schema change and belongs to its own decision, not to this one."
+  ],
+  "created_at": "2026-07-27T00:00:00+00:00",
+  "decision": "withdraw_abs_0004_v8_and_reconstruct_v9_from_admitted_v4",
+  "decision_id": "DECISION-20260727-0002",
+  "evidence_refs": [
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/self_model/plans/PLAN-20260723-0002.json",
+    "docs/comparisons/COMP-0118-v8-admission-q1-constraint-that-states-its-own-unenforceability.md",
+    "docs/comparisons/COMP-0119-v8-admission-q2-inert-clause-annotated-rather-than-removed.md",
+    "docs/comparisons/COMP-0120-v8-admission-q3-declarant-set-scope-and-the-recorded-override.md",
+    "docs/comparisons/COMP-0121-v8-admission-q4-attack-v8-section-3.md",
+    "docs/comparisons/COMP-0122-v8-admission-q5-per-version-admission-table.md",
+    "docs/comparisons/COMP-0123-v8-admission-q6-refusal-enumeration-and-the-4-7-exclusion.md",
+    "docs/comparisons/COMP-0124-v8-admission-q7-do-stated-bounds-make-criteria-checkable.md",
+    "docs/comparisons/COMP-0125-v8-admission-q8-what-the-revision-made-worse.md",
+    "docs/comparisons/comp0039/SLICE_C_FINDINGS.md",
+    "docs/comparisons/comp0039/CLAIM_IMPACT.json",
+    "docs/self_model/DRAFTING_EXECUTORS.json",
+    "docs/self_model/gaps/GAP-0007.json"
+  ],
+  "rationale": [
+    "Measured, not argued. Section 3 grew from 1464 characters in admitted v4 to 11043 in proposed v8, a factor of 7.5, across four amendments none of which was separately admitted. The [ADOPTED_CONSTRAINT] tag appears 0 times in v4's Section 3 and 8 times in v8's. Every sentence in that section carrying adopted status was introduced after the last admission.",
+    "Normative-state corruption. The document defines [ADOPTED_CONSTRAINT] as 'constraint adopted now' and carries 24 of them while marked status: proposed. The status of every constraint in the document is therefore undetermined: either proposed text is claiming present force, or the tags refer to inherited constraints and the document does not identify which wording was previously admitted. This was found by the reviewing executor and verified at line 45 against line 9.",
+    "The remedies the round produced are almost entirely removals: withdraw the legibility imperative rather than annotate it, delete the inert disqualification rather than caveat it, remove the revision-history sentences. Two of the three additions the drafting executor made in v8 draft 2 were subsequently used by reviewers to extend attacks: the subordinate-class breadth constraint widened the self-appointed-root path, and the disclosure that no attribution rule exists grounded a new false-attribution construction. Adding text to disclose a defect has twice created attack surface.",
+    "The plan reintroduces what the ontology withdrew. non_goals[8] still states that at the root of any chain the accountable party 'necessarily' authorizes work it is responsible for; v8 states at line 260 that this is false. Both documents were edited in the same session by the same executor, and a staleness scan built for exactly this class did not catch it because the phrase was not on the list it was given.",
+    "The document's shape has failed independently of its content. Historical rebuttal, disclaimer, deferred control and normative rule are interleaved, so after editing a clause it is not determinable whether dependent claims, labels and status tags still carry the prior meaning. That is an inheritance-boundary failure, and it is what makes deletion-based repair unreliable rather than merely tedious.",
+    "v5 through v8 were each drafted by a conversational executor. Conversational drafting produces no InvocationRecord, so no record establishes who drafted any of them, and none was separately admitted. The entire 7.5-fold growth occurred inside that unrepresented gap. This is the strongest available argument that the reconstruction must be a governed act with a recorded ledger rather than another session's editing."
+  ],
+  "repo_commit": "99b79011ca4e39348b59386b0cd95c263a74e6e3",
+  "required_next_governance": [
+    "v9 is a proposed amendment and requires its own admission review. This decision authorizes its construction, not its admission.",
+    "The re-read of v4's Section 3 against the three rounds must be recorded before v9 drafting begins, including any v4 statement the later rounds' findings bear on. If the re-read finds nothing, that is a result and must be recorded as one.",
+    "The change ledger is a new record family and is not indexed by the self-model, which reads capabilities, gaps, verifications, plans, warrants and decisions. Either the ledger is expressed in an indexed family or its absence from the index is stated where the ledger lives.",
+    "A replacement plan for Slice C should implement descriptive records and neutral assessment outputs only. The terms governed and valid authorization should not appear in its outputs: the round established that an invocation with undisclosed subordinate execution can earn both. Authorization policy belongs to a later plan.",
+    "The next round's question set must not be written by the executor that drafts v9. Both rounds so far were authored by the party whose text was under review, and the reviewing executor's synthesis identified nine surfaces neither round probed.",
+    "PLAN_STATUSES admits proposed, admitted, rejected, completed and superseded, and there is no superseded_by field. None of those values means withdrawn pending a successor: rejected would assert the plan was judged wrong, which no finding established, and superseded would assert a successor exists, which none does. PLAN-20260723-0002 therefore retains status proposed and its withdrawal is carried by next_action, which is weaker than a status field and will not be seen by anything reading status alone. The validator refusing the invented value is the schema working; extending the vocabulary is a separate governance act and was deliberately not folded into this one."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "ABS-0004 v8 ceases to be an admission candidate and becomes retained evidence. PLAN-20260723-0002 ceases to be an admission candidate. The admitted baseline reverts to v4 for the purpose of constructing v9; v4 remains the last version with an admission event, as it was before this decision. No file content changes as a consequence of this record alone: the withdrawal is effected by the version admission table and the plan status field, in the change that cites this decision.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "ABS-0004 v8 is withdrawn from admission consideration and retained as evidence; PLAN-20260723-0002 is withdrawn with it; ABS-0004 v9 is to be constructed by reconstruction from the admitted v4 text with a separate change ledger, rather than by further editing of v8. The round COMP-0118..0125 and an independent synthesis by a separate reviewing executor established that v8 carries 24 constraints tagged as adopted now while marked proposed, that its remedies are almost entirely removals, that two of its additions extended attacks rather than closing them, and that its Section 3 grew 7.5-fold across four amendments none of which was admitted.",
+  "title": "Withdraw ABS-0004 v8 and PLAN-20260723-0002; reconstruct v9 from the admitted v4 baseline"
+}
