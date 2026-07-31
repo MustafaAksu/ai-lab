@@ -1,0 +1,47 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q7 ===
+Eight of the plan's ten success criteria now carry a stated bound describing what the criterion does and does not establish, added after a round found them not mechanically checkable as written.
+
+Does stating a bound make a criterion checkable, or does it record that it is not and leave it in place? Go criterion by criterion for those that carry a bound, and say for each whether a person could now determine pass or fail without further judgment. Where a bound does not achieve that, give the wording that would, or say that the criterion should be removed rather than bounded.
+
+=== EVIDENCE PLAN-20260723-0002#success_criteria (all) ===
+[0] A stored invocation is classified governed when a valid authorization covers it and experimental otherwise, demonstrated by fixtures for both outcomes.
+
+[1] Each of the fourteen enumerated refusal reasons is exercised by a fixture and yields that reason; no fixture path returns a permitted outcome without a matching authorization record. This is enumerated-fixture coverage of the fourteen named reasons; it does not establish that no implementation path can return permitted without a matching authorization.
+
+[2] An authorization whose chain terminates nowhere is refused, and an authorization issued outside a principal's declared authority_scope is refused, each with its own reason. Checkable for the chain-termination case. The authority_scope case is checkable only against fixtures whose scopes are hand-constructed: ABS-0004 supplies no scope grammar and no matching semantics, so "outside its declared scope" cannot be evaluated in general.
+
+[3] The one-hop self-adjudication check refuses an adjudicator authorization over an artifact produced by the same executor identity, demonstrated against a real captured InvocationRecord, permits it when the identities differ, and carries a check_depth field marking the result as direct-only in both cases. The identity-collision logic and the presence and value of check_depth are mechanically checkable against any fixture InvocationRecord. The requirement to demonstrate against a real captured InvocationRecord is not: no record is named and no selection rule is given. The criterion is met by naming the specific InvocationRecord used.
+
+[4] Consequence classification is exercised over the enumerated modifier set: for each modifier, a fixture asserts the effective class equals the maximum of the default and the modifier level, and a downward adjustment without a recorded governed exception is refused. This is enumerated-fixture coverage of the named cases, not a proof of monotonicity over all inputs.
+
+[5] A qualification lacking an execution scope is rejected, and a qualification is not honoured for an endpoint or execution profile outside its scope. Checkable only against fixtures whose ExecutionProfile constraints are hand-constructed: ABS-0004 Section 4.6 gives the scope fields but no matching semantics for "permitted ExecutionProfile constraints" and no definition of a materially different profile.
+
+[6] A self-issued authorization is accepted, carries self_issued true, and is reported as not independent by any check that asks for independent authorization. Checkable under the plan's exact-identifier-equality rule for party sameness. "Any check that asks for independent authorization" is unbounded and is not checkable as written; the criterion is met against the enumerated checks this slice defines.
+
+[7] Regression: Slice A capture and Slice B resolution are unchanged, demonstrated by a fixture that runs both against stored records before and after authorization code is importable and asserts byte-identical outputs. COMP-0037 found this constraint had no corresponding check. Byte-identical output over the fixture set is unambiguous and checkable. It does not establish the broader constraint that no field, path, or default of Slice A or Slice B was altered.
+
+[8] The new modules are covered by tests exercising every public entrypoint and every enumerated outcome; the full suite passes offline with no network access. The offline-with-no-network condition is checkable as pass or fail. "Every public entrypoint" is not checkable as written: the criterion is met against an enumerated list of entrypoints recorded with the tests.
+
+[9] The repository audit reports ok true verified_current, and commit-level cross-environment reproduction from the public repository yields byte-identical checksums for every delivered file. Not mechanically checkable as written and restated as two conditions with named procedures: the audit reports ok true and verification_outcome verified_current when scripts/audit_self_model_index.py is run at the delivered commit; and a second clone of the public repository at that commit yields identical sha256 for each delivered file under a recorded file list. Without the procedure, the commands, and the semantics of verified_current, neither clause could be evaluated.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.

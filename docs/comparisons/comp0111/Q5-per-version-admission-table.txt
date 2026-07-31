@@ -1,0 +1,65 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q5 ===
+v8 replaced a single status field with a per-version admission table. The field previously read status admitted with an admission date, directly beneath version v7, while the stated admission basis described the round that produced v4. A reader would have taken v7 as admitted; no record established that.
+
+Does the table fix the defect or relocate it? Consider specifically: what a reader now takes from the word proposed against v8; whether "amended, not separately admitted" is a status or the absence of one; and whether a document that has been amended four times without an admission warrant is in a state the table can describe at all. If the table asserts more than the record supports, name the sentence.
+
+=== EVIDENCE ABS-0004:v8 metadata and version admission table ===
+
+- abstraction_id: `ABS-0004`
+- title: `Invocation Authorization Ontology`
+- version: `v8`
+- abstraction_level: `2`
+- status: `proposed` — this version only. A single status field cannot
+  describe a document amended repeatedly, and until v8 this one did not try:
+  the metadata carried `status: admitted` and `admitted_at: 2026-07-20`
+  directly beneath `version: v7`, while its stated admission basis described
+  the COMP-0032 round that produced v4. A reader would take v7 as admitted.
+  No record establishes that. The table below replaces the single field.
+- version admission table:
+
+  | version | state | basis |
+  | --- | --- | --- |
+  | v1, v2 | superseded during drafting | never entered the record |
+  | v3 | superseded | entered the record at 6802cf7; underwent the COMP-0032 challenge round |
+  | v4 | **admitted** 2026-07-20 | twelve adjudicated COMP-0032 findings applied; admitted at 56f18a2 by the operator as accountable principal in session, recorded in conversation only |
+  | v5 | amended, not separately admitted | replaced CatalogVerification with CatalogCapture on the COMP-0035 finding, at 6d7dfee |
+  | v6 | amended, not separately admitted; superseded | proposed an authorization-chain termination that both COMP-0037 reviewers broke independently, at 8a1399f |
+  | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
+  | v8 | **proposed** | this revision, applying the COMP-0039..0046 findings and the drafting finding recorded below |
+
+- admission record gap: no admission warrant exists for any ABS-0004
+  amendment. The four warrants naming ABS-0004 — WARR-20260722-0001,
+  WARR-20260722-0002, WARR-20260723-0001, WARR-20260723-0002 — are
+  plan-implementation warrants for Slices A and B, not ontology amendments.
+  v4's admission is recorded in conversation only, as its own basis states.
+  Until a DecisionRecord kind exists to carry amendment admission (Slice C,
+  Section 4.13), this table is an honest substitute for a record that cannot
+  yet be represented; it is not a claim that the gap is closed.
+- review basis for v8: COMP-0039..0046, eight questions asked in separate
+  invocations with per-question declared evidence, two providers, sixteen
+  complete responses. Findings consolidated in
+  `docs/comparisons/comp0039/SLICE_C_FINDINGS.md`. Under constraint C3 that
+  round is `independence_unresolved`, not two-witness corroboration.
+- authors: operator (adjudicating principal); drafting executor self-reported
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.

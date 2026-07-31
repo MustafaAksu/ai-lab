@@ -1,0 +1,160 @@
+{
+  "questions": [
+    {
+      "est_input_tokens": 1196,
+      "evidence_units": [
+        {
+          "chars": 400,
+          "source_sha256": "a2ac6ff9b353980f0f808abb37b0bc55f1ebeb239729b3dbe51aec644cd1e473",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:scope-breadth-is-visible-and-bread"
+        },
+        {
+          "chars": 687,
+          "source_sha256": "fb17c0724249169043b1107cf11e6c384815ce7289f293cb075bd79b2e191ed5",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:the-legibility-requirement-is-unen"
+        }
+      ],
+      "prompt_chars": 3589,
+      "prompt_path": "docs/comparisons/comp0111/Q1-constraint-that-states-its-own-unenforceability.txt",
+      "prompt_sha256": "e24356ff6be8933dd3d304de125d5b367bdef0b9fe96800571724d9842deb9b2",
+      "question_id": "Q1",
+      "slug": "constraint-that-states-its-own-unenforceability"
+    },
+    {
+      "est_input_tokens": 1341,
+      "evidence_units": [
+        {
+          "chars": 645,
+          "source_sha256": "0d9039164b0046968fbbfc1b74bbe1938b6e79ba97326798f54ae0c3cf42984c",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:self-issued-authorization-is-marke"
+        },
+        {
+          "chars": 731,
+          "source_sha256": "26241301c6bdf4910064c8049632a4010586a19910900cfc10c67359b1c1eda6",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:the-disqualification-is-conditiona"
+        }
+      ],
+      "prompt_chars": 4024,
+      "prompt_path": "docs/comparisons/comp0111/Q2-inert-clause-annotated-rather-than-removed.txt",
+      "prompt_sha256": "ca4fb90f1318871ad8609611d1099250cb347359787c3db9588d939548300b00",
+      "question_id": "Q2",
+      "slug": "inert-clause-annotated-rather-than-removed"
+    },
+    {
+      "est_input_tokens": 1340,
+      "evidence_units": [
+        {
+          "chars": 646,
+          "source_sha256": "e5d3cbf2a3d0236afdf0b20cf5791469275deb6b3fe1518a1b7fe266b9a14326",
+          "unit_id": "ABS-0004:v8:S3#open:what-makes-a-scope-declaration-som"
+        },
+        {
+          "chars": 660,
+          "source_sha256": "60bcd78f745a56fcee5da36e2e28f6baa0351b513fcac900e7724a9b7b6639f7",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:the-decision-not-to-bound-breadth"
+        }
+      ],
+      "prompt_chars": 4021,
+      "prompt_path": "docs/comparisons/comp0111/Q3-declarant-set-scope-and-the-recorded-override.txt",
+      "prompt_sha256": "80867b16fe2a9fee23f467b4ca239097d4162afcc6765ad3cca02bf8647e1e8a",
+      "question_id": "Q3",
+      "slug": "declarant-set-scope-and-the-recorded-override"
+    },
+    {
+      "est_input_tokens": 4345,
+      "evidence_units": [
+        {
+          "chars": 10763,
+          "source_sha256": "35158691861fab246d3aafef1efde1ed86d7fb0f24fd12e4ce0d3b25548553ba",
+          "unit_id": "ABS-0004:v8:S3 (all blocks)"
+        }
+      ],
+      "prompt_chars": 13037,
+      "prompt_path": "docs/comparisons/comp0111/Q4-attack-v8-section-3.txt",
+      "prompt_sha256": "3ab29705e868d66a01aa5eb11c8f068fd5c02fa345c54339412fa017691a6fd5",
+      "question_id": "Q4",
+      "slug": "attack-v8-section-3"
+    },
+    {
+      "est_input_tokens": 1665,
+      "evidence_units": [
+        {
+          "chars": 2518,
+          "source_sha256": "529866a1f32cb20f88050fc5d5f80a770e2095a1e9946c2db1ecbc3993d5ca79",
+          "unit_id": "ABS-0004:v8 metadata and version admission table"
+        }
+      ],
+      "prompt_chars": 4995,
+      "prompt_path": "docs/comparisons/comp0111/Q5-per-version-admission-table.txt",
+      "prompt_sha256": "2b0651c7401a5ee56f30bda3a49ce900094d9526a983e0ab9e2f1f1a09ee3021",
+      "question_id": "Q5",
+      "slug": "per-version-admission-table"
+    },
+    {
+      "est_input_tokens": 2193,
+      "evidence_units": [
+        {
+          "chars": 2419,
+          "source_sha256": "a3bfc815910c737437f5afe7ef5cf379e579578595dd12e685be35b7e9f4b03a",
+          "unit_id": "PLAN-20260723-0002#scope[4]"
+        },
+        {
+          "chars": 739,
+          "source_sha256": "879aa4b0bc8f250b324719c11e6ba0f9c207b9b817b2ae317efd3f3f8212df1c",
+          "unit_id": "PLAN-20260723-0002#scope[7]"
+        },
+        {
+          "chars": 361,
+          "source_sha256": "6b39783a2ef36985cd955af142c9fb18ecb4fda166b5c512aaa680d5faaf4c02",
+          "unit_id": "ABS-0004:v8:S3#adopted_constraint:a-disclosure-violation-under-4-7-i"
+        },
+        {
+          "chars": 443,
+          "source_sha256": "0796e537fbb1cabc819420c23e2bcaad4ac4cc0d46922b1cdb3ffae1a59bc90b",
+          "unit_id": "ABS-0004:v8:S3#def:subordinate-authorization-inherita"
+        }
+      ],
+      "prompt_chars": 6580,
+      "prompt_path": "docs/comparisons/comp0111/Q6-refusal-enumeration-and-the-4-7-exclusion.txt",
+      "prompt_sha256": "f03c95fbb4b4e6dbb348ed8dabf46e9ee4ffb29f8eb026d472b7d897ecfca5c9",
+      "question_id": "Q6",
+      "slug": "refusal-enumeration-and-the-4-7-exclusion"
+    },
+    {
+      "est_input_tokens": 2211,
+      "evidence_units": [
+        {
+          "chars": 4297,
+          "source_sha256": "e6f502cacecc6b64eec547221926049bcbec150ba017d6bc43a87df474fd1604",
+          "unit_id": "PLAN-20260723-0002#success_criteria (all)"
+        }
+      ],
+      "prompt_chars": 6634,
+      "prompt_path": "docs/comparisons/comp0111/Q7-do-stated-bounds-make-criteria-checkable.txt",
+      "prompt_sha256": "f4292020ee029df82fcabab69d9e9a6d205d76eb2580cedf8ed57bacbdd8d107",
+      "question_id": "Q7",
+      "slug": "do-stated-bounds-make-criteria-checkable"
+    },
+    {
+      "est_input_tokens": 4718,
+      "evidence_units": [
+        {
+          "chars": 10763,
+          "source_sha256": "35158691861fab246d3aafef1efde1ed86d7fb0f24fd12e4ce0d3b25548553ba",
+          "unit_id": "ABS-0004:v8:S3 (all blocks)"
+        },
+        {
+          "chars": 992,
+          "source_sha256": "bfc2f5ab96a3a94ddc92bd2eab730d7db263e7bdd02eedf3a6a338437f5981d5",
+          "unit_id": "PLAN-20260723-0002#scope[12]"
+        }
+      ],
+      "prompt_chars": 14154,
+      "prompt_path": "docs/comparisons/comp0111/Q8-what-the-revision-made-worse.txt",
+      "prompt_sha256": "071cdb8c628b2bcab86b3f2baad80c889ef118b7f58ee3821e3314d83e58b19c",
+      "question_id": "Q8",
+      "slug": "what-the-revision-made-worse"
+    }
+  ],
+  "round_label": "abs-0004-v8-and-revised-plan-admission-review"
+}

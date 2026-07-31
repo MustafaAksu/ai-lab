@@ -1,0 +1,49 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q3 ===
+v8 declines to impose a maximum authority_scope breadth. Its reason: the prior round defeated the scope rule from two directions, one using a scope too wide and one narrowly tailored to authorize exactly itself, so a breadth bound stops one and not the other, and what both share is that the declarant fixed its own scope. v8 records that it is overriding an explicit recommendation to reject universal scopes.
+
+Test the reasoning, not the honesty of recording it. Does "the declarant fixed its own scope" correctly name what the two constructions share, or is it a generalisation that happens to cover both? Is there a property they share that would support a control, which this framing hides? If the framing is right, say what follows: whether any internal rule can bear on a declarant-set scope, and if not, what the open question is actually asking for.
+
+=== EVIDENCE ABS-0004:v8:S3#open:what-makes-a-scope-declaration-som ===
+What makes a scope declaration something other than self-assertion.
+COMP-0037 defeated v6's scope rule from two directions, not one. One reviewer
+declared a scope wide enough to cover the intended invocation; the other
+declared one narrowly tailored to authorize exactly itself, observing that a
+declaration so tailored "should not be an acceptable root merely because it
+has a stated scope". A maximum-breadth rule stops the first construction and
+not the second. Breadth is therefore not the property at fault. What both
+constructions share is that the declarant fixed its own scope, and that is
+the open question this ontology does not answer.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:the-decision-not-to-bound-breadth ===
+The decision not to bound breadth is recorded as an
+override, not as an absence. COMP-0037 recommended that AI-Lab "reject scopes
+that are universal, unparseable, or circular", and this ontology does not
+adopt that. The reason is that the recommendation addresses one of the two
+constructions its own round produced, so adopting it would report progress
+against a defect it does not close. v7 declined the same recommendation
+without recording that it was declining anything, and described COMP-0037
+only as "the same self-authorization path", which under-reported what that
+round found. An override that is not recorded is indistinguishable from an
+oversight.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.

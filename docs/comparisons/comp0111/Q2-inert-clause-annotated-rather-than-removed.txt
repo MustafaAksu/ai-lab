@@ -1,0 +1,54 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q2 ===
+v8 keeps the rule that a self-issued authorization is disqualified from counting as independent, and adds a constraint stating that the disqualification is conditional, is currently inert because the policy that would fix independence requirements is deferred, and may not be presented as a control.
+
+A prior round found the disqualification does no work because the issuing principal populates its own independence requirements. v8's response was to say so rather than to change it.
+
+Is annotating an inert clause the honest form, or does keeping a rule that does nothing, with a note that it does nothing, leave a reader worse off than deleting it? Argue one side. Then state what would have to exist for the clause to do work, and whether v8's text commits to producing it.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:self-issued-authorization-is-marke ===
+Self-issued authorization is marked, never silently
+accepted. Where the issuing principal and the authorized executor are the
+same party, or where a principal issues an authorization covering an
+invocation it also performs, the authorization records `self_issued: true`.
+
+A self-issued authorization is not refused. At the root of a chain the
+accountable party may authorize work it also performs, and commonly will.
+v7 said it "necessarily" does; that is false. This ontology separates the
+AccountablePrincipal role from the executor role and permits one party to
+hold both without requiring it, so a root authorization need not be
+self-issued.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:the-disqualification-is-conditiona ===
+The disqualification is conditional, is currently
+inert, and must be described as such. A self-issued authorization does not
+count as independent authorization wherever independence is required. Nothing
+in this ontology establishes when independence is required: that belongs to
+AuthorizationPolicy, which Section 4.16 defines and defers. The issuing
+principal populates its own authorization's independence requirements, so
+until an external policy fixes them, a self-issued authorization may be
+recorded with no independence requirement against it, and nothing is
+disqualified. Until AuthorizationPolicy exists the marking is a label, and it
+may not be presented, in a record or a summary or an implementation plan, as
+a control.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.

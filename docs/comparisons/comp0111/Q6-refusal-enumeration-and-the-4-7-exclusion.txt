@@ -1,0 +1,49 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q6 ===
+The plan now enumerates fourteen refusal reasons and states expressly that ABS-0004 Section 4.7's disclosure constraints are excluded from what authorize() checks, with the reason that none is checkable from stored records.
+
+Two things to test. First, is fourteen complete for what the plan means by a valid authorization? Name any refusal the enumeration still lacks. Second, a prior reviewer's condition on excluding 4.7 was that the plan must then not describe its result as a valid authorization under the adopted constraints. Does the plan's current wording meet that condition, or does it exclude the checks while retaining language that implies they were made?
+
+=== EVIDENCE PLAN-20260723-0002#scope[4] ===
+A pure authorize() function over stored records returning an authorization outcome or one of the enumerated refusal reasons: (1) no qualification for this executor and role; (2) qualification out of execution scope; (3) consequence above the role ceiling; (4) unterminated authorization chain; (5) standing authority claimed outside its declared scope; (6) an authorization condition is unmet; (7) the authorization is malformed; (8) required conditions are absent; (9) authorized executor does not match the executor performing the invocation; (10) the authorization or a record it relies on is inactive or superseded; (11) subordinate execution represented as an Invocation but outside the classes its parent authorization declares; (12) self-adjudication conflict; (13) no authorization record covers this invocation; (14) an independence requirement recorded on the authorization is unmet. Fourteen reasons, each with a fixture. COMP-0037 found four missing from the six originally proposed. COMP-0043 found three further defects in the resulting ten: reasons 6 to 8 above were a single reason combining a failed condition, malformed data, and absent conditions, which differ in diagnostic and remedial meaning; reason 13 was absent, since "authorized executor does not match" presupposes an authorization exists; and reason 14 was absent, so an unmet independence requirement could not refuse unless the one-hop artifact test happened to trigger. EXCLUDED, EXPRESSLY: the three ABS-0004 Section 4.7 disclosure constraints are not checked by authorize() in this slice. They are not checkable from stored records: OutboundInteractionLog is in Section 11, Defined but Deferred, so no such record exists; EffectiveInputManifest carries completeness_attestation partial_declared_channels_only on every record, so a manifest attesting its own partiality cannot ground a refusal for undeclared configuration; and an undisclosed subordinate execution requires detecting an absence, which no stored record supplies. Reason 11 therefore reaches a subordinate that IS represented and exceeds its declared classes, and does not reach one never disclosed as an Invocation at all, which ABS-0004 Section 3 calls not an implicitly authorized act. An invocation with a required disclosure absent can pass every check in this slice and be classified governed. That is a stated limit of the slice, not a gap the fixtures will catch.
+
+=== EVIDENCE PLAN-20260723-0002#scope[7] ===
+The experimental-versus-governed boundary: a classify function marking an invocation governed only when a valid authorization covers it, experimental otherwise. Classification only; no invocation is refused execution by this slice. "Valid authorization" here means only that an authorization record covers the invocation and none of the fourteen refusal reasons applies. It does not certify disclosure compliance, and a governed classification asserts nothing about whether ABS-0004 Section 4.7's constraints were met. Neither the documentation nor any summary may describe a governed result as a valid authorization under the full set of adopted ABS-0004 constraints, because the Section 4.7 constraints are excluded from what is checked.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:a-disclosure-violation-under-4-7-i ===
+A disclosure violation under 4.7 is a classification,
+not a detection. Nothing in this ontology detects that a subordinate
+execution went undeclared. A violation is recorded when someone establishes
+it by other means. No statement in this document or in any summary of it may
+describe undeclared execution as surfaced, caught, or prevented by these
+constraints.
+
+=== EVIDENCE ABS-0004:v8:S3#def:subordinate-authorization-inherita ===
+Subordinate authorization inheritance: a subordinate invocation is
+covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.

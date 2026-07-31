@@ -1,0 +1,46 @@
+You are reviewing a proposed ontology amendment and the implementation plan that depends on it. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v8 is proposed and not admitted. PLAN-20260723-0002 is proposed and not admitted. Neither has governance force.
+
+Three disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v8 is a response to a prior review round (COMP-0039..0046) of v7. It withdrew several claims that round found unsupported. Do not treat a sentence as sound because it is a correction; a correction can overreach or under-reach like any other text.
+
+2. Of the 118 claims that round produced whose citations the amendment broke, 58 were adjudicated as still applying against v8. v8 made the ontology more honest about what it does not do; it did not make the mechanisms work. Do not credit v8 with having closed what it only disclosed.
+
+3. The executor that drafted v8 also proposed the dispositions deciding which claims still applied, subject to operator approval. Treat both as one party's work.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: the evidence set below was scoped deliberately, and the scoping may be wrong. If you need a section, constraint, or record that is not present, name it explicitly and say what you would have used it for. That report is wanted output, not a failure.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q1 ===
+v8 requires that a wide authority_scope "must be legible as wide", and then adds a second constraint stating that this requirement is enforced by nothing: no scope grammar, no interpretation rule, no validation step, no rendering requirement, no rule governing what a summary may say.
+
+Is a constraint that states its own unenforceability a constraint, or a note about one? Say what it obliges that the requirement alone would not, and what a reader could do with it that they could not do with the requirement plus silence. If the honest form is to delete the requirement rather than annotate it, say so and give the replacement.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:scope-breadth-is-visible-and-bread ===
+Scope breadth is visible, and breadth is not the
+defect. A declared `authority_scope` may be arbitrarily wide, including
+universal. A wide scope is permitted and must be legible as wide; it may not
+be described, in a record or in a summary, as bounded merely because a scope
+field was populated. A boundary that no one can fail to satisfy is not a
+boundary, and calling it one is a defect P6 forbids.
+
+=== EVIDENCE ABS-0004:v8:S3#adopted_constraint:the-legibility-requirement-is-unen ===
+The legibility requirement is unenforced, and saying so
+is part of stating it. Nothing in this ontology supplies a scope grammar, an
+interpretation rule, a validation step, a rendering requirement, or a rule
+governing what a summary may say about a scope field. The requirement above
+therefore binds whoever writes a record or a summary, and a violation is a
+defect discoverable by reading rather than one caught by a check. This
+constraint is included because the earlier draft of v8 corrected exactly this
+overclaim in the standing-authority constraint and reproduced it here two
+paragraphs later, which is the defect class P6 names and the third occurrence
+of it inside this document.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient to answer it, say so and name what is missing.
