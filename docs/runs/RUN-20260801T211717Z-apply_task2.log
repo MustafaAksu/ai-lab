@@ -1,0 +1,28 @@
+run log: docs/runs/RUN-20260801T211717Z-apply_task2.log
+HEAD: 99194a2  (expect 99194a2)
+payload + file md5 OK
+verified: v4 4.16 defines AuthorizationPolicy and forbids untyped policy references; the accepted patch applies to admitted v4, reproduces the supplied candidate, removes exactly one ADOPTED_CONSTRAINT, and leaves Section 3 untouched
+
+V9L-027: v4 change required -> explicit limitation sufficient
+counts now: {"explicit limitation sufficient": 8, "separate gap or policy required": 15, "unresolved": 4, "v4 change required": 2}
+prior classification, finding and later_disposition preserved in the entry
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+.................................................................        [100%]
+713 passed in 31.68s
+
+ M docs/runs/RUN-20260801T202527Z-apply_task1.log
+ M docs/self_model/SELF_MODEL.json
+ M docs/self_model/V9_CHANGE_LEDGER.json
+?? docs/comparisons/COMP-0038-prompt.txt
+?? docs/runs/RUN-20260801T211717Z-apply_task2.log
+?? docs/self_model/decisions/DECISION-20260727-0004.json
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-task2-proposed-baseline.md
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-task2-required-changes.patch
+?? docs/self_model/v9_reconstruction/SHA256SUMS.txt
+?? docs/self_model/v9_reconstruction/V9_TASK2_REQUIRED_CHANGES_PROPOSAL.md
+
+Commit with: git add docs/self_model/ docs/runs/

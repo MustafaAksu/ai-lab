@@ -1,0 +1,54 @@
+{
+  "authorized_effects": [
+    "Re-adjudicating V9L-027 from v4 change required to explicit limitation sufficient, with the prior classification, prior finding text and prior later_disposition preserved in the entry's readjudication block rather than overwritten.",
+    "Accepting the task 2 proposal for V9L-001 and V9L-002 as literal replacement text for admitted v4 sections 4.3 and 4.4, to be applied when ABS-0004 v9 is assembled.",
+    "Recording the task 2 proposal, its patch, the v4 baseline it was drafted against, and the resulting candidate text, so that what the reviewing executor wrote can be diffed against what is applied.",
+    "Recording that the accepted text does not name identity_verification_status, a field the implementation requires, as a known and accepted consequence rather than an oversight."
+  ],
+  "blocked_effects": [
+    "No assembly of ABS-0004 v9. The accepted patch is a proposal held for assembly after the limitation-sufficient entries are drafted; no ontology file is modified by this decision.",
+    "No re-derivation of any other ledger entry. Eight entries cite COMP-0032 and only V9L-027 was re-adjudicated; the other seven assert residual limitations that survive v4 having applied the COMP-0032 findings, and none was re-checked here.",
+    "No claim that the ledger is now correct. One entry was found false and corrected. The correction was found because a reviewing executor revalidated rather than trusting an admitted classification, which is evidence that others may be wrong and were not checked.",
+    "No restoration of identity_verification_status to the accepted text. The operator accepted the patch as proposed; the field's absence from the ontology while present in the implementation is recorded as an open item, not silently repaired.",
+    "No change to Section 3, which the accepted patch leaves untouched."
+  ],
+  "created_at": "2026-07-27T00:00:00+00:00",
+  "decision": "readjudicate_v9l027_and_accept_task2_proposal",
+  "decision_id": "DECISION-20260727-0004",
+  "evidence_refs": [
+    "docs/self_model/V9_CHANGE_LEDGER.json",
+    "docs/self_model/v9_reconstruction/V9_TASK2_REQUIRED_CHANGES_PROPOSAL.md",
+    "docs/self_model/v9_reconstruction/ABS-0004-v9-task2-required-changes.patch",
+    "docs/self_model/v9_reconstruction/V9_TASK1_SECTION3_REREAD.md",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "docs/self_model/decisions/DECISION-20260727-0003.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "ai_lab/providers/invocation_record.py"
+  ],
+  "rationale": [
+    "V9L-027 was admitted as v4 change required on a finding false against admitted v4. It states that AuthorizationPolicy is a load-bearing missing object and that untyped strings cannot support replayable constraints. Section 4.16 of admitted v4 defines AuthorizationPolicy as a versioned durable rule with role eligibility conditions, consequence ceilings, subordinate-execution classes permitted for inheritance, required qualifications and independence, and exception procedures; the same paragraph states that all policy references in DecisionRecords are typed references to a versioned policy object, never untyped strings.",
+    "The finding was true of v3, which COMP-0032 reviewed. Commit 56f18a2 applied it, and the v4 commit message lists AuthorizationPolicy among the applied findings. The entry's later_disposition attributed the definition to v8; v4 supplied it.",
+    "What survives is narrower and is a limitation rather than a missing definition: enforcement is deferred, which v4 states in the 4.16 heading and in Section 11. COMP-0119 demonstrated that deferred enforcement can leave a dependent control inoperative, but it did so against v8's self-issued disqualification clause, which v4 does not contain. The demonstrated harm does not reach v4; the risk that a reader takes a defined policy object for an operative one does.",
+    "The error was found because the task 1 verification block stated plainly that extraction correctness and classification correctness had NOT been checked, and the reviewing executor revalidated rather than treating an admitted classification as ground truth. It declined to draft text rather than manufacture a remedy for a defect it could not reproduce against v4. That is the two-party arrangement producing what neither party would have produced alone.",
+    "The V9L-001 and V9L-002 proposal was verified before acceptance: three supplied SHA-256 checksums match; the supplied v4 baseline is byte-identical to the admitted commit; the patch applies cleanly to it; the result is byte-identical to the supplied candidate; the ADOPTED_CONSTRAINT count falls by one and none is introduced; PROPOSED_CONSTRAINT is an existing v4 category rather than a new one; the cited Section 4.17 VerificationRun exists in v4; and Section 3 is untouched.",
+    "One consequence of the accepted text is recorded rather than repaired. The replacement drops the only ontology mention of identity_verification_status, which ai_lab/providers/invocation_record.py requires and every captured invocation record carries. The new definition replaces a single status with the distinction between an event-time resolution and a later assessment of it, which is the substance of V9L-002, but does not name the field. The operator accepted the patch as proposed."
+  ],
+  "repo_commit": "99194a29bf639a9ed80c7fe9259c4935252e8530",
+  "required_next_governance": [
+    "The accepted text and the implementation disagree about identity_verification_status: the ontology would no longer name a field the record schema validates and 166 captured records carry. Before v9 is assembled, either the text names the field or a record states that the ontology deliberately no longer does and what the implementation should do about it.",
+    "V9L-027 now belongs to the limitation-sufficient group and requires drafting alongside the other seven in that class. Its limitation is that a defined policy object whose enforcement is deferred can be read as operative.",
+    "One admitted ledger entry was false. Nothing establishes that the remaining twenty-eight are correct: the ledger was extracted by one party and admitted without per-entry revalidation against v4. Whether the rest are revalidated, and by whom, is a decision that has not been taken.",
+    "ABS-0004 v9 will inherit seventeen ADOPTED_CONSTRAINT tags from v4 while itself being proposed. That is the shape of the contradiction that decided the withdrawal of v8 under DECISION-20260727-0002. It is out of scope for task 2 and the accepted patch correctly does not address it, but v9 cannot be completed without answering it."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "V9L-027 moves from v4 change required to explicit limitation sufficient, changing the ledger distribution to 2 v4 change required, 8 explicit limitation sufficient, 15 separate gap or policy required, 4 unresolved. The V9L-001 and V9L-002 replacement text for sections 4.3 and 4.4 is accepted for application at v9 assembly. No ontology file changes as a consequence of this record.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "V9L-027 is re-adjudicated from v4 change required to explicit limitation sufficient: its admitted finding that AuthorizationPolicy is a missing object is false against admitted v4, which defines it at 4.16 and requires typed policy references. The finding was true of v3 and was applied by the v4 commit. What survives is that enforcement is deferred, which is a limitation to state rather than a definition to supply. The task 2 replacement text for V9L-001 and V9L-002 is accepted as proposed, with the absence of identity_verification_status recorded as a known consequence.",
+  "title": "Re-adjudicate V9L-027 against admitted v4 and accept the task 2 replacement text"
+}

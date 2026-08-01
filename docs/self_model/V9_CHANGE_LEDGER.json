@@ -56,10 +56,10 @@
   "counts": {
     "baseline_preservations": 5,
     "by_response_class": {
-      "explicit limitation sufficient": 7,
+      "explicit limitation sufficient": 8,
       "separate gap or policy required": 15,
       "unresolved": 4,
-      "v4 change required": 3
+      "v4 change required": 2
     },
     "live_entries": 29,
     "section_3_bearing_entries": {
@@ -628,11 +628,22 @@
         "Do not copy v8\u2019s AuthorizationPolicy definition.",
         "Do not claim a defined-but-deferred object makes current controls operative."
       ],
-      "finding": "AuthorizationPolicy is a load-bearing missing object when authorization, qualifications, or independence requirements cite policy. Untyped strings or issuer-populated requirements cannot support replayable external constraints.",
+      "finding": "Admitted v4 defines AuthorizationPolicy and requires typed policy references, but its enforcement is deferred. A defined-and-deferred policy object can be read as an operative constraint on authorization, qualifications, and independence when nothing evaluates it.",
       "finding_id": "V9L-027",
-      "later_disposition": "v8 reportedly defined AuthorizationPolicy but deferred it; that unadmitted response is excluded as a remedy source.",
-      "reason": "v9 reconstruction from v4 must decide whether to define the object, remove dependent claims, or leave an explicit gap; an untyped load-bearing reference is not sufficient.",
-      "required_response_class": "v4 change required",
+      "later_disposition": "Re-adjudicated from v4 change required to explicit limitation sufficient under DECISION-20260727-0004, after the reviewing executor found the admitted finding false against v4. See readjudication below for the prior values and the reasoning.",
+      "readjudication": {
+        "authorising_decision": "DECISION-20260727-0004",
+        "found_by": "The reviewing executor, during task 2 revalidation. It declined to draft text rather than manufacture a remedy for a defect it could not reproduce. The finding was reachable because the task 1 verification block stated that extraction correctness and classification correctness had NOT been checked.",
+        "prior_finding": "AuthorizationPolicy is a load-bearing missing object when authorization, qualifications, or independence requirements cite policy. Untyped strings or issuer-populated requirements cannot support replayable external constraints.",
+        "prior_later_disposition": "v8 reportedly defined AuthorizationPolicy but deferred it; that unadmitted response is excluded as a remedy source.",
+        "prior_required_response_class": "v4 change required",
+        "readjudicated_by": "operator, as accountable principal",
+        "scope_of_this_correction": "Eight ledger entries cite COMP-0032, which reviewed v3. V9L-027 is the only one of the eight classified v4 change required; the other seven assert residual limitations that survive v4 having applied the COMP-0032 findings. No other entry was re-adjudicated here, and none was re-derived.",
+        "what_survives": "Enforcement of AuthorizationPolicy is deferred, which v4 states in the \u00a74.16 heading and in Section 11. Deferred enforcement can leave a dependent control inoperative, and COMP-0119 demonstrated exactly that against v8's self-issued disqualification clause. v4 contains no such clause, so the demonstrated harm does not reach v4. What remains is that a reader may take a defined policy object for an operative one. That is a limitation to state, not a missing definition to supply.",
+        "why_the_prior_entry_was_wrong": "Both statements are false against admitted v4. Section 4.16 defines AuthorizationPolicy as a versioned durable rule with role eligibility conditions, consequence ceilings, subordinate-execution classes permitted for inheritance, required qualifications and independence, and exception procedures. The same paragraph states that all policy references in DecisionRecords are typed references to a versioned policy object, never untyped strings. The finding was true of v3, which COMP-0032 reviewed. Commit 56f18a2 applied it and its commit message lists AuthorizationPolicy among the applied findings. The prior later_disposition attributed the definition to v8; v4 supplied it."
+      },
+      "reason": "The object exists and the typed-reference rule exists, so no definition is missing from v4. What v4 does not state in the places that cite policy is that nothing yet evaluates it. An explicit limitation is sufficient; supplying another definition would duplicate an applied COMP-0032 remedy.",
+      "required_response_class": "explicit limitation sufficient",
       "reviewer_split": "COMP-0032 identifies the missing typed policy object. COMP-0119 confirms that without externally fixed policy the self-issued rule remains inert.",
       "source_rounds": [
         "COMP-0032",
@@ -703,6 +714,15 @@
   },
   "not_indexed": "This ledger is not read by ai_lab/documentation/self_model.py, which aggregates capabilities, gaps, verifications, plans, warrants and decisions. It therefore does not appear in SELF_MODEL.json, and nothing reading the self-model index will find it. That is stated here rather than fixed by inventing a sixth record family, which would be a self-model schema change and belongs to its own governance act. DECISION-20260727-0003 carries this as required_next_governance.",
   "purpose": "Determine the smallest honest delta from admitted ABS-0004 v4 using findings from the specified comparison rounds, without importing v5-v8 remedy text.",
+  "readjudications": [
+    {
+      "decision_id": "DECISION-20260727-0004",
+      "finding_id": "V9L-027",
+      "from": "v4 change required",
+      "note": "The first correction to an admitted ledger entry. Recorded rather than applied silently: the prior classification, the prior finding text and the prior later_disposition are preserved in the entry's readjudication block.",
+      "to": "explicit limitation sufficient"
+    }
+  ],
   "source_manifest": [
     {
       "bytes": 145760,

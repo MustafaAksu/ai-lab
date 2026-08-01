@@ -1,0 +1,65 @@
+--- a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md@56f18a2
++++ b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md.v9-task2-proposal
+@@ -157,28 +157,46 @@
+ 
+ `[DEF]` The stable identity of a model release used for provenance:
+ `model_id`, `originator_id` (developing organization), canonical name,
+-release/version identity where verifiable, identity verification status.
+-Deprecation is mutable and endpoint-specific; it lives in catalog
+-assertions. `[ADOPTED_CONSTRAINT]` An invocation records the most precise
+-ModelIdentity establishable at execution time; unresolved requested names are
+-recorded as unresolved, never silently substituted.
++release/version identity where establishable. Deprecation is mutable and
++endpoint-specific; it lives in catalog assertions.
++
++`[DEF]` An invocation's event-time identity resolution and the current
++assessment of that resolution are distinct facts. The event-time resolution is
++bound to the evidence available when the invocation occurred. A later
++assessment is recorded separately and linked to that historical resolution.
++
++`[PROPOSED_CONSTRAINT]` An invocation records the most precise ModelIdentity
++resolution establishable from evidence available at execution time; an
++unresolved requested name is recorded as unresolved and is never silently
++substituted. Later evidence that a relied-on catalog assertion was stale,
++contradicted, or wrong does not overwrite the event-time resolution.
+ 
+ ### 4.4 CatalogSnapshot and CatalogAssertion
+ 
+ `[DEF]` CatalogSnapshot: `snapshot_id`, provider surface, `observed_at`,
+-source set, assertions[]. Each CatalogAssertion is atomic and records ONLY
++source set, assertions[]. Each CatalogAssertion is atomic and records only
+ the claim: `assertion_subject`, `assertion_predicate`,
+ `assertion_value_or_target`, unit, scope, `valid_from`,
+-`valid_until`/superseded, source. Verification is an AI-Lab assessment,
+-never a property of the provider's claim; it attaches as a separate
+-CatalogVerification record referencing the assertion, carrying
+-`verification_outcome` (the shared three-valued vocabulary of
+-`ai_lab/documentation/verification_outcome.py`), `verified_at`, and a
+-verifier reference. Verification attaches per claim (alias resolution may
+-be `unverifiable` while pricing is `verified_current`). An assertion may
+-concern an API alias, an endpoint, a price, a region, or a model identity.
+-Example atomic assertions: (api-name-X, resolves_to, model-identity-Y);
+-(api-name-X, context_limit, 400000, tokens).
++`valid_until`/superseded, source. An assertion may concern an API alias, an
++endpoint, a price, a region, or a model identity. Example atomic assertions:
++(api-name-X, resolves_to, model-identity-Y); (api-name-X, context_limit,
++400000, tokens).
++
++`[DEF]` A CatalogAssertion records what its named source asserted at the
++snapshot's observed time. A provider-controlled catalog response is an
++attributed provider self-report. Authentication of the endpoint and integrity
++of the captured payload may establish who supplied which bytes at a time; they
++do not independently establish the truth of the asserted model mapping,
++capability, price, region, or identity.
++
++`[DEF]` Verification of a property concerning a CatalogAssertion is represented
++by a VerificationRun (Section 4.17), separate from the assertion. The
++VerificationRun identifies the property assessed, the evidence used, and the
++result.
++
++`[PROPOSED_CONSTRAINT]` A provider assertion alone never supports an
++unqualified `verified` status. Any verification claim concerning a
++CatalogAssertion is limited to the named property its evidence establishes.
+ 
+ `[DEF]` Catalog assertions record what a provider claims; they never record
+ suitability for an AI-Lab role.

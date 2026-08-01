@@ -1,0 +1,3 @@
+bf3e0cc10321b8d03949031bd294c59b02e120f47ed8d7fccd3f9407294bf42d  /mnt/data/v9_task2/V9_TASK2_REQUIRED_CHANGES_PROPOSAL.md
+c50c6783c317ad08c19c2bbc23dab78389ff40d72ccfbaf17ca6ef037071d166  /mnt/data/v9_task2/ABS-0004-v9-task2-required-changes.patch
+cda99362776f3e33026958319a84613cc094a4b8f111c267d0b95ef419da2061  /mnt/data/v9_task2/ABS-0004-v9-task2-proposed-baseline.md
