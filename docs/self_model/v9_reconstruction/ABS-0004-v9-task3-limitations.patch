@@ -1,0 +1,102 @@
+--- a/ABS-0004-v9-task2-proposed-baseline.md
++++ b/ABS-0004-v9-task3-limitations-candidate.md
+@@ -24,8 +24,10 @@
+   constraint proposed for adoption, `[ADOPTED_CONSTRAINT]` constraint adopted
+   now with its current enforcement honestly stated in the matrix, `[COMMIT]`
+   commitment concerning the preparation of this document, `[PROPOSAL]`
+-  candidate implementation boundary subject to future governance, or `[OPEN]`
+-  open question. Untagged prose binds nothing.
++  candidate implementation boundary subject to future governance, `[OPEN]`
++  open question, or `[LIMITATION]` descriptive boundary on what the ontology,
++  its records, or current enforcement establish. A limitation imposes no new
++  constraint and claims no adoption. Untagged prose binds nothing.
+ 
+ ## Evidence Inputs
+ 
+@@ -83,6 +85,10 @@
+ cannot detect correlated coherent error; scoped verification and lineage
+ tracking can.
+ 
++`[LIMITATION]` A verification result supports only the property it names. It
++does not by itself justify a broader epistemic status or establish truth,
++grounding, calibration, privacy, or any other unverified property.
++
+ `[PRINCIPLE]` P3. Complete production provenance does not imply complete
+ claim provenance. A newly produced artifact must not erase the provenance
+ limitations of the claims it carries.
+@@ -95,6 +101,10 @@
+ `unresolved`, `pre_provenance`), and unknown lineage or identity never
+ increases independence.
+ 
++`[LIMITATION]` Distinct identifiers, endpoints, or invocation records do not by themselves
++establish distinct executor identities. When executor-kind-specific
++equivalence cannot be resolved, independence remains unresolved.
++
+ ## 2. Scope and Non-Goals
+ 
+ `[DEF]` This document defines objects, relations, and constraints, and
+@@ -132,6 +142,20 @@
+ in a standing policy, delegated authority, or AccountablePrincipal authority
+ scope rather than requiring an infinite sequence of prior authorizations.
+ 
++`[LIMITATION]` AccountablePrincipal, `authority_scope`, delegation, and
++authorization records can state and attribute authority claims. Repository
++records do not by themselves establish a principal's extra-systemic
++entitlement to govern.
++
++`[LIMITATION]` A recorded authorization-chain terminus identifies where the
++represented chain stops. It does not by itself establish that the underlying
++invocation is substantively authorized.
++
++`[LIMITATION]` Record and relation requirements expose only what was declared,
++recorded, linked, traversable, and correctly attributed. They do not establish
++that every material invocation, authorization, input, dependency, or external
++interaction is present in the record.
++
+ ## 4. Object Definitions
+ 
+ ### 4.1 ProviderOrganization
+@@ -388,13 +412,14 @@
+ ### 4.15 Claim / EvidenceItem (defined, deferred)
+ 
+ `[DEF]` A claim anchored to an artifact span: `claim_id`, artifact
+-reference, span, proposition, claim kind. One artifact may mix original
+-observation, copied finding, new inference, and paraphrase; artifact-level
+-lineage cannot distinguish them. Until claim-level derivation exists, the
+-system provides artifact-level potential-dependence detection, not
+-claim-level independence proof; Section 7 imposes the conservative
+-inheritance this gap requires, and C11 imposes the interim
+-high-consequence disclosure this gap requires.
++reference, span, proposition, claim kind.
++
++`[LIMITATION]` One artifact may mix original observation, copied finding, new
++inference, and paraphrase; artifact-level lineage cannot distinguish them.
++Until claim-level derivation exists, the system provides artifact-level
++potential-dependence detection, not claim-level independence proof; Section 7
++imposes the conservative inheritance this gap requires, and C11 imposes the
++interim high-consequence disclosure this gap requires.
+ 
+ ### 4.16 RoutingPolicy and AuthorizationPolicy (defined, deferred)
+ 
+@@ -411,6 +436,10 @@
+ `policy authority`) are typed references to a versioned policy object,
+ never untyped strings.
+ 
++`[LIMITATION]` Defining AuthorizationPolicy and requiring typed references does
++not establish that a policy was active, applicable, evaluated, or enforced for
++a decision. AuthorizationPolicy enforcement remains deferred.
++
+ ### 4.17 VerificationRun (defined, deferred)
+ 
+ `[DEF]` The typed record C10 requires: verifier executor reference,
+@@ -558,6 +587,10 @@
+ produced two constructions satisfying the axis definitions while defeating
+ separation; this sentence closes both.
+ 
++`[LIMITATION]` Role, qualification, and authorization records are inputs to a
++C6 evaluation. Their existence does not establish that the C6 exercise
++restriction was evaluated or satisfied for a particular invocation.
++
+ `[ADOPTED_CONSTRAINT]` C7 Implementation separation: an executor with
+ repository or external action authority may implement an admitted plan but
+ may not be the sole verifier or adjudicator of its own changes.

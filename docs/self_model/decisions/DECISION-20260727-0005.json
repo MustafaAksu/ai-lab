@@ -1,0 +1,56 @@
+{
+  "authorized_effects": [
+    "Accepting the eight [LIMITATION] statements drafted for V9L-004, V9L-010, V9L-013, V9L-018, V9L-021, V9L-024, V9L-025 and V9L-027 as literal text for ABS-0004 v9, to be applied at assembly.",
+    "Adopting [LIMITATION] as a v9 sentence category: a descriptive boundary on what the ontology, its records, or current enforcement establish. It imposes no constraint and claims no adoption.",
+    "Adopting [INHERITED_CONSTRAINT] as a v9 sentence category: constraint text carried forward unchanged from the admitted v4 baseline, whose current governance force derives from v4's admission rather than from the proposed v9 document. A substantive change to such text becomes [PROPOSED_CONSTRAINT] until separately admitted.",
+    "Accepting that four of the eight statements restate substance already present in admitted v4, on the reasoning that a reader of the section carrying the limitation should not have to reconstruct it from a principle stated elsewhere in the document.",
+    "Recording that ABS-0004 v9's Section 3 will be approximately 1.48 times the size of admitted v4's Section 3, and the document approximately 1.06 times, as the accepted consequence of tasks 2 and 3."
+  ],
+  "blocked_effects": [
+    "No assembly of ABS-0004 v9. The accepted text is held with the task 2 text for application at assembly; no ontology file is modified by this decision.",
+    "No migration of the sixteen inherited constraints to [INHERITED_CONSTRAINT]. The category is adopted; applying it is an assembly step and is not performed here.",
+    "No new constraint, mechanism, or control. Every accepted statement is descriptive. None defines a chain terminus, a standing-authority rule, an ExecutorIdentity inheritance design, a verifier architecture, or an admission control.",
+    "No resolution of identity_verification_status, which DECISION-20260727-0004 records as required before assembly and which task 3 deliberately left untouched.",
+    "No change to any Section 3 definition or constraint. Section 3 gains three [LIMITATION] statements and nothing else."
+  ],
+  "created_at": "2026-07-27T00:00:00+00:00",
+  "decision": "accept_task3_limitations_and_v9_sentence_categories",
+  "decision_id": "DECISION-20260727-0005",
+  "evidence_refs": [
+    "docs/self_model/v9_reconstruction/V9_TASK3_LIMITATIONS_PROPOSAL.md",
+    "docs/self_model/v9_reconstruction/ABS-0004-v9-task3-limitations.patch",
+    "docs/self_model/v9_reconstruction/V9_TASK3_SENTENCE_CATEGORY_PROPOSAL.txt",
+    "docs/self_model/v9_reconstruction/ABS-0004-v9-task2-proposed-baseline.md",
+    "docs/self_model/V9_CHANGE_LEDGER.json",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "docs/self_model/decisions/DECISION-20260727-0004.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+  ],
+  "rationale": [
+    "[INHERITED_CONSTRAINT] answers the defect that decided the withdrawal of v8. v8 was marked proposed while carrying twenty-four constraints tagged with a category ABS-0004 defines as 'constraint adopted now', so the governance status of every constraint in the document was undetermined: either proposed text claimed present force, or the tags referred to inherited constraints and the document did not identify which wording had been admitted. [INHERITED_CONSTRAINT] states the answer in the tag itself.",
+    "The category is verifiable rather than asserted, and was verified before acceptance. Every one of the sixteen constraints surviving into the task 3 candidate is byte-identical to its admitted v4 text after whitespace normalisation. The single v4 constraint that does not survive is the ModelIdentity constraint that task 2 converted to [PROPOSED_CONSTRAINT], which is the correct treatment for text that changed.",
+    "The task 3 chain was verified end to end: five supplied checksums pass; the task 3 baseline is byte-identical to the committed task 2 candidate; the patch applies cleanly to it; the result is byte-identical to the supplied candidate; the ADOPTED_CONSTRAINT count does not change; and no Section 3 definition or constraint is altered.",
+    "The size consequence is recorded rather than left to be discovered. Section 3 grows from 1465 to 2173 characters, a factor of 1.48, against the 7.5 by which v8 had grown it across four unadmitted amendments. The document grows by a factor of 1.06.",
+    "Three of the accepted statements are added to Section 3, where task 1 found that no textual change is established by the later evidence. These are consistent: task 1 asked whether v4's Section 3 text is wrong or incomplete, and found it is not. The ledger's adjudicated response to three findings bearing on Section 3 is to state a limitation, which adds no definition and no constraint. The operator accepted this explicitly.",
+    "One accepted statement expresses the substance of P7, which first appeared in withdrawn v7 and is not present in admitted v4. The wording is the reviewing executor's rather than v7's, and it is tagged [LIMITATION] rather than [PRINCIPLE], so it claims no adoption and imposes no obligation. The underlying finding is established by COMP-0037 and COMP-0039..0046 independently of v7 having stated it.",
+    "Four of the eight statements restate substance already in admitted v4, at P2, P3, P5, C3, §4.15 and the C6 enforcement-matrix row. The reviewing executor flagged this rather than including them silently, and asked whether explicit repetition is preferable to the strict smallest-delta discipline. The operator accepted them on the reasoning that a reader of §4.15, §6 or §4.16 should not have to reconstruct the boundary from a principle stated elsewhere."
+  ],
+  "repo_commit": "7b8b1dc708cacc1012b46ba8d6e5203ad703a765",
+  "required_next_governance": [
+    "The assembly rule as proposed says to replace the seventeen inherited [ADOPTED_CONSTRAINT] tags. There are seventeen occurrences but sixteen constraints: the seventeenth is the sentence-discipline legend entry that defines what the tag means. At assembly the legend must be replaced by definitions of [INHERITED_CONSTRAINT] and [LIMITATION], not renamed. Applied literally the rule would rewrite the definition of a category the document no longer uses.",
+    "identity_verification_status remains unresolved. The accepted task 2 text removes the ontology's only mention of a field that ai_lab/providers/invocation_record.py validates and every captured invocation record carries. Assembly must not proceed until the text names the field or a record states that the ontology deliberately no longer does.",
+    "Assembly is the next reconstruction step and has not been authorized by any decision. DECISION-20260727-0002 authorizes constructing v9; what remains unassigned is who performs assembly, and the constraint that whoever drafts v9 does not write the question set that reviews it.",
+    "Fifteen ledger entries classified separate gap or policy required have no drafting task and are not addressed by v9. Whether they become gap records, and when, has not been decided."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The eight [LIMITATION] statements and the two new sentence categories are accepted for ABS-0004 v9. Together with the task 2 text accepted under DECISION-20260727-0004, this completes the drafting inputs for v9 assembly. No ontology file changes as a consequence of this record.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "The eight limitation statements drafted for the ledger's explicit-limitation-sufficient entries are accepted, along with two new v9 sentence categories: [LIMITATION] for descriptive boundaries claiming no adoption, and [INHERITED_CONSTRAINT] for v4 text carried forward whose force derives from v4's admission rather than from proposed v9. The second answers the contradiction that decided v8's withdrawal, and was verified before acceptance: all sixteen surviving constraints are verbatim admitted v4 text.",
+  "title": "Accept the task 3 limitation statements and the v9 sentence categories"
+}

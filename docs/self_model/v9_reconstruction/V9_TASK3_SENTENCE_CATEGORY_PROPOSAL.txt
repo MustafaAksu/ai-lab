@@ -1,0 +1,7 @@
+Proposed v9 sentence-discipline additions and replacement:
+
+[LIMITATION] descriptive boundary on what the ontology, its records, or current enforcement establish. A limitation imposes no new constraint and claims no adoption.
+
+[INHERITED_CONSTRAINT] constraint text carried forward unchanged from the admitted v4 baseline. Its current governance force derives from v4's admission, not from the proposed v9 document. A substantive change is tagged [PROPOSED_CONSTRAINT] until separately admitted.
+
+Assembly rule: replace the seventeen inherited [ADOPTED_CONSTRAINT] tags with [INHERITED_CONSTRAINT]. Do not apply this migration until the operator adjudicates the category proposal.

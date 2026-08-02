@@ -1,0 +1,24 @@
+run log: docs/runs/RUN-20260802T125359Z-apply_task3.log
+HEAD: 7b8b1dc  (expect 7b8b1dc)
+payload + file md5 OK
+verified: patch applies to the committed task 2 candidate and reproduces the supplied result; 16 constraints all verbatim admitted v4 plus 1 legend entry; 8 limitation statements; Section 3 free of ADOPTED_CONSTRAINT and grown 1.48x
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+.................................................................        [100%]
+713 passed in 32.64s
+
+ M docs/self_model/SELF_MODEL.json
+?? docs/comparisons/COMP-0038-prompt.txt
+?? docs/runs/RUN-20260802T125359Z-apply_task3.log
+?? docs/self_model/decisions/DECISION-20260727-0005.json
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-task3-limitations-candidate.md
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-task3-limitations.patch
+?? docs/self_model/v9_reconstruction/ASSEMBLY_RULE_CORRECTION.md
+?? docs/self_model/v9_reconstruction/SHA256SUMS-task3.txt
+?? docs/self_model/v9_reconstruction/V9_TASK3_LIMITATIONS_PROPOSAL.md
+?? docs/self_model/v9_reconstruction/V9_TASK3_SENTENCE_CATEGORY_PROPOSAL.txt
+
+Commit with: git add docs/self_model/ docs/runs/
