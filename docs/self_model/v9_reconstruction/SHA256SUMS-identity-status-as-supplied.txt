@@ -1,0 +1,4 @@
+67be6f2a8b55c57304e8498acd537ab5ebbb85ea3fd82e38c54c6bf52825af06  ABS-0004-v9-identity-status-baseline.md
+b8cb0b073c0bf5bdaa6f8e30e204a86f5a235f748a7fc3a1f04a5806fdd5c246  ABS-0004-v9-identity-status-candidate.md
+91faa9841820c0305e783b84dbba3c6dde4feec692e9532e60fee31541046e61  ABS-0004-v9-identity-status.patch
+e0a8c928f2088729e8a914d7835bd8ee96cc26b1e39d4cefcab488cb412f0322  V9_IDENTITY_VERIFICATION_STATUS_PROPOSAL.md

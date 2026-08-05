@@ -1,0 +1,26 @@
+--- a/ABS-0004-v9-task3-limitations-candidate.md
++++ b/ABS-0004-v9-identity-status-candidate.md
+@@ -189,6 +189,23 @@
+ bound to the evidence available when the invocation occurred. A later
+ assessment is recorded separately and linked to that historical resolution.
+ 
++`[DEF]` `identity_verification_status` is the immutable capture-time status of
++the executor reference in an InvocationRecord. It is not a later
++IdentityResolution outcome or the current assessment of one. `unresolved` means
++the capture path did not establish an executor-kind-specific stable identity.
++`verified` means an admitted capture path established a unique identity under a
++property-scoped verification rule and durably recorded or referenced the
++identity, supporting evidence, verifier, rule or test version, and verification
++time.
++
++`[LIMITATION]` InvocationRecord schema v1 accepts `verified`, but no admitted
++schema-v1 capture path can presently substantiate it: the current path performs
++no identity resolution, and provider catalog self-report, even over an
++authenticated channel, does not independently establish a model mapping. It
++therefore emits `unresolved`. Later append-only IdentityResolution records do
++not mutate or upgrade this field; validator acceptance of `verified` is
++syntactic compatibility, not a licensed status.
++
+ `[PROPOSED_CONSTRAINT]` An invocation records the most precise ModelIdentity
+ resolution establishable from evidence available at execution time; an
+ unresolved requested name is recorded as unresolved and is never silently

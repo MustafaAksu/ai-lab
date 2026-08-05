@@ -1,0 +1,54 @@
+{
+  "authorized_effects": [
+    "Accepting the [DEF] naming identity_verification_status as the immutable capture-time status of the executor reference in an InvocationRecord, together with the [LIMITATION] stating that no admitted schema-v1 capture path can presently substantiate the value verified.",
+    "Applying an operator-directed editorial change to the proposed text before acceptance: two occurrences of the capitalised object name IdentityResolution are lowercased to identity resolution, and one line pair is reflowed to hold the document's 79-column convention.",
+    "Retaining the reviewing executor's patch as supplied, unmodified, beside the amended one, so that what was written can be diffed against what was accepted.",
+    "Recording that this closes the last drafting input identified as blocking ABS-0004 v9 assembly."
+  ],
+  "blocked_effects": [
+    "No assembly of ABS-0004 v9. The accepted text joins the task 2 and task 3 text as drafting input; no ontology file is modified by this decision, and no decision has yet assigned who performs assembly.",
+    "No change to the InvocationRecord schema, its permitted value set, or any captured record. IDENTITY_VERIFICATION_STATUSES remains frozenset({unresolved, verified}) and all 182 retained records continue to carry unresolved.",
+    "No claim that verified is attainable. The accepted text defines what the value would mean and states that no admitted capture path can presently substantiate it. That is a definition plus a limitation, not a licence.",
+    "No definition of an IdentityResolution record type in ABS-0004. The object exists in ai_lab/providers/catalog_resolution.py and is admitted by WARR-20260723-0001; the lowercasing avoids ABS-0004 referring to it as though ABS-0004 defined it.",
+    "No change to Section 3, which the accepted patch leaves untouched."
+  ],
+  "created_at": "2026-08-05T00:00:00+00:00",
+  "decision": "accept_identity_verification_status_text_with_lowercasing",
+  "decision_id": "DECISION-20260805-0001",
+  "evidence_refs": [
+    "docs/self_model/v9_reconstruction/V9_IDENTITY_VERIFICATION_STATUS_PROPOSAL.md",
+    "docs/self_model/v9_reconstruction/ABS-0004-v9-identity-status.patch",
+    "docs/self_model/v9_reconstruction/AS-SUPPLIED-BY-REVIEWING-EXECUTOR.patch",
+    "docs/self_model/v9_reconstruction/ABS-0004-v9-task3-limitations-candidate.md",
+    "docs/self_model/decisions/DECISION-20260727-0004.json",
+    "docs/self_model/decisions/DECISION-20260727-0005.json",
+    "ai_lab/providers/invocation_record.py",
+    "ai_lab/providers/catalog_resolution.py"
+  ],
+  "rationale": [
+    "DECISION-20260727-0004 recorded that the accepted task 2 text removed the ontology's only mention of a field that ai_lab/providers/invocation_record.py validates and every captured invocation record carries, and required this be resolved before assembly. The operator directed that v9 name the field explicitly but define it narrowly as a historical capture-time field rather than as current truth about model identity.",
+    "The accepted text does that. It states that the field is the immutable capture-time status of the executor reference, and that it is not a later identity resolution outcome or the current assessment of one. That distinction is the substance of ledger entry V9L-002 and was already carried by the task 2 [DEF] separating event-time resolution from current assessment; naming the field attaches the implementation's own vocabulary to it.",
+    "The verified value is handled by definition plus limitation rather than by silence or by removal. The text says what verified would mean, and then states that no admitted schema-v1 capture path can substantiate it: the capture path performs no identity resolution, provider catalog self-report over an authenticated channel does not independently establish a model mapping, and later append-only identity resolution annotations do not write back. It ends by distinguishing what a validator accepts from what evidence licenses, which is the distinction the whole reconstruction turns on.",
+    "Verified before acceptance: four supplied checksums pass; the supplied baseline is byte-identical to the committed task 3 candidate; the patch applies cleanly and reproduces the supplied result; the tag delta is one [DEF] and one [LIMITATION] with no constraint tag introduced; Section 3 is untouched. The factual claims were checked against the implementation: schema v1 does accept verified, all 182 retained records carry unresolved, and catalog_resolution.py builds append-only identity resolution annotations that do not mutate the field.",
+    "One defect was found and corrected before acceptance. The proposed text used IdentityResolution as a capitalised object name, and ABS-0004 defines no such record type in v4, in the task 3 candidate, or in withdrawn v8; the phrase appears only in lowercase prose in three places. Accepting it would have had v9 reference a defined-looking object it does not define, which is a small instance of the pattern ledger entry V9L-027 alleged and was itself found false. The operator directed lowercasing.",
+    "The editorial change is recorded rather than absorbed. The lowercase form is one character longer, so one line pair was reflowed to hold the 79-column convention; the patch line count is unchanged so the hunk header remains valid; no line exceeds 79 characters; and the reviewing executor's patch as supplied is retained beside the amended one. The packaging executor made this change, and the diff between the two files is the evidence of exactly what it changed."
+  ],
+  "repo_commit": "c8517902490bd30d91fef562463cb059671a159e",
+  "required_next_governance": [
+    "ABS-0004 v9 assembly is now unblocked and remains unassigned. DECISION-20260727-0002 authorises constructing v9 and does not say who assembles it. The binding constraint is that whoever drafts v9 does not write the question set that reviews it; the reviewing executor has drafted all four inputs, so if it also assembles, the question set falls to the packaging executor.",
+    "The assembly correction recorded under DECISION-20260727-0005 still applies: seventeen ADOPTED_CONSTRAINT occurrences but sixteen constraints, the seventeenth being the legend entry, which must be replaced by definitions of [INHERITED_CONSTRAINT] and [LIMITATION] rather than renamed.",
+    "Fifteen ledger entries classified separate gap or policy required have no drafting task and are not addressed by v9. Whether they become gap records, and when, has not been decided.",
+    "ABS-0004 defines no IdentityResolution record type although the object is implemented and admitted by WARR-20260723-0001. The lowercasing avoids the ontology overclaiming, and does not close the gap that an admitted implementation object has no ontology definition."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The identity_verification_status [DEF] and [LIMITATION] are accepted for ABS-0004 v9 in their lowercased form. With the task 2 and task 3 text, the drafting inputs for v9 assembly are complete and the blocker recorded under DECISION-20260727-0004 is closed. No ontology file changes as a consequence of this record.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "ABS-0004 v9 will name identity_verification_status as the immutable capture-time status of an InvocationRecord's executor reference, explicitly not a later identity resolution outcome, with a limitation stating that no admitted schema-v1 capture path can presently substantiate the value verified. Two capitalised references to an object ABS-0004 does not define were lowercased on operator direction before acceptance, and the reviewing executor's patch as supplied is retained beside the amended one. This closes the last drafting input blocking v9 assembly.",
+  "title": "Accept the identity_verification_status definition and limitation for ABS-0004 v9"
+}

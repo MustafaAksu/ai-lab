@@ -1,0 +1,23 @@
+run log: docs/runs/RUN-20260805T150444Z-apply_idfield.log
+HEAD: c851790  (expect c851790)
+payload + file md5 OK
+verified: patch applies to the committed task 3 candidate and reproduces the supplied result; field named; no capitalised IdentityResolution survives; tag delta is one DEF and one LIMITATION; Section 3 untouched; no line over 79 columns; as-supplied patch retained and differs only as recorded
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+.................................................................        [100%]
+713 passed in 43.09s
+
+ M docs/self_model/SELF_MODEL.json
+?? docs/comparisons/COMP-0038-prompt.txt
+?? docs/runs/RUN-20260805T150444Z-apply_idfield.log
+?? docs/self_model/decisions/DECISION-20260805-0001.json
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-identity-status-AS-SUPPLIED.patch
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-identity-status-candidate.md
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-identity-status.patch
+?? docs/self_model/v9_reconstruction/SHA256SUMS-identity-status-as-supplied.txt
+?? docs/self_model/v9_reconstruction/V9_IDENTITY_VERIFICATION_STATUS_PROPOSAL.md
+
+Commit with: git add docs/self_model/ docs/runs/
