@@ -1,0 +1,55 @@
+{
+  "authorized_effects": [
+    "Assigning ABS-0004 v9 assembly to the reviewing executor, which drafted all four accepted inputs. Assembly is the mechanical application of the accepted task 2 and task 3 patches and the identity-status patch to admitted v4, plus the legend replacement recorded in ASSEMBLY_RULE_CORRECTION.md and the version metadata.",
+    "Assigning authorship of the v9 review question set to the packaging executor, which drafted none of v9's content.",
+    "Declaring the reviewing executor's self-reported identity in docs/self_model/DRAFTING_EXECUTORS.json as gpt-5.6-thinking, unverified, on the same footing as the two existing declarations.",
+    "Recording the observed relation between that identity and the OpenAI reviewer slot as a named unresolved question rather than as a resolved one."
+  ],
+  "blocked_effects": [
+    "No change to the reviewer slots. They remain claude-sonnet-5 and gpt-5.6-terra, adjudicated under DECISION-20260723-0001.",
+    "No claim that the v9 review round will be independent. Under ABS-0004 C3 every round in this repository is independence_unresolved because executor equivalence has never been established for any executor, and this round is no different.",
+    "No claim that gpt-5.6-terra and gpt-5.6-thinking are the same executor, and none that they are different. The catalog assertion below is provider self-report and does not verify either.",
+    "No addition of a third provider. Adding one would require a provider adapter, changes to the two-provider comparison runner, a model-default decision, catalog capture for a third surface, and a capability and warrant. That is a slice of work and was considered and not taken.",
+    "No authority for the assembling executor to change accepted text. Assembly applies what was accepted; any substantive change requires a new proposal and a new decision."
+  ],
+  "created_at": "2026-08-05T00:00:00+00:00",
+  "decision": "assign_v9_assembly_and_review_question_authorship",
+  "decision_id": "DECISION-20260805-0002",
+  "evidence_refs": [
+    "docs/self_model/DRAFTING_EXECUTORS.json",
+    "docs/self_model/v9_reconstruction/ASSEMBLY_RULE_CORRECTION.md",
+    "docs/self_model/decisions/DECISION-20260727-0001.json",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "docs/self_model/decisions/DECISION-20260727-0005.json",
+    "docs/self_model/decisions/DECISION-20260805-0001.json",
+    "docs/catalog/snap/SNAP-35fbd338ad148fb9.json",
+    "ai_lab/providers/settings.py",
+    "tests/test_invocation_record.py"
+  ],
+  "rationale": [
+    "DECISION-20260727-0002 requires that whoever drafts v9 does not write the question set that reviews it, because both prior rounds were authored by the party whose text was under review. The reviewing executor drafted all four accepted inputs, so it assembles and the packaging executor writes the questions. The packaging executor drafted v5 through v8, which v9 replaces, and drafted none of v9.",
+    "The reviewing executor self-reports provider_id_form gpt-5.6-thinking, display name GPT-5.6 Thinking, verification status unverified. It declined to assert that this is or is not the same executor as the gpt-5.6-terra reviewer slot, on the ground that its own testimony cannot establish either. That reasoning is correct and is adopted.",
+    "AI-Lab's own captured catalog bears on the question and is better evidence than testimony, without settling it. Snapshot SNAP-35fbd338ad148fb9, observed 2026-07-23, carries three atomic assertions: gpt-5.6-sol resolves to MID-be5b69688a96a161, gpt-5.6-terra to MID-729f399a16f7c1c2, and gpt-5.6-luna to MID-3597759ddcde9b0f. The provider asserts three distinct model identities in that family. gpt-5.6-thinking does not appear in the snapshot and resolves to nothing in AI-Lab's catalog.",
+    "That evidence is a provider self-report. The accepted task 2 text states that a provider catalog response is an attributed self-report whose transport integrity does not establish the truth of the asserted mapping. So the catalog records what the provider asserts about distinctness; it does not verify it, and it cannot verify a mapping for a name it does not contain.",
+    "The operative consequence is nil, and stating that plainly is the point of this paragraph. The reviewer-slot guard compares declared drafting identities against the configured slots by string, gpt-5.6-thinking is not gpt-5.6-terra, so the guard does not fire and the suite stays green. That is correct behaviour and it establishes nothing: under P5 an unknown fact blocks qualification and does not disappear, and under C3 distinctness never increases independence. The round was never claiming independence. It is independence_unresolved as every round in this repository is, now with a specific named hypothesis rather than a generic status.",
+    "The operator observed during this adjudication that complete independence is not achievable between any two intelligences, and that independence_unresolved as currently applied does not distinguish two instances of one model from two unrelated executors. Both observations are accepted as correct and are not addressed here: they concern the framework rather than any artifact, and the v9 review round is a better instrument for testing them than an amendment made while v9 is mid-assembly."
+  ],
+  "repo_commit": "f81a8befaa9109c8f65e59c0c59c1faf032ce986",
+  "required_next_governance": [
+    "The assembly correction recorded under DECISION-20260727-0005 applies: seventeen ADOPTED_CONSTRAINT occurrences but sixteen constraints, the seventeenth being the legend entry, which must be replaced by definitions of [INHERITED_CONSTRAINT] and [LIMITATION] rather than renamed.",
+    "The question set author drafted v5 through v8 and holds the reasoning behind the withdrawn text. Its priors about which surfaces to probe are shaped by that, and both prior question sets missed defects a third reader found. Whether the question set is critiqued by a party outside this pair before the round runs has not been decided.",
+    "Twenty-eight ledger entries have not been revalidated against admitted v4. One of twenty-nine was false, found by the party that did not write it. Whether the rest are revalidated, and by whom, remains undecided and is recorded in DECISION-20260727-0004.",
+    "GAP-0006 remains open and its first slice is specified and unblocked. Closing it before the v9 review round would make that round the first whose invocation records can report stop_reason rather than leaving truncation to be inferred from response content."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The reviewing executor assembles ABS-0004 v9; the packaging executor writes the question set for the round that reviews it. The reviewing executor's self-reported identity gpt-5.6-thinking is declared as a drafting executor. The reviewer slots are unchanged and the reviewer-slot guard continues to pass. No ontology file changes as a consequence of this record.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "The reviewing executor assembles ABS-0004 v9, having drafted all four accepted inputs, and the packaging executor writes the question set for the round that reviews it, satisfying the constraint that whoever drafts v9 does not write its review questions. The reviewing executor's self-reported identity gpt-5.6-thinking is declared unverified. Its relation to the gpt-5.6-terra reviewer slot is recorded as unresolved: the provider's own catalog asserts three distinct identities in that family and contains no entry for gpt-5.6-thinking, which is evidence and not verification. The round remains independence_unresolved, as every round is.",
+  "title": "Assign v9 assembly to the reviewing executor and question authorship to the packaging executor"
+}

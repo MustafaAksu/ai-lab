@@ -22,11 +22,27 @@
       ],
       "provider_id_form": "claude-opus-4-5",
       "reported_display_name": "Claude Opus 4.5"
+    },
+    {
+      "basis": "Self-report by the reviewing executor on 2026-08-05, when asked to declare its identity before the v9 review round could be configured. It reported provider openai, provider_id_form gpt-5.6-thinking, display name GPT-5.6 Thinking, verification_status unverified, and declined to assert whether this is or is not the same executor as AI-Lab's gpt-5.6-terra catalog identity. Not verified, on the same footing as the two declarations above.",
+      "declared_at": "2026-08-05",
+      "drafted": [
+        "ABS-0004 v9 change ledger (29 findings)",
+        "ABS-0004 v9 task 1 Section 3 re-read",
+        "ABS-0004 v9 task 2 replacement text for V9L-001 and V9L-002",
+        "ABS-0004 v9 task 3 limitation statements and sentence-category proposal",
+        "ABS-0004 v9 identity_verification_status definition and limitation",
+        "ABS-0004 v9 assembly (assigned under DECISION-20260805-0002)"
+      ],
+      "provider_id_form": "gpt-5.6-thinking",
+      "relation_to_reviewer_slots": "Unresolved, and named rather than left generic. The OpenAI reviewer slot is gpt-5.6-terra. Catalog snapshot SNAP-35fbd338ad148fb9, observed 2026-07-23, asserts that gpt-5.6-sol, gpt-5.6-terra and gpt-5.6-luna resolve to three distinct ModelIdentity records, and contains no entry for gpt-5.6-thinking, which therefore resolves to nothing in AI-Lab's catalog. That snapshot is a provider self-report: per the accepted v9 task 2 text, transport integrity does not establish the truth of an asserted mapping. The reviewer-slot guard compares by string and does not fire, which is correct and establishes nothing, since under C3 distinctness never increases independence and under P5 an unknown fact blocks qualification rather than disappearing. The v9 review round is independence_unresolved, as every round in this repository is.",
+      "reported_display_name": "GPT-5.6 Thinking"
     }
   ],
   "id_form_note": "provider_id_form is the value a provider default would actually carry, and is what the guard compares against. reported_display_name is what the executor states in prose. These differ in shape, and a guard comparing a display name against settings.CLAUDE_MODEL would never fire regardless of its contents.",
   "not_a_verification": "This file records self-reports. It establishes nothing about which model in fact produced any artifact, and must not be cited as establishing it. The pattern is the one ABS-0004 applies to standing authority: the claim, its date, and what it covers are recorded and legible; the claim itself is not verified, and no arrangement of records here could verify it. What the file provides is that a reviewer-slot default can be checked against a maintained list rather than against one literal frozen at the moment a single session happened to be observed.",
   "purpose": "Identities that have acted as drafting executor in AI-Lab sessions, so the reviewer-slot default can be checked against all of them rather than against one hardcoded literal. Under ABS-0004 C3 an invocation cannot adjudicate a claim whose evidence ancestry contains an invocation by an equivalent executor identity; configuring the reviewer slot to a drafting executor's identity would collapse reviewer and author.",
+  "relation_note": "A declaration may carry relation_to_reviewer_slots when the declared identity has an observable relation to a configured slot that string comparison does not capture. The guard compares by string, so a relation short of identity does not make it fire. Recording the relation keeps a passing guard from implying more than it checks.",
   "schema_version": "v1",
   "unclosed_gap": "Conversational drafting produces no InvocationRecord, so no record establishes who drafted any artifact. A machine check of C3 over ABS-0004 v8 finds no conflict, not because none exists but because the drafting act was never an Invocation. Slice C's one-hop check reads produced_by relations on the target artifact and would also find nothing. This file makes the reviewer-slot guard maintainable; it does not close that gap, and adding an entry here is not the same as capturing a drafting invocation."
 }

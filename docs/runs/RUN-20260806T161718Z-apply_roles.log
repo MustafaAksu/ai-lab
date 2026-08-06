@@ -1,0 +1,20 @@
+run log: docs/runs/RUN-20260806T161718Z-apply_roles.log
+HEAD: f81a8be  (expect f81a8be)
+payload + file md5 OK
+catalog verified: ['gpt-5.6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra'] resolve to 3 distinct ModelIdentity records; gpt-5.6-thinking resolves to nothing
+declared gpt-5.6-thinking (GPT-5.6 Thinking)
+reviewer slots: ['claude-sonnet-5', 'gpt-5.6-terra']
+guard fires: False
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+.................................................................        [100%]
+713 passed in 38.01s
+
+ M docs/self_model/DRAFTING_EXECUTORS.json
+ M docs/self_model/SELF_MODEL.json
+?? docs/self_model/decisions/DECISION-20260805-0002.json
+
+Commit with: git add docs/self_model/ docs/runs/
