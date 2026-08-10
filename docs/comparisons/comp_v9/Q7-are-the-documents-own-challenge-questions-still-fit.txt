@@ -1,0 +1,115 @@
+You are reviewing a proposed ontology amendment. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v9 is proposed and not admitted. v4 is the last version with an admission event. v9 has no governance force.
+
+Disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v9 is a RECONSTRUCTION, not an amendment. v5 through v8 were withdrawn. v9 was built from the admitted v4 text plus a ledger of findings from five prior review rounds. Its Section 3 is 1.48 times the size of v4's; v8 had grown it 7.5 times.
+
+2. v8 was withdrawn because it carried 24 constraints tagged with a category the document defines as "constraint adopted now" while itself marked proposed. v9's answer is a new tag, [INHERITED_CONSTRAINT]. Whether that answer works is what this round is for. Do not assume it does because it was adopted in response to a finding.
+
+3. The executor that drafted v9 is not the executor that wrote these questions. The question author drafted v5 through v8, all withdrawn. Its priors about what to probe are shaped by four failed attempts.
+
+4. Both prior question sets were written by the party whose text was under review, and both missed defects a third reader found. This one is not, but see 3.
+
+5. Reviewer independence is unresolved. The executor that drafted v9 self-reports as gpt-5.6-thinking. One of the two reviewer slots in this round is gpt-5.6-terra. The provider's own catalog asserts those are distinct model identities, and that catalog is itself a provider self-report. Nothing establishes that the drafter and this reviewer are different executors, and nothing establishes that they are the same.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: if you need a section, constraint or record that is not present, name it and say what you would have used it for. That report is wanted output.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q7 ===
+Section 13 lists fourteen challenge-round questions. They were written for the v3 to v4 round and have been carried through v5, v6, v7, v8 and now v9 unchanged. Nobody has revisited them.
+
+Assess them as an artifact in their own right. For each of the fourteen: is it answered, stale, still live, or unanswerable as posed? At least one is stale on its face — it asks whether "candidate Slice A" omits anything, and Slice A is implemented and warranted. Identify the others.
+
+Then state what the set does not ask. A question set inherited across five versions encodes the concerns of the version that wrote it; name the concerns of the current version it fails to cover.
+
+=== EVIDENCE ABS-0004 v9 Section 13, Challenge-Round Questions ===
+## 13. Challenge-Round Questions
+
+1. Which objects are missing; which defined objects are category errors?
+2. Which constraints are unenforceable as stated; what minimal
+   representable form makes them enforceable?
+3. Construct a concrete invocation satisfying the three-axis Role
+   definitions while violating authority separation.
+4. Construct a laundering path from a pre-provenance artifact into
+   high-consequence independent evidence that survives C9 and C10.
+5. Does candidate Slice A omit anything without which the provenance graph
+   cannot later answer the witness-independence question?
+6. Identify any predicate ambiguous enough to produce divergent
+   implementations.
+7. Where is invocation authorization represented; how is it distinguished
+   from routing and evidence admission; does the distinction hold under
+   composition?
+8. Can the ontology represent one model served through different
+   organizations, endpoints, regions, or mutable aliases without creating
+   false model independence?
+9. Does provenance as specified apply to claim derivation or only artifact
+   production, and where exactly does the artifact-level approximation
+   break?
+10. What must an effective-input record contain before an invocation may be
+    treated as blind?
+11. Which constraints apply identically to models, tools, and humans; which
+    require executor-specific rules?
+12. Under what conditions, if any, can an unresolved model identity qualify
+    as an independent witness path? Identify the failure behavior when
+    equivalence cannot be resolved.
+13. Construct a composite tool that satisfies the disclosure constraints'
+    letter (4.7, both) while still exercising undeclared authority.
+14. Construct a case where property-scoped verification (P2) plus validator
+    lineage marking (C10) still admits a generator-authored blind spot into
+    governed evidence.
+
+Do not recommend specific provider products in this round.
+
+=== EVIDENCE ABS-0004 v9 metadata and version admission table ===
+
+- abstraction_id: `ABS-0004`
+- title: `Invocation Authorization Ontology`
+- version: `v9`
+- abstraction_level: `2`
+- status: `proposed`
+- reconstruction baseline: admitted v4 at commit
+  `56f18a2ab7b66b1855b631a32d540f654c62b2c2`. Assembly does not admit v9;
+  v9 requires its own admission review.
+- version admission table:
+
+  | version | state | basis |
+  | --- | --- | --- |
+  | v1, v2 | superseded during drafting | never entered the record |
+  | v3 | superseded | entered the record at 6802cf7; underwent the COMP-0032 challenge round |
+  | v4 | **admitted** 2026-07-20 | twelve adjudicated COMP-0032 findings applied; admitted at 56f18a2 by the operator as accountable principal in session, recorded in conversation only |
+  | v5 | amended, not separately admitted | replaced CatalogVerification with CatalogCapture on the COMP-0035 finding, at 6d7dfee |
+  | v6 | amended, not separately admitted; superseded | proposed an authorization-chain termination that both COMP-0037 reviewers broke independently, at 8a1399f |
+  | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
+  | v8 | **withdrawn_after_admission_review** | reviewed by COMP-0118..0125 and withdrawn under DECISION-20260727-0002; retained as evidence, not rejected, and not an implementation authority |
+  | v9 | **proposed** | reconstructed from admitted v4 using the literal task 2, task 3, and identity-status text accepted under DECISION-20260727-0004, DECISION-20260727-0005, and DECISION-20260805-0001; assembled under DECISION-20260805-0002; pending its own admission review |
+
+- reconstruction inputs:
+  `ABS-0004-v9-task2-required-changes.patch`,
+  `ABS-0004-v9-task3-limitations.patch`,
+  `ABS-0004-v9-identity-status.patch`, and
+  `ASSEMBLY_RULE_CORRECTION.md`, retained under
+  `docs/self_model/v9_reconstruction/`.
+- authors: operator (adjudicating principal); inherited v4 text drafted by an
+  executor self-reported as "Claude"; v9 reconstruction text and assembly by
+  the reviewing executor self-reported as `gpt-5.6-thinking`; both executor
+  identities are unverified testimony; with attributed advisor contributions
+  described in Evidence Inputs.
+- sentence discipline: every normative statement is tagged `[DEF]`
+  definition; `[PRINCIPLE]` architectural principle;
+  `[PROPOSED_CONSTRAINT]` constraint proposed for adoption;
+  `[INHERITED_CONSTRAINT]` constraint text carried forward unchanged from the
+  admitted v4 baseline. Its current governance force derives from v4's
+  admission, not from the proposed v9 document. A substantive change becomes
+  `[PROPOSED_CONSTRAINT]` until separately admitted; `[COMMIT]` commitment
+  concerning the preparation of this document; `[PROPOSAL]` candidate
+  implementation boundary subject to future governance; `[OPEN]` open
+  question; or `[LIMITATION]` descriptive boundary on what the ontology, its
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient, say so and name what is missing.

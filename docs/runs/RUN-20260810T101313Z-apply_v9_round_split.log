@@ -1,0 +1,31 @@
+run log: docs/runs/RUN-20260810T101313Z-apply_v9_round_split.log
+HEAD: d219202
+payload + file md5 OK
+compile OK
+question                                               chars  est tok
+  Q1 does-inherited-constraint-resolve-or-relocate       8141     3015
+  Q2 do-limitations-do-work-or-wrap-failures             8758     3243
+  Q3 authorization-graph-cycles-expiry-retroactivity     8335     3087
+  Q4 identity-equivalence-aliases-and-unresolved         8905     3298
+  Q5 seed-authority-who-drafts-approves-and-relies      10382     3845
+  Q6 what-the-labels-mean-to-a-reader                    7998     2962
+  Q7 are-the-documents-own-challenge-questions-still-fit    7827     2898
+  Q8a what-this-question-set-missed-definitions          30149    11166
+  Q8b what-this-question-set-missed-constraints          23715     8783
+
+largest: Q8a at 11166 est input tokens
+PRE-FLIGHT: python3 preflight_prompt.py docs/comparisons/comp_v9/Q8a-what-this-question-set-missed-definitions.txt
+size check passed: 9 prompts, largest Q8a at 11166 est tok, ceiling 13000
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+......                                                                   [100%]
+726 passed in 34.23s
+
+NEXT:
+  1. python3 scripts/preflight_prompt.py docs/comparisons/comp_v9/Q8a-what-this-question-set-missed-definitions.txt
+  2. If COMPLETE -> bash run_v9_round.sh   (9 questions, 18 invocations)
+  3. Read the outcome line on each capture. stop_reason max_tokens means
+     that answer is truncated and is not a review.

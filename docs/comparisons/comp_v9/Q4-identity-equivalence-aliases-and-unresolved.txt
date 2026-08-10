@@ -1,0 +1,134 @@
+You are reviewing a proposed ontology amendment. This is ONE question of eight, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v9 is proposed and not admitted. v4 is the last version with an admission event. v9 has no governance force.
+
+Disclosures, because withholding them would be dishonest rather than isolating:
+
+1. v9 is a RECONSTRUCTION, not an amendment. v5 through v8 were withdrawn. v9 was built from the admitted v4 text plus a ledger of findings from five prior review rounds. Its Section 3 is 1.48 times the size of v4's; v8 had grown it 7.5 times.
+
+2. v8 was withdrawn because it carried 24 constraints tagged with a category the document defines as "constraint adopted now" while itself marked proposed. v9's answer is a new tag, [INHERITED_CONSTRAINT]. Whether that answer works is what this round is for. Do not assume it does because it was adopted in response to a finding.
+
+3. The executor that drafted v9 is not the executor that wrote these questions. The question author drafted v5 through v8, all withdrawn. Its priors about what to probe are shaped by four failed attempts.
+
+4. Both prior question sets were written by the party whose text was under review, and both missed defects a third reader found. This one is not, but see 3.
+
+5. Reviewer independence is unresolved. The executor that drafted v9 self-reports as gpt-5.6-thinking. One of the two reviewer slots in this round is gpt-5.6-terra. The provider's own catalog asserts those are distinct model identities, and that catalog is itself a provider self-report. Nothing establishes that the drafter and this reviewer are different executors, and nothing establishes that they are the same.
+
+Quote only text that appears below. Do not rely on repository access.
+
+IMPORTANT: if you need a section, constraint or record that is not present, name it and say what you would have used it for. That report is wanted output.
+
+Do not certify or praise. No provider product recommendations.
+
+=== QUESTION Q4 ===
+v9 states that identity_verification_status is the immutable capture-time status of an executor reference, that the value verified means an admitted capture path established a unique identity under a property-scoped verification rule, and that no admitted capture path can presently substantiate it. Every captured record carries unresolved.
+
+Constraint C3 forbids an invocation from adjudicating a claim whose evidence ancestry contains an invocation by an equivalent executor identity.
+
+This is live rather than hypothetical: the executor that drafted v9 self-reports as gpt-5.6-thinking, and one reviewer in this round is gpt-5.6-terra. The provider's catalog asserts they are distinct identities. That catalog is a provider self-report.
+
+Can two executor references be shown NOT equivalent under this ontology? If equivalence can never be established and non-equivalence can never be established either, state what C3 does in practice, and whether independence_unresolved carries any information that distinguishes one pairing from another. If the honest consequence is that C3 cannot be satisfied, say so and say what follows.
+
+=== EVIDENCE ABS-0004 v9 sections 4.3 and 4.4 ===
+### 4.3 ModelIdentity
+
+`[DEF]` The stable identity of a model release used for provenance:
+`model_id`, `originator_id` (developing organization), canonical name,
+release/version identity where establishable. Deprecation is mutable and
+endpoint-specific; it lives in catalog assertions.
+
+`[DEF]` An invocation's event-time identity resolution and the current
+assessment of that resolution are distinct facts. The event-time resolution is
+bound to the evidence available when the invocation occurred. A later
+assessment is recorded separately and linked to that historical resolution.
+
+`[DEF]` `identity_verification_status` is the immutable capture-time status of
+the executor reference in an InvocationRecord. It is not a later identity
+resolution outcome or the current assessment of one. `unresolved` means
+the capture path did not establish an executor-kind-specific stable identity.
+`verified` means an admitted capture path established a unique identity under a
+property-scoped verification rule and durably recorded or referenced the
+identity, supporting evidence, verifier, rule or test version, and verification
+time.
+
+`[LIMITATION]` InvocationRecord schema v1 accepts `verified`, but no admitted
+schema-v1 capture path can presently substantiate it: the current path performs
+no identity resolution, and provider catalog self-report, even over an
+authenticated channel, does not independently establish a model mapping. It
+therefore emits `unresolved`. Later append-only identity resolution records do
+not mutate or upgrade this field; validator acceptance of `verified` is
+syntactic compatibility, not a licensed status.
+
+`[PROPOSED_CONSTRAINT]` An invocation records the most precise ModelIdentity
+resolution establishable from evidence available at execution time; an
+unresolved requested name is recorded as unresolved and is never silently
+substituted. Later evidence that a relied-on catalog assertion was stale,
+contradicted, or wrong does not overwrite the event-time resolution.
+
+### 4.4 CatalogSnapshot and CatalogAssertion
+
+`[DEF]` CatalogSnapshot: `snapshot_id`, provider surface, `observed_at`,
+source set, assertions[]. Each CatalogAssertion is atomic and records only
+the claim: `assertion_subject`, `assertion_predicate`,
+`assertion_value_or_target`, unit, scope, `valid_from`,
+`valid_until`/superseded, source. An assertion may concern an API alias, an
+endpoint, a price, a region, or a model identity. Example atomic assertions:
+(api-name-X, resolves_to, model-identity-Y); (api-name-X, context_limit,
+400000, tokens).
+
+`[DEF]` A CatalogAssertion records what its named source asserted at the
+snapshot's observed time. A provider-controlled catalog response is an
+attributed provider self-report. Authentication of the endpoint and integrity
+of the captured payload may establish who supplied which bytes at a time; they
+do not independently establish the truth of the asserted model mapping,
+capability, price, region, or identity.
+
+`[DEF]` Verification of a property concerning a CatalogAssertion is represented
+by a VerificationRun (Section 4.17), separate from the assertion. The
+VerificationRun identifies the property assessed, the evidence used, and the
+result.
+
+`[PROPOSED_CONSTRAINT]` A provider assertion alone never supports an
+unqualified `verified` status. Any verification claim concerning a
+CatalogAssertion is limited to the named property its evidence establishes.
+
+`[DEF]` Catalog assertions record what a provider claims; they never record
+suitability for an AI-Lab role.
+
+=== EVIDENCE ABS-0004 v9 constraint C3, no self-adjudication ===
+`[INHERITED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an
+invocation cannot adjudicate a claim whose evidence ancestry contains an
+invocation by an equivalent executor identity, with equivalence defined
+per executor kind: ModelIdentity resolution equality for models;
+tool identity and version equality for tools; principal equality for
+humans. Direct lineage conflict: hard prohibition, no exception.
+Equivalent-identity conflict: hard prohibition absent a future explicitly
+governed exceptional procedure. Unknown or unresolved executor equivalence
+cannot establish identity independence; it yields
+`independence_unresolved`, never an independent path. An identity
+unresolved at one endpoint and resolved at another is treated as distinct
+until equivalence is affirmatively established; distinctness never
+increases independence (P5).
+
+=== EVIDENCE ABS-0004 v9 constraint C3 and neighbours ===
+`[INHERITED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an
+invocation cannot adjudicate a claim whose evidence ancestry contains an
+invocation by an equivalent executor identity, with equivalence defined
+per executor kind: ModelIdentity resolution equality for models;
+tool identity and version equality for tools; principal equality for
+humans. Direct lineage conflict: hard prohibition, no exception.
+Equivalent-identity conflict: hard prohibition absent a future explicitly
+governed exceptional procedure. Unknown or unresolved executor equivalence
+cannot establish identity independence; it yields
+`independence_unresolved`, never an independent path. An identity
+unresolved at one endpoint and resolved at another is treated as distinct
+until equivalence is affirmatively established; distinctness never
+increases independence (P5).
+
+`[PROPOSED_CONSTRAINT]` C4 No hidden witness reuse: an invocation that
+consumed another witness's output is not an independent confirmation of
+that testimony; it may count as synthesis or critique.
+
+--- END OF EVIDENCE ---
+
+Answer only the question above. If the evidence set is insufficient, say so and name what is missing.

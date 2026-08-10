@@ -1,0 +1,23 @@
+run log: docs/runs/RUN-20260810T100254Z-apply_preflight.log
+HEAD: d219202  (expect d219202)
+payload + file md5 OK
+compile OK
+verdict logic verified on 6 cases, including a truncated response carrying 17,000 characters of text
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+......                                                                   [100%]
+726 passed in 34.94s
+
+ M docs/self_model/SELF_MODEL.json
+?? build_v9_round.py
+?? docs/comparisons/comp_v9/
+?? docs/runs/RUN-20260810T095723Z-apply_v9_round.log
+?? docs/runs/RUN-20260810T100254Z-apply_preflight.log
+?? run_v9_round.sh
+?? scripts/preflight_prompt.py
+
+NEXT: python3 scripts/preflight_prompt.py docs/comparisons/comp_v9/Q8-what-this-question-set-was-built-to-miss.txt
+Commit with: git add scripts/preflight_prompt.py docs/comparisons/comp_v9/ docs/runs/ docs/self_model/SELF_MODEL.json

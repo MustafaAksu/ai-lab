@@ -1,0 +1,49 @@
+{
+  "capture_path": "scripts/compare_providers.py",
+  "effective_input_manifest": {
+    "completeness_attestation": "partial_declared_channels_only",
+    "context_manifest_reference": null,
+    "developer_instruction_digest": null,
+    "prior_tool_result_references": [],
+    "rendered_prompt_digest": "sha256:5e13ae5f530a58e38d8a6570aef78ac796a72b16451f59a96a4830195c36c797",
+    "session_state_mode": "stateless",
+    "system_instruction_digest": null,
+    "tool_schema_digest": null
+  },
+  "execution_profile": {
+    "output_token_limit": null,
+    "provider_request_flags": {
+      "max_tokens_source": "provider_default_unset"
+    },
+    "reasoning_parameters": {},
+    "requested_model_name": "gpt-5.6-terra",
+    "runtime_version": "openai==2.53.0",
+    "sampling_parameters": {},
+    "service_endpoint": "openai.responses"
+  },
+  "executor": {
+    "identity_verification_status": "unresolved",
+    "kind": "model",
+    "reference": "gpt-5.6-terra"
+  },
+  "governance_marker": "experimental",
+  "invocation_id": "INV-ad328d89f17c7d5a",
+  "occurred_at": "2026-08-10T10:30:22.669579+00:00",
+  "outcome": {
+    "content_block_types": [
+      "reasoning",
+      "message"
+    ],
+    "input_tokens": 1806,
+    "output_tokens": 1927,
+    "stop_reason": "completed",
+    "stop_reason_field": "status",
+    "text_chars": 6794
+  },
+  "requested_model_name": "gpt-5.6-terra",
+  "schema_version": "v1",
+  "service_endpoint": "openai.responses",
+  "session_id": "SESSION-3272b03450e44f5e",
+  "spawned": [],
+  "status": "success"
+}
