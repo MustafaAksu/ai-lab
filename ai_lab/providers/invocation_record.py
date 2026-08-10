@@ -125,6 +125,26 @@ PROFILE_FIELDS = (
 )
 
 # Warrant condition 4: the enumerated identity subset for schema v1.
+# GAP-0006. Additive outcome capture. Deliberately NOT in IDENTITY_FIELDS_V1:
+# adding these must not change any existing invocation_id. Deliberately not a
+# new INVOCATION_STATUSES value either: admitting a third status would make
+# previously persisted records asserting success require re-adjudication, and
+# no schema-versioning policy exists for self-model records.
+#
+# stop_reason is the provider's own value, verbatim. It is not normalised
+# across providers, because Anthropic reports stop_reason and the OpenAI
+# Responses API reports status or incomplete_details.reason, and asserting a
+# mapping between them would claim an equivalence neither provider states.
+# stop_reason_field records which field the value was read from.
+OUTCOME_FIELDS = (
+    "stop_reason",
+    "stop_reason_field",
+    "input_tokens",
+    "output_tokens",
+    "content_block_types",
+    "text_chars",
+)
+
 IDENTITY_FIELDS_V1 = (
     "schema_version",
     "capture_path",
@@ -320,6 +340,54 @@ def _validate_profile(profile: Mapping[str, Any]) -> None:
         )
 
 
+def _validate_outcome(outcome: Mapping[str, Any], path: str) -> None:
+    """Validate an outcome block if one is present.
+
+    Optional by design. Records captured before GAP-0006 was addressed carry
+    no outcome, which is accurate: their outcomes were not captured. Requiring
+    the block would invalidate the 182 stored records that tests/test_catalog.py
+    validates.
+    """
+
+    unexpected = set(outcome) - set(OUTCOME_FIELDS)
+    if unexpected:
+        raise InvocationRecordError(
+            f"{path} has unknown fields: {sorted(unexpected)}; "
+            f"permitted: {sorted(OUTCOME_FIELDS)}"
+        )
+    missing = set(OUTCOME_FIELDS) - set(outcome)
+    if missing:
+        raise InvocationRecordError(
+            f"{path} is missing fields: {sorted(missing)}. An outcome block is "
+            "optional, but a partial one would not say which parts were captured."
+        )
+    for name in ("stop_reason", "stop_reason_field"):
+        value = outcome[name]
+        if value is not None and (not isinstance(value, str) or not value):
+            raise InvocationRecordError(f"{path}.{name} must be null or a non-empty string")
+    for name in ("input_tokens", "output_tokens", "text_chars"):
+        value = outcome[name]
+        if value is None:
+            continue
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            raise InvocationRecordError(f"{path}.{name} must be null or a non-negative integer")
+    if outcome["text_chars"] is None:
+        raise InvocationRecordError(
+            f"{path}.text_chars must be an integer. The capture path always knows how "
+            "much text it received, and null would not distinguish no text from not "
+            "having looked."
+        )
+    blocks = outcome["content_block_types"]
+    if not isinstance(blocks, list) or any(not isinstance(b, str) or not b for b in blocks):
+        raise InvocationRecordError(
+            f"{path}.content_block_types must be a list of non-empty strings (may be empty)"
+        )
+    if outcome["stop_reason"] is not None and outcome["stop_reason_field"] is None:
+        raise InvocationRecordError(
+            f"{path}.stop_reason_field must name the field a stop_reason was read from"
+        )
+
+
 def validate_invocation_record(record: Mapping[str, Any]) -> None:
     """Schema validity for a Slice A InvocationRecord.
 
@@ -382,6 +450,9 @@ def validate_invocation_record(record: Mapping[str, Any]) -> None:
     _validate_manifest(_require_mapping(record, "effective_input_manifest", "$.effective_input_manifest"))
     _validate_profile(_require_mapping(record, "execution_profile", "$.execution_profile"))
 
+    if "outcome" in record:
+        _validate_outcome(_require_mapping(record, "outcome", "$.outcome"), "$.outcome")
+
     expected_id = invocation_id_for(record)
     actual_id = _require_string(record, "invocation_id", "$.invocation_id")
     if actual_id != expected_id:
@@ -417,6 +488,7 @@ def build_invocation_record(
     prior_tool_result_references: Sequence[str] | None = None,
     spawned: Sequence[str] | None = None,
     governance_marker: str = MARKER_EXPERIMENTAL,
+    outcome: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble and validate a Slice A record. Returns the record."""
 
@@ -463,6 +535,9 @@ def build_invocation_record(
     }
 
     record["invocation_id"] = invocation_id_for(record)
+    if outcome is not None:
+        record["outcome"] = dict(outcome)
+
     validate_invocation_record(record)
     return record
 

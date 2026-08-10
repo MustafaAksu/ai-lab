@@ -118,6 +118,27 @@ def execution_profile_inputs(provider: Any) -> dict[str, Any]:
     }
 
 
+def outcome_block(outcome: Any | None) -> dict[str, Any] | None:
+    """Render a ProviderOutcome into the record's outcome block, or None.
+
+    None when the provider did not report an outcome. GAP-0006: an absent
+    block accurately says the outcome was not captured, whereas a block of
+    nulls would look like capture. Only a provider implementing
+    ask_with_outcome produces one.
+    """
+
+    if outcome is None:
+        return None
+    return {
+        "stop_reason": outcome.stop_reason,
+        "stop_reason_field": outcome.stop_reason_field,
+        "input_tokens": outcome.input_tokens,
+        "output_tokens": outcome.output_tokens,
+        "content_block_types": list(outcome.content_block_types),
+        "text_chars": outcome.text_chars,
+    }
+
+
 def capture_provider_invocation(
     *,
     repo_root: Path,
@@ -129,6 +150,7 @@ def capture_provider_invocation(
     status: str,
     context_manifest_reference: str | None = None,
     spawned: Sequence[str] | None = None,
+    outcome: Any | None = None,
 ) -> tuple[Mapping[str, Any] | None, str | None]:
     """Build and write one InvocationRecord.
 
@@ -155,6 +177,7 @@ def capture_provider_invocation(
             status=status,
             context_manifest_reference=context_manifest_reference,
             spawned=spawned,
+            outcome=outcome_block(outcome),
             **profile_inputs,
         )
         write_invocation_record(record, repo_root)

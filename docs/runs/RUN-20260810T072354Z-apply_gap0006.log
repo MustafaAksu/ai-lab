@@ -1,0 +1,60 @@
+run log: docs/runs/RUN-20260810T072354Z-apply_gap0006.log
+HEAD: 6c615d4  (expect 6c615d4)
+payload + patch md5 OK
+patch applied, three new files written
+
+verified: 182 stored records still validate with unchanged ids and no outcome block; adding a block does not change an id; the truncated case is legible
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+......                                                                   [100%]
+726 passed in 36.33s
+
+ M ai_lab/providers/claude_provider.py
+ M ai_lab/providers/invocation_capture.py
+ M ai_lab/providers/invocation_record.py
+ M ai_lab/providers/openai_provider.py
+ M ai_lab/providers/provider.py
+ M docs/self_model/SELF_MODEL.json
+ M docs/self_model/capabilities/CAP-0015.json
+ M scripts/compare_providers.py
+?? ai-lab-all.bundle
+?? amend_cap0015.py
+?? build_comp0039.py
+?? build_extraction.py
+?? build_linking.py
+?? build_relink.py
+?? build_v8_round.py
+?? claim_impact.py
+?? declare_sol.py
+?? diagnose_empty_response.py
+?? dispositions.json
+?? docs/comparisons/COMP-0038-prompt.txt
+?? docs/runs/RUN-20260810T072354Z-apply_gap0006.log
+?? docs/self_model/decisions/DECISION-20260810-0001.json
+?? docs/self_model/verifications/VERIFY-20260810-0001.json
+?? draft_v8.py
+?? effect_withdrawal.py
+?? find_working_config.py
+?? index_and_synthesize.py
+?? parse_claims.py
+?? parse_links.py
+?? parse_relink.py
+?? patch_guard.py
+?? preflight_prompt.py
+?? preflight_q4.py
+?? readjudicate_v9l027.py
+?? record_dispositions.py
+?? revise_plan.py
+?? revise_v8.py
+?? run_atomic_round.sh
+?? run_extraction.sh
+?? run_linking.sh
+?? run_relink.sh
+?? run_v8_round.sh
+?? tests/test_invocation_outcome.py
+?? update_claim_graph.py
+
+Commit with: git add -A ai_lab/ scripts/ tests/ docs/self_model/ docs/runs/

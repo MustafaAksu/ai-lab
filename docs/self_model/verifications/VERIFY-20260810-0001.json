@@ -1,0 +1,41 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/provider.py",
+    "ai_lab/providers/claude_provider.py",
+    "ai_lab/providers/openai_provider.py",
+    "ai_lab/providers/invocation_record.py",
+    "ai_lab/providers/invocation_capture.py",
+    "scripts/compare_providers.py",
+    "tests/test_invocation_outcome.py"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "726 passed, up from 713. 13 new tests in tests/test_invocation_outcome.py."
+    },
+    {
+      "command": "python scripts/audit_self_model_index.py",
+      "exit_code": 0,
+      "summary": "ok true, verification_outcome verified_current after rebuilding the index."
+    },
+    {
+      "command": "mutation check over _validate_outcome guards",
+      "exit_code": 0,
+      "summary": "Each of the four guards was disabled in turn and a test failed each time: missing-fields, unknown-fields, text_chars-null, stop_reason_field. No guard is vacuous."
+    }
+  ],
+  "created_at": "2026-08-10T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified the first slice of GAP-0006 as recommended in the gap record: additive outcome capture with no change to INVOCATION_STATUSES. The root cause was one level below the record schema. Provider.ask returned str, so ClaudeProvider discarded response.stop_reason and response.usage inside the adapter, and a thinking-only response and a complete response both reached the capture path as text. Provider gains an abstract ask_with_outcome returning ProviderOutcome; both adapters implement it; ask is unchanged and its five other callers are unaffected. InvocationRecord gains an optional outcome block carrying stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars. Verified additive: a test asserts the invocation_id is identical with and without the block, because IDENTITY_FIELDS_V1 contains no outcome field, so no stored record's identity changes. Records without the block still validate, which the 182 stored records require. A provider reporting no outcome yields no block rather than a block of nulls, since nulls would read as capture. The two providers are not normalised onto a shared vocabulary: Anthropic reports stop_reason, the OpenAI Responses API reports status or incomplete_details.reason, and stop_reason_field records which field the value came from. NOT verified and out of scope: the third INVOCATION_STATUSES value, which the gap record identifies as migration-required and reserves for a separate decision. The 182 existing records remain uncaptured as to outcome, accurately.",
+  "target_item_id": "GAP-0006",
+  "target_item_type": "gap",
+  "verification_id": "VERIFY-20260810-0001"
+}

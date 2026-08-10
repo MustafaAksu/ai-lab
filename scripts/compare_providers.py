@@ -530,7 +530,16 @@ def main() -> int:
         print(f"=== {provider.name} ({model}) ===")
         occurred_at = utc_now_iso()
         try:
-            answer = provider.ask(provider_prompt)
+            # GAP-0006: prefer the outcome-reporting call so the record can
+            # say how the call ended. A provider without it still works and
+            # its record simply carries no outcome block, which is accurate.
+            ask_with_outcome = getattr(provider, "ask_with_outcome", None)
+            if callable(ask_with_outcome):
+                call_outcome = ask_with_outcome(provider_prompt)
+                answer = call_outcome.text
+            else:
+                call_outcome = None
+                answer = provider.ask(provider_prompt)
             call_status = "success"
         except Exception:
             record, capture_error = capture_provider_invocation(
@@ -562,12 +571,21 @@ def main() -> int:
             context_manifest_reference=(
                 str(context_manifest_path) if context_manifest_path else None
             ),
+            outcome=call_outcome,
         )
         if capture_error:
             report_capture_failure(provider.name, capture_error)
         elif record is not None:
             invocation_records.append(record)
             print(f"Captured invocation: {record['invocation_id']}")
+            reported = record.get("outcome")
+            if reported is not None:
+                print(
+                    f"  outcome: stop_reason={reported['stop_reason']!r} "
+                    f"output_tokens={reported['output_tokens']} "
+                    f"blocks={reported['content_block_types']} "
+                    f"text_chars={reported['text_chars']}"
+                )
 
         responses[provider.name] = {
             "model": model,

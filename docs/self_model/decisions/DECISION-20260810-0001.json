@@ -1,0 +1,57 @@
+{
+  "authorized_effects": [
+    "Implementing the first slice of GAP-0006 as specified in that gap's recommended_first_slice: additive outcome capture on the scripts/compare_providers.py path, with no change to INVOCATION_STATUSES.",
+    "Adding an abstract ask_with_outcome method to the Provider interface returning a ProviderOutcome, implemented by both provider adapters. Provider.ask is unchanged and its five other callers are unaffected.",
+    "Adding an optional outcome block to InvocationRecord carrying stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars.",
+    "Recording VERIFY-20260810-0001 against GAP-0006 and repointing CAP-0015's last_verified to it.",
+    "Repinning the two CAP-0015 evidence files this work changed, and recording as a capability limit that two other pinned files remain stale from earlier work this verification did not cover."
+  ],
+  "blocked_effects": [
+    "No third INVOCATION_STATUSES value. GAP-0006 identifies that as migration-required because previously persisted records asserting success would need re-adjudication, and no schema-versioning policy exists for self-model records. It is reserved to a separate decision.",
+    "No change to any stored record. IDENTITY_FIELDS_V1 contains no outcome field, so no invocation_id changes; a test asserts the identity is byte-identical with and without the block.",
+    "No retrospective outcome capture. The 182 records captured before this change carry no outcome block, which accurately says their outcomes were not captured. They cannot be recovered.",
+    "No normalisation of provider stop reasons onto a shared vocabulary. Anthropic reports stop_reason; the OpenAI Responses API reports status, or incomplete_details.reason when incomplete. Asserting a mapping would claim an equivalence neither provider states.",
+    "No repinning of CAP-0015 evidence this verification did not check. tests/test_invocation_record.py and docs/self_model/PREDICATE_REGISTRY.md were stale before this work and remain stale, recorded as a limit.",
+    "No new plan. The authority for this work is GAP-0006's own recommended first slice, adjudicated by the operator as sufficient."
+  ],
+  "created_at": "2026-08-10T00:00:00+00:00",
+  "decision": "implement_gap_0006_first_slice_additive_outcome_capture",
+  "decision_id": "DECISION-20260810-0001",
+  "evidence_refs": [
+    "docs/self_model/gaps/GAP-0006.json",
+    "docs/self_model/gaps/GAP-0007.json",
+    "docs/self_model/verifications/VERIFY-20260810-0001.json",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "ai_lab/providers/provider.py",
+    "ai_lab/providers/invocation_record.py",
+    "ai_lab/providers/invocation_capture.py",
+    "tests/test_invocation_outcome.py",
+    "docs/comparisons/COMP-0038-abs-0004-v7-amendment-and-revised-plan-20260723-0002-slice-c-admission-review.md"
+  ],
+  "rationale": [
+    "GAP-0006's recommended first slice describes the record change and not the change that makes it possible. Provider.ask returns str, so ClaudeProvider read response.stop_reason and response.usage and discarded both inside the adapter before any capture code could see them. A response with one empty thinking block and a response with a complete answer both arrived at the capture path as text, and compare_providers set call_status to success immediately after ask returned, because no exception had been raised. That is the mechanism by which INV-b59b93ec9cd8dbe6 was recorded success. The slice was under-specified and is recorded as such.",
+    "The interface change is additive rather than a redefinition of ask. Six call sites use ask and only compare_providers is the governed capture path; scripts/ask_provider.py is forbidden by WARR-20260722-0001 condition 1 from importing capture at all. Changing ask would have touched five callers with no governance need.",
+    "ask_with_outcome is abstract rather than a defaulting base method. A default returning empty fields would let a future provider join the governed path while capturing nothing, and the record would carry an outcome block that looks like capture and is not. That is the pattern ABS-0004 P6 forbids.",
+    "The outcome block is optional, and that was determined from evidence rather than assumed: tests/test_catalog.py validates the 182 stored records, so requiring the block would invalidate them. A provider that reports no outcome yields no block rather than a block of nulls, because absence accurately says the outcome was not captured while nulls would read as capture.",
+    "Verified additive at the identity level. IDENTITY_FIELDS_V1 was read before the change and contains no outcome field; the block is attached after invocation_id_for computes the identity; and a test asserts the id is identical with and without it.",
+    "The guards were mutation-tested rather than assumed effective, per GAP-0007. Each of the four checks in _validate_outcome was disabled in turn and a test failed each time, so no guard is vacuous. GAP-0007 records that nine of nine checks shipped without a constructed failing case failed in use, and none of seven negative-tested ones did.",
+    "The SDKs were upgraded before the work rather than after, so the adapters were written against the versions that will run: anthropic 0.113.0 to 0.121.0 and openai 2.44.0 to 2.53.0. The upgrade is legible in the record because execution_profile.runtime_version already captures the SDK version, and requirements.txt was refreshed at 6c615d4. The newer Anthropic SDK carries a stop reason that did not exist in 0.113.0, model_context_window_exceeded, which is directly within this gap's subject."
+  ],
+  "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
+  "required_next_governance": [
+    "GAP-0006 is not closed by this slice. Its risk statement names three defects: no outcome representation, supplied rather than effective configuration in execution_profile, and the witness output-budget asymmetry between the two providers. Only the first is addressed.",
+    "Whether to admit a third INVOCATION_STATUSES value remains open and migration-required. Nothing here decides it, and the outcome block makes the distinction legible without it.",
+    "Two CAP-0015 evidence files remain stale from earlier work: tests/test_invocation_record.py, staled by the guard change under DECISION-20260727-0001, and docs/self_model/PREDICATE_REGISTRY.md, staled by work not identified here. Sixteen stale capability evidence pins were found across four capabilities on 2026-08-01 by the reviewing executor and have not been addressed as a whole.",
+    "The first governed round run after this change will produce the first invocation records in this repository carrying stop_reason. Whether that changes how a round's completeness is assessed, and whether the existing practice of inferring truncation from response content should be retired, has not been decided."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "Invocation records captured on the compare_providers path from 2026-08-10 carry an outcome block reporting how the call ended. A response that returns without exception and produces no text is still recorded status success, and is now distinguishable from a complete response by stop_reason, output_tokens, content_block_types and text_chars. Records captured before this change are unchanged and carry no block.",
+  "source_capability_ids": [
+    "CAP-0015"
+  ],
+  "source_gap_id": "GAP-0006",
+  "source_plan_id": "PLAN-20260722-0001",
+  "status": "recorded",
+  "summary": "The first slice of GAP-0006 is implemented: an abstract ask_with_outcome on the Provider interface carries the provider's own stop reason, token counts and content block types to the capture path, and InvocationRecord gains an optional outcome block. The root cause was one level below the record schema, in adapters that discarded stop_reason and usage before capture existed. Verified additive: no stored record's invocation_id changes and records without the block still validate. INVOCATION_STATUSES is unchanged; admitting a third value remains migration-required and reserved.",
+  "title": "Implement the GAP-0006 first slice: additive execution-outcome capture"
+}

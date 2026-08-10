@@ -31,12 +31,12 @@
     ],
     "files": [
       {
-        "content_hash": "5633e4caed3220aa1c493c90f62874e6fd9d8bf6e5f6f8c6f8711b0afb6487c9",
+        "content_hash": "a04a56046e752e208b9c10174401b89711a46ef523aecfaae0c128e0b9eb9e21",
         "path": "ai_lab/providers/invocation_record.py",
         "role": "schema, validator, identity, serialization, relations"
       },
       {
-        "content_hash": "f492d2eccd483d7908e85bf149f269d3a76bd38b03d091c94aa8414456e6c5e1",
+        "content_hash": "cbdc1b9c3cf07cc74a3e76ec678bfcc5afb30efd53070185994a7059242806a9",
         "path": "ai_lab/providers/invocation_capture.py",
         "role": "capture surface for the admitted path"
       },
@@ -54,6 +54,16 @@
         "content_hash": "d685e2be37c66aedbeb1569e8e147c6be85ec2e102b904f62e849b646f18ba7b",
         "path": "docs/self_model/INVOCATION_RECORDS.md",
         "role": "record family documentation and stated limitations"
+      },
+      {
+        "content_hash": "5d5546a66b7566305435455b7487033a0623dcd42c268669290a64c6da65d590",
+        "path": "ai_lab/providers/provider.py",
+        "role": "Provider interface; ask_with_outcome and ProviderOutcome (GAP-0006 first slice)"
+      },
+      {
+        "content_hash": "815bc77752a46cfe4152584c53a67c279aefe6cb40e941c8a2415671c2328da6",
+        "path": "tests/test_invocation_outcome.py",
+        "role": "Outcome capture tests, written as falsifying cases per GAP-0007"
       }
     ],
     "memory_records": []
@@ -67,9 +77,9 @@
     "ai_lab.providers.invocation_capture.capture_provider_invocation (capture on the admitted path, returns record and error)"
   ],
   "last_verified": {
-    "repo_commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
-    "verification_artifact": "docs/self_model/verifications/VERIFY-20260722-0001.json",
-    "verified_at": "2026-07-22T00:00:00+00:00"
+    "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260810-0001.json",
+    "verified_at": "2026-08-10T00:00:00+00:00"
   },
   "limits": [
     "Capture is restricted to scripts/compare_providers.py. No other path emits records, and the validator rejects records claiming any other capture_path.",
@@ -79,9 +89,10 @@
     "Relations are emitted with authoritative false and relation_source future_edge_seed; they are diagnostic seeds, not authoritative graph edges.",
     "Nothing reads the records. C1 provenance_v1 activation, catalog resolution, roles and authorization, and lineage and admission remain unimplemented.",
     "Records are prospective only; invocations before this capability fall under the ABS-0004 Section 7 pre-provenance boundary.",
-    "Execution outcome is not captured. The record carries no stop_reason and no output-token count, and INVOCATION_STATUSES admits only success and failure, so an invocation that returned without exception and produced no content is recorded as success and is field-identical on status, governance_marker, execution_profile and spawned to one that produced a complete response. GAP-0006. Raising the Claude output-token default to 16000 under WARR-20260722-0001 reduced how often budget exhaustion occurs; it did not make exhaustion representable, and COMP-0038 exhausted 16000.",
+    "Execution outcome is captured from 2026-08-10 forward, on the compare_providers path only, in an optional outcome block carrying stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars (VERIFY-20260810-0001). The 182 records captured before that date carry no outcome block and their outcomes cannot be recovered. INVOCATION_STATUSES still admits only success and failure, so an invocation that returned without exception and produced nothing is still recorded status success; the outcome block is what distinguishes it. Admitting a third status value remains migration-required and is reserved to a separate decision under GAP-0006.",
     "execution_profile records supplied rather than effective configuration. A parameter the provider defaulted, rather than one AI-Lab sent, is absent from the record even when it determines the outcome: reasoning_parameters is {} whenever no effort parameter is sent, which is accurate about the request and silent about the effort actually applied.",
-    "output_token_limit is recorded for the provider AI-Lab caps and is null for the provider it does not, with max_tokens_source provider_default_unset. No record captures the uncapped endpoint's effective limit, so a comparison round's records cannot establish that its two witnesses had comparable room to answer."
+    "output_token_limit is recorded for the provider AI-Lab caps and is null for the provider it does not, with max_tokens_source provider_default_unset. No record captures the uncapped endpoint's effective limit, so a comparison round's records cannot establish that its two witnesses had comparable room to answer.",
+    "Pinned evidence for docs/self_model/PREDICATE_REGISTRY.md, tests/test_invocation_record.py does not match the current file contents. Those files were changed before 2026-08-10 by work that did not repin them, and VERIFY-20260810-0001 did not check them. The mismatch is recorded rather than repaired: repinning would assert a verification that has not happened."
   ],
   "name": "Invocation provenance capture (ABS-0004 Slice A)",
   "recommended_next_actions": [

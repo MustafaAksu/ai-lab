@@ -1,7 +1,7 @@
 from anthropic import Anthropic
 
 from ai_lab.config import read_claude_api_key
-from ai_lab.providers.provider import Provider
+from ai_lab.providers.provider import Provider, ProviderOutcome
 from ai_lab.providers.settings import CLAUDE_EFFORT, CLAUDE_MAX_TOKENS, CLAUDE_MODEL
 
 
@@ -28,6 +28,9 @@ class ClaudeProvider(Provider):
         return self._model
 
     def ask(self, prompt: str) -> str:
+        return self.ask_with_outcome(prompt).text
+
+    def ask_with_outcome(self, prompt: str) -> ProviderOutcome:
         request: dict[str, object] = {
             "model": self._model,
             "max_tokens": self._max_tokens,
@@ -45,9 +48,22 @@ class ClaudeProvider(Provider):
         response = self._client.messages.create(**request)
 
         parts: list[str] = []
+        block_types: list[str] = []
 
         for block in response.content:
-            if getattr(block, "type", None) == "text":
+            block_type = getattr(block, "type", None)
+            block_types.append(str(block_type))
+            if block_type == "text":
                 parts.append(block.text)
 
-        return "\n".join(parts).strip()
+        usage = getattr(response, "usage", None)
+        stop_reason = getattr(response, "stop_reason", None)
+
+        return ProviderOutcome(
+            text="\n".join(parts).strip(),
+            stop_reason=str(stop_reason) if stop_reason is not None else None,
+            stop_reason_field="stop_reason",
+            input_tokens=getattr(usage, "input_tokens", None),
+            output_tokens=getattr(usage, "output_tokens", None),
+            content_block_types=block_types,
+        )

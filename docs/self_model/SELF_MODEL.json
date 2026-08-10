@@ -45,8 +45,8 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 80,
-      "warn": 32
+      "info": 82,
+      "warn": 31
     }
   },
   "capabilities": [
@@ -228,7 +228,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-06T16:18:53+00:00",
+  "generated_at": "2026-08-10T07:29:40+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -766,7 +766,7 @@
       "target": "A stated practice rather than code, because the defect is in what gets written before a check is trusted, not in any module. Before a check is relied upon for a governance claim, record the input that should make it fail and the observed result of supplying that input. Applied to the checks this repository already depends on: the audit reports verified_current, so construct an evidence state where it must not and confirm it does not; the transfer-script md5 gates abort on mismatch, which is already tested and should stay tested; a parser that admits records must be shown rejecting a malformed one. This is not new machinery. It is the discipline the seven successful checks already followed, made a requirement instead of a habit."
     }
   ],
-  "repo_head": "f81a8befaa9109c8f65e59c0c59c1faf032ce986",
+  "repo_head": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -939,6 +939,11 @@
       "repo_commit": "22683688edf7b6b050e9920295f3e108fbaa6229",
       "source_path": "docs/self_model/verifications/VERIFY-20260723-0002.json",
       "verification_id": "VERIFY-20260723-0002"
+    },
+    {
+      "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
+      "source_path": "docs/self_model/verifications/VERIFY-20260810-0001.json",
+      "verification_id": "VERIFY-20260810-0001"
     }
   ],
   "warrant_counts": {
