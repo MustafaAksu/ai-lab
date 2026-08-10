@@ -1,0 +1,24 @@
+run log: docs/runs/RUN-20260810T094726Z-apply_v9.log
+HEAD: d07ece3  (expect d07ece3)
+payload + patch md5 OK
+patch applied
+
+assembled ontology sha256 matches: 8f61c283a5d716f6816798a4946824b2d0d633a8be0d154da33cc1ebbe7ab1fa
+verified: zero ADOPTED_CONSTRAINT tags; version v9, status proposed; all 16 INHERITED_CONSTRAINT statements are verbatim admitted v4
+
+capabilities: 16
+open_gaps: 4
+  "ok": true,
+  "verification_outcome": "verified_current"
+......                                                                   [100%]
+726 passed in 35.75s
+
+ M docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+ M docs/self_model/SELF_MODEL.json
+?? docs/runs/RUN-20260810T094726Z-apply_v9.log
+?? docs/self_model/v9_reconstruction/ABS-0004-v9-assembled.md
+?? docs/self_model/v9_reconstruction/SHA256SUMS-assembly.txt
+?? docs/self_model/v9_reconstruction/V9_ASSEMBLY_RECORD.md
+
+v9 is PROPOSED. Applying it does not admit it.
+Commit with: git add -A docs/abstractions/ docs/self_model/ docs/runs/
