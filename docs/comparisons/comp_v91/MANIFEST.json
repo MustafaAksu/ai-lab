@@ -1,0 +1,159 @@
+{
+  "question_author": "packaging executor, per DECISION-20260811-0001",
+  "questions": [
+    {
+      "declared_omissions": [],
+      "est_input_tokens": 11271,
+      "evidence_units": [
+        {
+          "chars": 4169,
+          "source_sha256": "0fae3c26c619e1e17d0b93cae2b2d3c972add9a9abf2631c8fc954936535b9d4",
+          "unit_id": "ABS-0004 v9.1 metadata and version admission table"
+        },
+        {
+          "chars": 7615,
+          "source_sha256": "c95c45c6ae7290e3b4bf67986d1d356b9069f712097e2796f08bb74ffa9a98ac",
+          "unit_id": "Section 6, Epistemic Constraints, carrying every constraint C1 to C11"
+        },
+        {
+          "chars": 7080,
+          "source_sha256": "e4e5622b627403134e8873573e2c8b5aedcdb473588bb11bec3b55ed0d63572e",
+          "unit_id": "Admitted ABS-0004 v4, Section 6, for comparison with the inherited constraints"
+        },
+        {
+          "chars": 8186,
+          "source_sha256": "2e1bbb5d7a0ef87a261fd1f9181ce4f9d83ad63886d90c3cd9e8170a36f5c2fb",
+          "unit_id": "DECISION-20260727-0005, which adopted the [INHERITED_CONSTRAINT] category"
+        }
+      ],
+      "prompt_chars": 30434,
+      "prompt_path": "docs/comparisons/comp_v91/R1-does-the-corrected-inherited-constraint-hold.txt",
+      "prompt_sha256": "29cfe9df2475c5d765e0b31608cb8c1173a713bbdff629326c6bc1ce132aca13",
+      "question_id": "R1",
+      "slug": "does-the-corrected-inherited-constraint-hold"
+    },
+    {
+      "declared_omissions": [],
+      "est_input_tokens": 4282,
+      "evidence_units": [
+        {
+          "chars": 2656,
+          "source_sha256": "1d08e5e99f7d7111766545f47d7806a3474a28bfa9fe228b26f163f04d8c7fed",
+          "unit_id": "All 11 [LIMITATION] statements in v9.1"
+        },
+        {
+          "chars": 2187,
+          "source_sha256": "e26d1ff379b5e11bdf2bd1ce7b171d915ceb7df811f034e5f7009b7a16369067",
+          "unit_id": "Section 3, Three Decisions"
+        },
+        {
+          "chars": 3758,
+          "source_sha256": "b35e96a78eec3130007f29cda86bd756295115db54767aec59849377f0362fb5",
+          "unit_id": "Section 9, Enforcement Matrix"
+        }
+      ],
+      "prompt_chars": 11564,
+      "prompt_path": "docs/comparisons/comp_v91/R2-do-the-eleven-limitations-do-work.txt",
+      "prompt_sha256": "6cb875c6489285b86aa8a3c5babcb49ec2c680e16427dc2b9f91e387db6eccf2",
+      "question_id": "R2",
+      "slug": "do-the-eleven-limitations-do-work"
+    },
+    {
+      "declared_omissions": [],
+      "est_input_tokens": 4767,
+      "evidence_units": [
+        {
+          "chars": 1155,
+          "source_sha256": "6246ef8d277649bfecce0fdd6aa235cef32660c4831540331c92e0b3f1b2de2f",
+          "unit_id": "Constraint C3 as corrected, in full"
+        },
+        {
+          "chars": 3517,
+          "source_sha256": "506cc597aede75dd34244eb2ca3eedd0c83180be67c21443b106448cb0919d68",
+          "unit_id": "Sections 4.3 and 4.4, ModelIdentity and CatalogSnapshot"
+        },
+        {
+          "chars": 960,
+          "source_sha256": "72b586662c2415e9b801dc26154e18f392daaf265b120ab98b0cd1c3ece62ff4",
+          "unit_id": "Section 4.18, IndependenceAssessment"
+        },
+        {
+          "chars": 241,
+          "source_sha256": "ba3737289b0dc9449c5cd6bd61b21b9fc9e38e8dfa70175fb8584d95d5519fc6",
+          "unit_id": "Principle P5, in full"
+        },
+        {
+          "chars": 3758,
+          "source_sha256": "b35e96a78eec3130007f29cda86bd756295115db54767aec59849377f0362fb5",
+          "unit_id": "Section 9, Enforcement Matrix"
+        }
+      ],
+      "prompt_chars": 12871,
+      "prompt_path": "docs/comparisons/comp_v91/R3-does-the-fail-closed-c3-actually-close.txt",
+      "prompt_sha256": "df8bbca36285dde565a239f816a4782b67bcc3355bb7bcc01f6904c85d14cee1",
+      "question_id": "R3",
+      "slug": "does-the-fail-closed-c3-actually-close"
+    },
+    {
+      "declared_omissions": [],
+      "est_input_tokens": 4257,
+      "evidence_units": [
+        {
+          "chars": 2187,
+          "source_sha256": "e26d1ff379b5e11bdf2bd1ce7b171d915ceb7df811f034e5f7009b7a16369067",
+          "unit_id": "Section 3, Three Decisions"
+        },
+        {
+          "chars": 1991,
+          "source_sha256": "36d3a4ee1a875be043d03412a219241f0d6c6508d7561fb17cc84b1ef5ae143e",
+          "unit_id": "Section 4.13, DecisionRecord and AccountablePrincipal"
+        },
+        {
+          "chars": 4169,
+          "source_sha256": "0fae3c26c619e1e17d0b93cae2b2d3c972add9a9abf2631c8fc954936535b9d4",
+          "unit_id": "ABS-0004 v9.1 metadata and version admission table"
+        }
+      ],
+      "prompt_chars": 11494,
+      "prompt_path": "docs/comparisons/comp_v91/R4-seed-authority-after-correction.txt",
+      "prompt_sha256": "d0cc42b7f5efad57661cb8e7531aefd4ca54bbbf071268ab2e59dd7f69178a1f",
+      "question_id": "R4",
+      "slug": "seed-authority-after-correction"
+    },
+    {
+      "declared_omissions": [
+        "Section 4 object definitions, which several challenge questions reference by number. Attaching Section 4 would put this prompt over the size that has been demonstrated to complete. Where a question cannot be assessed without a definition, say which definition and treat that question as unassessed rather than guessing."
+      ],
+      "est_input_tokens": 7782,
+      "evidence_units": [
+        {
+          "chars": 1942,
+          "source_sha256": "5d766e10397e84dc06b747e804829a5fe01300e7179d31925e2654f471ceeea1",
+          "unit_id": "Section 13, Challenge-Round Questions"
+        },
+        {
+          "chars": 7615,
+          "source_sha256": "c95c45c6ae7290e3b4bf67986d1d356b9069f712097e2796f08bb74ffa9a98ac",
+          "unit_id": "Section 6, Epistemic Constraints, carrying every constraint C1 to C11"
+        },
+        {
+          "chars": 3758,
+          "source_sha256": "b35e96a78eec3130007f29cda86bd756295115db54767aec59849377f0362fb5",
+          "unit_id": "Section 9, Enforcement Matrix"
+        },
+        {
+          "chars": 4169,
+          "source_sha256": "0fae3c26c619e1e17d0b93cae2b2d3c972add9a9abf2631c8fc954936535b9d4",
+          "unit_id": "ABS-0004 v9.1 metadata and version admission table"
+        }
+      ],
+      "prompt_chars": 21013,
+      "prompt_path": "docs/comparisons/comp_v91/R5-are-the-inherited-challenge-questions-fit.txt",
+      "prompt_sha256": "a755c12bae0fe430c7467c8a358cc92cddc9ce53986d5e4f000eef6a7b3d3f9d",
+      "question_id": "R5",
+      "slug": "are-the-inherited-challenge-questions-fit"
+    }
+  ],
+  "round_label": "abs-0004-v9.1-re-review",
+  "scope": "the five questions whose v9 evidence sets prevented judgment"
+}

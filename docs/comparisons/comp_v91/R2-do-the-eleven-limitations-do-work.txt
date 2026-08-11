@@ -1,0 +1,151 @@
+You are reviewing a proposed ontology amendment. This is ONE question of five, each asked in a separate call with its own evidence set. Do not attempt to answer the others.
+
+Status: ABS-0004 v9.1 is proposed and not admitted. v4 is the last version with an admission event. v9.1 has no governance force.
+
+Disclosures:
+
+1. v9.1 is the CORRECTED successor to v9. A prior round, COMP-0126 to COMP-0134, found eight defects in v9; all eight were accepted by the operator and answered. You are reviewing the answers, not the original. Do not assume a correction is sound because it was made in response to a finding.
+
+2. THIS IS A RE-RUN. Each of these five questions was asked of v9 and returned an answer qualified by insufficient evidence. The evidence sets were the question author's choices, and they were wrong. If this evidence set is still insufficient, say so and name precisely what is missing; that report is wanted output and the last round's version of it is why this round exists.
+
+3. The executor that drafted v9, the corrections, and the version bump self-reports as gpt-5.6-thinking. One reviewer slot in this round is gpt-5.6-terra. The provider's own catalog asserts these are distinct model identities, and that catalog is a provider self-report. Nothing establishes whether they are the same executor. Under the corrected C3 you are reading, an invocation may not adjudicate a claim whose evidence ancestry contains an executor of unresolved equivalence. Your output is evidence for the accountable principal, not an adjudication.
+
+4. The question author drafted ABS-0004 v5 through v8, all withdrawn or superseded, and drafted none of v9 or v9.1.
+
+Answer in whatever form fits, but include three things: a VERDICT SENTENCE before the reasoning; any evidence you needed and did not have; and anything you found that this question did not ask about.
+
+Quote only text that appears below. Do not certify or praise. No provider product recommendations.
+
+=== QUESTION R2 ===
+The v9 round asked whether the limitation statements do work or wrap failures in accurate disclaimers. Four of nine were supplied and the answer was qualified accordingly. All eleven now in v9.1 are below, with the sections that carry most of them.
+
+A prior synthesis characterised v8's failure mode as: a failed control retained in control-shaped language, wrapped in an accurate disclaimer, and delegated to a future mechanism or a careful reader.
+
+Go statement by statement. For each, say what a reader could do differently because it is present, and what would be lost if it were deleted. Distinguish those that constrain how the ontology may be described from those that merely record an absence. If the set as a whole substitutes disclosure for remedy, say so.
+
+=== EVIDENCE All 11 [LIMITATION] statements in v9.1 ===
+`[LIMITATION]` descriptive boundary on what the ontology, its
+  records, or current enforcement establish. A
+
+`[LIMITATION]`
+
+`[LIMITATION]` A verification result supports only the property it names. It
+does not by itself justify a broader epistemic status or establish truth,
+grounding, calibration, privacy, or any other unverified property.
+
+`[LIMITATION]` Distinct identifiers, endpoints, or invocation records do not by themselves
+establish distinct executor identities. When executor-kind-specific
+equivalence cannot be resolved, independence remains unresolved.
+
+`[LIMITATION]` AccountablePrincipal, `authority_scope`, delegation, and
+authorization records can state and attribute authority claims. Repository
+records do not by themselves establish a principal's extra-systemic
+entitlement to govern.
+
+`[LIMITATION]` A recorded authorization-chain terminus identifies where the
+represented chain stops. It does not by itself establish that the underlying
+invocation is substantively authorized.
+
+`[LIMITATION]` Record and relation requirements expose only what was declared,
+recorded, linked, traversable, and correctly attributed. They do not establish
+that every material invocation, authorization, input, dependency, or external
+interaction is present in the record.
+
+`[LIMITATION]` InvocationRecord schema v1 accepts `verified`, but no admitted
+schema-v1 capture path can presently substantiate it: the current path performs
+no identity resolution, and provider catalog self-report, even over an
+authenticated channel, does not independently establish a model mapping. It
+therefore emits `unresolved`. Later append-only identity resolution records do
+not mutate or upgrade this field; validator acceptance of `verified` is
+syntactic compatibility, not a licensed status.
+
+`[LIMITATION]` One artifact may mix original observation, copied finding, new
+inference, and paraphrase; artifact-level lineage cannot distinguish them.
+Until claim-level derivation exists, the system provides artifact-level
+potential-dependence detection, not claim-level independence proof; Section 7
+imposes the conservative inheritance this gap requires, and C11 imposes the
+interim high-consequence disclosure this gap requires.
+
+`[LIMITATION]` Defining AuthorizationPolicy and requiring typed references does
+not establish that a policy was active, applicable, evaluated, or enforced for
+a decision. AuthorizationPolicy enforcement remains deferred.
+
+`[LIMITATION]` Role, qualification, and authorization records are inputs to a
+C6 evaluation. Their existence does not establish that the C6 exercise
+restriction was evaluated or satisfied for a particular invocation.
+
+=== EVIDENCE Section 3, Three Decisions ===
+## 3. Three Decisions
+
+`[DEF]` The ontology distinguishes three decision kinds:
+
+1. Invocation authorization (ex ante): may executor E perform invocation I
+   under role R, consequence C, and conditions K?
+2. Routing selection: why was executor E selected rather than alternatives?
+3. Evidence admission (ex post): may output O enter governed evidence, and
+   with what epistemic status?
+
+`[DEF]` A decision-making act is an Invocation. Its governed output is a
+DecisionRecord. InvocationAuthorization, RoutingDecision, and
+EvidenceAdmissionDecision are DecisionRecord kinds (Section 4.13), not
+executor events. Execution authorization and output admission are separate:
+an experimental executor may be authorized to run while its outputs remain
+inadmissible as governed evidence.
+
+`[PROPOSED_CONSTRAINT]` Subordinate authorization inheritance: a subordinate
+invocation is covered by its parent's InvocationAuthorization only when that
+authorization's conditions declare the permitted subordinate execution
+classes (executor kinds, roles, consequence ceiling). A subordinate
+execution outside the declared classes requires its own authorization.
+Undeclared subordinate execution is a disclosure violation under 4.7, not
+an implicitly authorized act.
+
+`[OPEN]` Authorization-chain bootstrap: how an authorization chain terminates
+in a standing policy, delegated authority, or AccountablePrincipal authority
+scope rather than requiring an infinite sequence of prior authorizations.
+
+`[LIMITATION]` AccountablePrincipal, `authority_scope`, delegation, and
+authorization records can state and attribute authority claims. Repository
+records do not by themselves establish a principal's extra-systemic
+entitlement to govern.
+
+`[LIMITATION]` A recorded authorization-chain terminus identifies where the
+represented chain stops. It does not by itself establish that the underlying
+invocation is substantively authorized.
+
+`[LIMITATION]` Record and relation requirements expose only what was declared,
+recorded, linked, traversable, and correctly attributed. They do not establish
+that every material invocation, authorization, input, dependency, or external
+interaction is present in the record.
+
+=== EVIDENCE Section 9, Enforcement Matrix ===
+## 9. Enforcement Matrix
+
+`[DEF]` The matrix separates three questions that do not imply one another.
+Governance status is `proposed-v9` or `inherited-v4` and records the source of
+normative force. Claimed enforcement mode is `none`, `manual`, or `machine` and
+records what enforcement mode the document says is presently used. Enforcement
+evidence is `none`, a named retained artifact instance, or machine evidence and
+records what evidence exists that the applicable check occurred for a named
+target. Representability is `none` | `partial` | `full`. A manual enforcement
+claim counts as evidenced only when a specific retained artifact attests the
+applicable check for a named target. An artifact class, an input record, or the
+claim that a check happens is not enforcement evidence.
+
+| Constraint | Governance status | Claimed enforcement mode | Enforcement evidence | Representability | Target enforcement | Activation condition | Dependencies |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 staged provenance | proposed-v9 | none | none | none | validator per profile | profile activation decision after capability ships | invocation records; manifests; profiles |
+| C2 catalog admission | proposed-v9 | none | none | none | validator + runtime gate | catalog capability ships | catalog snapshots; identities; qualifications |
+| C3 no self-adjudication (executor-generic) | proposed-v9 | manual | none; `WARR-20260719-0002` is not C3 evidence | partial | per-kind equivalence check + lineage traversal | manual use is claimed; evidence begins only with a named C3 attestation for a named adjudication | ancestry capture; executor-equivalence semantics |
+| C4 hidden witness reuse | proposed-v9 | none | none | none | context-lineage inspection | lineage capability ships | manifests; ancestry |
+| C5 lineage independence | proposed-v9 | none | none | none | categorical assessment with reasons | lineage capability ships | ancestry; claim lineage |
+| C6 authority separation | inherited-v4 | manual | none; role records are inputs to C6 evaluation, not evidence that it occurred | partial | artifact validator | manual practice is claimed; evidence begins only with a named C6 evaluation for a named invocation | role records |
+| C7 implementation separation | inherited-v4 | manual | none; existing VERIFY records show verification activity but do not attest a C7 implementation-separation check for a named change | partial | validator on VERIFY records | manual practice is claimed; evidence begins only with a named C7 attestation | none; strengthened later |
+| C8 decision traceability | proposed-v9 | none | none | none | RoutingDecision validation | routing capability ships | routing records |
+| C9 lineage inheritance | inherited-v4 | manual | none; no named artifact instance currently attests a C9 inheritance check for a named target | partial | inheritance propagation | manual practice is claimed; evidence begins only with a named C9 attestation | claim lineage (full) |
+| C10 validator lineage | inherited-v4 | manual | none; VERIFY records name verification activity, but no named retained artifact currently establishes the C10 lineage-independence check for a named verification | partial | VerificationRun with verifier-ancestry check | manual practice is claimed; evidence begins only with a named C10 attestation | ancestry capture |
+| C11 interim independence disclosure | inherited-v4 | manual | none; no named DecisionRecord or warrant instance currently attests the C11 disclosure check for a named high-consequence decision | partial | admission validator requiring disclosure + named controls | manual practice is claimed; evidence begins only with a named C11 attestation | none; retired when claim lineage ships |
+
+--- END OF EVIDENCE ---
+
+Answer only the question above.
