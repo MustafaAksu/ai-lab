@@ -1,0 +1,154 @@
+diff --git a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+index a8db62b..632b732 100644
+--- a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
++++ b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+@@ -44,8 +44,16 @@
+   concerning the preparation of this document; `[PROPOSAL]` candidate
+   implementation boundary subject to future governance; `[OPEN]` open
+   question; or `[LIMITATION]` descriptive boundary on what the ontology, its
+-  records, or current enforcement establish. A limitation imposes no
+-  constraint and claims no adoption. Untagged prose binds nothing.
++  records, or current enforcement establish. A `[DEF]` introduces a term,
++  record shape, relation, or descriptive derivation; it does not by itself
++  impose an obligation, prohibition, permission, admission condition, or
++  status-changing consequence. A limitation imposes no constraint and claims
++  no adoption. Untagged prose binds nothing.
++- `[LIMITATION]` `[INHERITED_CONSTRAINT]` establishes textual continuity with
++  an admitted v4 constraint; it does not by itself establish semantic identity
++  when definitions, vocabularies, relation rules, or other referents used by
++  that constraint differ in the proposed version. Such dependencies require
++  re-examination before admission.
+ 
+ ## Evidence Inputs
+ 
+@@ -148,8 +156,8 @@ executor events. Execution authorization and output admission are separate:
+ an experimental executor may be authorized to run while its outputs remain
+ inadmissible as governed evidence.
+ 
+-`[DEF]` Subordinate authorization inheritance: a subordinate invocation is
+-covered by its parent's InvocationAuthorization only when that
++`[PROPOSED_CONSTRAINT]` Subordinate authorization inheritance: a subordinate
++invocation is covered by its parent's InvocationAuthorization only when that
+ authorization's conditions declare the permitted subordinate execution
+ classes (executor kinds, roles, consequence ceiling). A subordinate
+ execution outside the declared classes requires its own authorization.
+@@ -481,9 +489,17 @@ a decision. AuthorizationPolicy enforcement remains deferred.
+ verifier version, rule/test version, inputs (content-addressed),
+ execution environment, result, and `verifier_lineage_status`
+ (`independent` | `self_authored_with_review` | `self_authored_unreviewed`).
+-Self-authored-unreviewed verification cannot satisfy admission for
+-high-consequence outputs; the named independent review artifact converts
+-the status to `self_authored_with_review`.
++
++`[PROPOSED_CONSTRAINT]` Self-authored-unreviewed verification cannot satisfy
++admission for high-consequence outputs. A review artifact changes
++`verifier_lineage_status` to `self_authored_with_review` only when that
++artifact is linked to the exact VerificationRun and establishes all of the
++following for the reviewed property: the reviewer invocation and executor
++identity; reviewer independence relative to the verifier and the output under
++review with no unresolved or disqualified independence dimension; coverage of
++the verifier version, rule/test version, content-addressed inputs, execution
++environment, and result; and a positive review outcome. Naming or linking a
++review artifact without those recorded findings does not change the status.
+ 
+ ### 4.18 IndependenceAssessment (defined, deferred)
+ 
+@@ -492,9 +508,14 @@ path, source, executor identity, provider/organization correlation, prompt
+ common cause, session-state confidence, claim-lineage completeness), each
+ with an enumerated outcome (`disqualified` | `degraded` | `independent` |
+ `unresolved`) and a reason reference. Derivation rule: any dimension
+-`disqualified` yields overall status `dependent`; any dimension
+-`unresolved` without a named compensating control yields overall
+-`unresolved`; otherwise `qualified_independent` with degradations listed.
++`disqualified` yields overall status `dependent`; any dimension `unresolved`
++yields overall `unresolved`; otherwise `qualified_independent` with
++degradations listed. A compensating control may be recorded as mitigation or
++as evidence used to reassess a dimension, but it cannot convert an unresolved
++dimension by its name or existence alone. Qualification may increase only
++after the governing rule for that dimension records evidence that resolves the
++unknown to a non-`unresolved` outcome, after which the overall status is
++derived again.
+ 
+ ## 5. Canonical Relations
+ 
+@@ -578,19 +599,23 @@ governed role only when the role's required catalog claims are satisfied at
+ the role's freshness requirements. Experimental execution is permitted;
+ experimental outputs cannot silently enter governed evidence.
+ 
+-`[INHERITED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an
++`[PROPOSED_CONSTRAINT]` C3 No self-adjudication (executor-generic): an
+ invocation cannot adjudicate a claim whose evidence ancestry contains an
+ invocation by an equivalent executor identity, with equivalence defined
+ per executor kind: ModelIdentity resolution equality for models;
+ tool identity and version equality for tools; principal equality for
+ humans. Direct lineage conflict: hard prohibition, no exception.
+ Equivalent-identity conflict: hard prohibition absent a future explicitly
+-governed exceptional procedure. Unknown or unresolved executor equivalence
+-cannot establish identity independence; it yields
+-`independence_unresolved`, never an independent path. An identity
+-unresolved at one endpoint and resolved at another is treated as distinct
+-until equivalence is affirmatively established; distinctness never
+-increases independence (P5).
++governed exceptional procedure. If equivalence between the adjudicating
++executor and an executor in the claim's evidence ancestry is unresolved,
++the adjudicating invocation may not adjudicate that claim while the relation
++remains unresolved; the independence result is `independence_unresolved`, not
++an independent path. An unresolved relation is not treated as distinct for
++independence purposes and remains unresolved until equivalence or
++non-equivalence is affirmatively established under the applicable
++executor-kind identity semantics. A compensating control that leaves the
++equivalence fact unresolved cannot license adjudication or increase
++independence (P5).
+ 
+ `[PROPOSED_CONSTRAINT]` C4 No hidden witness reuse: an invocation that
+ consumed another witness's output is not an independent confirmation of
+@@ -715,25 +740,30 @@ classification function.
+ 
+ ## 9. Enforcement Matrix
+ 
+-`[DEF]` Normative state: proposed | adopted-manual | machine-enforced.
+-Representability: none | partial | full. Manual enforcement counts only
+-when the check leaves a named artifact; the claim that a check happens is
+-not evidence. Capability dependencies replace slice numbers until admitted
+-plans exist.
+-
+-| Constraint | Normative state | Representability | Current enforcement evidence | Target enforcement | Activation condition | Dependencies |
+-| --- | --- | --- | --- | --- | --- | --- |
+-| C1 staged provenance | proposed | none | none | validator per profile | profile activation decision after capability ships | invocation records; manifests; profiles |
+-| C2 catalog admission | proposed | none | none | validator + runtime gate | catalog capability ships | catalog snapshots; identities; qualifications |
+-| C3 no self-adjudication (executor-generic) | adopted-manual | partial | named attestation in completion warrants (for example WARR-20260719-0002 scope adjudications) | per-kind equivalence check + lineage traversal | already active manually | ancestry capture; executor-equivalence semantics |
+-| C4 hidden witness reuse | proposed | none | none | context-lineage inspection | lineage capability ships | manifests; ancestry |
+-| C5 lineage independence | proposed | none | none | categorical assessment with reasons | lineage capability ships | ancestry; claim lineage |
+-| C6 authority separation | adopted, not currently evidenced | partial | none (no current record names the check) | artifact validator | already practiced; evidence begins with role records | role records |
+-| C7 implementation separation | adopted-manual | partial | VERIFY records (cross-environment verification) | validator on VERIFY records | already active | none; strengthened later |
+-| C8 decision traceability | proposed | none | none | RoutingDecision validation | routing capability ships | routing records |
+-| C9 lineage inheritance | adopted-manual | partial | named disclosure statements in records | inheritance propagation | already active manually | claim lineage (full) |
+-| C10 validator lineage | adopted-manual | partial | verifier identity in VERIFY command records; independence via cross-environment and operator review | VerificationRun with verifier-ancestry check | already active manually | ancestry capture |
+-| C11 interim independence disclosure | adopted-manual | partial | disclosure statements in DecisionRecords/warrants | admission validator requiring disclosure + named controls | already active manually | none; retired when claim lineage ships |
++`[DEF]` The matrix separates three questions that do not imply one another.
++Governance status is `proposed-v9` or `inherited-v4` and records the source of
++normative force. Claimed enforcement mode is `none`, `manual`, or `machine` and
++records what enforcement mode the document says is presently used. Enforcement
++evidence is `none`, a named retained artifact instance, or machine evidence and
++records what evidence exists that the applicable check occurred for a named
++target. Representability is `none` | `partial` | `full`. A manual enforcement
++claim counts as evidenced only when a specific retained artifact attests the
++applicable check for a named target. An artifact class, an input record, or the
++claim that a check happens is not enforcement evidence.
++
++| Constraint | Governance status | Claimed enforcement mode | Enforcement evidence | Representability | Target enforcement | Activation condition | Dependencies |
++| --- | --- | --- | --- | --- | --- | --- | --- |
++| C1 staged provenance | proposed-v9 | none | none | none | validator per profile | profile activation decision after capability ships | invocation records; manifests; profiles |
++| C2 catalog admission | proposed-v9 | none | none | none | validator + runtime gate | catalog capability ships | catalog snapshots; identities; qualifications |
++| C3 no self-adjudication (executor-generic) | proposed-v9 | manual | none; `WARR-20260719-0002` is not C3 evidence | partial | per-kind equivalence check + lineage traversal | manual use is claimed; evidence begins only with a named C3 attestation for a named adjudication | ancestry capture; executor-equivalence semantics |
++| C4 hidden witness reuse | proposed-v9 | none | none | none | context-lineage inspection | lineage capability ships | manifests; ancestry |
++| C5 lineage independence | proposed-v9 | none | none | none | categorical assessment with reasons | lineage capability ships | ancestry; claim lineage |
++| C6 authority separation | inherited-v4 | manual | none; role records are inputs to C6 evaluation, not evidence that it occurred | partial | artifact validator | manual practice is claimed; evidence begins only with a named C6 evaluation for a named invocation | role records |
++| C7 implementation separation | inherited-v4 | manual | none; existing VERIFY records show verification activity but do not attest a C7 implementation-separation check for a named change | partial | validator on VERIFY records | manual practice is claimed; evidence begins only with a named C7 attestation | none; strengthened later |
++| C8 decision traceability | proposed-v9 | none | none | none | RoutingDecision validation | routing capability ships | routing records |
++| C9 lineage inheritance | inherited-v4 | manual | none; no named artifact instance currently attests a C9 inheritance check for a named target | partial | inheritance propagation | manual practice is claimed; evidence begins only with a named C9 attestation | claim lineage (full) |
++| C10 validator lineage | inherited-v4 | manual | none; VERIFY records name verification activity, but no named retained artifact currently establishes the C10 lineage-independence check for a named verification | partial | VerificationRun with verifier-ancestry check | manual practice is claimed; evidence begins only with a named C10 attestation | ancestry capture |
++| C11 interim independence disclosure | inherited-v4 | manual | none; no named DecisionRecord or warrant instance currently attests the C11 disclosure check for a named high-consequence decision | partial | admission validator requiring disclosure + named controls | manual practice is claimed; evidence begins only with a named C11 attestation | none; retired when claim lineage ships |
+ 
+ ## 10. Proposed Implementation Sequence
+ 
