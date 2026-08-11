@@ -1,0 +1,60 @@
+{
+  "authorized_effects": [
+    "Accepting findings A1 through A8 of docs/comparisons/comp_v9/V9_ROUND_FINDINGS.md as established, with A1 to A7 accepted as repository-verified defects and A8 accepted as an adjudicated design finding.",
+    "Requiring that each accepted finding be answered in the ABS-0004 candidate before that candidate is proposed for admission, by the remedy recorded against it below or by a recorded decision not to take that remedy.",
+    "Recording that these are corrections to a proposed document and that no admitted text changes as a consequence. ABS-0004 v4 remains the last version with an admission event.",
+    "Recording the correction sequence: the accepted findings are answered first, then only the questions whose evidence sets prevented reliable judgment are re-run, then one unframed full-document question closes the round."
+  ],
+  "blocked_effects": [
+    "No silent patching of ABS-0004 v9. Each accepted finding is answered in a recorded change or is recorded as deliberately not answered. A candidate that quietly no longer exhibits a defect, with nothing saying who decided that or why, is the failure mode this decision exists to prevent.",
+    "No change to admitted v4. A6 concerns text present in v4 unchanged, and A7 concerns a constraint inherited from it; neither is corrected by editing the admitted baseline, which would require its own admission event.",
+    "No treatment of the round as exoneration. Seven of nine questions reported material evidence insufficiency, and the question set was written by the party that drafted v5 through v8. No surface is to be treated as having passed because no finding was reported against it.",
+    "No re-running of the full round. Only the evidence-starved questions are re-run, with the prerequisite artifacts supplied.",
+    "No decision on whether ABS-0004 v9 becomes v10 or is revised in place. That follows from how many of these corrections change normative text and is not settled here."
+  ],
+  "created_at": "2026-08-11T00:00:00+00:00",
+  "decision": "accept_v9_round_findings_a1_through_a8",
+  "decision_id": "DECISION-20260811-0001",
+  "evidence_refs": [
+    "docs/comparisons/comp_v9/V9_ROUND_FINDINGS.md",
+    "docs/comparisons/COMP-0126-v9-admission-q1-does-inherited-constraint-resolve-or-relocate.md",
+    "docs/comparisons/COMP-0129-v9-admission-q4-identity-equivalence-aliases-and-unresolved.md",
+    "docs/comparisons/COMP-0133-v9-admission-q8a-what-this-question-set-missed-definitions.md",
+    "docs/comparisons/COMP-0134-v9-admission-q8b-what-this-question-set-missed-constraints.md",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/self_model/warrants/WARR-20260719-0002.json",
+    "docs/self_model/decisions/DECISION-20260727-0005.json",
+    "docs/self_model/V9_CHANGE_LEDGER.json"
+  ],
+  "rationale": [
+    "A1 accepted. Section 9 declares the normative-state vocabulary as proposed, adopted-manual, machine-enforced. The C6 row carries 'adopted, not currently evidenced', which is not among them, and no other row uses a fourth value. Remedy: either define the state in the declared vocabulary or move C6 to one of the three. The state as written conflates whether the constraint was admitted, whether it is operative, and whether there is evidence it was checked; a definition must separate those.",
+    "A2 accepted. The rule stated above the table reads that manual enforcement counts only when the check leaves a named artifact and that the claim a check happens is not evidence. The evidence cells for C7, C9, C10 and C11 name categories rather than instances. Remedy: name artifact instances, or move those rows to proposed. The matrix currently fails its own rule in four rows.",
+    "A3 accepted. The C3 row cites WARR-20260719-0002 as a named attestation. That warrant targets PLAN-20260719-0001 and contains no occurrence of C3, equivalence, ancestry or self-adjudication. Remedy: remove the citation or supply an artifact that does attest the check. Taken with A2, no adopted-manual row currently has sufficient evidence as written.",
+    "A4 accepted, and it is the most serious. P5 states that unknown facts block qualification and that unknown lineage or identity never increases independence. Section 4.18's derivation rule sends any dimension unresolved WITHOUT a named compensating control to overall unresolved, and everything else to qualified_independent. An unresolved dimension accompanied by a named compensating control therefore reaches qualified_independent, and nothing requires the control to resolve the unknown. Remedy: require the compensating control to resolve or bound the unknown it compensates for, or remove the fall-through so that an unresolved dimension yields unresolved regardless.",
+    "A5 accepted. Section 4.17 states that the named independent review artifact converts the status to self_authored_with_review. Naming performs the conversion; nothing requires the artifact to establish that the reviewer was independent, that reviewer identity was resolved, that the review covered the relevant verifier version, inputs or tests, or that it passed. Remedy: state what the artifact must establish for the conversion to hold.",
+    "A6 accepted, with its scope corrected. The Section 3 subordinate-inheritance paragraph is tagged [DEF] while stating that a subordinate execution outside the declared classes requires its own authorization and that undeclared subordinate execution is a disclosure violation. Those are consequences, not definitions. The paragraph is present in admitted v4 unchanged, so this is a previously undiscovered weakness in v4's sentence discipline rather than a reconstruction failure. Remedy: retag, or add a rule that [DEF] may not carry consequences. Note the consequence for v9's central innovation: retagging ADOPTED_CONSTRAINT to INHERITED_CONSTRAINT guards one entry path into normative text and [DEF] is another, unguarded.",
+    "A7 accepted. C3 is byte-identical to its admitted v4 text while sections 4.3 and 4.4, which define the ModelIdentity resolution its equivalence test turns on, grew from 1589 to 3506 characters. Inherited text in a changed semantic environment is not necessarily the same constraint. The verification performed before adopting INHERITED_CONSTRAINT checked byte identity of the constraint and not stability of its referents, so it could not have detected this. Remedy: re-examine C3 against the changed definitions, or record the limitation explicitly.",
+    "A8 accepted as adjudicated rather than verified. C3's prohibition applies where an equivalent executor identity is established. Where equivalence is unresolved the ontology yields independence_unresolved and 'never an independent path', which is not the same as a prohibition on adjudicating. A possible same-executor relation can therefore avoid the prohibition by being unresolvable rather than by being resolved. The operator adjudicates that fail-closed behaviour is wanted: unresolved equivalence in the evidence ancestry must produce a consequence, not only a label.",
+    "A4 and A8 are the same question at two levels and must be answered together. A4 is a contradiction the document commits against itself; A8 is a consequence the document declines to draw. Answering A4 alone would stop unresolved becoming qualified_independent by naming, and still leave unstated what unresolved forbids.",
+    "The findings were produced by a round whose questions were written by the packaging executor and whose text was drafted by the reviewing executor, then independently re-derived: the reviewing executor read the raw round artifacts and corrected the packaging executor's synthesis on four points, and separately rejected the packaging executor's verification wrapper for committing the very failure the findings record diagnoses. Both corrections are recorded in the findings record rather than absorbed."
+  ],
+  "repo_commit": "3d5846dc1530647fddfa72274428f0fbbb862bef",
+  "required_next_governance": [
+    "The corrections must be drafted by a party that does not then review them, and the review questions must be written by a party that did not draft the corrections. Both prior question sets were written by the party whose text was under review, and both missed defects a third reader found.",
+    "Only the evidence-starved questions are re-run: Q1 above all, with admitted v4, DECISION-20260727-0005, the assembly record, the constraint comparison, and the definitions on which inherited constraints depend. The fourth consecutive round in which prompts cited material not attached is a defect in question construction, not in the candidate.",
+    "The round should close with one unframed full-document question against the corrected candidate, asking for the most serious remaining admission defect not already named and requiring an internal contradiction to be distinguished from a declared limitation. Every round so far has produced its sharpest finding when a reviewer left the question author's frame.",
+    "A6 concerns admitted v4 text. Whether v4's sentence discipline is itself corrected, and by what event, is not decided here. Correcting a proposed candidate does not correct the baseline it inherited from.",
+    "GAP-0006 remains open: this round's records carry execution outcomes, but execution_profile still records supplied rather than effective configuration, and the witness output-budget asymmetry between providers is undisclosed in every round including this one."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "Findings A1 through A8 are accepted. Each must be answered in the ABS-0004 candidate before it is proposed for admission, by the recorded remedy or by a recorded decision not to take it. No admitted text changes and ABS-0004 v4 remains the last admitted version. The correction sequence is fixed: answer the accepted findings, re-run only the evidence-starved questions with prerequisite artifacts, then close with one unframed full-document question.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "The eight findings of the ABS-0004 v9 admission round are accepted: a normative state outside the declared vocabulary, four evidence cells naming classes rather than artifacts, a cited warrant that does not attest the constraint citing it, a contradiction between P5 and the Section 4.18 derivation rule, a verification status converted by naming an artifact, normative content carried under a [DEF] tag inherited from admitted v4, an inherited constraint whose referent definitions changed beneath it, and C3 failing to bar adjudication when equivalence is unresolved. A4 and A8 are the same question at two levels and are to be answered together. The corrections are to be made in a recorded change, not silently.",
+  "title": "Accept findings A1 through A8 of the ABS-0004 v9 admission round"
+}

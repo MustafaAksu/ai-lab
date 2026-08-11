@@ -1,0 +1,19 @@
+run log: docs/runs/RUN-20260811T072254Z-apply_accept.log
+HEAD 3d5846dc1530647fddfa72274428f0fbbb862bef, working tree clean apart from run logs
+payload + file sha256 OK
+
+verified: decision shape and evidence refs; findings record carries A1..A8 with its corrected headline; and the four textually-checkable defects are still present, so this decision accepts findings that are still live
+
+installed docs/self_model/decisions/DECISION-20260811-0001.json
+capabilities: 16
+open_gaps: 4
+audit asserted: ok=True verification_outcome='verified_current'
+......                                                                   [100%]
+726 passed in 38.37s
+git diff --check clean
+
+ M docs/self_model/SELF_MODEL.json
+?? docs/runs/RUN-20260811T072254Z-apply_accept.log
+?? docs/self_model/decisions/DECISION-20260811-0001.json
+
+Commit with: git add docs/self_model/ docs/runs/
