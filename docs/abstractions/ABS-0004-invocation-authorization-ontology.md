@@ -4,12 +4,12 @@
 
 - abstraction_id: `ABS-0004`
 - title: `Invocation Authorization Ontology`
-- version: `v9`
+- version: `v9.1`
 - abstraction_level: `2`
 - status: `proposed`
 - reconstruction baseline: admitted v4 at commit
-  `56f18a2ab7b66b1855b631a32d540f654c62b2c2`. Assembly does not admit v9;
-  v9 requires its own admission review.
+  `56f18a2ab7b66b1855b631a32d540f654c62b2c2`. Assembly does not admit v9.1;
+  v9.1 requires its own admission review.
 - version admission table:
 
   | version | state | basis |
@@ -21,7 +21,8 @@
   | v6 | amended, not separately admitted; superseded | proposed an authorization-chain termination that both COMP-0037 reviewers broke independently, at 8a1399f |
   | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
   | v8 | **withdrawn_after_admission_review** | reviewed by COMP-0118..0125 and withdrawn under DECISION-20260727-0002; retained as evidence, not rejected, and not an implementation authority |
-  | v9 | **proposed** | reconstructed from admitted v4 using the literal task 2, task 3, and identity-status text accepted under DECISION-20260727-0004, DECISION-20260727-0005, and DECISION-20260805-0001; assembled under DECISION-20260805-0002; pending its own admission review |
+  | v9 | reviewed, not admitted; superseded by corrected v9.1 candidate | reconstructed from admitted v4 and assembled under DECISION-20260805-0002; the text reviewed in COMP-0126..0134 had SHA-256 `8f61c283a5d716f6816798a4946824b2d0d633a8be0d154da33cc1ebbe7ab1fa`; eight findings A1-A8 were accepted under DECISION-20260811-0001, so that reviewed text is not the corrected candidate |
+  | v9.1 | **proposed** | corrected successor to the reviewed v9. The corrected pre-version-bump text had SHA-256 `c2dadf897441bf842b34e2b71a347a264401bb228168c4b4214d5964c8d218b0`; it differs from the reviewed v9 because the eight accepted findings A1-A8 were answered by recorded corrections. The v9.1 version/history update records that distinction and does not itself add a ninth substantive correction; pending review of the corrected text |
 
 - reconstruction inputs:
   `ABS-0004-v9-task2-required-changes.patch`,
