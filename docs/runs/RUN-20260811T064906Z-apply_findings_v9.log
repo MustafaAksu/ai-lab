@@ -1,0 +1,24 @@
+run log: docs/runs/RUN-20260811T064906Z-apply_findings_v9.log
+HEAD 7c650a4e18057ddca34d3d9abec4585f8b65c8b3, working tree clean apart from run logs
+payload + file sha256 OK
+
+verified: HEAD 7c650a4, clean tree, 9 round artifacts COMP-0126..COMP-0134, 18 invocations all carrying outcomes with distribution {'completed': 9, 'end_turn': 9}, and every Part A and Part B claim established against the repository
+
+installed docs/comparisons/comp_v9/V9_ROUND_FINDINGS.md
+capabilities: 16
+open_gaps: 4
+audit asserted: ok=True verification_outcome='verified_current'
+......                                                                   [100%]
+726 passed in 31.66s
+git diff --check clean
+
+--- exact resulting change ---
+ M docs/self_model/SELF_MODEL.json
+?? docs/comparisons/comp_v9/V9_ROUND_FINDINGS.md
+?? docs/runs/RUN-20260810T150905Z-apply_findings_v9.log
+?? docs/runs/RUN-20260811T064218Z-apply_findings_v9.log
+?? docs/runs/RUN-20260811T064451Z-apply_findings_v9.log
+?? docs/runs/RUN-20260811T064906Z-apply_findings_v9.log
+
+This record does not adjudicate. Part A is for the operator to accept or reject.
+Commit with: git add docs/comparisons/comp_v9/ docs/runs/ docs/self_model/SELF_MODEL.json
