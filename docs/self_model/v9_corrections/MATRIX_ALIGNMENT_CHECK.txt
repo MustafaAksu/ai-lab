@@ -1,0 +1,13 @@
+C1: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C2: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C3: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C4: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C5: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C6: INHERITED_CONSTRAINT -> inherited-v4; expected inherited-v4: MATCH
+C7: INHERITED_CONSTRAINT -> inherited-v4; expected inherited-v4: MATCH
+C8: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C9: INHERITED_CONSTRAINT -> inherited-v4; expected inherited-v4: MATCH
+C10: PROPOSED_CONSTRAINT -> proposed-v9; expected proposed-v9: MATCH
+C11: INHERITED_CONSTRAINT -> inherited-v4; expected inherited-v4: MATCH
+All 11 constraint tags agree with Section 9 governance status.
+C10 non-governance cells unchanged and match the pre-change row.
