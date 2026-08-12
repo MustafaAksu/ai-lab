@@ -1,0 +1,84 @@
+diff --git a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+index 10054c3..ef35fc1 100644
+--- a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
++++ b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+@@ -53,8 +53,9 @@
+ - `[LIMITATION]` `[INHERITED_CONSTRAINT]` establishes textual continuity with
+   an admitted v4 constraint; it does not by itself establish semantic identity
+   when definitions, vocabularies, relation rules, or other referents used by
+-  that constraint differ in the proposed version. Such dependencies require
+-  re-examination before admission.
++  that constraint differ in the proposed version.
++- `[PROPOSED_CONSTRAINT]` Such dependencies require re-examination before
++  admission.
+ 
+ ## Evidence Inputs
+ 
+@@ -229,9 +230,11 @@ time.
+ schema-v1 capture path can presently substantiate it: the current path performs
+ no identity resolution, and provider catalog self-report, even over an
+ authenticated channel, does not independently establish a model mapping. It
+-therefore emits `unresolved`. Later append-only identity resolution records do
+-not mutate or upgrade this field; validator acceptance of `verified` is
+-syntactic compatibility, not a licensed status.
++therefore emits `unresolved`. Validator acceptance of `verified` is syntactic
++compatibility, not a licensed status.
++
++`[PROPOSED_CONSTRAINT]` Later append-only identity resolution records do not
++mutate or upgrade `identity_verification_status`.
+ 
+ `[PROPOSED_CONSTRAINT]` An invocation records the most precise ModelIdentity
+ resolution establishable from evidence available at execution time; an
+@@ -694,7 +697,7 @@ relied on (operator adjudication, source disclosure, deterministic
+ verification of the claims where available). Absent that disclosure, the
+ independence requirement is unmet, not silently satisfied.
+ 
+-`[INHERITED_CONSTRAINT]` C10 Validator lineage independence (property-scoped
++`[PROPOSED_CONSTRAINT]` C10 Validator lineage independence (property-scoped
+ P2 hardening): verifier provenance (identity, version, rule/test version,
+ inputs, environment, result) is always recorded. When the code, schema,
+ tests, or configuration driving a verification share evidence ancestry
+@@ -829,39 +832,7 @@ into governed evidence. `[OPEN]` DecisionRecord: extend warrants or new
+ family; subtypes or one family. `[OPEN]` Per-provider escalation ladders: entirely
+ deferred to the post-ontology comparison with live catalog verification.
+ 
+-## 13. Challenge-Round Questions
+-
+-1. Which objects are missing; which defined objects are category errors?
+-2. Which constraints are unenforceable as stated; what minimal
+-   representable form makes them enforceable?
+-3. Construct a concrete invocation satisfying the three-axis Role
+-   definitions while violating authority separation.
+-4. Construct a laundering path from a pre-provenance artifact into
+-   high-consequence independent evidence that survives C9 and C10.
+-5. Does candidate Slice A omit anything without which the provenance graph
+-   cannot later answer the witness-independence question?
+-6. Identify any predicate ambiguous enough to produce divergent
+-   implementations.
+-7. Where is invocation authorization represented; how is it distinguished
+-   from routing and evidence admission; does the distinction hold under
+-   composition?
+-8. Can the ontology represent one model served through different
+-   organizations, endpoints, regions, or mutable aliases without creating
+-   false model independence?
+-9. Does provenance as specified apply to claim derivation or only artifact
+-   production, and where exactly does the artifact-level approximation
+-   break?
+-10. What must an effective-input record contain before an invocation may be
+-    treated as blind?
+-11. Which constraints apply identically to models, tools, and humans; which
+-    require executor-specific rules?
+-12. Under what conditions, if any, can an unresolved model identity qualify
+-    as an independent witness path? Identify the failure behavior when
+-    equivalence cannot be resolved.
+-13. Construct a composite tool that satisfies the disclosure constraints'
+-    letter (4.7, both) while still exercising undeclared authority.
+-14. Construct a case where property-scoped verification (P2) plus validator
+-    lineage marking (C10) still admits a generator-authored blind spot into
+-    governed evidence.
+-
+-Do not recommend specific provider products in this round.
++## 13. Review Artifacts (non-normative)
++
++Review and challenge questions are retained as non-normative comparison
++artifacts under `docs/comparisons/`; they do not form part of this ontology.
