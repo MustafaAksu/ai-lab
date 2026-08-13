@@ -206,7 +206,7 @@
     {
       "category": "provider_infrastructure",
       "gap_id": "GAP-0005",
-      "name": "Provider invocations lack ontology-mandated representation and governance",
+      "name": "Invocation authorization has no record form, and six ABS-0004 constraints claim manual enforcement with no attesting artifact",
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0005.json",
       "status": "open"
@@ -228,7 +228,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-08-13T13:59:24+00:00",
+  "generated_at": "2026-08-13T15:50:43+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -752,15 +752,15 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0005",
-      "target": "ABS-0004 Section 10 Slice A exactly as admitted: invocation provenance capture on the scripts/compare_providers.py path only. Atomic InvocationRecord; executor reference with identity-verification status; requested API model name; endpoint surface; session identity; minimal EffectiveInputManifest (rendered prompt digest, instruction digests, ContextManifest reference, tool-schema digest, prior tool-result references, session-state mode, completeness_attestation); ExecutionProfile reference including output-token limits; spawned edges; experimental-versus-governed marker; produced_by relation; status; validator and integration fixture. No routing, no catalog enforcement. Relations in GraphRelation shape with predicate-registry entries for the seven Slice A predicates."
+      "target": "Not Slice A, which is implemented and warranted, and not Slice B, which is implemented. The readiness assessment of 2026-08-12 examined all six manual-mode constraints against what the repository already records and identified C7 as the cheapest to turn into an evidenced check: it is the only one of the six whose subject is which party did what, and all 35 VERIFY records already carry recorded_by.peer_id and repo_commit. The missing half is the implementer identity for the change being verified; git author is the operator on every commit and does not name the drafting executor. The minimum honest artifact is a verifier and implementer pair on a VERIFY record, both naming declared executor identities, with the refusal condition stated for when they match. C11 is second. C3 and C10 share a single blocker, evidence-ancestry capture, which is the largest unlock among the six and a build rather than a field."
     },
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0006",
-      "target": "Additive outcome capture only, with no change to INVOCATION_STATUSES. Add an outcome object to InvocationRecord carrying stop_reason, output_tokens, and the content block types returned, populated on the scripts/compare_providers.py path. This makes the distinction between a completed response, a truncated response, and a response with no content legible without redefining status, and therefore requires no migration of existing records: records captured before the change simply lack the object, which is accurate, since their outcomes were not captured. Redefining INVOCATION_STATUSES to admit a third value is migration-required in the sense COMP-0046 identified, because previously persisted records asserting success would need re-adjudication, and no schema-versioning or migration policy exists for self-model records. That decision should be taken separately and explicitly rather than folded into a capture change."
+      "target": "The recommended first slice, additive outcome capture with no change to INVOCATION_STATUSES, was implemented and verified on 2026-08-10 under DECISION-20260810-0001 and VERIFY-20260810-0001. It is not pending work. The next slice addresses effective configuration: record what the provider call actually ran with, not only what was supplied. The concrete instance is that reasoning_parameters shows an explicit effort value on five records and an empty object on 205, because one provider's effort variable was set and the other's was not; the records cannot establish equivalent reasoning configuration across witnesses in the same round. A third status value for INVOCATION_STATUSES remains migration-required and reserved to a separate decision."
     }
   ],
-  "repo_head": "8e06e11fff266a698006abfc967ef84c81f3548f",
+  "repo_head": "548e0a7c96c07830cfba1c13a054464fbec26123",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
