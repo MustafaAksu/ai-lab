@@ -1,0 +1,47 @@
+{
+  "authorized_effects": [
+    "Adopting the falsification-before-reliance practice as a repository requirement: before a check is relied upon for a governance claim, the input that should make it fail and the observed result of supplying that input are recorded.",
+    "Closing GAP-0007, with this decision and the practice's demonstrated instances as the evidence that the deficiency it recorded is addressed.",
+    "Recording that the requirement binds any executor producing a check this repository relies on, not only the executor that has been following it."
+  ],
+  "blocked_effects": [
+    "No retrospective application. Checks relied upon before this decision were not required to demonstrate falsification, and this decision does not invalidate the claims they supported. GAP-0007 records nine that failed in use; that record stands as evidence rather than as a list to remediate.",
+    "No claim that the practice prevents the defect it addresses. It requires that a falsifying case be constructed and its result recorded; a check can still measure something adjacent to its purpose if the constructed case is itself chosen from the same mistaken understanding.",
+    "No new machinery, module, or record type. The requirement is satisfied by recording the falsifying case and its observed result wherever the check's own evidence is recorded.",
+    "No claim that the practice is enforced. Nothing in the repository detects a check relied upon without a recorded falsifying case. This is an adopted requirement with manual enforcement and no attesting artifact, which is the same position as the six manual-mode constraints in ABS-0004 v9.1."
+  ],
+  "created_at": "2026-08-12T00:00:00+00:00",
+  "decision": "adopt_falsification_before_reliance_practice",
+  "decision_id": "DECISION-20260812-0002",
+  "evidence_refs": [
+    "docs/self_model/gaps/GAP-0007.json",
+    "docs/self_model/decisions/DECISION-20260810-0001.json",
+    "docs/self_model/verifications/VERIFY-20260810-0001.json",
+    "docs/self_model/capabilities/CAP-0015.json",
+    "tests/test_invocation_outcome.py",
+    "scripts/preflight_prompt.py"
+  ],
+  "rationale": [
+    "GAP-0007 recorded that of sixteen checks written and relied upon during one session, the nine shipped without a constructed failing case all failed in use, and the seven negative-tested before being relied upon did not. Its recommended remedy was a stated practice rather than code, on the ground that the defect is in what gets written before a check is trusted.",
+    "The practice has been followed continuously since the gap was opened. VERIFY-20260810-0001 records that each of the four guards in _validate_outcome was disabled in turn and a test failed each time. tests/test_invocation_outcome.py is written as falsifying cases first. scripts/preflight_prompt.py verifies its own verdict logic on six constructed cases, including a truncated response carrying seventeen thousand characters of text, before its verdict is relied upon.",
+    "Following is not adopting. The reviewing executor searched decisions, capabilities, plans and the ontology and found no governance act making the practice binding. A practice consistently followed is evidence that it is useful and feasible; it is not evidence that another executor is obliged to follow it. Both executors agreed on this distinction independently, and the operator adopted the practice rather than closing the gap on the strength of the habit.",
+    "The requirement is stated as recording rather than as testing, deliberately. A falsifying case that is constructed and passes silently leaves the same absence the gap describes. What makes the difference is that the case and its observed result are written down where the check's evidence is, so a reader can see what the check was shown to reject.",
+    "This decision does not make the practice enforced, and the blocked effects say so. Nothing detects a check relied upon without a recorded falsifying case. Adopting a requirement whose enforcement is manual and unevidenced is the same position ABS-0004 v9.1 was admitted in, and recording that parallel is more useful than implying a stronger status."
+  ],
+  "repo_commit": "d10fd20775e1b83177915055406fdbc74988b403",
+  "required_next_governance": [
+    "The practice is adopted and unenforced. A check relied upon without a recorded falsifying case is not detectable by anything in the repository, which is the same deficiency the enforcement matrix records for six ABS-0004 constraints.",
+    "Whether the requirement extends to checks written by internal identities, invoked through scripts/compare_providers.py, is not settled here. The instances cited are all external work, and an internal identity producing a check has no way to record a falsifying case except through the artifact its invocation produces.",
+    "GAP-0007's evidence enumerates nine failures from one session and states that the failure set was classified after the fact by the executor that wrote the checks. That confound is not removed by adopting the practice, and the nine-of-nine figure should not be cited as a controlled result."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "The falsification-before-reliance practice becomes a repository requirement binding any executor producing a check relied upon for a governance claim. GAP-0007 closes. No check is retrospectively invalidated, and nothing detects a violation.",
+  "source_capability_ids": [
+    "CAP-0015"
+  ],
+  "source_gap_id": "GAP-0007",
+  "source_plan_id": "PLAN-20260722-0001",
+  "status": "recorded",
+  "summary": "The practice GAP-0007 recommended is adopted as a repository requirement: before a check is relied upon for a governance claim, the input that should make it fail and the observed result of supplying it are recorded. The practice has been followed continuously since the gap was opened, but following is not adopting, and no governance act had made it binding on anyone. GAP-0007 closes. The requirement is adopted with manual enforcement and no attesting artifact, which is the same position as the six manual-mode constraints in ABS-0004 v9.1.",
+  "title": "Adopt the falsification-before-reliance practice and close GAP-0007"
+}
