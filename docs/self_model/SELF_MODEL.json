@@ -167,8 +167,8 @@
     "implemented": 16
   },
   "gap_counts": {
-    "closed": 3,
-    "open": 4
+    "closed": 4,
+    "open": 3
   },
   "gaps": [
     {
@@ -225,10 +225,10 @@
       "name": "No practice requires a check to state what would falsify it before the check is relied on",
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0007.json",
-      "status": "open"
+      "status": "closed"
     }
   ],
-  "generated_at": "2026-08-13T06:57:29+00:00",
+  "generated_at": "2026-08-13T13:59:24+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -571,8 +571,7 @@
   "open_gaps": [
     "GAP-0002",
     "GAP-0005",
-    "GAP-0006",
-    "GAP-0007"
+    "GAP-0006"
   ],
   "open_plans": [
     "PLAN-20260723-0002"
@@ -759,14 +758,9 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0006",
       "target": "Additive outcome capture only, with no change to INVOCATION_STATUSES. Add an outcome object to InvocationRecord carrying stop_reason, output_tokens, and the content block types returned, populated on the scripts/compare_providers.py path. This makes the distinction between a completed response, a truncated response, and a response with no content legible without redefining status, and therefore requires no migration of existing records: records captured before the change simply lack the object, which is accurate, since their outcomes were not captured. Redefining INVOCATION_STATUSES to admit a third value is migration-required in the sense COMP-0046 identified, because previously persisted records asserting success would need re-adjudication, and no schema-versioning or migration policy exists for self-model records. That decision should be taken separately and explicitly rather than folded into a capture change."
-    },
-    {
-      "source_field": "recommended_first_slice",
-      "source_record": "GAP-0007",
-      "target": "A stated practice rather than code, because the defect is in what gets written before a check is trusted, not in any module. Before a check is relied upon for a governance claim, record the input that should make it fail and the observed result of supplying that input. Applied to the checks this repository already depends on: the audit reports verified_current, so construct an evidence state where it must not and confirm it does not; the transfer-script md5 gates abort on mismatch, which is already tested and should stay tested; a parser that admits records must be shown rejecting a malformed one. This is not new machinery. It is the discipline the seven successful checks already followed, made a requirement instead of a habit."
     }
   ],
-  "repo_head": "8f11c45008414e40ab2bf32dadeb95f39e251bc3",
+  "repo_head": "8e06e11fff266a698006abfc967ef84c81f3548f",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
