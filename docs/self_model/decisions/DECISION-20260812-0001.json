@@ -1,0 +1,63 @@
+{
+  "authorized_effects": [
+    "Admitting ABS-0004 v9.1 at sha256 36e4ef61d2007d18ac5cd5d6dd014dcd4266d67438f13d29743bc74969b675ae, repository commit 0c14652249b0ed946657e88f9f549d5ddbf09272, as the invocation authorization ontology of record, superseding admitted v4.",
+    "Admitting it with every known deficiency enumerated in this record rather than resolved, including that no constraint in the document has enforcement evidence.",
+    "Recording R3 as an admitted enforcement limitation: constraint C3's semantics are correct and its automatic enforcement is absent.",
+    "Recording R4 as an admitted trust-root limitation: the ontology cannot distinguish a genuinely authorized seed from a fabricated one, and no repository-internal schema can.",
+    "Updating the ontology's status field and version admission table to record this admission, its date, the admitting principal, this decision id, and the hash of the adjudicated text, in the same change that records this decision."
+  ],
+  "blocked_effects": [
+    "No claim that ABS-0004 v9.1 is enforced. All eleven constraints carry enforcement evidence none; six claim manual enforcement and none names an artifact instance attesting that the check occurred. Admission establishes what the ontology says, not that anything checks it.",
+    "No claim that v9.1 is free of defects. It is free of every internal contradiction, false claim and misclassified normative sentence known at admission; further review will find more, and finding more does not retroactively invalidate this admission.",
+    "No claim that the authorization-chain bootstrap is solved. It remains [OPEN], as it was in admitted v4, and R4 establishes that it is an epistemic boundary rather than unfinished engineering.",
+    "No admission of any implementation. PLAN-20260723-0002 remains withdrawn, and no capability is warranted by this decision.",
+    "No treatment of the review rounds as exoneration. Seven of nine questions in COMP-0126..0134 and one of five in COMP-0135..0139 reported material evidence insufficiency. No surface is to be treated as having passed because no finding was reported against it."
+  ],
+  "created_at": "2026-08-12T00:00:00+00:00",
+  "decision": "admit_abs_0004_v9_1_with_enumerated_limitations",
+  "decision_id": "DECISION-20260812-0001",
+  "evidence_refs": [
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/comparisons/comp_v9/V9_ROUND_FINDINGS.md",
+    "docs/comparisons/COMP-0135-v9-1-re-review-r1-does-the-corrected-inherited-constraint-hold.md",
+    "docs/comparisons/COMP-0136-v9-1-re-review-r2-do-the-eleven-limitations-do-work.md",
+    "docs/comparisons/COMP-0137-v9-1-re-review-r3-does-the-fail-closed-c3-actually-close.md",
+    "docs/comparisons/COMP-0138-v9-1-re-review-r4-seed-authority-after-correction.md",
+    "docs/comparisons/COMP-0139-v9-1-re-review-r5-are-the-inherited-challenge-questions-fit.md",
+    "docs/self_model/v9_corrections/V9_1_R1_R2_R5_CORRECTIONS_PROPOSAL.md",
+    "docs/self_model/v9_corrections/V9_1_C10_MATRIX_ALIGNMENT_RECORD.md",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "docs/self_model/decisions/DECISION-20260811-0001.json",
+    "docs/self_model/V9_CHANGE_LEDGER.json"
+  ],
+  "rationale": [
+    "The admission threshold applied is the one the reviewing executor proposed and the operator accepted: no known unresolved internal contradiction, false claim, or misclassified normative sentence, with every remaining known deficiency explicitly accepted as a limitation or separate future work. It is not that reviewers stop finding things. If admission required that, ABS-0004 could never be admitted, and the four-version expansion from v5 to v8 is what pursuing that standard produced.",
+    "The five findings of the re-review round were adjudicated individually. R1 closed: all five constraints still tagged inherited are byte-identical to admitted v4, and their referents were compared rather than assumed. Four showed no material drift. C10 showed material drift, because Section 4.17 declares itself the typed record C10 requires and its review-artifact conversion rule changed from naming an artifact to establishing five findings; C10's admission threshold therefore moved while its text did not, and it was retagged to [PROPOSED_CONSTRAINT] with its wording unchanged.",
+    "R2 closed. Two sentences tagged [LIMITATION] carried normative content, contradicting the legend's statement that a limitation imposes no constraint: the prohibition on later append-only records mutating identity_verification_status, and the requirement that materially changed referents be re-examined before admission. Both were split so that the descriptive part remains a limitation and the normative part is a [PROPOSED_CONSTRAINT]. The second is notable because that sentence was the rule under which the R1 check itself was performed; the instrument was misclassified.",
+    "R3 is admitted as an enforcement limitation. Both reviewers independently found that no path exists by which an invocation adjudicates a claim whose evidence ancestry contains an executor of unresolved equivalence while satisfying corrected C3. The rule closes. Both also found it enforceable only by voluntary attestation, because no mechanism captures evidence ancestry or resolves executor equivalence. Correct semantics with absent machinery is a legitimate disclosed limitation, and is distinct from a rule that misdescribes itself.",
+    "R4 is admitted as a trust-root limitation and no ontology text was added for it. The finding is that a genuinely authorized seed and a fabricated one produce identical record shapes: AccountablePrincipal permits a pseudonymous identity with no required external anchor, and authority_scope and delegation_reference are self-declared on a record the principal or its executor can author. Section 3 already states that repository records do not establish extra-systemic entitlement to govern and that a recorded chain terminus does not establish substantive authorization. Adding a third formulation of the same boundary would restart the expansion pattern that produced v8.",
+    "R5 was executed as a deletion. Fourteen challenge-round questions written for the v3 to v4 round had been carried unchanged through six versions; six of fourteen were unassessable, three still live, one stale on its face. They are review machinery, not ontology semantics, and Section 13 now carries a two-line non-normative pointer to the comparison artifacts.",
+    "The enforcement position is stated rather than implied, because the round established it as an aggregate fact nobody had asked about. Every one of the eleven constraints carries enforcement evidence none. C1, C2, C4, C5 and C8 claim no enforcement mode at all. C3, C6, C7, C9, C10 and C11 claim manual enforcement and each records why the artifacts that exist are not evidence: role records are inputs to a C6 evaluation rather than evidence one occurred; VERIFY records show verification activity but do not attest the C7 or C10 checks; no named instance attests C9 or C11; and WARR-20260719-0002, the only artifact the matrix names, targets PLAN-20260719-0001 and does not mention C3. A reader must take from this that the ontology says what the system holds itself to and that nothing currently demonstrates compliance.",
+    "The correction history is recorded because it is evidence about the arrangement rather than about the document. Each pass over v9.1 introduced one new defect. The A1 to A8 corrections retagged C10's sentence and left its enforcement matrix row asserting inherited governance, a contradiction between two statements of the same fact. The packaging executor's referent-drift check for R1 missed the Section 4.17 dependency entirely, because Section 4.17 refers to C10 rather than C10 referring to it, and a forward-reference scan cannot see a backward reference. The packaging executor's limitation extractor damaged two statements in the evidence supplied for R2, so that round assessed nine statements while its prompt said eleven. In every case the defect was found by the party that did not create it. No pass was clean, and no defect survived the other party's reading.",
+    "Admission at this point rather than after a further round is a judgment that the remaining findings are of a different kind than the ones corrected. R2, R4 and R5 converge on a document that is sound and inert: constraints properly stated, one limitation doing constraining work, and the seed question unanswerable from inside. Another unrestricted round would find further desirable controls and further absent machinery. Those are implementation work, not defects in what the document says."
+  ],
+  "repo_commit": "0c14652249b0ed946657e88f9f549d5ddbf09272",
+  "required_next_governance": [
+    "The ontology's status field and version admission table were updated in the same change that records this decision, so the document and this record agree at admission. Recording the admission alters the document bytes: the adjudicated text is sha256 36e4ef61d2007d18ac5cd5d6dd014dcd4266d67438f13d29743bc74969b675ae and the file as committed is sha256 bb9ea9c57250a7b14031554f6111e9b71843cda67a4e5a6c6eec58d78110ec8b. A future reader comparing the two must not treat the difference as an inconsistency; the admission row states the distinction.",
+    "Enforcement evidence is absent for every constraint. A constraint claiming manual enforcement with no named artifact is a claim that a check happens, which the matrix's own rule says is not evidence. Either artifacts are produced for the six manual-mode constraints, or their claimed enforcement mode is reduced to none.",
+    "C3 is admitted as unenforceable except by attestation. Evidence ancestry capture and executor-equivalence resolution are the two mechanisms that would make it checkable; neither exists, and GAP-0006 already records that execution_profile captures supplied rather than effective configuration, which is a smaller instance of the same absence.",
+    "Fifteen ledger entries classified separate gap or policy required have no drafting task and are not addressed by v9.1. Twenty-eight of the twenty-nine ledger entries have never been revalidated against admitted v4; the one that was checked, V9L-027, was found false.",
+    "This admission is recorded as a DecisionRecord in the self-model. Whether it also satisfies the ontology's own EvidenceAdmissionDecision shape, which v4's admission did not, has not been checked. If it does not, that is a case of the ontology of record failing to represent its own admission."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "ABS-0004 v9.1 becomes the invocation authorization ontology of record, superseding admitted v4. Its constraints state what the system holds itself to; none of them is enforced, and no claim of enforcement follows from this admission. R3 and R4 are admitted limitations. The document's status field must be updated to record this admission before the document and this record agree.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260723-0002",
+  "status": "recorded",
+  "summary": "ABS-0004 v9.1 is admitted as the invocation authorization ontology of record, superseding v4, with every known deficiency enumerated rather than resolved. The threshold applied is no known internal contradiction, false claim, or misclassified normative sentence; not the absence of further findings. R1 and R2 were closed by correction, R3 and R4 are admitted as limitations, and R5's inherited challenge questions were deleted. All eleven constraints carry enforcement evidence none, six of them claiming manual enforcement while naming no attesting artifact; the admission establishes what the ontology says and not that anything checks it.",
+  "title": "Admit ABS-0004 v9.1 with enumerated limitations and no enforcement claim"
+}
