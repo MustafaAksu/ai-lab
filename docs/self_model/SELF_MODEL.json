@@ -168,7 +168,7 @@
   },
   "gap_counts": {
     "closed": 4,
-    "open": 3
+    "open": 4
   },
   "gaps": [
     {
@@ -226,9 +226,17 @@
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0007.json",
       "status": "closed"
+    },
+    {
+      "category": "provenance_semantics",
+      "gap_id": "GAP-0008",
+      "name": "Evidence ancestry is undefined and unpopulated, and six constraints depend on it",
+      "priority": "high",
+      "source_path": "docs/self_model/gaps/GAP-0008.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-08-14T09:49:53+00:00",
+  "generated_at": "2026-08-14T10:31:38+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -452,6 +460,11 @@
       "source_record": "GAP-0007"
     },
     {
+      "risk": "C3 as corrected in v9.1 forbids an invocation from adjudicating a claim whose evidence ancestry contains an equivalent executor, and refuses when the relation is unresolved. With ancestry undefined and unpopulated, that prohibition cannot be evaluated for any real claim: there is no set of invocations to check the adjudicating executor against. The constraint is sound, its equivalence half is now implemented, and it remains unevaluable because its other half names something the ontology does not define. The specific hazard is that a future implementation reads the fields that exist, finds them empty, and reports no conflict. An empty ancestry is indistinguishable from an uncaptured one, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from this ontology in August: the existence of a field treated as evidence of the property it names.",
+      "source_field": "risk",
+      "source_record": "GAP-0008"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -571,7 +584,8 @@
   "open_gaps": [
     "GAP-0002",
     "GAP-0005",
-    "GAP-0006"
+    "GAP-0006",
+    "GAP-0008"
   ],
   "open_plans": [
     "PLAN-20260723-0002"
@@ -758,9 +772,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0006",
       "target": "The recommended first slice, additive outcome capture with no change to INVOCATION_STATUSES, was implemented and verified on 2026-08-10 under DECISION-20260810-0001 and VERIFY-20260810-0001. It is not pending work. The next slice addresses effective configuration: record what the provider call actually ran with, not only what was supplied. The concrete instance is that reasoning_parameters shows an explicit effort value on five records and an empty object on 205, because one provider's effort variable was set and the other's was not; the records cannot establish equivalent reasoning configuration across witnesses in the same round. A third status value for INVOCATION_STATUSES remains migration-required and reserved to a separate decision."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0008",
+      "target": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim."
     }
   ],
-  "repo_head": "748a0bef2bc382b4a4b40a817db2460d4a0827e4",
+  "repo_head": "780782f2d7c07541aa2cff26ace3e0f8a7445a3e",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -938,6 +957,11 @@
       "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
       "source_path": "docs/self_model/verifications/VERIFY-20260810-0001.json",
       "verification_id": "VERIFY-20260810-0001"
+    },
+    {
+      "repo_commit": "d93a40874762248c855505c82f5661ee7b0b8dda",
+      "source_path": "docs/self_model/verifications/VERIFY-20260814-0001.json",
+      "verification_id": "VERIFY-20260814-0001"
     }
   ],
   "warrant_counts": {
