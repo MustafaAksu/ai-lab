@@ -1,0 +1,34 @@
+{
+  "blocked_by": [],
+  "category": "provenance_semantics",
+  "evidence": {
+    "files_checked": [
+      "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+      "ai_lab/providers/invocation_record.py",
+      "ai_lab/providers/invocation_capture.py",
+      "scripts/compare_providers.py",
+      "docs/comparisons/READINESS_ASSESSMENT_20260812.md",
+      "docs/self_model/gaps/GAP-0005.json"
+    ],
+    "reason": "Two measurements and one textual finding. MEASURED: all 210 retained InvocationRecords carry spawned as an empty list, and all 210 carry no context_manifest_reference. No invocation record references any other invocation. The fields that could carry ancestry exist in the schema and nothing populates them. 105 comparison artifacts name two or more invocation ids, 104 naming exactly two and COMP-0038 naming three, but that is sibling grouping produced by one runner sending one prompt to two providers; it is not a derivation relation and nothing in the ontology says it is. TEXTUAL: the phrase evidence ancestry appears four times in admitted v9.1 and is defined nowhere. Section 6 uses it in C3's prohibition, in C3's fail-closed clause, and in C10, which requires that a verifier not share evidence ancestry with the tests or configuration driving a verification; Section 5's state-isolation text requires adjudicators to have reconstructible evidence ancestry. No [DEF] introduces the term, states which recorded edges constitute it, how those edges compose, or what result follows when they are incomplete. The ontology does supply ingredients: 4.10 gives Invocation a parent run reference where applicable, 4.12 represents influential inputs as EffectiveInputManifest, spawned is a defined invocation relation, the derivation vocabulary carries claim_derived_from and copied_from, and 4.15 states the achievable ceiling. The missing thing is the governed rule that joins them."
+  },
+  "gap_id": "GAP-0008",
+  "last_reviewed_at": "2026-08-14T00:00:00+00:00",
+  "name": "Evidence ancestry is undefined and unpopulated, and six constraints depend on it",
+  "notes": [
+    "Found on 2026-08-14 while assessing whether C3's ancestry dependency was as close to reachable as its equivalence dependency had turned out to be. It is not, and the asymmetry is instructive. Equivalence was one pure function because Slice B had already built the representation AND populated the evidence. Ancestry has representation fragments, no governed relation, and empty values in the fields that exist.",
+    "Section 4.15 states the ceiling and it should not be exceeded: one artifact may mix original observation, copied finding, new inference and paraphrase, so artifact-level lineage cannot distinguish them, and what the system can provide is artifact-level potential-dependence detection rather than claim-level independence proof. A first slice that attempted claim-level derivation would overclaim against the admitted ontology's own statement.",
+    "Six enforcement-matrix rows name ancestry or lineage in their dependency column: C3 per-kind equivalence check plus lineage traversal, C4 context-lineage inspection, C5 categorical assessment with reasons, C9 inheritance propagation, C10 VerificationRun with verifier-ancestry check, and C11 admission validator requiring disclosure and named controls. This is the single largest shared dependency among the six manual-mode constraints.",
+    "Recorded as its own gap rather than folded into GAP-0005 on the reviewing executor's recommendation. GAP-0005 is about invocation authorization having no record form and about six constraints claiming manual enforcement without artifacts; this is a distinct deficiency in what a constraint's central term means, and burying it would repeat the pattern where a gap's evidence describes several unrelated things and goes stale as a whole."
+  ],
+  "priority": "high",
+  "recommended_first_slice": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim.",
+  "related_capabilities": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "risk": "C3 as corrected in v9.1 forbids an invocation from adjudicating a claim whose evidence ancestry contains an equivalent executor, and refuses when the relation is unresolved. With ancestry undefined and unpopulated, that prohibition cannot be evaluated for any real claim: there is no set of invocations to check the adjudicating executor against. The constraint is sound, its equivalence half is now implemented, and it remains unevaluable because its other half names something the ontology does not define. The specific hazard is that a future implementation reads the fields that exist, finds them empty, and reports no conflict. An empty ancestry is indistinguishable from an uncaptured one, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from this ontology in August: the existence of a field treated as evidence of the property it names.",
+  "schema_version": "v1",
+  "status": "open",
+  "summary": "Evidence ancestry is a term C3 and C10 both turn on, and it is defined nowhere in admitted ABS-0004 v9.1. No [DEF] states which recorded edges constitute it, how they compose, or what follows when they are incomplete. Separately, the fields that could carry it are empty: all 210 InvocationRecords have spawned as an empty list and no context_manifest_reference, and no invocation references another. Six enforcement-matrix rows name ancestry or lineage in their dependency column, making this the largest shared dependency among the manual-mode constraints. The first slice is a definition, not code."
+}

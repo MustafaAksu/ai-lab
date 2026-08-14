@@ -1,0 +1,40 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/executor_equivalence.py",
+    "tests/test_executor_equivalence.py",
+    "ai_lab/providers/catalog_resolution.py",
+    "docs/catalog/snap/SNAP-35fbd338ad148fb9.json",
+    "docs/catalog/snap/SNAP-c111fceb0ec3809f.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "736 passed, up from 726. 10 new tests in tests/test_executor_equivalence.py."
+    },
+    {
+      "command": "behavioural mutation over the four guards in executor_equivalence.py",
+      "exit_code": 0,
+      "summary": "Each guard was replaced with behaviour that would return non_equivalent or permit adjudication where the module refuses, and a test failed in every case: unimplemented executor kinds, cross-kind pairs, unresolved-side handling, and blocks_adjudication. No guard is vacuous."
+    },
+    {
+      "command": "equivalence over the two live reviewer-slot invocations",
+      "exit_code": 0,
+      "summary": "claude-sonnet-5 resolves to MID-105b9070b0bfc3e4 and gpt-5.6-terra to MID-729f399a16f7c1c2 through catalog_resolution.resolve_identity; status non_equivalent, basis model_identity_resolution_inequality_asserted_by_catalog."
+    }
+  ],
+  "created_at": "2026-08-14T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "d93a40874762248c855505c82f5661ee7b0b8dda",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified ai_lab/providers/executor_equivalence.py as an implementation of the equivalence relation ABS-0004 C3 names, built as a pure function over the already-warranted catalog_resolution.resolve_identity rather than as new machinery. It resolves each side's executor reference to a ModelIdentity record and compares the resolved identities, which is the test C3 states for models: ModelIdentity resolution equality. WHAT IS VERIFIED. Ten falsifying cases pass, and the four guards were behaviourally mutation-tested. No path returns non_equivalent from differing identifier strings: unimplemented executor kinds, cross-kind pairs, unknown names, absent catalog and malformed input all return unresolved with an enumerated reason, which is what v9.1's limitation on distinct identifiers and P5 require. The case that justifies resolution over string comparison was constructed and passes: two different reference strings resolving to one ModelIdentity return equivalent and block adjudication, where a string comparison would have permitted it. No such alias pair exists in the captured catalog, so that snapshot is synthesised; the behaviour is established and the situation is not observed. WHAT IS NOT VERIFIED, AND REQUIRES OPERATOR ADJUDICATION. Whether a non_equivalent result licenses adjudication under C3. Both catalog captures carry content_evidence_status self_asserted and channel_authentication_status unverifiable, and admitted v9.1 states that provider catalog self-report does not independently establish the truth of an asserted model mapping. C3 permits adjudication only when non-equivalence is affirmatively established. The module records the evidence class in its basis field rather than concealing it, but it sets blocks_adjudication False on that basis. Whether a cleanly resolved provider self-report is affirmative establishment, or whether the relation should remain unresolved pending stronger evidence, is not settled by the ontology and is not decided here. The reviewing executor raised this; the packaging executor had treated resolution through a governed path as settling it.",
+  "target_item_id": "CAP-0016",
+  "target_item_type": "capability",
+  "verification_id": "VERIFY-20260814-0001"
+}
