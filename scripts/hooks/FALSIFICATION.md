@@ -14,6 +14,34 @@ Six cases were constructed and run against a clone with the hook installed.
 | 4 | a commit touching no self-model file | not run at all | **not run**, commit permitted |
 | 5 | a malformed record, so the build fails | refuse | **refused**, reporting the build failure |
 | 6 | unstaged edits present while the staged content is correct | permit | **permitted** |
+| 7 | a self-model record **deleted** without rebuilding the index | refuse | **refused** (after correction; see below) |
+| 8 | the same deletion with the index rebuilt and staged | permit | **permitted** |
+| 9 | the index itself deleted while records change | refuse | **refused** |
+
+## The deletion blind spot, found after shipping
+
+Cases 7 to 9 were added on 2026-08-12 after the reviewing executor found a real
+defect in the shipped hook.
+
+`staged_paths()` used `git diff --cached --name-only --diff-filter=ACMR`. `D` is
+absent from that filter, so a staged **deletion** of a self-model record returned
+no paths, `touches_self_model()` was false, and the hook exited 0. A record could
+be removed with no index rebuild and the commit would be permitted, while the
+hook's docstring claimed it established that the index describes the staged
+records.
+
+The six original cases were all additions and modifications. **No deletion was
+ever constructed**, so the falsification practice adopted the same day caught
+nothing here: the practice requires that a falsifying case be constructed, and a
+case not thought of is not constructed. The reviewing executor found it by
+reading the filter rather than by running the suite.
+
+The filter is removed; every staged path now counts. Deleting the index while
+records change is refused rather than skipped.
+
+This is the limitation `DECISION-20260812-0002` states in its blocked effects:
+the practice does not prevent the defect it addresses, because a constructed
+case can be chosen from the same mistaken understanding that produced the check.
 
 ## What the falsification found
 

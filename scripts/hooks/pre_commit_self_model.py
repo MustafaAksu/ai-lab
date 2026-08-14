@@ -35,6 +35,11 @@ It also reads the STAGED content rather than the working tree, so a commit made
 with `git add -p` or with unstaged edits present is checked against what is
 actually being committed.
 
+Staged DELETIONS count. Removing a record without rebuilding the index leaves
+the index describing a record that no longer exists, which is the same defect as
+adding one without rebuilding. Deleting the index itself while changing records
+is refused rather than skipped.
+
 Install:  ln -sf ../../scripts/hooks/pre_commit_self_model.py .git/hooks/pre-commit
 Bypass:   git commit --no-verify   (recorded here as available, deliberately)
 """
@@ -56,7 +61,18 @@ def git(*args: str, **kw) -> str:
 
 
 def staged_paths() -> list[str]:
-    out = git("diff", "--cached", "--name-only", "--diff-filter=ACMR")
+    """Every staged path, INCLUDING deletions.
+
+    The first version filtered to ACMR and was therefore blind to deletions: a
+    staged removal of a self-model record with no index rebuild was permitted,
+    while the hook's docstring claimed it established that the index describes
+    the staged records. The six falsification cases constructed for that version
+    were all additions and modifications, so the practice adopted under
+    DECISION-20260812-0002 caught nothing here. The reviewing executor found it
+    by constructing the case the author had not.
+    """
+
+    out = git("diff", "--cached", "--name-only")
     return [l for l in out.splitlines() if l.strip()]
 
 
@@ -79,9 +95,11 @@ def main() -> int:
         work = Path(td)
         staged_index_path = work / INDEX
         if not staged_index_path.exists():
-            print("pre-commit: SELF_MODEL.json is absent from the staged tree; "
-                  "not checking.", file=sys.stderr)
-            return 0
+            print("\npre-commit REFUSED: self-model records are staged but "
+                  f"{INDEX} is absent from the staged tree.", file=sys.stderr)
+            print("  A commit that removes the index while changing records "
+                  "leaves nothing describing them.", file=sys.stderr)
+            return 1
         staged_index = json.loads(staged_index_path.read_text())
 
         r = subprocess.run(
