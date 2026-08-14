@@ -228,7 +228,7 @@
       "status": "closed"
     }
   ],
-  "generated_at": "2026-08-13T15:50:43+00:00",
+  "generated_at": "2026-08-14T09:49:53+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -760,7 +760,7 @@
       "target": "The recommended first slice, additive outcome capture with no change to INVOCATION_STATUSES, was implemented and verified on 2026-08-10 under DECISION-20260810-0001 and VERIFY-20260810-0001. It is not pending work. The next slice addresses effective configuration: record what the provider call actually ran with, not only what was supplied. The concrete instance is that reasoning_parameters shows an explicit effort value on five records and an empty object on 205, because one provider's effort variable was set and the other's was not; the records cannot establish equivalent reasoning configuration across witnesses in the same round. A third status value for INVOCATION_STATUSES remains migration-required and reserved to a separate decision."
     }
   ],
-  "repo_head": "548e0a7c96c07830cfba1c13a054464fbec26123",
+  "repo_head": "748a0bef2bc382b4a4b40a817db2460d4a0827e4",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
