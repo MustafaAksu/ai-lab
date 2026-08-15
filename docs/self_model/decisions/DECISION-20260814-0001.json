@@ -1,0 +1,56 @@
+{
+  "authorized_effects": [
+    "Adjudicating that a cleanly resolved provider self-report establishes the equivalence RELATION but does not license the adjudication PERMISSION, and separating the two in ai_lab/providers/executor_equivalence.py.",
+    "Recording that blocks_adjudication returns False only where the relation is non_equivalent AND the content evidence underlying the resolution is independently_corroborated.",
+    "Accepting that under this rule every executor pair in the repository today blocks adjudication, because both retained catalog captures carry content_evidence_status self_asserted.",
+    "Keeping the two sides' evidence classes separate rather than collapsing them, and requiring both to be independently corroborated for the permission."
+  ],
+  "blocked_effects": [
+    "No change to what the resolution reports. non_equivalent remains non_equivalent where the catalog asserts distinct identities and the resolution is clean; the relation is not weakened to unresolved. The reviewing executor's alternative was to make it unresolved, and that was not taken: it would discard a real distinction the catalog does record.",
+    "No claim that provider self-report is worthless. It establishes what the provider asserts, resolved through a governed path, and that is recorded in basis, left_evidence_class and right_evidence_class rather than discarded.",
+    "No claim that any executor pair in this repository is affirmatively non-equivalent for C3 purposes. None is, today.",
+    "No new evidence vocabulary. independently_corroborated, self_asserted, unassessed and contradicted are the existing CONTENT_EVIDENCE_STATUSES from CAP-0016; this decision selects a threshold within them rather than inventing one.",
+    "No ordinal ranking of the content evidence classes. This decision establishes one threshold and does not order the four values relative to one another; an earlier implementation did, and that ordering was ungoverned.",
+    "No multi-capture aggregation rule. Where more than one catalog capture could resolve the same executor, this decision neither defines which governs nor authorises reliance on the result. That is recorded as required next governance."
+  ],
+  "created_at": "2026-08-14T00:00:00+00:00",
+  "decision": "separate_equivalence_relation_from_adjudication_permission",
+  "decision_id": "DECISION-20260814-0001",
+  "evidence_refs": [
+    "ai_lab/providers/executor_equivalence.py",
+    "tests/test_executor_equivalence.py",
+    "ai_lab/providers/catalog.py",
+    "docs/self_model/verifications/VERIFY-20260814-0001.json",
+    "docs/self_model/capabilities/CAP-0016.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+  ],
+  "rationale": [
+    "The question was raised by the reviewing executor against VERIFY-20260814-0001. The packaging executor had implemented non_equivalent as permitting adjudication, on the reasoning that resolution through a governed path settles the matter. That was an assumption rather than a finding, and it is the same shape as the A5 defect corrected in v9.1: naming or resolving something treated as establishing the property it names.",
+    "Both sides of the tension are real. C3's own test is ModelIdentity resolution equality, and Slice B exists to make that resolution governed, so requiring more could make C3's stated test unsatisfiable by any evidence available here. Against that, admitted v9.1 states that provider catalog self-report does not independently establish an asserted model mapping, and P5 states that unknown facts block qualification. The ontology does not resolve which governs.",
+    "The operator adjudicated a third option: keep the relation, defer the permission. The resolution honestly reports what the catalog asserts, and the permission waits for evidence the catalog cannot supply about itself. Neither the relation nor the permission is overstated.",
+    "The threshold is not invented. CAP-0016 already defines CONTENT_EVIDENCE_STATUSES as self_asserted, independently_corroborated, contradicted and unassessed, and ai_lab/providers/catalog.py already documents that a provider-sourced capture may never carry anything stronger than self_asserted however well its channel authenticated. independently_corroborated is the vocabulary's own name for the class C3 requires.",
+    "That constraint is enforced in code and not merely documented, which was established while writing the tests: the catalog validator refuses independently_corroborated on a provider_self_report capture, with the message that authenticating the channel establishes who said it and not whether it is true. The permitting path therefore requires a third_party_record source, which this repository does not have.",
+    "Consequence, stated rather than discovered later: every executor pair in this repository blocks adjudication today. That is not a regression. It is the honest position, and it means C3 is now evaluable and evaluates to refuse, where before it was unevaluable.",
+    "The implementation initially collapsed the two sides' evidence classes into one pair-level value by ranking the four CONTENT_EVIDENCE_STATUSES on an ordinal scale and taking the weaker. The reviewing executor rejected that: this decision establishes one threshold, that independently_corroborated licenses the permission, and it does not establish that the classes form a total order. Nothing governs the claim that unassessed is stronger than self_asserted. The two classes are now kept separate and the permission requires both to be independently corroborated, which gives the adjudicated behaviour without the invented ordering and is directly falsifiable: a corroborated left side with a self_asserted right side must block, and so must the reverse. Both mutations are caught by tests.",
+    "Two claims in an earlier draft of this decision were wrong and are corrected here rather than silently removed. It said a mixed-evidence pair could not be constructed; the test suite does construct one synthetically, and the accurate statement is that no mixed pair exists in retained production evidence. It also said the weakest-side rule was unfalsifiable, which was true only because the test meant to falsify it reversed snapshot order rather than swapping which provider's capture was corroborated, and so could not distinguish the rule from taking the left side alone. Removing the ordering removes the question.",
+    "The catalog validator's refusal of independently_corroborated on a provider_self_report capture was previously established only while writing the tests. It is now retained evidence: test_catalog_rejects_corroborated_provider_self_report asserts the refusal, and test_catalog_accepts_corroborated_third_party_record establishes that the synthetic captures used in the permission matrix are shapes the catalog accepts rather than shapes it would reject.",
+    "The reviewing executor found a latent order dependence that neither the implementation nor its tests had surfaced. It was verified before acceptance: with one self_asserted and one independently_corroborated capture covering the same executor, putting the provider capture first yields blocks True and putting the third-party capture first yields blocks False, from identical evidence. Today no such pair can exist. It is recorded as a boundary with a pinning test rather than fixed, because the fix requires an aggregation rule the ontology does not supply."
+  ],
+  "repo_commit": "2ce60c6b615110aab2db139424e4289c13b8dfbb",
+  "required_next_governance": [
+    "C3 now evaluates to refuse for every pair. If a governed round is to proceed on the basis that its witnesses are non-equivalent, either a third_party_record capture must corroborate the identity mapping, or the round must record that it proceeds with the relation non_equivalent and the permission withheld. The second is honest and should be the default until the first exists.",
+    "VERIFY-20260814-0001 marked this question open and its summary should be read alongside this decision. It is not amended: it recorded the state at the time of verification, and amending it would remove the evidence that the question was found rather than anticipated.",
+    "This decision governs the equivalence half of C3. The ancestry half is GAP-0008, and C3 remains unevaluable for any real claim until evidence ancestry is defined and populated.",
+    "Before any third_party_record capture is relied upon to clear C3 adjudication, define and falsify order-independent semantics for multiple catalog captures applicable to the same executor identity resolution, covering both agreement and contradiction between sources. _resolve_one currently returns the first snapshot that resolves, so two captures covering one executor and differing in evidence class produce opposite governance outcomes from the same evidence in different list order; test_multiple_captures_for_one_executor_are_order_dependent demonstrates this and pins it. It is harmless today because every retained capture is a provider self-report and the validator forbids corroboration on one, so no live pair can differ. It becomes unsafe with the first corroborating source, which is exactly what the permitting path requires. At minimum three cases must pass before that path is used: the same mapping from a self_asserted and a corroborated source must give an identical outcome in either input order; a corroborated mapping that conflicts with a provider mapping must not depend on list order; and two corroborated sources that disagree must fail closed unless a governed conflict rule says otherwise. The aggregation rule is deliberately NOT decided here: choosing one now would repeat the ordinal-ranking mistake this decision already corrected."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "executor_equivalence.blocks_adjudication returns False only when the relation is non_equivalent AND both identity resolutions rest on independently_corroborated content evidence. All other combinations block, including a non_equivalent relation with one corroborated side and one self_asserted side, and including every pair in the repository today.",
+  "source_capability_ids": [
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260722-0001",
+  "status": "recorded",
+  "summary": "A cleanly resolved provider self-report establishes that the catalog asserts two executors are distinct; it does not establish the affirmative non-equivalence C3 requires before permitting adjudication. The two are separated: the relation reports non_equivalent, and the permission is withheld unless BOTH sides' resolutions rest on independently_corroborated evidence, which no provider-sourced capture may carry. Every executor pair in the repository blocks adjudication today, which is the honest position rather than a regression.",
+  "title": "Separate the equivalence relation from the adjudication permission"
+}
