@@ -236,7 +236,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-17T06:51:26+00:00",
+  "generated_at": "2026-08-17T07:37:51+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -779,7 +779,7 @@
       "target": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim."
     }
   ],
-  "repo_head": "3458fd35a9498ca399a89354d73ce297e1278d7a",
+  "repo_head": "30db113180f1986d7662f0288d11fa4e13570c85",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
