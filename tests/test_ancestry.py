@@ -33,7 +33,6 @@ from ai_lab.providers.ancestry import (
     AncestryResult,
     ancestry_edges,
     normalise_digest,
-    shares_ancestry_edge,
 )
 from ai_lab.providers.invocation_record import digest_text
 
@@ -140,11 +139,15 @@ def test_positive_edge(tmp_path):
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(tmp_path, manifest, rel)
     r = ancestry_edges(invocation=rec, repo_root=REPO)
-    assert r.coverage in (COVERAGE_COMPLETE, COVERAGE_PARTIAL)
     assert r.edges, "no edge established from a manifest with items"
     assert r.manifest_id == manifest.get("manifest_id")
     for item in manifest["items"]:
-        assert item["source_path"] in r.edges
+        if (REPO / item["source_path"]).exists():
+            assert item["source_path"] in r.edges
+    # COMPLETE is unreachable while source selection is unbound to the prompt.
+    assert r.coverage == COVERAGE_PARTIAL
+    assert r.binding is not None and r.binding.startswith("unbound")
+    assert "not_bound_to_the_rendered_prompt" in r.reason
 
 
 # --- criterion 2: the sibling negative, protecting C13 -------------------
@@ -165,7 +168,11 @@ def test_sibling_negative_no_edge_between_same_prompt_invocations():
     for left, right in pairs[:5]:
         assert left["effective_input_manifest"]["rendered_prompt_digest"] == \
                right["effective_input_manifest"]["rendered_prompt_digest"]
-        assert shares_ancestry_edge(left=left, right=right, repo_root=REPO) is False
+        # The narrower fact only: an equal prompt digest creates no edge. This
+        # module does not answer whether one invocation is an ancestor of
+        # another, and must not be asked to: that relation is outside the
+        # implemented edge class, and answering False would collapse "outside
+        # scope" into "no relation exists", which P5 forbids.
         assert ancestry_edges(invocation=left, repo_root=REPO).edges == ()
         assert ancestry_edges(invocation=right, repo_root=REPO).edges == ()
 
@@ -256,9 +263,14 @@ def test_missing_source_path_yields_partial_coverage(tmp_path):
     rec = _record_referencing(tmp_path, altered, "m.context.json")
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_PARTIAL
-    assert "docs/abstractions/GONE-FOREVER.md" in r.unreconstructable_sources
+    gone = "docs/abstractions/GONE-FOREVER.md"
+    assert gone in r.unreconstructable_sources
+    # The renderer substitutes a "[source file not found]" placeholder, so the
+    # artifact's contents did not necessarily reach the executor. Visible as
+    # unreconstructable, absent from the established-edge set.
+    assert gone not in r.edges
     assert r.establishes_independence is False
-    assert "partial" in r.reason
+    assert "cannot be reconstructed" in r.reason
 
 
 # --- the property no result may ever assert ---------------------------
@@ -273,3 +285,57 @@ def test_no_result_ever_establishes_independence(coverage):
     """
 
     assert AncestryResult(edges=("a",), coverage=coverage).establishes_independence is False
+    # The dangerous incorrect implementation is `coverage == COMPLETE and not
+    # edges`: a complete traversal that found nothing, read as independence.
+    # That is the negative result most likely to be promoted later.
+    assert AncestryResult(edges=(), coverage=coverage).establishes_independence is False
+
+
+def test_substituted_source_path_is_not_reported_as_complete(tmp_path):
+    """The reviewing executor's falsification, retained.
+
+    Substituting a manifest's source_path while leaving manifest_id and
+    full_prompt_hash untouched previously produced coverage COMPLETE with the
+    substituted path reported as an established ancestor. compute_manifest_id
+    hashes task, assembly_policy and item_ids and neither source_path nor source
+    content, so nothing in the retained evidence detects the substitution.
+
+    The hole is not closed by this test; COMPLETE is capped at PARTIAL and the
+    binding field says why. This case exists so that a future change which
+    reintroduces COMPLETE without a source-to-prompt binding fails here.
+    """
+
+    src, manifest = _a_manifest_with_hash()
+    tampered = copy.deepcopy(manifest)
+    tampered["items"][0]["source_path"] = "SUBSTITUTED.md"
+    (tmp_path / "SUBSTITUTED.md").write_text("x")
+    for it in tampered["items"][1:]:
+        p = tmp_path / it["source_path"]
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("x")
+    (tmp_path / "m.context.json").write_text(json.dumps(tampered))
+    rec = _record_referencing(tmp_path, tampered, "m.context.json")
+
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert "SUBSTITUTED.md" in r.edges, (
+        "the substitution is still undetected, which is the recorded hole"
+    )
+    assert r.coverage != COVERAGE_COMPLETE, (
+        "COMPLETE coverage was reported for an unbound source selection"
+    )
+    assert r.binding is not None and r.binding.startswith("unbound")
+    assert r.establishes_independence is False
+
+
+def test_complete_coverage_is_currently_unreachable():
+    """No input may yield COMPLETE while the binding hole is open.
+
+    If this fails, either a binding was implemented and the module docstring,
+    PLAN-20260817-0001 scope item 4, and this test must all be updated, or
+    COMPLETE was reintroduced without one.
+    """
+
+    src, manifest = _a_manifest_with_hash()
+    rel = str(src.relative_to(REPO))
+    rec = _record_referencing(None, manifest, rel)
+    assert ancestry_edges(invocation=rec, repo_root=REPO).coverage != COVERAGE_COMPLETE

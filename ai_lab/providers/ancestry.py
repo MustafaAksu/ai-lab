@@ -34,12 +34,31 @@ WHAT THIS DOES NOT ESTABLISH
   coverage other than COMPLETE means nothing was evaluated rather than nothing
   was found.
 
-THE COMPLETENESS CONDITION (scope item 4)
+THE COMPLETENESS CONDITION (scope item 4) IS NOT YET SATISFIED
 
-An edge exists only where the referenced manifest is durably retained, parses,
-and validates as the manifest used to render the captured prompt. The last is
-checked by comparing the manifest's full_prompt_hash against the record's
-rendered_prompt_digest.
+An edge should exist only where the referenced manifest is durably retained,
+parses, and validates as the manifest used to render the captured prompt. The
+third part is NOT achieved by the check implemented here, and that is recorded
+rather than concealed.
+
+Comparing the manifest's full_prompt_hash against the record's
+rendered_prompt_digest establishes only that two stored hash fields agree. It
+does not bind the manifest's current items or source_path values to the prompt
+that was rendered. The reviewing executor falsified this against the repository:
+substituting a real manifest's first source_path for README.md, leaving
+manifest_id and full_prompt_hash untouched, and supplying the matching record
+digest produced coverage complete with README.md reported as an established
+ancestor. The packaging executor reproduced it.
+
+manifest_id does not close the hole either: compute_manifest_id hashes
+task, assembly_policy and item_ids, and neither source_path nor source content.
+
+Until a retained binding exists between source selection, the content actually
+rendered, and the captured prompt, NO result from this module reports COMPLETE
+coverage. The ceiling is PARTIAL, and `binding` records why. Candidate bindings
+include a per-source content digest in the manifest, a rendered-context digest,
+or a content-addressed manifest; choosing one is a design decision this slice
+does not make.
 
 Those two are comparable, established by evidence rather than assumed: both are
 SHA-256 over the UTF-8 encoding of the same `provider_prompt` variable, computed
@@ -93,6 +112,7 @@ class AncestryResult:
     reason: str | None = None
     manifest_id: str | None = None
     unreconstructable_sources: tuple[str, ...] = ()
+    binding: str | None = None
 
     @property
     def establishes_independence(self) -> bool:
@@ -108,7 +128,12 @@ class AncestryResult:
 
     @property
     def evaluated(self) -> bool:
-        """Whether the edge class could be evaluated at all."""
+        """Whether a USABLE ancestry-edge evaluation is available.
+
+        Not whether evaluation was attempted. A prompt-hash mismatch was
+        evaluated and failed validation; it returns UNAVAILABLE because no
+        usable edge results, and this property is False for it.
+        """
 
         return self.coverage != COVERAGE_UNAVAILABLE
 
@@ -188,39 +213,30 @@ def ancestry_edges(
             missing.append(str(item.get("item_id", "<no item_id>")))
             continue
         if not (root / src).exists():
-            # Section 4.19: a manifest naming a source that cannot be
-            # reconstructed leaves coverage partial. The item is still recorded
-            # as a potential ancestor, because the manifest asserts it reached
-            # the executor; what is missing is the ability to reconstruct it.
+            # The renderer substitutes "[source file not found: <path>]" when a
+            # source is absent, so an unreconstructable source does NOT
+            # establish that the artifact's contents reached the executor: the
+            # executor may have received only the placeholder. The path stays
+            # visible in unreconstructable_sources so potential ancestry is not
+            # under-reported, and stays OUT of edges so it is not over-reported.
             missing.append(src)
+            continue
         edges.append(src)
 
+    # COMPLETE is unreachable until a source-to-prompt binding exists. Capping
+    # here rather than at the call site means no caller can obtain COMPLETE from
+    # this module while the binding hole is open.
+    reasons = ["source_selection_not_bound_to_the_rendered_prompt"]
+    if missing:
+        reasons.append(
+            f"{len(missing)} manifest item(s) name a source that cannot be "
+            "reconstructed")
     return AncestryResult(
         edges=tuple(edges),
-        coverage=COVERAGE_PARTIAL if missing else COVERAGE_COMPLETE,
-        reason=(
-            f"{len(missing)} manifest item(s) name a source that cannot be "
-            "reconstructed; lineage coverage is partial and independence is not "
-            "inferred"
-            if missing else None
-        ),
+        coverage=COVERAGE_PARTIAL,
+        reason="; ".join(reasons) + "; independence is not inferred",
         manifest_id=manifest_id,
         unreconstructable_sources=tuple(missing),
+        binding="unbound: manifest source selection is not tied to the captured "
+                "prompt by any retained digest; see the module docstring",
     )
-
-
-def shares_ancestry_edge(
-    *,
-    left: Mapping[str, Any],
-    right: Mapping[str, Any],
-    repo_root: Path | str = ".",
-) -> bool:
-    """Whether one of these invocations is an ancestry ancestor of the other.
-
-    Always False for this edge class, and deliberately so: the edges are
-    artifact-to-invocation, so no invocation is ever an ancestor of another
-    through them. This exists to make the C13 sibling case explicit rather than
-    leaving a caller to assume that a shared prompt digest means something.
-    """
-
-    return False
