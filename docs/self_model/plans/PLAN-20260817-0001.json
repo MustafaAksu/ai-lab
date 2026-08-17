@@ -1,0 +1,92 @@
+{
+  "admission_summary": null,
+  "admission_warrant_id": null,
+  "admitted_at": null,
+  "completed_at": null,
+  "completion_verification_id": null,
+  "completion_warrant_id": null,
+  "constraints": [
+    "Implementation is authorized only within the scope admitted by the future admission warrant for this plan; any expansion requires a separate proposed and admitted plan.",
+    "One edge class only. The slice establishes that a repository artifact selected into a retained ContextManifest and rendered into a captured invocation's effective input is a direct artifact-level evidence ancestor of that invocation. No other edge class is implemented, and no traversal over more than one edge is performed.",
+    "The edge must satisfy ABS-0004 v9.2 Section 4.19 as admitted. It is an explicit directional effective-input linkage, which is what C13 requires as the additional retained relation beyond common input; it is not inferred from rendered_prompt_digest equality, which C13 forbids.",
+    "An absent, unreadable, or non-validating manifest yields unresolved and never independent, per C14 and P5. A negative result may not be reported as absence of ancestry where coverage is incomplete.",
+    "Every check written for this slice ships with its constructed falsifying input and the observed result, per DECISION-20260812-0002.",
+    "No field of InvocationRecord schema v1 is reinterpreted to carry something it was not defined for. In particular prior_tool_result_references is not used for repository artifacts: Section 4.12 defines that input class as prior tool outputs, and a markdown artifact is not a tool result."
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "created_from": "ABS-0004 v9.2 Section 4.19 [PROPOSAL], and GAP-0008",
+  "depends_on_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "evidence_ids": [],
+  "expected_outputs": [
+    "A pure function that, given a retained ContextManifest and a captured InvocationRecord, returns the artifact-level ancestry edges it establishes together with the coverage of the edge class it depends on, and returns unresolved with an enumerated reason wherever it cannot establish them.",
+    "A change to scripts/compare_providers.py making the referenced ContextManifest durable before the provider call, so that a record referencing a manifest references one that exists.",
+    "A test file whose cases are the falsification set below, each constructed before the check it exercises is relied upon.",
+    "At least one retained InvocationRecord carrying a populated context_manifest_reference, which the repository does not currently have on any of its 210 records.",
+    "A verification record and a capability amendment; the capability to amend is CAP-0015, whose pinned evidence includes the capture path this slice changes."
+  ],
+  "mitigation": [
+    "The manifest-durability change is the smallest that removes the ordering weakness: write the manifest before the provider call rather than after the comparison artifact. If that ordering cannot be achieved without wider change, the alternative is to record explicitly that the reference is unvalidated, which is worse but honest, and that choice must be recorded rather than taken silently.",
+    "The hash-comparability question is answered before the edge is relied upon, not assumed. If the two digests are not hashes of the same content, the cross-check is removed from the completeness condition and its absence recorded, rather than left in place appearing to check something.",
+    "The slice produces its first real instance on a deliberate run rather than waiting for one to occur, so the edge is exercised against a record captured by the current path rather than only against synthesised inputs."
+  ],
+  "next_action": "Operator adjudication of this plan, then an admission warrant, then implementation.",
+  "non_goals": [
+    "Output digesting. The outcome block added under DECISION-20260810-0001 carries no content hash, and this slice does not add one. The edge established here does not require it.",
+    "Content-addressed output-to-effective-input linkage, which Section 4.19 names as a second representation and which needs output digests.",
+    "Invocation-to-invocation ancestry. This slice establishes artifact-to-invocation only. Composing prior invocation, produced_by, artifact, effective input, later invocation requires a produced_by edge class that is not in scope.",
+    "General ancestry traversal, transitive closure, or a materialised graph.",
+    "C3 or C10 enforcement. C3 remains unevaluable for any real claim after this slice: its equivalence half blocks under DECISION-20260814-0001 and its ancestry half will have one populated edge class rather than a graph.",
+    "Any change to reask_from_synthesis.py, create_abstraction.py, or synthesize_comparison.py. All three predate Slice A, none has been modified since 2026-06-30, and no uncaptured comparison artifact has been created since capture existed.",
+    "A generalised prior_artifact_references field or any new InvocationRecord field.",
+    "Claim-level lineage, which Section 4.15 states would overclaim."
+  ],
+  "notes": [
+    "Two candidates were assessed for the first edge class and the packaging executor was wrong about both. It proposed reask_from_synthesis.py, which the reviewing executor accepted as genuine ancestry but rejected as the first slice, including because it would have pointed prior_tool_result_references at a markdown artifact when Section 4.12 defines that class as prior tool outputs. It then concluded no active workflow produces a directional edge; the reviewing executor found that the --latest-context path already does. Both corrections are in the rationale rather than removed.",
+    "The reviewing executor's six falsification cases are in success_criteria, with three added by the packaging executor while verifying: the unpopulated-reference case that all 210 existing records exhibit, the hash-comparability question, and the durability case. The unpopulated-reference case is the one the risk statement names, and it is the one a naive implementation would answer wrongly.",
+    "Every factual claim in this plan was measured at commit e2abcf3 before the plan was written: 210 invocation records with context_manifest_reference null on all of them, 25 retained context manifests, 22 carrying full_prompt_hash, every manifest item carrying a source_path, and 105 rendered_prompt_digest groups of exactly two."
+  ],
+  "objective": "Make the directional effective-input relation that the active comparison path already performs durable, validated, and falsifiable, and produce the repository's first retained instance of it.",
+  "plan_id": "PLAN-20260817-0001",
+  "proposed_change": "scripts/compare_providers.py already builds a ContextPackManifest on the --latest-context path, selects repository artifacts into manifest items each carrying item_id, item_type and source_path, renders those source files into the provider prompt, and passes context_manifest_reference to capture. The relation exists in the code and has never been exercised in a retained record. This slice adds a function that reads a retained manifest and a captured record and reports the ancestry edges established plus the coverage it depends on; makes the manifest durable before the provider call so a reference cannot dangle; and runs the path once to produce a first retained instance.",
+  "rationale": [
+    "Section 4.19's [PROPOSAL] requires one honest directional edge class end to end rather than general traversal over empty provenance. Two candidates were assessed and the assessment was corrected twice.",
+    "The packaging executor first proposed reask_from_synthesis.py, which extracts a re-ask prompt from a named prior synthesis artifact. The reviewing executor agreed that relation is genuine ancestry under Section 4.19 and rejected it as the first slice for three reasons: the script has not been modified since 2026-06-30 and instrumenting it would exercise a path the project does not use; it would require pointing prior_tool_result_references at a markdown artifact when Section 4.12 defines that class as prior tool outputs, which is convenience-driven reuse that weakens the field; and it would mix bringing a legacy path under capture with introducing the first edge, making the slice harder to falsify.",
+    "The packaging executor then concluded that no active governed workflow produces a directional edge. That was wrong, and the reviewing executor found the seam: the --latest-context path already selects named artifacts into a retained manifest and renders them into the prompt. The accurate statement is that a latent directional-edge capture path exists with no retained post-Slice-A instance, which is neither that ancestry capture does not exist nor that it is already captured.",
+    "The seam was verified before this plan was written. Twenty-five context manifests are retained; twenty-two carry full_prompt_hash; every manifest item carries a source_path naming a specific repository artifact; and context_manifest_reference is populated on zero of 210 invocation records.",
+    "Two defects in the existing path were found while verifying, and both are in scope because both bear on whether the edge can be trusted. The manifest is written after the provider call and after the comparison artifact, so a record can reference a manifest that never became durable; that was immaterial while the field was metadata and is material once it is lineage evidence. And the two hashes the completeness cross-check would compare are formatted differently, bare hex against a sha256: prefix, and have never co-existed on a record, so whether they digest the same content is unobserved.",
+    "This slice is smaller than creating a new directional mechanism and more useful than instrumenting dormant tooling. It makes explicit and testable an information-flow relation the active workflow already performs."
+  ],
+  "repo_commit": "e2abcf3218ce15310d5162b20e9bef2f9b136f21",
+  "risk": "The specific hazard is that an ancestry function reads the manifest reference on the 210 existing records, finds it null, and reports no ancestor. An unpopulated edge is indistinguishable from an absent one unless coverage is reported separately, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from ABS-0004 in August: the existence of a field treated as evidence of the property it names. C14 exists to forbid it and this slice must demonstrate compliance rather than assert it. A second hazard is that the completeness cross-check compares two hashes that are not hashes of the same content, in which case it would appear to validate the manifest while validating nothing.",
+  "schema_version": "v1",
+  "scope": [
+    "A pure function over a retained ContextManifest and a captured InvocationRecord returning the established artifact-to-invocation edges and the coverage of the edge class relied upon, never raising for a non-establishment and returning unresolved with an enumerated reason instead.",
+    "Making the referenced ContextManifest durable before the provider call in scripts/compare_providers.py, so that context_manifest_reference cannot name a file that was never written.",
+    "Establishing whether ContextManifest.full_prompt_hash and InvocationRecord.effective_input_manifest.rendered_prompt_digest are hashes of the same content. They are formatted differently and have never co-existed on a record. If they are, the comparison becomes part of the edge's completeness condition; if they are not, the check is not used and its absence is recorded.",
+    "The completeness condition for the edge: an ancestry edge exists only where the referenced manifest is durably retained, parses, and validates as the manifest used to render the captured prompt. Where any of those fails the result is unresolved.",
+    "One deliberate run of the --latest-context path producing at least one retained InvocationRecord with a populated context_manifest_reference, so the edge is exercised against a real record.",
+    "Tests implementing the falsification set in success_criteria, constructed before the checks are relied upon."
+  ],
+  "source_capability_ids": [
+    "CAP-0015"
+  ],
+  "source_gap_id": "GAP-0008",
+  "status": "proposed",
+  "success_criteria": [
+    "POSITIVE EDGE. A source artifact listed in a retained manifest, rendered into the prompt, referenced by a captured invocation, with the completeness condition satisfied, is reported as a potential-dependence ancestor of that invocation.",
+    "SIBLING NEGATIVE. Two invocations sharing an identical rendered_prompt_digest with no manifest linking either to the other are reported as having no ancestry edge between them. This exercises C13 against the 105 same-prompt pairs the repository already holds, which are the case a naive implementation would misread as ancestry.",
+    "MANIFEST ITEM ABSENT. An artifact present in the repository but not selected into the target manifest is not reported as an ancestor merely because it exists.",
+    "DANGLING MANIFEST. An invocation naming a missing or unreadable manifest yields unresolved, not no-ancestry. This exercises C14.",
+    "PROMPT MISMATCH. A manifest whose recorded prompt hash does not identify the captured prompt yields unresolved and no valid edge. Conditional on the hash-comparability question being answered affirmatively; if it is not, this criterion is replaced by a recorded statement that the check is unavailable.",
+    "SOURCE PATH MISSING. A manifest naming a source artifact that cannot be reconstructed yields partial coverage, and independence is not inferred.",
+    "UNPOPULATED REFERENCE. An invocation record with context_manifest_reference null yields unresolved coverage rather than no ancestors. This is the case all 210 existing records exhibit and the one the risk statement names.",
+    "HASH COMPARABILITY. Whether full_prompt_hash and rendered_prompt_digest are hashes of the same content is established by evidence and recorded either way.",
+    "DURABILITY. A test demonstrates that a failure between the provider call and manifest serialisation does not leave a captured record referencing a manifest that does not exist.",
+    "Each guard in the new function is mutation-tested: replacing it with behaviour that would report an edge or independence where the function refuses causes a test to fail."
+  ],
+  "summary": "Establish one directional evidence-ancestry edge class end to end, as ABS-0004 v9.2 Section 4.19 proposes: a repository artifact selected into a retained ContextManifest and rendered into a captured invocation's effective input is a direct artifact-level evidence ancestor of that invocation. The relation already exists in the active comparison path and has never been exercised in a retained record; context_manifest_reference is null on all 210. The slice adds a function that reports established edges and its own coverage, makes the manifest durable before the provider call so a reference cannot dangle, resolves whether the two prompt hashes are comparable, and produces the first retained instance. No output digesting, no traversal, no C3 or C10 enforcement.",
+  "title": "First evidence-ancestry edge class: ContextManifest-backed effective-input ancestry"
+}
