@@ -1,0 +1,129 @@
+diff --git a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+index ec3472b..b15836b 100644
+--- a/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
++++ b/docs/abstractions/ABS-0004-invocation-authorization-ontology.md
+@@ -4,13 +4,16 @@
+ 
+ - abstraction_id: `ABS-0004`
+ - title: `Invocation Authorization Ontology`
+-- version: `v9.1`
++- version: `v9.2`
+ - abstraction_level: `2`
+ - status: `admitted`
+ - reconstruction baseline: admitted v4 at commit
+   `56f18a2ab7b66b1855b631a32d540f654c62b2c2`. v9.1 was reconstructed from
+   that baseline, reviewed in corrected form, and admitted under
+-  `DECISION-20260812-0001` on 2026-08-12.
++  `DECISION-20260812-0001` on 2026-08-12. v9.2 amends that admitted v9.1 text
++  solely by incorporating the admitted GAP-0008 evidence-ancestry definition
++  and its C12-C14 enforcement-matrix rows, and was admitted under
++  `DECISION-20260817-0001` on 2026-08-17.
+ - version admission table:
+ 
+   | version | state | basis |
+@@ -23,7 +26,8 @@
+   | v7 | amended, not separately admitted | replaced v6's termination rule, at 00335d6; reviewed by COMP-0039..0046 |
+   | v8 | **withdrawn_after_admission_review** | reviewed by COMP-0118..0125 and withdrawn under DECISION-20260727-0002; retained as evidence, not rejected, and not an implementation authority |
+   | v9 | reviewed, not admitted; superseded by v9.1 | reconstructed from admitted v4 and assembled under DECISION-20260805-0002; the text reviewed in COMP-0126..0134 had SHA-256 `8f61c283a5d716f6816798a4946824b2d0d633a8be0d154da33cc1ebbe7ab1fa`; eight findings A1-A8 were accepted under DECISION-20260811-0001, so that reviewed text is not the corrected v9.1 text |
+-  | v9.1 | **admitted** 2026-08-12 | admitted by the operator as accountable principal under `DECISION-20260812-0001`. The text adjudicated for admission had SHA-256 `36e4ef61d2007d18ac5cd5d6dd014dcd4266d67438f13d29743bc74969b675ae`; recording this admission changes the document bytes, so that hash identifies the adjudicated text immediately before admission bookkeeping, while the current file has a different post-recording hash. v9.1 remains explicit that admission establishes what the ontology says, not that its constraints are machine-enforced or evidenced as enforced. |
++  | v9.1 | **admitted** 2026-08-12; **superseded by v9.2** 2026-08-17 | admitted by the operator as accountable principal under `DECISION-20260812-0001`. The text adjudicated for admission had SHA-256 `36e4ef61d2007d18ac5cd5d6dd014dcd4266d67438f13d29743bc74969b675ae`; recording this admission changes the document bytes, so that hash identifies the adjudicated text immediately before admission bookkeeping, while the current file has a different post-recording hash. v9.1 remains explicit that admission establishes what the ontology says, not that its constraints are machine-enforced or evidenced as enforced. |
++  | v9.2 | **admitted** 2026-08-17 | admitted by the operator as accountable principal under `DECISION-20260817-0001`. The text adjudicated for admission had SHA-256 `2d0addd85b490e5837dfb7d061ec759fb8d1827b05648e4bbbb3d7ee43971fba`; recording this admission changes the document bytes, so that hash identifies the adjudicated v9.2 text immediately before admission bookkeeping, while the current file has a different post-recording hash. v9.2 admission establishes the evidence-ancestry definitions and C12-C14 as ontology text; it does not establish that ancestry capture, traversal, or any C12-C14 enforcement exists. |
+ 
+ - reconstruction inputs:
+   `ABS-0004-v9-task2-required-changes.patch`,
+@@ -522,6 +526,85 @@ after the governing rule for that dimension records evidence that resolves the
+ unknown to a non-`unresolved` outcome, after which the overall status is
+ derived again.
+ 
++### 4.19 Artifact-Level Evidence Ancestry
++
++`[DEF]` Artifact-level evidence ancestry. For a governed artifact, claim-bearing
++artifact, or invocation output, *evidence ancestry* is the directed transitive
++closure of recorded provenance and effective-input relations representing
++**potential information dependence** from an earlier invocation or artifact to
++the target. An ancestor need not be the original source of a proposition;
++membership means only that information from, derived from, or capable of being
++carried from that ancestor is represented as able to influence the target.
++
++`[DEF]` Direct artifact-level evidence-ancestry edge. A direct evidence-ancestry
++edge is a recorded directional provenance or effective-input linkage between a
++source invocation or artifact and a target whose information state it may
++influence. Representations of such a linkage include an explicit effective-input
++reference to an earlier invocation output or produced artifact; a
++content-addressed linkage between a recorded source output and content
++represented as an effective input of the target invocation; or an admitted
++directional derivation relation such as `copied_from`, `summarized_from`,
++`transformed_from`, or `claim_derived_from`, at the granularity supported by the
++retained records. `artifact produced_by invocation` identifies the producing
++invocation of an artifact; by itself it describes production rather than later
++consumption.
++
++`[DEF]` Spawned execution relation. `spawned` represents execution composition
++between a parent invocation and subordinate execution. A separate retained
++effective-input, output-use, derivation, or equivalent directional-influence
++relation represents whether information from that subordinate execution could
++contribute to a later target.
++
++`[PROPOSED_CONSTRAINT]` C12. A `spawned` relation alone may not be treated as
++establishing an evidence-ancestry edge. A spawned invocation may enter a target's
++evidence ancestry only where a retained directional influence relation
++establishes potential information dependence on that subordinate execution.
++
++`[DEF]` Co-input and continuity relations. Equality of `rendered_prompt_digest`,
++membership in the same comparison or protocol round, temporal proximity, common
++provider or executor class, and membership in the same session can represent
++common input, common cause, or execution continuity. None of those facts by
++itself represents direction of information flow from one invocation to another.
++
++`[PROPOSED_CONSTRAINT]` C13. Co-input, common-cause, and continuity relations may
++not be counted as evidence-ancestry edges unless an additional retained
++directional relation establishes potential information dependence. Where
++session continuity may carry relevant inherited state that is not reconstructibly
++represented, that lineage dimension remains `unresolved` under P5.
++
++`[DEF]` Artifact-level ancestry traversal result. An ancestry traversal describes
++discovered potential-dependence paths together with the represented coverage of
++the edge classes on which the traversal depends. A negative path result
++describes that no path was found in the represented graph.
++
++`[PROPOSED_CONSTRAINT]` C14. A negative traversal result may not be treated as
++evidence of independence where an applicable input, output, derivation,
++subordinate-influence, or inherited-state edge is absent, incomplete, or not
++connectable at the retained granularity. In such a case the corresponding
++ancestry question remains `unresolved` under P5.
++
++`[LIMITATION]` This definition does not provide claim-level lineage. An artifact
++can contain copied material, original observation, paraphrase, and new inference
++simultaneously; therefore an artifact-level path establishes potential
++dependence only. It neither proves that a particular claim was copied nor proves
++independence when no complete path is represented.
++
++`[LIMITATION]` Current capture cannot evaluate this definition for historical
++InvocationRecords. At the measured repository state, `spawned`,
++`prior_tool_result_references`, and `context_manifest_reference` carry no
++ancestry links, while invocation outputs have no retained content digest that
++can be matched to later effective inputs. `rendered_prompt_digest` is populated,
++but equality of that digest establishes common rendered input rather than
++directional ancestry. The currently observed paired comparison records
++therefore identify sibling/co-input structure, not an evidence-ancestry graph.
++
++`[PROPOSAL]` The first capability slice after this definition should capture
++**one honest directional edge class end to end** rather than implement general
++traversal over empty provenance. Candidate capture mechanisms include explicit
++prior-output references and content-addressed output-to-effective-input linkage.
++Selection of the first mechanism, its completeness boundary, and any
++output-digest schema change require a separately admitted implementation plan.
++
+ ## 5. Canonical Relations
+ 
+ `[INHERITED_CONSTRAINT]` All relations use the `GraphRelation` shape of
+@@ -769,6 +852,9 @@ claim that a check happens is not enforcement evidence.
+ | C9 lineage inheritance | inherited-v4 | manual | none; no named artifact instance currently attests a C9 inheritance check for a named target | partial | inheritance propagation | manual practice is claimed; evidence begins only with a named C9 attestation | claim lineage (full) |
+ | C10 validator lineage | proposed-v9 | manual | none; VERIFY records name verification activity, but no named retained artifact currently establishes the C10 lineage-independence check for a named verification | partial | VerificationRun with verifier-ancestry check | manual practice is claimed; evidence begins only with a named C10 attestation | ancestry capture |
+ | C11 interim independence disclosure | inherited-v4 | manual | none; no named DecisionRecord or warrant instance currently attests the C11 disclosure check for a named high-consequence decision | partial | admission validator requiring disclosure + named controls | manual practice is claimed; evidence begins only with a named C11 attestation | none; retired when claim lineage ships |
++| C12 spawned execution ancestry qualification | proposed-v9 | none | none; no named retained artifact currently attests a C12 spawned-to-ancestry qualification check for a named target | partial | ancestry-edge admission validator | directional ancestry capture capability ships | populated `spawned`; retained directional influence linkage |
++| C13 co-input and continuity ancestry exclusion | proposed-v9 | none | none; no named retained artifact currently attests a C13 co-input/continuity exclusion check for a named target | partial | ancestry-edge classifier + session-lineage coverage check | directional ancestry capture capability ships | directional influence linkage; reconstructible inherited session state |
++| C14 incomplete ancestry coverage fails closed | proposed-v9 | none | none; no named retained traversal result currently attests C14 edge-coverage fail-closed handling for a named ancestry question | none | ancestry traversal + coverage validator | ancestry traversal with edge-class coverage ships | populated ancestry edges; edge-class coverage/completeness representation |
+ 
+ ## 10. Proposed Implementation Sequence
+ 

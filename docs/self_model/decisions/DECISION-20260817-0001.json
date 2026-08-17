@@ -1,0 +1,53 @@
+{
+  "authorized_effects": [
+    "Admitting ABS-0004 v9.2 at sha256 04833eb4fa75e6baa0112626585c35c563b677b3c34c9b6b506105b2c0031023, superseding admitted v9.1, incorporating the artifact-level evidence-ancestry definition as Section 4.19.",
+    "Admitting three new constraints C12, C13 and C14, each with governance status proposed-v9, claimed enforcement mode none, and enforcement evidence none.",
+    "Recording that the admission does not make the definition evaluable: no retained InvocationRecord carries an ancestry edge, and the definition's own [LIMITATION] says so.",
+    "Recording that the ontology now carries fourteen constraints and that enforcement evidence is none for every one of them."
+  ],
+  "blocked_effects": [
+    "No claim that evidence ancestry can now be computed. Section 4.19 defines the relation; nothing populates it. spawned, prior_tool_result_references and context_manifest_reference are empty on all 210 retained records, and invocation outputs carry no content digest that could be matched to a later effective input.",
+    "No claim that C3 or C10 is now evaluable. C3's equivalence half resolves under DECISION-20260814-0001 and blocks for every live pair; its ancestry half now has a definition with no populated edges. C3 remains unevaluable for any real claim.",
+    "No treatment of the 105 same-prompt pairs as ancestry. C13 forbids it: equality of rendered_prompt_digest, round membership, temporal proximity, common provider class and session membership represent common input or common cause, not direction of information flow.",
+    "No decision on the output-digest schema, whether output hashing suffices or an explicit output object is required, how a ContextManifest item identifies its producing invocation, traversal strategy, claim-level lineage, whether every spawned child contributes epistemically, or a completeness threshold. Each is capability or policy work after this definition.",
+    "No enforcement mode claimed for C12, C13 or C14. They are recorded as none rather than manual, because no manual practice exists for a definition admitted today, and claiming manual enforcement without an attesting artifact is the defect correction A2 removed from this ontology."
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "decision": "admit_abs_0004_v9_2_with_evidence_ancestry_definition",
+  "decision_id": "DECISION-20260817-0001",
+  "evidence_refs": [
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+    "docs/abstractions/proposals/PROP-GAP0008-evidence-ancestry-definition.md",
+    "docs/self_model/gaps/GAP-0008.json",
+    "docs/self_model/decisions/DECISION-20260812-0001.json",
+    "docs/self_model/decisions/DECISION-20260814-0001.json",
+    "ai_lab/providers/executor_equivalence.py"
+  ],
+  "rationale": [
+    "GAP-0008 recorded that evidence ancestry is the term C3 and C10 both turn on and is defined nowhere in the admitted ontology, and that the fields which could carry it are empty. Its recommended first slice was a definition rather than code.",
+    "The sequencing was contested and the contest is recorded. The packaging executor proposed that output digesting precede the definition, on the ground that defining uncomputable edges repeats what v9.1 was corrected for. The reviewing executor rejected that and the packaging executor withdrew it: the absence of output digests is a capability blocker and not a definition blocker, and making source.output_digest equals target.input_digest the definition would make one implementation mechanism into the ontology and force the implementation to decide what ancestry means before the ontology had said so. A narrower definition covering only today's populated fields was also rejected, because the richest available relation is the 105 same-prompt pairs and those are siblings rather than ancestors.",
+    "The definition's most useful content is the case it forbids. All 210 retained records pair by rendered_prompt_digest into 105 groups of exactly two, which is the richest relation available and which a naive implementation would read as ancestry. C5 already treats common leading prompts as defeating witness-path independence separately from lineage, so the ontology had the distinction; C13 makes it a constraint.",
+    "An earlier draft placed three prohibitions and one status-changing consequence under [DEF], which the A6 correction to v9.1 forbids. The packaging executor found this and the reviewing executor split each block so the description remains [DEF] and the rule becomes [PROPOSED_CONSTRAINT], additionally changing is evidenced only by to is a recorded directional linkage, removing an admission condition the packaging executor had not flagged. The result was checked mechanically inside Section 4.19: five [DEF] blocks with no normative language, three [PROPOSED_CONSTRAINT] blocks each carrying it, two [LIMITATION] blocks and one [PROPOSAL], all descriptive.",
+    "Verified before admission at commit 64bcc2bfafa9bc8695c5f3e95cd890aa57d1f7af. Five supplied checksums pass. The baseline is byte-identical to committed v9.1. The patch applies cleanly, touches one file, and reproduces the supplied candidate at the stated hash. Tag deltas are exactly DEF +5, PROPOSED_CONSTRAINT +3, LIMITATION +2, PROPOSAL +1 with every other category unchanged. Five hunks and three removed lines, all three metadata: the version line, the admission sentence, and the superseded v9.1 table row. No existing definition, principle, constraint or limitation changed.",
+    "The Section 4.19 [LIMITATION] measurements were re-derived rather than accepted: spawned, prior_tool_result_references and context_manifest_reference are populated on 0 of 210 records, rendered_prompt_digest on 210 of 210, and 0 of 28 outcome blocks carry any digest or hash field. The reviewing executor noted it could not re-measure against this commit; these figures are the packaging executor's.",
+    "The consequence is stated rather than left to be found. The ontology now carries fourteen constraints and enforcement evidence is none for all fourteen. Admitting a definition adds three constraints in that state, which is honest for a definition admitted the day it is written and would be a defect if it persisted without a capture slice."
+  ],
+  "repo_commit": "64bcc2bfafa9bc8695c5f3e95cd890aa57d1f7af",
+  "required_next_governance": [
+    "Section 4.19's [PROPOSAL] states the next step: capture one honest directional edge class end to end rather than implement general traversal over empty provenance. Candidate mechanisms are explicit prior-output references and content-addressed output-to-effective-input linkage. Selection of the mechanism, its completeness boundary, and any output-digest schema change require a separately admitted implementation plan with a warrant.",
+    "C12, C13 and C14 are admitted with claimed enforcement mode none. When a capture slice ships, their mode and evidence must be revised together; a mode raised to manual without a named attesting artifact would repeat the defect corrected by A2 in v9.1.",
+    "GAP-0008 is not closed by this admission. Its first slice is complete; the gap records both an undefined term and unpopulated fields, and only the first is addressed.",
+    "The decision id was reserved by the drafting executor before this record existed, because the admission bookkeeping bytes embed it. A different id or date would require regenerating the bookkeeping and the post-recording hash. That coupling is worth noting for future amendments: the document cites the decision that admits it, so the two cannot be drafted independently."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "ABS-0004 v9.2 becomes the invocation authorization ontology of record, superseding v9.1. Artifact-level evidence ancestry is defined at Section 4.19, with C12 forbidding spawned alone as an ancestry edge, C13 forbidding co-input and continuity relations as ancestry edges, and C14 forbidding a negative traversal result from being read as independence where edge coverage is incomplete. No ancestry edge exists in any retained record, so the definition is admitted and unevaluable.",
+  "source_capability_ids": [
+    "CAP-0015",
+    "CAP-0016"
+  ],
+  "source_gap_id": "GAP-0008",
+  "source_plan_id": "PLAN-20260722-0001",
+  "status": "recorded",
+  "summary": "ABS-0004 v9.2 is admitted, superseding v9.1, adding Section 4.19 which defines artifact-level evidence ancestry as the directed transitive closure of recorded provenance and effective-input relations representing potential information dependence. Three constraints C12, C13 and C14 enter as proposed-v9 with enforcement mode and evidence none: spawned alone is not an ancestry edge, co-input and continuity relations are not ancestry edges, and a negative traversal result is not evidence of independence where coverage is incomplete. The definition cannot be evaluated for any retained record, and says so.",
+  "title": "Admit ABS-0004 v9.2 with the artifact-level evidence-ancestry definition"
+}
