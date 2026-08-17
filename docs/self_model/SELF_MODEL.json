@@ -236,7 +236,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-17T07:37:51+00:00",
+  "generated_at": "2026-08-17T08:09:13+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -578,6 +578,11 @@
       "risk": "An authorization system that classifies but never refuses can create a false sense of control: readers may assume governed means checked when it means covered by a record. The one-hop self-adjudication check has the same hazard at a finer grain, since it will pass every deeper collision. Role and consequence vocabularies decided here are load-bearing for Slice D's admission rules, and a coarse role taxonomy would propagate. Beyond those: v8 makes the honest limitation explicit rather than closing it, so a reader who wants an assurance AI-Lab cannot give will find the system declining to give it, which is correct and may be mistaken for a defect. v8 also records that its self-issued disqualification is inert until AuthorizationPolicy exists, so this slice must not present the self_issued marking as a control. The self_issued marking depends on identifying when two records name the same party, which is straightforward for exact identifiers and undecidable in general; the implementation must not claim to detect sameness it cannot establish.",
       "source_field": "risk",
       "source_record": "PLAN-20260723-0002"
+    },
+    {
+      "risk": "The specific hazard is that an ancestry function reads the manifest reference on the 210 existing records, finds it null, and reports no ancestor. An unpopulated edge is indistinguishable from an absent one unless coverage is reported separately, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from ABS-0004 in August: the existence of a field treated as evidence of the property it names. C14 exists to forbid it and this slice must demonstrate compliance rather than assert it. A second hazard is that the completeness cross-check compares two hashes that are not hashes of the same content, in which case it would appear to validate the manifest while validating nothing.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260817-0001"
     }
   ],
   "model_type": "self_model",
@@ -588,11 +593,12 @@
     "GAP-0008"
   ],
   "open_plans": [
-    "PLAN-20260723-0002"
+    "PLAN-20260723-0002",
+    "PLAN-20260817-0001"
   ],
   "plan_counts": {
     "completed": 22,
-    "proposed": 1
+    "proposed": 2
   },
   "plans": [
     {
@@ -755,6 +761,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260723-0002.json",
       "status": "proposed",
       "title": "Roles, qualification, and invocation authorization (ABS-0004 Slice C)"
+    },
+    {
+      "plan_id": "PLAN-20260817-0001",
+      "source_gap_id": "GAP-0008",
+      "source_path": "docs/self_model/plans/PLAN-20260817-0001.json",
+      "status": "proposed",
+      "title": "First evidence-ancestry edge class: ContextManifest-backed effective-input ancestry"
     }
   ],
   "recommended_next_targets": [
@@ -779,7 +792,7 @@
       "target": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim."
     }
   ],
-  "repo_head": "30db113180f1986d7662f0288d11fa4e13570c85",
+  "repo_head": "88b0f4ab7e77427ad1f7764b1db4a503ddd25791",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
