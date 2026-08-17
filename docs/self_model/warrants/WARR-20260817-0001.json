@@ -1,0 +1,35 @@
+{
+  "author": "operator",
+  "conditions": [
+    "Edge-class fence: exactly one edge class is implemented, the ContextManifest-backed effective-input relation from a repository artifact to the invocation whose prompt rendered it. No other edge class, no transitive closure, no invocation-to-invocation edge, and no output digesting. A test must demonstrate that the function reports only artifact-to-invocation edges.",
+    "Unpopulated reference: a test must demonstrate that an InvocationRecord with context_manifest_reference null yields unresolved coverage rather than an empty ancestor set. All 210 retained records exhibit this case, and reporting no ancestor for them would be the defect C14 forbids and the one the plan's risk statement names.",
+    "Sibling exclusion: a test must demonstrate that two invocations sharing an identical rendered_prompt_digest, with no manifest linking either to the other, yield no ancestry edge between them. The repository holds 105 such pairs and they are the case a naive implementation would misread.",
+    "Coverage reporting: every result must carry the coverage of the edge class it relied upon, and a negative path result must be distinguishable from an unevaluated one. A test must demonstrate that distinction.",
+    "Hash comparability: whether ContextManifest.full_prompt_hash and InvocationRecord.effective_input_manifest.rendered_prompt_digest are hashes of the same content must be established by evidence before either is used in the completeness condition. If they are not comparable, the check is removed and its absence recorded rather than left in place appearing to validate.",
+    "Durability: the referenced manifest must be durably retained before the provider call, and a test must demonstrate that a failure between the provider call and manifest serialisation cannot leave a captured record referencing a manifest that does not exist. If that ordering cannot be achieved within this scope, the alternative of recording the reference as unvalidated must be adopted explicitly in a recorded change rather than by omission.",
+    "Field integrity: no InvocationRecord schema v1 field may be repurposed. In particular prior_tool_result_references may not be used for repository artifacts, since Section 4.12 defines that input class as prior tool outputs.",
+    "Falsification: every check relied upon for a governance claim ships with its constructed falsifying input and the observed result, per DECISION-20260812-0002, and each guard in the new function is mutation-tested such that replacing it with behaviour reporting an edge or independence where the function refuses causes a test to fail.",
+    "First instance: the slice must produce at least one retained InvocationRecord with a populated context_manifest_reference, so the edge is exercised against a record captured by the current path and not only against synthesised inputs.",
+    "Completion requires a verification record and a CAP-0015 amendment. The amendment must repin only the files this work changed and verified; files stale from earlier work must be left stale and recorded, as VERIFY-20260810-0001 established."
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260817-0001",
+    "DECISION-20260817-0001",
+    "GAP-0008",
+    "CAP-0015",
+    "CAP-0016",
+    "DECISION-20260814-0001",
+    "DECISION-20260812-0002"
+  ],
+  "reason": "The plan implements the [PROPOSAL] of ABS-0004 v9.2 Section 4.19, admitted under DECISION-20260817-0001: capture one honest directional edge class end to end rather than implement general traversal over empty provenance. Its scope is the relation the active comparison path already performs and has never recorded. Unlike the admission warrant for PLAN-20260722-0001, this warrant cites no governed review round. COMP-0034 supported that plan with both providers reviewing it as attached text; no equivalent round was run for this plan. Its support is instead the external deliberation recorded in the plan's rationale and notes: the packaging executor proposed a first edge class twice and was corrected twice by the reviewing executor, once on choosing dormant tooling and repurposing a field Section 4.12 defines otherwise, and once on concluding that no active workflow produces a directional edge when the --latest-context path already does. That is weaker evidence than a governed round and is recorded as such. Every factual claim in the plan was measured at commit e2abcf3 before admission: 210 invocation records with context_manifest_reference null on every one, 25 retained context manifests, 22 carrying full_prompt_hash, every manifest item carrying a source_path naming a specific artifact, and 105 rendered_prompt_digest groups of exactly two. The scope is fenced against the two expansions that would make it unfalsifiable: output digesting, which Section 4.19 names as a separate representation and which the outcome block cannot currently support, and traversal, which would operate over a graph with one populated edge class.",
+  "repo_commit": "bdc3fd736b5085c7df6b295ef9c102d5ac328ab5",
+  "schema_version": "v1",
+  "scope": "Admission warrant for PLAN-20260817-0001, the first evidence-ancestry edge class under ABS-0004 v9.2 Section 4.19. Authorizes implementation of exactly the plan's six scope items: the pure function over a retained ContextManifest and a captured InvocationRecord returning established artifact-to-invocation edges and its own coverage; making the referenced manifest durable before the provider call in scripts/compare_providers.py; establishing whether the two prompt hashes are comparable; the completeness condition for the edge; one deliberate run producing a first retained instance; and tests implementing the plan's ten success criteria. Authorizes nothing else. Specifically excluded: output digesting, content-addressed output-to-effective-input linkage, invocation-to-invocation ancestry, transitive closure or any traversal beyond a single edge, C3 or C10 enforcement, any new InvocationRecord field, claim-level lineage, and any change to reask_from_synthesis.py, create_abstraction.py or synthesize_comparison.py.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260817-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260817-0001",
+  "warrant_state": "supported"
+}

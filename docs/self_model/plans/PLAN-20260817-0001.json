@@ -1,7 +1,7 @@
 {
-  "admission_summary": null,
-  "admission_warrant_id": null,
-  "admitted_at": null,
+  "admission_summary": "Admitted by the operator as accountable principal under WARR-20260817-0001, with ten conditions. The warrant fences the scope against output digesting and traversal, and requires that the unpopulated-reference case, the sibling-exclusion case, and the hash-comparability question each be settled by evidence before the edge is relied upon. Unlike the Slice A admission, no governed review round supports this plan; the warrant records that its support is external deliberation and that this is weaker evidence.",
+  "admission_warrant_id": "WARR-20260817-0001",
+  "admitted_at": "2026-08-17T00:00:00+00:00",
   "completed_at": null,
   "completion_verification_id": null,
   "completion_warrant_id": null,
@@ -19,7 +19,9 @@
     "CAP-0015",
     "CAP-0016"
   ],
-  "evidence_ids": [],
+  "evidence_ids": [
+    "WARR-20260817-0001"
+  ],
   "expected_outputs": [
     "A pure function that, given a retained ContextManifest and a captured InvocationRecord, returns the artifact-level ancestry edges it establishes together with the coverage of the edge class it depends on, and returns unresolved with an enumerated reason wherever it cannot establish them.",
     "A change to scripts/compare_providers.py making the referenced ContextManifest durable before the provider call, so that a record referencing a manifest references one that exists.",
@@ -32,7 +34,7 @@
     "The hash-comparability question is answered before the edge is relied upon, not assumed. If the two digests are not hashes of the same content, the cross-check is removed from the completeness condition and its absence recorded, rather than left in place appearing to check something.",
     "The slice produces its first real instance on a deliberate run rather than waiting for one to occur, so the edge is exercised against a record captured by the current path rather than only against synthesised inputs."
   ],
-  "next_action": "Operator adjudication of this plan, then an admission warrant, then implementation.",
+  "next_action": "Implement the six scope items under WARR-20260817-0001. Begin with the hash-comparability question, because two success criteria and one warrant condition depend on its answer and the completeness condition changes if the two digests are not comparable.",
   "non_goals": [
     "Output digesting. The outcome block added under DECISION-20260810-0001 carries no content hash, and this slice does not add one. The edge established here does not require it.",
     "Content-addressed output-to-effective-input linkage, which Section 4.19 names as a second representation and which needs output digests.",
@@ -74,7 +76,7 @@
     "CAP-0015"
   ],
   "source_gap_id": "GAP-0008",
-  "status": "proposed",
+  "status": "admitted",
   "success_criteria": [
     "POSITIVE EDGE. A source artifact listed in a retained manifest, rendered into the prompt, referenced by a captured invocation, with the completeness condition satisfied, is reported as a potential-dependence ancestor of that invocation.",
     "SIBLING NEGATIVE. Two invocations sharing an identical rendered_prompt_digest with no manifest linking either to the other are reported as having no ancestry edge between them. This exercises C13 against the 105 same-prompt pairs the repository already holds, which are the case a naive implementation would misread as ancestry.",
