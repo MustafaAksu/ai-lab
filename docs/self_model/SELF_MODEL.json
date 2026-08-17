@@ -39,7 +39,8 @@
     "PLAN-20260717-0001",
     "PLAN-20260719-0001",
     "PLAN-20260722-0001",
-    "PLAN-20260723-0001"
+    "PLAN-20260723-0001",
+    "PLAN-20260817-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -236,7 +237,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-17T08:09:13+00:00",
+  "generated_at": "2026-08-17T08:21:12+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -597,8 +598,9 @@
     "PLAN-20260817-0001"
   ],
   "plan_counts": {
+    "admitted": 1,
     "completed": 22,
-    "proposed": 2
+    "proposed": 1
   },
   "plans": [
     {
@@ -766,7 +768,7 @@
       "plan_id": "PLAN-20260817-0001",
       "source_gap_id": "GAP-0008",
       "source_path": "docs/self_model/plans/PLAN-20260817-0001.json",
-      "status": "proposed",
+      "status": "admitted",
       "title": "First evidence-ancestry edge class: ContextManifest-backed effective-input ancestry"
     }
   ],
@@ -792,7 +794,7 @@
       "target": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim."
     }
   ],
-  "repo_head": "88b0f4ab7e77427ad1f7764b1db4a503ddd25791",
+  "repo_head": "bdf5d96ad892002fc925bf69e5ce2290dacba910",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -978,7 +980,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 57
+    "supported": 58
   },
   "warrants": [
     {
@@ -1435,6 +1437,14 @@
       "target_item_id": "PLAN-20260723-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260723-0002",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260817-0001.json",
+      "target_item_id": "PLAN-20260817-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260817-0001",
       "warrant_state": "supported"
     }
   ]
