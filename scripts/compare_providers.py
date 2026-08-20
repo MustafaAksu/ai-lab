@@ -4,6 +4,7 @@ from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -11,7 +12,10 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from ai_lab.documentation.context_pack_renderer import render_context_pack_markdown
+from ai_lab.documentation.context_pack_renderer import (
+    compute_source_binding_digest,
+    render_context_pack_markdown,
+)
 from ai_lab.documentation.prompt_context import (
     build_latest_context_pack_manifest,
     build_prompt,
@@ -449,12 +453,32 @@ def main() -> int:
     provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
 
     if args.latest_context and context_manifest is not None:
+        # PLAN-20260817-0001 scope item 2, as clarified. The manifest must be
+        # FINAL before it is hashed and written: bindings first, then the prompt
+        # hash, then serialise once. Writing provisionally and amending after the
+        # provider call would recreate the reference-binding defect the
+        # content-addressed reference exists to close.
+        context_manifest = replace(
+            context_manifest,
+            items=tuple(
+                replace(item,
+                        source_binding_digest=compute_source_binding_digest(item))
+                for item in context_manifest.items
+            ),
+        )
         context_manifest = replace(
             context_manifest,
             full_prompt_hash=prompt_sha256(provider_prompt),
         )
         context_pack = render_context_pack_markdown(context_manifest)
         provider_prompt = build_prompt(raw_prompt, context_pack=context_pack)
+        # The rendered pack now carries the bindings, so the prompt changed and
+        # the hash recorded a moment ago is stale. Recompute against the final
+        # prompt, which is the one the provider will receive.
+        context_manifest = replace(
+            context_manifest,
+            full_prompt_hash=prompt_sha256(provider_prompt),
+        )
 
     if args.print_prompt:
         if args.print_context_summary:
@@ -505,7 +529,29 @@ def main() -> int:
         title = title_from_prompt(raw_prompt)
 
     if save_path is not None and context_manifest is not None:
-        context_manifest_path = save_path.with_suffix(".context.json")
+        # Serialise once, hash those exact bytes, and retain them under a
+        # content-addressed name BEFORE any provider call. The digest in the
+        # filename is what authenticates the manifest to the InvocationRecord:
+        # any later edit changes the bytes and the reference stops matching.
+        context_manifest_json = (
+            json.dumps(context_manifest.to_dict(), indent=2, sort_keys=True) + "\n"
+        )
+        manifest_bytes = context_manifest_json.encode("utf-8")
+        manifest_digest = hashlib.sha256(manifest_bytes).hexdigest()
+        context_manifest_path = save_path.with_suffix(
+            f".context.{manifest_digest}.json"
+        )
+        if context_manifest_path.exists():
+            existing = context_manifest_path.read_bytes()
+            if existing != manifest_bytes:
+                raise SystemExit(
+                    f"ABORT: {context_manifest_path} exists with different bytes "
+                    "than its content address claims; refusing to overwrite"
+                )
+        else:
+            context_manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            context_manifest_path.write_bytes(manifest_bytes)
+            print(f"Saved context manifest: {context_manifest_path}")
         extra_metadata["context_manifest"] = str(context_manifest_path)
 
     providers = [
@@ -626,14 +672,6 @@ def main() -> int:
         save_path.parent.mkdir(parents=True, exist_ok=True)
         save_path.write_text(artifact, encoding="utf-8")
         print(f"Saved comparison artifact: {save_path}")
-
-        if context_manifest is not None and context_manifest_path is not None:
-            context_manifest_json = (
-                json.dumps(context_manifest.to_dict(), indent=2, sort_keys=True)
-                + "\n"
-            )
-            context_manifest_path.write_text(context_manifest_json, encoding="utf-8")
-            print(f"Saved context manifest: {context_manifest_path}")
 
     return 0
 

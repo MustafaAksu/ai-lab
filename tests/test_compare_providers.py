@@ -227,7 +227,9 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     )
 
     save_path = tmp_path / "COMP-0001-context-test.md"
-    manifest_path = tmp_path / "COMP-0001-context-test.context.json"
+    # The manifest is now retained under a content-addressed name, so its path
+    # is not predictable before the run: the digest is of the final bytes.
+    # PLAN-20260817-0001 scope item 2.
 
     monkeypatch.setattr(
         "sys.argv",
@@ -246,6 +248,20 @@ def test_main_context_comparison_saves_raw_prompt_and_sibling_context_manifest(
     )
 
     assert compare_providers.main() == 0
+
+    manifests = sorted(tmp_path.glob("COMP-0001-context-test.context.*.json"))
+    assert len(manifests) == 1, f"expected one retained manifest, found {manifests}"
+    manifest_path = manifests[0]
+
+    # The reference must authenticate the bytes: the digest in the filename is
+    # the SHA-256 of the file as written.
+    import hashlib
+
+    digest = manifest_path.name.split(".")[-2]
+    assert len(digest) == 64
+    assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == digest, (
+        "the content-addressed name does not match the retained bytes"
+    )
 
     artifact = save_path.read_text(encoding="utf-8")
     manifest_json = manifest_path.read_text(encoding="utf-8")
@@ -1259,3 +1275,73 @@ def test_main_latest_context_print_prompt_can_auto_include_l0_discovery(monkeypa
     assert captured[0]["auto_include_l0_discovery"] is True
     assert captured[0]["auto_include_l0_discovery_max_items"] == 2
     assert captured[0]["l0_store"] == tmp_path
+
+
+def test_manifest_is_retained_before_any_provider_call(tmp_path, monkeypatch):
+    """PLAN-20260817-0001 scope item 2, the ordering guarantee.
+
+    The manifest was previously written after the provider call and after the
+    comparison artifact, so a captured record could reference a manifest that
+    never became durable. This asserts the file exists, and matches its content
+    address, at the moment the first provider is asked anything.
+    """
+
+    import hashlib
+
+    from ai_lab.documentation.context_pack import (
+        ContextPackItem,
+        ContextPackManifest,
+    )
+    from scripts import compare_providers
+
+    seen: dict[str, object] = {}
+
+    class RecordingProvider:
+        def __init__(self, name):
+            self.name = name
+            self.model = f"{name.lower()}-model"
+
+        def ask(self, prompt):
+            found = sorted(tmp_path.glob("*.context.*.json"))
+            seen.setdefault("at_call_time", [p.name for p in found])
+            if found and "digest_matches" not in seen:
+                seen["digest_matches"] = (
+                    hashlib.sha256(found[0].read_bytes()).hexdigest()
+                    == found[0].name.split(".")[-2]
+                )
+            return f"{self.name} answer"
+
+    item = ContextPackItem(
+        item_type="abstraction", item_id="ABS-0003", reason="Latest abstraction.",
+        relevance_score=0.9, token_estimate=100,
+    )
+    manifest = ContextPackManifest(
+        task="Ordering check.", assembly_policy="latest_context", items=(item,),
+    )
+
+    monkeypatch.setattr(compare_providers, "OpenAIProvider",
+                        lambda: RecordingProvider("OpenAI"))
+    monkeypatch.setattr(compare_providers, "ClaudeProvider",
+                        lambda: RecordingProvider("Claude"))
+    monkeypatch.setattr(
+        compare_providers, "build_latest_context_pack_manifest",
+        lambda task, token_budget=None, model_target=None, scope=None,
+        require_admission=False, task_label=None, full_prompt_hash=None,
+        max_warning_admissions=None, **kwargs: manifest)
+    monkeypatch.setattr(compare_providers, "render_context_pack_markdown",
+                        lambda manifest: "# Generated Context Pack")
+
+    save_path = tmp_path / "COMP-0002-ordering.md"
+    monkeypatch.setattr("sys.argv", [
+        "compare_providers.py", "Ordering", "check.", "--latest-context",
+        "--require-admission", "--save", str(save_path), "--title", "Ordering",
+    ])
+    assert compare_providers.main() == 0
+
+    assert seen.get("at_call_time"), (
+        "no context manifest existed when the provider was called; a captured "
+        "record could reference a manifest that never became durable"
+    )
+    assert seen.get("digest_matches") is True, (
+        "the manifest present at call time did not match its content address"
+    )
