@@ -393,7 +393,9 @@ class ContextPackManifest:
         return data
 
 
-def manifest_from_dict(data: Mapping[str, object]) -> ContextPackManifest:
+def manifest_from_dict(
+    data: Mapping[str, object], *, reject_unknown: bool = False
+) -> ContextPackManifest:
     """Reconstruct and validate a retained manifest.
 
     The canonical deserialisation path. A reader that JSON-parses a manifest and
@@ -402,11 +404,16 @@ def manifest_from_dict(data: Mapping[str, object]) -> ContextPackManifest:
     format, and the manifest_id consistency check ContextPackManifest performs on
     construction.
 
-    ai_lab/providers/ancestry.py must use this rather than raw JSON, because an
-    ancestry edge reported from a manifest the writer would have rejected is an
-    edge the retained evidence does not establish. That was demonstrated: a
-    correctly bound manifest with assembly_policy set to an invalid value
-    produced coverage complete.
+    reject_unknown makes the reconstruction fail closed on any field this schema
+    does not define. ai_lab/providers/ancestry.py passes True: an ancestry
+    evaluator that silently discards a field it does not understand can prove an
+    edge from a manifest whose semantics it did not read, and admission_policy
+    is rendered into the context pack, so a dropped field is not necessarily
+    inert. Other callers keep the permissive default.
+
+    total_token_estimate is validated rather than discarded. It is rendered into
+    the pack as "Total token estimate", so a retained manifest whose stated total
+    disagrees with its own items is not what the writer would have serialised.
 
     Raises ContextPackError on any structural violation.
     """
@@ -414,17 +421,36 @@ def manifest_from_dict(data: Mapping[str, object]) -> ContextPackManifest:
     if not isinstance(data, Mapping):
         raise ContextPackError("manifest must be a mapping")
 
+    known = {
+        "task", "assembly_policy", "manifest_id", "token_budget", "created_at",
+        "model_target", "pipeline_run_id", "task_label", "full_prompt_hash",
+        "admission_summary", "admission_policy", "diagnostics",
+    }
+    derived = {"items", "exclusions", "total_token_estimate"}
+    if reject_unknown:
+        unknown = set(data) - known - derived
+        if unknown:
+            raise ContextPackError(
+                f"unsupported manifest field(s) {sorted(unknown)}: this evaluator "
+                "cannot establish what they mean for the rendered pack, and will "
+                "not prove an edge from a manifest it does not fully understand"
+            )
+
     items = tuple(
         ContextPackItem(**dict(raw)) for raw in (data.get("items") or ())
     )
     exclusions = tuple(
         ContextPackExclusion(**dict(raw)) for raw in (data.get("exclusions") or ())
     )
-    known = {
-        "task", "assembly_policy", "manifest_id", "token_budget", "created_at",
-        "model_target", "pipeline_run_id", "task_label", "full_prompt_hash",
-        "admission_summary", "total_token_estimate",
-    }
+
+    stated_total = data.get("total_token_estimate")
+    if stated_total is not None:
+        derived_total = sum(i.token_estimate for i in items)
+        if stated_total != derived_total:
+            raise ContextPackError(
+                f"total_token_estimate {stated_total} does not match the sum of "
+                f"item token estimates {derived_total}"
+            )
+
     kwargs = {k: v for k, v in data.items() if k in known}
-    kwargs.pop("total_token_estimate", None)  # derived, not an input
     return ContextPackManifest(items=items, exclusions=exclusions, **kwargs)

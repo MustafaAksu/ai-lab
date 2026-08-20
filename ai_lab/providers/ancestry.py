@@ -37,10 +37,21 @@ WHAT THIS DOES NOT ESTABLISH
 THE COMPLETENESS CONDITION (scope item 4)
 
 An edge exists only where the referenced manifest is durably retained, parses,
-structurally validates as a ContextPackManifest through the same rules the
-writer applied, validates as the manifest used to render the captured prompt,
-AND the item's retained source_binding_digest still matches what its source
-renders to now.
+is authenticated by a content-addressed context_manifest_reference, structurally
+validates as a ContextPackManifest through the same rules the writer applied and
+with unknown fields rejected, validates as the manifest used to render the
+captured prompt, AND the item's retained source_binding_digest still matches what
+its source renders to now.
+
+The content-addressed reference is the link that makes the rest mean anything.
+Per-item bindings prove that a manifest item is internally consistent with its
+source; they do not prove that this manifest is the one whose selection produced
+the prompt. The reviewing executor demonstrated the difference: substituting a
+source_path AND recomputing its binding, leaving manifest_id and full_prompt_hash
+untouched, reached coverage complete with the substituted path reported as an
+established ancestor. Binding the reference to the manifest bytes closes it,
+because any edit changes those bytes and the retained reference no longer
+authenticates them.
 
 The last part exists because the first three do not suffice, which was
 established by falsification rather than argued. Comparing the manifest's
@@ -77,6 +88,7 @@ reason.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -142,6 +154,27 @@ class AncestryResult:
         """
 
         return self.coverage != COVERAGE_UNAVAILABLE
+
+
+def _reference_digest(reference: str) -> str | None:
+    """Extract the manifest-content digest a reference commits to.
+
+    A content-addressed reference embeds the SHA-256 of the manifest bytes:
+
+        docs/comparisons/COMP-0042.context.<64 hex>.json
+
+    Returns None for a reference that names a file without authenticating it,
+    which every reference retained before this scheme existed does. Such a
+    reference cannot support an established edge, because a manifest can be
+    edited under it without detection.
+    """
+
+    stem = reference.rsplit("/", 1)[-1]
+    parts = stem.split(".")
+    for part in parts:
+        if len(part) == 64 and all(c in "0123456789abcdef" for c in part.lower()):
+            return part.lower()
+    return None
 
 
 def _recompute_binding(item: Mapping[str, Any], root: Path) -> str | None:
@@ -228,8 +261,27 @@ def ancestry_edges(
         manifest_from_dict,
     )
 
+    # The reference must authenticate the manifest BYTES, not merely name a
+    # file. Otherwise substituting a source_path and recomputing its binding
+    # produces a manifest that is internally consistent and is not the one whose
+    # selection produced the prompt. That mutation was demonstrated to reach
+    # coverage complete before this check existed.
+    expected_digest = _reference_digest(manifest_ref)
+    if expected_digest is None:
+        return AncestryResult(
+            coverage=COVERAGE_UNAVAILABLE,
+            reason="manifest_reference_is_not_content_addressed: the reference "
+                   "names a file but does not authenticate its contents",
+        )
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != expected_digest:
+        return AncestryResult(
+            coverage=COVERAGE_UNAVAILABLE,
+            reason="referenced_manifest_contents_do_not_match_the_reference_digest",
+        )
+
     try:
-        manifest_from_dict(raw)
+        manifest_from_dict(raw, reject_unknown=True)
     except ContextPackError as exc:
         return AncestryResult(
             coverage=COVERAGE_UNAVAILABLE,

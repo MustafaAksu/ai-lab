@@ -141,12 +141,12 @@ def test_positive_edge(tmp_path):
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(tmp_path, manifest, rel)
     r = ancestry_edges(invocation=rec, repo_root=REPO)
-    # The 25 retained manifests predate source_binding_digest, so no edge from
-    # them can be established. Visible as unbound, absent from edges.
-    assert r.coverage == COVERAGE_PARTIAL
+    # The 25 retained manifests predate both source_binding_digest and the
+    # content-addressed reference scheme, so no edge from them can be
+    # established and the evaluation stops at the reference.
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "not_content_addressed" in r.reason
     assert r.edges == ()
-    assert r.unbound_sources
-    assert r.manifest_id == manifest.get("manifest_id")
 
 
 # --- criterion 2: the sibling negative, protecting C13 -------------------
@@ -184,9 +184,7 @@ def test_manifest_item_absent_is_not_an_ancestor(tmp_path):
     src, manifest = _a_manifest_with_hash()
     trimmed = copy.deepcopy(manifest)
     dropped = trimmed["items"].pop()["source_path"]
-    p = tmp_path / "m.context.json"
-    p.write_text(json.dumps(trimmed))
-    rec = _record_referencing(tmp_path, trimmed, "m.context.json")
+    rec = _record_referencing(tmp_path, trimmed, _write_content_addressed(tmp_path, trimmed))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert dropped not in r.edges
     assert (REPO / dropped).exists(), "the dropped artifact does exist in the repository"
@@ -229,7 +227,10 @@ def test_prompt_mismatch_yields_no_valid_edge(tmp_path):
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(tmp_path, manifest, rel,
                               prompt_hash="sha256:" + "1" * 64)
-    r = ancestry_edges(invocation=rec, repo_root=REPO)
+    ref = _write_content_addressed(tmp_path, manifest)
+    rec = _record_referencing(tmp_path, manifest, ref,
+                              prompt_hash="sha256:" + "1" * 64)
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_UNAVAILABLE
     assert r.reason == "manifest_prompt_hash_does_not_identify_the_captured_prompt"
     assert r.edges == ()
@@ -240,9 +241,8 @@ def test_manifest_without_a_prompt_hash_yields_unresolved(tmp_path):
 
     src, manifest = _a_manifest_with_hash()
     stripped = {k: v for k, v in manifest.items() if k != "full_prompt_hash"}
-    p = tmp_path / "m.context.json"
-    p.write_text(json.dumps(stripped))
-    rec = _record_referencing(tmp_path, None, "m.context.json",
+    rec = _record_referencing(tmp_path, None,
+                              _write_content_addressed(tmp_path, stripped),
                               prompt_hash="sha256:" + "2" * 64)
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_UNAVAILABLE
@@ -257,9 +257,7 @@ def test_missing_source_path_yields_partial_coverage(tmp_path):
     src, manifest = _a_manifest_with_hash()
     altered = copy.deepcopy(manifest)
     altered["items"][0]["source_path"] = "docs/abstractions/GONE-FOREVER.md"
-    p = tmp_path / "m.context.json"
-    p.write_text(json.dumps(altered))
-    rec = _record_referencing(tmp_path, altered, "m.context.json")
+    rec = _record_referencing(tmp_path, altered, _write_content_addressed(tmp_path, altered))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_PARTIAL
     gone = "docs/abstractions/GONE-FOREVER.md"
@@ -334,7 +332,7 @@ def test_retained_manifests_cannot_yield_complete():
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(None, manifest, rel)
     r = ancestry_edges(invocation=rec, repo_root=REPO)
-    assert r.coverage == COVERAGE_PARTIAL
+    assert r.coverage == COVERAGE_UNAVAILABLE
     assert r.edges == ()
 
 
@@ -362,8 +360,23 @@ def _bound_manifest(tmp_path, manifest, *, mutate=None):
         os.chdir(cwd)
     if mutate:
         mutate(tmp_path, bound)
-    (tmp_path / "m.context.json").write_text(json.dumps(bound))
     return bound
+
+
+def _write_content_addressed(tmp_path, manifest):
+    """Write a manifest under a content-addressed reference and return it.
+
+    The reference embeds the SHA-256 of the bytes written, which is what
+    authenticates the manifest to the InvocationRecord.
+    """
+
+    import hashlib
+
+    payload = json.dumps(manifest).encode("utf-8")
+    digest = hashlib.sha256(payload).hexdigest()
+    ref = f"m.context.{digest}.json"
+    (tmp_path / ref).write_bytes(payload)
+    return ref
 
 
 def test_binding_positive_case_reaches_complete(tmp_path):
@@ -371,7 +384,7 @@ def test_binding_positive_case_reaches_complete(tmp_path):
 
     _, manifest = _a_manifest_with_hash()
     bound = _bound_manifest(tmp_path, manifest)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_COMPLETE
     assert len(r.edges) == len(bound["items"])
@@ -391,7 +404,7 @@ def test_binding_rejects_substituted_source_path(tmp_path):
         m["items"][0]["source_path"] = "OTHER.md"
 
     bound = _bound_manifest(tmp_path, manifest, mutate=swap)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert "OTHER.md" not in r.edges
     assert "OTHER.md" in r.unbound_sources
@@ -407,7 +420,7 @@ def test_binding_rejects_changed_source_content(tmp_path):
         (root / m["items"][0]["source_path"]).write_text("something else entirely")
 
     bound = _bound_manifest(tmp_path, manifest, mutate=edit)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert bound["items"][0]["source_path"] not in r.edges
     assert bound["items"][0]["source_path"] in r.unbound_sources
@@ -424,7 +437,7 @@ def test_binding_rejects_identical_content_at_a_different_path(tmp_path):
         m["items"][0]["source_path"] = "TWIN.md"
 
     bound = _bound_manifest(tmp_path, manifest, mutate=repoint)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert "TWIN.md" not in r.edges, (
         "identical rendered text at a different path preserved the binding; the "
@@ -441,7 +454,7 @@ def test_binding_legacy_manifest_is_partial_not_complete(tmp_path):
         m["items"][0].pop("source_binding_digest", None)
 
     bound = _bound_manifest(tmp_path, manifest, mutate=strip)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_PARTIAL
     assert bound["items"][0]["source_path"] in r.unbound_sources
@@ -457,7 +470,7 @@ def test_binding_mixed_one_bound_one_unbound(tmp_path):
         m["items"][0].pop("source_binding_digest", None)
 
     bound = _bound_manifest(tmp_path, manifest, mutate=strip_one)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert bound["items"][0]["source_path"] in r.unbound_sources
     assert bound["items"][1]["source_path"] in r.edges
@@ -497,7 +510,7 @@ def test_structurally_invalid_manifest_never_reaches_complete(tmp_path):
         m["assembly_policy"] = "NOT_A_VALID_POLICY"
 
     bound = _bound_manifest(tmp_path, manifest, mutate=invalidate)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_UNAVAILABLE
     assert "does_not_validate" in r.reason
@@ -514,7 +527,7 @@ def test_inconsistent_manifest_id_is_rejected(tmp_path):
         m["manifest_id"] = "0" * 16
 
     bound = _bound_manifest(tmp_path, manifest, mutate=tamper)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
     assert r.coverage == COVERAGE_UNAVAILABLE
     assert "does_not_validate" in r.reason
@@ -543,7 +556,7 @@ def test_evaluation_is_independent_of_process_cwd(tmp_path, monkeypatch):
 
     _, manifest = _a_manifest_with_hash()
     bound = _bound_manifest(tmp_path, manifest)
-    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    rec = _record_referencing(tmp_path, bound, _write_content_addressed(tmp_path, bound))
 
     elsewhere = tmp_path / "elsewhere"
     elsewhere.mkdir()
@@ -557,3 +570,87 @@ def test_evaluation_is_independent_of_process_cwd(tmp_path, monkeypatch):
     assert from_repo.edges == from_elsewhere.edges
     assert from_repo.unbound_sources == from_elsewhere.unbound_sources == ()
     assert os.getcwd() == str(elsewhere), "the evaluator changed the working directory"
+
+
+# --- manifest-to-record identity -----------------------------------------
+
+def test_substituted_path_with_recomputed_binding_is_rejected(tmp_path):
+    """The mutation the per-item binding alone did not catch.
+
+    The existing suite tested "change the path, KEEP the binding" and rejected
+    it. Nobody tested "change the path, RECOMPUTE the binding", and that reached
+    coverage complete: per-item bindings prove an item is internally consistent
+    with its source, not that this manifest is the one whose selection produced
+    the prompt.
+
+    The content-addressed reference closes it. Recomputing the binding changes
+    the manifest bytes, so the digest the InvocationRecord's reference commits
+    to no longer authenticates them.
+    """
+
+    _, manifest = _a_manifest_with_hash()
+    honest = _bound_manifest(tmp_path, manifest)
+    ref = _write_content_addressed(tmp_path, honest)
+    rec = _record_referencing(tmp_path, honest, ref)
+    assert ancestry_edges(invocation=rec, repo_root=tmp_path).coverage \
+        == COVERAGE_COMPLETE, "the honest baseline must reach complete"
+
+    # substitute a source AND recompute its binding, leaving the record alone
+    tampered = copy.deepcopy(honest)
+    (tmp_path / "SWAPPED.md").write_text("content of SWAPPED.md")
+    tampered["items"][0]["source_path"] = "SWAPPED.md"
+    tampered["items"][0]["source_binding_digest"] = compute_source_binding_digest(
+        ContextPackItem(item_type=tampered["items"][0]["item_type"],
+                        item_id=tampered["items"][0]["item_id"], reason="r",
+                        relevance_score=0.5, source_path="SWAPPED.md"),
+        repo_root=tmp_path)
+    (tmp_path / ref).write_text(json.dumps(tampered))  # same reference, new bytes
+
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "do_not_match_the_reference_digest" in r.reason
+    assert "SWAPPED.md" not in r.edges
+
+
+def test_reference_without_a_content_digest_is_rejected(tmp_path):
+    """A reference that names a file without authenticating its contents."""
+
+    _, manifest = _a_manifest_with_hash()
+    bound = _bound_manifest(tmp_path, manifest)
+    (tmp_path / "plain.context.json").write_text(json.dumps(bound))
+    rec = _record_referencing(tmp_path, bound, "plain.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "not_content_addressed" in r.reason
+
+
+def test_unknown_manifest_field_fails_closed(tmp_path):
+    """An evaluator must not prove an edge from a manifest it cannot fully read."""
+
+    from ai_lab.documentation.context_pack import ContextPackError, manifest_from_dict
+
+    _, manifest = _a_manifest_with_hash()
+    bound = _bound_manifest(tmp_path, manifest)
+    bound["some_future_field"] = {"affects": "prompt semantics"}
+    ref = _write_content_addressed(tmp_path, bound)
+    rec = _record_referencing(tmp_path, bound, ref)
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "does_not_validate" in r.reason
+    # permissive mode still accepts it, for callers that are not proving edges
+    manifest_from_dict(bound)
+    with pytest.raises(ContextPackError, match="unsupported manifest field"):
+        manifest_from_dict(bound, reject_unknown=True)
+
+
+def test_inconsistent_total_token_estimate_is_rejected(tmp_path):
+    """Rendered into the pack as "Total token estimate", so a mismatch means the
+    retained manifest is not what the writer would have serialised."""
+
+    from ai_lab.documentation.context_pack import ContextPackError, manifest_from_dict
+
+    _, manifest = _a_manifest_with_hash()
+    bound = _bound_manifest(tmp_path, manifest)
+    bound["total_token_estimate"] = 999999
+    with pytest.raises(ContextPackError, match="does not match the sum"):
+        manifest_from_dict(bound)
