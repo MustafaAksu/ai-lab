@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from hashlib import sha256
+
 from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManifest
 from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 
@@ -77,6 +79,38 @@ def _read_context_item_source(item: ContextPackItem) -> str:
         return _read_l0_summary_source_path(item.source_path)
 
     return _read_source_path(item.source_path)
+
+
+# Text the renderer substitutes when a source cannot be read or is invalid. A
+# placeholder is not the artifact, so binding one would assert that the
+# artifact's contents reached the executor when only this did.
+_PLACEHOLDER_PREFIXES = ("[missing source_path]", "[source file not found:",
+                         "[source file unreadable:", "[invalid l0_summary source")
+
+
+def compute_source_binding_digest(item: ContextPackItem) -> str | None:
+    """Bind an item's source path to the exact text rendered from it.
+
+    Returns None when no binding can honestly be produced: no source_path, or a
+    source that renders to a placeholder rather than to its own contents.
+
+    Deliberately routed through _read_context_item_source, the renderer's single
+    dispatch, rather than re-reading the file. A second approximation of what
+    gets inserted would create exactly the class of false check this binding
+    exists to remove: _read_l0_summary_source_path parses and reformats an
+    l0_summary source, so the file bytes are not what reaches the executor.
+
+    The path participates in the digest so that pointing an item at a different
+    artifact with identical rendered text does not preserve the binding.
+    """
+
+    if not item.source_path:
+        return None
+    rendered = _read_context_item_source(item)
+    if rendered.startswith(_PLACEHOLDER_PREFIXES):
+        return None
+    payload = item.source_path.encode("utf-8") + b"\0" + rendered.encode("utf-8")
+    return sha256(payload).hexdigest()
 
 
 def render_context_pack_markdown(manifest: ContextPackManifest) -> str:

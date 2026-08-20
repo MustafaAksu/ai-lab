@@ -34,31 +34,34 @@ WHAT THIS DOES NOT ESTABLISH
   coverage other than COMPLETE means nothing was evaluated rather than nothing
   was found.
 
-THE COMPLETENESS CONDITION (scope item 4) IS NOT YET SATISFIED
+THE COMPLETENESS CONDITION (scope item 4)
 
-An edge should exist only where the referenced manifest is durably retained,
-parses, and validates as the manifest used to render the captured prompt. The
-third part is NOT achieved by the check implemented here, and that is recorded
-rather than concealed.
+An edge exists only where the referenced manifest is durably retained, parses,
+validates as the manifest used to render the captured prompt, AND the item's
+retained source_binding_digest still matches what its source renders to now.
 
-Comparing the manifest's full_prompt_hash against the record's
-rendered_prompt_digest establishes only that two stored hash fields agree. It
-does not bind the manifest's current items or source_path values to the prompt
-that was rendered. The reviewing executor falsified this against the repository:
-substituting a real manifest's first source_path for README.md, leaving
-manifest_id and full_prompt_hash untouched, and supplying the matching record
-digest produced coverage complete with README.md reported as an established
-ancestor. The packaging executor reproduced it.
+The last part exists because the first three do not suffice, which was
+established by falsification rather than argued. Comparing the manifest's
+full_prompt_hash against the record's rendered_prompt_digest proves only that
+two stored hash fields agree. The reviewing executor substituted a retained
+manifest's first source_path for README.md, left manifest_id and
+full_prompt_hash untouched, supplied the matching record digest, and obtained
+coverage complete with README.md reported as an established ancestor; the
+packaging executor reproduced it. compute_manifest_id does not close the hole
+either, since it hashes task, assembly_policy and item_ids and neither
+source_path nor source content.
 
-manifest_id does not close the hole either: compute_manifest_id hashes
-task, assembly_policy and item_ids, and neither source_path nor source content.
+The binding is per item rather than collective, so that one unbindable source
+does not invalidate the edges around it, which success criterion 6 requires. It
+covers the canonical source path together with the exact text the renderer
+produces for that item, not the file bytes: _read_l0_summary_source_path parses
+and reformats an l0_summary source, so bytes are not what reached the executor,
+and including the path prevents substituting a different artifact with identical
+rendered text.
 
-Until a retained binding exists between source selection, the content actually
-rendered, and the captured prompt, NO result from this module reports COMPLETE
-coverage. The ceiling is PARTIAL, and `binding` records why. Candidate bindings
-include a per-source content digest in the manifest, a rendered-context digest,
-or a content-addressed manifest; choosing one is a design decision this slice
-does not make.
+An item whose binding is absent, unrecomputable, or mismatched is NOT reported
+in `edges`. It stays visible in `unbound_sources` or `unreconstructable_sources`
+so potential ancestry is not under-reported, and coverage falls to PARTIAL.
 
 Those two are comparable, established by evidence rather than assumed: both are
 SHA-256 over the UTF-8 encoding of the same `provider_prompt` variable, computed
@@ -112,6 +115,7 @@ class AncestryResult:
     reason: str | None = None
     manifest_id: str | None = None
     unreconstructable_sources: tuple[str, ...] = ()
+    unbound_sources: tuple[str, ...] = ()
     binding: str | None = None
 
     @property
@@ -136,6 +140,43 @@ class AncestryResult:
         """
 
         return self.coverage != COVERAGE_UNAVAILABLE
+
+
+def _recompute_binding(item: Mapping[str, Any], root: Path) -> str | None:
+    """Recompute an item's binding through the renderer's own dispatch.
+
+    Returns None when no binding can be produced, which is treated as a
+    mismatch by the caller rather than as agreement.
+    """
+
+    from ai_lab.documentation.context_pack import ContextPackItem
+    from ai_lab.documentation.context_pack_renderer import (
+        compute_source_binding_digest,
+    )
+
+    src = item.get("source_path")
+    if not src:
+        return None
+    cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(root)
+        return compute_source_binding_digest(
+            ContextPackItem(
+                item_type=item.get("item_type", "abstraction"),
+                item_id=item.get("item_id", "x"),
+                reason=item.get("reason", "recomputed for binding validation"),
+                relevance_score=float(item.get("relevance_score", 0.5)),
+                source_path=src,
+            )
+        )
+    except Exception:  # noqa: BLE001 - any failure is a non-binding
+        return None
+    finally:
+        import os
+
+        os.chdir(cwd)
 
 
 def ancestry_edges(
@@ -207,6 +248,7 @@ def ancestry_edges(
     items = manifest.get("items") or []
     edges: list[str] = []
     missing: list[str] = []
+    unbound: list[str] = []
     for item in items:
         src = item.get("source_path")
         if not src:
@@ -221,22 +263,36 @@ def ancestry_edges(
             # under-reported, and stays OUT of edges so it is not over-reported.
             missing.append(src)
             continue
+
+        claimed_binding = item.get("source_binding_digest")
+        if not claimed_binding:
+            # A manifest retained before this field existed, or an item the
+            # builder could not bind. Visible, not established.
+            unbound.append(src)
+            continue
+        recomputed = _recompute_binding(item, root)
+        if recomputed is None or recomputed != claimed_binding.strip().lower():
+            unbound.append(src)
+            continue
         edges.append(src)
 
-    # COMPLETE is unreachable until a source-to-prompt binding exists. Capping
-    # here rather than at the call site means no caller can obtain COMPLETE from
-    # this module while the binding hole is open.
-    reasons = ["source_selection_not_bound_to_the_rendered_prompt"]
+    reasons: list[str] = []
     if missing:
-        reasons.append(
-            f"{len(missing)} manifest item(s) name a source that cannot be "
-            "reconstructed")
+        reasons.append(f"{len(missing)} item(s) name a source that cannot be "
+                       "reconstructed")
+    if unbound:
+        reasons.append(f"{len(unbound)} item(s) carry no verifiable source "
+                       "binding")
+    complete = not missing and not unbound and bool(edges)
     return AncestryResult(
         edges=tuple(edges),
-        coverage=COVERAGE_PARTIAL,
-        reason="; ".join(reasons) + "; independence is not inferred",
+        coverage=COVERAGE_COMPLETE if complete else COVERAGE_PARTIAL,
+        reason=None if complete else "; ".join(reasons) +
+               "; independence is not inferred",
         manifest_id=manifest_id,
         unreconstructable_sources=tuple(missing),
-        binding="unbound: manifest source selection is not tied to the captured "
-                "prompt by any retained digest; see the module docstring",
+        unbound_sources=tuple(unbound),
+        binding="bound: every reported edge carries a source_binding_digest that "
+                "recomputes to its retained value" if complete else
+                "partial: some items are unbound or unreconstructable",
     )

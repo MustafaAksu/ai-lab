@@ -25,6 +25,8 @@ import pathlib
 
 import pytest
 
+from ai_lab.documentation.context_pack import ContextPackItem
+from ai_lab.documentation.context_pack_renderer import compute_source_binding_digest
 from ai_lab.documentation.prompt_context import prompt_sha256
 from ai_lab.providers.ancestry import (
     COVERAGE_COMPLETE,
@@ -139,15 +141,12 @@ def test_positive_edge(tmp_path):
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(tmp_path, manifest, rel)
     r = ancestry_edges(invocation=rec, repo_root=REPO)
-    assert r.edges, "no edge established from a manifest with items"
-    assert r.manifest_id == manifest.get("manifest_id")
-    for item in manifest["items"]:
-        if (REPO / item["source_path"]).exists():
-            assert item["source_path"] in r.edges
-    # COMPLETE is unreachable while source selection is unbound to the prompt.
+    # The 25 retained manifests predate source_binding_digest, so no edge from
+    # them can be established. Visible as unbound, absent from edges.
     assert r.coverage == COVERAGE_PARTIAL
-    assert r.binding is not None and r.binding.startswith("unbound")
-    assert "not_bound_to_the_rendered_prompt" in r.reason
+    assert r.edges == ()
+    assert r.unbound_sources
+    assert r.manifest_id == manifest.get("manifest_id")
 
 
 # --- criterion 2: the sibling negative, protecting C13 -------------------
@@ -317,25 +316,167 @@ def test_substituted_source_path_is_not_reported_as_complete(tmp_path):
     rec = _record_referencing(tmp_path, tampered, "m.context.json")
 
     r = ancestry_edges(invocation=rec, repo_root=tmp_path)
-    assert "SUBSTITUTED.md" in r.edges, (
-        "the substitution is still undetected, which is the recorded hole"
+    assert "SUBSTITUTED.md" not in r.edges, (
+        "a substituted source path was reported as an established ancestry edge"
     )
-    assert r.coverage != COVERAGE_COMPLETE, (
-        "COMPLETE coverage was reported for an unbound source selection"
-    )
-    assert r.binding is not None and r.binding.startswith("unbound")
+    assert r.coverage != COVERAGE_COMPLETE
     assert r.establishes_independence is False
 
 
-def test_complete_coverage_is_currently_unreachable():
-    """No input may yield COMPLETE while the binding hole is open.
+def test_retained_manifests_cannot_yield_complete():
+    """Every manifest retained before source_binding_digest existed.
 
-    If this fails, either a binding was implemented and the module docstring,
-    PLAN-20260817-0001 scope item 4, and this test must all be updated, or
-    COMPLETE was reintroduced without one.
+    Legacy manifests yield partial, never complete, and their items are not
+    reported as established.
     """
 
     src, manifest = _a_manifest_with_hash()
     rel = str(src.relative_to(REPO))
     rec = _record_referencing(None, manifest, rel)
-    assert ancestry_edges(invocation=rec, repo_root=REPO).coverage != COVERAGE_COMPLETE
+    r = ancestry_edges(invocation=rec, repo_root=REPO)
+    assert r.coverage == COVERAGE_PARTIAL
+    assert r.edges == ()
+
+
+# --- the binding falsification set ---------------------------------------
+
+def _bound_manifest(tmp_path, manifest, *, mutate=None):
+    """Write a manifest whose every item carries a correct binding."""
+
+    import os
+
+    bound = copy.deepcopy(manifest)
+    for it in bound["items"]:
+        p = tmp_path / it["source_path"]
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("content of " + it["source_path"])
+    cwd = os.getcwd()
+    os.chdir(tmp_path)
+    try:
+        for it in bound["items"]:
+            it["source_binding_digest"] = compute_source_binding_digest(
+                ContextPackItem(item_type=it["item_type"], item_id=it["item_id"],
+                                reason="r", relevance_score=0.5,
+                                source_path=it["source_path"]))
+    finally:
+        os.chdir(cwd)
+    if mutate:
+        mutate(tmp_path, bound)
+    (tmp_path / "m.context.json").write_text(json.dumps(bound))
+    return bound
+
+
+def test_binding_positive_case_reaches_complete(tmp_path):
+    """The first input for which COMPLETE is reachable."""
+
+    _, manifest = _a_manifest_with_hash()
+    bound = _bound_manifest(tmp_path, manifest)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_COMPLETE
+    assert len(r.edges) == len(bound["items"])
+    assert r.unbound_sources == ()
+    assert r.binding.startswith("bound")
+    assert r.establishes_independence is False
+
+
+def test_binding_rejects_substituted_source_path(tmp_path):
+    """Changing source_path while leaving the binding untouched. The falsification
+    that found the hole."""
+
+    _, manifest = _a_manifest_with_hash()
+
+    def swap(root, m):
+        (root / "OTHER.md").write_text("content of " + m["items"][0]["source_path"])
+        m["items"][0]["source_path"] = "OTHER.md"
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=swap)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert "OTHER.md" not in r.edges
+    assert "OTHER.md" in r.unbound_sources
+    assert r.coverage == COVERAGE_PARTIAL
+
+
+def test_binding_rejects_changed_source_content(tmp_path):
+    """Changing what the source renders to, leaving the binding untouched."""
+
+    _, manifest = _a_manifest_with_hash()
+
+    def edit(root, m):
+        (root / m["items"][0]["source_path"]).write_text("something else entirely")
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=edit)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert bound["items"][0]["source_path"] not in r.edges
+    assert bound["items"][0]["source_path"] in r.unbound_sources
+
+
+def test_binding_rejects_identical_content_at_a_different_path(tmp_path):
+    """The path participates in the digest, so identical text elsewhere fails."""
+
+    _, manifest = _a_manifest_with_hash()
+
+    def repoint(root, m):
+        original = m["items"][0]["source_path"]
+        (root / "TWIN.md").write_text("content of " + original)
+        m["items"][0]["source_path"] = "TWIN.md"
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=repoint)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert "TWIN.md" not in r.edges, (
+        "identical rendered text at a different path preserved the binding; the "
+        "path is not participating in the digest"
+    )
+
+
+def test_binding_legacy_manifest_is_partial_not_complete(tmp_path):
+    """An item with no binding field at all."""
+
+    _, manifest = _a_manifest_with_hash()
+
+    def strip(root, m):
+        m["items"][0].pop("source_binding_digest", None)
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=strip)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_PARTIAL
+    assert bound["items"][0]["source_path"] in r.unbound_sources
+
+
+def test_binding_mixed_one_bound_one_unbound(tmp_path):
+    """A valid edge is retained while an unbound sibling makes coverage partial."""
+
+    _, manifest = _a_manifest_with_hash()
+    assert len(manifest["items"]) >= 2, "need a multi-item manifest"
+
+    def strip_one(root, m):
+        m["items"][0].pop("source_binding_digest", None)
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=strip_one)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert bound["items"][0]["source_path"] in r.unbound_sources
+    assert bound["items"][1]["source_path"] in r.edges
+    assert r.coverage == COVERAGE_PARTIAL
+
+
+def test_binding_is_not_produced_for_a_placeholder(tmp_path):
+    """A missing source renders to a placeholder, which must not be bound."""
+
+    item = ContextPackItem(item_type="abstraction", item_id="GONE", reason="r",
+                           relevance_score=0.5, source_path="docs/GONE-FOREVER.md")
+    assert compute_source_binding_digest(item) is None
+
+
+def test_binding_digest_requires_a_source_path():
+    """The field is meaningless without the path it binds."""
+
+    from ai_lab.documentation.context_pack import ContextPackError
+
+    with pytest.raises(ContextPackError, match="requires a source_path"):
+        ContextPackItem(item_type="abstraction", item_id="X", reason="r",
+                        relevance_score=0.5, source_binding_digest="a" * 64)

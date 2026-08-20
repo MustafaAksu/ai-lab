@@ -155,6 +155,21 @@ class ContextPackItem:
     admission_decision: str | None = None
     freshness_state: str | None = None
     warrant_state: str | None = None
+    source_binding_digest: str | None = None
+    """SHA-256 over the canonical source_path and the exact source text rendered
+    into the context pack, joined by a NUL byte.
+
+    Optional so that manifests retained before this field existed remain valid;
+    an item without it cannot support an established ancestry edge, which
+    ai_lab/providers/ancestry.py enforces rather than this class.
+
+    It binds two things the ancestry edge depends on: WHICH artifact was
+    selected, and WHAT was actually rendered from it. A raw file-content digest
+    would bind neither correctly: the renderer does not always inject file
+    bytes, since _read_l0_summary_source_path parses and reformats an
+    l0_summary source, and a content-only digest would let one source path be
+    substituted for another artifact with identical rendered text.
+    """
 
     def __post_init__(self) -> None:
         if self.item_type not in VALID_CONTEXT_ITEM_TYPES:
@@ -187,6 +202,15 @@ class ContextPackItem:
         if self.warrant_state and self.warrant_state not in VALID_WARRANT_STATES:
             raise ContextPackError("Unsupported warrant_state.")
 
+        if self.source_binding_digest is not None:
+            _validate_sha256_hex(self.source_binding_digest, "source_binding_digest")
+            if not self.source_path:
+                raise ContextPackError(
+                    "source_binding_digest requires a source_path: the digest binds "
+                    "the path together with the rendered text, and is meaningless "
+                    "without one."
+                )
+
     def to_dict(self) -> dict[str, object]:
         """Serialize the context item into a JSON-compatible dictionary."""
         data: dict[str, object] = {
@@ -214,6 +238,9 @@ class ContextPackItem:
 
         if self.warrant_state:
             data["warrant_state"] = self.warrant_state
+
+        if self.source_binding_digest:
+            data["source_binding_digest"] = self.source_binding_digest
 
         return data
 
