@@ -1,0 +1,28 @@
+{
+  "author": "operator",
+  "conditions": [
+    "The completion is recorded against the plan as executed, including the scope-item-2 clarification and the scope-item-4 adjudication in the plan's notes. Neither scope line was rewritten in place.",
+    "The provenance boundary is recorded in CAP-0001's limits and in the plan notes: manifests retained before content-addressed references cannot establish Section 4.19 edges, and evaluate as unavailable rather than partial.",
+    "CAP-0001 repins only the three files this slice changed and verified. Eight pins stale before the slice began are left stale and recorded as a limit, per the admission warrant's condition 10.",
+    "No claim of C3 or C10 enforcement follows from this completion. C3 remains unevaluable for any real claim."
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "decision": "admit",
+  "evidence_ids": [
+    "PLAN-20260817-0001",
+    "WARR-20260817-0001",
+    "VERIFY-20260817-0001",
+    "CAP-0001",
+    "GAP-0008",
+    "DECISION-20260817-0001"
+  ],
+  "reason": "All six scope items are implemented and verified at 782 passing tests, up from 743 at admission. The repository holds its first retained artifact-level evidence-ancestry edges: two invocations in COMP-0140 return coverage complete over a manifest written content-addressed before either provider call. The ten conditions of WARR-20260817-0001 are met. The edge-class fence held: no second edge class, no traversal, no output digesting, no new InvocationRecord field, no change to compute_manifest_id. The unpopulated-reference case returns unavailable with an enumerated reason on all 210 pre-slice records rather than an empty ancestor set. The sibling case returns no edge between the 105 same-prompt pairs. Coverage is reported alongside edges throughout. Hash comparability was settled by evidence and the two digests are normalised rather than compared raw. Durability is tested by a recording provider that checks, at call time, that the manifest exists and matches its content address. No schema field was repurposed. Every guard is mutation-proven, and one deliberate run produced the first instance. The completeness condition took three attempts, and every failure was found by the party that did not write it. That is recorded in VERIFY-20260817-0001 rather than smoothed over, because it is the strongest available evidence about what the two-party arrangement buys: the packaging executor twice believed the condition was satisfied, and twice it was not.",
+  "repo_commit": "7d438028de70ef396eec8bd5da3ff1881951e156",
+  "schema_version": "v1",
+  "scope": "Completion warrant for PLAN-20260817-0001. Records that the first evidence-ancestry edge class is implemented, verified, and exercised against a real captured invocation. Authorizes no further work: GAP-0008 remains open, the second representation Section 4.19 names still requires output digests, and invocation-to-invocation ancestry requires a produced_by edge class no plan covers.",
+  "substrate": "conversation",
+  "target_item_id": "PLAN-20260817-0001",
+  "target_item_type": "plan",
+  "warrant_id": "WARR-20260817-0002",
+  "warrant_state": "supported"
+}

@@ -35,7 +35,7 @@
         "role": "mechanism"
       },
       {
-        "content_hash": "c074e88a15c872ec0b00c611a1c31c0a1d2215c4dcd8ead50739d232117b3aae",
+        "content_hash": "83178ff4e6fafd2c8f2ba47982b03b4522d5793eafc505849d4249664dbee9c5",
         "path": "ai_lab/documentation/context_pack_renderer.py",
         "role": "mechanism"
       },
@@ -55,7 +55,7 @@
         "role": "interface"
       },
       {
-        "content_hash": "ca793018e75bf4cf38cc3fd39c1f375caeba26012be89e44b7f26c37334651e6",
+        "content_hash": "766ee0c3a8524ef943e8d48dffd33c57fef46b2294a9b92d0f84ac936ea7d850",
         "path": "scripts/compare_providers.py",
         "role": "interface"
       },
@@ -80,7 +80,7 @@
         "role": "test"
       },
       {
-        "content_hash": "bf2d162959f43b9a4abfc758f45b62984ccd7d0a21b5229c1f6f61bee5bad3ae",
+        "content_hash": "ade0d309ecb85cbec1a195de216088653a2a6eade46678e4e112f5807ef1fc3a",
         "path": "tests/test_compare_providers.py",
         "role": "test"
       },
@@ -88,6 +88,16 @@
         "content_hash": "cd2713a6ce13212ecaf1a6fd64d760df0e05bee3e918067e6213e3ca927052c9",
         "path": "tests/test_prompt_context.py",
         "role": "test"
+      },
+      {
+        "content_hash": "e85b60ef9a51988396aff8f3ee75fbed69d8f040a3bfab7bad295d394850d59e",
+        "path": "ai_lab/providers/ancestry.py",
+        "role": "Artifact-level evidence-ancestry evaluation over a retained ContextManifest (ABS-0004 v9.2 Section 4.19, PLAN-20260817-0001)"
+      },
+      {
+        "content_hash": "f21d4a598fe78463a95bd5fdf01052a9976b2f82522e4aa87039a4793ada1024",
+        "path": "tests/test_ancestry.py",
+        "role": "Ancestry falsification set, constructed before reliance per DECISION-20260812-0002"
       }
     ],
     "memory_records": [
@@ -109,13 +119,15 @@
     "scripts/compare_providers.py --latest-context --include-l0"
   ],
   "last_verified": {
-    "repo_commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
-    "verification_artifact": "docs/self_model/verifications/VERIFY-20260705-0001.json",
-    "verified_at": "2026-07-04T21:26:15+00:00"
+    "repo_commit": "7d438028de70ef396eec8bd5da3ff1881951e156",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260817-0001.json",
+    "verified_at": "2026-08-17T00:00:00+00:00"
   },
   "limits": [
     "Explicit L0 inclusion requires user-supplied chunk IDs.",
-    "Automatic L0 discovery, ranking, dependency expansion, and repair are not implemented."
+    "Automatic L0 discovery, ranking, dependency expansion, and repair are not implemented.",
+    "Context manifests are retained under a content-addressed reference embedding the SHA-256 of their exact bytes, written before any provider call, and carry a per-item source_binding_digest over the source path and the rendered source text (VERIFY-20260817-0001). The 25 manifests retained before that scheme are structurally valid and cannot establish Section 4.19 ancestry edges: their references do not authenticate any bytes, so they evaluate as coverage unavailable.",
+    "Pinned evidence for ai_lab/documentation/context_pack_builder.py, ai_lab/documentation/prompt_context.py, scripts/ask_provider.py, scripts/build_context_pack.py, tests/test_ask_provider.py, tests/test_build_context_pack_script.py, tests/test_context_pack_builder.py, tests/test_prompt_context.py does not match current file contents. Those files were stale before PLAN-20260817-0001 began and were not changed or verified by it; VERIFY-20260817-0001 did not check them. Recorded rather than repaired, because repinning would assert a verification that has not happened."
   ],
   "name": "Explicit L0 latest-context inclusion",
   "recommended_next_actions": [

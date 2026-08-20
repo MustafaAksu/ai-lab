@@ -1,0 +1,54 @@
+{
+  "artifacts_checked": [
+    "ai_lab/providers/ancestry.py",
+    "ai_lab/documentation/context_pack.py",
+    "ai_lab/documentation/context_pack_renderer.py",
+    "scripts/compare_providers.py",
+    "tests/test_ancestry.py",
+    "tests/test_compare_providers.py",
+    "docs/comparisons/COMP-0140-first-ancestry-edge.md",
+    "docs/invocations/INV-8419d4bb8a312acc.json",
+    "docs/invocations/INV-f7249a960a179db3.json",
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md"
+  ],
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "summary": "782 passed, up from 743 at plan admission. 38 in tests/test_ancestry.py."
+    },
+    {
+      "command": "python scripts/compare_providers.py --latest-context --require-admission --save docs/comparisons/COMP-0140-first-ancestry-edge.md",
+      "exit_code": 0,
+      "summary": "Scope item 5. Wrote the manifest content-addressed BEFORE both provider calls, then captured INV-8419d4bb8a312acc and INV-f7249a960a179db3, each carrying context_manifest_reference COMP-0140-first-ancestry-edge.context.886cca23baadb266f8ebefae1f20bc00a5956b62f0c6e410c88f3363c3394522.json."
+    },
+    {
+      "command": "ancestry_edges over every retained record",
+      "exit_code": 0,
+      "summary": "2 of 212 records carry a manifest reference; both return coverage complete with edge docs/abstractions/ABS-0003-ai-lab-reconciled-memory-implementation-loop.md and reason None. The other 210 return coverage unavailable with reason no_context_manifest_reference_recorded, not an empty ancestor set."
+    },
+    {
+      "command": "byte-tamper of the retained manifest",
+      "exit_code": 0,
+      "summary": "Changing one byte of the retained manifest fails two tests. The retained edge is verified against bytes rather than observed."
+    },
+    {
+      "command": "mutation testing over every guard added by this slice",
+      "exit_code": 0,
+      "summary": "Each guard was replaced with behaviour that would report an edge, independence, or complete coverage where the code refuses, and a test failed in every case: content-digest check, non-addressed reference, strict manifest validation, total_token_estimate consistency, per-item binding presence, binding recomputation, placeholder binding, path participation in the digest, unbound items reaching complete, and the pre-call manifest write."
+    }
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "recorded_by": {
+    "peer_id": "claude",
+    "role": "assistant",
+    "substrate": "conversation"
+  },
+  "repo_commit": "7d438028de70ef396eec8bd5da3ff1881951e156",
+  "schema_version": "v1",
+  "status": "passed",
+  "summary": "Verified PLAN-20260817-0001 complete: all six scope items implemented, and the repository holds its first retained artifact-level evidence-ancestry edges under ABS-0004 v9.2 Section 4.19. WHAT WAS ESTABLISHED. An artifact selected into a retained ContextManifest and rendered into a captured invocation's effective input is now reportable as a direct ancestor of that invocation, and two such edges exist. coverage complete is not a weak claim: it is reachable only when the context_manifest_reference embeds the manifest's byte digest and that digest recomputes from the retained file, the manifest validates as a ContextPackManifest with unknown fields rejected and its stated total_token_estimate consistent with its items, its full_prompt_hash normalises equal to the record's rendered_prompt_digest, and every item's source_binding_digest recomputes through the renderer's own dispatch. Each of those conditions is separately mutation-proven. THE COMPLETENESS CONDITION TOOK THREE ATTEMPTS AND EACH FAILURE WAS FOUND BY THE PARTY THAT DID NOT WRITE IT. The first compared two stored hash fields; the reviewing executor substituted a source_path and obtained coverage complete with the substituted path reported as an ancestor. The second added a per-item source binding; the reviewing executor substituted a source_path AND recomputed its binding, and again obtained complete, correcting its own earlier recommendation that the per-item binding was sufficient. The third binds the InvocationRecord's reference to the exact manifest bytes, which closes both: any edit changes the bytes and the reference stops authenticating them. The packaging executor reproduced each falsification before accepting it. WHAT IS NOT ESTABLISHED. No invocation is an ancestor of another: the edges are artifact-to-invocation, and invocation-to-invocation ancestry needs a produced_by edge class that is out of scope. No traversal beyond a single edge exists. C3 remains unevaluable for any real claim: its equivalence half blocks for every live pair under DECISION-20260814-0001, and its ancestry half now has one populated edge class rather than a graph. Section 4.15's ceiling stands and both witnesses in COMP-0140 independently named the failure mode it discloses, that an artifact-level edge invites false precision about which span actually supports a claim; both had ABS-0003 in context, so that is common-cause corroboration and not independent confirmation, per C5. PROVENANCE BOUNDARY. The 25 manifests retained before content-addressed references existed are structurally valid and cannot establish edges; they evaluate as unavailable rather than partial, because which manifest bytes those invocations referred to cannot be established at all. 210 of 212 records carry no reference and return unavailable with an enumerated reason, never an empty ancestor set.",
+  "target_item_id": "PLAN-20260817-0001",
+  "target_item_type": "plan",
+  "verification_id": "VERIFY-20260817-0001"
+}
