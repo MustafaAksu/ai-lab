@@ -237,7 +237,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-20T12:17:46+00:00",
+  "generated_at": "2026-08-20T12:23:31+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -584,6 +584,11 @@
       "risk": "The specific hazard is that an ancestry function reads the manifest reference on the 210 existing records, finds it null, and reports no ancestor. An unpopulated edge is indistinguishable from an absent one unless coverage is reported separately, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from ABS-0004 in August: the existence of a field treated as evidence of the property it names. C14 exists to forbid it and this slice must demonstrate compliance rather than assert it. A second hazard is that the completeness cross-check compares two hashes that are not hashes of the same content, in which case it would appear to validate the manifest while validating nothing.",
       "source_field": "risk",
       "source_record": "PLAN-20260817-0001"
+    },
+    {
+      "risk": "The specific hazard is that an evaluator finds a seed, finds a response section, finds that text_chars agrees with its length, and reports the relation established. That is the current state of the evidence and it establishes nothing: any string of that length satisfies it. A weaker version of the same hazard is attribution by heading, which works today because provider display names and executor references happen to correspond, and would break silently the first time a provider is renamed or a third is added. Both are the pattern corrections A2 and A5 removed from ABS-0004: a record naming a property treated as establishment of the property.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260817-0002"
     }
   ],
   "model_type": "self_model",
@@ -593,9 +598,12 @@
     "GAP-0006",
     "GAP-0008"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260817-0002"
+  ],
   "plan_counts": {
     "completed": 23,
+    "proposed": 1,
     "withdrawn": 1
   },
   "plans": [
@@ -766,6 +774,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260817-0001.json",
       "status": "completed",
       "title": "First evidence-ancestry edge class: ContextManifest-backed effective-input ancestry"
+    },
+    {
+      "plan_id": "PLAN-20260817-0002",
+      "source_gap_id": "GAP-0008",
+      "source_path": "docs/self_model/plans/PLAN-20260817-0002.json",
+      "status": "proposed",
+      "title": "Invocation output binding and produced_by establishment"
     }
   ],
   "recommended_next_targets": [
@@ -790,7 +805,7 @@
       "target": "The measurement this gap previously recommended is complete, and it inverted the expected answer. Recorded here rather than left as a pending instruction. MEASURED at 765e6e22c66736ebb5d35ac5f8a762ba7ed48e54: 106 of 140 comparison artifacts already carry a governed invocation_produced_by relation, emitted by produced_by_references in ai_lab/providers/invocation_capture.py and written at scripts/compare_providers.py. Each names source_id, predicate produced_by, target_id and an evidence path, and each declares itself authoritative false with relation_source future_edge_seed. The remaining 34 are pre-provenance artifacts with no invocation records to attribute to. The predicate registry already defines the inverse, produces, as not emitted in Slice A, so no second predicate is needed to traverse in the ancestry direction. WHY THE SEEDS CANNOT BE PROMOTED. The cited InvocationRecord does not say it produced the artifact, and its outcome block carries stop_reason, token counts, content_block_types and text_chars but no output content digest. An evaluator can establish that the artifact names the record, that the record exists, and that text_chars agrees with the response length; it cannot establish that the output the record describes is the response the artifact incorporated. Agreement on a length is satisfied by any string of that length. Flipping authoritative to true would treat a record naming a property as establishment of the property, which is the pattern corrections A2 and A5 removed from ABS-0004. CONSEQUENCE: output content digesting is the missing evidentiary primitive, and it is a shared prerequisite. It is what would let a produced_by seed be validated rather than trusted, and it is separately required for the content-addressed output-to-effective-input edge class Section 4.19 names. One capability supports both remaining directions. The 106 seeds do not eliminate the need for it; they make it immediately useful. NEXT SLICE, not yet planned: invocation output binding and produced_by establishment. Narrow first outcome: a new invocation retains a digest of its textual output, the corresponding response section of the comparison artifact recomputes to that digest, the existing seed is thereby validated rather than trusted, and one established invocation-to-artifact relation exists. No traversal. Historical seeds are NOT retrofitted: those records have no output digest, and model name, text_chars, timing, session id and the knowledge that one script wrote both files are corroborating consistency checks that do not bind the exact output. Persistence form is deliberately undecided: whether established relations are derived on demand or written as EDGE records should follow the truth condition, not precede it, and the EDGE validator does not currently admit produced_by."
     }
   ],
-  "repo_head": "3fc63499d78e956f69a8ac0971f57a9d9bdafea6",
+  "repo_head": "6b67074fa09834b9ec8fd0c5d0e31d2fde32cc93",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
