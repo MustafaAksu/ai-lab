@@ -37,8 +37,10 @@ WHAT THIS DOES NOT ESTABLISH
 THE COMPLETENESS CONDITION (scope item 4)
 
 An edge exists only where the referenced manifest is durably retained, parses,
-validates as the manifest used to render the captured prompt, AND the item's
-retained source_binding_digest still matches what its source renders to now.
+structurally validates as a ContextPackManifest through the same rules the
+writer applied, validates as the manifest used to render the captured prompt,
+AND the item's retained source_binding_digest still matches what its source
+renders to now.
 
 The last part exists because the first three do not suffice, which was
 established by falsification rather than argued. Comparing the manifest's
@@ -145,8 +147,14 @@ class AncestryResult:
 def _recompute_binding(item: Mapping[str, Any], root: Path) -> str | None:
     """Recompute an item's binding through the renderer's own dispatch.
 
-    Returns None when no binding can be produced, which is treated as a
-    mismatch by the caller rather than as agreement.
+    Returns None when no binding can be produced, which the caller treats as a
+    mismatch rather than as agreement.
+
+    An earlier version changed the process working directory so the renderer
+    would resolve source paths against `root`. That made this module's evaluator
+    impure in a way its own docstring denied, and unsafe if two evaluations ever
+    overlapped, since source resolution could occur against another call's
+    temporary cwd. The renderer now takes an explicit repo_root instead.
     """
 
     from ai_lab.documentation.context_pack import ContextPackItem
@@ -154,29 +162,21 @@ def _recompute_binding(item: Mapping[str, Any], root: Path) -> str | None:
         compute_source_binding_digest,
     )
 
-    src = item.get("source_path")
-    if not src:
+    if not item.get("source_path"):
         return None
-    cwd = Path.cwd()
     try:
-        import os
-
-        os.chdir(root)
         return compute_source_binding_digest(
             ContextPackItem(
                 item_type=item.get("item_type", "abstraction"),
                 item_id=item.get("item_id", "x"),
                 reason=item.get("reason", "recomputed for binding validation"),
                 relevance_score=float(item.get("relevance_score", 0.5)),
-                source_path=src,
-            )
+                source_path=item["source_path"],
+            ),
+            repo_root=root,
         )
     except Exception:  # noqa: BLE001 - any failure is a non-binding
         return None
-    finally:
-        import os
-
-        os.chdir(cwd)
 
 
 def ancestry_edges(
@@ -212,12 +212,36 @@ def ancestry_edges(
             reason=f"referenced_manifest_not_retained: {manifest_ref}",
         )
     try:
-        manifest = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001 - any parse failure is unavailable
         return AncestryResult(
             coverage=COVERAGE_UNAVAILABLE,
             reason=f"referenced_manifest_unreadable: {type(exc).__name__}",
         )
+
+    # Structural validation, not just parsing. A reader that takes `items`
+    # straight from JSON bypasses every rule the writer enforced, including the
+    # manifest_id consistency check. A correctly bound manifest carrying an
+    # invalid assembly_policy previously reached coverage complete.
+    from ai_lab.documentation.context_pack import (
+        ContextPackError,
+        manifest_from_dict,
+    )
+
+    try:
+        manifest_from_dict(raw)
+    except ContextPackError as exc:
+        return AncestryResult(
+            coverage=COVERAGE_UNAVAILABLE,
+            reason=f"referenced_manifest_does_not_validate: {exc}",
+            manifest_id=raw.get("manifest_id") if isinstance(raw, dict) else None,
+        )
+    except Exception as exc:  # noqa: BLE001 - a malformed shape is not a valid manifest
+        return AncestryResult(
+            coverage=COVERAGE_UNAVAILABLE,
+            reason=f"referenced_manifest_does_not_validate: {type(exc).__name__}",
+        )
+    manifest = raw
 
     manifest_id = manifest.get("manifest_id")
 

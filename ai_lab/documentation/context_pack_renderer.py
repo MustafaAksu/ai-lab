@@ -9,12 +9,13 @@ from ai_lab.documentation.context_pack import ContextPackItem, ContextPackManife
 from ai_lab.documentation.l0_summary import L0SummaryError, validate_l0_summary_record
 
 
-def _read_source_path(source_path: str | None) -> str:
+def _read_source_path(source_path: str | None,
+                      repo_root: Path | None = None) -> str:
     """Read source content for a context item."""
     if not source_path:
         return "[missing source_path]"
 
-    path = Path(source_path)
+    path = Path(source_path) if repo_root is None else Path(repo_root) / source_path
 
     try:
         if not path.is_file():
@@ -25,13 +26,14 @@ def _read_source_path(source_path: str | None) -> str:
         return f"[source file unreadable: {source_path}; {error}]"
 
 
-def _read_l0_summary_source_path(source_path: str | None) -> str:
+def _read_l0_summary_source_path(source_path: str | None,
+                                 repo_root: Path | None = None) -> str:
     """Read and compactly render a validated L0 summary JSON source."""
 
     if not source_path:
         return "[missing source_path]"
 
-    path = Path(source_path)
+    path = Path(source_path) if repo_root is None else Path(repo_root) / source_path
 
     try:
         if not path.is_file():
@@ -74,11 +76,25 @@ def _read_l0_summary_source_path(source_path: str | None) -> str:
     return "\n".join(lines)
 
 
-def _read_context_item_source(item: ContextPackItem) -> str:
-    if item.item_type == "l0_summary":
-        return _read_l0_summary_source_path(item.source_path)
+def _read_context_item_source(item: ContextPackItem,
+                              repo_root: Path | None = None) -> str:
+    """Read an item's source through the one authoritative dispatch.
 
-    return _read_source_path(item.source_path)
+    repo_root is explicit rather than implied by the process working directory,
+    so a caller validating a manifest against an arbitrary root does not have to
+    chdir. Defaults to None, which preserves the resolution behaviour every
+    existing caller relies on.
+
+    NOT FALSIFIED for the l0_summary branch. No retained manifest uses that item
+    type, so removing repo_root from the l0_summary call breaks no test, while
+    removing it from the plain-source call breaks three. The branch is
+    implemented identically and is untested; it becomes testable when an
+    l0_summary item appears in a manifest.
+    """
+    if item.item_type == "l0_summary":
+        return _read_l0_summary_source_path(item.source_path, repo_root)
+
+    return _read_source_path(item.source_path, repo_root)
 
 
 # Text the renderer substitutes when a source cannot be read or is invalid. A
@@ -88,7 +104,8 @@ _PLACEHOLDER_PREFIXES = ("[missing source_path]", "[source file not found:",
                          "[source file unreadable:", "[invalid l0_summary source")
 
 
-def compute_source_binding_digest(item: ContextPackItem) -> str | None:
+def compute_source_binding_digest(item: ContextPackItem,
+                                  repo_root: Path | None = None) -> str | None:
     """Bind an item's source path to the exact text rendered from it.
 
     Returns None when no binding can honestly be produced: no source_path, or a
@@ -106,7 +123,7 @@ def compute_source_binding_digest(item: ContextPackItem) -> str | None:
 
     if not item.source_path:
         return None
-    rendered = _read_context_item_source(item)
+    rendered = _read_context_item_source(item, repo_root)
     if rendered.startswith(_PLACEHOLDER_PREFIXES):
         return None
     payload = item.source_path.encode("utf-8") + b"\0" + rendered.encode("utf-8")

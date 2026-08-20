@@ -480,3 +480,80 @@ def test_binding_digest_requires_a_source_path():
     with pytest.raises(ContextPackError, match="requires a source_path"):
         ContextPackItem(item_type="abstraction", item_id="X", reason="r",
                         relevance_score=0.5, source_binding_digest="a" * 64)
+
+
+# --- structural validation and location independence ---------------------
+
+def test_structurally_invalid_manifest_never_reaches_complete(tmp_path):
+    """A correctly bound manifest the writer would have rejected.
+
+    Previously produced coverage complete: ancestry_edges JSON-parsed the
+    manifest and read its items without applying the rules the writer applied.
+    """
+
+    _, manifest = _a_manifest_with_hash()
+
+    def invalidate(root, m):
+        m["assembly_policy"] = "NOT_A_VALID_POLICY"
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=invalidate)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "does_not_validate" in r.reason
+    assert r.edges == ()
+
+
+def test_inconsistent_manifest_id_is_rejected(tmp_path):
+    """manifest_id is checked for consistency on construction; a reader that
+    skips construction skips that check too."""
+
+    _, manifest = _a_manifest_with_hash()
+
+    def tamper(root, m):
+        m["manifest_id"] = "0" * 16
+
+    bound = _bound_manifest(tmp_path, manifest, mutate=tamper)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+    r = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    assert r.coverage == COVERAGE_UNAVAILABLE
+    assert "does_not_validate" in r.reason
+
+
+def test_every_retained_manifest_validates():
+    """The canonical path must not reject manifests the writer produced."""
+
+    from ai_lab.documentation.context_pack import manifest_from_dict
+
+    files = sorted(glob.glob(str(REPO / "docs/comparisons/*.context.json")))
+    assert files, "no retained manifests"
+    for f in files:
+        manifest_from_dict(json.loads(pathlib.Path(f).read_text()))
+
+
+def test_evaluation_is_independent_of_process_cwd(tmp_path, monkeypatch):
+    """Proves the replacement for os.chdir actually removed the dependency.
+
+    An earlier version changed the process working directory so the renderer
+    would resolve source paths against repo_root. This runs the same evaluation
+    from two different working directories and requires identical results.
+    """
+
+    import os
+
+    _, manifest = _a_manifest_with_hash()
+    bound = _bound_manifest(tmp_path, manifest)
+    rec = _record_referencing(tmp_path, bound, "m.context.json")
+
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+
+    monkeypatch.chdir(REPO)
+    from_repo = ancestry_edges(invocation=rec, repo_root=tmp_path)
+    monkeypatch.chdir(elsewhere)
+    from_elsewhere = ancestry_edges(invocation=rec, repo_root=tmp_path)
+
+    assert from_repo.coverage == from_elsewhere.coverage == COVERAGE_COMPLETE
+    assert from_repo.edges == from_elsewhere.edges
+    assert from_repo.unbound_sources == from_elsewhere.unbound_sources == ()
+    assert os.getcwd() == str(elsewhere), "the evaluator changed the working directory"

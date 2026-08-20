@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import sha256
@@ -390,3 +391,40 @@ class ContextPackManifest:
             }
 
         return data
+
+
+def manifest_from_dict(data: Mapping[str, object]) -> ContextPackManifest:
+    """Reconstruct and validate a retained manifest.
+
+    The canonical deserialisation path. A reader that JSON-parses a manifest and
+    reads its `items` directly bypasses every rule the writer enforced: item
+    types, relevance bounds, admission and freshness vocabularies, binding digest
+    format, and the manifest_id consistency check ContextPackManifest performs on
+    construction.
+
+    ai_lab/providers/ancestry.py must use this rather than raw JSON, because an
+    ancestry edge reported from a manifest the writer would have rejected is an
+    edge the retained evidence does not establish. That was demonstrated: a
+    correctly bound manifest with assembly_policy set to an invalid value
+    produced coverage complete.
+
+    Raises ContextPackError on any structural violation.
+    """
+
+    if not isinstance(data, Mapping):
+        raise ContextPackError("manifest must be a mapping")
+
+    items = tuple(
+        ContextPackItem(**dict(raw)) for raw in (data.get("items") or ())
+    )
+    exclusions = tuple(
+        ContextPackExclusion(**dict(raw)) for raw in (data.get("exclusions") or ())
+    )
+    known = {
+        "task", "assembly_policy", "manifest_id", "token_budget", "created_at",
+        "model_target", "pipeline_run_id", "task_label", "full_prompt_hash",
+        "admission_summary", "total_token_estimate",
+    }
+    kwargs = {k: v for k, v in data.items() if k in known}
+    kwargs.pop("total_token_estimate", None)  # derived, not an input
+    return ContextPackManifest(items=items, exclusions=exclusions, **kwargs)
