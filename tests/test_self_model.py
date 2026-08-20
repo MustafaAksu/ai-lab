@@ -5002,3 +5002,58 @@ def test_validate_warr_20260717_0001_admission():
         "No bulk or production sidecars"
         in record["scope"]
     )
+
+
+def test_withdrawn_is_a_plan_status_and_is_not_open():
+    """A plan removed from consideration without being judged wrong.
+
+    DECISION-20260727-0002 withdrew PLAN-20260723-0002 with ABS-0004 v8 and
+    recorded that neither rejected nor superseded was truthful: rejected would
+    assert the plan was judged wrong, which no finding established, and
+    superseded would assert a successor exists, which none does. The withdrawal
+    was carried in next_action, and that decision recorded the cost in its own
+    text: prose "will not be seen by anything reading status alone". On
+    2026-08-17 the packaging executor read status alone and reported the plan as
+    open work.
+
+    withdrawn is deliberately absent from both open-status sets. A withdrawn plan
+    is not open work, and admitting it there would reintroduce the misreading.
+    """
+
+    import json
+    import pathlib
+
+    from ai_lab.documentation.self_model import PLAN_STATUSES
+
+    assert "withdrawn" in PLAN_STATUSES
+
+    repo = pathlib.Path(__file__).resolve().parents[1]
+    index = json.loads((repo / "docs/self_model/SELF_MODEL.json").read_text())
+    plan = json.loads(
+        (repo / "docs/self_model/plans/PLAN-20260723-0002.json").read_text()
+    )
+    assert plan["status"] == "withdrawn"
+    assert "PLAN-20260723-0002" not in index["open_plans"], (
+        "a withdrawn plan is being counted as open work"
+    )
+    assert "PLAN-20260723-0002" not in index.get("admitted_plans", [])
+
+
+def test_an_invented_plan_status_is_still_refused():
+    """Widening the vocabulary must not weaken it."""
+
+    import json
+    import pathlib
+
+    import pytest
+
+    from ai_lab.documentation.self_model import SelfModelError, validate_plan_record
+
+    repo = pathlib.Path(__file__).resolve().parents[1]
+    plan = json.loads(
+        (repo / "docs/self_model/plans/PLAN-20260723-0002.json").read_text()
+    )
+    validate_plan_record(plan)
+    plan["status"] = "abandoned"
+    with pytest.raises(SelfModelError, match="must be one of"):
+        validate_plan_record(plan)

@@ -720,7 +720,21 @@ def audit_self_model(
 
 
 
-PLAN_STATUSES = {"proposed", "admitted", "rejected", "completed", "superseded"}
+# "withdrawn" means the plan was removed from admission consideration without
+# being judged wrong and without a successor existing. DECISION-20260727-0002
+# established the need: PLAN-20260723-0002 was withdrawn with ABS-0004 v8, and
+# neither "rejected" nor "superseded" was truthful, so the withdrawal was carried
+# in next_action instead. That decision recorded the cost in its own text, that a
+# next_action "will not be seen by anything reading status alone", and deferred
+# the vocabulary change as separate governance. On 2026-08-17 the packaging
+# executor read status alone and reported the plan as open work, which is the
+# recorded cost occurring.
+#
+# Deliberately NOT added to open_statuses at either site: a withdrawn plan is not
+# open work, and adding it there would reintroduce the misreading in a new place.
+PLAN_STATUSES = {
+    "proposed", "admitted", "rejected", "completed", "superseded", "withdrawn",
+}
 
 
 def _plan_require_string(record: dict[str, object], key: str) -> str:

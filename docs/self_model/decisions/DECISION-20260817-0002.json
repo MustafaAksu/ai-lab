@@ -1,0 +1,44 @@
+{
+  "authorized_effects": [
+    "Adding withdrawn to PLAN_STATUSES, for a plan removed from admission consideration without being judged wrong and without a successor existing.",
+    "Setting PLAN-20260723-0002 status from proposed to withdrawn, moving a withdrawal recorded on 2026-07-27 from next_action prose into the status field.",
+    "Recording that withdrawn is deliberately absent from both open-status sets, so a withdrawn plan is not counted as open work."
+  ],
+  "blocked_effects": [
+    "No change to any withdrawal decision. PLAN-20260723-0002 was withdrawn under DECISION-20260727-0002 on 2026-07-27; only its representation changes, and its next_action retains the original withdrawal text.",
+    "No weakening of the status vocabulary. An invented value is still refused, which a test asserts.",
+    "No new open-work state. withdrawn is not added to open_statuses at either site; adding it would reintroduce the misreading this decision corrects.",
+    "No retrospective reclassification of any other plan. Twenty-three plans exist and only PLAN-20260723-0002 was withdrawn without a successor."
+  ],
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "decision": "admit_withdrawn_plan_status",
+  "decision_id": "DECISION-20260817-0002",
+  "evidence_refs": [
+    "docs/self_model/plans/PLAN-20260723-0002.json",
+    "docs/self_model/decisions/DECISION-20260727-0002.json",
+    "ai_lab/documentation/self_model.py",
+    "tests/test_self_model.py"
+  ],
+  "rationale": [
+    "DECISION-20260727-0002 withdrew PLAN-20260723-0002 together with ABS-0004 v8, on which its semantics depended, and found no truthful status for it. Rejected would assert the plan was judged wrong, which no finding established. Superseded would assert a successor exists, which none does. The plan therefore retained status proposed and its withdrawal was carried in next_action.",
+    "That decision recorded the cost in its own text: a next_action is weaker than a status field and will not be seen by anything reading status alone. It deferred the vocabulary change as a separate governance act rather than folding it into the withdrawal, which was correct.",
+    "The cost occurred. On 2026-08-17 the packaging executor surveyed open work by reading plan status, found PLAN-20260723-0002 reading proposed, and reported it as an open plan. The record predicting the failure was three weeks old and the failure was found by re-reading that record rather than by any check.",
+    "The change is narrow by construction. withdrawn is added to PLAN_STATUSES only. Both sites that define plan openness, the registry spec and the index builder, are left as proposed and admitted, so a withdrawn plan is not open work. A test asserts that PLAN-20260723-0002 is absent from open_plans, and mutation testing confirms that adding withdrawn to either open set fails two tests.",
+    "Falsified before reliance, per DECISION-20260812-0002: the value validates, an invented value is still refused with the vocabulary listed, and open_plans is empty after the change where it previously contained the withdrawn plan."
+  ],
+  "repo_commit": "b962825ca0488f86c4c624534b19cb76cf519d5a",
+  "required_next_governance": [
+    "Nothing in the repository detects a status field carrying less information than a record's own prose. This defect was recorded by the decision that created it and was found three weeks later by re-reading that decision, not by a check. Other records may carry the same shape.",
+    "The other status vocabularies were not examined. Capability, gap, verification and warrant records have their own value sets, and whether any of them lacks a value its records need was not tested here."
+  ],
+  "schema_version": "v1",
+  "selection_effect": "PLAN_STATUSES admits withdrawn. PLAN-20260723-0002 reads withdrawn and no longer appears in open_plans, which is now empty. No plan is open.",
+  "source_capability_ids": [
+    "CAP-0015"
+  ],
+  "source_gap_id": "GAP-0005",
+  "source_plan_id": "PLAN-20260722-0001",
+  "status": "recorded",
+  "summary": "The plan status vocabulary gains withdrawn, for a plan removed from admission consideration without being judged wrong and without a successor. PLAN-20260723-0002 was withdrawn on 2026-07-27 and has read proposed since, because no truthful value existed; the withdrawing decision recorded that carrying it in next_action would not be seen by anything reading status alone, and on 2026-08-17 that is exactly what happened. withdrawn is deliberately not an open status.",
+  "title": "Admit withdrawn as a plan status and correct PLAN-20260723-0002"
+}
