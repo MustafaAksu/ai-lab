@@ -101,12 +101,15 @@ def test_normalise_digest_cases(value, expected):
 def test_unpopulated_reference_is_unavailable_not_empty():
     """Success criterion 7. The C14 case, against real data.
 
-    Every retained record has context_manifest_reference null. The result must
-    say the edge class could not be evaluated, not that no ancestor exists.
+    A record with no context_manifest_reference must say the edge class could
+    not be evaluated, not that no ancestor exists. Most retained records are of
+    this kind; those captured after scope item 2 shipped carry a reference and
+    are exercised separately.
     """
 
-    recs = _records()
-    assert recs, "no retained invocation records"
+    recs = [r for r in _records()
+            if not r["effective_input_manifest"].get("context_manifest_reference")]
+    assert recs, "no unreferenced records remain to exercise this case"
     for rec in recs:
         r = ancestry_edges(invocation=rec, repo_root=REPO)
         assert r.coverage == COVERAGE_UNAVAILABLE
@@ -115,17 +118,57 @@ def test_unpopulated_reference_is_unavailable_not_empty():
         assert r.evaluated is False
 
 
-def test_every_retained_record_is_currently_unevaluable():
-    """Pins the state the plan measured: 0 of the records carry a reference."""
+def test_the_first_retained_ancestry_edges_are_complete():
+    """The milestone this slice existed to produce.
 
-    recs = _records()
-    unavailable = [r for r in recs
-                   if ancestry_edges(invocation=r, repo_root=REPO).coverage
-                   == COVERAGE_UNAVAILABLE]
-    assert len(unavailable) == len(recs), (
-        "some record now carries a context_manifest_reference; the first retained "
-        "instance has arrived and this test should be replaced by one exercising it"
-    )
+    Replaces a test that pinned "no record carries a reference", which fired
+    when the first one did. PLAN-20260817-0001 scope item 5 produced COMP-0140:
+    two invocations whose content-addressed reference authenticates a manifest
+    written before the provider call.
+
+    coverage COMPLETE is not a weak claim here. It is reachable only when the
+    reference embeds the manifest's byte digest and that digest recomputes, the
+    manifest validates with unknown fields rejected, its full_prompt_hash
+    normalises equal to the record's rendered_prompt_digest, and every item's
+    source_binding_digest recomputes through the renderer's own dispatch.
+    """
+
+    live = [r for r in _records()
+            if r["effective_input_manifest"].get("context_manifest_reference")]
+    assert live, "no record carries a context_manifest_reference"
+    for rec in live:
+        ref = rec["effective_input_manifest"]["context_manifest_reference"]
+        assert (REPO / ref).exists(), f"referenced manifest not retained: {ref}"
+        r = ancestry_edges(invocation=rec, repo_root=REPO)
+        assert r.coverage == COVERAGE_COMPLETE, (
+            f"{rec['invocation_id']} did not reach complete: {r.reason}"
+        )
+        assert r.edges, "complete coverage with no edges"
+        assert r.reason is None
+        assert r.establishes_independence is False
+
+
+def test_the_retained_edges_authenticate_their_manifests():
+    """The chain, verified against retained bytes rather than inferred.
+
+    Recomputes the manifest digest from the file on disk and requires it to
+    equal the digest embedded in the record's reference. If a manifest were
+    edited after capture this fails, which is the property the content-addressed
+    reference exists to give.
+    """
+
+    import hashlib
+
+    live = [r for r in _records()
+            if r["effective_input_manifest"].get("context_manifest_reference")]
+    assert live
+    for rec in live:
+        ref = rec["effective_input_manifest"]["context_manifest_reference"]
+        claimed = ref.split(".")[-2]
+        actual = hashlib.sha256((REPO / ref).read_bytes()).hexdigest()
+        assert actual == claimed, (
+            f"{ref} has been modified since capture: bytes hash to {actual}"
+        )
 
 
 # --- criterion 1: the positive edge ---------------------------------------
