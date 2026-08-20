@@ -1,0 +1,35 @@
+{
+ "author": "operator",
+ "conditions": [
+  "Slice fence: exactly one primitive and one relation are implemented — the retained output digest in the InvocationRecord outcome block, and the invocation-to-artifact produced_by relation established by recomputation. No traversal, no composition with the ContextManifest edge class, no EDGE record persistence, no retrofit of the 106 historical seeds, no promotion of any seed's authoritative flag, no C3 or C10 enforcement claim.",
+  "Single-source digest: the digest is computed from the same in-memory value the comparison artifact incorporates, at the single point in scripts/compare_providers.py where that value exists. Re-reading the artifact, normalizing text, reconstructing from provider API objects, or independently obtaining the output elsewhere are prohibited digest sources, and a test must demonstrate that a normalizing extractor converts a constructed mismatch into a match and thereby fails.",
+  "Identity by retained invocation_id: attribution of a response section to an InvocationRecord keys on a per-section retained invocation_id written before the artifact is built. The provider heading and model line are display and consistency metadata; a test must demonstrate that changing them does not change attribution and that changing the invocation_id does.",
+  "Fail closed on ambiguity: missing, duplicated, or conflicting per-section invocation_id attribution yields unresolved with an enumerated reason. The evaluator never selects among multiple candidate sections and never binds to a synthetically apparent section created by provider output that mimics the artifact's framing. If the current Markdown framing cannot support unambiguous extraction, adopting a stronger framing is recorded rather than taken silently.",
+  "Historical evidence discipline: a record with no outcome block and a record with an outcome block but no output digest yield unresolved with distinct enumerated reasons. All 212 current records (182 without an outcome block, 30 with one, none with a digest) remain unresolved and are not retrofitted.",
+  "Operational obligation: the output digest is optional in schema v1 and required in practice for a new successful compare_providers.py capture with textual output. A test must demonstrate that such a capture without a populated digest blocks completion and establishes no evidence.",
+  "Falsification: every check relied upon for a governance claim ships with its constructed falsifying input and the observed result, per DECISION-20260812-0002, and every guard is mutation-tested: replacing it with behaviour that would establish a relation where the evaluator refuses causes a test to fail. Falsifying inputs are drafted before the extraction and evaluation code they falsify.",
+  "Exact text round-trip: response text with leading and trailing whitespace, and response text containing Markdown-fence-like or artifact-framing-like content, either reproduces the exact retained digest when extracted from the artifact or yields unresolved.",
+  "Completion instance: one deliberate two-provider run establishes the produced_by relation for each successfully captured response carrying the new attribution and digest; under the current provider set this is expected to produce two established relations. Completion by a single accidental success is not acceptance of the two-record case.",
+  "Completion requires a verification record and a capability amendment. The amendment repins only the files this work changed and verified, and any claim in the verification record is bounded by what the falsification set actually demonstrated."
+ ],
+ "created_at": "2026-08-20T00:00:00+00:00",
+ "decision": "admit",
+ "evidence_ids": [
+  "PLAN-20260817-0002",
+  "GAP-0008",
+  "CAP-0015",
+  "CAP-0001",
+  "DECISION-20260812-0002",
+  "DECISION-20260817-0001",
+  "WARR-20260817-0001",
+  "VERIFY-20260817-0001"
+ ],
+ "reason": "The operator admits PLAN-20260817-0002 as amended. The plan was drafted by the packaging executor, reviewed by the reviewing executor, who required five amendments including the correction of a false characterization of the historical evidence (the outcome-without-digest count), amended, and confirmation-passed by the reviewing executor, who required one further falsifier for structural-marker collision in provider output and the repo_commit provenance correction, both applied. Every measurable claim exchanged between the executors was reproduced by the other party before acceptance, and one immaterial counting discrepancy (212 versus 213 seed references) is recorded in the plan's amendment block rather than reconciled. The reviewing executor's final disposition was admit with no further conceptual round. The plan's operative measurements were established at 68f80cfad8002a055ca0f42459fef1d57e8448d3 and the amended plan with its rebuilt index is committed at 2ba2cf3. The admission establishes authorization to implement, not that anything is implemented: at admission, no InvocationRecord carries an output digest, no response section carries an invocation_id, and every produced_by relation in the repository remains an unestablished seed.",
+ "schema_version": "v1",
+ "scope": "Admission warrant for PLAN-20260817-0002 as amended, invocation output binding and produced_by establishment, the second evidence-ancestry edge class under ABS-0004 v9.2 Section 4.19. Authorizes implementation of exactly the plan's six scope items: the optional output digest in the InvocationRecord outcome block computed from the single authoritative value in scripts/compare_providers.py; the retained per-section invocation_id in newly produced comparison artifacts; the pure evaluator that locates a section by retained invocation_id, recomputes its digest over the exact extracted text, and reports equality with the retained digest or unresolved with an enumerated reason; the establishment condition requiring a validating record with a digest, a seed naming it, exactly one section carrying its invocation_id, and digest equality; one deliberate two-provider run establishing the relation for each successfully captured response; and tests implementing the plan's fourteen success criteria. Authorizes nothing else. Specifically excluded: invocation-to-invocation ancestry, any traversal or composition with the ContextManifest edge class, producing the governed instance in which a produced artifact is consumed through a manifest, retrofitting or reformatting the 106 seeded or 34 pre-provenance artifacts, EDGE record persistence, content-addressed output-to-effective-input linkage, and C3 or C10 enforcement.",
+ "substrate": "conversation",
+ "target_item_id": "PLAN-20260817-0002",
+ "target_item_type": "plan",
+ "warrant_id": "WARR-20260820-0001",
+ "warrant_state": "supported"
+}
