@@ -1,92 +1,118 @@
 {
-  "admission_summary": null,
-  "admission_warrant_id": null,
-  "admitted_at": null,
-  "completed_at": null,
-  "completion_verification_id": null,
-  "completion_warrant_id": null,
-  "constraints": [
-    "Implementation is authorized only within the scope admitted by a future admission warrant; any expansion requires a separate proposed and admitted plan.",
-    "One primitive and one relation. The primitive is a retained digest of an invocation's textual output. The relation is invocation-to-artifact produced_by, established by recomputation rather than trusted from the seed.",
-    "No traversal. Composing this relation with the ContextManifest edge from PLAN-20260817-0001 to obtain invocation-to-invocation ancestry is deliberately out of scope, even though it becomes possible.",
-    "No retrofit. The 106 existing seeds stay relation_source future_edge_seed and authoritative false. Their records have no output digest, and model name, text_chars, timing and session id are consistency checks that do not bind an output.",
-    "The evaluator derives the established relation from evidence and does not read the seed's authoritative flag. The seed names the candidate to check.",
-    "Every check ships with its constructed falsifying input and observed result, per DECISION-20260812-0002, and each guard is mutation-tested.",
-    "No new predicate. The registry defines produced_by with inverse produces, not emitted in Slice A; the ancestry direction is that inverse and needs no second emitted predicate."
+ "admission_summary": null,
+ "admission_warrant_id": null,
+ "admitted_at": null,
+ "amendment": {
+  "amended_at": "2026-08-20T00:00:00+00:00",
+  "amended_from_review": "Reviewing executor review of the v1 proposal at 68f80cfad8002a055ca0f42459fef1d57e8448d3, relayed by the operator; packaging executor reproduced every measurable claim in the review before accepting it.",
+  "changes": [
+   "Attribution keys on a per-section retained invocation_id; the model line demotes to a consistency check. This is the stronger implementation of the already-proposed scope item and removes the semantic dependency on markdown model names.",
+   "Success criterion 2 split: NO OUTCOME and OUTCOME WITHOUT DIGEST are distinct cases with distinct enumerated reasons. The v1 claim that all 212 records were the outcome-without-digest case was false: measured at 68f80cf, 30 records carry an outcome block, 182 carry none, 0 carry an output digest.",
+   "The v1 mitigation said 28 records carry an outcome block; the measured number is 30. Corrected.",
+   "The composability rationale no longer claims that two coexisting edge classes make invocation-to-invocation ancestry derivable. A shared artifact instance is additionally required and no such instance is claimed to exist.",
+   "The single-source digest requirement is stated explicitly, and an EXACT TEXT ROUND-TRIP falsifier is added so that normalization or stripping in an extractor can never make a mismatch pass.",
+   "The output digest remains schema-optional so historical records stay valid, and becomes operationally required for new successful captures with textual output; its absence on such a capture prevents completion and evidence establishment.",
+   "Completion strengthened: a deliberate two-provider run must establish the relation for each successfully captured response carrying the new attribution and digest, exercising the two-record/two-section case in reality."
   ],
-  "created_at": "2026-08-17T00:00:00+00:00",
-  "created_from": "GAP-0008 recommended first slice, as restated after the produced_by measurement",
-  "depends_on_capability_ids": [
-    "CAP-0015",
-    "CAP-0001"
-  ],
-  "evidence_ids": [],
-  "expected_outputs": [
-    "An output digest retained in the InvocationRecord outcome block, over the exact textual output the provider returned.",
-    "A pure function that, given a comparison artifact and a captured InvocationRecord, reports whether the artifact's response attributed to that record recomputes to the record's retained output digest, and returns unresolved with an enumerated reason wherever it cannot establish it.",
-    "A change to scripts/compare_providers.py sufficient to retain the digest and to make the response section attributable to a specific record.",
-    "A test file implementing the falsification set below.",
-    "At least one established invocation-to-artifact produced_by relation derived from evidence rather than from the seed.",
-    "A verification record and a capability amendment."
-  ],
-  "mitigation": [
-    "The attribution problem is solved by the model line rather than the heading, because the heading is a provider display name and the mapping to an executor reference exists only in code. If the model line proves insufficient, the alternative is to name the invocation id in the response section, which is a larger artifact-format change and must be recorded rather than taken silently.",
-    "The digest is computed over the same text the artifact incorporates, obtained from the same value, rather than from a second reconstruction of what was returned. A separate approximation would create the class of false check that took three attempts to remove from the ContextManifest slice.",
-    "Adding a required field to the outcome block would invalidate the 28 records that carry one. The digest is therefore optional, and its absence yields unresolved rather than a failed validation."
-  ],
-  "next_action": "Operator adjudication, then an admission warrant, then implementation.",
-  "non_goals": [
-    "Invocation-to-invocation ancestry and any traversal that would compose two edge classes.",
-    "Retrofitting the 106 historical produced_by seeds.",
-    "Promoting any seed by flipping authoritative from false to true.",
-    "EDGE record persistence. Whether established relations are derived on demand or written as EDGE records follows the truth condition rather than preceding it, and the EDGE validator does not currently admit produced_by.",
-    "Content-addressed output-to-effective-input linkage. This slice builds the primitive that would enable it and does not implement it.",
-    "C3 or C10 enforcement.",
-    "Any change to the 34 pre-provenance comparison artifacts, which have no invocation records to attribute to."
-  ],
-  "notes": [
-    "This plan exists because a measurement inverted its author's expectation. The packaging executor found 106 governed produced_by seeds and read that as making produced_by the cheap next slice. The reviewing executor asked what would make a seed authoritative and established that the seeds assert the relation without retaining evidence to reconstruct it, which makes output digesting the prerequisite rather than the alternative. The packaging executor verified the load-bearing claim before accepting it: INV-8419d4bb8a312acc carries no output digest, and its text_chars of 335 agrees with the artifact's 335-character response, which looks like corroboration and is satisfied by any string of that length.",
-    "Response attribution was measured at commit 0f8b594 before this scope was written. All 106 seeded artifacts carry exactly two response sections, each with a model line. The seed is artifact-level and does not say which response came from which invocation. The heading carries a provider display name, OpenAI or Claude; the record carries an executor reference, gpt-5.6-terra or claude-sonnet-5; and nothing retained maps one to the other. Attribution by heading would work today by coincidence and break silently on a provider rename or a third provider, which is why success criterion 8 falsifies it explicitly.",
-    "The packaging executor's cost estimates in this area have been wrong three times: C10 as the cheapest manual-mode constraint, reask_from_synthesis as the first directional edge, and produced_by as cheaper than output digesting. Each was corrected by the reviewing executor with a reproducible falsification. This plan's scope rests on measurements taken before it was written rather than on an estimate."
-  ],
-  "objective": "Retain a digest of each invocation's textual output, and establish one invocation-to-artifact produced_by relation by recomputation rather than by assertion.",
-  "plan_id": "PLAN-20260817-0002",
-  "proposed_change": "The outcome block added under DECISION-20260810-0001 carries stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars, and no content digest. The 106 comparison artifacts carrying invocation_produced_by therefore assert a relation that cannot be reconstructed from the two endpoints: an evaluator can confirm the record exists and that text_chars agrees with the response length, and agreement on a length is satisfied by any string of that length. This slice adds the digest, makes the response section attributable to a specific record, and implements an evaluator that establishes the relation from evidence.",
-  "rationale": [
-    "GAP-0008's restated first slice requires a second edge class that composes with the ContextManifest edge, and identified output content digesting as the shared prerequisite for both remaining directions.",
-    "The measurement that produced this conclusion inverted the packaging executor's expectation and is recorded in GAP-0008. 106 of 140 comparison artifacts already carry a governed produced_by seed, which looked like the cheap path; the reviewing executor established that the seeds are assertions rather than reconstructible evidence, which makes the digest the prerequisite rather than the alternative.",
-    "Response attribution was measured before scoping. All 106 seeded artifacts carry exactly two response sections, each with a model line naming an executor reference. The seed itself is artifact-level: it records that COMP-0140 was produced by two invocations without saying which response came from which. The section heading is a provider display name, OpenAI or Claude, while the record carries gpt-5.6-terra or claude-sonnet-5, and the mapping between them exists only in code. Attribution must therefore key on the model line, which is retained in the artifact, not on the heading.",
-    "The digest must be optional in the outcome block. Twenty-eight records carry an outcome and none carries a digest; requiring it would invalidate them. An absent digest yields unresolved, which is the same discipline the ancestry evaluator applies to an absent manifest reference.",
-    "This slice deliberately stops before composition. Once an established produced_by relation exists alongside the ContextManifest edge, invocation-to-invocation ancestry becomes derivable, and that is the first thing this project has built that could answer a C3-shaped question. Building the traversal in the same slice would mean the traversal and its two input edge classes were verified together, and the ContextManifest slice showed what happens when a completeness condition is assumed rather than falsified."
-  ],
-  "repo_commit": "0f8b59493253c779a2f0493ee9f33e1f6035ba5e",
-  "risk": "The specific hazard is that an evaluator finds a seed, finds a response section, finds that text_chars agrees with its length, and reports the relation established. That is the current state of the evidence and it establishes nothing: any string of that length satisfies it. A weaker version of the same hazard is attribution by heading, which works today because provider display names and executor references happen to correspond, and would break silently the first time a provider is renamed or a third is added. Both are the pattern corrections A2 and A5 removed from ABS-0004: a record naming a property treated as establishment of the property.",
-  "schema_version": "v1",
-  "scope": [
-    "An optional output digest in the InvocationRecord outcome block, over the exact textual output returned by the provider, computed from the same value the comparison artifact incorporates.",
-    "Making a comparison artifact's response section attributable to a specific InvocationRecord, keyed on the retained model line rather than on the provider display heading.",
-    "A pure evaluator that, given an artifact and a record, recomputes the attributed response section's digest and reports whether it equals the record's retained output digest, returning unresolved with an enumerated reason otherwise.",
-    "The establishment condition for a produced_by relation: the record validates, carries an output digest, the artifact carries a seed naming that record, the attributed response section is identifiable, and its recomputed digest equals the retained one.",
-    "One deliberate run producing at least one established relation.",
-    "Tests implementing the falsification set in success_criteria."
-  ],
-  "source_capability_ids": [
-    "CAP-0015"
-  ],
-  "source_gap_id": "GAP-0008",
-  "status": "proposed",
-  "success_criteria": [
-    "POSITIVE. A record with an output digest, an artifact seeding produced_by for it, and an attributable response section that recomputes to that digest, yields an established relation.",
-    "NO DIGEST. A record with an outcome block and no output digest yields unresolved, not a failed relation. All 212 current records are this case.",
-    "DIGEST MISMATCH. A response section whose recomputed digest differs from the retained one yields unresolved and no established relation.",
-    "ALTERED RESPONSE. Editing one character of the response text in a retained artifact causes the relation to stop being established.",
-    "WRONG ATTRIBUTION. A seed naming a record whose model line matches no response section in the artifact yields unresolved rather than binding to whichever section happens to be present.",
-    "TWO RECORDS, TWO SECTIONS. An artifact with two seeded records establishes each against its own section and not against the other's.",
-    "SEED WITHOUT EVIDENCE. A seed for a record that carries no output digest yields unresolved, and the seed's authoritative flag is not read.",
-    "HEADING IS NOT ATTRIBUTION. Changing a response section's heading while leaving its model line intact does not change which record it is attributed to. This falsifies attribution by display name.",
-    "HISTORICAL SEEDS. The 106 existing seeds yield unresolved and are not promoted.",
-    "Each guard is mutation-tested: replacing it with behaviour that would establish a relation where the evaluator refuses causes a test to fail."
-  ],
-  "summary": "Add a retained digest of each invocation's textual output and establish one invocation-to-artifact produced_by relation by recomputation. 106 comparison artifacts already carry governed produced_by seeds that assert the relation without retaining evidence to reconstruct it: the outcome block carries no content digest, and text_chars agreeing with a response length is satisfied by any string of that length. This slice adds the missing primitive, keys response attribution to the retained model line rather than the provider display heading, and implements an evaluator that derives the relation from evidence rather than reading the seed's authoritative flag. No traversal, no retrofit, no persistence decision.",
-  "title": "Invocation output binding and produced_by establishment"
+  "measurement_discrepancies": [
+   "Seed reference count: the reviewing executor reported 212 seed references across the 106 seeded artifacts; the packaging executor's reproduction counted 213 unique INV ids resolving to retained records. The difference is one identifier and is attributed to counting method (the reproduction's regex sweep may match an INV id appearing outside a seed block). Both counts agree on 106 seeded artifacts, zero model-line/executor-reference mismatches, and zero artifacts with duplicate model lines. Recorded rather than reconciled because it is immaterial to this plan's design and the divergence of method is itself worth retaining."
+  ]
+ },
+ "completed_at": null,
+ "completion_verification_id": null,
+ "completion_warrant_id": null,
+ "constraints": [
+  "Implementation is authorized only within the scope admitted by a future admission warrant; any expansion requires a separate proposed and admitted plan.",
+  "One primitive and one relation. The primitive is a retained digest of an invocation's textual output. The relation is invocation-to-artifact produced_by, established by recomputation rather than trusted from the seed.",
+  "No traversal. Composing this relation with the ContextManifest edge from PLAN-20260817-0001 is deliberately out of scope. Both edge classes existing does not by itself make invocation-to-invocation ancestry derivable: a governed instance in which a produced artifact is consumed through the ContextManifest edge is additionally required, and producing one is not part of this slice.",
+  "No retrofit. The 106 existing seeds stay relation_source future_edge_seed and authoritative false. Their records have no output digest, and model name, text_chars, timing and session id are consistency checks that do not bind an output.",
+  "The evaluator derives the established relation from evidence and does not read the seed's authoritative flag. The seed names the candidate to check.",
+  "Every check ships with its constructed falsifying input and observed result, per DECISION-20260812-0002, and each guard is mutation-tested.",
+  "No new predicate. The registry defines produced_by with inverse produces, not emitted in Slice A; the ancestry direction is that inverse and needs no second emitted predicate.",
+  "Single source for the digest. The digest is computed from the same in-memory value the artifact incorporates, at the point where that value exists once: the answer assigned from the provider call in scripts/compare_providers.py. Re-reading the artifact, normalizing text, reconstructing from provider API objects, or independently obtaining the output elsewhere are all prohibited digest sources.",
+  "Operationally required for new captures. The output digest is optional in schema v1 so the 30 historical outcome blocks remain valid; for a new successful compare_providers.py invocation where textual output is available, the governed capture path must populate it, and its absence on such a capture prevents completion and evidence establishment."
+ ],
+ "created_at": "2026-08-17T00:00:00+00:00",
+ "created_from": "GAP-0008 recommended first slice, as restated after the produced_by measurement; amended after reviewing-executor review before admission",
+ "depends_on_capability_ids": [
+  "CAP-0015",
+  "CAP-0001"
+ ],
+ "evidence_ids": [],
+ "expected_outputs": [
+  "An output digest retained in the InvocationRecord outcome block, over the exact textual output the provider returned, computed from the same value the comparison artifact incorporates.",
+  "A per-response-section retained invocation_id in newly produced comparison artifacts, naming the InvocationRecord that produced that section, alongside the existing model line which remains as a consistency check.",
+  "A pure function that, given a comparison artifact and a captured InvocationRecord, reports whether the response section attributed to that record by retained invocation_id recomputes to the record's retained output digest, and returns unresolved with an enumerated reason wherever it cannot establish it.",
+  "A change to scripts/compare_providers.py sufficient to retain the digest and to write the per-section invocation_id.",
+  "A test file implementing the falsification set below.",
+  "Established invocation-to-artifact produced_by relations from one deliberate two-provider run: one per successfully captured response carrying the new attribution and digest, derived from evidence rather than from the seed.",
+  "A verification record and a capability amendment."
+ ],
+ "mitigation": [
+  "Attribution keys on a retained per-section invocation_id, written into the response section before the artifact is built, from the record identifier that capture_provider_invocation returns in the same flow. The provider heading and the model line are display and consistency metadata respectively; neither is the identity key. This removes both the display-name coincidence and the model-string-uniqueness assumption that model-line attribution would have required.",
+  "The digest is computed over the same text the artifact incorporates, obtained from the same value at the single point in compare_providers.py where it exists, rather than from a second reconstruction of what was returned. A separate approximation would create the class of false check that took three attempts to remove from the ContextManifest slice.",
+  "Adding a required field to the outcome block would invalidate the 30 records that carry one. The digest is therefore optional in schema, and its absence on a historical record yields unresolved rather than a failed validation. To prevent the optional field from silently remaining absent forever, new successful captures with textual output must populate it, and absence there blocks completion."
+ ],
+ "next_action": "Operator adjudication of the amended plan, then an admission warrant, then implementation.",
+ "non_goals": [
+  "Invocation-to-invocation ancestry and any traversal that would compose two edge classes.",
+  "Producing the governed instance in which an artifact established as produced_by is also consumed through a ContextManifest edge. That instance is what would first make a composable invocation-to-invocation path exist, and it is future work.",
+  "Retrofitting the 106 historical produced_by seeds.",
+  "Promoting any seed by flipping authoritative from false to true.",
+  "EDGE record persistence. Whether established relations are derived on demand or written as EDGE records follows the truth condition rather than preceding it, and the EDGE validator does not currently admit produced_by.",
+  "Content-addressed output-to-effective-input linkage. This slice builds the primitive that would enable it and does not implement it.",
+  "C3 or C10 enforcement.",
+  "Any change to the 34 pre-provenance comparison artifacts, which have no invocation records to attribute to.",
+  "Any change to the format of the 106 existing seeded artifacts, which carry model lines and no invocation_id and remain unresolved."
+ ],
+ "notes": [
+  "This plan exists because a measurement inverted its author's expectation. The packaging executor found 106 governed produced_by seeds and read that as making produced_by the cheap next slice. The reviewing executor asked what would make a seed authoritative and established that the seeds assert the relation without retaining evidence to reconstruct it, which makes output digesting the prerequisite rather than the alternative. The packaging executor verified the load-bearing claim before accepting it: INV-8419d4bb8a312acc carries no output digest, and its text_chars of 335 agrees with the artifact's 335-character response, which looks like corroboration and is satisfied by any string of that length.",
+  "Attribution was measured twice. At 0f8b594 the drafter measured that all 106 seeded artifacts carry exactly two response sections, each with a model line, and that the heading-to-executor mapping exists only in code. At 68f80cf the reviewing executor measured, and the packaging executor independently reproduced, that every seeded artifact's model lines match the corresponding records' executor references with zero mismatches and zero duplicates. Model-line attribution therefore works on the present corpus, and it remains presentation metadata resting on a uniqueness assumption that a shared model string or a retry would break. The retained invocation_id is available in the same code path before the artifact is built and is the identity the relation is actually about, so v2 keys on it.",
+  "The v1 draft mischaracterized its own historical evidence, claiming all 212 records were the outcome-without-digest case; the measured split is 30 with an outcome block and 182 without, none with a digest. The v1 mitigation also said 28 outcome blocks where the count is 30. Both errors are corrected here and retained in the amendment record rather than overwritten, per the correction-recording rule.",
+  "The packaging executor's cost estimates in this area have been wrong three times: C10 as the cheapest manual-mode constraint, reask_from_synthesis as the first directional edge, and produced_by as cheaper than output digesting. Each was corrected by the reviewing executor with a reproducible falsification. This plan's scope rests on measurements taken before it was written rather than on an estimate."
+ ],
+ "objective": "Retain a digest of each invocation's textual output, and establish invocation-to-artifact produced_by relations by recomputation rather than by assertion.",
+ "plan_id": "PLAN-20260817-0002",
+ "proposed_change": "The outcome block added under DECISION-20260810-0001 carries stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars, and no content digest. The 106 comparison artifacts carrying invocation_produced_by therefore assert a relation that cannot be reconstructed from the two endpoints: an evaluator can confirm the record exists and that text_chars agrees with the response length, and agreement on a length is satisfied by any string of that length. This slice adds the digest computed from the single authoritative value in compare_providers.py, writes a retained invocation_id into each new response section so the section is attributable to a specific record by identity rather than by display metadata, and implements an evaluator that establishes the relation from evidence.",
+ "rationale": [
+  "GAP-0008's restated first slice requires a second edge class that composes with the ContextManifest edge, and identified output content digesting as the shared prerequisite for both remaining directions.",
+  "The measurement that produced this conclusion inverted the packaging executor's expectation and is recorded in GAP-0008. 106 of 140 comparison artifacts already carry a governed produced_by seed, which looked like the cheap path; the reviewing executor established that the seeds are assertions rather than reconstructible evidence, which makes the digest the prerequisite rather than the alternative.",
+  "Attribution keys on a retained per-section invocation_id. The record identifier exists in compare_providers.py before the artifact is built, in the same flow that produces the response text, so writing it into the section adds no new mapping and no new trust. The heading is a provider display name and the model line is an executor reference that happens to be unique per artifact today; both are retained as consistency checks and neither is the identity key, because identity by display metadata is the pattern corrections A2 and A5 removed from ABS-0004.",
+  "The digest must be optional in the outcome block. Thirty records carry an outcome and none carries a digest; requiring it would invalidate them. An absent digest yields unresolved, which is the same discipline the ancestry evaluator applies to an absent manifest reference. To keep the optional field from being silently omitted indefinitely, a new successful capture with textual output must populate it.",
+  "This slice deliberately stops before composition. Once an established produced_by relation exists, both edge classes required for an invocation-to-artifact-to-invocation chain are implemented. That is not yet a composable path: a later governed instance in which the produced artifact is itself consumed through the ContextManifest edge is required before an actual invocation-to-invocation chain exists, and building the traversal in the same slice as its input edge classes would mean they were verified together, which is what the ContextManifest slice showed goes wrong when a completeness condition is assumed rather than falsified."
+ ],
+ "repo_commit": "0f8b59493253c779a2f0493ee9f33e1f6035ba5e",
+ "risk": "The specific hazard is that an evaluator finds a seed, finds a response section, finds that text_chars agrees with its length, and reports the relation established. That is the current state of the evidence and it establishes nothing: any string of that length satisfies it. A weaker version of the same hazard is attribution by display metadata, heading or model line, which works today because display names and executor references happen to correspond uniquely, and would break silently on a provider rename, a shared model string, or a retry producing two sections from one executor. A third form is an extractor that normalizes text before recomputing the digest, silently converting a mismatch into a match. All three are the pattern corrections A2 and A5 removed from ABS-0004: a record naming a property treated as establishment of the property.",
+ "schema_version": "v1",
+ "scope": [
+  "An optional output digest in the InvocationRecord outcome block, over the exact textual output returned by the provider, computed from the same in-memory value the comparison artifact incorporates, at the single point in scripts/compare_providers.py where that value exists.",
+  "A retained invocation_id written into each new response section of a comparison artifact, naming the InvocationRecord that produced it; the model line is retained as a consistency check and the heading as display only.",
+  "A pure evaluator that, given an artifact and a record, locates the response section attributed to that record by retained invocation_id, recomputes the section's digest over the exact extracted text, and reports whether it equals the record's retained output digest, returning unresolved with an enumerated reason otherwise.",
+  "The establishment condition for a produced_by relation: the record validates, carries an output digest, the artifact carries a seed naming that record, exactly one response section carries that record's invocation_id, and the section's recomputed digest equals the retained one.",
+  "One deliberate two-provider run establishing the relation for each successfully captured response carrying the new attribution and digest; under the current provider set this is expected to produce two established relations.",
+  "Tests implementing the falsification set in success_criteria."
+ ],
+ "source_capability_ids": [
+  "CAP-0015"
+ ],
+ "source_gap_id": "GAP-0008",
+ "status": "proposed",
+ "success_criteria": [
+  "POSITIVE. A record with an output digest, an artifact seeding produced_by for it, and a response section carrying its invocation_id whose extracted text recomputes to that digest, yields an established relation.",
+  "NO OUTCOME. A historical InvocationRecord with no outcome block yields unresolved with an enumerated reason. 182 of the 212 current records are this case.",
+  "OUTCOME WITHOUT DIGEST. An InvocationRecord with an outcome block and no output digest yields unresolved with a different enumerated reason. 30 of the 212 current records are this case; no current record carries a digest.",
+  "DIGEST MISMATCH. A response section whose recomputed digest differs from the retained one yields unresolved and no established relation.",
+  "ALTERED RESPONSE. Editing one character of the response text in a retained artifact causes the relation to stop being established.",
+  "WRONG ATTRIBUTION. A seed naming a record whose invocation_id appears in no response section of the artifact yields unresolved rather than binding to whichever section happens to be present.",
+  "AMBIGUOUS OR DUPLICATE INVOCATION ID. A missing, duplicated, or conflicting per-section invocation_id attribution yields unresolved with an enumerated reason; the evaluator never picks one of several candidates.",
+  "TWO RECORDS, TWO SECTIONS. An artifact with two seeded records establishes each against its own section and not against the other's.",
+  "SEED WITHOUT EVIDENCE. A seed for a record that carries no output digest yields unresolved, and the seed's authoritative flag is not read.",
+  "DISPLAY METADATA IS NOT ATTRIBUTION. Changing a response section's provider heading or model display line does not change attribution when the retained invocation_id is unchanged; changing the invocation_id does. This falsifies attribution by display metadata in both directions.",
+  "EXACT TEXT ROUND-TRIP. Response text with leading and trailing whitespace, and response text containing Markdown-fence-like content, must either reproduce the exact output digest when extracted from the artifact or yield unresolved; an extractor that normalizes or strips must cause a test failure by converting a constructed mismatch into a match.",
+  "MISSING DIGEST ON NEW CAPTURE. A new successful capture with textual output and no populated output digest is a defect: it blocks completion and establishes no evidence, rather than passing as an acceptable optional-field absence.",
+  "HISTORICAL SEEDS. The 106 existing seeds yield unresolved and are not promoted or retrofitted.",
+  "Each guard is mutation-tested: replacing it with behaviour that would establish a relation where the evaluator refuses causes a test to fail."
+ ],
+ "summary": "Add a retained digest of each invocation's textual output and establish invocation-to-artifact produced_by relations by recomputation. 106 comparison artifacts already carry governed produced_by seeds that assert the relation without retaining evidence to reconstruct it: the outcome block carries no content digest, and text_chars agreeing with a response length is satisfied by any string of that length. This slice adds the missing primitive computed from the single authoritative value in compare_providers.py, keys response attribution to a retained per-section invocation_id with the model line demoted to a consistency check, and implements an evaluator that derives the relation from evidence rather than reading the seed's authoritative flag. Amended after reviewing-executor review: historical-evidence counts corrected (30 outcome blocks, 182 without, 0 digests), the composability rationale narrowed to what the evidence supports, an exact-text round-trip falsifier added, and the digest made operationally required for new captures while remaining schema-optional. No traversal, no retrofit, no persistence decision.",
+ "title": "Invocation output binding and produced_by establishment"
 }
