@@ -231,13 +231,13 @@
     {
       "category": "provenance_semantics",
       "gap_id": "GAP-0008",
-      "name": "Evidence ancestry is undefined and unpopulated, and six constraints depend on it",
+      "name": "Evidence ancestry is defined and one artifact-to-invocation edge class is implemented; the graph is not composable",
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0008.json",
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-20T10:39:06+00:00",
+  "generated_at": "2026-08-20T10:54:58+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -461,7 +461,7 @@
       "source_record": "GAP-0007"
     },
     {
-      "risk": "C3 as corrected in v9.1 forbids an invocation from adjudicating a claim whose evidence ancestry contains an equivalent executor, and refuses when the relation is unresolved. With ancestry undefined and unpopulated, that prohibition cannot be evaluated for any real claim: there is no set of invocations to check the adjudicating executor against. The constraint is sound, its equivalence half is now implemented, and it remains unevaluable because its other half names something the ontology does not define. The specific hazard is that a future implementation reads the fields that exist, finds them empty, and reports no conflict. An empty ancestry is indistinguishable from an uncaptured one, so absence of a recorded conflict would be presented as absence of a conflict. That is the pattern the A2 and A5 corrections removed from this ontology in August: the existence of a field treated as evidence of the property it names.",
+      "risk": "C3 remains unevaluable for any real claim, and the shape of the remaining gap is easy to mistake for progress. Its equivalence half resolves and blocks for every live pair under DECISION-20260814-0001. Its ancestry half now returns coverage complete for two invocations, which reads like success but establishes only that a named artifact reached those executors. C3 asks whether an equivalent executor appears in a claim's evidence ancestry; with no invocation-to-invocation edge, no executor can appear in any ancestry, so the constraint cannot be evaluated however many artifact edges accumulate. The specific hazard is that a future implementation composes what exists, finds no executor conflict because none is representable, and reports independence. C14 forbids reading a negative traversal as independence, and ancestry_edges reports coverage alongside edges for that reason, but the guard is one function's discipline rather than a property of the graph.",
       "source_field": "risk",
       "source_record": "GAP-0008"
     },
@@ -789,10 +789,10 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0008",
-      "target": "Definition before code, in this order, because writing traversal first would reverse the ontology-first discipline this project has repeatedly had to unwind: empty and untyped provenance, then traversal code, then deciding later what its edges meant. (1) Define artifact-level evidence ancestry in ABS-0004, as an amendment requiring its own admission. (2) State which recorded edges participate: at minimum the Invocation parent run reference, spawned, and the EffectiveInputManifest reference. (3) State the traversal semantics and the conservative result when edges are absent or incomplete, which under P5 must be unresolved rather than a default of independent. (4) Populate the existing provenance fields on one governed path, which is capability work touching scripts/compare_providers.py and the InvocationRecord it writes, and which needs a plan and a warrant. (5) Only then implement traversal. Not claim-level derivation: 4.15 already states that would overclaim."
+      "target": "Not generalised traversal. A traversal over one edge class is architecturally uninteresting: with only artifact-to-invocation edges there is no chain to walk. The next slice should add a second directional edge class that COMPOSES with the first. Two candidates are named by Section 4.19 and by the completed plan: an invocation-to-artifact produced_by relation, and content-addressed output-to-effective-input linkage. produced_by is the more promising because it composes immediately: invocation A produced_by artifact A, artifact A effective input of invocation B, therefore invocation A is an ancestor of invocation B under Section 4.19's transitive closure, which is the relation C3 asks about. MEASURE BEFORE CHOOSING, as was done for C7 and for this gap's own first slice, where the packaging executor's cost estimates were wrong twice. The measurement is: of the 139 comparison artifacts, how many can already be unambiguously attributed to the InvocationRecords that produced them, and what retained evidence establishes that attribution? If attribution is nearly represented, produced_by is the cheaper slice. If it is not, output digesting may be the cleaner primitive. Build neither until the measurement says which."
     }
   ],
-  "repo_head": "316d26a101bf6ecb25e214583543f5f23529e2e8",
+  "repo_head": "c174a972a14a24df693ac572c9dd943835fa9ccb",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
