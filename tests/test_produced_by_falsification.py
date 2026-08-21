@@ -107,13 +107,21 @@ def make_artifact(
         responses[provider] = data
     extra = None
     if seeds is not None:
+        # Exactly the shape produced_by_references emits: the artifact is
+        # the source, the invocation is the target. The v1 fixture invented
+        # a shape ("invocation_id" key) that the v1 parser happened to
+        # accept, so the tests validated the evaluator against a fiction;
+        # the deliberate run's seed_not_found refusal exposed both.
         extra = {
             "invocation_produced_by": [
                 {
-                    "invocation_id": inv,
-                    "relation": "produced_by",
+                    "source_id": "COMP-9999",
+                    "predicate": "produced_by",
+                    "target_id": inv,
                     "relation_source": "future_edge_seed",
                     "authoritative": False,
+                    "scope": "invocation_provenance_slice_a",
+                    "evidence": f"docs/invocations/{inv}.json",
                 }
                 for inv in seeds
             ]

@@ -23,8 +23,8 @@ an enumerated unresolved, never an empty result):
 
   no_outcome_block               record carries no outcome block
   outcome_without_output_digest  outcome present, digest absent
-  seed_not_found                 artifact has no produced_by seed naming
-                                 the record
+  seed_not_found                 artifact has no produced_by seed whose
+                                 target_id names the record
   attributed_section_not_found   no parseable section carries the record's
                                  invocation_id
   ambiguous_attribution          more than one section carries it, or the
@@ -162,16 +162,20 @@ def _parse_seeds(artifact_text: str) -> list[str] | None:
                 return None
             if isinstance(payload, list):
                 for item in payload:
+                    # Real seed shape (produced_by_references): the artifact
+                    # is the source and the invocation is the target, so the
+                    # candidate id is target_id. The v1 evaluator read
+                    # source_id, and its fixture invented a shape the parser
+                    # happened to handle, so 25 tests passed against a
+                    # fiction; the deliberate establishment run refused with
+                    # seed_not_found and exposed both. Corrected here;
+                    # the fixture now emits the real shape.
                     if (
                         isinstance(item, Mapping)
                         and item.get("predicate") == "produced_by"
-                        and isinstance(item.get("source_id"), str)
+                        and isinstance(item.get("target_id"), str)
                     ):
-                        seed_ids.append(item["source_id"])
-                    elif isinstance(item, Mapping) and isinstance(
-                        item.get("invocation_id"), str
-                    ):
-                        seed_ids.append(item["invocation_id"])
+                        seed_ids.append(item["target_id"])
 
     if fence is not None:
         return None
