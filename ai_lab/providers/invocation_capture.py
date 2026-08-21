@@ -17,6 +17,8 @@ import uuid
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from ai_lab.provenance.produced_by import output_text_digest
+
 from ai_lab.providers.invocation_record import (
     ATTESTATION_PARTIAL,
     CAPTURE_PATH_COMPARE_PROVIDERS,
@@ -129,7 +131,7 @@ def outcome_block(outcome: Any | None) -> dict[str, Any] | None:
 
     if outcome is None:
         return None
-    return {
+    block = {
         "stop_reason": outcome.stop_reason,
         "stop_reason_field": outcome.stop_reason_field,
         "input_tokens": outcome.input_tokens,
@@ -137,6 +139,17 @@ def outcome_block(outcome: Any | None) -> dict[str, Any] | None:
         "content_block_types": list(outcome.content_block_types),
         "text_chars": outcome.text_chars,
     }
+    # PLAN-20260817-0002: retained digest of the invocation's textual output.
+    # outcome.text is the same immutable value assigned to `answer` in
+    # scripts/compare_providers.py and incorporated verbatim into the
+    # comparison artifact (single-source constraint: no re-read, no
+    # normalization, no reconstruction). Operationally required for a new
+    # successful capture with textual output; schema-optional so the 30
+    # historical outcome blocks remain valid.
+    text = getattr(outcome, "text", None)
+    if isinstance(text, str):
+        block["output_text_digest"] = output_text_digest(text)
+    return block
 
 
 def capture_provider_invocation(

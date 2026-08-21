@@ -145,6 +145,17 @@ OUTCOME_FIELDS = (
     "text_chars",
 )
 
+# PLAN-20260817-0002. Optional in schema v1 so the 30 historical outcome
+# blocks remain valid; operationally required for a new successful capture
+# with textual output (its absence there blocks completion and establishes
+# no evidence). "sha256:" + hex over the UTF-8 bytes of exactly the text
+# the provider returned, computed by the capture path from the same value
+# the comparison artifact incorporates.
+OUTCOME_OPTIONAL_FIELDS = (
+    "output_text_digest",
+)
+_OUTPUT_TEXT_DIGEST_RE = __import__("re").compile(r"^sha256:[0-9a-f]{64}$")
+
 IDENTITY_FIELDS_V1 = (
     "schema_version",
     "capture_path",
@@ -349,7 +360,7 @@ def _validate_outcome(outcome: Mapping[str, Any], path: str) -> None:
     validates.
     """
 
-    unexpected = set(outcome) - set(OUTCOME_FIELDS)
+    unexpected = set(outcome) - set(OUTCOME_FIELDS) - set(OUTCOME_OPTIONAL_FIELDS)
     if unexpected:
         raise InvocationRecordError(
             f"{path} has unknown fields: {sorted(unexpected)}; "
@@ -381,6 +392,13 @@ def _validate_outcome(outcome: Mapping[str, Any], path: str) -> None:
     if not isinstance(blocks, list) or any(not isinstance(b, str) or not b for b in blocks):
         raise InvocationRecordError(
             f"{path}.content_block_types must be a list of non-empty strings (may be empty)"
+        )
+    digest = outcome.get("output_text_digest")
+    if digest is not None and (
+        not isinstance(digest, str) or not _OUTPUT_TEXT_DIGEST_RE.match(digest)
+    ):
+        raise InvocationRecordError(
+            f"{path}.output_text_digest must be sha256:<64 lowercase hex> when present"
         )
     if outcome["stop_reason"] is not None and outcome["stop_reason_field"] is None:
         raise InvocationRecordError(

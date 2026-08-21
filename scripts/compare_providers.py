@@ -56,13 +56,19 @@ def utc_now_iso() -> str:
 
 def markdown_escape_fence(text: str) -> str:
     """
-    Prevent accidental Markdown fence breakage.
+    Prevent Markdown fence breakage, including adversarial content.
 
-    If a provider response contains triple backticks, use a longer fence.
+    The fence must be a backtick run that cannot occur as a line of the
+    content it fences. A single escalation (``` to ````) is insufficient:
+    content containing both breaks the longer fence too (PLAN-20260817-0002
+    STRUCTURAL MARKER finding, fence fix approved by the operator
+    2026-08-20). Choose one backtick longer than the longest backtick run
+    anywhere in the content, with a minimum of three.
     """
-    if "```" in text:
-        return "````"
-    return "```"
+    longest = 0
+    for run in re.findall(r"`+", text):
+        longest = max(longest, len(run))
+    return "`" * max(3, longest + 1)
 
 
 def slugify(text: str) -> str:
@@ -169,11 +175,20 @@ def build_markdown_artifact(
     for provider_name, data in responses.items():
         response = data["response"]
         fence = markdown_escape_fence(response)
-        lines.extend(
+        section = [
+            f"## {provider_name} Response",
+            "",
+            f"- model: `{data['model']}`",
+        ]
+        # PLAN-20260817-0002: identity by retained invocation_id. The model
+        # line above is a consistency check and the heading is display only;
+        # attribution keys on this line. Absent for responses captured
+        # without a record, which renders the historical format.
+        invocation_id = data.get("invocation_id")
+        if invocation_id:
+            section.append(f"- invocation_id: `{invocation_id}`")
+        section.extend(
             [
-                f"## {provider_name} Response",
-                "",
-                f"- model: `{data['model']}`",
                 "",
                 fence,
                 response,
@@ -181,6 +196,7 @@ def build_markdown_artifact(
                 "",
             ]
         )
+        lines.extend(section)
 
     return "\n".join(lines).rstrip() + "\n"
 
@@ -637,6 +653,10 @@ def main() -> int:
             "model": model,
             "response": answer,
         }
+        if record is not None:
+            # Same flow, no new mapping: the identifier the capture path
+            # returned for exactly this call attributes exactly this section.
+            responses[provider.name]["invocation_id"] = record["invocation_id"]
         print(answer)
         print()
 
