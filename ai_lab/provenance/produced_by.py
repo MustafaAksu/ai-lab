@@ -5,10 +5,18 @@ PLAN-20260817-0002 under WARR-20260820-0001. One primitive and one relation:
   - output_text_digest: "sha256:" + hex over the UTF-8 bytes of exactly the
     provider's textual output, computed by the capture path from the same
     value the comparison artifact incorporates.
-  - evaluate_produced_by: establishes an invocation-to-artifact produced_by
+  - evaluate_produced_by: establishes an artifact-to-invocation produced_by
     relation by recomputation, or returns unresolved with an enumerated
     reason. It never reads a seed's authoritative flag and never selects
     among ambiguous candidates.
+
+    Direction, per the predicate registry: the artifact is the source and
+    the invocation is the target — COMP produced_by INV means the artifact
+    was produced by that invocation. Invocation-to-artifact ancestry is the
+    registered inverse, produces, and is not emitted here. The admitted
+    plan and warrant used the shorthand "invocation-to-artifact
+    produced_by"; that wording error is recorded in the completion
+    verification rather than silently rewritten in admitted records.
 
 The parser is fence-aware: content inside a fenced block is response bytes
 and is never read as a section heading, metadata line, or seed, so provider
@@ -21,10 +29,26 @@ metadata and are not read for attribution.
 Refusal reasons, exactly one per distinct failure (P5: absent evidence is
 an enumerated unresolved, never an empty result):
 
+  invalid_invocation_record      the record fails the canonical
+                                 InvocationRecord validator; establishment
+                                 requires a record the repository itself
+                                 accepts (completion-review finding: the
+                                 v2 evaluator established a stripped
+                                 record the validator rejects)
   no_outcome_block               record carries no outcome block
   outcome_without_output_digest  outcome present, digest absent
-  seed_not_found                 artifact has no produced_by seed whose
-                                 target_id names the record
+  seed_not_found                 artifact has no seed asserting exactly
+                                 (this artifact, produced_by, this record);
+                                 a seed naming a different source artifact
+                                 does not count (completion-review finding:
+                                 the v2 evaluator accepted a foreign
+                                 source_id)
+  artifact_identity_not_found    the artifact carries no parseable
+                                 comparison_id, so the seed's source
+                                 cannot be checked against it
+  invalid_seed_metadata          a seed metadata line is not valid JSON
+                                 (e.g. the one legacy Python-repr
+                                 serialization)
   attributed_section_not_found   no parseable section carries the record's
                                  invocation_id
   ambiguous_attribution          more than one section carries it, or the
@@ -48,10 +72,14 @@ _HEADING_RE = re.compile(r"^## (?P<name>.+) Response$")
 _FENCE_RE = re.compile(r"^(?P<fence>`{3,})$")
 _INVOCATION_LINE_RE = re.compile(r"^- invocation_id: `(?P<id>[^`]+)`$")
 _SEED_LINE_RE = re.compile(r"^- invocation_produced_by: `(?P<json>.*)`$")
+_COMPARISON_ID_RE = re.compile(r"^- comparison_id: `(?P<id>[^`]+)`$")
 
+REASON_INVALID_RECORD = "invalid_invocation_record"
 REASON_NO_OUTCOME = "no_outcome_block"
 REASON_NO_DIGEST = "outcome_without_output_digest"
 REASON_NO_SEED = "seed_not_found"
+REASON_NO_ARTIFACT_ID = "artifact_identity_not_found"
+REASON_BAD_SEED = "invalid_seed_metadata"
 REASON_NO_SECTION = "attributed_section_not_found"
 REASON_AMBIGUOUS = "ambiguous_attribution"
 REASON_MISMATCH = "digest_mismatch"
@@ -132,16 +160,49 @@ def _parse_sections(artifact_text: str) -> list[dict[str, Any]] | None:
 _CONFLICT = object()
 
 
-def _parse_seeds(artifact_text: str) -> list[str] | None:
-    """Invocation ids named by produced_by seeds in the artifact metadata.
+class _SeedParseError(Exception):
+    """Seed metadata exists but is not valid JSON (invalid_seed_metadata)."""
+
+
+def _parse_artifact_identity(artifact_text: str) -> str | None:
+    """The artifact's retained comparison_id, or None when absent."""
+
+    lines = artifact_text.split("\n")
+    fence: str | None = None
+    for line in lines:
+        if fence is not None:
+            if line == fence:
+                fence = None
+            continue
+        fence_match = _FENCE_RE.match(line)
+        if fence_match:
+            fence = fence_match.group("fence")
+            continue
+        ident = _COMPARISON_ID_RE.match(line)
+        if ident:
+            return ident.group("id")
+    return None
+
+
+def _parse_seeds(artifact_text: str) -> list[tuple[str, str]] | None:
+    """(source_id, target_id) pairs of produced_by seeds in the metadata.
 
     Fence-aware for the same reason as section parsing. Returns None when
-    the framing is unparseable, [] when no seed line exists.
+    the framing is unparseable (unterminated fence), [] when no seed line
+    exists, and raises _SeedParseError when a seed line is present but is
+    not valid JSON (the one legacy Python-repr serialization is this case).
+
+    The full pair is returned because the seed asserts a whole relation:
+    (artifact, produced_by, invocation). The v1 evaluator read source_id
+    where the invocation lives in target_id (exposed by the deliberate
+    run); the v2 evaluator matched target_id alone, so a seed copied from
+    another artifact could establish this one (exposed by the completion
+    review). The caller must check both ends.
     """
 
     lines = artifact_text.split("\n")
     fence: str | None = None
-    seed_ids: list[str] = []
+    pairs: list[tuple[str, str]] = []
     found = False
 
     for line in lines:
@@ -159,27 +220,20 @@ def _parse_seeds(artifact_text: str) -> list[str] | None:
             try:
                 payload = json.loads(seed.group("json"))
             except json.JSONDecodeError:
-                return None
+                raise _SeedParseError()
             if isinstance(payload, list):
                 for item in payload:
-                    # Real seed shape (produced_by_references): the artifact
-                    # is the source and the invocation is the target, so the
-                    # candidate id is target_id. The v1 evaluator read
-                    # source_id, and its fixture invented a shape the parser
-                    # happened to handle, so 25 tests passed against a
-                    # fiction; the deliberate establishment run refused with
-                    # seed_not_found and exposed both. Corrected here;
-                    # the fixture now emits the real shape.
                     if (
                         isinstance(item, Mapping)
                         and item.get("predicate") == "produced_by"
+                        and isinstance(item.get("source_id"), str)
                         and isinstance(item.get("target_id"), str)
                     ):
-                        seed_ids.append(item["target_id"])
+                        pairs.append((item["source_id"], item["target_id"]))
 
     if fence is not None:
         return None
-    return seed_ids if (found or seed_ids) else []
+    return pairs if (found or pairs) else []
 
 
 def _unresolved(invocation_id: str, reason: str) -> dict[str, Any]:
@@ -197,6 +251,10 @@ def evaluate_produced_by(
     """
 
     invocation_id = str(record.get("invocation_id", ""))
+
+    reason = _record_validation_guard(record)
+    if reason is not None:
+        return _unresolved(invocation_id, reason)
 
     reason = _record_evidence_guard(record)
     if reason is not None:
@@ -217,6 +275,28 @@ def evaluate_produced_by(
     return {"status": "established", "reason": None, "invocation_id": invocation_id}
 
 
+def _record_validation_guard(record: Mapping[str, Any]) -> str | None:
+    """The record must pass the canonical InvocationRecord validator.
+
+    Completion-review finding: the v2 evaluator established a record
+    stripped to invocation_id and outcome, which the repository's own
+    validator rejects. Establishment requires a record the repository
+    accepts, checked by invoking the canonical validator rather than
+    reproducing a subset of its rules here.
+    """
+
+    from ai_lab.providers.invocation_record import (
+        InvocationRecordError,
+        validate_invocation_record,
+    )
+
+    try:
+        validate_invocation_record(record)
+    except InvocationRecordError:
+        return REASON_INVALID_RECORD
+    return None
+
+
 def _record_evidence_guard(record: Mapping[str, Any]) -> str | None:
     """The record must carry an outcome block with a well-formed digest."""
 
@@ -230,16 +310,25 @@ def _record_evidence_guard(record: Mapping[str, Any]) -> str | None:
 
 
 def _seed_guard(artifact_text: str, invocation_id: str) -> str | None:
-    """The artifact must carry a produced_by seed naming this record.
+    """The artifact must seed exactly (this artifact, produced_by, record).
 
-    The seed names the candidate to check; its authoritative flag is not
-    read anywhere in this module (plan constraint).
+    The whole candidate relation is checked: the seed's source_id must be
+    the artifact's own retained comparison_id and its target_id must be
+    the record. A seed copied from another artifact establishes nothing
+    (completion-review finding). The seed names the candidate to check;
+    its authoritative flag is not read anywhere in this module.
     """
 
-    seeds = _parse_seeds(artifact_text)
+    artifact_id = _parse_artifact_identity(artifact_text)
+    if artifact_id is None:
+        return REASON_NO_ARTIFACT_ID
+    try:
+        seeds = _parse_seeds(artifact_text)
+    except _SeedParseError:
+        return REASON_BAD_SEED
     if seeds is None:
         return REASON_AMBIGUOUS
-    if invocation_id not in seeds:
+    if (artifact_id, invocation_id) not in seeds:
         return REASON_NO_SEED
     return None
 

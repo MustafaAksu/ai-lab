@@ -146,3 +146,53 @@ def test_exactness_mutation_stripping_extractor_converts_mismatch_to_match(monke
         "a stripping digest passes the constructed mismatch: exact bytes "
         "are load-bearing"
     )
+
+
+def _permit_validation(record):
+    return None
+
+
+def test_validation_guard_is_load_bearing(monkeypatch):
+    """Completion-review hole 1 under mutation: with canonical validation
+    permissive, the stripped record establishes again."""
+    from tests.test_produced_by_falsification import sha256_hex
+
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    full = make_record(INV_A, digest_of=text)
+    stripped = {"invocation_id": full["invocation_id"], "outcome": full["outcome"]}
+    assert produced_by.evaluate_produced_by(art, stripped)["reason"] == "invalid_invocation_record"
+    monkeypatch.setattr(produced_by, "_record_validation_guard", _permit_validation)
+    mutant = produced_by.evaluate_produced_by(art, stripped)
+    assert mutant["status"] == "established", (
+        "with validation permissive the stripped record establishes: the "
+        "validation guard is load-bearing"
+    )
+
+
+def test_seed_source_check_is_load_bearing(monkeypatch):
+    """Completion-review hole 2 under mutation: a target-only seed guard
+    accepts the foreign-source seed the full-relation guard refuses."""
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    foreign = art.replace('"source_id": "COMP-9999"', '"source_id": "COMP-8888"')
+    rec = make_record(INV_A, digest_of=text)
+    assert produced_by.evaluate_produced_by(foreign, rec)["reason"] == "seed_not_found"
+
+    def target_only_guard(artifact_text, invocation_id):
+        try:
+            seeds = produced_by._parse_seeds(artifact_text)
+        except produced_by._SeedParseError:
+            return produced_by.REASON_BAD_SEED
+        if seeds is None:
+            return produced_by.REASON_AMBIGUOUS
+        if invocation_id not in [t for (_, t) in seeds]:
+            return produced_by.REASON_NO_SEED
+        return None
+
+    monkeypatch.setattr(produced_by, "_seed_guard", target_only_guard)
+    mutant = produced_by.evaluate_produced_by(foreign, rec)
+    assert mutant["status"] == "established", (
+        "the v2 target-only guard accepts the copied seed: checking the "
+        "whole relation is load-bearing"
+    )

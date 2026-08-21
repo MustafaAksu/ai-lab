@@ -65,34 +65,66 @@ def sha256_hex(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+# A real retained record as the fixture template, so every fixture is a
+# record the canonical validator accepts. The v2 fixture was a minimal
+# stub that could not validate; when the completion review added canonical
+# validation to the evaluator, every stub refused — the same
+# fixture-vs-reality lesson as the invented seed shape, caught the same
+# review cycle.
+_TEMPLATE_PATH = REPO_ROOT / "docs" / "invocations" / "INV-bf521665213e8e83.json"
+_TEMPLATE = __import__("json").loads(_TEMPLATE_PATH.read_text())
+
+from ai_lab.providers.invocation_record import invocation_id_for  # noqa: E402
+
+
+def _fixture_record(session_id: str) -> dict:
+    """A canonically valid record derived from a real retained one.
+
+    invocation_id is content-addressed over IDENTITY_FIELDS_V1, so fixtures
+    cannot invent ids: each fixture varies session_id and recomputes the id
+    the way the system does. INV_A and INV_B below are those computed ids.
+    """
+    import copy
+
+    record = copy.deepcopy(_TEMPLATE)
+    record["session_id"] = session_id
+    record["invocation_id"] = invocation_id_for(record)
+    return record
+
+
+INV_A = _fixture_record("produced-by-fixture-a")["invocation_id"]
+INV_B = _fixture_record("produced-by-fixture-b")["invocation_id"]
+_SESSION_FOR = {INV_A: "produced-by-fixture-a", INV_B: "produced-by-fixture-b"}
+
+
 def make_record(
-    invocation_id: str = "INV-aaaaaaaaaaaaaaaa",
+    invocation_id: str = None,
     *,
     outcome: dict | None | str = "default",
     digest_of: str | None = None,
 ) -> dict:
-    """Minimal InvocationRecord stub carrying the fields the evaluator reads."""
-    record = {
-        "invocation_id": invocation_id,
-        "executor": {"kind": "model", "reference": "claude-sonnet-5"},
-    }
-    if outcome == "default":
-        outcome = {
-            "stop_reason": "end_turn",
-            "text_chars": 0,
-            "content_block_types": ["text"],
-        }
-    if outcome is not None:
+    """A canonically valid InvocationRecord for INV_A or INV_B."""
+    if invocation_id is None:
+        invocation_id = INV_A
+    record = _fixture_record(_SESSION_FOR[invocation_id])
+    assert record["invocation_id"] == invocation_id
+    if outcome is None:
+        record.pop("outcome", None)
+        return record
+    if outcome != "default":
         record["outcome"] = dict(outcome)
-        if digest_of is not None:
-            record["outcome"]["output_text_digest"] = sha256_hex(digest_of)
-            record["outcome"]["text_chars"] = len(digest_of)
+    else:
+        record["outcome"].pop("output_text_digest", None)
+    if digest_of is not None:
+        record["outcome"]["output_text_digest"] = sha256_hex(digest_of)
+        record["outcome"]["text_chars"] = len(digest_of)
     return record
 
 
 def make_artifact(
     sections: list[tuple[str, str, str | None]],
     seeds: list[str] | None = None,
+    comparison_id: str = "COMP-9999",
 ) -> str:
     """Build a real artifact via build_markdown_artifact.
 
@@ -115,7 +147,7 @@ def make_artifact(
         extra = {
             "invocation_produced_by": [
                 {
-                    "source_id": "COMP-9999",
+                    "source_id": comparison_id,
                     "predicate": "produced_by",
                     "target_id": inv,
                     "relation_source": "future_edge_seed",
@@ -131,13 +163,9 @@ def make_artifact(
         responses=responses,
         created_at="2026-08-20T00:00:00+00:00",
         command="test",
-        comparison_id="COMP-9999",
+        comparison_id=comparison_id,
         extra_metadata=extra,
     )
-
-
-INV_A = "INV-aaaaaaaaaaaaaaaa"
-INV_B = "INV-bbbbbbbbbbbbbbbb"
 
 
 # --- POSITIVE -------------------------------------------------------------
@@ -397,3 +425,94 @@ def test_historical_format_without_invocation_id_yields_unresolved():
 def test_digest_function_convention():
     assert output_text_digest("x") == sha256_hex("x")
     assert output_text_digest("x") != output_text_digest("x\n")
+
+
+# --- COMPLETION-REVIEW FALSIFIERS (Sol, 2026-08-21) ----------------------
+# Two establishment holes the v2 evaluator had, found by the reviewing
+# executor against the real COMP-0141, both reproduced before acceptance.
+
+
+def test_invalid_record_never_establishes():
+    """The v2 evaluator established a record stripped to invocation_id and
+    outcome, which the canonical validator rejects. Establishment requires
+    a record the repository itself accepts."""
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    full = make_record(INV_A, digest_of=text)
+    stripped = {"invocation_id": full["invocation_id"], "outcome": full["outcome"]}
+    result = evaluate_produced_by(art, stripped)
+    assert result["status"] == "unresolved"
+    assert result["reason"] == "invalid_invocation_record"
+
+
+def test_foreign_source_seed_never_establishes():
+    """The v2 evaluator matched target_id alone, so a seed copied from
+    another artifact established this one. The whole candidate relation
+    (this artifact, produced_by, this record) must be seeded."""
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    rec = make_record(INV_A, digest_of=text)
+    assert evaluate_produced_by(art, rec)["status"] == "established"
+    foreign = art.replace('"source_id": "COMP-9999"', '"source_id": "COMP-8888"')
+    assert foreign != art
+    result = evaluate_produced_by(foreign, rec)
+    assert result["status"] == "unresolved"
+    assert result["reason"] == "seed_not_found"
+
+
+def test_missing_artifact_identity_fails_closed():
+    """Without a retained comparison_id the seed's source cannot be checked
+    against the artifact, so nothing establishes."""
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    stripped = "\n".join(
+        line for line in art.split("\n") if not line.startswith("- comparison_id:")
+    )
+    rec = make_record(INV_A, digest_of=text)
+    result = evaluate_produced_by(stripped, rec)
+    assert result["status"] == "unresolved"
+    assert result["reason"] == "artifact_identity_not_found"
+
+
+def test_malformed_seed_metadata_has_its_own_reason():
+    """A seed line that is not valid JSON (the one legacy Python-repr
+    serialization is this case) is syntactically invalid candidate
+    metadata, distinct from structural ambiguity."""
+    text = "content"
+    art = make_artifact([("Claude", text, INV_A)], seeds=[INV_A])
+    line = next(l for l in art.split("\n") if l.startswith("- invocation_produced_by:"))
+    repr_line = line.replace('"', "'").replace("false", "False")
+    broken = art.replace(line, repr_line)
+    assert broken != art
+    rec = make_record(INV_A, digest_of=text)
+    result = evaluate_produced_by(broken, rec)
+    assert result["status"] == "unresolved"
+    assert result["reason"] == "invalid_seed_metadata"
+
+
+def test_new_capture_with_text_populates_digest_and_without_it_establishes_nothing():
+    """Operational requirement (warrant condition 6): the capture path
+    populates the digest for a new successful capture with textual output,
+    and a record missing it establishes no evidence."""
+    from ai_lab.providers.invocation_capture import outcome_block
+    from ai_lab.providers.provider import ProviderOutcome
+
+    provider_outcome = ProviderOutcome(
+        text="captured answer",
+        stop_reason="end_turn",
+        stop_reason_field="stop_reason",
+        input_tokens=1,
+        output_tokens=2,
+        content_block_types=["text"],
+    )
+    block = outcome_block(provider_outcome)
+    assert block["output_text_digest"] == sha256_hex("captured answer"), (
+        "the capture path must populate the digest from the outcome text"
+    )
+
+    art = make_artifact([("Claude", "captured answer", INV_A)], seeds=[INV_A])
+    rec = make_record(INV_A, digest_of="captured answer")
+    del rec["outcome"]["output_text_digest"]
+    result = evaluate_produced_by(art, rec)
+    assert result["status"] == "unresolved"
+    assert result["reason"] == "outcome_without_output_digest"
