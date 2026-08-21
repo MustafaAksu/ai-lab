@@ -1,0 +1,28 @@
+{
+ "author": "operator",
+ "conditions": [
+  "This warrant records completion of exactly the admitted slice and authorizes no further work. GAP-0008 remains open: both ancestry edge classes are implemented, and no governed instance exists in which an artifact established as produced_by is also consumed through a ContextManifest edge, so no composable invocation-to-invocation path exists or is claimed.",
+  "The established relations are the two of COMP-0141. The 212 historical seed references remain unresolved by their enumerated reasons, no seed is promoted, and the evaluator never reads a seed's authoritative flag.",
+  "The direction correction stands as recorded: the registry predicate is artifact produced_by invocation, with registered inverse produces; the admitted plan and warrant's 'invocation-to-artifact produced_by' shorthand is a recorded wording error in those records, which are not edited.",
+  "Reliance on the produced_by evaluator for any future governance claim inherits the falsification discipline: the nine refusal reasons and the mutation-tested guards define its verified envelope, and behaviour outside that envelope is unverified, not presumed."
+ ],
+ "created_at": "2026-08-21T00:00:00+00:00",
+ "decision": "admit",
+ "evidence_ids": [
+  "PLAN-20260817-0002",
+  "WARR-20260820-0001",
+  "VERIFY-20260821-0001",
+  "CAP-0015",
+  "CAP-0001",
+  "GAP-0008",
+  "DECISION-20260812-0002"
+ ],
+ "reason": "The operator adjudicates PLAN-20260817-0002 complete. VERIFY-20260821-0001 maps all six scope items to evidence: the schema-optional, operationally required output digest computed from the single authoritative value; per-section retained invocation_id attribution; the pure evaluator with canonical record validation, whole-relation seed checking, and nine enumerated refusal reasons; the establishment condition exercised by 30 falsification and 8 mutation tests within an 822-test suite; and the deliberate two-provider run COMP-0141 with both relations established by recomputation. The completion evidence includes three defect cycles retained in full: the seed-direction and fictional-fixture pair exposed by the deliberate run, the two establishment holes (invalid-record establishment and foreign-source seed acceptance) found by the reviewing executor's completion review and reproduced before acceptance, and the content-addressed-identity fixture correction that canonical validation forced. The reviewing executor's final disposition after two completion rounds was pass with two record corrections, both applied and reproduced: nine refusal reasons, and the 212-versus-213 seed-reference discrepancy resolved as a counting-method artifact (a prose citation in COMP-0038 to an invocation seeded by COMP-0037). The warrant records completion at c000150 with the index reconciled at a7bd83f.",
+ "schema_version": "v1",
+ "scope": "Completion warrant for PLAN-20260817-0002, invocation output binding and produced_by establishment. Records that the second evidence-ancestry edge class under ABS-0004 v9.2 Section 4.19 is implemented, verified, falsified, mutation-tested, and exercised against a real two-provider run with both relations established by recomputation rather than assertion. Authorizes no further work: the composable-instance production, traversal, EDGE persistence, historical retrofit, and C3 or C10 enforcement all remain outside every warrant issued to date.",
+ "substrate": "conversation",
+ "target_item_id": "PLAN-20260817-0002",
+ "target_item_type": "plan",
+ "warrant_id": "WARR-20260821-0001",
+ "warrant_state": "supported"
+}

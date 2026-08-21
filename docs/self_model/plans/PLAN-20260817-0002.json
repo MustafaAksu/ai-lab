@@ -21,9 +21,9 @@
   "original_measurement_commit": "0f8b59493253c779a2f0493ee9f33e1f6035ba5e",
   "amendment_measurement_commit": "68f80cfad8002a055ca0f42459fef1d57e8448d3"
  },
- "completed_at": null,
- "completion_verification_id": null,
- "completion_warrant_id": null,
+ "completed_at": "2026-08-21T00:00:00+00:00",
+ "completion_verification_id": "VERIFY-20260821-0001",
+ "completion_warrant_id": "WARR-20260821-0001",
  "constraints": [
   "Implementation is authorized only within the scope admitted by a future admission warrant; any expansion requires a separate proposed and admitted plan.",
   "One primitive and one relation. The primitive is a retained digest of an invocation's textual output. The relation is invocation-to-artifact produced_by, established by recomputation rather than trusted from the seed.",
@@ -56,7 +56,7 @@
   "The digest is computed over the same text the artifact incorporates, obtained from the same value at the single point in compare_providers.py where it exists, rather than from a second reconstruction of what was returned. A separate approximation would create the class of false check that took three attempts to remove from the ContextManifest slice.",
   "Adding a required field to the outcome block would invalidate the 30 records that carry one. The digest is therefore optional in schema, and its absence on a historical record yields unresolved rather than a failed validation. To prevent the optional field from silently remaining absent forever, new successful captures with textual output must populate it, and absence there blocks completion."
  ],
- "next_action": "Implementation under WARR-20260820-0001, falsifying inputs drafted before extraction and evaluation code.",
+ "next_action": "None. Slice complete. GAP-0008 remains open: the composable instance (an artifact established as produced_by consumed through a ContextManifest edge) and traversal are the recorded remaining work.",
  "non_goals": [
   "Invocation-to-invocation ancestry and any traversal that would compose two edge classes.",
   "Producing the governed instance in which an artifact established as produced_by is also consumed through a ContextManifest edge. That instance is what would first make a composable invocation-to-invocation path exist, and it is future work.",
@@ -99,7 +99,7 @@
   "CAP-0015"
  ],
  "source_gap_id": "GAP-0008",
- "status": "admitted",
+ "status": "completed",
  "success_criteria": [
   "POSITIVE. A record with an output digest, an artifact seeding produced_by for it, and a response section carrying its invocation_id whose extracted text recomputes to that digest, yields an established relation.",
   "NO OUTCOME. A historical InvocationRecord with no outcome block yields unresolved with an enumerated reason. 182 of the 212 current records are this case.",
