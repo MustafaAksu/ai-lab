@@ -47,8 +47,8 @@
     "ok": true,
     "severity_counts": {
       "error": 0,
-      "info": 85,
-      "warn": 31
+      "info": 82,
+      "warn": 34
     }
   },
   "capabilities": [
@@ -238,7 +238,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-20T13:05:10+00:00",
+  "generated_at": "2026-08-21T07:10:13+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -806,7 +806,7 @@
       "target": "The measurement this gap previously recommended is complete, and it inverted the expected answer. Recorded here rather than left as a pending instruction. MEASURED at 765e6e22c66736ebb5d35ac5f8a762ba7ed48e54: 106 of 140 comparison artifacts already carry a governed invocation_produced_by relation, emitted by produced_by_references in ai_lab/providers/invocation_capture.py and written at scripts/compare_providers.py. Each names source_id, predicate produced_by, target_id and an evidence path, and each declares itself authoritative false with relation_source future_edge_seed. The remaining 34 are pre-provenance artifacts with no invocation records to attribute to. The predicate registry already defines the inverse, produces, as not emitted in Slice A, so no second predicate is needed to traverse in the ancestry direction. WHY THE SEEDS CANNOT BE PROMOTED. The cited InvocationRecord does not say it produced the artifact, and its outcome block carries stop_reason, token counts, content_block_types and text_chars but no output content digest. An evaluator can establish that the artifact names the record, that the record exists, and that text_chars agrees with the response length; it cannot establish that the output the record describes is the response the artifact incorporated. Agreement on a length is satisfied by any string of that length. Flipping authoritative to true would treat a record naming a property as establishment of the property, which is the pattern corrections A2 and A5 removed from ABS-0004. CONSEQUENCE: output content digesting is the missing evidentiary primitive, and it is a shared prerequisite. It is what would let a produced_by seed be validated rather than trusted, and it is separately required for the content-addressed output-to-effective-input edge class Section 4.19 names. One capability supports both remaining directions. The 106 seeds do not eliminate the need for it; they make it immediately useful. NEXT SLICE, not yet planned: invocation output binding and produced_by establishment. Narrow first outcome: a new invocation retains a digest of its textual output, the corresponding response section of the comparison artifact recomputes to that digest, the existing seed is thereby validated rather than trusted, and one established invocation-to-artifact relation exists. No traversal. Historical seeds are NOT retrofitted: those records have no output digest, and model name, text_chars, timing, session id and the knowledge that one script wrote both files are corroborating consistency checks that do not bind the exact output. Persistence form is deliberately undecided: whether established relations are derived on demand or written as EDGE records should follow the truth condition, not precede it, and the EDGE validator does not currently admit produced_by."
     }
   ],
-  "repo_head": "a1cac3aa4337d9c5345391c8ba316af547b55961",
+  "repo_head": "92c946887f76e3aa5eee36623b21b58ceda99046",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
