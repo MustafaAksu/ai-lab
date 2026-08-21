@@ -232,13 +232,13 @@
     {
       "category": "provenance_semantics",
       "gap_id": "GAP-0008",
-      "name": "Evidence ancestry is defined and one artifact-to-invocation edge class is implemented; the graph is not composable",
+      "name": "Evidence ancestry has both edge classes implemented; no artifact instance composes them and no traversal exists",
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0008.json",
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-21T11:27:45+00:00",
+  "generated_at": "2026-08-21T12:06:32+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -795,15 +795,15 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0006",
-      "target": "The recommended first slice, additive outcome capture with no change to INVOCATION_STATUSES, was implemented and verified on 2026-08-10 under DECISION-20260810-0001 and VERIFY-20260810-0001. It is not pending work. The next slice addresses effective configuration: record what the provider call actually ran with, not only what was supplied. The concrete instance is that reasoning_parameters shows an explicit effort value on five records and an empty object on 205, because one provider's effort variable was set and the other's was not; the records cannot establish equivalent reasoning configuration across witnesses in the same round. A third status value for INVOCATION_STATUSES remains migration-required and reserved to a separate decision."
+      "target": "The recommended first slice, additive outcome capture with no change to INVOCATION_STATUSES, was implemented and verified on 2026-08-10 under DECISION-20260810-0001 and VERIFY-20260810-0001. It is not pending work. The next slice addresses effective configuration: record what the provider call actually ran with, not only what was supplied. The concrete instance is that reasoning_parameters shows an explicit effort value on 7 records and an empty object on 207 (5 and 205 at the last review), because one provider's effort variable was set and the other's was not; the records cannot establish equivalent reasoning configuration across witnesses in the same round. A third status value for INVOCATION_STATUSES remains migration-required and reserved to a separate decision."
     },
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0008",
-      "target": "The measurement this gap previously recommended is complete, and it inverted the expected answer. Recorded here rather than left as a pending instruction. MEASURED at 765e6e22c66736ebb5d35ac5f8a762ba7ed48e54: 106 of 140 comparison artifacts already carry a governed invocation_produced_by relation, emitted by produced_by_references in ai_lab/providers/invocation_capture.py and written at scripts/compare_providers.py. Each names source_id, predicate produced_by, target_id and an evidence path, and each declares itself authoritative false with relation_source future_edge_seed. The remaining 34 are pre-provenance artifacts with no invocation records to attribute to. The predicate registry already defines the inverse, produces, as not emitted in Slice A, so no second predicate is needed to traverse in the ancestry direction. WHY THE SEEDS CANNOT BE PROMOTED. The cited InvocationRecord does not say it produced the artifact, and its outcome block carries stop_reason, token counts, content_block_types and text_chars but no output content digest. An evaluator can establish that the artifact names the record, that the record exists, and that text_chars agrees with the response length; it cannot establish that the output the record describes is the response the artifact incorporated. Agreement on a length is satisfied by any string of that length. Flipping authoritative to true would treat a record naming a property as establishment of the property, which is the pattern corrections A2 and A5 removed from ABS-0004. CONSEQUENCE: output content digesting is the missing evidentiary primitive, and it is a shared prerequisite. It is what would let a produced_by seed be validated rather than trusted, and it is separately required for the content-addressed output-to-effective-input edge class Section 4.19 names. One capability supports both remaining directions. The 106 seeds do not eliminate the need for it; they make it immediately useful. NEXT SLICE, not yet planned: invocation output binding and produced_by establishment. Narrow first outcome: a new invocation retains a digest of its textual output, the corresponding response section of the comparison artifact recomputes to that digest, the existing seed is thereby validated rather than trusted, and one established invocation-to-artifact relation exists. No traversal. Historical seeds are NOT retrofitted: those records have no output digest, and model name, text_chars, timing, session id and the knowledge that one script wrote both files are corroborating consistency checks that do not bind the exact output. Persistence form is deliberately undecided: whether established relations are derived on demand or written as EDGE records should follow the truth condition, not precede it, and the EDGE validator does not currently admit produced_by."
+      "target": "The previously recommended slice, invocation output binding and produced_by establishment, is complete: PLAN-20260817-0002 under WARR-20260820-0001, verified by VERIFY-20260821-0001, completed under WARR-20260821-0001. Recorded here rather than left as a pending instruction. The next slice is the composable instance: one governed run in which an artifact with an established produced_by relation (COMP-0141 or a successor) is selected into a retained ContextManifest and rendered into a subsequent captured invocation's effective input, so that both edge classes hold on one artifact instance and the first real invocation-to-artifact-to-invocation path exists. Traversal is a separate later slice, sequenced after the instance exists so it is not verified together with its own input edges. The Section 4.15 ceiling stands unchanged: artifact-level potential-dependence detection, not claim-level independence proof."
     }
   ],
-  "repo_head": "566d0c8150847e765f0bdb87e31f30a293f97ad7",
+  "repo_head": "0a5868a35e26d9eab22f786b69322241605f7b37",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
