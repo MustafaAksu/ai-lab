@@ -13,6 +13,16 @@
         "id": "WARR-20260722-0001",
         "path": "docs/self_model/warrants/WARR-20260722-0001.json",
         "role": "admission warrant with eight binding conditions"
+      },
+      {
+        "id": "PLAN-20260817-0002",
+        "path": "docs/self_model/plans/PLAN-20260817-0002.json",
+        "role": "admitted output-binding plan, amended through two reviewing-executor rounds"
+      },
+      {
+        "id": "WARR-20260820-0001",
+        "path": "docs/self_model/warrants/WARR-20260820-0001.json",
+        "role": "admission warrant with ten binding conditions"
       }
     ],
     "commits": [
@@ -27,16 +37,32 @@
       {
         "commit": "7f8eacff1f930e1bbe96f48f33e3161d31f8cd6f",
         "role": "Capture fidelity fixes from first-run findings"
+      },
+      {
+        "commit": "92c946887f76e3aa5eee36623b21b58ceda99046",
+        "role": "PLAN-20260817-0002 implementation: output digest, invocation_id attribution, produced_by evaluator, falsification and mutation tests"
+      },
+      {
+        "commit": "703471be3dcd99e47511d947a34f96e17305e33f",
+        "role": "Seed-direction defect fix: parser reads the real seed shape (defect exposed by the deliberate run)"
+      },
+      {
+        "commit": "a6d15b0d39a8873a2aeeac99bcb05c5c275856a1",
+        "role": "Deliberate establishment run: COMP-0141 and two captured invocations with output digests"
+      },
+      {
+        "commit": "312d08be9239521e8bfb1a8d0fa2ee671882d679",
+        "role": "Completion-review corrections: canonical record validation, whole-relation seed check (artifact comparison_id, produced_by, invocation), invalid_seed_metadata and artifact_identity_not_found reasons, capture-path digest falsifier"
       }
     ],
     "files": [
       {
-        "content_hash": "a04a56046e752e208b9c10174401b89711a46ef523aecfaae0c128e0b9eb9e21",
+        "content_hash": "2c2594154bce9e181328591078e606384d46763dc161a5ee2b2d013bd8dee5be",
         "path": "ai_lab/providers/invocation_record.py",
         "role": "schema, validator, identity, serialization, relations"
       },
       {
-        "content_hash": "cbdc1b9c3cf07cc74a3e76ec678bfcc5afb30efd53070185994a7059242806a9",
+        "content_hash": "544635c58302df30090a7b5a841bb864a14c81886670e6cb25072c745804728f",
         "path": "ai_lab/providers/invocation_capture.py",
         "role": "capture surface for the admitted path"
       },
@@ -64,6 +90,21 @@
         "content_hash": "815bc77752a46cfe4152584c53a67c279aefe6cb40e941c8a2415671c2328da6",
         "path": "tests/test_invocation_outcome.py",
         "role": "Outcome capture tests, written as falsifying cases per GAP-0007"
+      },
+      {
+        "content_hash": "9d293c249a5dd73413f1be83dac733bbf4350da0c1249631f2e800cf01703890",
+        "path": "ai_lab/provenance/produced_by.py",
+        "role": "output digest and produced_by evaluator: canonical record validation, fence-aware parsing, whole-relation seed check, identity by retained invocation_id, nine enumerated refusal reasons"
+      },
+      {
+        "content_hash": "feb8e10616cc58d3e20f086d0bfd733893d02bf29d1c631a534516464f96b3e1",
+        "path": "tests/test_produced_by_falsification.py",
+        "role": "falsification set for the plan's success criteria plus completion-review falsifiers; original set written before the evaluator"
+      },
+      {
+        "content_hash": "0cdcd5969dd21453a51d28146bc64a2f144e4aa598bc921779eea0b1efe3bd07",
+        "path": "tests/test_produced_by_mutation.py",
+        "role": "mutation tests demonstrating each guard load-bearing, including the two completion-review holes"
       }
     ],
     "memory_records": []
@@ -74,25 +115,28 @@
     "ai_lab.providers.invocation_record.invocation_id_for and invocation_relative_path (deterministic identity and path)",
     "ai_lab.providers.invocation_record.canonical_invocation_json (byte-stable serialization)",
     "ai_lab.providers.invocation_record.invocation_relations (GraphRelation-shaped Slice A relations)",
-    "ai_lab.providers.invocation_capture.capture_provider_invocation (capture on the admitted path, returns record and error)"
+    "ai_lab.providers.invocation_capture.capture_provider_invocation (capture on the admitted path, returns record and error)",
+    "ai_lab.provenance.produced_by.evaluate_produced_by(artifact_text, record): establishes the artifact-produced_by-invocation relation by recomputation or refuses with one of nine enumerated reasons; invocation-to-artifact ancestry is the registered inverse, produces",
+    "ai_lab.provenance.produced_by.output_text_digest(text): sha256 over the exact UTF-8 bytes, no normalization"
   ],
   "last_verified": {
-    "repo_commit": "6c615d4d104e0dfa068bc34a777e3d580ef0efef",
-    "verification_artifact": "docs/self_model/verifications/VERIFY-20260810-0001.json",
-    "verified_at": "2026-08-10T00:00:00+00:00"
+    "repo_commit": "c0dbb30869a5bba3daec8903a20b85258f524835",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260821-0001.json",
+    "verified_at": "2026-08-21T00:00:00+00:00"
   },
   "limits": [
     "Capture is restricted to scripts/compare_providers.py. No other path emits records, and the validator rejects records claiming any other capture_path.",
     "completeness_attestation is partial_declared_channels_only on this path: the manifest is not declared exhaustive for all effective-input channels, so no captured record qualifies as blind-witness evidence.",
-    "identity_verification_status is unresolved for every model executor; no resolution mechanism exists until Slice B.",
+    "InvocationRecord identity_verification_status remains capture-time unresolved for every model executor and is not mutated by later catalog or equivalence resolution; resolution outcomes live in their own records, not in the capture record.",
     "governance_marker defaults to experimental and stays there until an admission consumer exists.",
-    "Relations are emitted with authoritative false and relation_source future_edge_seed; they are diagnostic seeds, not authoritative graph edges.",
-    "Nothing reads the records. C1 provenance_v1 activation, catalog resolution, roles and authorization, and lineage and admission remain unimplemented.",
+    "Relations are emitted with authoritative false and relation_source future_edge_seed; they are candidate-naming seeds, not authoritative graph edges. For a new-format artifact and a record carrying an output digest, the produced_by evaluator can establish the relation artifact-produced_by-invocation by recomputation; the seed's flag is never read and no seed is promoted.",
+    "Two governed readers of the records now exist: the ancestry evaluator (ContextManifest edge, PLAN-20260817-0001) and the produced_by evaluator (PLAN-20260817-0002). Catalog resolution and model-equivalence resolution exist separately (CAP-0016, executor_equivalence). C1 provenance_v1 activation, role and authorization enforcement, generalized multi-edge traversal, and admission remain unimplemented. No governed instance exists in which an artifact established as produced_by is also consumed through a ContextManifest edge, so no composable invocation-to-invocation path exists.",
     "Records are prospective only; invocations before this capability fall under the ABS-0004 Section 7 pre-provenance boundary.",
     "Execution outcome is captured from 2026-08-10 forward, on the compare_providers path only, in an optional outcome block carrying stop_reason, stop_reason_field, input_tokens, output_tokens, content_block_types and text_chars (VERIFY-20260810-0001). The 182 records captured before that date carry no outcome block and their outcomes cannot be recovered. INVOCATION_STATUSES still admits only success and failure, so an invocation that returned without exception and produced nothing is still recorded status success; the outcome block is what distinguishes it. Admitting a third status value remains migration-required and is reserved to a separate decision under GAP-0006.",
     "execution_profile records supplied rather than effective configuration. A parameter the provider defaulted, rather than one AI-Lab sent, is absent from the record even when it determines the outcome: reasoning_parameters is {} whenever no effort parameter is sent, which is accurate about the request and silent about the effort actually applied.",
     "output_token_limit is recorded for the provider AI-Lab caps and is null for the provider it does not, with max_tokens_source provider_default_unset. No record captures the uncapped endpoint's effective limit, so a comparison round's records cannot establish that its two witnesses had comparable room to answer.",
-    "Pinned evidence for docs/self_model/PREDICATE_REGISTRY.md, tests/test_invocation_record.py does not match the current file contents. Those files were changed before 2026-08-10 by work that did not repin them, and VERIFY-20260810-0001 did not check them. The mismatch is recorded rather than repaired: repinning would assert a verification that has not happened."
+    "Pinned evidence for docs/self_model/PREDICATE_REGISTRY.md, tests/test_invocation_record.py does not match the current file contents. Those files were changed before 2026-08-10 by work that did not repin them, and VERIFY-20260810-0001 did not check them. The mismatch is recorded rather than repaired: repinning would assert a verification that has not happened.",
+    "Output digests exist only for captures at or after 92c9468: 182 historical records carry no outcome block and 30 carry one without a digest, and all remain unresolved by their distinct enumerated reasons. Exactly one artifact, COMP-0035, carries the legacy Python-repr seed serialization; a digest-bearing record evaluated against it refuses with invalid_seed_metadata."
   ],
   "name": "Invocation provenance capture (ABS-0004 Slice A)",
   "recommended_next_actions": [
@@ -108,5 +152,5 @@
   ],
   "schema_version": "v1",
   "status": "implemented",
-  "summary": "Provider calls on the scripts/compare_providers.py path emit atomic InvocationRecords in schema v1: executor reference with identity verification status, requested API model name, service endpoint, session identity, occurred_at, status, governance marker, spawned edges, a minimal EffectiveInputManifest (rendered prompt digest, instruction and tool-schema digests, ContextManifest reference, prior tool-result references, session-state mode, completeness attestation), and an ExecutionProfile (endpoint, requested model name, output-token limit and its source, sampling and reasoning parameters, request flags, SDK runtime version). Records are validated by validate_invocation_record, serialized as byte-stable canonical JSON at deterministic paths under docs/invocations/, and identified by a digest over the enumerated version-scoped subset IDENTITY_FIELDS_V1 so that later slices cannot alter existing identities. Relations are emitted only in GraphRelation shape and only for the seven ABS-0004 Section 5 Slice A predicates. Capture is additive: failures are reported and never abort a provider call, and no consumer reads the records."
+  "summary": "Provider calls on the scripts/compare_providers.py path emit atomic InvocationRecords in schema v1: executor reference with identity verification status, requested API model name, service endpoint, session identity, occurred_at, status, governance marker, spawned edges, a minimal EffectiveInputManifest (rendered prompt digest, instruction and tool-schema digests, ContextManifest reference, prior tool-result references, session-state mode, completeness attestation), and an ExecutionProfile (endpoint, requested model name, output-token limit and its source, sampling and reasoning parameters, request flags, SDK runtime version). Records are validated by validate_invocation_record, serialized as byte-stable canonical JSON at deterministic paths under docs/invocations/, and identified by a digest over the enumerated version-scoped subset IDENTITY_FIELDS_V1 so that later slices cannot alter existing identities. Relations are emitted only in GraphRelation shape and only for the seven ABS-0004 Section 5 Slice A predicates. Capture is additive: failures are reported and never abort a provider call, and two governed evaluators (ancestry and produced_by) read the records; broader consumers remain unimplemented."
 }

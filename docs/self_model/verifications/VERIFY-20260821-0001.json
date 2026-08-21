@@ -1,0 +1,58 @@
+{
+ "artifacts_checked": [
+  "ai_lab/provenance/produced_by.py",
+  "ai_lab/providers/invocation_capture.py",
+  "ai_lab/providers/invocation_record.py",
+  "scripts/compare_providers.py",
+  "tests/test_produced_by_falsification.py",
+  "tests/test_produced_by_mutation.py",
+  "docs/comparisons/COMP-0141-plan-20260817-0002-deliberate-establishment-run.md",
+  "docs/invocations/INV-bf521665213e8e83.json",
+  "docs/invocations/INV-9d3f9a646709af76.json"
+ ],
+ "commands": [
+  {
+   "command": "python -m pytest -q",
+   "exit_code": 0,
+   "summary": "822 passed at c0dbb30, up from 784 at plan admission. 30 tests in tests/test_produced_by_falsification.py implement the plan's success criteria plus the completion-review falsifiers; the original 25 were written before the evaluator existed (warrant condition 7). 8 tests in tests/test_produced_by_mutation.py replace each named guard with permissive behaviour and demonstrate the refusal disappears, so each guard is load-bearing."
+  },
+  {
+   "command": "python scripts/compare_providers.py \"State the single-source principle for evidence binding in one paragraph.\" --title \"PLAN-20260817-0002 deliberate establishment run\"",
+   "exit_code": 0,
+   "summary": "Scope item 5, the deliberate two-provider run at 92c9468. Captured INV-bf521665213e8e83 (gpt-5.6-terra, text_chars 694) and INV-9d3f9a646709af76 (claude-sonnet-5, text_chars 1473), each with a populated outcome.output_text_digest, and wrote COMP-0141 with a retained per-section invocation_id line in both response sections."
+  },
+  {
+   "command": "python - (inline: evaluate_produced_by over COMP-0141 for both captured records; the inline body is reproduced in this record's summary rather than retained as a script)",
+   "exit_code": 0,
+   "summary": "FIRST ATTEMPT, RESULT RETAINED EXPLICITLY: both records refused with seed_not_found. The v1 seed parser read source_id where produced_by_references places the invocation in target_id, and the v1 test fixture had invented a seed shape ('invocation_id' key) the parser happened to accept, so all 25 falsification tests passed against a fiction while the real format refused. Corrected at 703471b: the parser reads the real shape and the fixture emits exactly what produced_by_references writes."
+  },
+  {
+   "command": "python - (inline: evaluate_produced_by over COMP-0141 for both captured records, after 703471b)",
+   "exit_code": 0,
+   "summary": "Both relations established. INV-bf521665213e8e83: status established, reason None, retained digest sha256:749cc3af5b539426ff40f8680b5e94f05fd0c60cb7d8a6b662db1998ed25b2a8 recomputed exactly from the section attributed by its invocation_id. INV-9d3f9a646709af76: status established, reason None, retained digest sha256:ba17d6c65e0807e1fbc78824da9fe97a2440be6aa3da2b005a1185884e22fc47 recomputed likewise. Re-run and re-established at 312d08b under the strengthened guards. The establishment reads the seed only to name the candidate and never reads its authoritative flag."
+  },
+  {
+   "command": "python - (inline: completion-review falsifications, reviewing executor 2026-08-21, reproduced by the packaging executor before acceptance)",
+   "exit_code": 0,
+   "summary": "TWO ESTABLISHMENT HOLES IN THE v2 EVALUATOR, both found by the reviewing executor against the real COMP-0141 and both reproduced before acceptance. HOLE 1: a record stripped to invocation_id and outcome evaluated established while validate_invocation_record rejected it. HOLE 2: the seed guard matched target_id alone, so the real seed with source_id edited to COMP-9999 still established, meaning a seed copied from another artifact could establish this one. Both fixed at 312d08b: a canonical-validation guard refuses invalid_invocation_record, and the seed guard requires the exact triple (artifact's retained comparison_id, produced_by, record's invocation_id). Each fix ships with its falsifier and a mutation test demonstrating the v2 behaviour re-establishes when the guard is made permissive."
+  },
+  {
+   "command": "python scripts/audit_self_model_index.py",
+   "exit_code": 0,
+   "summary": "ok true, verification_outcome verified_current at c0dbb30."
+  }
+ ],
+ "created_at": "2026-08-21T00:00:00+00:00",
+ "recorded_by": {
+  "peer_id": "claude",
+  "role": "assistant",
+  "substrate": "conversation"
+ },
+ "repo_commit": "c0dbb30869a5bba3daec8903a20b85258f524835",
+ "schema_version": "v1",
+ "status": "passed",
+ "summary": "Verified PLAN-20260817-0002 complete against its six scope items, each with its evidence. ITEM 1, output digest primitive: outcome.output_text_digest is schema-optional in invocation_record.py, populated by outcome_block in invocation_capture.py from outcome.text, the same immutable value assigned to answer in compare_providers.py and incorporated verbatim into the artifact; exact-byte round-trip tests cover leading/trailing whitespace and fence-like content, and two live digests exist. ITEM 2, per-section attribution: build_markdown_artifact writes a retained invocation_id line for each response captured with a record; COMP-0141 carries two. ITEM 3, pure evaluator: ai_lab.provenance.produced_by.evaluate_produced_by. ITEM 4, establishment condition: canonical InvocationRecord validation, an exact seeded triple (artifact's retained comparison_id, produced_by, record's invocation_id), exactly one attributed section, and digest equality over exactly-extracted bytes; every other state is unresolved with one of nine enumerated reasons. ITEM 5, completion instance: the deliberate two-provider run produced COMP-0141 with both relations established, one per successfully captured response. ITEM 6, falsification and mutation suite: 30 falsification tests and 8 mutation tests, full suite 822. DIRECTION CORRECTION, RECORDED RATHER THAN REWRITTEN. The predicate registry defines produced_by with the artifact as source and the invocation as target: COMP produced_by INV. The admitted plan and warrant repeatedly used the shorthand 'invocation-to-artifact produced_by', which is directionally wrong; invocation-to-artifact ancestry is the registered inverse, produces. No predicate, seed, or implementation direction changes: the code inspects the existing artifact-produced_by-invocation seeds. The admitted records are not edited; this paragraph is the correction of record, and mutable code documentation and capability records now state the direction correctly. DEFECTS FOUND AFTER IMPLEMENTATION, ALL RETAINED. First, the seed-direction/fictional-fixture pair found by the deliberate run (703471b). Second, the completion review found two establishment holes in the corrected evaluator: establishment of a record the canonical validator rejects, and acceptance of a seed whose source_id names a different artifact; both reproduced, fixed at 312d08b, falsified, and mutation-tested. Third, adding canonical validation exposed that the test fixtures themselves did not validate: invocation_id is content-addressed over identity fields, so fixtures cannot invent ids and now derive them via invocation_id_for exactly as the system does — the third fixture-vs-reality instance this slice, each recorded at its site. HISTORICAL EVIDENCE, MEASURED. Canonical parsing of the 106 historical invocation_produced_by blocks yields 212 seed references to 212 distinct retained InvocationRecords (210 JSON-parseable plus 2 in the repr-era COMP-0035): 182 evaluate no_outcome_block and 30 outcome_without_output_digest. The earlier packaging-executor regex sweep returned 213 because it also matched a prose citation in COMP-0038 to an InvocationRecord actually seeded by COMP-0037; the 212-versus-213 discrepancy recorded unresolved in the admitted plan's amendment block is therefore resolved here as a counting-method artifact, not a duplicate produced_by relation, and the admitted plan is not edited. No historical evaluation reaches seed parsing, because record evidence is checked first. Exactly one artifact, COMP-0035, carries the legacy Python-repr seed serialization; a digest-bearing record evaluated against it would refuse with the enumerated reason invalid_seed_metadata, and no such record exists. Nothing historical is promoted or retrofitted, and the evaluator never reads a seed's authoritative flag. FRAMING CHANGES, OPERATOR-APPROVED. markdown_escape_fence lengthens the fence until its backtick run cannot occur in the content it fences; the prior single escalation was falsified by content containing both fence strings (approval recorded 2026-08-20). PROCESS NOTE. During completion-record transport, superseded draft capability amendments referencing this then-uncommitted verification record were committed ahead of it (7d092a2), failed the seed audit, and were reverted at c0dbb30 before any warrant referenced them; the zip-extraction transport can resurrect stale files and the corrected records ship only after this verification exists. BOUNDARIES THAT REMAIN TRUE. Both edge classes required for an invocation-to-artifact-to-invocation chain are implemented; no governed instance exists in which an artifact established as produced_by is also consumed through a ContextManifest edge, so no composable path is claimed. No traversal, no EDGE persistence, no C3 or C10 enforcement claim.",
+ "target_item_id": "PLAN-20260817-0002",
+ "target_item_type": "plan",
+ "verification_id": "VERIFY-20260821-0001"
+}
