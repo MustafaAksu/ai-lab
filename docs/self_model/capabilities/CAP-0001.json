@@ -26,10 +26,6 @@
       {
         "commit": "bfd0b32a596d9a9665eefc825cdd2b7732170421",
         "role": "memory_refresh"
-      },
-      {
-        "commit": "92c946887f76e3aa5eee36623b21b58ceda99046",
-        "role": "compare_providers.py changed under WARR-20260820-0001: fence lengthening until the fence cannot occur in content (operator-approved), retained per-section invocation_id, digest population via the capture path. Context-inclusion behavior unchanged; repin only."
       }
     ],
     "files": [
@@ -59,7 +55,7 @@
         "role": "interface"
       },
       {
-        "content_hash": "779180d1e96b45cf50b42744d616683f6fc369340a2c446ae1502f127db08b69",
+        "content_hash": "766ee0c3a8524ef943e8d48dffd33c57fef46b2294a9b92d0f84ac936ea7d850",
         "path": "scripts/compare_providers.py",
         "role": "interface"
       },
@@ -123,9 +119,9 @@
     "scripts/compare_providers.py --latest-context --include-l0"
   ],
   "last_verified": {
-    "repo_commit": "a6d15b0d39a8873a2aeeac99bcb05c5c275856a1",
-    "verification_artifact": "docs/self_model/verifications/VERIFY-20260821-0001.json",
-    "verified_at": "2026-08-21T00:00:00+00:00"
+    "repo_commit": "7d438028de70ef396eec8bd5da3ff1881951e156",
+    "verification_artifact": "docs/self_model/verifications/VERIFY-20260817-0001.json",
+    "verified_at": "2026-08-17T00:00:00+00:00"
   },
   "limits": [
     "Explicit L0 inclusion requires user-supplied chunk IDs.",
