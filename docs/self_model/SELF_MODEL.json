@@ -238,7 +238,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-08-21T12:06:32+00:00",
+  "generated_at": "2026-08-21T12:19:53+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -803,7 +803,7 @@
       "target": "The previously recommended slice, invocation output binding and produced_by establishment, is complete: PLAN-20260817-0002 under WARR-20260820-0001, verified by VERIFY-20260821-0001, completed under WARR-20260821-0001. Recorded here rather than left as a pending instruction. The next slice is the composable instance: one governed run in which an artifact with an established produced_by relation (COMP-0141 or a successor) is selected into a retained ContextManifest and rendered into a subsequent captured invocation's effective input, so that both edge classes hold on one artifact instance and the first real invocation-to-artifact-to-invocation path exists. Traversal is a separate later slice, sequenced after the instance exists so it is not verified together with its own input edges. The Section 4.15 ceiling stands unchanged: artifact-level potential-dependence detection, not claim-level independence proof."
     }
   ],
-  "repo_head": "0a5868a35e26d9eab22f786b69322241605f7b37",
+  "repo_head": "5531f3e5e0f069535df9990f901637701754bfc7",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
