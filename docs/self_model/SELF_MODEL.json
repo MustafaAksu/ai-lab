@@ -41,7 +41,8 @@
     "PLAN-20260722-0001",
     "PLAN-20260723-0001",
     "PLAN-20260817-0001",
-    "PLAN-20260817-0002"
+    "PLAN-20260817-0002",
+    "PLAN-20260912-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -170,7 +171,7 @@
   },
   "gap_counts": {
     "closed": 4,
-    "open": 4
+    "open": 5
   },
   "gaps": [
     {
@@ -236,9 +237,17 @@
       "priority": "high",
       "source_path": "docs/self_model/gaps/GAP-0008.json",
       "status": "open"
+    },
+    {
+      "category": "experimental_evidence",
+      "gap_id": "GAP-0009",
+      "name": "Effect of information-equivalent relational organization on unchanged-LLM reasoning is unmeasured",
+      "priority": "medium",
+      "source_path": "docs/self_model/gaps/GAP-0009.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-08-21T12:46:20+00:00",
+  "generated_at": "2026-09-12T20:40:36+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -467,6 +476,11 @@
       "source_record": "GAP-0008"
     },
     {
+      "risk": "Two failure modes would make a result look like evidence when it is not. First, inference leakage: if the organized rendering carries any derived content (intersected domains, composed relations, deduplicated entities, query-ordered handles), an Arm-2 advantage is forced by construction and tests only that a solver was attached; the admission invariants exist to prevent this and must be automated per instance, not sampled. Second, non-discrimination: if the subject model solves the family at ceiling from the flat rendering, a null result says nothing about the hypothesis; the calibration STOP exists to prevent launching a non-discriminating campaign. A third, subtler risk is scope inflation of a negative result: absence of an effect in one family and difficulty range must not be reported as refutation of externalized relational state in general.",
+      "source_field": "risk",
+      "source_record": "GAP-0009"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -590,6 +604,11 @@
       "risk": "The specific hazard is that an evaluator finds a seed, finds a response section, finds that text_chars agrees with its length, and reports the relation established. That is the current state of the evidence and it establishes nothing: any string of that length satisfies it. A weaker version of the same hazard is attribution by display metadata, heading or model line, which works today because display names and executor references happen to correspond uniquely, and would break silently on a provider rename, a shared model string, or a retry producing two sections from one executor. A third form is an extractor that normalizes text before recomputing the digest, silently converting a mismatch into a match. A fourth form is provider output that itself contains text resembling the artifact's framing, creating a synthetically apparent section that an extractor scanning for headings or metadata lines could bind to. All four are the pattern corrections A2 and A5 removed from ABS-0004: a record naming a property treated as establishment of the property.",
       "source_field": "risk",
       "source_record": "PLAN-20260817-0002"
+    },
+    {
+      "risk": "Inference leakage into Arm 2 would make the primary result forced rather than measured; a ceiling family would make it non-discriminating; either could be mistaken for evidence. A positive result could be misread as a capability or as support for the wider relational-memory architecture; a negative result could be inflated into a general refutation. Provider non-determinism adds noise to a paired design so per-stratum conclusions are underpowered and only the pooled primary endpoint bears on closure. Under Option S the cell has no AI-Lab InvocationRecords; its provenance is only as good as the stage JSONL and manifest digests. Interim looks add a small risk of stopping on noise, bounded by the spending function.",
+      "source_field": "risk",
+      "source_record": "PLAN-20260912-0001"
     }
   ],
   "model_type": "self_model",
@@ -597,10 +616,14 @@
     "GAP-0002",
     "GAP-0005",
     "GAP-0006",
-    "GAP-0008"
+    "GAP-0008",
+    "GAP-0009"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20260912-0001"
+  ],
   "plan_counts": {
+    "admitted": 1,
     "completed": 24,
     "withdrawn": 1
   },
@@ -779,6 +802,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260817-0002.json",
       "status": "completed",
       "title": "Invocation output binding and produced_by establishment"
+    },
+    {
+      "plan_id": "PLAN-20260912-0001",
+      "source_gap_id": "GAP-0009",
+      "source_path": "docs/self_model/plans/PLAN-20260912-0001.json",
+      "status": "admitted",
+      "title": "Relational state organization cell: governed visitor experiment with zero integration effect (PREREG-RS-0001 v0.3.1)"
     }
   ],
   "recommended_next_targets": [
@@ -801,9 +831,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0008",
       "target": "The previously recommended slice, invocation output binding and produced_by establishment, is complete: PLAN-20260817-0002 under WARR-20260820-0001, verified by VERIFY-20260821-0001, completed under WARR-20260821-0001. Recorded here rather than left as a pending instruction. The next slice is the composable instance: one governed run in which an artifact with an established produced_by relation (COMP-0141 or a successor) is selected into a retained ContextManifest and rendered into a subsequent captured invocation's effective input, so that both edge classes hold on one artifact instance and the first real invocation-to-artifact-to-invocation path exists. Traversal is a separate later slice, sequenced after the instance exists so it is not verified together with its own input edges. The Section 4.15 ceiling stands unchanged: artifact-level potential-dependence detection, not claim-level independence proof."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0009",
+      "target": "A governed visitor experiment with INTEGRATION_EFFECT = 'none': preregistration PREREG-RS-0001 v0.3.1 frozen first; then a zero-API implementation of generator, exhaustive oracle, propagator-defined depth labeller, FLAT-v0 and RM-v0 serializers (RM-v0 = clue table once plus an ID-only adjacency index), decoder, admission auditor (invariants A1-A6) and scorer under ai_lab/experiments/relational_state/ with tests under tests/experiments/relational_state/; then a provider runner (the only module importing ai_lab.providers.*) gated behind a deterministic calibration STOP, with self-contained content-addressed provenance (Option S, no InvocationRecords); then the paired Arm-1/Arm-2 main campaign on the frozen primary subject (draft: gpt-5.6-terra) with the preregistered primary endpoint. The first slice also creates the docs/research/experiments/ artifact family, which must be authorized explicitly by the plan rather than introduced through the experiment."
     }
   ],
-  "repo_head": "4355c07ae15d048bb1bdcf8641d5a8ddd9499e5c",
+  "repo_head": "0f14943adb5e6eeaba0c42caf3a59b51370e78ba",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -999,7 +1034,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 61
+    "supported": 62
   },
   "warrants": [
     {
@@ -1488,6 +1523,14 @@
       "target_item_id": "PLAN-20260817-0002",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260821-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20260912-0001.json",
+      "target_item_id": "PLAN-20260912-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20260912-0001",
       "warrant_state": "supported"
     }
   ]

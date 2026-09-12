@@ -1,0 +1,34 @@
+{
+ "schema_version": "v1",
+ "warrant_id": "WARR-20260912-0001",
+ "target_item_id": "PLAN-20260912-0001",
+ "target_item_type": "plan",
+ "decision": "admit",
+ "warrant_state": "supported",
+ "created_at": "2026-09-12T20:40:36+00:00",
+ "author": "operator",
+ "substrate": "self_model_governance",
+ "repo_commit": "0f14943adb5e6eeaba0c42caf3a59b51370e78ba",
+ "reason": "The operator admits PLAN-20260912-0001 on the reviewing executor's R3 recommendation. PLAN-20260912-0001 is a bounded, preregistered experimental-evidence slice for GAP-0009. PREREG-RS-0001 v0.3.1 fixes the host claim, information-equivalent FLAT-v0/RM-v0 arms, admission invariants A1-A6, query independence, generated-only puzzle family, exhaustive oracle, calibration STOP, paired endpoint, SESOI and bounded staged analysis before implementation. The experiment is admitted only as a visitor with INTEGRATION_EFFECT = 'none'. It establishes no AI-Lab capability and does not authorize relational-state integration into AI-Lab runtime behaviour. Option S preserves the host governance membrane by using self-contained content-addressed experiment provenance and writing no InvocationRecords.",
+ "scope": "Admit only PLAN-20260912-0001 under PREREG-RS-0001 v0.3.1: creation of the docs/research/experiments/ artifact family and relational_state experiment area; zero-API implementation and tests for the generator, exhaustive oracle, PROP-RS-0 depth labeller, FLAT-v0 and RM-v0 serializers, decoder, A1-A6 admission auditor, scorer, Lan-DeMets O'Brien-Fleming spending routine, finite-sample simulation STOP gate, and import membrane; followed only after reviewing-executor zero-API verification by the provider runner, non-evidential calibration and pilot, and the preregistered bounded main campaign. No runtime relational-state integration, context-selection change, provider-routing change, graph-memory change, self-model capability claim, InvocationRecord capture-path widening, or extension beyond the frozen campaign bounds is admitted.",
+ "conditions": [
+  "Condition 1 (satisfied at admission): the stale duplicate sample-size/interim-look constraint was removed from PLAN-20260912-0001 so that only the Lan-DeMets O'Brien-Fleming specification remains operative.",
+  "Condition 2 (satisfied at admission): the GAP-0009 summary refers to provider adapters and experiment-local provenance rather than implying that the governed invocation-capture path is usable by this experiment.",
+  "PREREG-RS-0001 v0.3.1 is the frozen scientific object. Any substantive change to hypothesis, arms, representation, family, endpoint, SESOI, subject, calibration rule, sample-size rule, staged boundary rule, or budget requires an amendment before affected execution; non-preregistered analyses are EXPLORATORY and cannot close GAP-0009.",
+  "INTEGRATION_EFFECT must remain 'none'. No AI-Lab runtime behaviour, default prompt path, context selection, graph-neighbourhood behaviour, memory write, provider routing, self-model capability, or production integration may change under this plan.",
+  "Option S is binding. CAPTURE_PATHS and ai_lab/providers/invocation_record.py must remain unchanged and no docs/invocations/ records may be produced by this experiment.",
+  "Every experiment module except runner.py must remain standard-library-only. runner.py alone may import ai_lab.providers.*. No experiment module may import ai_lab.documentation, context-selection code, or graph-neighbourhood code.",
+  "The first implementation slice is zero-API only. No runner.py and no provider call are authorized until generator, oracle, PROP-RS-0 depth labeller, serializers, decoder, A1-A6 auditor, scorer, query-independence guard, import membrane, spending routine, finite-sample simulation gate, focused tests, full test suite, and self-model audit are green.",
+  "After the zero-API slice, the reviewing executor must verify implementation against PREREG-RS-0001 v0.3.1 before runner.py is written or any provider call occurs.",
+  "Failure of the finite-sample statistical simulation STOP gate blocks provider execution and requires an amendment to the statistical routine before proceeding.",
+  "Primary subject is gpt-5.6-terra; claude-sonnet-5 is the post-primary replication subject. SESOI is 0.03, power-design alternative is 0.06, calibration window is [0.30, 0.80] with centre 0.55 and smaller-n tie-break, N_min is 1200, N_max is 2616, and no value may be changed after relevant outcomes are exposed.",
+  "Main-campaign execution may stop only under the preregistered POSITIVE, NEGATIVE, INCONCLUSIVE or STOP rules. No extension beyond N_max is authorized; any later extension is a new experimental cell with its own preregistration and governance.",
+  "A positive result closes only the declared experimental-evidence question in its tested scope. It does not establish relational memory, automatic propagation, query projection, residual machinery, or an AI-Lab capability.",
+  "GAP-0009 remains open through implementation and provider execution until closed by the preregistered POSITIVE, NEGATIVE or INCONCLUSIVE evidence record."
+ ],
+ "evidence_ids": [
+  "PLAN-20260912-0001",
+  "GAP-0009",
+  "CAP-0015"
+ ]
+}

@@ -37,6 +37,18 @@
       "provider_id_form": "gpt-5.6-thinking",
       "relation_to_reviewer_slots": "Unresolved, and named rather than left generic. The OpenAI reviewer slot is gpt-5.6-terra. Catalog snapshot SNAP-35fbd338ad148fb9, observed 2026-07-23, asserts that gpt-5.6-sol, gpt-5.6-terra and gpt-5.6-luna resolve to three distinct ModelIdentity records, and contains no entry for gpt-5.6-thinking, which therefore resolves to nothing in AI-Lab's catalog. That snapshot is a provider self-report: per the accepted v9 task 2 text, transport integrity does not establish the truth of an asserted mapping. The reviewer-slot guard compares by string and does not fire, which is correct and establishes nothing, since under C3 distinctness never increases independence and under P5 an unknown fact blocks qualification rather than disappearing. The v9 review round is independence_unresolved, as every round in this repository is.",
       "reported_display_name": "GPT-5.6 Thinking"
+    },
+    {
+      "basis": "Self-report by the drafting executor in the session of 2026-09-12, which drafted PREREG-RS-0001 v0.1-v0.3.1, GAP-0009, PLAN-20260912-0001 and materialized WARR-20260912-0001 on the operator's admission. Not verified: no InvocationRecord captures a conversational drafting act.",
+      "declared_at": "2026-09-12",
+      "drafted": [
+        "PREREG-RS-0001 (v0.1-v0.3.1)",
+        "GAP-0009",
+        "PLAN-20260912-0001",
+        "WARR-20260912-0001 (materialization of the operator's admission)"
+      ],
+      "provider_id_form": "claude-fable-5-1",
+      "reported_display_name": "Claude Fable 5.1"
     }
   ],
   "id_form_note": "provider_id_form is the value a provider default would actually carry, and is what the guard compares against. reported_display_name is what the executor states in prose. These differ in shape, and a guard comparing a display name against settings.CLAUDE_MODEL would never fire regardless of its contents.",

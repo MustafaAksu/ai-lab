@@ -1,0 +1,38 @@
+{
+ "blocked_by": [],
+ "category": "experimental_evidence",
+ "evidence": {
+  "files_checked": [
+   "ai_lab/providers/provider.py",
+   "ai_lab/providers/invocation_capture.py",
+   "ai_lab/providers/settings.py",
+   "ai_lab/documentation/compact_graph_representation_evaluation.py",
+   "docs/self_model/gaps/GAP-0002.json",
+   "docs/self_model/plans/PLAN-20260817-0002.json",
+   "docs/proposals/P-0001-AI-Lab-Documentation-Architecture-v0.3.md",
+   "docs/comparisons/",
+   "docs/runs/"
+  ],
+  "reason": "MEASURED at 0f14943adb5e6eeaba0c42caf3a59b51370e78ba (main, clean working tree, confirmed on the operator server 2026-09-12). No plan, verification, comparison, run or proposal in the repository tests whether reorganizing an information-equivalent clue set into explicit relational state changes the reasoning accuracy of an unchanged LLM when no automatic inference or propagation is supplied. The 25 plan records concern context selection, graph-neighbourhood diagnostics, self-model infrastructure, provenance capture and evidence ancestry; none holds the representation fixed in information content and varies only its organization. The provider adapters (Provider.ask / ask_with_outcome) are sufficient to run such a test; the governed capture path (capture_provider_invocation) is not admitted for this use (see notes), so experiment provenance is self-contained; and the diagnostic-only evaluators establish a precedent (SELECTION_EFFECT = 'none') for an experiment that changes no runtime behaviour. The docs/research/experiments/ artifact family anticipated by P-0001 does not exist; docs/ contains proposals, reviews, runs, comparisons, invocations and synthesis families only. This gap records an absence of evidence, not an absence of capability: nothing here asserts that AI-Lab should have a relational-state or relational-memory feature."
+ },
+ "gap_id": "GAP-0009",
+ "last_reviewed_at": "2026-09-12T20:40:36+00:00",
+ "name": "Effect of information-equivalent relational organization on unchanged-LLM reasoning is unmeasured",
+ "notes": [
+  "Origin: the RTG relational-memory architecture thread (RTG_RELATIONAL_MEMORY_DISCUSSION_WRAPUP_v0.1 and its successors) converged on a substrate proposal whose interesting content is propagation, residuals, gluing and justification. Applying the RPS feasibility gate F(-1) to that thread showed that none of its internal refinements touches a host claim; the only measurable host claim currently available is the narrower one recorded here. The wider architecture is explicitly out of scope of this gap.",
+  "Closure is admissible in three forms and none commits AI-Lab to implementation: POSITIVE (a paired advantage at or above the preregistered smallest effect of interest, in the declared family and difficulty range), NEGATIVE (the confidence interval excludes that effect), INCONCLUSIVE (neither). A positive closure does not establish a capability; any runtime use of relational state requires its own GAP, PLAN and warrant.",
+  "Prediction recorded before any run, per the Casebook rule 'derive the result you hope to discover': with a current frontier model on small logic-grid instances (n <= 5) the family is expected to sit at ceiling and the primary difference to be indistinguishable from zero. The preregistration therefore mandates a calibration step that finds a difficulty range where the test can discriminate, with a STOP if none exists. A ceiling result at calibration is not evidence about the hypothesis.",
+  "Terminology: 'relational state' rather than 'relational memory' is used throughout, because 'memory' asserts an architectural commitment the evidence does not yet support.",
+  "Category note: 'experimental_evidence' is descriptive. The GAP validator requires only a non-empty category string; this value does not redefine a missing experimental measurement as an AI-Lab capability deficit, and it must not be read as introducing a new self-model gap semantics.",
+  "Capture-path finding (reviewing-executor item 8, verified at 0f14943): capture_provider_invocation writes one tracked docs/invocations/INV-*.json per call and validate_invocation_record admits only capture_path 'scripts/compare_providers.py' (WARR-20260722-0001 condition 1). Decision: Option S — the experiment records self-contained content-addressed provenance and writes no InvocationRecords; no host capture-path widening is authorized by this gap or its plan."
+ ],
+ "priority": "medium",
+ "recommended_first_slice": "A governed visitor experiment with INTEGRATION_EFFECT = 'none': preregistration PREREG-RS-0001 v0.3.1 frozen first; then a zero-API implementation of generator, exhaustive oracle, propagator-defined depth labeller, FLAT-v0 and RM-v0 serializers (RM-v0 = clue table once plus an ID-only adjacency index), decoder, admission auditor (invariants A1-A6) and scorer under ai_lab/experiments/relational_state/ with tests under tests/experiments/relational_state/; then a provider runner (the only module importing ai_lab.providers.*) gated behind a deterministic calibration STOP, with self-contained content-addressed provenance (Option S, no InvocationRecords); then the paired Arm-1/Arm-2 main campaign on the frozen primary subject (draft: gpt-5.6-terra) with the preregistered primary endpoint. The first slice also creates the docs/research/experiments/ artifact family, which must be authorized explicitly by the plan rather than introduced through the experiment.",
+ "related_capabilities": [
+  "CAP-0015"
+ ],
+ "risk": "Two failure modes would make a result look like evidence when it is not. First, inference leakage: if the organized rendering carries any derived content (intersected domains, composed relations, deduplicated entities, query-ordered handles), an Arm-2 advantage is forced by construction and tests only that a solver was attached; the admission invariants exist to prevent this and must be automated per instance, not sampled. Second, non-discrimination: if the subject model solves the family at ceiling from the flat rendering, a null result says nothing about the hypothesis; the calibration STOP exists to prevent launching a non-discriminating campaign. A third, subtler risk is scope inflation of a negative result: absence of an effect in one family and difficulty range must not be reported as refutation of externalized relational state in general.",
+ "schema_version": "v1",
+ "status": "open",
+ "summary": "AI-Lab has no controlled evidence establishing whether an information-equivalent relational organization of a clue set improves reasoning by an unchanged LLM when no automatic inference, propagation or query-dependent selection is supplied. The provider adapters and experiment-local provenance mechanisms needed to obtain such evidence exist. The absence is one of evidence, not of capability; closure may be positive, negative or inconclusive without committing AI-Lab to any relational-state feature."
+}
