@@ -26,8 +26,10 @@ def test_every_populated_stratum_yields_verified_instances(n, d, state):
 
 
 def test_occupancy_bound_is_the_recorded_one():
-    assert populated(8, 4, "unique") and not populated(7, 4, "unique")
+    # PROP-RS-0 = R1-only (v0.3.2): unique n >= d+1, ambiguous n >= d+2
+    assert populated(5, 4, "unique") and not populated(4, 4, "unique")
     assert populated(6, 4, "ambiguous") and not populated(5, 4, "ambiguous")
+    assert all(populated(n, d, s) for n in (6, 7, 8, 9) for d in (1, 2, 3, 4) for s in ("unique", "ambiguous"))
     assert not populated(9, 0, "unique")
 
 

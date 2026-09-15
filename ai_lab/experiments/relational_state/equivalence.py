@@ -10,7 +10,7 @@ from collections import Counter
 from dataclasses import dataclass
 
 from .model import Puzzle, Trial
-from .render import decode, inference_derived_facts, render_flat, render_rm, state_block
+from .render import decode, frame, inference_derived_facts, render_flat, render_index, render_rm, state_block
 
 
 @dataclass(frozen=True)
@@ -56,12 +56,38 @@ def query_independent(puzzle: Puzzle) -> bool:
 
 
 def distinct_handles_preserved(puzzle: Puzzle) -> bool:
-    """A5: rendering and decoding never merge two handles, even when their
-    visible clue neighbourhoods are identical."""
+    """A5: the serialized artefacts (frame, clue table, index) carry exactly the
+    declared distinct handles — derived from the rendered TEXT, never restored
+    from the source object — so two handles with identical clue neighbourhoods
+    cannot have been merged and no handle can have been dropped."""
+    instruction, _ = frame(puzzle, puzzle.persons[0])
+    lines = instruction.splitlines()
+    frame_persons = [h.strip() for h in lines[1][len("Persons: "):-1].split(",")]
+    frame_items = [h.strip() for h in lines[2][len("Items: "):-1].split(",")]
+    index_handles = [ln.split(":")[0] for ln in render_index(puzzle).splitlines()]
     for arm_text in (render_flat(puzzle), render_rm(puzzle)):
         clues, _ = decode(arm_text)
-        persons = {c.person for c in clues} | set(puzzle.persons)
-        items = {c.item for c in clues} | set(puzzle.items)
-        if len(persons) != puzzle.n or len(items) != puzzle.n:
+        if not {c.person for c in clues} <= set(frame_persons) or not {c.item for c in clues} <= set(frame_items):
             return False
-    return True
+    n = puzzle.n
+    return (
+        len(frame_persons) == n == len(set(frame_persons))
+        and len(frame_items) == n == len(set(frame_items))
+        and set(frame_persons) == set(puzzle.persons)
+        and set(frame_items) == set(puzzle.items)
+        and set(index_handles) == set(puzzle.persons) | set(puzzle.items)
+        and len(index_handles) == 2 * n
+    )
+
+
+def admit_instance(puzzle: Puzzle) -> AuditResult:
+    """The single admission entry point: A1-A6 plus query independence.
+    The runner calls this before every provider call (PREREG §6)."""
+    base = audit(puzzle)
+    failed = list(base.failed)
+    if not distinct_handles_preserved(puzzle):
+        failed.append("A5")
+    if not query_independent(puzzle):
+        failed.append("QI")
+    failed = sorted(set(failed))
+    return AuditResult(not failed, tuple(failed))

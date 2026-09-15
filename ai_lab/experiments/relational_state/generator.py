@@ -20,11 +20,9 @@ later (R1). Random consistent noise clues are then added.
                and PROP-RS-0 reaches its fixed point at round d with the
                target row non-singleton.
 
-Occupancy bound (recorded, not hidden): under the frozen PROP-RS-0 rules the
-hidden-single rule R2 fixes a chain's last person as soon as its item's column
-is otherwise empty, so a unique-target chain of depth d needs a guard chain of
-d - 1 further persons: n >= 2d. An ambiguous instance uses the T/Q pair as the
-guard: n >= d + 2. See `populated(n, d, state)`.
+Occupancy bound (PROP-RS-0 = R1-only, PREREG v0.3.2): a unique-target chain
+of depth d needs d + 1 persons (n >= d + 1); an ambiguous instance needs the
+chain p_0..p_{d-1} plus the pair T, Q (n >= d + 2). See `populated`.
 
 Handles are positional and never deduplicated by descriptor (A5).
 """
@@ -53,19 +51,10 @@ class Instance:
 
 
 def populated(n: int, d: int, target_state: str) -> bool:
-    """Occupancy bound under the frozen PROP-RS-0 (R1 + R2).
-
-    unique:    chain p_0..p_d (d+1 persons) plus a guard chain g_1..g_{d-1}
-               that keeps the target's item column open until round d-1
-               (otherwise R2 fixes the target early)  -> n >= 2d.
-    ambiguous: chain p_0..p_{d-1} plus the pair T, Q which also guard the
-               last chain item's column                -> n >= d + 2.
-    """
+    """Occupancy bound under PROP-RS-0 = R1-only (v0.3.2)."""
     if d < 1:
         return False
-    if target_state == "unique":
-        return n >= 2 * d
-    return n >= d + 2
+    return n >= d + 1 if target_state == "unique" else n >= d + 2
 
 
 def _consistent(clue: tuple[str, str, str], sigmas: list[dict[str, str]]) -> bool:
@@ -97,19 +86,12 @@ def _build(
 
     if target_state == "unique":
         chain = order[: d + 1]
-        guards = order[d + 1 : 2 * d]
-        free = order[2 * d :]
+        free = order[d + 1 :]
         target = chain[-1]
         sigmas = [sigma]
         raw.append(("EQUAL", chain[0], sigma[chain[0]]))
         for k in range(1, len(chain)):
             keep_only(chain[k], {sigma[chain[k - 1]], sigma[chain[k]]})
-        # guard chain: g_1 resolves at round 1, ..., g_{d-1} at round d-1,
-        # each keeping its own item plus the next guard's item; the last
-        # guard keeps the target's item so the target column stays open.
-        nxt_items = [sigma[g] for g in guards[1:]] + [sigma[target]]
-        for g, nxt in zip(guards, nxt_items):
-            keep_only(g, {sigma[g], nxt})
         protected: set[str] = set()
     else:
         target, partner = order[0], order[1]

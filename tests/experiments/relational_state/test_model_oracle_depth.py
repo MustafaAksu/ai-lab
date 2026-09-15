@@ -66,7 +66,17 @@ def test_depth_rounds_are_synchronous_waves():
     assert row_set(b2, "Calo") == ("mask",)
     assert depth(pz, "Brix") == (1, "singleton")
     assert depth(pz, "Calo") == (2, "singleton")
-    assert RULES_FROZEN == ("R1", "R2")
+    assert RULES_FROZEN == ("R1",)
+
+
+def test_r2_is_not_applied_under_frozen_rules():
+    # Only Ando's row admits kite; hidden-single (R2) would fix Ando at round 1,
+    # the frozen R1-only propagator leaves the board at its fixed point.
+    persons, items = PERSON_VOCAB[:3], ITEM_VOCAB[:3]
+    clues = (Clue("C1", "NOT_EQUAL", "Brix", "kite"), Clue("C2", "NOT_EQUAL", "Calo", "kite"))
+    pz = Puzzle(persons, items, clues)
+    assert depth(pz, "Ando") == (0, "fixed_point")
+    assert depth(pz, "Ando", rules=("R1", "R2")) == (1, "singleton")
 
 
 def test_depth_fixed_point_kind_for_ambiguous_target():

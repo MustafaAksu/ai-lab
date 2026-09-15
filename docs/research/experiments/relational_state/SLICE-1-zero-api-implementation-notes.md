@@ -2,7 +2,7 @@
 
 **Plan / warrant:** PLAN-20260912-0001 / WARR-20260912-0001 (scope S1–S3)  
 **Base commit:** `073b84f1c6588959be3ea186c5b64b4339125bc1`  
-**Status:** implemented; awaiting reviewing-executor implementation verification (warrant condition 8). No `runner.py`, no provider call.
+**Status:** implemented; reviewing-executor verification returned CONDITIONAL PASS (2026-09-15); conditions applied in the v0.3.2 changeset (see Resolution). No `runner.py`, no provider call.
 
 ## What was built
 
@@ -21,3 +21,13 @@ Gate result (20,000 replications per cell, seed 20260912): **PASS**, max p_error
 **F4 — Block arithmetic.** 2616 = 10 × 240 + 216, not 9 × 240 + 456; the final partial block is 216 (a multiple of 24, stratum-balanced).
 
 **F5 — FRAME-v0 text.** The preregistration froze the *existence* of an identical instruction block but not its wording; the wording now lives in `render.frame` under version `FRAME-v0` and should be reviewed as part of this verification, since it is prompt content.
+
+## Resolution (2026-09-15, after reviewing-executor verification)
+
+- F1 → **amended**: PROP-RS-0 = R1-only (PREREG v0.3.2 §4.2); generator construction without guard chains; occupancy unique $n\ge d+1$, ambiguous $n\ge d+2$; tests updated (all 24 strata verified populated for $n\in\{6,7,8,9\}$, and every populated $(n,d,\text{state})$ for $n\in3..9$).
+- F2 → **confirmed**: frozen total-two-sided convention kept; gsDesign per-tail values remain a labelled fixture only.
+- F3 → **frozen explicitly**: sizing constants 1.96 / 0.84 (v0.3.2 §7).
+- F4 → **corrected** in v0.3.2 ($2616 = 10\times240+216$).
+- F5 → **frozen**: FRAME-v0 literal text and `FRAME_SHA256 = a70cd833…9885a72` in v0.3.2 §5.4 and `render.py`.
+- Reviewer-required fix → **applied**: `equivalence.admit_instance` is the single admission entry point (A1–A6 + query independence, named failures); A5 now reads the rendered frame/index text rather than restoring handles from the source object, with a test that detects a merging serializer.
+- Finite-sample gate: unchanged code path; report retained (reviewer reproduced it byte-for-byte, SHA-256 `0576231926b7…a572f1`).

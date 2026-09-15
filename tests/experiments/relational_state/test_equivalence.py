@@ -1,12 +1,12 @@
-from ai_lab.experiments.relational_state.equivalence import audit, distinct_handles_preserved, query_independent
+from ai_lab.experiments.relational_state.equivalence import admit_instance, audit, distinct_handles_preserved, query_independent
 from ai_lab.experiments.relational_state.generator import generate
 from ai_lab.experiments.relational_state.model import ITEM_VOCAB, PERSON_VOCAB, Clue, Puzzle, Trial
-from ai_lab.experiments.relational_state.render import decode, inference_derived_facts, prompt, render_flat, render_rm, state_block
+from ai_lab.experiments.relational_state.render import FRAME_SHA256, FRAME_TEMPLATE, QUERY_TEMPLATE, decode, inference_derived_facts, prompt, render_flat, render_rm, state_block
 
 
 def _sample():
     out = []
-    for n, d, st, seed in ((3, 1, "unique", 1), (5, 2, "ambiguous", 2), (8, 4, "unique", 3), (9, 4, "ambiguous", 4)):
+    for n, d, st, seed in ((3, 1, "unique", 1), (5, 2, "ambiguous", 2), (5, 4, "unique", 3), (9, 4, "ambiguous", 4)):
         inst = generate(n, d, st, seed)
         assert inst is not None
         out.append(inst)
@@ -68,3 +68,35 @@ def test_a5_identical_neighbourhoods_remain_distinct_handles():
         clues, _ = decode(arm_text)
         assert {c.person for c in clues} == {"Ando", "Brix"}
     assert "Ando: C1" in render_rm(pz) and "Brix: C2" in render_rm(pz)
+
+
+def test_admit_instance_is_the_single_entry_point():
+    for inst in _sample():
+        res = admit_instance(inst.trial.puzzle)
+        assert res.ok and res.failed == ()
+    pz = _sample()[0].trial.puzzle
+    doubled = Puzzle(pz.persons, pz.items, pz.clues + (pz.clues[0],))
+    res = admit_instance(doubled)
+    assert not res.ok and "A6" in res.failed
+
+
+def test_a5_guard_reads_rendered_text_not_source_object(monkeypatch):
+    import ai_lab.experiments.relational_state.equivalence as eq
+
+    pz = _sample()[0].trial.puzzle
+    assert eq.distinct_handles_preserved(pz)
+    # Simulate a serializer that silently merges two persons in the frame line.
+    real_frame = eq.frame
+
+    def merging_frame(puzzle, target):
+        instr, q = real_frame(puzzle, target)
+        return instr.replace(f"Persons: {puzzle.persons[0]}, {puzzle.persons[1]}", f"Persons: {puzzle.persons[0]}"), q
+
+    monkeypatch.setattr(eq, "frame", merging_frame)
+    assert not eq.distinct_handles_preserved(pz)
+    assert "A5" in admit_instance(pz).failed
+
+
+def test_frame_v0_is_frozen_by_hash():
+    assert FRAME_SHA256 == "a70cd833982abe491d244b3a8a6c714e30cd8f1affa13ad4621e320169885a72"
+    assert "{persons}" in FRAME_TEMPLATE and "{items}" in FRAME_TEMPLATE and "{target}" in QUERY_TEMPLATE

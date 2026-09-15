@@ -6,9 +6,11 @@ and no completeness claim is made (§2 F1, F7).
 Board: admissible[person][item] booleans. Round 0 applies every clue atom.
 One round = one simultaneous wave computed from the board at the start of the
 round: R1 a person with exactly one admissible item removes that item from
-every other person; R2 an item admissible for exactly one person removes every
-other item from that person. Both rules read the start-of-round board only;
-consequences derived within a round are not re-applied until the next round.
+every other person. (R2, the hidden-single rule, was removed by amendment
+v0.3.2 — finding F1 — and remains available only through the `rules`
+parameter for zero-API evaluation; it is never used for labelling.) The rule
+reads the start-of-round board only; consequences derived within a round are
+not re-applied until the next round.
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ def initial_board(puzzle: Puzzle) -> Board:
     return board
 
 
-RULES_FROZEN = ("R1", "R2")  # PREREG-RS-0001 v0.3.1 §4.2
+RULES_FROZEN = ("R1",)  # PREREG-RS-0001 v0.3.2 §4.2 (amended from R1+R2; see F1)
 
 
 def wave(puzzle: Puzzle, board: Board, rules: tuple[str, ...] = RULES_FROZEN) -> Board:

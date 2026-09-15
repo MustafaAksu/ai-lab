@@ -9,6 +9,8 @@ and alters nothing in either state block (query independence).
 
 from __future__ import annotations
 
+import hashlib
+
 from .model import Clue, Puzzle, Trial
 
 FLAT_VERSION = "FLAT-v0"
@@ -53,26 +55,30 @@ def render_rm(puzzle: Puzzle) -> str:
     return f"{CLUES_HEADER}\n{clue_table(puzzle)}\n\n{INDEX_HEADER}\n{render_index(puzzle)}"
 
 
+FRAME_TEMPLATE = (
+    "You are given a logic puzzle.\n"
+    "Persons: {persons}.\n"
+    "Items: {items}.\n"
+    "Rules: every person has exactly one item and every item belongs to exactly one person.\n"
+    "Clue lines have the form: <clue-id> <RELATION> <Person> <Item>, where EQUAL means the person "
+    "has the item and NOT_EQUAL means the person does not have the item.\n"
+    "If an INDEX section is present, each line lists, for one person or item, the ids of the clues "
+    "that mention it; an index entry is a reference to a clue, not an additional clue.\n"
+    "Answer with a single JSON object and nothing else, of the form "
+    '{{"status": "unique" | "ambiguous" | "inconsistent", "answer": ["<item>", ...]}}. '
+    "Use \"unique\" with one item when exactly one item is possible for the queried person, "
+    "\"ambiguous\" with all possible items when more than one is possible, and "
+    "\"inconsistent\" with an empty list when the clues admit no assignment."
+)
+QUERY_TEMPLATE = "Question: which item belongs to {target}?"
+FRAME_SHA256 = hashlib.sha256((FRAME_TEMPLATE + "\n" + QUERY_TEMPLATE).encode("utf-8")).hexdigest()
+
+
 def frame(puzzle: Puzzle, target: str) -> tuple[str, str]:
-    """(instruction block, query line) — identical across arms."""
-    persons = ", ".join(puzzle.persons)
-    items = ", ".join(puzzle.items)
-    instruction = (
-        "You are given a logic puzzle.\n"
-        f"Persons: {persons}.\n"
-        f"Items: {items}.\n"
-        "Rules: every person has exactly one item and every item belongs to exactly one person.\n"
-        "Clue lines have the form: <clue-id> <RELATION> <Person> <Item>, where EQUAL means the person "
-        "has the item and NOT_EQUAL means the person does not have the item.\n"
-        "If an INDEX section is present, each line lists, for one person or item, the ids of the clues "
-        "that mention it; an index entry is a reference to a clue, not an additional clue.\n"
-        "Answer with a single JSON object and nothing else, of the form "
-        '{"status": "unique" | "ambiguous" | "inconsistent", "answer": ["<item>", ...]}. '
-        "Use \"unique\" with one item when exactly one item is possible for the queried person, "
-        "\"ambiguous\" with all possible items when more than one is possible, and "
-        "\"inconsistent\" with an empty list when the clues admit no assignment."
-    )
-    query = f"Question: which item belongs to {target}?"
+    """(instruction block, query line) — identical across arms; FRAME-v0 frozen
+    by FRAME_SHA256 (PREREG v0.3.2 §5.4)."""
+    instruction = FRAME_TEMPLATE.format(persons=", ".join(puzzle.persons), items=", ".join(puzzle.items))
+    query = QUERY_TEMPLATE.format(target=target)
     return instruction, query
 
 
