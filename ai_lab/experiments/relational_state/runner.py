@@ -1,4 +1,4 @@
-"""S4 runner: the only module that invokes a provider (PREREG-RS-0001 v0.3.2 §3, §8, §9.1).
+"""S4 runner: the only module that invokes a provider (PREREG-RS-0001 v0.3.3 §3, §8, §9.1).
 
 Membrane: imports ai_lab.providers.* only (WARR-20260912-0001 cond. 6).
 Provenance: Option S — no InvocationRecords; one JSONL per stage with
@@ -36,7 +36,7 @@ from .render import FLAT_VERSION, FRAME_SHA256, FRAME_VERSION, RM_VERSION, promp
 from .scoring import Paired, adjudicate, parse_output, required_pairs, score
 from .sequential import blocks, look_schedule, schedule_for
 
-# ---- frozen operator values (PREREG v0.3.2 §7, §8.1) -----------------------
+# ---- frozen operator values (PREREG v0.3.3 §7, §8.1) -----------------------
 SESOI = 0.03
 N_MIN, N_MAX = 1200, 2616
 BLOCK = 240
@@ -48,7 +48,7 @@ CAL_PER_STATE = 10
 PILOT_PER_STRATUM = 10
 MAIN_D = (1, 2, 3, 4)
 STATES = ("unique", "ambiguous")
-# Frozen subjects (PREREG v0.3.2 §3): the profile refuses anything else per role.
+# Frozen subjects (PREREG v0.3.3 §3): the profile refuses anything else per role.
 ROLES = {
     "primary": {"provider": "openai", "model": "gpt-5.6-terra", "reasoning_effort": "medium"},
     "replication": {"provider": "claude", "model": "claude-sonnet-5", "reasoning_effort": None},
@@ -310,7 +310,7 @@ def select_n_main(surface: dict[int, tuple[int, int]]) -> tuple[list[int] | None
         triple = [n0, n0 + 1, n0 + 2]
         if not all(n in surface for n in triple):
             continue
-        # every main stratum (n, d in MAIN_D, state) must be populated (v0.3.2 §4.2: n >= 6)
+        # every main stratum (n, d in MAIN_D, state) must be populated (v0.3.3 §4.2, §8.1: n >= 6)
         if not all(populated(n, d, st) for n in triple for d in MAIN_D for st in STATES):
             continue
         c = sum(surface[n][0] for n in triple)
@@ -343,16 +343,20 @@ def cmd_calibration(out: Path, factory: ProviderFactory) -> dict:
     cells: dict[str, dict] = {}
     missing = 0
     for r in rows:
+        key0 = f"n={r['n']},d={r['depth']},{r['target_state']}"
+        cells.setdefault(key0, {"correct": 0, "total": 0, "requested": CAL_PER_STATE, "realized": 0})["realized"] += 1
         if r["error"]:
-            missing += 1  # provider failure after retry: missing, not wrong (PREREG §7 handling)
+            missing += 1  # provider failure after retry: missing model observation, not a wrong answer
             continue
         c, t = surface.get(r["n"], (0, 0))
         surface[r["n"]] = (c + int(r["correct"]), t + 1)
         key = f"n={r['n']},d={r['depth']},{r['target_state']}"
-        cc = cells.setdefault(key, {"correct": 0, "total": 0, "requested": CAL_PER_STATE, "realized": 0})
+        cc = cells[key]
+        # requested = intended distinct puzzles; realized = distinct admitted puzzles
+        # actually generated and called (may fall short in a finite stratum, v0.3.3 F7);
+        # total = non-missing model responses used for accuracy.
         cc["correct"] += int(r["correct"])
-        cc["total"] += 1  # admitted, non-missing rows
-        cc["realized"] += 1  # v0.3.3 F7: may fall short of `requested` in a finite stratum (recorded, not hidden)
+        cc["total"] += 1
     n_main, detail = select_n_main(surface)
     report = {
         "stage": "calibration", "evidential": False, "integration_effect": INTEGRATION_EFFECT,

@@ -55,3 +55,9 @@ Also applied:
 6. The pilot `N_req > N_max` STOP artifact carries `integration_effect = "none"`.
 7. F7 wording in PREREG v0.3.3 (§8.1); calibration cells report `requested` and `realized`.
 8. Cost correction: calibration is 589 calls (58 × 10 + 9), 1178 only as a worst-case attempt bound.
+
+## S4.1.1 (2026-09-15)
+
+Reviewing-executor catch, accepted: `PREREG_VERSION` was still `"v0.3.1"` while the docstring said v0.3.3, so the execution profile and manifest would have identified the wrong frozen artifact. My error: the v0.3.3 edit updated the docstring and file names but its constant replacement targeted the v0.3.2 string and silently did not match. Fixed to `"v0.3.3"`; stale v0.3.2 headers in `runner.py` updated; a test asserts that both the generated profile and the manifest read `PREREG-RS-0001 v0.3.3`.
+
+Reporting semantics corrected in the same patch: `realized` is now incremented before the provider-error check, so a puzzle that was generated, admitted and called counts as realized even when its observation is missing. The four calibration counters are therefore: `requested` (intended distinct puzzles), `realized` (distinct admitted puzzles generated and called), `total` (non-missing model responses, the accuracy denominator), `missing_after_retry` (failed model observations).

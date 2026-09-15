@@ -75,6 +75,18 @@ def _profile(tmp_path, monkeypatch):
     return runner.cmd_profile(tmp_path, "openai", seed=11)
 
 
+def test_artifacts_identify_the_frozen_prereg_version(tmp_path, monkeypatch):
+    from ai_lab.experiments.relational_state import PREREG_VERSION
+
+    assert PREREG_VERSION == "v0.3.3"
+    _profile(tmp_path, monkeypatch)
+    prof = json.loads((tmp_path / "campaign_execution_profile.json").read_text())
+    assert prof["prereg"] == "PREREG-RS-0001 v0.3.3"
+    runner.cmd_calibration(tmp_path, _factory(FakeProvider()))
+    man = json.loads((tmp_path / "campaign_manifest.json").read_text())
+    assert man["prereg"] == "PREREG-RS-0001 v0.3.3"
+
+
 def test_profile_is_frozen_once_and_carries_membrane_fields(tmp_path, monkeypatch):
     path = _profile(tmp_path, monkeypatch)
     prof = json.loads(path.read_text())
@@ -241,6 +253,9 @@ def test_calibration_provider_failures_are_missing_not_wrong(tmp_path, monkeypat
     rows = runner._rows(tmp_path / "calibration.jsonl")
     assert sum(1 for r in rows if r["error"]) == 1 and cal["missing_after_retry"] == 1
     assert sum(c["total"] for c in cal["cells"].values()) == len(rows) - 1
+    # realized counts the puzzle that was generated and called even though its
+    # observation is missing; total (the accuracy denominator) does not
+    assert sum(c["realized"] for c in cal["cells"].values()) == len(rows)
     assert all(v["acc"] == 1.0 for v in cal["surface_by_n"].values())
 
 

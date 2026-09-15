@@ -11,6 +11,6 @@ ai_lab.providers.*. Enforced by tests/experiments/relational_state/test_membrane
 
 INTEGRATION_EFFECT = "none"
 PREREG_ID = "PREREG-RS-0001"
-PREREG_VERSION = "v0.3.1"
+PREREG_VERSION = "v0.3.3"
 PLAN_ID = "PLAN-20260912-0001"
 WARRANT_ID = "WARR-20260912-0001"
