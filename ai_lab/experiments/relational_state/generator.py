@@ -161,6 +161,7 @@ def generate_stratum(n: int, d: int, target_state: str, count: int, base_seed: i
             continue
         pid = inst.trial.puzzle.puzzle_id()
         if pid in seen:
+            misses += 1  # duplicates count as misses so a tiny stratum cannot loop forever
             continue
         seen.add(pid)
         out.append(inst)
