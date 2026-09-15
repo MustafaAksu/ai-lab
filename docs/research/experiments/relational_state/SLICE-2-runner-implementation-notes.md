@@ -3,7 +3,7 @@
 **Plan / warrant:** PLAN-20260912-0001 / WARR-20260912-0001 (scope S4)  
 **Authorization:** reviewing executor, 2026-09-15, after slice-1 PASS at `afe7aab`  
 **Base commit:** `afe7aab2006dbcf8d092291a7056f97d822fdd79`  
-**Status:** implemented with fake-provider tests; **no provider call has been made**. Calibration (S5) requires the reviewing executor's runner verification and the operator's go.
+**Status:** implemented with fake-provider tests; **no provider call has been made**. Reviewing-executor runner verification (2026-09-15) returned CONDITIONAL PASS; the S4.1 fixes below are applied. Calibration (S5) awaits the reviewing executor's diff check and the operator's go.
 
 ## What was built
 
@@ -37,7 +37,21 @@ export AI_LAB_OPENAI_MODEL=gpt-5.6-terra AI_LAB_OPENAI_REASONING_EFFORT=medium
 OUT=docs/research/experiments/relational_state/runs/campaign-01
 python3 -m ai_lab.experiments.relational_state.runner profile --out $OUT --provider openai --seed 20260915
 cat $OUT/campaign_execution_profile.json        # send to the reviewing executor; nothing has been called yet
-python3 -m ai_lab.experiments.relational_state.runner calibration --out $OUT   # ~1180 Arm-1 calls
+python3 -m ai_lab.experiments.relational_state.runner calibration --out $OUT   # 589 Arm-1 calls (58 cells x 10 + one 9-puzzle cell); at most 1178 attempts if every call needs its retry
 cat $OUT/calibration_report.json                # N_main or STOP; non-evidential
 ```
 Pilot and main are separate operator decisions after the calibration report.
+
+## S4.1 (after runner verification, 2026-09-15)
+
+Blocking fixes:
+1. **Frozen subject enforced mechanically.** The provider is constructed *from the frozen profile* (`default_provider_factory(prof)` → `OpenAIProvider(model=prof.model, reasoning_effort=prof.reasoning_effort)`), never from current environment defaults, and `_check_provider_matches` compares both model and reasoning effort on the built provider before any call. `profile --role primary` refuses anything but `openai / gpt-5.6-terra / medium`; `--role replication` refuses anything but `claude / claude-sonnet-5`. Tests: wrong provider, wrong model, wrong effort, missing effort (all abort with no profile written and no call); environment drift after freezing does not reach the provider; effort mismatch on a built provider aborts before any call. F9 is thereby closed.
+2. **Calibration provider failures are missing, not wrong.** Errored rows (after retry) are excluded from `correct/total`, from the surface and from triple selection; `missing_after_retry` is reported. Test covers a double-failure row.
+3. **Option S rows carry the full provenance set:** `source_git_commit`, `source_git_dirty`, `execution_profile_ref`, `execution_profile_sha256`, plus `stop_reason_field` and `content_block_types` from `ProviderOutcome`.
+
+Also applied:
+4. **Manifest verification before every subsequent stage** — all recorded stage digests and the calibration-report digest are recomputed; mismatch aborts (test tampers with `calibration.jsonl` and checks that the pilot refuses without a call). `N_main` and the calibration report digest are frozen in the manifest; the pilot reads `N_main` from the verified manifest, not from the mutable report.
+5. **`close-inconclusive --reason`** records a voluntary/budget stop as INCONCLUSIVE at the last completed look and blocks further stages.
+6. The pilot `N_req > N_max` STOP artifact carries `integration_effect = "none"`.
+7. F7 wording in PREREG v0.3.3 (§8.1); calibration cells report `requested` and `realized`.
+8. Cost correction: calibration is 589 calls (58 × 10 + 9), 1178 only as a worst-case attempt bound.

@@ -48,6 +48,11 @@ CAL_PER_STATE = 10
 PILOT_PER_STRATUM = 10
 MAIN_D = (1, 2, 3, 4)
 STATES = ("unique", "ambiguous")
+# Frozen subjects (PREREG v0.3.2 §3): the profile refuses anything else per role.
+ROLES = {
+    "primary": {"provider": "openai", "model": "gpt-5.6-terra", "reasoning_effort": "medium"},
+    "replication": {"provider": "claude", "model": "claude-sonnet-5", "reasoning_effort": None},
+}
 
 
 class ProviderLike(Protocol):
@@ -57,7 +62,7 @@ class ProviderLike(Protocol):
     def ask_with_outcome(self, prompt: str): ...
 
 
-ProviderFactory = Callable[[str], ProviderLike]
+ProviderFactory = Callable[[dict], ProviderLike]  # receives the FROZEN profile, never the environment
 
 
 def _sha(text: str) -> str:
@@ -87,22 +92,31 @@ def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def default_provider_factory(provider: str) -> ProviderLike:
-    """Real providers; imported lazily so the zero-API modules never need the SDKs."""
-    if provider == "openai":
+def _pd(value):
+    return None if value == "provider_default" else value
+
+
+def default_provider_factory(prof: dict) -> ProviderLike:
+    """Real providers, constructed FROM THE FROZEN PROFILE (not from current
+    environment defaults), so the artifact controls execution. Imported
+    lazily so the zero-API modules never need the SDKs."""
+    if prof["provider"] == "openai":
         from ai_lab.providers.openai_provider import OpenAIProvider
 
-        return OpenAIProvider()
-    if provider == "claude":
+        return OpenAIProvider(model=prof["model"], reasoning_effort=_pd(prof["reasoning_effort"]))
+    if prof["provider"] == "claude":
         from ai_lab.providers.claude_provider import ClaudeProvider
 
-        return ClaudeProvider()
-    raise ValueError(provider)
+        kw = {"model": prof["model"], "effort": _pd(prof["reasoning_effort"])}
+        if prof["max_output_tokens"] != "provider_default":
+            kw["max_tokens"] = prof["max_output_tokens"]
+        return ClaudeProvider(**kw)
+    raise ValueError(prof["provider"])
 
 
 # ---- profile ----------------------------------------------------------------
 
-def resolve_profile(provider: str, seed: int) -> dict:
+def resolve_profile(provider: str, seed: int, role: str = "primary") -> dict:
     """Execution profile from configured settings; provider-managed or
     unexposed parameters are recorded as provider_default (PREREG §3)."""
     from ai_lab.providers import settings
@@ -113,14 +127,23 @@ def resolve_profile(provider: str, seed: int) -> dict:
         model, effort, max_tokens = settings.CLAUDE_MODEL, settings.CLAUDE_EFFORT, settings.CLAUDE_MAX_TOKENS
     else:
         raise ValueError(provider)
+    frozen = ROLES[role]
+    effort_str = effort if effort else "provider_default"
+    want_effort = frozen["reasoning_effort"] or "provider_default"
+    if provider != frozen["provider"] or model != frozen["model"] or effort_str != want_effort:
+        raise SystemExit(
+            f"refusing to freeze a {role} profile with provider={provider!r}, model={model!r}, "
+            f"reasoning_effort={effort_str!r}; frozen {role} subject is {frozen}"
+        )
     return {
+        "role": role,
         "prereg": f"{PREREG_ID} {PREREG_VERSION}",
         "plan_id": PLAN_ID,
         "warrant_id": WARRANT_ID,
         "integration_effect": INTEGRATION_EFFECT,
         "provider": provider,
         "model": model,
-        "reasoning_effort": effort if effort else "provider_default",
+        "reasoning_effort": effort_str,
         "max_output_tokens": max_tokens if max_tokens is not None else "provider_default",
         "temperature": "provider_default",
         "seed_param": "provider_default",
@@ -138,12 +161,12 @@ def resolve_profile(provider: str, seed: int) -> dict:
     }
 
 
-def cmd_profile(out: Path, provider: str, seed: int) -> Path:
+def cmd_profile(out: Path, provider: str, seed: int, role: str = "primary") -> Path:
     out.mkdir(parents=True, exist_ok=True)
     path = out / "campaign_execution_profile.json"
     if path.exists():
         raise SystemExit("profile already frozen; refusing to overwrite")
-    _write_json(path, resolve_profile(provider, seed))
+    _write_json(path, resolve_profile(provider, seed, role))
     return path
 
 
@@ -156,12 +179,21 @@ def _load_profile(out: Path) -> dict:
         raise SystemExit("FRAME_SHA256 mismatch: prompt frame drifted since the profile was frozen")
     if prof["integration_effect"] != INTEGRATION_EFFECT:
         raise SystemExit("integration_effect mismatch")
+    prof["_ref"] = path.name
+    prof["_sha256"] = _sha_file(path)
     return prof
 
 
 def _check_provider_matches(prof: dict, prov: ProviderLike) -> None:
+    """Defence in depth: the factory builds from the profile, and the built
+    provider is still compared with it before any call."""
     if getattr(prov, "model", None) != prof["model"]:
         raise SystemExit(f"provider model {getattr(prov, 'model', None)!r} != frozen {prof['model']!r}")
+    for attr in ("_reasoning_effort", "_effort"):
+        if hasattr(prov, attr):
+            got = getattr(prov, attr) or "provider_default"
+            if got != prof["reasoning_effort"]:
+                raise SystemExit(f"provider reasoning effort {got!r} != frozen {prof['reasoning_effort']!r}")
 
 
 # ---- one call ---------------------------------------------------------------
@@ -193,10 +225,16 @@ class Row:
     error: str | None
     started_at: str
     finished_at: str
+    source_git_commit: str
+    source_git_dirty: object
+    execution_profile_ref: str
+    execution_profile_sha256: str
+    stop_reason_field: str | None = None
+    content_block_types: tuple[str, ...] = ()
     integration_effect: str = INTEGRATION_EFFECT
 
 
-def run_trial_arm(inst: Instance, arm: int, prov: ProviderLike, stage: str, retries: int = 1) -> Row:
+def run_trial_arm(inst: Instance, arm: int, prov: ProviderLike, stage: str, prof: dict, retries: int = 1) -> Row:
     pz, target = inst.trial.puzzle, inst.trial.target
     adm = admit_instance(pz)
     if not adm.ok:
@@ -211,16 +249,18 @@ def run_trial_arm(inst: Instance, arm: int, prov: ProviderLike, stage: str, retr
         except Exception as e:  # noqa: BLE001 - recorded, retried once, then a missing pair
             err = f"{type(e).__name__}: {e}"
     status, omega = oracle_status(pz, target)
+    prov_fields = (prof["git_commit"], prof["git_dirty"], prof["_ref"], prof["_sha256"])
     if out is None:
         return Row(stage, pz.puzzle_id(), inst.trial.trial_id(), arm, inst.n, inst.depth, inst.target_state, target, omega,
                    FLAT_VERSION if arm == 1 else RM_VERSION, _sha(text), len(text), "", _sha(""), None, (), False, False,
-                   None, None, None, attempts, err, started, _now())
+                   None, None, None, attempts, err, started, _now(), *prov_fields)
     parsed = parse_output(out.text)
     return Row(stage, pz.puzzle_id(), inst.trial.trial_id(), arm, inst.n, inst.depth, inst.target_state, target, omega,
                FLAT_VERSION if arm == 1 else RM_VERSION, _sha(text), len(text), out.text, _sha(out.text),
                parsed.status, parsed.answer, parsed.ok, score(parsed, status, omega),
                getattr(out, "stop_reason", None), getattr(out, "input_tokens", None), getattr(out, "output_tokens", None),
-               attempts, None, started, _now())
+               attempts, None, started, _now(), *prov_fields,
+               getattr(out, "stop_reason_field", None), tuple(getattr(out, "content_block_types", ()) or ()))
 
 
 def _arm_order(trial_id: str) -> tuple[int, int]:
@@ -286,7 +326,7 @@ def select_n_main(surface: dict[int, tuple[int, int]]) -> tuple[list[int] | None
 
 def cmd_calibration(out: Path, factory: ProviderFactory) -> dict:
     prof = _load_profile(out)
-    prov = factory(prof["provider"])
+    prov = factory(prof)
     _check_provider_matches(prof, prov)
     path = out / "calibration.jsonl"
     done = {(r["trial_id"]) for r in _rows(path)}
@@ -297,28 +337,36 @@ def cmd_calibration(out: Path, factory: ProviderFactory) -> dict:
     for inst in insts:
         if inst.trial.trial_id() in done:
             continue
-        _append_row(path, run_trial_arm(inst, 1, prov, "calibration"))
+        _append_row(path, run_trial_arm(inst, 1, prov, "calibration", prof))
     rows = _rows(path)
     surface: dict[int, tuple[int, int]] = {}
     cells: dict[str, dict] = {}
+    missing = 0
     for r in rows:
+        if r["error"]:
+            missing += 1  # provider failure after retry: missing, not wrong (PREREG §7 handling)
+            continue
         c, t = surface.get(r["n"], (0, 0))
         surface[r["n"]] = (c + int(r["correct"]), t + 1)
         key = f"n={r['n']},d={r['depth']},{r['target_state']}"
-        cc = cells.setdefault(key, {"correct": 0, "total": 0, "requested": CAL_PER_STATE})
+        cc = cells.setdefault(key, {"correct": 0, "total": 0, "requested": CAL_PER_STATE, "realized": 0})
         cc["correct"] += int(r["correct"])
-        cc["total"] += 1  # may fall short of `requested` when the stratum has fewer distinct puzzles (recorded, not hidden)
+        cc["total"] += 1  # admitted, non-missing rows
+        cc["realized"] += 1  # v0.3.3 F7: may fall short of `requested` in a finite stratum (recorded, not hidden)
     n_main, detail = select_n_main(surface)
     report = {
         "stage": "calibration", "evidential": False, "integration_effect": INTEGRATION_EFFECT,
-        "arm": 1, "rows": len(rows), "excluded_at_admission": excluded,
+        "arm": 1, "rows": len(rows), "missing_after_retry": missing, "excluded_at_admission": excluded,
         "surface_by_n": {str(n): {"correct": c, "total": t, "acc": c / t} for n, (c, t) in sorted(surface.items())},
         "cells": cells, "selection": detail,
         "N_main": n_main, "STOP": n_main is None,
         "stage_sha256": _sha_file(path), "completed_at": _now(),
     }
     _write_json(out / "calibration_report.json", report)
-    _manifest_update(out, "calibration", path)
+    _manifest_update(out, "calibration", path, {
+        "N_main": n_main, "calibration_STOP": n_main is None,
+        "calibration_report_sha256": _sha_file(out / "calibration_report.json"),
+    })
     return report
 
 
@@ -335,6 +383,19 @@ def _manifest_update(out: Path, stage: str, path: Path, extra: dict | None = Non
         m.update(extra)
     m["manifest_sha256_excluding_self"] = _sha(json.dumps({k: v for k, v in m.items() if k != "manifest_sha256_excluding_self"}, sort_keys=True))
     _write_json(mpath, m)
+    return m
+
+
+def _verify_manifest(out: Path) -> dict:
+    """Recompute every recorded stage digest (and the calibration report
+    digest) and refuse to proceed on any mismatch."""
+    m = _read_json(out / "campaign_manifest.json")
+    for stage, rec in m["stages"].items():
+        f = out / rec["file"]
+        if not f.exists() or _sha_file(f) != rec["sha256"]:
+            raise SystemExit(f"manifest verification failed for stage {stage!r}: file missing or digest mismatch")
+    if "calibration_report_sha256" in m and _sha_file(out / "calibration_report.json") != m["calibration_report_sha256"]:
+        raise SystemExit("manifest verification failed: calibration_report.json was modified after freezing")
     return m
 
 
@@ -363,7 +424,7 @@ def stratum_instances(n_main: list[int], per_stratum: int, seed: int, tag: str, 
     return out
 
 
-def _run_pairs(insts: list[Instance], prov: ProviderLike, stage: str, path: Path, seed: int) -> None:
+def _run_pairs(insts: list[Instance], prov: ProviderLike, stage: str, path: Path, seed: int, prof: dict) -> None:
     done = {(r["trial_id"], r["arm"]) for r in _rows(path)}
     order = list(insts)
     random.Random(f"{stage}|{seed}").shuffle(order)
@@ -372,7 +433,7 @@ def _run_pairs(insts: list[Instance], prov: ProviderLike, stage: str, path: Path
         for arm in _arm_order(tid):
             if (tid, arm) in done:
                 continue
-            _append_row(path, run_trial_arm(inst, arm, prov, stage))
+            _append_row(path, run_trial_arm(inst, arm, prov, stage, prof))
 
 
 def paired_from_rows(rows: list[dict]) -> tuple[Paired, dict]:
@@ -400,15 +461,16 @@ def paired_from_rows(rows: list[dict]) -> tuple[Paired, dict]:
 
 def cmd_pilot(out: Path, factory: ProviderFactory) -> dict:
     prof = _load_profile(out)
-    cal = _read_json(out / "calibration_report.json")
-    if cal["STOP"] or not cal["N_main"]:
+    m0 = _verify_manifest(out)
+    if m0.get("calibration_STOP") or not m0.get("N_main"):
         raise SystemExit("calibration STOP: no eligible N_main; pilot not authorized")
-    prov = factory(prof["provider"])
+    cal = {"N_main": m0["N_main"]}
+    prov = factory(prof)
     _check_provider_matches(prof, prov)
     path = out / "pilot.jsonl"
     excluded: list[dict] = []
     insts = _admitted(stratum_instances(cal["N_main"], PILOT_PER_STRATUM, prof["campaign_seed"], "pilot", set()), excluded)
-    _run_pairs(insts, prov, "pilot", path, prof["campaign_seed"])
+    _run_pairs(insts, prov, "pilot", path, prof["campaign_seed"], prof)
     rows = _rows(path)
     paired, extra = paired_from_rows(rows)
     # --- blinding sequence: (1) b+c, (2) N_req + looks + z_k, (3) manifest hash, (4) unlock direction
@@ -416,7 +478,8 @@ def cmd_pilot(out: Path, factory: ProviderFactory) -> dict:
     n_req = required_pairs(q)
     if n_req > N_MAX:
         _manifest_update(out, "pilot", path, {"q_blinded": q, "N_req": n_req, "STOP": "N_req exceeds N_max", "direction_unlocked": False})
-        _write_json(out / "pilot_report.json", {"stage": "pilot", "evidential": False, "q": q, "N_req": n_req, "STOP": True, "direction_unlocked": False})
+        _write_json(out / "pilot_report.json", {"stage": "pilot", "evidential": False, "integration_effect": INTEGRATION_EFFECT,
+                                                "q": q, "N_req": n_req, "STOP": True, "direction_unlocked": False, "completed_at": _now()})
         return {"STOP": True, "q": q, "N_req": n_req}
     sched = schedule_for(n_req)
     manifest = _manifest_update(out, "pilot", path, {
@@ -445,7 +508,7 @@ def cmd_pilot(out: Path, factory: ProviderFactory) -> dict:
 
 def cmd_main(out: Path, factory: ProviderFactory, stage_index: int) -> dict:
     prof = _load_profile(out)
-    m = _read_json(out / "campaign_manifest.json")
+    m = _verify_manifest(out)
     if "N_req" not in m or m.get("STOP"):
         raise SystemExit("no frozen N_req in manifest; run pilot first")
     if m.get("closure"):
@@ -456,7 +519,7 @@ def cmd_main(out: Path, factory: ProviderFactory, stage_index: int) -> dict:
     prev = f"main-stage-{stage_index - 1:02d}"
     if stage_index > 1 and prev not in m["stages"]:
         raise SystemExit(f"{prev} not completed/hashed; stages run in order")
-    prov = factory(prof["provider"])
+    prov = factory(prof)
     _check_provider_matches(prof, prov)
     stage = f"main-stage-{stage_index:02d}"
     path = out / f"{stage}.jsonl"
@@ -466,7 +529,7 @@ def cmd_main(out: Path, factory: ProviderFactory, stage_index: int) -> dict:
         exclude |= {r["puzzle_id"] for r in _rows(out / f"main-stage-{k:02d}.jsonl")}
     excluded: list[dict] = []
     insts = _admitted(stratum_instances(m["N_main"], per, prof["campaign_seed"], stage, exclude), excluded)
-    _run_pairs(insts, prov, stage, path, prof["campaign_seed"] + stage_index)
+    _run_pairs(insts, prov, stage, path, prof["campaign_seed"] + stage_index, prof)
     _manifest_update(out, stage, path)
     # cumulative paired statistic
     all_rows: list[dict] = []
@@ -492,19 +555,37 @@ def cmd_main(out: Path, factory: ProviderFactory, stage_index: int) -> dict:
     return report
 
 
+def cmd_close_inconclusive(out: Path, reason: str) -> dict:
+    """Voluntary/budget stop (PREREG §7 closure): closes INCONCLUSIVE at the
+    last completed look, recorded with the operator's reason."""
+    m = _verify_manifest(out)
+    if m.get("closure"):
+        raise SystemExit(f"campaign already closed: {m['closure']}")
+    completed = sorted(int(k.split("-")[-1]) for k in m["stages"] if k.startswith("main-stage-"))
+    cum = sum(m.get("blocks", [])[: len(completed)]) if completed else 0
+    looks = [n for n in m.get("looks", []) if n <= cum]
+    m["closure"] = {"verdict": "INCONCLUSIVE", "reason": reason, "voluntary": True, "completed_trials": cum,
+                    "at_last_completed_look": looks[-1] if looks else None, "closed_at": _now()}
+    _write_json(out / "campaign_manifest.json", m)
+    return m["closure"]
+
+
 # ---- CLI --------------------------------------------------------------------
 
 def main(argv: list[str] | None = None, factory: ProviderFactory = default_provider_factory) -> int:
     ap = argparse.ArgumentParser(prog="relational_state.runner")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    p = sub.add_parser("profile"); p.add_argument("--out", required=True); p.add_argument("--provider", choices=("openai", "claude"), required=True); p.add_argument("--seed", type=int, required=True)
+    p = sub.add_parser("profile"); p.add_argument("--out", required=True); p.add_argument("--provider", choices=("openai", "claude"), required=True); p.add_argument("--seed", type=int, required=True); p.add_argument("--role", choices=tuple(ROLES), default="primary")
+    cl = sub.add_parser("close-inconclusive"); cl.add_argument("--out", required=True); cl.add_argument("--reason", required=True)
     c = sub.add_parser("calibration"); c.add_argument("--out", required=True)
     q = sub.add_parser("pilot"); q.add_argument("--out", required=True)
     mn = sub.add_parser("main"); mn.add_argument("--out", required=True); mn.add_argument("--stage", type=int, required=True)
     a = ap.parse_args(argv)
     out = Path(a.out)
     if a.cmd == "profile":
-        print(cmd_profile(out, a.provider, a.seed))
+        print(cmd_profile(out, a.provider, a.seed, a.role))
+    elif a.cmd == "close-inconclusive":
+        print(json.dumps(cmd_close_inconclusive(out, a.reason), indent=1))
     elif a.cmd == "calibration":
         r = cmd_calibration(out, factory); print(json.dumps({k: r[k] for k in ("rows", "N_main", "STOP", "surface_by_n")}, indent=1))
     elif a.cmd == "pilot":

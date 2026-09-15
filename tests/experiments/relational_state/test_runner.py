@@ -24,8 +24,9 @@ class FakeOutcome:
 class FakeProvider:
     """Answers from the oracle with arm-dependent accuracy; records every prompt."""
 
-    def __init__(self, acc_arm1=0.5, acc_arm2=0.9, model="gpt-5.6-terra", fail_on=None):
+    def __init__(self, acc_arm1=0.5, acc_arm2=0.9, model="gpt-5.6-terra", fail_on=None, reasoning_effort="medium"):
         self.name, self.model = "Fake", model
+        self._reasoning_effort = reasoning_effort
         self.acc = {1: acc_arm1, 2: acc_arm2}
         self.prompts: list[str] = []
         self.rng = random.Random(0)
@@ -53,17 +54,24 @@ class FakeProvider:
 
 
 def _factory(prov):
-    return lambda name: prov
+    return lambda prof: prov
 
 
-def _profile(tmp_path, monkeypatch):
-    monkeypatch.setenv("AI_LAB_OPENAI_MODEL", "gpt-5.6-terra")
-    monkeypatch.setenv("AI_LAB_OPENAI_REASONING_EFFORT", "medium")
+def _reload_settings(monkeypatch, model="gpt-5.6-terra", effort="medium"):
+    monkeypatch.setenv("AI_LAB_OPENAI_MODEL", model)
+    if effort is None:
+        monkeypatch.delenv("AI_LAB_OPENAI_REASONING_EFFORT", raising=False)
+    else:
+        monkeypatch.setenv("AI_LAB_OPENAI_REASONING_EFFORT", effort)
     import importlib
 
     from ai_lab.providers import settings
 
     importlib.reload(settings)
+
+
+def _profile(tmp_path, monkeypatch):
+    _reload_settings(monkeypatch)
     return runner.cmd_profile(tmp_path, "openai", seed=11)
 
 
@@ -73,9 +81,46 @@ def test_profile_is_frozen_once_and_carries_membrane_fields(tmp_path, monkeypatc
     assert prof["integration_effect"] == INTEGRATION_EFFECT == "none"
     assert prof["frame_sha256"] == FRAME_SHA256
     assert prof["model"] == "gpt-5.6-terra" and prof["reasoning_effort"] == "medium"
-    assert prof["temperature"] == "provider_default"
+    assert prof["temperature"] == "provider_default" and prof["role"] == "primary"
     with pytest.raises(SystemExit):
         runner.cmd_profile(tmp_path, "openai", seed=11)
+
+
+@pytest.mark.parametrize("provider,model,effort", [
+    ("claude", "gpt-5.6-terra", "medium"),      # wrong provider for the primary role
+    ("openai", "gpt-5.6-sol", "medium"),        # wrong model
+    ("openai", "gpt-5.6-terra", "high"),        # wrong reasoning effort
+    ("openai", "gpt-5.6-terra", None),          # missing reasoning effort
+])
+def test_primary_profile_refuses_non_frozen_subject(tmp_path, monkeypatch, provider, model, effort):
+    _reload_settings(monkeypatch, model=model, effort=effort)
+    prov = FakeProvider()
+    with pytest.raises(SystemExit):
+        runner.cmd_profile(tmp_path, provider, seed=1)
+    assert not (tmp_path / "campaign_execution_profile.json").exists()
+    assert prov.prompts == []
+
+
+def test_provider_is_built_from_frozen_profile_not_environment(tmp_path, monkeypatch):
+    _profile(tmp_path, monkeypatch)
+    # environment drifts to `high` after freezing; the factory must still receive `medium`
+    _reload_settings(monkeypatch, effort="high")
+    seen = {}
+
+    def factory(prof):
+        seen.update(prof)
+        return FakeProvider(reasoning_effort=prof["reasoning_effort"])
+
+    runner.cmd_calibration(tmp_path, factory)
+    assert seen["reasoning_effort"] == "medium" and seen["model"] == "gpt-5.6-terra"
+
+
+def test_effort_mismatch_on_built_provider_aborts_before_any_call(tmp_path, monkeypatch):
+    _profile(tmp_path, monkeypatch)
+    prov = FakeProvider(reasoning_effort="high")
+    with pytest.raises(SystemExit):
+        runner.cmd_calibration(tmp_path, _factory(prov))
+    assert prov.prompts == []
 
 
 def test_stage_requires_profile_and_matching_model(tmp_path, monkeypatch):
@@ -112,6 +157,9 @@ def test_full_pipeline_with_fake_provider(tmp_path, monkeypatch):
     rows = runner._rows(tmp_path / "calibration.jsonl")
     assert all(r["arm"] == 1 and r["stage"] == "calibration" for r in rows)
     assert all(r["integration_effect"] == "none" for r in rows)
+    prof = json.loads((tmp_path / "campaign_execution_profile.json").read_text())
+    assert all(r["execution_profile_ref"] == "campaign_execution_profile.json" and len(r["execution_profile_sha256"]) == 64
+               and r["source_git_commit"] == prof["git_commit"] and "source_git_dirty" in r for r in rows)
     for key, cell in cal["cells"].items():
         assert 1 <= cell["total"] <= cell["requested"] == 10, key
     assert cal["cells"]["n=3,d=1,ambiguous"]["total"] == 9   # tiny stratum: only 9 distinct puzzles exist; recorded
@@ -121,6 +169,14 @@ def test_full_pipeline_with_fake_provider(tmp_path, monkeypatch):
     assert man["stages"]["calibration"]["sha256"] == hashlib.sha256((tmp_path / "calibration.jsonl").read_bytes()).hexdigest()
     # --- pilot: both arms, back-to-back per trial, blinding sequence
     n_calls_before = len(prov.prompts)
+    # tampering with a hashed stage file is detected before the next stage runs
+    calfile = tmp_path / "calibration.jsonl"
+    original = calfile.read_bytes()
+    calfile.write_bytes(original + b"\n")
+    with pytest.raises(SystemExit):
+        runner.cmd_pilot(tmp_path, _factory(prov))
+    calfile.write_bytes(original)
+    assert len(prov.prompts) == n_calls_before
     pil = runner.cmd_pilot(tmp_path, _factory(prov))
     prows = runner._rows(tmp_path / "pilot.jsonl")
     assert len(prows) == 3 * 4 * 2 * 10 * 2
@@ -151,6 +207,8 @@ def test_full_pipeline_with_fake_provider(tmp_path, monkeypatch):
     assert all(f"main-stage-{k:02d}" in man["stages"] for k in range(1, closed_at_stage + 1))
     with pytest.raises(SystemExit):
         runner.cmd_main(tmp_path, _factory(prov), closed_at_stage + 1)
+    with pytest.raises(SystemExit):
+        runner.cmd_close_inconclusive(tmp_path, "already closed")
     # no puzzle leaks from pilot into main, and no duplicate puzzles across main stages
     pids_pilot = {r["puzzle_id"] for r in prows}
     pids_main = [r["puzzle_id"] for k in range(1, closed_at_stage + 1) for r in runner._rows(tmp_path / f"main-stage-{k:02d}.jsonl")]
@@ -167,11 +225,36 @@ def test_provider_error_is_retried_once_then_recorded_as_missing(tmp_path, monke
 
     inst = generate(4, 1, "unique", 1)
     prov = FakeProvider(fail_on={1, 2})
-    row = runner.run_trial_arm(inst, 1, prov, "t")
+    prof = runner._load_profile(tmp_path)
+    row = runner.run_trial_arm(inst, 1, prov, "t", prof)
     assert row.error and row.attempts == 2 and not row.correct and row.response == ""
     prov2 = FakeProvider(fail_on={1})
-    row2 = runner.run_trial_arm(inst, 1, prov2, "t")
+    row2 = runner.run_trial_arm(inst, 1, prov2, "t", prof)
     assert row2.error is None and row2.attempts == 2
+
+
+def test_calibration_provider_failures_are_missing_not_wrong(tmp_path, monkeypatch):
+    _profile(tmp_path, monkeypatch)
+    # first call fails twice (retry exhausted) -> missing; must not enter any denominator
+    prov = FakeProvider(acc_arm1=1.0, fail_on={1, 2})
+    cal = runner.cmd_calibration(tmp_path, _factory(prov))
+    rows = runner._rows(tmp_path / "calibration.jsonl")
+    assert sum(1 for r in rows if r["error"]) == 1 and cal["missing_after_retry"] == 1
+    assert sum(c["total"] for c in cal["cells"].values()) == len(rows) - 1
+    assert all(v["acc"] == 1.0 for v in cal["surface_by_n"].values())
+
+
+def test_voluntary_close_records_inconclusive_at_last_completed_look(tmp_path, monkeypatch):
+    _profile(tmp_path, monkeypatch)
+    prov = FakeProvider(acc_arm1=0.80, acc_arm2=0.90)
+    runner.cmd_calibration(tmp_path, _factory(prov))
+    runner.cmd_pilot(tmp_path, _factory(prov))
+    runner.cmd_main(tmp_path, _factory(prov), 1)
+    closure = runner.cmd_close_inconclusive(tmp_path, "budget")
+    assert closure["verdict"] == "INCONCLUSIVE" and closure["voluntary"] and closure["completed_trials"] == 240
+    assert closure["at_last_completed_look"] is None      # no look completed yet
+    with pytest.raises(SystemExit):
+        runner.cmd_main(tmp_path, _factory(prov), 2)
 
 
 def test_pilot_stops_when_required_n_exceeds_budget(tmp_path, monkeypatch):

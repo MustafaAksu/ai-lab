@@ -1,4 +1,4 @@
-"""Relational state organization cell (PREREG-RS-0001 v0.3.1, PLAN-20260912-0001).
+"""Relational state organization cell (PREREG-RS-0001 v0.3.3, PLAN-20260912-0001).
 
 A governed visitor experiment. INTEGRATION_EFFECT is "none": nothing in this
 package changes AI-Lab runtime behaviour, defaults, prompt paths, context
