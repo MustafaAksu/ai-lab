@@ -247,7 +247,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-09-15T13:50:23+00:00",
+  "generated_at": "2026-09-15T13:53:55+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -838,7 +838,7 @@
       "target": "A governed visitor experiment with INTEGRATION_EFFECT = 'none': preregistration PREREG-RS-0001 v0.3.1 frozen first; then a zero-API implementation of generator, exhaustive oracle, propagator-defined depth labeller, FLAT-v0 and RM-v0 serializers (RM-v0 = clue table once plus an ID-only adjacency index), decoder, admission auditor (invariants A1-A6) and scorer under ai_lab/experiments/relational_state/ with tests under tests/experiments/relational_state/; then a provider runner (the only module importing ai_lab.providers.*) gated behind a deterministic calibration STOP, with self-contained content-addressed provenance (Option S, no InvocationRecords); then the paired Arm-1/Arm-2 main campaign on the frozen primary subject (draft: gpt-5.6-terra) with the preregistered primary endpoint. The first slice also creates the docs/research/experiments/ artifact family, which must be authorized explicitly by the plan rather than introduced through the experiment."
     }
   ],
-  "repo_head": "86ac63a93032afc9fc1a2c0569d3166cf845805b",
+  "repo_head": "86b6aa7f9683e9795c73d875dffab78d18409e22",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
