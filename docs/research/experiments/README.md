@@ -8,4 +8,4 @@ establishes no AI-Lab capability by itself. Family created by PLAN-20260912-0001
 
 | Area | Preregistration | Plan | Integration effect |
 |---|---|---|---|
-| `relational_state/` | PREREG-RS-0001 v0.3.3 | PLAN-20260912-0001 / WARR-20260912-0001 | `none` |
+| `relational_state/` | PREREG-RS-0001 v0.4 | PLAN-20260912-0001 / WARR-20260912-0001 | `none` |

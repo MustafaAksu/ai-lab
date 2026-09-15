@@ -24,7 +24,7 @@ class FakeOutcome:
 class FakeProvider:
     """Answers from the oracle with arm-dependent accuracy; records every prompt."""
 
-    def __init__(self, acc_arm1=0.5, acc_arm2=0.9, model="gpt-5.6-terra", fail_on=None, reasoning_effort="medium"):
+    def __init__(self, acc_arm1=0.5, acc_arm2=0.9, model="gpt-5.6-luna", fail_on=None, reasoning_effort="low"):
         self.name, self.model = "Fake", model
         self._reasoning_effort = reasoning_effort
         self.acc = {1: acc_arm1, 2: acc_arm2}
@@ -57,7 +57,7 @@ def _factory(prov):
     return lambda prof: prov
 
 
-def _reload_settings(monkeypatch, model="gpt-5.6-terra", effort="medium"):
+def _reload_settings(monkeypatch, model="gpt-5.6-luna", effort="low"):
     monkeypatch.setenv("AI_LAB_OPENAI_MODEL", model)
     if effort is None:
         monkeypatch.delenv("AI_LAB_OPENAI_REASONING_EFFORT", raising=False)
@@ -78,13 +78,13 @@ def _profile(tmp_path, monkeypatch):
 def test_artifacts_identify_the_frozen_prereg_version(tmp_path, monkeypatch):
     from ai_lab.experiments.relational_state import PREREG_VERSION
 
-    assert PREREG_VERSION == "v0.3.3"
+    assert PREREG_VERSION == "v0.4"
     _profile(tmp_path, monkeypatch)
     prof = json.loads((tmp_path / "campaign_execution_profile.json").read_text())
-    assert prof["prereg"] == "PREREG-RS-0001 v0.3.3"
+    assert prof["prereg"] == "PREREG-RS-0001 v0.4"
     runner.cmd_calibration(tmp_path, _factory(FakeProvider()))
     man = json.loads((tmp_path / "campaign_manifest.json").read_text())
-    assert man["prereg"] == "PREREG-RS-0001 v0.3.3"
+    assert man["prereg"] == "PREREG-RS-0001 v0.4"
 
 
 def test_profile_is_frozen_once_and_carries_membrane_fields(tmp_path, monkeypatch):
@@ -92,17 +92,17 @@ def test_profile_is_frozen_once_and_carries_membrane_fields(tmp_path, monkeypatc
     prof = json.loads(path.read_text())
     assert prof["integration_effect"] == INTEGRATION_EFFECT == "none"
     assert prof["frame_sha256"] == FRAME_SHA256
-    assert prof["model"] == "gpt-5.6-terra" and prof["reasoning_effort"] == "medium"
+    assert prof["model"] == "gpt-5.6-luna" and prof["reasoning_effort"] == "low"   # v0.4 amended subject
     assert prof["temperature"] == "provider_default" and prof["role"] == "primary"
     with pytest.raises(SystemExit):
         runner.cmd_profile(tmp_path, "openai", seed=11)
 
 
 @pytest.mark.parametrize("provider,model,effort", [
-    ("claude", "gpt-5.6-terra", "medium"),      # wrong provider for the primary role
-    ("openai", "gpt-5.6-sol", "medium"),        # wrong model
-    ("openai", "gpt-5.6-terra", "high"),        # wrong reasoning effort
-    ("openai", "gpt-5.6-terra", None),          # missing reasoning effort
+    ("claude", "gpt-5.6-luna", "low"),          # wrong provider for the primary role
+    ("openai", "gpt-5.6-terra", "low"),         # superseded v0.3.3 model
+    ("openai", "gpt-5.6-luna", "medium"),       # superseded v0.3.3 effort
+    ("openai", "gpt-5.6-luna", None),           # missing reasoning effort
 ])
 def test_primary_profile_refuses_non_frozen_subject(tmp_path, monkeypatch, provider, model, effort):
     _reload_settings(monkeypatch, model=model, effort=effort)
@@ -115,7 +115,7 @@ def test_primary_profile_refuses_non_frozen_subject(tmp_path, monkeypatch, provi
 
 def test_provider_is_built_from_frozen_profile_not_environment(tmp_path, monkeypatch):
     _profile(tmp_path, monkeypatch)
-    # environment drifts to `high` after freezing; the factory must still receive `medium`
+    # environment drifts to `high` after freezing; the factory must still receive `low`
     _reload_settings(monkeypatch, effort="high")
     seen = {}
 
@@ -124,7 +124,7 @@ def test_provider_is_built_from_frozen_profile_not_environment(tmp_path, monkeyp
         return FakeProvider(reasoning_effort=prof["reasoning_effort"])
 
     runner.cmd_calibration(tmp_path, factory)
-    assert seen["reasoning_effort"] == "medium" and seen["model"] == "gpt-5.6-terra"
+    assert seen["reasoning_effort"] == "low" and seen["model"] == "gpt-5.6-luna"
 
 
 def test_effort_mismatch_on_built_provider_aborts_before_any_call(tmp_path, monkeypatch):

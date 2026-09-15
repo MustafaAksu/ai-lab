@@ -26,7 +26,7 @@ So the family is not merely "a bit easy"; it is uninformative for this subject a
 
 ## Decision (reviewing executor, 2026-09-15)
 
-**Option 3, narrowly: one amendment to a weaker subject configuration, not a ladder.** The family, `FRAME-v0`, arms, SESOI, window, sample-size machinery and staged boundaries are untouched; only the subject specification and the consequence of this STOP change. The amendment is **v0.4** (not v0.3.4) because the subject's reasoning configuration is a frozen substantive parameter. `campaign_seed` stays 20260915 so the calibration puzzle sample is held approximately fixed and the medium→weaker comparison is clean; calibration remains non-evidential.
+**Option 3, narrowly: one amendment to a weaker subject configuration, not a ladder.** The configuration chosen is **`gpt-5.6-luna` at `reasoning_effort = low`** — a tier change as well as a budget change, judged more likely than Terra/low to move Arm-1 off ceiling, at the cost that the claim is explicitly about Luna at low effort. The family, `FRAME-v0`, arms, SESOI, window, sample-size machinery and staged boundaries are untouched; only the subject specification and the consequence of this STOP change. The amendment is **v0.4** (not v0.3.4) because the subject's reasoning configuration is a frozen substantive parameter. `campaign_seed` stays 20260915 so the calibration puzzle sample is held approximately fixed and the medium→weaker comparison is clean; calibration remains non-evidential.
 
 Branch: campaign-02 calibration under the amended subject → window found ⇒ pilot; STOP again ⇒ the cell ends.
 

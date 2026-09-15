@@ -1,4 +1,4 @@
-"""Relational state organization cell (PREREG-RS-0001 v0.3.3, PLAN-20260912-0001).
+"""Relational state organization cell (PREREG-RS-0001 v0.4, PLAN-20260912-0001).
 
 A governed visitor experiment. INTEGRATION_EFFECT is "none": nothing in this
 package changes AI-Lab runtime behaviour, defaults, prompt paths, context
@@ -11,6 +11,6 @@ ai_lab.providers.*. Enforced by tests/experiments/relational_state/test_membrane
 
 INTEGRATION_EFFECT = "none"
 PREREG_ID = "PREREG-RS-0001"
-PREREG_VERSION = "v0.3.3"
+PREREG_VERSION = "v0.4"
 PLAN_ID = "PLAN-20260912-0001"
 WARRANT_ID = "WARR-20260912-0001"
