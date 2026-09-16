@@ -247,7 +247,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-09-16T06:36:20+00:00",
+  "generated_at": "2026-09-16T06:36:54+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -835,7 +835,7 @@
       "target": "Superseded by the outcome of PLAN-20260912-0001. A successor slice should begin by establishing a difficulty coordinate with a demonstrable gradient for the intended subject, verified by a small Arm-1 calibration, before re-declaring a paired family; the existing relational_state package (generator, oracle, serializers, admission invariants, scorer, sequential routine, gate, runner) is reusable unchanged."
     }
   ],
-  "repo_head": "ee79d0a9cd6498d25b2c0e5fdc86784c7f694130",
+  "repo_head": "815237a84119f132a5714b208d444c6214d0daea",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
