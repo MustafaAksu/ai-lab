@@ -247,7 +247,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-09-15T15:15:41+00:00",
+  "generated_at": "2026-09-16T06:36:20+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -619,12 +619,9 @@
     "GAP-0008",
     "GAP-0009"
   ],
-  "open_plans": [
-    "PLAN-20260912-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 24,
+    "completed": 25,
     "withdrawn": 1
   },
   "plans": [
@@ -807,7 +804,7 @@
       "plan_id": "PLAN-20260912-0001",
       "source_gap_id": "GAP-0009",
       "source_path": "docs/self_model/plans/PLAN-20260912-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Relational state organization cell: governed visitor experiment with zero integration effect (PREREG-RS-0001 v0.3.1)"
     }
   ],
@@ -835,10 +832,10 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0009",
-      "target": "A governed visitor experiment with INTEGRATION_EFFECT = 'none': preregistration PREREG-RS-0001 v0.3.1 frozen first; then a zero-API implementation of generator, exhaustive oracle, propagator-defined depth labeller, FLAT-v0 and RM-v0 serializers (RM-v0 = clue table once plus an ID-only adjacency index), decoder, admission auditor (invariants A1-A6) and scorer under ai_lab/experiments/relational_state/ with tests under tests/experiments/relational_state/; then a provider runner (the only module importing ai_lab.providers.*) gated behind a deterministic calibration STOP, with self-contained content-addressed provenance (Option S, no InvocationRecords); then the paired Arm-1/Arm-2 main campaign on the frozen primary subject (draft: gpt-5.6-terra) with the preregistered primary endpoint. The first slice also creates the docs/research/experiments/ artifact family, which must be authorized explicitly by the plan rather than introduced through the experiment."
+      "target": "Superseded by the outcome of PLAN-20260912-0001. A successor slice should begin by establishing a difficulty coordinate with a demonstrable gradient for the intended subject, verified by a small Arm-1 calibration, before re-declaring a paired family; the existing relational_state package (generator, oracle, serializers, admission invariants, scorer, sequential routine, gate, runner) is reusable unchanged."
     }
   ],
-  "repo_head": "52d55bf67f148fec9b3bcbee789c2f19a03232dd",
+  "repo_head": "ee79d0a9cd6498d25b2c0e5fdc86784c7f694130",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -1031,6 +1028,11 @@
       "repo_commit": "c0dbb30869a5bba3daec8903a20b85258f524835",
       "source_path": "docs/self_model/verifications/VERIFY-20260821-0001.json",
       "verification_id": "VERIFY-20260821-0001"
+    },
+    {
+      "repo_commit": "52d55bf67f148fec9b3bcbee789c2f19a03232dd",
+      "source_path": "docs/self_model/verifications/VERIFY-20260915-0001.json",
+      "verification_id": "VERIFY-20260915-0001"
     }
   ],
   "warrant_counts": {

@@ -1,0 +1,63 @@
+{
+ "schema_version": "v1",
+ "verification_id": "VERIFY-20260915-0001",
+ "target_item_id": "PLAN-20260912-0001",
+ "target_item_type": "plan",
+ "status": "verified",
+ "created_at": "2026-09-16T06:36:19+00:00",
+ "recorded_by": {
+  "peer_id": "claude",
+  "role": "assistant",
+  "substrate": "conversation"
+ },
+ "repo_commit": "52d55bf67f148fec9b3bcbee789c2f19a03232dd",
+ "summary": "Verifies that PLAN-20260912-0001 was EXECUTED as admitted and that its preregistered calibration STOP fired correctly. It does NOT verify the host hypothesis H_RS: Arm 2 was never sent to a provider, no paired trial was ever run, and GAP-0009 therefore remains open. Scope items S1-S5 were executed (documentation family and frozen preregistration; zero-API package with generator, exhaustive oracle, PROP-RS-0 depth labeller, FLAT-v0/RM-v0 serializers, decoder, A1-A6 admission auditor, scorer, Lan-DeMets spending routine and finite-sample gate; runner with Option S provenance; two Arm-1 calibrations). S6 (pilot) and S7 (main campaign) were never authorized and never run. campaign-01 (gpt-5.6-terra / medium, profile SHA-256 0891dfe3ce3a9129b26974557d0324d7a703951478a6e29dc91c44623cc09cf0): 588 Arm-1 calls, 0 missing after retry, 0 excluded at admission, STOP with no eligible N_main (eligible triples {6,7,8} 0.953, {7,8,9} 0.969 against the frozen [0.30, 0.80] window). Under PREREG v0.4 the single declared second subject configuration was calibrated: campaign-02 (gpt-5.6-luna / low, profile SHA-256 5c504acb909316cdff5b488b241549cd2ee9d182fbc5bf44a6395ced19f4df5b, calibration.jsonl SHA-256 f5f474e8d7286dedf615cb983a34bf321dab1485068117f383c99e4a253d1832, report SHA-256 6d617bcf4a069b692e3ba3b145c95012bfb9bf7f5d70f7efb311f9480af2eae9, manifest excluding self 127f707b9a0333b09f77c579be940c84de01ba2e5e0fdaf7ffe328599c9c0f1f): 588 Arm-1 calls, 0 missing, 0 excluded, second STOP ({6,7,8} 0.975, {7,8,9} 0.974). This is the terminal state defined in PREREG-RS-0001 v0.4 section 8.1, distinct from the paired-campaign INCONCLUSIVE closure of section 7. Visitor boundary held throughout: INTEGRATION_EFFECT = 'none' on every artifact, no InvocationRecords were written, CAPTURE_PATHS and docs/invocations/ are unchanged, and no AI-Lab runtime behaviour, default, prompt path, context selection, provider routing or self-model capability was modified. Total provider usage for the whole plan: 1176 Arm-1 calibration calls, all non-evidential.",
+ "artifacts_checked": [
+  "docs/research/experiments/relational_state/PREREG-RS-0001-relational-state-organization-v0.4.md",
+  "docs/research/experiments/relational_state/SLICE-1-zero-api-implementation-notes.md",
+  "docs/research/experiments/relational_state/SLICE-2-runner-implementation-notes.md",
+  "docs/research/experiments/relational_state/GATE-RS-0001-finite-sample-20260912.json",
+  "docs/research/experiments/relational_state/S5-CALIBRATION-01-result-and-STOP.md",
+  "docs/research/experiments/relational_state/S5-CALIBRATION-02-result-and-CELL-CLOSURE.md",
+  "docs/research/experiments/relational_state/runs/campaign-01/campaign_execution_profile.json",
+  "docs/research/experiments/relational_state/runs/campaign-01/calibration.jsonl",
+  "docs/research/experiments/relational_state/runs/campaign-01/calibration_report.json",
+  "docs/research/experiments/relational_state/runs/campaign-01/campaign_manifest.json",
+  "docs/research/experiments/relational_state/runs/campaign-02/campaign_execution_profile.json",
+  "docs/research/experiments/relational_state/runs/campaign-02/calibration.jsonl",
+  "docs/research/experiments/relational_state/runs/campaign-02/calibration_report.json",
+  "docs/research/experiments/relational_state/runs/campaign-02/campaign_manifest.json",
+  "ai_lab/experiments/relational_state/",
+  "tests/experiments/relational_state/",
+  "ai_lab/providers/invocation_record.py",
+  "docs/self_model/warrants/WARR-20260912-0001.json",
+  "docs/self_model/gaps/GAP-0009.json"
+ ],
+ "commands": [
+  {
+   "command": "python3 -m pytest -q",
+   "exit_code": 0,
+   "summary": "925 passed at 52d55bf (822 at plan admission; 103 in tests/experiments/relational_state/). Covers A1-A6 and query independence, the A5 text-based guard, PROP-RS-0 R1-only semantics and generator occupancy, paired-Wald and Lan-DeMets routines, the finite-sample gate, the two-tier import membrane with CAPTURE_PATHS unchanged, and the runner (profile freeze and role enforcement, frame-drift abort, arm/trial ordering, pilot blinding sequence, staged looks, manifest tamper detection, voluntary close)."
+  },
+  {
+   "command": "python3 scripts/audit_self_model_index.py",
+   "exit_code": 0,
+   "summary": "ok=true, verification_outcome=verified_current at 52d55bf."
+  },
+  {
+   "command": "python3 -m ai_lab.experiments.relational_state.gate 20000",
+   "exit_code": 0,
+   "summary": "Finite-sample STOP gate PASS at 20,000 replications per cell over 15 cells, max p_error 0.0533 <= 0.06; report reproduced byte-for-byte by the reviewing executor (SHA-256 0576231926b7e558937efb3aad21112a111687daa8bfb821eba88f7764a572f1)."
+  },
+  {
+   "command": "python3 -m ai_lab.experiments.relational_state.runner calibration --out docs/research/experiments/relational_state/runs/campaign-01",
+   "exit_code": 0,
+   "summary": "588 Arm-1 calls, 0 missing after retry, 0 excluded at admission, STOP: no eligible N_main."
+  },
+  {
+   "command": "python3 -m ai_lab.experiments.relational_state.runner calibration --out docs/research/experiments/relational_state/runs/campaign-02",
+   "exit_code": 0,
+   "summary": "588 Arm-1 calls, 0 missing after retry, 0 excluded at admission, second STOP: no eligible N_main. Terminal state per PREREG v0.4 section 8.1."
+  }
+ ]
+}
