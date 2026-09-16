@@ -1,0 +1,17 @@
+{
+ "N_main": null,
+ "calibration_STOP": true,
+ "calibration_report_sha256": "6d617bcf4a069b692e3ba3b145c95012bfb9bf7f5d70f7efb311f9480af2eae9",
+ "frame_sha256": "a70cd833982abe491d244b3a8a6c714e30cd8f1affa13ad4621e320169885a72",
+ "integration_effect": "none",
+ "manifest_sha256_excluding_self": "127f707b9a0333b09f77c579be940c84de01ba2e5e0fdaf7ffe328599c9c0f1f",
+ "prereg": "PREREG-RS-0001 v0.4",
+ "stages": {
+  "calibration": {
+   "completed_at": "2026-09-15T14:59:53+00:00",
+   "file": "calibration.jsonl",
+   "rows": 588,
+   "sha256": "f5f474e8d7286dedf615cb983a34bf321dab1485068117f383c99e4a253d1832"
+  }
+ }
+}
