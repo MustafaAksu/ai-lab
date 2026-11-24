@@ -1,0 +1,56 @@
+# VERIFY v2 pre-merge run (PLAN-20261124-0001 S5, admitted under WARR-20261124-0001).
+#
+# Runs the VERIFY v2 writer on the event commit: for pull_request, GitHub's
+# synthetic merge commit of head into base (M_PR); for push to main, the commit
+# that entered main (M_main). The uploaded receipt covers only its subject. A
+# receipt for M_PR is not evidence for M_main, and a push-to-main receipt is never
+# pre-merge evidence. The artifact is transport only; only import makes a receipt
+# durable. This workflow decides nothing: it is not a required check unless the
+# operator makes it one, and it writes nothing back to the repository.
+name: verify-v2
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Check out the event commit with full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned requirements
+        run: python -m pip install -r requirements.txt
+
+      - name: Run the VERIFY v2 writer on the event commit
+        id: writer
+        run: |
+          mkdir -p "$RUNNER_TEMP/verify-v2"
+          python scripts/verify_v2.py \
+            --commit "$(git rev-parse HEAD)" \
+            --profile docs/self_model/verification_profiles/VPROF-0001.json \
+            --store-root "$RUNNER_TEMP/verify-v2/store" \
+            --receipt-out "$RUNNER_TEMP/verify-v2/receipt.json" \
+            --runner-kind github_actions
+
+      - name: Upload the receipt and stored outputs, also after failure
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: verify-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/verify-v2
+          if-no-files-found: warn

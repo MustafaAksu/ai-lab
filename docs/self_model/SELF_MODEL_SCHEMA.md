@@ -51,7 +51,24 @@ A GAP record describes a missing or incomplete capability. Open GAPs must not be
 
 VERIFY v1 records are attributed testimony about execution evidence. They include `recorded_by` so the evidence claim is attributed.
 
-VERIFY v1 does not independently execute commands. A future v2 writer should run commands, capture exit code/output, bind results to repo HEAD, and write the VERIFY record automatically.
+VERIFY v1 does not independently execute commands. Its records stay attributed testimony; nothing in v2 converts a v1 record into observed execution.
+
+### VERIFY v2 (PLAN-20261124-0001, WARR-20261124-0001)
+
+VERIFY v2 separates two objects.
+
+- **Receipt.** The raw output of `scripts/verify_v2.py`. The writer runs a declared profile itself, in a detached git worktree of one exact commit, with an allowlisted command environment (PATH, a fresh HOME, LANG, TZ and the profile's literal variables). It records per command the termination, exit code, timeout and the stdout/stderr bytes under content addresses, and checks HEAD and `git status --porcelain=v1 --untracked-files=all --ignored` at every command boundary. The receipt is a producer's claim of observation (`observation_basis: observed_by_writer`). Its `verifier_lineage_status` is always `self_authored_unreviewed`, and `environment_capture` is `partial`: it does not supply the full effective-input coverage of ABS-0004 Section 4.7.
+- **Canonical VERIFY v2 record.** A `VERIFY-YYYYMMDD-NNNN` file written only by `scripts/import_verification_v2.py`. It carries the shared VERIFY fields (`repo_commit` equals the receipt's subject commit), the receipt's SHA-256, a summary derived from the receipt, `origin.origin_verification: unverified` and import metadata kept apart from the observation time.
+
+Result is a total function with precedence `incomplete` (the profile is empty, a command did not terminate by exiting, a command is missing, or HEAD or the tree differed at any boundary), then `one_or_more_commands_failed`, then `all_commands_exit_zero`. `incomplete` is never a success. The boundary observation does not detect a path changed and restored within one command.
+
+Validation recomputes every derived field and never copies it: the receipt's result and output retention from its commands; completeness against the stored profile bytes (command count, order, argv templates, timeouts, declared properties); stream lengths against `capture_complete`; the command environment against the stored profile's allowlist and literal values; and on the record, the summary, `repo_commit`, `observed_at`, origin and lineage. Store paths must equal the path derived from the digest and stay inside the store root. Checks that need the store take the repository root explicitly (`validate_verification_record_in_repo`); no check resolves a path from the working directory.
+
+Store: `docs/self_model/verification_outputs/sha256/<2 hex>/<digest>`, holding outputs, profiles, distribution lists and receipts. Each stream is retained up to 8 MiB, and a truncated stream is marked `capture_complete: false`. `scripts/check_verification_outputs.py` checks that every blob hashes to its address and that every v2 record validates against its receipt. Integrity means stored bytes equal recorded digests. It does not establish where or whether a run took place.
+
+What v2 does not establish: independence of the writer from the code it checks (the same executor authors both); CI origin (a self-consistent receipt with a fabricated run id passes import, which is why origin stays `unverified`); that a command tests its declared property (P2); confidentiality beyond the environment-transfer property (the allowlist does not stop a command reading files, so local raw outputs are checked before import into this public repository).
+
+CI (`.github/workflows/verify-v2.yml`): runs on pull requests and pushes to `main` with `fetch-depth: 0`, `persist-credentials: false`, contents read permission and no secrets, and uploads the receipt even after a failure. A pull_request receipt covers only its synthetic merge commit (M_PR). M_PR = M_main is not assumed. A push-to-main receipt is never pre-merge evidence. Tree equality between two commits is `content_equivalence` (tracked-content equality only), not equality of verification scope, because the audit also depends on git history. Artifacts are transport (GitHub's default retention is 90 days); only import makes a receipt durable. The workflow is not a required check: that is an operator arrangement, and GAP-0010's required-check dimension remains open.
 
 ## SELF-AUDIT v1 checks
 
