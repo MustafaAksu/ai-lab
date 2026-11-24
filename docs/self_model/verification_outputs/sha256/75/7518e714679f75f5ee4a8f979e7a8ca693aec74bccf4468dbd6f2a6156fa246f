@@ -1,0 +1,218 @@
+{
+ "commands": [
+  {
+   "argv": [
+    "/opt/hostedtoolcache/Python/3.12.16/x64/bin/python",
+    "scripts/audit_self_model_index.py"
+   ],
+   "argv_template": [
+    "{python}",
+    "scripts/audit_self_model_index.py"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "the self-model index committed at the subject commit audits ok and verified_current against the records and git history available at the subject commit",
+   "exit_code": 0,
+   "finished_at": "2026-11-24T15:18:50.569421+00:00",
+   "index": 0,
+   "started_at": "2026-11-24T15:18:50.316732+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 691,
+    "retained_bytes": 691,
+    "sha256": "02c5c48a2937bd57ead4c2e8e8488e4a465477f5f943917f647417e9946ba38c",
+    "store_path": "sha256/02/02c5c48a2937bd57ead4c2e8e8488e4a465477f5f943917f647417e9946ba38c"
+   },
+   "termination": "exited",
+   "timeout_seconds": 600
+  },
+  {
+   "argv": [
+    "/opt/hostedtoolcache/Python/3.12.16/x64/bin/python",
+    "scripts/build_self_model.py",
+    "--output",
+    "/tmp/verify-v2-0bsimapv/scratch/SELF_MODEL.rebuilt.json"
+   ],
+   "argv_template": [
+    "{python}",
+    "scripts/build_self_model.py",
+    "--output",
+    "{scratch}/SELF_MODEL.rebuilt.json"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "an index can be rebuilt from the subject commit's records without error; the tracked index is not overwritten and the rebuilt file is not compared by this command",
+   "exit_code": 0,
+   "finished_at": "2026-11-24T15:18:50.864305+00:00",
+   "index": 1,
+   "started_at": "2026-11-24T15:18:50.625475+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 162,
+    "retained_bytes": 162,
+    "sha256": "1ecfe2c07d059d5bdc5fd1dd99695204cbc4de5cf78d3bf094dfe9579997cf34",
+    "store_path": "sha256/1e/1ecfe2c07d059d5bdc5fd1dd99695204cbc4de5cf78d3bf094dfe9579997cf34"
+   },
+   "termination": "exited",
+   "timeout_seconds": 600
+  },
+  {
+   "argv": [
+    "/opt/hostedtoolcache/Python/3.12.16/x64/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "argv_template": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "the test suite at the subject commit passes in the recorded environment",
+   "exit_code": 1,
+   "finished_at": "2026-11-24T15:19:47.408153+00:00",
+   "index": 2,
+   "started_at": "2026-11-24T15:18:50.919765+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 1755,
+    "retained_bytes": 1755,
+    "sha256": "39ada9779b05f9361c46b139c507a32dd9bb75dc40a07df9b93f107dd7fb1aa7",
+    "store_path": "sha256/39/39ada9779b05f9361c46b139c507a32dd9bb75dc40a07df9b93f107dd7fb1aa7"
+   },
+   "termination": "exited",
+   "timeout_seconds": 3600
+  }
+ ],
+ "environment": {
+  "command_environment": {
+   "HOME": "/tmp/verify-v2-0bsimapv/home",
+   "LANG": "C.UTF-8",
+   "PATH": "/usr/bin:/bin",
+   "PYTHONDONTWRITEBYTECODE": "1",
+   "TZ": "UTC"
+  },
+  "environment_capture": "partial",
+  "installed_distributions": {
+   "count": 25,
+   "sha256": "9f9e0005b3e2b7a305a5848456b41a8b2c1b5f7b6001de9769df5cf4def7848f",
+   "store_path": "sha256/9f/9f9e0005b3e2b7a305a5848456b41a8b2c1b5f7b6001de9769df5cf4def7848f"
+  },
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "python": {
+   "implementation": "CPython",
+   "version": "3.12.16"
+  },
+  "requirements_sha256": "444e50898ae0147ce4259cb0994a0e70baa69eed58a634f5a3d845e061896096",
+  "runner": {
+   "event_name": "pull_request",
+   "image_os": "ubuntu24",
+   "image_version": "20261116.376.1",
+   "kind": "github_actions",
+   "reported_by": "runner environment variables, unverified",
+   "run_attempt": "1",
+   "run_id": "45423994386",
+   "runner_os": "Linux",
+   "workflow_file_sha256": "fee413d2701350d6dbf775d42d20f320095d57ee657ac1806a58a7f76c14e1df",
+   "workflow_ref": "MustafaAksu/ai-lab/.github/workflows/verify-v2.yml@refs/pull/2/merge"
+  }
+ },
+ "finished_at": "2026-11-24T15:19:47.424407+00:00",
+ "history": {
+  "shallow": false,
+  "stored_repo_head": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+  "stored_repo_head_reachable": true
+ },
+ "inputs": {
+  "profile": {
+   "path": "docs/self_model/verification_profiles/VPROF-0001.json",
+   "profile_id": "VPROF-0001",
+   "sha256": "f66ed27c9adfed40314bb547d01decb4d39da77e33fca525d6e2aa18fbfe8a9b",
+   "store_path": "sha256/f6/f66ed27c9adfed40314bb547d01decb4d39da77e33fca525d6e2aa18fbfe8a9b"
+  },
+  "trees": {
+   "ai_lab": "3a93029707715be3b92928fc28791b248afc5dae",
+   "root": "73ba42c9445aff9c2605b8e7b0e933346a582de4",
+   "scripts": "4acfd3b0a364ca28cd9d2c7c3de0ec534f118b49",
+   "tests": "d333aa2dcf5466a0e651ed8b476dc99a8a266352"
+  }
+ },
+ "observation_basis": "observed_by_writer",
+ "output_retention": "complete",
+ "receipt_schema": "ai-lab/verify-v2-receipt/1",
+ "result": "one_or_more_commands_failed",
+ "retention_limit_bytes": 8388608,
+ "started_at": "2026-11-24T15:18:50.150291+00:00",
+ "subject": {
+  "base_sha": "5c6404284e074055c1a4dad7d348ed8df2f83262",
+  "candidate_commit": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+  "head_sha": "465c2fadbfeb265dbbab84f640d7cca7e652ba8c",
+  "pull_request": 2,
+  "tree_id": "73ba42c9445aff9c2605b8e7b0e933346a582de4"
+ },
+ "tree_observation": {
+  "initial": {
+   "changed_paths": [],
+   "head": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+   "head_matches_subject": true,
+   "status_clean": true
+  },
+  "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+  "permitted_tree_changes": [],
+  "scope": "command_boundaries_only: a path changed and restored within one command is not detected"
+ },
+ "verifier": {
+  "interpreter": {
+   "path": "/opt/hostedtoolcache/Python/3.12.16/x64/bin/python",
+   "version": "3.12.16"
+  },
+  "running_sha256": "e2f120cfb18246c621e2ed497792a7f5ca1c4648c4b5dc8f51466febb66f8d23",
+  "subject_blob_sha": "f749b0d554286116ab366162dc0a1fa9a0f52b23",
+  "tool": "scripts/verify_v2.py",
+  "verifier_matches_subject": true
+ },
+ "verifier_lineage_status": "self_authored_unreviewed"
+}

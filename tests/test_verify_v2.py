@@ -562,6 +562,10 @@ def _audit(repo_root: Path, cwd: Path) -> dict:
 
 def test_f16_v1_and_v2_records_pass_registry_index_and_audit_together(tmp_path):
     repo_root = _copy_repository(tmp_path / "copy")
+    existing_v2 = sum(
+        json.loads(p.read_text()).get("schema_version") == "v2"
+        for p in (repo_root / "docs/self_model/verifications").glob("VERIFY-*.json")
+    )
     _build(repo_root, repo_root)
     _git(repo_root, "commit", "-q", "-am", "index")
     (repo_root / "profiles").mkdir()
@@ -587,7 +591,7 @@ def test_f16_v1_and_v2_records_pass_registry_index_and_audit_together(tmp_path):
     registry = SelfModelRegistry(repo_root)
     entries = list(registry.entries("verification"))
     schemas = [json.loads((repo_root / e.source_path).read_text())["schema_version"] for e in entries]
-    assert schemas.count("v1") >= 39 and schemas.count("v2") == 2
+    assert schemas.count("v1") >= 39 and schemas.count("v2") == existing_v2 + 2
     elsewhere = tmp_path / "elsewhere"
     elsewhere.mkdir()
     for cwd in (repo_root, elsewhere):
