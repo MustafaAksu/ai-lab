@@ -17,7 +17,9 @@ Standard library only, and nothing is imported from ai_lab, so that the
 verifier's identity is this one file.
 
 Exit codes: 0 result all_commands_exit_zero; 1 one_or_more_commands_failed;
-3 incomplete; 2 refused before running (no receipt is written).
+3 either a valid incomplete receipt or a failure to finish a receipt; 2 refused
+before running (no receipt is written). A failure to finish publishes no receipt
+and attempts a separate, bounded failure diagnostic outside the blob store.
 """
 
 from __future__ import annotations
@@ -26,6 +28,7 @@ import argparse
 import datetime as _dt
 import hashlib
 import json
+import math
 import os
 import platform
 import re
@@ -33,11 +36,14 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 from importlib import metadata
 from pathlib import Path, PurePosixPath
 
 RECEIPT_SCHEMA = "ai-lab/verify-v2-receipt/1"
 PROFILE_SCHEMA = "ai-lab/verify-v2-profile/1"
+FAILURE_SCHEMA = "ai-lab/verify-v2-failure/1"
+FAILURE_DIAGNOSTIC_LIMIT_BYTES = 2048
 WRITER_PATH = "scripts/verify_v2.py"
 RETENTION_LIMIT_BYTES = 8 * 1024 * 1024
 LINEAGE = "self_authored_unreviewed"
@@ -46,7 +52,9 @@ TREE_OBSERVATION_METHOD = (
     "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z"
 )
 TREE_OBSERVATION_SCOPE = (
-    "command_boundaries_only: a path changed and restored within one command is not detected"
+    "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; "
+    "status-hidden changes (including assume-unchanged) and a path changed and restored "
+    "within one command are not detected"
 )
 FULL_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 ENV_NAME_RE = re.compile(r"^[A-Z_][A-Z0-9_]*$")
@@ -57,6 +65,32 @@ TERMINATIONS = ("exited", "timeout", "signal", "failed_to_start")
 
 class Refusal(Exception):
     """Raised when the writer refuses to run; no receipt is written."""
+
+
+FAILURE_STAGES = frozenset({
+    "preflight", "prepare_worktree", "check_writer", "load_profile", "capture_environment",
+    "capture_runner", "observe_initial", "run_command", "assemble_receipt", "cleanup",
+    "serialize_receipt", "store_receipt", "publish_receipt", "unknown",
+})
+
+
+def _safe_error_type(error: Exception) -> str:
+    """Classify without serializing exception messages, reprs, or payloads."""
+    for kind in (FileExistsError, PermissionError, FileNotFoundError, OSError,
+                 subprocess.CalledProcessError, subprocess.TimeoutExpired,
+                 UnicodeError, json.JSONDecodeError, ValueError, TypeError, RuntimeError):
+        if isinstance(error, kind):
+            return kind.__name__
+    return "Exception"
+
+
+class WriterFailure(Exception):
+    """A sanitized failure to complete a receipt; never a verification record."""
+
+    def __init__(self, stage: str, error: Exception) -> None:
+        self.stage = stage if stage in FAILURE_STAGES else "unknown"
+        self.error_type = _safe_error_type(error)
+        super().__init__(f"{self.stage}: {self.error_type}")
 
 
 # ---------------------------------------------------------------- pure functions
@@ -120,23 +154,47 @@ def _git_text(repo: Path, *args: str) -> str:
     return _git(repo, *args).stdout.decode("utf-8").strip()
 
 
+def _atomic_write_exclusive(path: Path, data: bytes) -> None:
+    """Publish complete bytes atomically without replacing any existing name.
+
+    The temporary file is on the destination filesystem. Linking is atomic and
+    refuses an existing destination, unlike a replacing rename. No final path
+    becomes visible until writing and fsync have succeeded.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(prefix=".verify-v2-", dir=path.parent)
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.link(temporary, path)
+    finally:
+        try:
+            temporary.unlink(missing_ok=True)
+        except OSError:
+            pass  # A staging-file cleanup failure cannot invalidate published bytes.
+
+
 class Store:
     """Content-addressed blob store: <root>/sha256/<first two hex>/<digest>."""
 
     def __init__(self, root: Path) -> None:
         self.root = root
+        self.created: set[Path] = set()
 
     def put(self, data: bytes) -> tuple[str, str]:
         digest = _sha256(data)
         relative = store_relative_path(digest)
         path = self.root / relative
-        path.parent.mkdir(parents=True, exist_ok=True)
-        if path.exists():
+        try:
+            _atomic_write_exclusive(path, data)
+        except FileExistsError:
             if path.read_bytes() != data:
                 raise RuntimeError(f"store collision with different bytes at {relative}")
         else:
-            with path.open("xb") as handle:
-                handle.write(data)
+            self.created.add(path)
         return digest, relative
 
 
@@ -175,20 +233,20 @@ def _load_profile(worktree: Path, profile_arg: str) -> tuple[bytes, dict]:
 def _check_profile(profile: object) -> None:
     if not isinstance(profile, dict) or profile.get("profile_schema") != PROFILE_SCHEMA:
         raise Refusal(f"profile_schema must be {PROFILE_SCHEMA}")
-    if not isinstance(profile.get("profile_id"), str) or not profile["profile_id"]:
-        raise Refusal("profile_id must be a non-empty string")
+    if not isinstance(profile.get("profile_id"), str) or not profile["profile_id"] or "\0" in profile["profile_id"]:
+        raise Refusal("profile_id must be a non-empty NUL-free string")
     if profile.get("permitted_tree_changes") != []:
         raise Refusal("this writer supports only profiles that permit no tree change")
     environment = profile.get("environment")
     if not isinstance(environment, dict):
         raise Refusal("profile environment must be an object of literal values")
     for name, value in environment.items():
-        if not ENV_NAME_RE.match(name) or name in BASE_ENVIRONMENT_NAMES:
-            raise Refusal(f"profile environment name not allowed: {name}")
+        if not isinstance(name, str) or not ENV_NAME_RE.fullmatch(name) or name in BASE_ENVIRONMENT_NAMES:
+            raise Refusal("profile environment name not allowed")
         if SECRET_NAME_RE.search(name):
-            raise Refusal(f"profile environment name looks like a secret: {name}")
-        if not isinstance(value, str) or "$" in value:
-            raise Refusal(f"profile environment value for {name} must be a literal string")
+            raise Refusal("profile environment name looks like a secret")
+        if not isinstance(value, str) or "$" in value or "\0" in value:
+            raise Refusal("profile environment values must be literal NUL-free strings")
     commands = profile.get("commands")
     if not isinstance(commands, list) or not commands:
         raise Refusal("profile must declare at least one command")
@@ -196,13 +254,17 @@ def _check_profile(profile: object) -> None:
         if not isinstance(command, dict):
             raise Refusal(f"profile command {index} must be an object")
         argv = command.get("argv")
-        if not isinstance(argv, list) or not argv or not all(isinstance(a, str) and a for a in argv):
-            raise Refusal(f"profile command {index} argv must be a non-empty list of strings")
+        if (not isinstance(argv, list) or not argv
+                or not all(isinstance(a, str) and a and "\0" not in a for a in argv)):
+            raise Refusal(f"profile command {index} argv must be a non-empty list of NUL-free strings")
         timeout = command.get("timeout_seconds")
-        if not isinstance(timeout, (int, float)) or isinstance(timeout, bool) or not (0 < timeout < 86400):
+        if (not isinstance(timeout, (int, float)) or isinstance(timeout, bool)
+                or (isinstance(timeout, float) and not math.isfinite(timeout))
+                or not (0 < timeout < 86400)):
             raise Refusal(f"profile command {index} timeout_seconds must be positive and finite")
-        if not isinstance(command.get("declared_property"), str) or not command["declared_property"]:
-            raise Refusal(f"profile command {index} declared_property must be a non-empty string")
+        if (not isinstance(command.get("declared_property"), str) or not command["declared_property"]
+                or "\0" in command["declared_property"]):
+            raise Refusal(f"profile command {index} declared_property must be a non-empty NUL-free string")
 
 
 def _boundary(worktree: Path, subject: str) -> dict:
@@ -277,7 +339,7 @@ def _run_command(index: int, spec: dict, worktree: Path, scratch: Path, env: dic
         stderr = error.stderr or b""
     except OSError as error:
         termination = "failed_to_start"
-        stderr = f"{type(error).__name__}: {error}".encode("utf-8")
+        stderr = f"{_safe_error_type(error)}: command could not start".encode("utf-8")
     finished = _now()
     record = {
         "index": index,
@@ -320,12 +382,20 @@ def _runner(kind: str, worktree: Path) -> tuple[dict, dict]:
             ("image_version", "ImageVersion"),
         ):
             runner[key] = os.environ.get(name)
+        for key in ("run_id", "run_attempt"):
+            value = runner[key]
+            if value is not None and not re.fullmatch(r"[1-9][0-9]*", value):
+                raise RuntimeError("runner numeric metadata is malformed")
+        for key in ("workflow_ref", "event_name", "runner_os", "image_os", "image_version"):
+            value = runner[key]
+            if value is not None and (not value or "\0" in value):
+                raise RuntimeError("runner text metadata is malformed")
         workflow = worktree / ".github" / "workflows" / "verify-v2.yml"
         runner["workflow_file_sha256"] = _sha256(workflow.read_bytes()) if workflow.is_file() else None
         event_path = os.environ.get("GITHUB_EVENT_PATH")
         if event_path and Path(event_path).is_file():
             event = json.loads(Path(event_path).read_text(encoding="utf-8"))
-            pull = event.get("pull_request")
+            pull = event.get("pull_request") if isinstance(event, dict) else None
             if isinstance(pull, dict):
                 subject_extra = {
                     "pull_request": pull.get("number"),
@@ -333,6 +403,13 @@ def _runner(kind: str, worktree: Path) -> tuple[dict, dict]:
                     "base_sha": (pull.get("base") or {}).get("sha"),
                 }
         runner["reported_by"] = "runner environment variables, unverified"
+        if runner["event_name"] in ("pull_request", "pull_request_target") or subject_extra:
+            number = subject_extra.get("pull_request")
+            if (not isinstance(number, int) or isinstance(number, bool) or number <= 0
+                    or not all(isinstance(subject_extra.get(key), str)
+                               and FULL_COMMIT_RE.fullmatch(subject_extra[key])
+                               for key in ("head_sha", "base_sha"))):
+                raise RuntimeError("pull_request runner metadata is incomplete")
     return runner, subject_extra
 
 
@@ -343,11 +420,14 @@ def _history(repo: Path, worktree: Path, subject: str) -> dict:
     index = worktree / "docs" / "self_model" / "SELF_MODEL.json"
     if index.is_file():
         try:
-            stored = json.loads(index.read_text(encoding="utf-8")).get("repo_head")
-        except json.JSONDecodeError:
+            payload = json.loads(index.read_text(encoding="utf-8"))
+            stored = payload.get("repo_head") if isinstance(payload, dict) else None
+        except (UnicodeDecodeError, json.JSONDecodeError):
             stored = None
-    if isinstance(stored, str) and FULL_COMMIT_RE.match(stored):
+    if isinstance(stored, str) and FULL_COMMIT_RE.fullmatch(stored):
         reachable = _git(repo, "merge-base", "--is-ancestor", stored, subject, check=False).returncode == 0
+    else:
+        stored = None
     return {"shallow": shallow, "stored_repo_head": stored, "stored_repo_head_reachable": reachable}
 
 
@@ -362,7 +442,7 @@ def _tree_ids(repo: Path, subject: str) -> dict:
 # ---------------------------------------------------------------- main run
 
 
-def write_receipt(
+def _write_receipt(
     repo: Path,
     commit: str,
     profile_arg: str,
@@ -370,26 +450,30 @@ def write_receipt(
     receipt_out: Path,
     foreign_verifier: bool = False,
     runner_kind: str = "local",
+    *,
+    progress: dict,
 ) -> tuple[str, dict]:
-    if not FULL_COMMIT_RE.match(commit):
+    if not isinstance(commit, str) or not FULL_COMMIT_RE.fullmatch(commit):
         raise Refusal("--commit must be a full 40-hex commit id")
     if _git(repo, "cat-file", "-e", f"{commit}^{{commit}}", check=False).returncode != 0:
         raise Refusal(f"commit not found in repository: {commit}")
-    if receipt_out.exists():
+    if receipt_out.exists() or receipt_out.is_symlink():
         raise Refusal(f"refusing to overwrite existing receipt: {receipt_out}")
 
     running_bytes = Path(__file__).resolve().read_bytes()
     store = Store(store_root)
-    temp = Path(tempfile.mkdtemp(prefix="verify-v2-"))
+    progress["stage"] = "prepare_worktree"
+    temp = Path(tempfile.mkdtemp(prefix="verify-v2-")).resolve()
     worktree = temp / "worktree"
     scratch = temp / "scratch"
     home = temp / "home"
-    scratch.mkdir()
-    home.mkdir()
     started = _now()
     try:
+        scratch.mkdir()
+        home.mkdir()
         _git(repo, "worktree", "add", "--detach", str(worktree), commit)
 
+        progress["stage"] = "check_writer"
         subject_writer = worktree / WRITER_PATH
         if subject_writer.is_file():
             subject_writer_bytes = subject_writer.read_bytes()
@@ -404,19 +488,25 @@ def write_receipt(
                 f"(verifier_matches_subject={matches}); use --foreign-verifier to run and record it"
             )
 
+        progress["stage"] = "load_profile"
         profile_bytes, profile = _load_profile(worktree, profile_arg)
         profile_digest, profile_store_path = store.put(profile_bytes)
+        progress["stage"] = "capture_environment"
         distributions = _installed_distributions()
         dist_digest, dist_store_path = store.put(distributions)
         requirements = worktree / "requirements.txt"
+        progress["stage"] = "capture_runner"
         runner, subject_extra = _runner(runner_kind, worktree)
         env = _command_environment(profile, home)
 
+        progress["stage"] = "observe_initial"
         initial = _boundary(worktree, commit)
         commands = []
+        progress["stage"] = "run_command"
         for index, spec in enumerate(profile["commands"]):
             commands.append(_run_command(index, spec, worktree, scratch, env, store, commit))
 
+        progress["stage"] = "assemble_receipt"
         subject = {"candidate_commit": commit, "tree_id": _git_text(repo, "rev-parse", f"{commit}^{{tree}}")}
         subject.update({k: v for k, v in subject_extra.items() if v is not None})
         receipt = {
@@ -471,16 +561,85 @@ def write_receipt(
         receipt["result"] = compute_result(len(profile["commands"]), commands, initial)
         receipt["output_retention"] = compute_output_retention(commands)
     finally:
-        _git(repo, "worktree", "remove", "--force", str(worktree), check=False)
-        _git(repo, "worktree", "prune", check=False)
-        shutil.rmtree(temp, ignore_errors=True)
+        prior_stage = progress["stage"]
+        progress["stage"] = "cleanup"
+        try:
+            _git(repo, "worktree", "remove", "--force", str(worktree), check=False)
+            _git(repo, "worktree", "prune", check=False)
+            shutil.rmtree(temp, ignore_errors=True)
+        except Exception:
+            raise
+        else:
+            progress["stage"] = prior_stage
 
-    data = (json.dumps(receipt, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
-    digest, _ = store.put(data)
-    receipt_out.parent.mkdir(parents=True, exist_ok=True)
-    with receipt_out.open("xb") as handle:
-        handle.write(data)
+    progress["stage"] = "serialize_receipt"
+    data = (json.dumps(receipt, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
+    progress["stage"] = "store_receipt"
+    digest, relative = store.put(data)
+    progress["stage"] = "publish_receipt"
+    try:
+        _atomic_write_exclusive(receipt_out, data)
+    except Exception:
+        # Keep pre-existing evidence. Remove only this run's newly published
+        # receipt blob if the requested receipt name could not be published.
+        stored_receipt = store_root / relative
+        if stored_receipt in store.created:
+            try:
+                stored_receipt.unlink(missing_ok=True)
+            except OSError:
+                pass
+        raise
     return digest, receipt
+
+
+def write_receipt(
+    repo: Path,
+    commit: str,
+    profile_arg: str,
+    store_root: Path,
+    receipt_out: Path,
+    foreign_verifier: bool = False,
+    runner_kind: str = "local",
+) -> tuple[str, dict]:
+    """Run once; a failure cannot expose a partially written receipt path."""
+    progress = {"stage": "preflight"}
+    try:
+        return _write_receipt(repo, commit, profile_arg, store_root, receipt_out,
+                              foreign_verifier, runner_kind, progress=progress)
+    except Refusal:
+        raise
+    except Exception as error:
+        raise WriterFailure(progress["stage"], error) from None
+
+
+def _write_failure_diagnostic(receipt_out: Path, store_root: Path, failure: WriterFailure) -> Path | None:
+    """Best-effort bounded diagnostic, outside CAS and not an importable receipt.
+
+    Fields are fixed or sanitized type/stage labels. No exception message,
+    traceback, command, environment, or captured output is included.
+    """
+    try:
+        store = store_root.resolve()
+        directory = receipt_out.parent.resolve()
+        if directory == store or store in directory.parents:
+            directory = store.parent
+        if directory == store or store in directory.parents:
+            return None
+        payload = {
+            "failure_schema": FAILURE_SCHEMA,
+            "receipt_written": False,
+            "exit_code": 3,
+            "stage": failure.stage,
+            "error_type": failure.error_type,
+        }
+        data = (json.dumps(payload, sort_keys=True) + "\n").encode("utf-8")
+        if len(data) > FAILURE_DIAGNOSTIC_LIMIT_BYTES:
+            return None
+        path = directory / f"verify-v2-failure-{uuid.uuid4().hex}.json"
+        _atomic_write_exclusive(path, data)
+        return path
+    except Exception:
+        return None
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -503,7 +662,7 @@ def main(argv: list[str] | None = None) -> int:
             commit=args.commit,
             profile_arg=args.profile,
             store_root=args.store_root.resolve(),
-            receipt_out=args.receipt_out.resolve(),
+            receipt_out=args.receipt_out.absolute(),
             foreign_verifier=args.foreign_verifier,
             runner_kind=args.runner_kind,
         )
@@ -511,7 +670,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"refused: {error}", file=sys.stderr)
         return 2
     except Exception as error:  # the run could not be completed: no receipt, never success
-        print(f"incomplete: writer could not finish the receipt: {type(error).__name__}: {error}", file=sys.stderr)
+        failure = error if isinstance(error, WriterFailure) else WriterFailure("unknown", error)
+        diagnostic = _write_failure_diagnostic(args.receipt_out, args.store_root, failure)
+        print(json.dumps({"receipt_written": False, "stage": failure.stage,
+                          "error_type": failure.error_type,
+                          "failure_diagnostic": str(diagnostic) if diagnostic is not None else None},
+                         sort_keys=True), file=sys.stderr)
         return 3
     print(json.dumps({"receipt_sha256": digest, "result": receipt["result"],
                       "output_retention": receipt["output_retention"]}, sort_keys=True))

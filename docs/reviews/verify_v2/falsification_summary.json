@@ -1,0 +1,726 @@
+{
+  "final": {
+    "archive": "falsification_final.json.gz",
+    "archive_sha256": "56f06b67fab4b7614d69bd29c5ccb9918dc49268bc63c0c13a0b64ab74a0fd36",
+    "results": [
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f1_no_writer_argument_accepts_a_result"
+        ],
+        "name": "F1 writer accepts an exit code",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f2_failing_command_yields_failed_result_and_nonzero_exit",
+          "tests/test_verify_v2.py::test_f10_stale_committed_index_fails_even_though_build_succeeds"
+        ],
+        "name": "F2 failed mapped to success",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f3_abbreviated_and_unresolvable_commits_are_refused"
+        ],
+        "name": "F3 abbreviated commit accepted",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f3_uncommitted_changes_in_invoking_clone_do_not_reach_the_worktree"
+        ],
+        "name": "F3 invoking clone's working files leak into run",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f4_checker_detects_altered_blob_and_altered_digest"
+        ],
+        "name": "F4 checker ignores blob address",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f5_profile_is_read_from_subject_tree"
+        ],
+        "name": "F5 profile read from invoking clone",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f5_dotdot_path_to_an_existing_profile_is_refused",
+          "tests/test_verify_v2.py::test_f5_symlink_resolving_outside_the_subject_tree_is_refused"
+        ],
+        "name": "F5 escaping profile accepted",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command0]",
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command1]",
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command2]"
+        ],
+        "name": "F6 worktree left behind",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f7_v2_record_lacking_a_required_block_is_refused[summary]"
+        ],
+        "name": "F7 v2 summary block not required",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f8_lineage_is_never_stronger_than_self_authored_unreviewed"
+        ],
+        "name": "F8 writer claims independent lineage",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f9_importer_refusals"
+        ],
+        "name": "F9 re-import not refused",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f10_old_build_then_audit_order_is_caught_as_tree_change",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-2]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[0]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[1]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[2]"
+        ],
+        "name": "F10/F14 boundaries ignored by result",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f11_foreign_writer_is_refused_by_default_and_recorded_when_allowed",
+          "tests/test_verify_v2.py::test_f11_writer_absent_at_subject"
+        ],
+        "name": "F11 foreign writer not refused",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f12_unfinished_commands_yield_incomplete_never_success[command0-timeout]"
+        ],
+        "name": "F12 timeout recorded as exit 0",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f13_stream_over_retention_limit_is_partial"
+        ],
+        "name": "F13 no retention limit",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]"
+        ],
+        "name": "F14 ignored paths not observed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-2]"
+        ],
+        "name": "F14 untracked paths not observed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[0]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[1]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[2]"
+        ],
+        "name": "F14/Cond1 HEAD not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f15_workflow_static_properties"
+        ],
+        "name": "F15 upload not on always()",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f15_workflow_static_properties"
+        ],
+        "name": "F15 credentials persisted",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f16_v1_and_v2_records_pass_registry_index_and_audit_together"
+        ],
+        "name": "F16 store resolved from cwd",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[exit_one_but_success]",
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[truncated_to_first_command]"
+        ],
+        "name": "F17 result not recomputed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[truncated_to_first_command]"
+        ],
+        "name": "F17/Cond2 completeness against profile count dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[argv_template_differs]"
+        ],
+        "name": "F17/Cond2 argv template not compared",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[capture_complete_inconsistent]"
+        ],
+        "name": "F17/Cond2 capture_complete not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_record_invariant_violations_are_refused[repo_commit_differs]"
+        ],
+        "name": "F17 repo_commit invariant dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_record_invariant_violations_are_refused[origin_verified]"
+        ],
+        "name": "F17 origin not required unverified",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_non_derived_store_path_inside_store_with_correct_bytes_is_refused"
+        ],
+        "name": "F17 store path not derived",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_store_path_escaping_store_root_is_refused"
+        ],
+        "name": "F17 store root containment dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f18_environment_outside_allowlist_reaches_neither_command_nor_receipt"
+        ],
+        "name": "F18/Cond3 parent environment passed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f18_profile_variables_must_be_explicit_non_secret_literals[environment0]"
+        ],
+        "name": "F18/Cond3 secret-like profile names allowed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[extra_environment_variable]"
+        ],
+        "name": "F18/Cond3 env allowlist not checked by validator",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_result_and_retention_copies_agree_exhaustively"
+        ],
+        "name": "agreement: validator copy diverges",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r9_explicit_absence_is_valid_but_missing_fields_are_not"
+        ],
+        "name": "R9 nullable field presence not required",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r9_receipt_rejects_invalid_scalar_types[commands.0.index:False]"
+        ],
+        "name": "R9 bool accepted as integer index",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r10_resolved_command_cannot_contradict_template[executable]"
+        ],
+        "name": "R10 resolved argv not compared",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r10_resolved_command_cannot_contradict_template[cwd]"
+        ],
+        "name": "R10 cwd not constrained",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r11_valid_cas_digest_does_not_admit_invalid_stored_profile[secret_environment]"
+        ],
+        "name": "R11 stored profile policy not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2_writer_review.py::test_atomic_write_failure_does_not_publish_partial_bytes"
+        ],
+        "name": "Section 7 receipt path published before fsync",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      }
+    ],
+    "snapshot_sha256": "eac815c9fe80b90d8e08114607a83e177832921da246538e2dd80f8559e1cbda",
+    "source_head": "68f6f103b1e3cae37c8fb15b7214d10d941aa5a3",
+    "summary": {
+      "caught": 39,
+      "errors": 0,
+      "groups": {
+        "historical_33": {
+          "caught": 33,
+          "mutations": 33
+        },
+        "review_additions": {
+          "caught": 6,
+          "mutations": 6
+        }
+      },
+      "mutations": 39,
+      "not_caught": 0
+    },
+    "uncompressed_bytes": 1150480,
+    "uncompressed_sha256": "919547e5b0340232757a2dae459c5be0ff59f74f4a3115ff19e017c6b216792e"
+  },
+  "initial": {
+    "archive": "falsification_initial.json.gz",
+    "archive_sha256": "3915eab15b03d06067071635681d9640cab6f8a971a6d338037abc0ad01e7b81",
+    "results": [
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f1_no_writer_argument_accepts_a_result"
+        ],
+        "name": "F1 writer accepts an exit code",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f2_failing_command_yields_failed_result_and_nonzero_exit",
+          "tests/test_verify_v2.py::test_f10_stale_committed_index_fails_even_though_build_succeeds"
+        ],
+        "name": "F2 failed mapped to success",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f3_abbreviated_and_unresolvable_commits_are_refused"
+        ],
+        "name": "F3 abbreviated commit accepted",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f3_uncommitted_changes_in_invoking_clone_do_not_reach_the_worktree"
+        ],
+        "name": "F3 invoking clone's working files leak into run",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f4_checker_detects_altered_blob_and_altered_digest"
+        ],
+        "name": "F4 checker ignores blob address",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f5_profile_is_read_from_subject_tree"
+        ],
+        "name": "F5 profile read from invoking clone",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f5_dotdot_path_to_an_existing_profile_is_refused",
+          "tests/test_verify_v2.py::test_f5_symlink_resolving_outside_the_subject_tree_is_refused"
+        ],
+        "name": "F5 escaping profile accepted",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command0]",
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command1]",
+          "tests/test_verify_v2.py::test_f6_worktree_and_temporary_directories_are_removed[command2]"
+        ],
+        "name": "F6 worktree left behind",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f7_v2_record_lacking_a_required_block_is_refused[summary]"
+        ],
+        "name": "F7 v2 summary block not required",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f8_lineage_is_never_stronger_than_self_authored_unreviewed"
+        ],
+        "name": "F8 writer claims independent lineage",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f9_importer_refusals"
+        ],
+        "name": "F9 re-import not refused",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f10_old_build_then_audit_order_is_caught_as_tree_change",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[tracked-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-2]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[0]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[1]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[2]"
+        ],
+        "name": "F10/F14 boundaries ignored by result",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f11_foreign_writer_is_refused_by_default_and_recorded_when_allowed",
+          "tests/test_verify_v2.py::test_f11_writer_absent_at_subject"
+        ],
+        "name": "F11 foreign writer not refused",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f12_unfinished_commands_yield_incomplete_never_success[command0-timeout]"
+        ],
+        "name": "F12 timeout recorded as exit 0",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f13_stream_over_retention_limit_is_partial"
+        ],
+        "name": "F13 no retention limit",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]"
+        ],
+        "name": "F14 ignored paths not observed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[ignored-2]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-0]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-1]",
+          "tests/test_verify_v2.py::test_f14_any_tree_change_at_any_boundary_is_incomplete[untracked-2]"
+        ],
+        "name": "F14 untracked paths not observed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[0]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[1]",
+          "tests/test_verify_v2.py::test_f14_head_move_with_clean_status_is_incomplete[2]"
+        ],
+        "name": "F14/Cond1 HEAD not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [],
+        "name": "F15 upload not on always()",
+        "reason": "non-assertion test exception: builtins.KeyError",
+        "status": "ERROR"
+      },
+      {
+        "failed_nodeids": [],
+        "name": "F15 credentials persisted",
+        "reason": "non-assertion test exception: builtins.KeyError",
+        "status": "ERROR"
+      },
+      {
+        "failed_nodeids": [],
+        "name": "F16 store resolved from cwd",
+        "reason": "non-assertion test exception: import_v2_under_test.ImportRefusal",
+        "status": "ERROR"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[exit_one_but_success]",
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[truncated_to_first_command]"
+        ],
+        "name": "F17 result not recomputed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[truncated_to_first_command]"
+        ],
+        "name": "F17/Cond2 completeness against profile count dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[argv_template_differs]"
+        ],
+        "name": "F17/Cond2 argv template not compared",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[capture_complete_inconsistent]"
+        ],
+        "name": "F17/Cond2 capture_complete not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_record_invariant_violations_are_refused[repo_commit_differs]"
+        ],
+        "name": "F17 repo_commit invariant dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_record_invariant_violations_are_refused[origin_verified]"
+        ],
+        "name": "F17 origin not required unverified",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_non_derived_store_path_inside_store_with_correct_bytes_is_refused"
+        ],
+        "name": "F17 store path not derived",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_store_path_escaping_store_root_is_refused"
+        ],
+        "name": "F17 store root containment dropped",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f18_environment_outside_allowlist_reaches_neither_command_nor_receipt"
+        ],
+        "name": "F18/Cond3 parent environment passed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f18_profile_variables_must_be_explicit_non_secret_literals[environment0]"
+        ],
+        "name": "F18/Cond3 secret-like profile names allowed",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_f17_receipt_invariant_violations_are_refused_even_with_matching_summary[extra_environment_variable]"
+        ],
+        "name": "F18/Cond3 env allowlist not checked by validator",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2.py::test_result_and_retention_copies_agree_exhaustively"
+        ],
+        "name": "agreement: validator copy diverges",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r9_explicit_absence_is_valid_but_missing_fields_are_not"
+        ],
+        "name": "R9 nullable field presence not required",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r9_receipt_rejects_invalid_scalar_types[commands.0.index:False]"
+        ],
+        "name": "R9 bool accepted as integer index",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r10_resolved_command_cannot_contradict_template[executable]"
+        ],
+        "name": "R10 resolved argv not compared",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r10_resolved_command_cannot_contradict_template[cwd]"
+        ],
+        "name": "R10 cwd not constrained",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verification_v2_contract.py::test_r11_valid_cas_digest_does_not_admit_invalid_stored_profile[secret_environment]"
+        ],
+        "name": "R11 stored profile policy not checked",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      },
+      {
+        "failed_nodeids": [
+          "tests/test_verify_v2_writer_review.py::test_atomic_write_failure_does_not_publish_partial_bytes"
+        ],
+        "name": "Section 7 receipt path published before fsync",
+        "reason": "baseline passed; exact selected tests ran; call assertion failed",
+        "status": "CAUGHT"
+      }
+    ],
+    "snapshot_sha256": "79a1e64372c374d8a62387b6092315920ee85f0235679b978d9e5038fc0b774d",
+    "source_head": "68f6f103b1e3cae37c8fb15b7214d10d941aa5a3",
+    "summary": {
+      "caught": 36,
+      "errors": 3,
+      "groups": {
+        "historical_33": {
+          "caught": 30,
+          "mutations": 33
+        },
+        "review_additions": {
+          "caught": 6,
+          "mutations": 6
+        }
+      },
+      "mutations": 39,
+      "not_caught": 3
+    },
+    "uncompressed_bytes": 1143667,
+    "uncompressed_sha256": "8f8b514fcd3c59a7c1f5b0dd42f6fddda8900ebb04026c3f612da587d8bbe8bb"
+  }
+}

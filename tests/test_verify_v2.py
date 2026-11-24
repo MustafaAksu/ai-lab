@@ -522,11 +522,11 @@ def test_f15_workflow_static_properties():
     steps = workflow["jobs"]["verify-v2"]["steps"]
     checkout = next(s for s in steps if str(s.get("uses", "")).startswith("actions/checkout@"))
     assert checkout["with"]["fetch-depth"] == 0
-    assert checkout["with"]["persist-credentials"] is False
+    assert checkout["with"].get("persist-credentials") is False
     writer = next(s for s in steps if s.get("id") == "writer")
     assert "continue-on-error" not in writer
     upload = next(s for s in steps if str(s.get("uses", "")).startswith("actions/upload-artifact@"))
-    assert upload["if"] == "always()"
+    assert upload.get("if") == "always()"
     for step in steps:
         if "uses" in step:
             assert len(step["uses"].split("@")[1]) == 40, step["uses"]
@@ -582,8 +582,14 @@ def test_f16_v1_and_v2_records_pass_registry_index_and_audit_together(tmp_path):
                   GITHUB_EVENT_PATH=str(event))
     _, ci_receipt, _ = run_writer(tmp_path, repo_root, commit, "--runner-kind", "github_actions", env=ci_env, name="ci")
     assert receipt_of(ci_receipt)["subject"]["pull_request"] == 1
-    importer.import_receipt(repo_root, local_receipt, store, RECORDED_BY)
-    importer.import_receipt(repo_root, ci_receipt, store, RECORDED_BY)
+    for receipt_path in (local_receipt, ci_receipt):
+        try:
+            importer.import_receipt(repo_root, receipt_path, store, RECORDED_BY)
+        except (importer.ImportRefusal, SelfModelError) as error:
+            pytest.fail(
+                "a valid receipt must import using the explicit repository/store roots, "
+                f"independently of the process working directory: {error}"
+            )
     _build(repo_root, repo_root)
     _git(repo_root, "add", "-A")
     _git(repo_root, "commit", "-q", "-m", "records")

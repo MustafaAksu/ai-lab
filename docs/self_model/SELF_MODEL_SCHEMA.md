@@ -60,9 +60,43 @@ VERIFY v2 separates two objects.
 - **Receipt.** The raw output of `scripts/verify_v2.py`. The writer runs a declared profile itself, in a detached git worktree of one exact commit, with an allowlisted command environment (PATH, a fresh HOME, LANG, TZ and the profile's literal variables). It records per command the termination, exit code, timeout and the stdout/stderr bytes under content addresses, and checks HEAD and `git status --porcelain=v1 --untracked-files=all --ignored` at every command boundary. The receipt is a producer's claim of observation (`observation_basis: observed_by_writer`). Its `verifier_lineage_status` is always `self_authored_unreviewed`, and `environment_capture` is `partial`: it does not supply the full effective-input coverage of ABS-0004 Section 4.7.
 - **Canonical VERIFY v2 record.** A `VERIFY-YYYYMMDD-NNNN` file written only by `scripts/import_verification_v2.py`. It carries the shared VERIFY fields (`repo_commit` equals the receipt's subject commit), the receipt's SHA-256, a summary derived from the receipt, `origin.origin_verification: unverified` and import metadata kept apart from the observation time.
 
-Result is a total function with precedence `incomplete` (the profile is empty, a command did not terminate by exiting, a command is missing, or HEAD or the tree differed at any boundary), then `one_or_more_commands_failed`, then `all_commands_exit_zero`. `incomplete` is never a success. The boundary observation does not detect a path changed and restored within one command.
+Result is a total function with precedence `incomplete` (the profile is empty, a command did not terminate by exiting, a command is missing, HEAD differs from the subject or Git status reports a change at any boundary), then `one_or_more_commands_failed`, then `all_commands_exit_zero`. `incomplete` is never a success. A clean boundary means that Git status reported no changed paths; it is not byte-level equality of the worktree and the subject tree. In particular, index flags such as `assume-unchanged` can hide a tracked-file edit, and a path changed and restored within one command is not detected. The HEAD check is separate from this status observation.
 
-Validation recomputes every derived field and never copies it: the receipt's result and output retention from its commands; completeness against the stored profile bytes (command count, order, argv templates, timeouts, declared properties); stream lengths against `capture_complete`; the command environment against the stored profile's allowlist and literal values; and on the record, the summary, `repo_commit`, `observed_at`, origin and lineage. Store paths must equal the path derived from the digest and stay inside the store root. Checks that need the store take the repository root explicitly (`validate_verification_record_in_repo`); no check resolves a path from the working directory.
+Validation recomputes every derived field and never copies it: the receipt's result and output retention from its commands; completeness against the stored profile bytes (command count, order, argv templates and resolved argv, working directory, timeouts, declared properties); stream lengths against `capture_complete`; the command environment against the stored profile's allowlist and literal values; and on the record, the summary, `repo_commit`, `observed_at`, origin and lineage. Store paths must equal the path derived from the digest and stay inside the store root. Checks that need the store take the repository root explicitly (`validate_verification_record_in_repo`); no check resolves a path from the working directory.
+
+#### Required fields and profile validity (R9-R11)
+
+Receipt schema `/1` requires the complete S1/S2 structure, including subject and input tree ids; history; verifier tool, digest, subject blob and interpreter; Python/platform/distribution/environment/runner metadata; tree-observation method, scope and boundaries; and every command's template, resolved argv, cwd, timeout, property, termination, exit code, timestamps, streams and boundary. Missing fields are rejected even when a replacement digest and canonical summary agree with the malformed receipt. Booleans do not satisfy integer fields. Timestamps must be timezone-aware and internally ordered. Git object ids and content digests have their declared hexadecimal lengths.
+
+Nullable fields must still be present. The permitted cases are:
+
+| Field | Null meaning |
+| --- | --- |
+| `history.stored_repo_head` and `stored_repo_head_reachable` | No valid stored index head was available; reachability is also null. A valid stored head has a boolean reachability observation. |
+| `inputs.trees.tests`, `.scripts`, `.ai_lab` | The named subject path is absent. The root tree is required and equals `subject.tree_id`. |
+| `verifier.subject_blob_sha` | Writer absent at subject; `verifier_matches_subject` must be `absent_at_subject`. |
+| `environment.requirements_sha256` | No requirements file was available. |
+| GitHub runner metadata values | An explicitly missing runner-reported value; every declared key is still required. A claimed pull-request event requires the subject's PR number and head/base hashes. |
+| Boundary `head` | HEAD observation failed; it cannot count as matching the subject. |
+| Command `exit_code` | Termination was `timeout`, `signal` or `failed_to_start`; exited commands require an integer. |
+
+`{python}` resolves to the recorded `verifier.interpreter.path`. The writer's existing `/1` layout records `command_environment.HOME` as an absolute `<run>/home`; `{scratch}` resolves to its sibling `<run>/scratch`. `cwd: "."` means the detached worktree root. The validator reconstructs this resolution and compares the complete argv and cwd; it does not infer a scratch directory from the argv being checked. This is internal consistency, not proof of execution or CI origin. Historical receipts already carry these inputs and are not rewritten.
+
+The standalone writer and validator retain separate profile-check implementations. Agreement tests cover their acceptance and refusal behavior: nonempty profile id and command list, no permitted status changes, valid environment names excluding base and secret-like names, literal string values, valid argv, nonempty property, and finite timeouts strictly between 0 and 86400 seconds. Invalid stored profiles cannot become admissible by recomputing their hashes.
+
+#### Writer completion and falsification evidence (R12)
+
+| Outcome | Complete receipt | Exit code |
+| --- | --- | --- |
+| All commands exited zero | Yes | 0 |
+| One or more commands failed | Yes | 1 |
+| Refused before execution | No | 2 |
+| Representable incomplete run | Yes | 3 |
+| Writer could not complete a receipt | No | 3 |
+
+Receipt publication is atomic and refuses overwrite. On an unexpected writer failure, a bounded, separately identified diagnostic is attempted outside the content-addressed store; it is not a receipt and cannot be imported as a canonical VERIFY record. A diagnostic contains no raw exception text, command output or environment values. If diagnostic writing itself fails, the command still fails and does not manufacture a receipt.
+
+`scripts/falsify_verify_v2.py` retains baseline and mutation execution evidence. A mutation counts as caught only when the selected test ids passed before mutation, the same ids actually executed afterward, and a target test failed in its assertion phase. Collection, usage, internal, setup/teardown or timeout failures are errors, not successful falsification. The report retains exact node ids, process outcomes and failure details. It supports the specific tests and mutations exercised; it does not establish general correctness or independent lineage.
 
 Store: `docs/self_model/verification_outputs/sha256/<2 hex>/<digest>`, holding outputs, profiles, distribution lists and receipts. Each stream is retained up to 8 MiB, and a truncated stream is marked `capture_complete: false`. `scripts/check_verification_outputs.py` checks that every blob hashes to its address and that every v2 record validates against its receipt. Integrity means stored bytes equal recorded digests. It does not establish where or whether a run took place.
 
