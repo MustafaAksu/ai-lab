@@ -42,7 +42,8 @@
     "PLAN-20260723-0001",
     "PLAN-20260817-0001",
     "PLAN-20260817-0002",
-    "PLAN-20260912-0001"
+    "PLAN-20260912-0001",
+    "PLAN-20261124-0001"
   ],
   "audit_summary": {
     "ok": true,
@@ -255,7 +256,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-11-23T14:06:07+00:00",
+  "generated_at": "2026-11-24T09:56:17+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -622,6 +623,11 @@
       "risk": "Inference leakage into Arm 2 would make the primary result forced rather than measured; a ceiling family would make it non-discriminating; either could be mistaken for evidence. A positive result could be misread as a capability or as support for the wider relational-memory architecture; a negative result could be inflated into a general refutation. Provider non-determinism adds noise to a paired design so per-stratum conclusions are underpowered and only the pooled primary endpoint bears on closure. Under Option S the cell has no AI-Lab InvocationRecords; its provenance is only as good as the stage JSONL and manifest digests. Interim looks add a small risk of stopping on noise, bounded by the spending function.",
       "source_field": "risk",
       "source_record": "PLAN-20260912-0001"
+    },
+    {
+      "risk": "The writer could be mistaken for an independent verifier when the same executor authors it and much of the code it checks; a passing CI run could be read as acceptance; an imported CI receipt could be read as attested origin; a declared property could be read as established when only an exit code is observed; a command could alter the tree under later commands; a truncated or incomplete run could be read as complete; the store grows with every receipt; a receipt for a synthetic merge commit could be cited for a different merged commit; the workflow could be weakened by a later change to its own file.",
+      "source_field": "risk",
+      "source_record": "PLAN-20261124-0001"
     }
   ],
   "model_type": "self_model",
@@ -633,8 +639,11 @@
     "GAP-0009",
     "GAP-0010"
   ],
-  "open_plans": [],
+  "open_plans": [
+    "PLAN-20261124-0001"
+  ],
   "plan_counts": {
+    "admitted": 1,
     "completed": 25,
     "withdrawn": 1
   },
@@ -820,6 +829,13 @@
       "source_path": "docs/self_model/plans/PLAN-20260912-0001.json",
       "status": "completed",
       "title": "Relational state organization cell: governed visitor experiment with zero integration effect (PREREG-RS-0001 v0.3.1)"
+    },
+    {
+      "plan_id": "PLAN-20261124-0001",
+      "source_gap_id": "GAP-0010",
+      "source_path": "docs/self_model/plans/PLAN-20261124-0001.json",
+      "status": "admitted",
+      "title": "Observed-execution verification: VERIFY v2 writer, retained outputs and a pre-merge CI run (GAP-0010 first slice)"
     }
   ],
   "recommended_next_targets": [
@@ -854,7 +870,7 @@
       "target": "A v2 VERIFY writer that executes the declared commands itself rather than accepting their results as arguments: in a clean checkout of one exact commit, refusing a dirty tree or a commit mismatch; per command, retaining the stdout and stderr bytes under a durable reference with their content digests, and recording the exit code and the property the command is declared to establish; recording the environment (interpreter version, dependency set digest, platform), the writer's own content hash as verifier version, the versions or content digests of the tests, rules and other effective inputs the commands ran, and the verifier executor reference; and leaving verifier_lineage_status at the weakest value its evidence supports rather than defaulting it upward. Paired with a CI workflow that runs the same writer on the candidate merge commit of a pull request before merge and retains the record, with the workflow's own configuration declared as an effective input per the Section 4.7 tool-configuration disclosure constraint. If the candidate changes after the record is produced, the record no longer covers it and any acceptance condition relying on it is re-evaluated. Mapped onto the Section 4.17 fields without implementing the deferred IndependenceAssessment. Falsified before reliance: a caller cannot inject an exit code; a failing command yields a failing record; a dirty tree and a commit mismatch are refused; altering the retained output bytes after recording is detected as a mismatch between their recomputed digest and the recorded one. A re-run is a separate record; two runs are compared only on explicitly declared properties, and byte equality is expected only where the command's output contract requires it, since timing, timestamps and other nondeterministic output can differ without indicating that either record is corrupt. v1 writer and records unchanged."
     }
   ],
-  "repo_head": "baaf1e44b27a0006ab6316b75383fe88b3856e01",
+  "repo_head": "88c9d4540b66a89de5920adade5afe6163a10a2c",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -1055,7 +1071,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 62
+    "supported": 63
   },
   "warrants": [
     {
@@ -1552,6 +1568,14 @@
       "target_item_id": "PLAN-20260912-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20260912-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20261124-0001.json",
+      "target_item_id": "PLAN-20261124-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20261124-0001",
       "warrant_state": "supported"
     }
   ]

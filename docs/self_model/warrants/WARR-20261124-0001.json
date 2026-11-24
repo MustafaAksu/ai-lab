@@ -1,0 +1,26 @@
+{
+ "schema_version": "v1",
+ "warrant_id": "WARR-20261124-0001",
+ "target_item_id": "PLAN-20261124-0001",
+ "target_item_type": "plan",
+ "decision": "admit",
+ "warrant_state": "supported",
+ "created_at": "2026-11-24T09:55:00+00:00",
+ "author": "operator",
+ "substrate": "self_model_governance",
+ "repo_commit": "88c9d4540b66a89de5920adade5afe6163a10a2c",
+ "reason": "The operator admits PLAN-20261124-0001 on the reviewing executor's r3 review (PASS_WITH_CONDITIONS, favourable admission recommendation, no fourth plan revision requested). The plan is the GAP-0010 first slice and step 2 of the programme recorded in GAP-0005: an evidence-only VERIFY v2 writer, receipt and canonical record, content-addressed output store, integrity checker, importer and pre-merge CI workflow, with lineage fixed at self_authored_unreviewed and CI origin recorded as unverified. Review history: r1 CHANGES_REQUESTED (R1-R5), r2 CHANGES_REQUESTED (R6-R8), r3 PASS_WITH_CONDITIONS. The operator's decision was stated in session on 2026-11-24 ('ikinci adıma geçebiliriz') after reading the r3 review; this record was materialized by the packaging executor from that statement.",
+ "scope": "Admit only PLAN-20261124-0001 as reviewed in revision r3 (plan file SHA-256 79f1c900b5051de3f093a05aa8bb1016a0062f98afc0f1f969ac4e7c66d7d292 before the admission fields were added), scope items S1-S9, under the four conditions below. This warrant authorizes no automated acceptance, merge, warrant or status transition, no branch protection, ruleset, required check or CODEOWNERS change, no change to ABS-0004, to executor equivalence or to v1 records, and no capability last_verified change. It does not close GAP-0010.",
+ "conditions": [
+  "Condition 1 (implementation, from the reviewing executor's r3 review): at every command boundary, including before the first command, the writer checks HEAD of the worktree equals the subject commit as well as the empty git status snapshot; any violation yields result 'incomplete' under VPROF-0001. F14 covers it, including a command that moves HEAD to another commit while leaving git status empty (the reviewer's counterexample).",
+  "Condition 2 (implementation): F17 also tests receipt completeness against the stored profile bytes: the number, order and argv templates of the receipt's commands must match the profile, so a receipt holding only the first successful command of a three-command profile cannot yield success; and each stream's stored byte length must be consistent with capture_complete and the observed total. These checks strengthen internal consistency and do not verify CI origin.",
+  "Condition 3 (implementation): profile environment variables are explicit, non-secret literal values declared in the profile and are never passed through from the parent environment. The environment allowlist is stated as a transfer property only, not a general confidentiality guarantee: it does not stop a command reading sensitive files. Public CI and the git store use an execution environment holding no secrets, and local raw outputs are checked before they are imported into the public repository. F18 is evidence only for the environment-transfer property it tests.",
+  "Condition 4 (evidence): fulfilment of Conditions 1 to 3 is demonstrated in the implementation review, not assumed from this warrant."
+ ],
+ "evidence_ids": [
+  "PLAN-20261124-0001",
+  "GAP-0010",
+  "GAP-0005",
+  "CAP-0010"
+ ]
+}
