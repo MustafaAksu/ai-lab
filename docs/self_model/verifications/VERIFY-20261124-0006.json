@@ -1,0 +1,57 @@
+{
+  "created_at": "2026-11-24T16:16:15+00:00",
+  "import": {
+    "imported_at": "2026-11-24T16:16:15+00:00",
+    "importer_sha256": "dbc3d2e61abe76ef05bc660d1ec37e5ad7a245ac624cc0b4e17775c901fd50e1"
+  },
+  "observed_at": "2026-11-24T16:14:44.053333+00:00",
+  "origin": {
+    "claimed_runner": {
+      "event_name": "pull_request",
+      "image_os": "ubuntu24",
+      "image_version": "20261116.133.1",
+      "kind": "github_actions",
+      "reported_by": "runner environment variables, unverified",
+      "run_attempt": "1",
+      "run_id": "45434593937",
+      "runner_os": "Linux",
+      "workflow_file_sha256": "fee413d2701350d6dbf775d42d20f320095d57ee657ac1806a58a7f76c14e1df",
+      "workflow_ref": "MustafaAksu/ai-lab/.github/workflows/verify-v2.yml@refs/pull/3/merge"
+    },
+    "origin_verification": "unverified"
+  },
+  "receipt": {
+    "sha256": "d1782cc64dca4045f9032a31ce2159ddae865dd48f57fd006ae2bb492e875dfd",
+    "store_path": "sha256/d1/d1782cc64dca4045f9032a31ce2159ddae865dd48f57fd006ae2bb492e875dfd"
+  },
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "packaging_executor",
+    "substrate": "conversation"
+  },
+  "repo_commit": "2ea18fda8b62a115c31300fbc4676cdf38da8840",
+  "schema_version": "v2",
+  "summary": {
+    "commands": [
+      {
+        "declared_property": "the self-model index committed at the subject commit audits ok and verified_current against the records and git history available at the subject commit",
+        "exit_code": 0,
+        "termination": "exited"
+      },
+      {
+        "declared_property": "an index can be rebuilt from the subject commit's records without error; the tracked index is not overwritten and the rebuilt file is not compared by this command",
+        "exit_code": 0,
+        "termination": "exited"
+      },
+      {
+        "declared_property": "the test suite at the subject commit passes in the recorded environment",
+        "exit_code": 1,
+        "termination": "exited"
+      }
+    ],
+    "output_retention": "complete",
+    "result": "one_or_more_commands_failed"
+  },
+  "verification_id": "VERIFY-20261124-0006",
+  "verifier_lineage_status": "self_authored_unreviewed"
+}

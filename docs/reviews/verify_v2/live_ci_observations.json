@@ -1,0 +1,193 @@
+{
+  "schema": "ai-lab/verify-v2-review-ci-observations/1",
+  "observed_by": {
+    "peer_id": "chatgpt",
+    "role": "packaging_executor",
+    "substrate": "conversation"
+  },
+  "implementation_commit": "613afe553618266e5bb1ac0c88043f7e45e44bb3",
+  "source": "GitHub connector job/artifact metadata; receipt claims remain origin-unverified",
+  "runs": [
+    {
+      "url": "https://github.com/MustafaAksu/ai-lab/actions/runs/45434431208",
+      "job": {
+        "id": 138588266139,
+        "name": "verify-v2",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 45434431208,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out the event commit with full history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install pinned requirements",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run the VERIFY v2 writer on the event commit",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Upload the receipt and stored outputs, also after failure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Check out the event commit with full history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      "artifact": {
+        "id": 14940985616,
+        "name": "verify-v2-45434431208-1",
+        "size_in_bytes": 8299,
+        "url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14940985616",
+        "archive_download_url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14940985616/zip",
+        "expired": false,
+        "created_at": "2026-11-24T16:13:46Z",
+        "expires_at": "2027-02-22T16:12:37Z",
+        "updated_at": "2026-11-24T16:13:46Z",
+        "digest": "sha256:b0c79e879dfcc68c95afe47d7860ffbc2f47e211c89cd64aa536e8e070bf6ccd",
+        "workflow_run": {
+          "id": 45434431208,
+          "repository_id": 1284299931,
+          "head_repository_id": 1284299931,
+          "head_branch": "verify-v2",
+          "head_sha": "613afe553618266e5bb1ac0c88043f7e45e44bb3"
+        }
+      },
+      "archive_sha256_verified": true
+    },
+    {
+      "url": "https://github.com/MustafaAksu/ai-lab/actions/runs/45434593937",
+      "job": {
+        "id": 138588845414,
+        "name": "verify-v2",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 45434593937,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out the event commit with full history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install pinned requirements",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run the VERIFY v2 writer on the event commit",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 5
+          },
+          {
+            "name": "Upload the receipt and stored outputs, also after failure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11
+          },
+          {
+            "name": "Post Check out the event commit with full history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      "artifact": {
+        "id": 14941885133,
+        "name": "verify-v2-45434593937-1",
+        "size_in_bytes": 8518,
+        "url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14941885133",
+        "archive_download_url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14941885133/zip",
+        "expired": false,
+        "created_at": "2026-11-24T16:14:44Z",
+        "expires_at": "2027-02-22T16:13:28Z",
+        "updated_at": "2026-11-24T16:14:44Z",
+        "digest": "sha256:3596cddf8d802c008d67b017048f858f208396e52e1297fe91bfe061a2510222",
+        "workflow_run": {
+          "id": 45434593937,
+          "repository_id": 1284299931,
+          "head_repository_id": 1284299931,
+          "head_branch": "verify-v2-r9-r12-failure-613afe5",
+          "head_sha": "99950a16bd84e7e5005b9627c58d49f74235fa4f"
+        }
+      },
+      "archive_sha256_verified": true
+    }
+  ],
+  "failure_pull_request": {
+    "number": 3,
+    "url": "https://github.com/MustafaAksu/ai-lab/pull/3",
+    "state": "closed",
+    "merged": false,
+    "fixture_head": "99950a16bd84e7e5005b9627c58d49f74235fa4f"
+  }
+}
