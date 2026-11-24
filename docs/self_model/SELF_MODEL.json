@@ -171,7 +171,7 @@
   },
   "gap_counts": {
     "closed": 4,
-    "open": 5
+    "open": 6
   },
   "gaps": [
     {
@@ -245,9 +245,17 @@
       "priority": "medium",
       "source_path": "docs/self_model/gaps/GAP-0009.json",
       "status": "open"
+    },
+    {
+      "category": "verification_evidence",
+      "gap_id": "GAP-0010",
+      "name": "VERIFY records are attributed testimony of execution rather than observed execution, and no recorded check is required against the exact candidate before merge",
+      "priority": "high",
+      "source_path": "docs/self_model/gaps/GAP-0010.json",
+      "status": "open"
     }
   ],
-  "generated_at": "2026-09-16T06:41:46+00:00",
+  "generated_at": "2026-11-23T14:06:07+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -481,6 +489,11 @@
       "source_record": "GAP-0009"
     },
     {
+      "risk": "VERIFY v1 does not supply a standard per-command contract binding observed execution, retained output, environment, and verifier and test versions, and no recorded check is required against the exact candidate before merge. Automated acceptance relying on v1 testimony alone could mistake reported success for observed success. The C7 and C10 evidence required by the GAP-0005 programme must preserve this distinction when per-step operator review is removed.",
+      "source_field": "risk",
+      "source_record": "GAP-0010"
+    },
+    {
       "risk": "The diagnostic could be misread as automatic retrieval unless output labels remain explicit about read-only candidate reporting.",
       "source_field": "risk",
       "source_record": "PLAN-20260705-0001"
@@ -617,7 +630,8 @@
     "GAP-0005",
     "GAP-0006",
     "GAP-0008",
-    "GAP-0009"
+    "GAP-0009",
+    "GAP-0010"
   ],
   "open_plans": [],
   "plan_counts": {
@@ -817,7 +831,7 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0005",
-      "target": "Not Slice A, which is implemented and warranted, and not Slice B, which is implemented. The readiness assessment of 2026-08-12 examined all six manual-mode constraints against what the repository already records and identified C7 as the cheapest to turn into an evidenced check: it is the only one of the six whose subject is which party did what, and all 35 VERIFY records already carry recorded_by.peer_id and repo_commit. The missing half is the implementer identity for the change being verified; git author is the operator on every commit and does not name the drafting executor. The minimum honest artifact is a verifier and implementer pair on a VERIFY record, both naming declared executor identities, with the refusal condition stated for when they match. C11 is second. C3 and C10 share a single blocker, evidence-ancestry capture, which is the largest unlock among the six and a build rather than a field."
+      "target": "Sequenced inside a five-step programme for moving AI-Lab toward delegated self-authorization. The operator approved this sequence as the working order on 2026-11-23, in session, in answer to the question whether the reviewing executor's corrected five-step order was approved; that approval fixes the order of work and authorizes none of the steps. Each step remains subject to its own plan, review and admission, and only drafting of step 1 is in progress. Steps: (1) scope records; (2) observed-execution verification and CI, under GAP-0010; (3) qualification semantics, as three separate scope items: implementing the tool and human equivalence tests the ontology already defines; a governed decision on cross-kind equivalence semantics; and a separate decision whether the ExecutorIdentity superclass left [OPEN] in Section 4.7 is needed, the latter two being ontology changes; together with executable evidence conditions for C3 and C10; (4) the authority mechanism: a versioned AuthorizationPolicy, invocation_authorization and evidence_admission kept as separate DecisionRecord kinds, a deterministic evaluator, and protected paths for the policy, evaluator, the tests that guard them and the CI configuration they depend on; (5) a bootstrap admission by the operator activating only an explicit delegation whose evidence conditions are met. This gap's own first slice within that programme is unchanged in substance and must not be lost in it: the C7 implementer and verifier pair, both naming declared executor identities, with the refusal condition stated for when they match. It should be carried on the observed-execution VERIFY records of GAP-0010 rather than on v1 testimony records, so that the first C7 artifact binds a named implementer to a run that was actually observed. Section 8 is not to be changed by this programme: plan admission stays high, and delegation changes who may authorize enumerated high-class plan kinds, not their class. C11 remains second among the manual-mode constraints; C3 and C10 still share the evidence-ancestry blocker recorded in GAP-0008, which step (5) depends on."
     },
     {
       "source_field": "recommended_first_slice",
@@ -833,9 +847,14 @@
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0009",
       "target": "Superseded by the outcome of PLAN-20260912-0001. A successor slice should begin by establishing a difficulty coordinate with a demonstrable gradient for the intended subject, verified by a small Arm-1 calibration, before re-declaring a paired family; the existing relational_state package (generator, oracle, serializers, admission invariants, scorer, sequential routine, gate, runner) is reusable unchanged."
+    },
+    {
+      "source_field": "recommended_first_slice",
+      "source_record": "GAP-0010",
+      "target": "A v2 VERIFY writer that executes the declared commands itself rather than accepting their results as arguments: in a clean checkout of one exact commit, refusing a dirty tree or a commit mismatch; per command, retaining the stdout and stderr bytes under a durable reference with their content digests, and recording the exit code and the property the command is declared to establish; recording the environment (interpreter version, dependency set digest, platform), the writer's own content hash as verifier version, the versions or content digests of the tests, rules and other effective inputs the commands ran, and the verifier executor reference; and leaving verifier_lineage_status at the weakest value its evidence supports rather than defaulting it upward. Paired with a CI workflow that runs the same writer on the candidate merge commit of a pull request before merge and retains the record, with the workflow's own configuration declared as an effective input per the Section 4.7 tool-configuration disclosure constraint. If the candidate changes after the record is produced, the record no longer covers it and any acceptance condition relying on it is re-evaluated. Mapped onto the Section 4.17 fields without implementing the deferred IndependenceAssessment. Falsified before reliance: a caller cannot inject an exit code; a failing command yields a failing record; a dirty tree and a commit mismatch are refused; altering the retained output bytes after recording is detected as a mismatch between their recomputed digest and the recorded one. A re-run is a separate record; two runs are compared only on explicitly declared properties, and byte equality is expected only where the command's output contract requires it, since timing, timestamps and other nondeterministic output can differ without indicating that either record is corrupt. v1 writer and records unchanged."
     }
   ],
-  "repo_head": "49febfae312e912be0b04247bd988d338ed1a85d",
+  "repo_head": "baaf1e44b27a0006ab6316b75383fe88b3856e01",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
