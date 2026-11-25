@@ -1,0 +1,206 @@
+{
+ "commands": [
+  {
+   "argv": [
+    "/usr/local/bin/python3",
+    "scripts/audit_self_model_index.py"
+   ],
+   "argv_template": [
+    "{python}",
+    "scripts/audit_self_model_index.py"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "the self-model index committed at the subject commit audits ok and verified_current against the records and git history available at the subject commit",
+   "exit_code": 0,
+   "finished_at": "2026-11-24T15:16:25.317555+00:00",
+   "index": 0,
+   "started_at": "2026-11-24T15:16:24.981934+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 691,
+    "retained_bytes": 691,
+    "sha256": "d99b231a9a291d32002a984ca53d504d464e6b83345c56c5f94d14cbc614dbce",
+    "store_path": "sha256/d9/d99b231a9a291d32002a984ca53d504d464e6b83345c56c5f94d14cbc614dbce"
+   },
+   "termination": "exited",
+   "timeout_seconds": 600
+  },
+  {
+   "argv": [
+    "/usr/local/bin/python3",
+    "scripts/build_self_model.py",
+    "--output",
+    "/tmp/verify-v2-muruvy9z/scratch/SELF_MODEL.rebuilt.json"
+   ],
+   "argv_template": [
+    "{python}",
+    "scripts/build_self_model.py",
+    "--output",
+    "{scratch}/SELF_MODEL.rebuilt.json"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "an index can be rebuilt from the subject commit's records without error; the tracked index is not overwritten and the rebuilt file is not compared by this command",
+   "exit_code": 0,
+   "finished_at": "2026-11-24T15:16:25.704425+00:00",
+   "index": 1,
+   "started_at": "2026-11-24T15:16:25.382583+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 162,
+    "retained_bytes": 162,
+    "sha256": "08fac4672cb6f76de6004e05fd3bdef7a99090bce50fbe191bc1f3c21f2ccabd",
+    "store_path": "sha256/08/08fac4672cb6f76de6004e05fd3bdef7a99090bce50fbe191bc1f3c21f2ccabd"
+   },
+   "termination": "exited",
+   "timeout_seconds": 600
+  },
+  {
+   "argv": [
+    "/usr/local/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "argv_template": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "boundary_after": {
+    "changed_paths": [],
+    "head": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+    "head_matches_subject": true,
+    "status_clean": true
+   },
+   "cwd": ".",
+   "declared_property": "the test suite at the subject commit passes in the recorded environment",
+   "exit_code": 0,
+   "finished_at": "2026-11-24T15:17:36.833620+00:00",
+   "index": 2,
+   "started_at": "2026-11-24T15:16:25.713076+00:00",
+   "stderr": {
+    "capture_complete": true,
+    "observed_bytes": 0,
+    "retained_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store_path": "sha256/e3/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "stdout": {
+    "capture_complete": true,
+    "observed_bytes": 1152,
+    "retained_bytes": 1152,
+    "sha256": "18eeb9e19aac6d4b8104c436beb422473cabbf6af4b0bc557a30df527cf7c550",
+    "store_path": "sha256/18/18eeb9e19aac6d4b8104c436beb422473cabbf6af4b0bc557a30df527cf7c550"
+   },
+   "termination": "exited",
+   "timeout_seconds": 3600
+  }
+ ],
+ "environment": {
+  "command_environment": {
+   "HOME": "/tmp/verify-v2-muruvy9z/home",
+   "LANG": "C.UTF-8",
+   "PATH": "/usr/bin:/bin",
+   "PYTHONDONTWRITEBYTECODE": "1",
+   "TZ": "UTC"
+  },
+  "environment_capture": "partial",
+  "installed_distributions": {
+   "count": 190,
+   "sha256": "6f89a1acd64123b2c5022b300ddbf4d43de0edeb4d671c562fbd36077e75aea8",
+   "store_path": "sha256/6f/6f89a1acd64123b2c5022b300ddbf4d43de0edeb4d671c562fbd36077e75aea8"
+  },
+  "platform": "Linux-6.18.44-fc-v819-x86_64-with-glibc2.39",
+  "python": {
+   "implementation": "CPython",
+   "version": "3.13.18"
+  },
+  "requirements_sha256": "444e50898ae0147ce4259cb0994a0e70baa69eed58a634f5a3d845e061896096",
+  "runner": {
+   "kind": "local"
+  }
+ },
+ "finished_at": "2026-11-24T15:17:36.857372+00:00",
+ "history": {
+  "shallow": false,
+  "stored_repo_head": "5c6404284e074055c1a4dad7d348ed8df2f83262",
+  "stored_repo_head_reachable": true
+ },
+ "inputs": {
+  "profile": {
+   "path": "docs/self_model/verification_profiles/VPROF-0001.json",
+   "profile_id": "VPROF-0001",
+   "sha256": "f66ed27c9adfed40314bb547d01decb4d39da77e33fca525d6e2aa18fbfe8a9b",
+   "store_path": "sha256/f6/f66ed27c9adfed40314bb547d01decb4d39da77e33fca525d6e2aa18fbfe8a9b"
+  },
+  "trees": {
+   "ai_lab": "3a93029707715be3b92928fc28791b248afc5dae",
+   "root": "14d0ed77fd84d8e69aec1c8a606798f5176670bb",
+   "scripts": "4acfd3b0a364ca28cd9d2c7c3de0ec534f118b49",
+   "tests": "8e7dd784ebb95abaaec7de8bf4a5e5b1502d7097"
+  }
+ },
+ "observation_basis": "observed_by_writer",
+ "output_retention": "complete",
+ "receipt_schema": "ai-lab/verify-v2-receipt/1",
+ "result": "all_commands_exit_zero",
+ "retention_limit_bytes": 8388608,
+ "started_at": "2026-11-24T15:16:24.405903+00:00",
+ "subject": {
+  "candidate_commit": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+  "tree_id": "14d0ed77fd84d8e69aec1c8a606798f5176670bb"
+ },
+ "tree_observation": {
+  "initial": {
+   "changed_paths": [],
+   "head": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+   "head_matches_subject": true,
+   "status_clean": true
+  },
+  "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+  "permitted_tree_changes": [],
+  "scope": "command_boundaries_only: a path changed and restored within one command is not detected"
+ },
+ "verifier": {
+  "interpreter": {
+   "path": "/usr/local/bin/python3",
+   "version": "3.13.18"
+  },
+  "running_sha256": "e2f120cfb18246c621e2ed497792a7f5ca1c4648c4b5dc8f51466febb66f8d23",
+  "subject_blob_sha": "f749b0d554286116ab366162dc0a1fa9a0f52b23",
+  "tool": "scripts/verify_v2.py",
+  "verifier_matches_subject": true
+ },
+ "verifier_lineage_status": "self_authored_unreviewed"
+}

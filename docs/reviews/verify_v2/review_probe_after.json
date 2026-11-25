@@ -1,0 +1,36 @@
+{
+  "fixture_source_commit": "68f6f103b1e3cae37c8fb15b7214d10d941aa5a3",
+  "results": [
+    {
+      "case": "valid_control",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "R9_required_fields_absent",
+      "outcome": "REJECTED",
+      "reason": "receipt is missing required fields: history"
+    },
+    {
+      "case": "R10_resolved_argv_and_cwd",
+      "outcome": "REJECTED",
+      "reason": "commands[0].argv differs from resolution of the stored template"
+    },
+    {
+      "case": "R11_secret_profile_variable",
+      "outcome": "REJECTED",
+      "reason": "stored profile environment name looks like a secret: MY_API_KEY"
+    },
+    {
+      "case": "R11_negative_timeout",
+      "outcome": "REJECTED",
+      "reason": "stored profile.commands[0].timeout_seconds must be positive and finite, below 86400 seconds"
+    },
+    {
+      "case": "negative_control_wrong_result",
+      "outcome": "REJECTED",
+      "reason": "result 'incomplete' differs from the result recomputed from the commands ('all_commands_exit_zero')"
+    }
+  ],
+  "validator_sha256": "242f0cab04af3f9a5d6a6022ce7e61cd1c49cb0d381bb10ecc23079cd342310c"
+}

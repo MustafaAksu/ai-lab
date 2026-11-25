@@ -1,0 +1,36 @@
+{
+  "fixture_source_commit": "68f6f103b1e3cae37c8fb15b7214d10d941aa5a3",
+  "results": [
+    {
+      "case": "valid_control",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "R9_required_fields_absent",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "R10_resolved_argv_and_cwd",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "R11_secret_profile_variable",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "R11_negative_timeout",
+      "outcome": "ACCEPTED",
+      "result": "all_commands_exit_zero"
+    },
+    {
+      "case": "negative_control_wrong_result",
+      "outcome": "REJECTED",
+      "reason": "result 'incomplete' differs from the result recomputed from the commands ('all_commands_exit_zero')"
+    }
+  ],
+  "validator_sha256": "7e9bf79d248c76dcaa204b1ecbaff30e7365af6c58f738cd8389cf87e069f4fc"
+}

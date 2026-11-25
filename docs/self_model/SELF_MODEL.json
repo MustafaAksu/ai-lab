@@ -256,7 +256,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-11-24T09:56:17+00:00",
+  "generated_at": "2026-11-24T16:16:15+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -870,7 +870,7 @@
       "target": "A v2 VERIFY writer that executes the declared commands itself rather than accepting their results as arguments: in a clean checkout of one exact commit, refusing a dirty tree or a commit mismatch; per command, retaining the stdout and stderr bytes under a durable reference with their content digests, and recording the exit code and the property the command is declared to establish; recording the environment (interpreter version, dependency set digest, platform), the writer's own content hash as verifier version, the versions or content digests of the tests, rules and other effective inputs the commands ran, and the verifier executor reference; and leaving verifier_lineage_status at the weakest value its evidence supports rather than defaulting it upward. Paired with a CI workflow that runs the same writer on the candidate merge commit of a pull request before merge and retains the record, with the workflow's own configuration declared as an effective input per the Section 4.7 tool-configuration disclosure constraint. If the candidate changes after the record is produced, the record no longer covers it and any acceptance condition relying on it is re-evaluated. Mapped onto the Section 4.17 fields without implementing the deferred IndependenceAssessment. Falsified before reliance: a caller cannot inject an exit code; a failing command yields a failing record; a dirty tree and a commit mismatch are refused; altering the retained output bytes after recording is detected as a mismatch between their recomputed digest and the recorded one. A re-run is a separate record; two runs are compared only on explicitly declared properties, and byte equality is expected only where the command's output contract requires it, since timing, timestamps and other nondeterministic output can differ without indicating that either record is corrupt. v1 writer and records unchanged."
     }
   ],
-  "repo_head": "88c9d4540b66a89de5920adade5afe6163a10a2c",
+  "repo_head": "613afe553618266e5bb1ac0c88043f7e45e44bb3",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -1068,6 +1068,36 @@
       "repo_commit": "52d55bf67f148fec9b3bcbee789c2f19a03232dd",
       "source_path": "docs/self_model/verifications/VERIFY-20260915-0001.json",
       "verification_id": "VERIFY-20260915-0001"
+    },
+    {
+      "repo_commit": "e2cac08ee38dd759631dcb54bdf5a05aa2d831a2",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0001.json",
+      "verification_id": "VERIFY-20261124-0001"
+    },
+    {
+      "repo_commit": "acce91521648c08febe356c9b01021aae91a4099",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0002.json",
+      "verification_id": "VERIFY-20261124-0002"
+    },
+    {
+      "repo_commit": "0887599927e5755fda1cf90b30130a4f64e0b12f",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0003.json",
+      "verification_id": "VERIFY-20261124-0003"
+    },
+    {
+      "repo_commit": "613afe553618266e5bb1ac0c88043f7e45e44bb3",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0004.json",
+      "verification_id": "VERIFY-20261124-0004"
+    },
+    {
+      "repo_commit": "da523c45f42efdca7605ff70b9b36e18e80379f4",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0005.json",
+      "verification_id": "VERIFY-20261124-0005"
+    },
+    {
+      "repo_commit": "2ea18fda8b62a115c31300fbc4676cdf38da8840",
+      "source_path": "docs/self_model/verifications/VERIFY-20261124-0006.json",
+      "verification_id": "VERIFY-20261124-0006"
     }
   ],
   "warrant_counts": {

@@ -1,0 +1,26 @@
+{
+ "profile_schema": "ai-lab/verify-v2-profile/1",
+ "profile_id": "VPROF-0001",
+ "description": "Standard triple (PLAN-20261124-0001 S3). The audit runs first on the unmodified worktree; the build is redirected to scratch so the tracked index is never overwritten; bytecode and the pytest cache are suppressed so that no tree change is needed. Declared properties are P2-scoped declarations of what each command is relied on to establish; the writer does not check that a command tests its declared property.",
+ "environment": {
+  "PYTHONDONTWRITEBYTECODE": "1"
+ },
+ "permitted_tree_changes": [],
+ "commands": [
+  {
+   "argv": ["{python}", "scripts/audit_self_model_index.py"],
+   "timeout_seconds": 600,
+   "declared_property": "the self-model index committed at the subject commit audits ok and verified_current against the records and git history available at the subject commit"
+  },
+  {
+   "argv": ["{python}", "scripts/build_self_model.py", "--output", "{scratch}/SELF_MODEL.rebuilt.json"],
+   "timeout_seconds": 600,
+   "declared_property": "an index can be rebuilt from the subject commit's records without error; the tracked index is not overwritten and the rebuilt file is not compared by this command"
+  },
+  {
+   "argv": ["{python}", "-m", "pytest", "-q", "-p", "no:cacheprovider"],
+   "timeout_seconds": 3600,
+   "declared_property": "the test suite at the subject commit passes in the recorded environment"
+  }
+ ]
+}

@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from ai_lab.documentation import verification_v2
 from ai_lab.documentation.verification_outcome import (
     CLASS_DRIFT,
     CLASS_EVIDENCE_UNAVAILABLE,
@@ -101,7 +102,22 @@ def _validate_recorded_by(recorded_by: object) -> None:
 
 
 def validate_verification_record(record: dict[str, object]) -> None:
-    """Validate a VERIFY-* execution-evidence record."""
+    """Validate a VERIFY-* execution-evidence record.
+
+    v1 records are attributed testimony and are validated exactly as before.
+    v2 records (PLAN-20261124-0001) are validated here for structure only; checks
+    that need the content-addressed store run in validate_verification_record_in_repo
+    with an explicit repository root.
+    """
+
+    if record.get("schema_version") == "v2":
+        try:
+            verification_v2.validate_canonical_structure(record)
+        except verification_v2.VerificationV2Error as error:
+            raise SelfModelError(str(error)) from error
+        _require_id(record.get("verification_id"), "$.verification_id", VERIFY_ID_RE, "VERIFY-YYYYMMDD-NNNN")
+        _validate_recorded_by(record.get("recorded_by"))
+        return
 
     if record.get("schema_version") != "v1":
         raise SelfModelError("$.schema_version must be v1")
@@ -121,6 +137,21 @@ def validate_verification_record(record: dict[str, object]) -> None:
         if not isinstance(command.get("exit_code"), int):
             raise SelfModelError(f"$.commands[{index}].exit_code must be an int")
         _require_non_empty_string(command.get("summary"), f"$.commands[{index}].summary")
+
+
+def validate_verification_record_in_repo(record: dict[str, object], repo_root: Path) -> None:
+    """Repository-level VERIFY checks; v2 records are checked against their stored receipt.
+
+    The repository root is an explicit argument: no check resolves a path from the
+    process working directory.
+    """
+
+    if record.get("schema_version") != "v2":
+        return
+    try:
+        verification_v2.validate_against_store(dict(record), Path(repo_root))
+    except verification_v2.VerificationV2Error as error:
+        raise SelfModelError(str(error)) from error
 
 
 def _validate_commit_evidence(items: object) -> None:
@@ -569,7 +600,9 @@ def audit_self_model(
                 )
             else:
                 try:
-                    validate_verification_record(read_json(verification_path))
+                    verification_record = read_json(verification_path)
+                    validate_verification_record(verification_record)
+                    validate_verification_record_in_repo(verification_record, repo_root)
                     findings.append(
                         _finding(
                             "info",
@@ -1108,6 +1141,7 @@ class RecordTypeSpec:
     date_scoped: bool
     validator: RecordValidator
     status_field: str | None = "status"
+    repo_validator: Callable[[dict[str, object], Path], None] | None = None
     allowed_statuses: frozenset[str] = frozenset()
     open_statuses: frozenset[str] = frozenset()
     references: tuple[ReferenceSpec, ...] = ()
@@ -1222,6 +1256,7 @@ SELF_MODEL_RECORD_SPECS: tuple[RecordTypeSpec, ...] = (
         date_scoped=True,
         validator=validate_verification_record,
         status_field=None,
+        repo_validator=validate_verification_record_in_repo,
         references=(
             ReferenceSpec(
                 field_path=("target_item_id",),
@@ -1383,6 +1418,8 @@ class SelfModelRegistry:
                 try:
                     record = read_json(path)
                     spec.validator(record)
+                    if spec.repo_validator is not None:
+                        spec.repo_validator(record, self.repo_root)
                 except (OSError, json.JSONDecodeError, SelfModelError) as exc:
                     relative = path.relative_to(self.repo_root)
                     raise SelfModelError(
@@ -1808,6 +1845,8 @@ def write_new_self_model_record(
     candidate = deepcopy(dict(record))
 
     spec.validator(candidate)
+    if spec.repo_validator is not None:
+        spec.repo_validator(candidate, repo_root)
 
     identifier = candidate.get(spec.id_field)
 
