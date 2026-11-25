@@ -1,0 +1,83 @@
+{
+  "accepted_package_commit": "86f08b3f9f3192bfe576d5be207752e446af5941",
+  "canonical_recording_time": "2026-11-25T08:49:21+00:00",
+  "checks": {
+    "audit": {
+      "exit_code": 0,
+      "result": {
+        "findings": [
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+            "message": "Stored repo_head matches current HEAD.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-completion/docs/self_model/SELF_MODEL.json"
+          },
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_CONTENT_CURRENT",
+            "message": "Stored SELF_MODEL.json matches a normalized rebuild.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-completion/docs/self_model/SELF_MODEL.json"
+          }
+        ],
+        "ok": true,
+        "schema_version": "v1",
+        "verification_outcome": "verified_current"
+      }
+    },
+    "cas": {
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "problems": 0
+      }
+    }
+  },
+  "fixed_statuses": {
+    "GAP-0005": "open",
+    "GAP-0008": "open",
+    "GAP-0010": "open",
+    "autonomous_authorization": "not_activated",
+    "origin_verification": "unverified",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_pi_identity_separation": "unresolved"
+  },
+  "implementation_tests_workflow_profiles_requirements_unchanged": true,
+  "mutations_rerun": false,
+  "observation_scope": "completion recording working tree based on the accepted package; not a canonical VERIFY or independent qualification and not a receipt for any subsequently-created commit",
+  "plan_status": "completed",
+  "preservation": {
+    "accepted_package_cas_files": 37,
+    "accepted_package_review_files": 16,
+    "accepted_package_verify_files": 47,
+    "cas_bytes": 83763,
+    "total_files_byte_identical": 100
+  },
+  "pytest": {
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "duration_seconds_reported": 61.77,
+    "environment_note": "minimal environment; PYTHONDONTWRITEBYTECODE=1; pinned-requirements environment",
+    "exit_code": 0,
+    "passed": 1398,
+    "python": "3.12.14",
+    "stdout_bytes": 1632,
+    "stdout_path": "docs/reviews/verify_v2/completion/pi_completion_pytest.txt",
+    "stdout_sha256": "0d0e4cdc9fea2cb644ad240824beb7e12e07b3c94395dd75af1ecb457e16d690"
+  },
+  "recorded_at": "2026-11-25T08:57:24+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "packaging_executor",
+    "substrate": "conversation"
+  },
+  "schema": "ai-lab/pi-completion-recording-validation/1",
+  "warrant_id": "WARR-20261125-0001"
+}

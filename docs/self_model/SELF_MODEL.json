@@ -256,7 +256,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-11-25T07:07:27+00:00",
+  "generated_at": "2026-11-25T08:55:12+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -465,7 +465,7 @@
       "source_record": "GAP-0004"
     },
     {
-      "risk": "Without invocation provenance, every governed decision that relies on provider outputs rests on undisclosed execution conditions: truncations, configuration differences, session contamination, and model substitutions are invisible after the fact, as COMP-0032's truncation incident showed. Without catalog verification, unverifiable provider claims (ADVISOR-0000 class) can only be excluded by operator vigilance. Without structural authority separation, the C3/C6/C7 disciplines depend entirely on session practice and degrade silently if practice slips. Deferring representation while building routing or escalation would recreate the retrofit debt GAP-0004 was opened to prevent.",
+      "risk": "Invocation provenance and catalog records are implemented, and the evidence-production slice is completed, but they do not establish invocation authorization, structural authority separation or independently corroborated executor identity. Treating successful VERIFY v2 receipts or the PI's step-2 completion as permission for delegated acceptance would bypass the still-open C3/C6/C7/C10 evidence and authorization requirements. The tool, human and cross-kind equivalence gaps, the missing implementer field, the GAP-0008 ancestry dependency and unresolved writer-PI identity separation remain. Step 3 preparation must not become implementation or activation without its separate review and admission.",
       "source_field": "risk",
       "source_record": "GAP-0005"
     },
@@ -490,7 +490,7 @@
       "source_record": "GAP-0009"
     },
     {
-      "risk": "A working writer, passing CI run or imported receipt could be mistaken for enforced pre-merge acceptance, authenticated CI origin, independent verification, or plan completion. The workflow is not a required merge check in the observed repository configuration; origin stays unverified and lineage stays self_authored_unreviewed. Each receipt covers only its subject. Environment capture is partial, declared properties remain P2-scoped declarations, and a clean command boundary means Git status reported no changes, not byte-level worktree equality. The C7/C10 evidence and authorization conditions required by the GAP-0005 programme must be established separately before reliance.",
+      "risk": "PI completion of the evidence-production slice could be mistaken for enforced pre-merge acceptance, authenticated CI origin, independent verification or delegated decision authority. The completion decision is recorded by WARR-20261125-0001; it does not create required merge controls. Origin stays unverified and lineage stays self_authored_unreviewed. Each receipt covers only its subject. Environment capture is partial, declared properties remain P2-scoped declarations, and a clean command boundary means Git status reported no changes, not byte-level worktree equality. The C7/C10 evidence and authorization conditions required by the GAP-0005 programme must be established separately before reliance.",
       "source_field": "risk",
       "source_record": "GAP-0010"
     },
@@ -639,12 +639,9 @@
     "GAP-0009",
     "GAP-0010"
   ],
-  "open_plans": [
-    "PLAN-20261124-0001"
-  ],
+  "open_plans": [],
   "plan_counts": {
-    "admitted": 1,
-    "completed": 25,
+    "completed": 26,
     "withdrawn": 1
   },
   "plans": [
@@ -834,7 +831,7 @@
       "plan_id": "PLAN-20261124-0001",
       "source_gap_id": "GAP-0010",
       "source_path": "docs/self_model/plans/PLAN-20261124-0001.json",
-      "status": "admitted",
+      "status": "completed",
       "title": "Observed-execution verification: VERIFY v2 writer, retained outputs and a pre-merge CI run (GAP-0010 first slice)"
     }
   ],
@@ -847,7 +844,7 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0005",
-      "target": "Sequenced inside a five-step programme for moving AI-Lab toward delegated self-authorization. The operator approved this sequence as the working order on 2026-11-23, in session, in answer to the question whether the reviewing executor's corrected five-step order was approved; that approval fixes the order of work and authorizes none of the steps. Each step remains subject to its own plan, review and admission, and only drafting of step 1 is in progress. Steps: (1) scope records; (2) observed-execution verification and CI, under GAP-0010; (3) qualification semantics, as three separate scope items: implementing the tool and human equivalence tests the ontology already defines; a governed decision on cross-kind equivalence semantics; and a separate decision whether the ExecutorIdentity superclass left [OPEN] in Section 4.7 is needed, the latter two being ontology changes; together with executable evidence conditions for C3 and C10; (4) the authority mechanism: a versioned AuthorizationPolicy, invocation_authorization and evidence_admission kept as separate DecisionRecord kinds, a deterministic evaluator, and protected paths for the policy, evaluator, the tests that guard them and the CI configuration they depend on; (5) a bootstrap admission by the operator activating only an explicit delegation whose evidence conditions are met. This gap's own first slice within that programme is unchanged in substance and must not be lost in it: the C7 implementer and verifier pair, both naming declared executor identities, with the refusal condition stated for when they match. It should be carried on the observed-execution VERIFY records of GAP-0010 rather than on v1 testimony records, so that the first C7 artifact binds a named implementer to a run that was actually observed. Section 8 is not to be changed by this programme: plan admission stays high, and delegation changes who may authorize enumerated high-class plan kinds, not their class. C11 remains second among the manual-mode constraints; C3 and C10 still share the evidence-ancestry blocker recorded in GAP-0008, which step (5) depends on."
+      "target": "The five-step programme remains the working order adopted by the operator on 2026-11-23; the order itself authorizes none of the steps. Current phase status: (1) scope records were delivered at 88c9d4540b66a89de5920adade5afe6163a10a2c, whose commit records the reviewing executor's r3 PASS and operator acceptance on 2026-11-24; (2) observed-execution verification and CI under GAP-0010, exactly PLAN-20261124-0001 S1-S9, are completed by WARR-20261125-0001 following PI acceptance of package 86f08b3f9f3192bfe576d5be207752e446af5941; (3) prepare a separate reviewable plan for qualification semantics. Step 3 preparation must keep three scope items separate: implementing the tool and human equivalence tests the ontology already defines; a governed decision on cross-kind equivalence semantics; and a separate decision whether the ExecutorIdentity superclass left [OPEN] in Section 4.7 is needed, the latter two being ontology changes; together with executable evidence conditions for C3 and C10. No step-3 implementation is admitted by the step-2 completion. Later steps remain (4) the authority mechanism: a versioned AuthorizationPolicy, invocation_authorization and evidence_admission kept as separate DecisionRecord kinds, a deterministic evaluator, and protected paths for the policy, evaluator, their guarding tests and CI configuration; (5) a bootstrap admission by the operator activating only an explicit delegation whose evidence conditions are met. Each later implementation requires its own review and admission. This gap's own first slice within that programme remains the C7 implementer and verifier pair on observed-execution VERIFY v2 records, both naming declared executor identities, with the refusal condition stated for when they match. The eight v2 records do not yet carry that implementer field, and writer-PI identity separation remains unresolved. Section 8 is unchanged: plan admission stays high, and delegation changes who may authorize enumerated high-class plan kinds, not their class. C11 remains second among the manual-mode constraints; C3 and C10 retain the GAP-0008 evidence-ancestry blocker on which step 5 depends. No autonomy or delegation is activated by this record."
     },
     {
       "source_field": "recommended_first_slice",
@@ -867,10 +864,10 @@
     {
       "source_field": "recommended_first_slice",
       "source_record": "GAP-0010",
-      "target": "The previously recommended observed-execution writer, two-level receipt/canonical-record contract, content-addressed retention, integrity checker, importer, VPROF-0001 and pre-merge/post-merge CI workflow are implemented in main at a9800e156b01493b74d952d22dc1f852f291c66e under PLAN-20261124-0001 / WARR-20261124-0001. Do not schedule that implementation again. Review docs/reviews/verify_v2/completion/COMPLETION-PREPARATION.md with the local and deliberate-CI-failure evidence, final pre-merge VERIFY-20261125-0001 and separate post-merge VERIFY-20261125-0002, each bound to its own exact subject, together with the tracked-content-equivalence comparison and measured store growth; then record the PI completion decision. The PLAN is still admitted, and implementation merge or technical review is not that completion decision. Even completion of this first slice leaves GAP-0010 open for an explicitly governed operator arrangement requiring verification of the exact candidate before the decision that relies on it. Required checks, protected policy/CI paths and acceptance/admission machinery are separate later work; this record authorizes none of them. A post-merge receipt is not pre-merge evidence, tree equality is not verification-scope equality, and an import commit is not covered merely because it contains a receipt. C7 implementer/verifier qualification, tool or cross-kind equivalence and C10 lineage/ancestry remain the separate GAP-0005/GAP-0008 programme; no IndependenceAssessment is supplied here."
+      "target": "The observed-execution writer, two-level receipt/canonical-record contract, content-addressed retention, integrity checker, importer, VPROF-0001 and pre-merge/post-merge CI workflow are implemented in main at a9800e156b01493b74d952d22dc1f852f291c66e. The PI has accepted completion of exactly PLAN-20261124-0001 S1-S9 for package 86f08b3f9f3192bfe576d5be207752e446af5941, recorded by WARR-20261125-0001 and docs/reviews/verify_v2/completion/PI-COMPLETION-RECORD.md; neither that implementation nor its completion is pending. GAP-0010 remains open for an explicitly governed operator arrangement requiring verification of the exact candidate before the decision that relies on it. Required checks, protected policy/CI paths and acceptance/admission machinery are separate later work; no such enforcement or automation is activated here. A post-merge receipt is not pre-merge evidence, tree equality is not verification-scope equality, and an import or completion-recording commit is not covered merely because it contains a receipt. C7 implementer/verifier qualification, tool or cross-kind equivalence and C10 lineage/ancestry remain the separate GAP-0005/GAP-0008 programme. Its step 3 is preparation only, with separate review and admission before implementation. No IndependenceAssessment is supplied here."
     }
   ],
-  "repo_head": "a9800e156b01493b74d952d22dc1f852f291c66e",
+  "repo_head": "86f08b3f9f3192bfe576d5be207752e446af5941",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [
@@ -1111,7 +1108,7 @@
     }
   ],
   "warrant_counts": {
-    "supported": 63
+    "supported": 64
   },
   "warrants": [
     {
@@ -1616,6 +1613,14 @@
       "target_item_id": "PLAN-20261124-0001",
       "target_item_type": "plan",
       "warrant_id": "WARR-20261124-0001",
+      "warrant_state": "supported"
+    },
+    {
+      "decision": "admit",
+      "source_path": "docs/self_model/warrants/WARR-20261125-0001.json",
+      "target_item_id": "PLAN-20261124-0001",
+      "target_item_type": "plan",
+      "warrant_id": "WARR-20261125-0001",
       "warrant_state": "supported"
     }
   ]
