@@ -1,0 +1,166 @@
+{
+ "schema_version": "v1",
+ "plan_id": "PLAN-20261125-0001",
+ "title": "Step 3 qualification semantics: per-kind identity evidence, endpoint-bound model aggregation, and C3/C10 evidence conditions",
+ "status": "proposed",
+ "created_at": "2026-11-25T09:20:01+00:00",
+ "created_from": "The user's authorization in this conversation to prepare a Step 3 PLAN and proposed equivalence evidence contract after PLAN-20261124-0001 completion. The five-step programme in GAP-0005 fixes the working order, and WARR-20261125-0001 permits Step 3 preparation only; neither admits Step 3 implementation.",
+ "repo_commit": "5515f55894b10ad70c321340257f67a960dcc382",
+ "source_gap_id": "GAP-0005",
+ "source_capability_ids": [
+  "CAP-0015",
+  "CAP-0016"
+ ],
+ "depends_on_capability_ids": [
+  "CAP-0010",
+  "CAP-0015",
+  "CAP-0016"
+ ],
+ "evidence_ids": [
+  "GAP-0005",
+  "GAP-0008",
+  "GAP-0010",
+  "DECISION-20260814-0001",
+  "PLAN-20261124-0001",
+  "WARR-20261125-0001"
+ ],
+ "proposed_by": {
+  "peer_id": "chatgpt",
+  "role": "packaging_executor",
+  "substrate": "conversation",
+  "attribution_status": "self_declared_unverified",
+  "basis": "ChatGPT is the actual proposer and drafting executor in this session. This attribution is not an authenticated ModelIdentity binding, a captured drafting InvocationRecord, an independently established identity, or an independence finding. DRAFTING_EXECUTORS.json is read as a registry of declarations, not as verification; this plan does not modify it."
+ },
+ "authorization_status": "preparation_only_no_implementation_admission",
+ "objective": "Define reviewable, falsifiable evidence conditions for executor equivalence without conflating a reported identity relation, evidence sufficient for that relation, epistemic independence, or action authorization. Propose bounded future implementations of tool/tool and human/human evidence binding, endpoint-bound and order-independent model/model resolution, and executable C3/C10 evidence/refusal checks. Cross-kind semantics remain a separately governed proposal; the ExecutorIdentity superclass remains deferred. Incomplete GAP-0008 ancestry must never become positive live qualification.",
+ "proposed_change": "This preparation changes only this proposed PLAN, its companion draft contract/review documents and the generated self-model index, with optional reproducible baseline probes outside production behavior. A future explicit admission may authorize the bounded identity-binding, model-resolution and evidence-checking code/tests described in S1-S8 after the gates below are met. The proposed implementation preserves the three-valued identity relation and reports binding/applicability/coverage reasons separately. It introduces no authority mechanism, live qualification issuer, or automatic reliance path.",
+ "scope": [
+  "S1. Freeze the versioned contract in docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md before implementation. ModelResolutionAssessment, ToolBindingAssessment, HumanBindingAssessment and EquivalenceAssessment are proposed append-only shapes, not installed schemas. They identify typed subjects, event-time applicability, retained evidence/provenance/digests, assessment-rule version, aliases, contradictions/revocations/supersession and result/reason semantics. Keep identity relation, per-kind evidence sufficiency, independence and authorization separate. Exact shape, placement and assessment rules require admission; do not extend the closed InvocationRecord v1 executor object or upgrade historical records.",
+  "S2. Proposed tool/tool slice after admission: validate invocation-to-tool bindings and compare established ToolIdentity plus version identity, as C3 defines. Executable digests, release/build provenance and runtime measurements support bindings but are not the equivalence rule: equal bytes alone do not establish equal identity; different build/configuration bytes alone do not establish different identities. Missing or conflicting identity bindings yield unresolved. Missing material configuration/dependency/subordinate/external-interaction disclosure blocks the corresponding execution standing, not an identity relation whose binding is otherwise established. This slice neither qualifies a deterministic adjudicator nor hides a model inside a tool wrapper.",
+  "S3. Proposed human/human slice after admission: validate bindings to a governed principal namespace and non-reassignable principal identity, alias/key/account binding provenance and event-time validity, plus evidence linking the invocation to the acting principal. Display names, git authors, signatures, account control and different account identifiers alone are insufficient. Equality may follow established common-principal bindings; non-equivalence needs namespace uniqueness/alias-deduplication evidence or an admitted pairwise distinctness finding, not merely two distinct namespaced strings. Reassignment, shared accounts, delegation and conflicting identity evidence remain explicit. Identity does not transfer action authority. No account creation, credential collection, writer provisioning or claim that the PI/writers are now distinct is included.",
+  "S4. Proposed model/model slice after admission: bind invocation endpoint spelling through retained ServiceEndpointIdentity/admitted alias evidence to snapshot.service_endpoint_id, capture.snapshot_id and the applicable model assertion (R13). Use tri-state applicability with separate malformed-input diagnostics. Demonstrably wrong-endpoint, temporally inapplicable or absent-name evidence is excluded with reasons; unknown binding or possibly relevant malformed evidence cannot be classified as irrelevant. Evaluate all relevant evidence: any relevant contradicted, ambiguous or undetermined item blocks a clean permitting aggregate and cannot be skipped (R14). The proposed aggregation requires unanimity of all relevant resolved model targets, preserves a set of source evidence classes and exact corroboration witnesses, and is invariant to source order and duplication. No first-match, last-match, majority, strongest-source or ordinal ranking applies. DECISION-20260814-0001's corroboration threshold remains a separate necessary per-side model condition; no retained provider self-report is promoted, and neither threshold nor unanimity establishes independence/authorization.",
+  "S5. Cross-kind semantic proposal only: compare a disjoint-kinds axiom, a universal identity abstraction and pair-specific evidence rules against human-operated tools, model-wrapping tools and disclosed composite executors. Recommend that a kind mismatch remain unresolved unless a separately governed pair-specific rule establishes the relevant relation with retained bindings; material subordinate executions must remain visible. Explain why kind inequality alone is neither affirmed non-equivalence nor independence, and identify the minimum normative changes and counterexamples any alternative would need. This PLAN does not enact a cross-kind rule or rewrite ABS-0004.",
+  "S6. Superclass necessity assessment, not superclass introduction: record whether a concrete admitted operation cannot be represented by existing ModelIdentity, ToolIdentity and HumanIdentity plus typed bindings. In the absence of such a demonstrated failure, retain Section 4.7's ExecutorIdentity-superclass question as deferred. Convenience, polymorphic dispatch and differently named executors alone are not a necessity demonstration. Any later superclass proposal needs its own semantics, migration analysis, review and admission.",
+  "S7. Proposed executable C3/C10 evidence-condition slice after admission: pure validation/refusal checks over named identity-binding results, target claims/outputs, exact VerificationRun/review inputs and supplied ancestry coverage. C3 requires checks for direct lineage conflict and equivalent or unresolved executor ancestry; C10 requires the verifier code/schema/tests/configuration and output-producer ancestry, property scope and exact run/version/input/environment/result binding. A proposed review-based lineage change requires every Section 4.17 reviewer-identity, independence-dimension and coverage condition; a PASS string or linked review alone cannot satisfy it. Missing/unconnectable applicable input, output, derivation, subordinate-influence or inherited-state coverage yields unresolved under P5/C14. Implement only evidence-shape/refusal checks and prerequisite reporting in this slice, not full ancestry capture/traversal, live positive qualification, IndependenceAssessment issuance or authorization. Complete synthetic fixtures can test a necessary-condition contract, never establish a live qualification. C10 currently names ModelIdentity as the output producer; extending that producer semantics to another kind requires a separate normative decision.",
+  "S8. Verification and review after admission: baseline-positive fixtures, adversarial per-kind/endpoint/conflict/ancestry cases, full permutation/duplicate tests, and deliberate guard mutations observed to fail for their intended assertion before reliance. Preserve the current order-dependence test as historical evidence, then replace its asserted-bug behavior only in the separately admitted implementation with tests of the accepted order-independent rule. Retain exact subject/rule/test/input/environment and bounded output evidence under the existing VERIFY v2 standing; review the mechanical implementation and the proposed normative choices separately. Report residual gaps and retain the current provider-source classifications and historical records."
+ ],
+ "current_preparation_outputs": [
+  "docs/self_model/plans/PLAN-20261125-0001.json, status proposed, with no admission or completion fields.",
+  "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md.",
+  "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md.",
+  "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md.",
+  "docs/reviews/qualification_semantics/SOURCE-REVIEW-BASELINE.md.",
+  "docs/self_model/SELF_MODEL.json rebuilt only to index this proposal; no status inference."
+ ],
+ "implementation_gates": [
+  "G0 — Current authorization is drafting/review preparation only. A valid PLAN record, a rebuilt index, baseline probes or a technical PASS does not admit implementation. No admission_warrant_id, admitted_at or effective qualification is created by this proposal.",
+  "G1 — Before any Step 3 implementation, a reviewing executor examines the exact PLAN and companion contract/matrix; the PI separately admits a bounded revision with named evidence, scope and actual decision time. Freeze the per-kind binding schemas, property-scoped assessment rules, applicability semantics, source-set completeness assumptions and deterministic model aggregation/conflict rule in that admission or its explicitly referenced governed decision. Unknown or disputed rules remain unresolved; developers may not choose a permitting rule as an incidental implementation detail.",
+  "G2 — Implement admitted mechanical slices in small reviewable increments: model endpoint/applicability/conflict handling, tool bindings, human bindings, then evidence-condition/refusal checks. Zero-API fixtures and targeted falsification precede any reliance. Runtime integrations beyond the pure existing relation helper and newly admitted evidence checks require an explicitly admitted scope; no caller may treat a non-blocking identity subcondition as overall adjudication permission.",
+  "G3 — Cross-kind semantics require a separate explicit normative decision; they do not become effective through tool/human code or this plan's admission by implication. The superclass remains deferred unless a concrete necessity case is first reviewed and then separately admitted. No type migration is bundled with the mechanical fixes.",
+  "G4 — GAP-0008 must supply the actual composable instances, traversal and edge-class coverage needed for the named C3/C10 question before a later plan can claim positive qualification. A missing edge, an empty search result, a boolean complete flag without retained coverage evidence, or fixture-only completeness does not discharge this gate. This plan neither implements the traversal nor closes GAP-0008.",
+  "G5 — Completion of any future admitted slice requires scoped review and explicit operator completion recording, preserving fixed origin/lineage and the distinction between exact execution subjects and package/import commits. New capability last_verified references, delegation activation, required checks and authority mechanisms remain separately governed."
+ ],
+ "non_goals": [
+  "No implementation, production test rewrite, policy activation, warrant or decision issuance is authorized in the present preparation changeset.",
+  "No AuthorizationPolicy, InvocationAuthorization, EvidenceAdmissionDecision, live RoleQualification/IndependenceAssessment issuer, routing change or autonomous acceptance/merge mechanism.",
+  "No automatic cross-kind non-equivalence, ExecutorIdentity superclass, ontology amendment, source-ranking convention or new model evidence class.",
+  "No transplantation of the model catalog independently_corroborated/self_asserted vocabulary or threshold onto tools or humans; their evidence properties and admission conditions are specified separately.",
+  "No full ancestry graph/traversal, historical lineage retrofit, claim-level independence proof or positive C3/C10 qualification while applicable ancestry remains incomplete.",
+  "No account/credential provisioning, writer-PI identity separation claim, GitHub protection/ruleset change or C7 implementer-field schema expansion.",
+  "No catalog re-capture, paid provider call, fabricated corroborating source, historical evidence-class upgrade, receipt-origin attestation or verifier-lineage upgrade.",
+  "No closure of GAP-0005, GAP-0008 or GAP-0010; no change to the high consequence class of plan admission or to the Step 4/5 activation boundary."
+ ],
+ "constraints": [
+  "NON-EQUIVALENCE does not imply INDEPENDENCE; INDEPENDENCE does not imply AUTHORIZATION. The per-kind relation can be reported without satisfying the evidence threshold for reliance; satisfying an identity subcondition does not establish C3/C5/C10, a qualified role, or permission to act.",
+  "P2/P5 and C3-C7/C10-C14 remain binding at their existing standing. Direct lineage conflicts cannot be waived, unknown identity/ancestry does not increase independence, and a compensating-control label does not resolve an unknown fact.",
+  "Model catalog evidence retains the existing per-side classifications and admitted threshold from DECISION-20260814-0001. Preserve each source's status and rationale; do not synthesize an ordinal minimum/maximum or infer that a source_type string establishes independent corroboration.",
+  "Applicability is evidence-based and event-scoped. Every supplied candidate receives a retained inclusion/exclusion/undetermined reason; unavailable relevant evidence and incomplete candidate-set coverage must remain visible rather than yielding an apparently complete result.",
+  "The source-set contract must distinguish all evidence provided from all evidence known to exist; sorting or deduplication cannot prove global completeness. Unknown coverage limits the conclusion, even where the provided sources agree.",
+  "Tool identity/version and human principal identity require their own admitted binding evidence. Digests identify retained bytes and support integrity comparison; signatures can authenticate signing-key use under a named key-binding rule; account metadata reports an account. None alone proves the broader identity claim.",
+  "Preserve closed InvocationRecord v1 and all historical catalog, verification, CAS, review and decision bytes. Proposed new binding/assessment records are append-only and may not silently reclassify earlier invocations or declarations.",
+  "Tool configuration/dependencies/subordinates and human aliases/shared-account/delegation paths must remain visible; encapsulation cannot launder authority or erase a potentially equivalent executor from ancestry.",
+  "All future evaluator outputs disclose exact rule version, evidence/input digests, event time, applicability findings and coverage limitations. Evidence-condition checking produces no active authorization or live qualification record.",
+  "The implementer is not the sole verifier/adjudicator. ChatGPT's preparation, a different reviewer role/provider, and the conversation's declared identities supply no C3/C5 independence finding. Writer-PI separation remains unresolved; DRAFTING_EXECUTORS declarations do not establish it.",
+  "Engineering constitution: small vertical slices, explicit design rationale, reproducible tests, releasable main and no committed secrets. Use synthetic/opaque principal fixtures and minimal non-secret binding evidence; do not collect credentials or personal identity documents for this slice.",
+  "The existing VERIFY v2 writer remains evidence-only, with origin_verification unverified and verifier_lineage_status self_authored_unreviewed. Baseline and later test records do not verify a different commit merely because tracked trees agree or a receipt is imported there."
+ ],
+ "falsification_set": [
+  "Tool binding: identical established ToolIdentity/version under two aliases returns equivalent; equal executable bytes under unbound identities cannot manufacture equivalence; different build/config bytes alone cannot manufacture non-equivalence.",
+  "Tool insufficiency: missing/replaced artifact-to-identity binding, contradictory version binding or revoked evidence prevents the identity relation where the binding is not established. Undisclosed material configuration/dependency or hidden model subordinate blocks the corresponding execution/disclosure standing without manufacturing identity inequality or erasing an otherwise established identity relation.",
+  "Human aliasing: two accounts/keys established as one principal return equivalent; different display names, git authors or account IDs alone never yield affirmed non-equivalence.",
+  "Human insufficiency: reassigned namespace IDs, missing event-time acting-principal evidence, shared accounts, conflicting alias maps or revoked keys return unresolved where identity cannot be established; a delegated action never silently changes the acting principal.",
+  "R13 endpoint binding: substitute a snapshot from another endpoint while keeping the requested model name and otherwise valid capture; it cannot resolve the invocation through that endpoint. Direct invocation spelling-to-EID string comparison must not reject the valid retained endpoint-binding chain.",
+  "R13 unknown alias: an undocumented endpoint alias or absent/ambiguous endpoint binding remains undetermined/unresolved, not an accepted normalization or proven-irrelevant exclusion.",
+  "R14 contradicted source: add a relevant contradicted capture before and after a clean/corroborated source; the contradiction remains visible and blocks a clean permitting aggregate in either order.",
+  "R14 ambiguous source: add a relevant internally ambiguous snapshot before and after clean support; neither order may silently skip ambiguity and resolve positively.",
+  "Relevant-source conflicts: provider/corroborated disagreement and two corroborated sources resolving to different identities fail closed in every permutation unless a separately governed conflict rule explicitly resolves the conflict.",
+  "Agreement: self_asserted and corroborated sources asserting the same mapping produce identical relation/evidence-threshold findings in every order, with both source classes retained. Both sides of a model comparison must meet the existing threshold; swapping the corroborated side cannot change the requirement.",
+  "Irrelevant-source control: demonstrably wrong-endpoint, expired, future or absent-name evidence cannot veto valid applicable support; each exclusion has a retained reason. Potentially relevant malformed evidence or undetermined binding cannot take this exclusion path.",
+  "Permutation and duplication: every permutation of each bounded multi-source fixture, repeated source insertion and stable source-ID deduplication leaves the semantic result/reasons invariant. Two different contents using the same source identity must be diagnosed, not collapsed. Swapping comparison arguments preserves the relation while exchanging the corresponding per-side evidence; it cannot turn a one-sided threshold failure into success.",
+  "Temporal mode: later import of demonstrably earlier evidence does not alter its availability, while later observation/corroboration cannot be backdated into event-time assessment. Retrospective assessment has its own cutoff and never rewrites the original capture. Test inclusive validity/freshness boundaries and conflicting or unavailable timing evidence.",
+  "No evidence laundering: provider_self_report cannot acquire independently_corroborated standing, signature/transport authenticity cannot promote claim content, and tools/humans cannot pass by borrowing model evidence-class labels.",
+  "Cross-kind/composite: human-versus-tool or model-versus-tool kind inequality remains unresolved under current semantics; a model-wrapping tool cannot remove its material subordinate invocation from the evidence question.",
+  "C3 conflict: a directly dependent or equivalent-identity ancestor blocks; an unresolved identity edge cannot be converted into no conflict. A negative traversal over missing/unconnectable edge classes remains unresolved.",
+  "C10 exact coverage: alter verifier code/test/config version, subject output, input digest, execution environment, reviewed property or linked run; a review of the other item cannot satisfy the condition. Missing reviewer identity/independence dimensions or a PASS label alone never raises lineage standing.",
+  "Ancestry incompleteness: missing input/output/derivation/subordinate/inherited-state coverage, a forged complete flag, an empty graph and complete synthetic fixtures must not produce positive live qualification or independence.",
+  "Authority separation: a resolved non-equivalent pair, a non-blocking identity subcondition, a successful fixture/test/receipt or an accepted technical proposal cannot issue a warrant, qualify a role, activate policy or mutate authorization state.",
+  "Mutation discipline: establish a passing baseline for each selected test, remove or reverse the corresponding guard, and require the intended ordinary assertion failure. Collection/import/setup/teardown/runtime/environment errors and timeouts are not caught mutations; retain those diagnostics separately."
+ ],
+ "success_criteria": [
+  "PREPARATION: the PLAN remains proposed with actual ChatGPT attribution and no admission/completion fields; companion documents make current observations, proposed semantics, future implementation gates and open decisions separately reviewable. No production code/test, policy, warrant, decision, gap status or historical evidence changes occur; reproducible baseline probes are diagnostic only.",
+  "CONTRACT: every relation outcome and evidence/refusal condition is traceable to a per-kind rule, retained evidence shape, applicability/coverage case and falsifier. No tool/human evidence requirement is inherited merely from a model catalog enum; the exact future binding format and normative gates are explicit.",
+  "MODEL AFTER ADMISSION: R13 endpoint substitution is refused while valid endpoint bindings resolve; R14 relevant contradiction/ambiguity is never skipped; provided-source order and duplicates cannot change semantic results; genuinely irrelevant evidence does not poison a valid resolution. The three multi-source cases required by DECISION-20260814-0001 pass under the explicitly admitted rule.",
+  "PER-KIND AFTER ADMISSION: tool identity/version and human principal fixtures demonstrate justified equality/non-equivalence and insufficient-binding refusals without treating identifier inequality as evidence. Proposed tool/human fixtures are synthetic and labelled; they do not create live bindings. Existing model-relation findings retain their current evidence standing; no live record is upgraded to obtain a passing example.",
+  "C3/C10 AFTER ADMISSION: executable evidence-shape/refusal checks cover named conflicts, unresolved identity and incomplete ancestry; exact review/run/property bindings and Section 4.17 conditions are testable. No positive live qualification exists while applicable GAP-0008 ancestry coverage is incomplete.",
+  "FALSIFICATION AFTER ADMISSION: each relied-on guard has a retained baseline and an observed targeted broken-variant assertion failure; complete permutation/conflict cases and the bounded false-positive/false-negative controls pass. Infrastructure errors do not count as falsification success.",
+  "COMPATIBILITY AFTER ADMISSION: existing historical records remain byte-identical and valid, the full existing suite is green apart from explicitly replaced known-defect assertions, the self-model index audits verified_current, and new scoped VERIFY evidence retains unverified origin and self_authored_unreviewed lineage.",
+  "GOVERNANCE BOUNDARY: any future completion report states which mechanical slices were admitted and delivered, which normative proposals remain deferred, and the unresolved GAP-0005/GAP-0008/GAP-0010 and writer-PI dependencies. Successful delivery cannot close those gaps or activate Step 4/5 implicitly."
+ ],
+ "expected_outputs": [
+  "Current: the proposed PLAN and four companion documents under docs/reviews/qualification_semantics/, with an aggregation-only SELF_MODEL rebuild.",
+  "Only after separate admission: narrowly scoped tool/human binding validation and model endpoint/applicability/aggregation changes around ai_lab/providers/executor_equivalence.py and catalog_resolution.py, with exact new module/record boundaries frozen by admission.",
+  "Only after separate admission: scoped tests around tests/test_executor_equivalence.py plus the admitted per-kind/evidence-condition fixtures and retained guard-mutation results.",
+  "Only after separate admission: pure C3/C10 evidence-condition/refusal checks that consume supplied coverage and return prerequisite findings, without implementing graph traversal, issuing qualification or authorizing an invocation.",
+  "Reviewable cross-kind alternatives/recommendation and an explicit superclass deferral or demonstrated necessity case; neither is an effective ontology change.",
+  "Only after separate admission and execution: exact-subject verification evidence and a completion report that preserves all origin, lineage, identity and coverage limitations."
+ ],
+ "evidence_files": [
+  "docs/architecture/ADR-0001-engineering-constitution.md",
+  "docs/abstractions/ABS-0004-invocation-authorization-ontology.md",
+  "docs/self_model/DRAFTING_EXECUTORS.json",
+  "docs/self_model/decisions/DECISION-20260814-0001.json",
+  "ai_lab/providers/executor_equivalence.py",
+  "ai_lab/providers/catalog_resolution.py",
+  "tests/test_executor_equivalence.py",
+  "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md",
+  "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md",
+  "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md",
+  "docs/reviews/qualification_semantics/SOURCE-REVIEW-BASELINE.md"
+ ],
+ "rationale": [
+  "Step 2 supplies scoped execution evidence, not the identity/lineage conditions needed for governed reliance. Step 3 must make those conditions explicit before any authority mechanism or delegation is considered.",
+  "The current model helper resolves the first successful snapshot and its retained test demonstrates order dependence. DECISION-20260814-0001 expressly defers multi-source semantics and requires agreement/conflict falsification before corroborating captures can be relied upon.",
+  "Source inspection at the recorded baseline shows that catalog resolution requires an endpoint value but does not bind the invocation's endpoint spelling to the snapshot's endpoint identity, and the outer loop can skip failed/ambiguous/contradicted resolutions. R13 and R14 therefore need explicit applicability and aggregation rules, not just additional happy-path fixtures.",
+  "ABS-0004 already names tool identity/version equality and human principal equality but gives them distinct verification requirements. Their mechanical implementation needs evidence contracts; importing the model corroboration enum would invent a policy by analogy.",
+  "A kind tag, an authenticated account, a content digest or a missing graph path is a narrower observation than executor identity, independence or authority. Separating those conclusions prevents another representation field from being mistaken for an established property.",
+  "Small mechanical slices can be specified and later tested without closing GAP-0008 or introducing a universal executor type. Cross-kind semantics and any superclass remain explicit architectural decisions rather than prerequisites assumed for convenience."
+ ],
+ "risk": "A pure identity helper may be mistaken for an adjudicator; a tool digest or human account may be mistaken for established identity; conflicted evidence may disappear through source filtering or ordering; new type labels may launder model-only evidence thresholds; a synthetically complete graph or absent path may be presented as live independence; and proposal acceptance may be mistaken for implementation or autonomy admission. Shared PI/writer account metadata and uncaptured conversational drafting make the identity/ancestry limits concrete.",
+ "mitigation": "Separate relation, evidence sufficiency, ancestry/independence and authorization; require per-kind event-scoped bindings and explicit model applicability/conflict semantics; retain every source reason and source-set coverage limitation; use adversarial positive/negative controls and targeted mutation checks; preserve append-only historical evidence; block positive live C3/C10 qualification while relevant ancestry is incomplete; keep normative decisions, implementation admission and later activation as distinct gates.",
+ "rollback": [
+  "During preparation, an adverse review leaves PLAN status proposed and revises the draft through visible history; it does not create a warrant, overwrite prior evidence or silently remove a counterexample.",
+  "After any separately admitted implementation, a failed binding/aggregation/coverage guard stops reliance on the affected path and reports unresolved with retained diagnostics. No fallback to first-match/strongest-source success or a silently weakened trust rule is allowed.",
+  "Revert only the affected mechanical slice through a reviewable changeset if necessary, retaining test outputs, binding assessments and the prior evidence history. Revoked or superseded bindings remain visible; no historical capture/VERIFY/decision is relabelled or deleted to obtain a passing result.",
+  "Keep permitting/activation paths disabled until the applicable rule, evidence coverage and review gates are met. A rollback never activates delegated authorization or substitutes a different source without a recorded reason."
+ ],
+ "next_action": "Review this proposed PLAN together with EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md, STEP-3-PLAN-DRAFT.md, FALSIFICATION-MATRIX.md and SOURCE-REVIEW-BASELINE.md. Resolve or explicitly defer the per-kind evidence rules, model aggregation/applicability rule and cross-kind normative questions; then seek a separate PI admission of an exact bounded implementation scope. Until that admission, perform only authorized preparation and reproducible baseline inspection; no Step 3 implementation, positive qualification or authority activation.",
+ "notes": [
+  "created_at is an actual UTC clock observation at preparation start on 2026-11-25, not an inferred client-message timestamp. The proposal baseline is main commit 5515f55894b10ad70c321340257f67a960dcc382.",
+  "R13 and R14 in this proposal label the requested endpoint-binding and relevant-conflict-retention findings; they are not a renumbering of ABS-0004 C13/C14.",
+  "No PLAN admission_warrant_id, admitted_at, completion fields or new warrant/decision accompany this draft. The existing completed Step 2 PLAN and its warrants remain unchanged.",
+  "No new or independent execution evidence is claimed merely by writing these test cases. Reproducible baseline observations belong in SOURCE-REVIEW-BASELINE.md with their own exact subject and result; the future falsification set describes work still gated on admission."
+ ],
+ "falsification_matrix": "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md",
+ "planned_scenario_families": 31,
+ "falsification_set_note": "The descriptive categories here summarize the 31 scenario families in the linked matrix. Neither count is a pytest count or a completed mutation score; executed unchanged-baseline observations are recorded separately."
+}
