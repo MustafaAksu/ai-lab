@@ -409,12 +409,19 @@ For synthetic evaluation:
 4. An accepted path beginning at adjudicator_ref yields
    DIRECT_LINEAGE_CONFLICT and C3=violated.
 5. Otherwise, a path beginning at an ancestor invocation needs a unique exact
-   ancestor_assessment_row linking that invocation, adjudicator, assessment
-   and identity query. Check the referenced query's exact subjects and context,
-   then recompute its **identity portion only** under the same anchored r2
-   source/per-kind rules. Require valid R_identity=equivalent. A serialized
-   equivalent label or assessment hash is insufficient; do not recursively
-   evaluate C3. This yields EQUIVALENT_ANCESTOR and C3=violated.
+   ancestor_assessment_row linking that invocation, adjudicator, retained
+   assessment and identity query. The old query/result/context/fixture must
+   form an earlier, separately byte-bound **acyclic provenance dependency
+   graph**; none can depend back on the current fixture or current context.
+   Check those bytes and their internal links, but treat the old context,
+   policy and R label as history only. Validate both old Query Subject objects
+   against current-pinned invocation bytes; their pair must be exactly the
+   ancestor and adjudicator, in either order. An internal identity-only
+   evaluation takes that validated subject pair plus the **current** consumer
+   inventory, profiles and cutoff. It neither calls the old public Query
+   adapter nor adopts its context or recurses into C3/C10. Require the newly
+   computed valid R_identity=equivalent. This yields EQUIVALENT_ANCESTOR and
+   C3=violated; the stored equivalent label/hash is insufficient.
 6. Any established conflict in steps 4–5 dominates missing unrelated coverage.
    With no such conflict, C3 is unresolved, including seemingly complete
    fictional no-conflict evidence. Invalid input envelopes still follow §1.
@@ -423,6 +430,14 @@ Missing relations/coverage or a tool adjudicator compared with model/human
 ancestors cannot supply step 5 equivalence. Cross-kind remains unresolved.
 SYN-C3-CONFLICT-1 creates no positive ancestry profile or production binding.
 Step 3 therefore cannot establish Step 5 readiness.
+
+The step5 provenance graph is a reference dependency graph, not the directional
+influence graph. Check it before recursive dereference. A cycle or current
+fixture/context back-dependency gives invalid input with
+CONTEXT_ANCHOR_MISMATCH at stage7. An earlier identity-only fixture with empty
+C3 rows supplies an acyclic construction; its prior result still grants no
+current standing. The current context must include the exact ancestor/adjudicator
+invocation bytes needed for the fresh identity-only assessment.
 
 C3. C10Context.run freezes the exact VerificationRun, property, verifier
 executor/version, rule/test version, input manifest, environment, result,

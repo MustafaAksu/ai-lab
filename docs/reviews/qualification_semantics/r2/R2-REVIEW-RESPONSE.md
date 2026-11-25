@@ -33,6 +33,8 @@ Synthetic profiles are fixed by the harness before Query. A caller-provided esta
 
 C3 has no positive result. Only explicitly accepted negative-conflict evidence can yield violated; opaque hashed edge bytes do not establish direction. Missing coverage or unsupported cross-kind comparison without an established conflict remains unresolved. The negative synthetic conflict rule is not a live or positive ancestry profile.
 
+Its retained ancestor query/assessment uses a separate earlier acyclic context/fixture dependency graph. The old context and result are provenance only; the exact invocation pair is recomputed under the current pinned identity context. Cycles or dependencies back to the current fixture/context are invalid. This avoids a self-referential content-digest construction and prevents prior-context acceptance from becoming a bypass.
+
 C10 is **unresolved throughout r2**. Its input binds a verification run and review references but does not bind a receiving decision, consequence or attempted reliance. Shared ancestry alone does not violate C10. Wrong run/property, missing review evidence and unknown ancestry produce named refusals/diagnostics; they do not manufacture a high-consequence violation or a lineage upgrade. A later C10 scope must establish those additional premises.
 
 Q_C3_C10 is violated only when its accepted C3 conflict finding is violated; otherwise unresolved. No domain can return positive combined qualification. The existing Boolean adapter is always true, including direct construction and synthetic identity success.

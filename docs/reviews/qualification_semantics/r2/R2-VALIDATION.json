@@ -5,32 +5,32 @@
       "sha256": "58dbef0baabe1eaa42c2913ddd00a3421d82fac68b8e3ab5a8ea5cc30373b3a2"
     },
     "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md": {
-      "bytes": 15582,
-      "sha256": "1359911527301513a722c104e6a41c2d01222bee38196d03f7e03ed2cbbb1420"
+      "bytes": 15807,
+      "sha256": "7e86dc2eed02c999ecd50412fe87acbc3acfdc1e1992f992f49c2489d13770d3"
     },
     "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md": {
       "bytes": 16986,
       "sha256": "3b3a8ce503c645980bf6be4040a1cf8e05503c145ee601ca8430e311f1d5c458"
     },
     "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json": {
-      "bytes": 70488,
-      "sha256": "4cae5187db4cdac8ebbeb2e916f5191338708539abcfee86bddcb15199708975"
+      "bytes": 70884,
+      "sha256": "72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327"
     },
     "docs/reviews/qualification_semantics/r2/CONSUMER-COMPATIBILITY.md": {
       "bytes": 8516,
       "sha256": "5c4583f3ea4c0a9bd3e7af2547ade799e9f540429496411f4c9000eb18d9c2fc"
     },
     "docs/reviews/qualification_semantics/r2/DETERMINISTIC-RULES.md": {
-      "bytes": 27677,
-      "sha256": "955a8a8bdf56341cf29bcc8103a8fa338ba6974bd4e13c3e4bd41f51fbeb5aa3"
+      "bytes": 28714,
+      "sha256": "bfa22c7a1473d1b0d37a8efe1f4c64b5eb89db43131a4cef0c3570fe258bb77f"
     },
     "docs/reviews/qualification_semantics/r2/R2-BASELINE-OBSERVATIONS.md": {
       "bytes": 10758,
       "sha256": "6265e579e3e134b770bfc4a79443185da94ca004e2cea85cc6f59fcdaab99b40"
     },
     "docs/reviews/qualification_semantics/r2/R2-REVIEW-RESPONSE.md": {
-      "bytes": 9082,
-      "sha256": "bf84daaa1e0e0b5e9c37c5b04027fd18a04ed4353fb18c67f72f228b40c1a5b4"
+      "bytes": 9512,
+      "sha256": "d19f28b49180106ddeb7d299cd7b7bbe6b5325c1c74b13bc05b6107d4c7de0f0"
     },
     "docs/reviews/qualification_semantics/r2/SCHEMA-EXAMPLES.json": {
       "bytes": 241082,
@@ -38,7 +38,7 @@
     },
     "docs/reviews/qualification_semantics/r2/SCHEMA-VALIDATION.json": {
       "bytes": 42232,
-      "sha256": "f101995ead9700de1edd63f54d9f24fcff103d14052d73a3f7a5cd2e9e3d42b3"
+      "sha256": "651d7550099f13eb5cb072f71fb7ef2b774cbf1bd26a52d7fd9c75aad944124c"
     },
     "docs/reviews/qualification_semantics/r2/check_schema_examples.py": {
       "bytes": 7931,
@@ -119,7 +119,7 @@
     },
     "verification_records_validated": 47
   },
-  "finalized_at": "2026-11-25T21:10:53.832403+00:00",
+  "finalized_at": "2026-11-25T21:16:56.425715+00:00",
   "frozen_boundaries": {
     "all_domains_C10": "unresolved",
     "combined_positive_qualification": false,
@@ -130,6 +130,7 @@
     "runtime_tests_workflows_dependencies_ontology_unchanged": true,
     "synthetic_C3_negative_rule": "SYN-C3-CONFLICT-1"
   },
+  "internal_consistency_refinement": "Within r2, freeze acyclic prior-context provenance for synthetic C3 ancestor assessments; recompute validated invocation subjects under current context, never reuse prior context/R as authority. This is a schema-description/rule clarification, not runtime implementation.",
   "limits": [
     "The 48-family falsification matrix is proposed, not executed.",
     "The 89 schema/parse examples establish syntax only; example digests are dummy references.",
@@ -190,10 +191,10 @@
     "corpus_sha256": "sha256:36f10e0036669b7df811a71e5624307b3927b81164b459450fa2a0cb22bce203",
     "jsonschema_version": "4.26.0",
     "meta_schema_valid": true,
-    "observed_at": "2026-11-25T21:08:39.492413+00:00",
+    "observed_at": "2026-11-25T21:16:56.175881+00:00",
     "passed_cases": 89,
     "python_version": "3.12.14",
-    "schema_sha256": "sha256:4cae5187db4cdac8ebbeb2e916f5191338708539abcfee86bddcb15199708975",
+    "schema_sha256": "sha256:72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327",
     "scope": "Syntax/parse oracles only. No digest dereference, source selection, identity binding, qualification, independent review or runtime registration.",
     "status": "pass"
   },

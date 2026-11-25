@@ -2658,7 +2658,7 @@
         "adjudicator_invocation_ref"
       ],
       "additionalProperties": false,
-      "description": "The exact retained synthetic AssessmentResult and Query must bind this invocation pair. Recompute identity-only R_identity under the same anchored fixture/policy and require equivalent; do not trust the stored label and do not recurse into C3/C10. The ancestor must start a verified path to the claim."
+      "description": "The retained synthetic AssessmentResult and Query bind this exact ancestor/adjudicator pair through an earlier, separately byte-bound acyclic context/fixture provenance DAG. Earlier context/policy/result labels are provenance only. Validate both Subjects against current pinned invocation bytes, then recompute identity-only R_identity internally using CURRENT consumer inventory/profiles/cutoff. Do not call the old public Query adapter, trust the old R label, or recurse into C3/C10. Require equivalent and a verified ancestor-to-claim path. Reject dependency cycles and references back to the current fixture/context before dereference; the earlier identity-only fixture can have empty C3 rows."
     },
     "SyntheticC3ConflictContextRow": {
       "type": "object",

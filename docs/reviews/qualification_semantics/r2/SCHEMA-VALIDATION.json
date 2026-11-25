@@ -1,10 +1,10 @@
 {
   "report_kind": "qualification_r2_syntax_only_validation",
   "status": "pass",
-  "observed_at": "2026-11-25T21:08:39.492413+00:00",
+  "observed_at": "2026-11-25T21:16:56.175881+00:00",
   "python_version": "3.12.14",
   "jsonschema_version": "4.26.0",
-  "schema_sha256": "sha256:4cae5187db4cdac8ebbeb2e916f5191338708539abcfee86bddcb15199708975",
+  "schema_sha256": "sha256:72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327",
   "corpus_sha256": "sha256:36f10e0036669b7df811a71e5624307b3927b81164b459450fa2a0cb22bce203",
   "checker_sha256": "sha256:40ca221cf49023e35ca9e93795a7ef36f3b53ac1427376b1affaa9a20f3dc74c",
   "meta_schema": "draft-2020-12",
