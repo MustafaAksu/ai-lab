@@ -1,0 +1,86 @@
+{
+  "base_commit": "a9800e156b01493b74d952d22dc1f852f291c66e",
+  "canonical_completion_warrant_issued": false,
+  "checks": {
+    "cas_checker": {
+      "command": [
+        "python",
+        "scripts/check_verification_outputs.py"
+      ],
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "problems": 0
+      }
+    },
+    "self_model_audit": {
+      "command": [
+        "python",
+        "scripts/audit_self_model_index.py"
+      ],
+      "exit_code": 0,
+      "result": {
+        "findings": [
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+            "message": "Stored repo_head matches current HEAD.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-completion/docs/self_model/SELF_MODEL.json"
+          },
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_CONTENT_CURRENT",
+            "message": "Stored SELF_MODEL.json matches a normalized rebuild.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-completion/docs/self_model/SELF_MODEL.json"
+          }
+        ],
+        "ok": true,
+        "schema_version": "v1",
+        "verification_outcome": "verified_current"
+      }
+    }
+  },
+  "code_tests_workflow_requirements_profiles_unchanged": true,
+  "gap0010_status": "open",
+  "historical_verification_and_cas_files_unchanged": 74,
+  "mutations_rerun_in_this_preparation": false,
+  "new_receipt_ids": [
+    "VERIFY-20261125-0001",
+    "VERIFY-20261125-0002"
+  ],
+  "observation_scope": "prepared working tree based on a9800e156b01493b74d952d22dc1f852f291c66e; packaging evidence, not a canonical VERIFY, independent review or receipt for a subsequently-created commit",
+  "plan_status": "admitted",
+  "protected_records_unchanged": [
+    "docs/self_model/plans/PLAN-20261124-0001.json",
+    "docs/self_model/warrants/WARR-20261124-0001.json",
+    "docs/self_model/gaps/GAP-0005.json",
+    "docs/self_model/gaps/GAP-0008.json"
+  ],
+  "pytest": {
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "duration_seconds_reported": 62.82,
+    "environment_note": "minimal environment, PYTHONDONTWRITEBYTECODE=1; existing pinned-requirements virtual environment",
+    "exit_code": 0,
+    "passed": 1398,
+    "stdout_bytes": 1632,
+    "stdout_path": "docs/reviews/verify_v2/completion/package_pytest.txt",
+    "stdout_sha256": "859716287044363f88e303db03c186882d417b20731d5330ebc3d34874bc4ce4"
+  },
+  "python": "3.12.14",
+  "recorded_at": "2026-11-25T07:10:20+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "packaging_executor",
+    "substrate": "conversation"
+  },
+  "schema": "ai-lab/completion-package-validation/1"
+}

@@ -1,0 +1,267 @@
+{
+  "schema": "ai-lab/verify-v2-completion-preparation-observations/1",
+  "preparation_status": "draft_pending_review_and_pi_completion_decision",
+  "retrieved_at_utc": "2026-11-25 06:59:13 UTC",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "role": "packaging_executor",
+    "substrate": "conversation"
+  },
+  "merge": {
+    "pr_number": 1,
+    "url": "https://github.com/MustafaAksu/ai-lab/pull/1",
+    "merged": true,
+    "merged_at": "2026-11-25T06:37:40Z",
+    "merged_by": "MustafaAksu",
+    "merge_commit": "a9800e156b01493b74d952d22dc1f852f291c66e",
+    "head_commit": "e044132a8934136efab0e55317218517ffdaebde",
+    "base_commit_at_merge": "5c6404284e074055c1a4dad7d348ed8df2f83262"
+  },
+  "main_observed": {
+    "commit": "a9800e156b01493b74d952d22dc1f852f291c66e",
+    "tree": "f41b71481b2eb1e43de83fb9910337d8b88bf40f",
+    "protected": false
+  },
+  "final_premerge_commit": {
+    "sha": "99debb2a551f0f69094f5d3d13fcc1b6ae273300",
+    "tree": "f41b71481b2eb1e43de83fb9910337d8b88bf40f",
+    "parents": [
+      "5c6404284e074055c1a4dad7d348ed8df2f83262",
+      "e044132a8934136efab0e55317218517ffdaebde"
+    ]
+  },
+  "ci": [
+    {
+      "phase": "pre_merge",
+      "id": 45436135188,
+      "url": "https://github.com/MustafaAksu/ai-lab/actions/runs/45436135188",
+      "event": "pull_request",
+      "head_sha": "e044132a8934136efab0e55317218517ffdaebde",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-24T16:21:16Z",
+      "updated_at": "2026-11-24T16:22:42Z",
+      "run_attempt": 1,
+      "artifacts": [
+        {
+          "id": 14941731615,
+          "name": "verify-v2-45436135188-1",
+          "size_in_bytes": 8300,
+          "url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14941731615",
+          "archive_download_url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14941731615/zip",
+          "expired": false,
+          "created_at": "2026-11-24T16:22:38Z",
+          "expires_at": "2027-02-22T16:21:16Z",
+          "updated_at": "2026-11-24T16:22:38Z",
+          "digest": "sha256:669ec010c3f67277f55957ff0e718b3a131e22cc3253da01278bfddbe77d1e1c",
+          "workflow_run": {
+            "id": 45436135188,
+            "repository_id": 1284299931,
+            "head_repository_id": 1284299931,
+            "head_branch": "verify-v2",
+            "head_sha": "e044132a8934136efab0e55317218517ffdaebde"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "id": 138594328550,
+          "name": "verify-v2",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 45436135188,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Check out the event commit with full history",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pinned requirements",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run the VERIFY v2 writer on the event commit",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Upload the receipt and stored outputs, also after failure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Check out the event commit with full history",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "post_merge",
+      "id": 45562011319,
+      "url": "https://github.com/MustafaAksu/ai-lab/actions/runs/45562011319",
+      "event": "push",
+      "head_sha": "a9800e156b01493b74d952d22dc1f852f291c66e",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-25T06:37:42Z",
+      "updated_at": "2026-11-25T06:39:02Z",
+      "run_attempt": 1,
+      "artifacts": [
+        {
+          "id": 14998760966,
+          "name": "verify-v2-45562011319-1",
+          "size_in_bytes": 8147,
+          "url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14998760966",
+          "archive_download_url": "https://api.github.com/repos/MustafaAksu/ai-lab/actions/artifacts/14998760966/zip",
+          "expired": false,
+          "created_at": "2026-11-25T06:39:00Z",
+          "expires_at": "2027-02-23T06:37:42Z",
+          "updated_at": "2026-11-25T06:39:00Z",
+          "digest": "sha256:14cec5df731c89831412cde16eda99c1b71ed9fe78d5c7b1f2085a3991364bff",
+          "workflow_run": {
+            "id": 45562011319,
+            "repository_id": 1284299931,
+            "head_repository_id": 1284299931,
+            "head_branch": "main",
+            "head_sha": "a9800e156b01493b74d952d22dc1f852f291c66e"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "id": 139027707354,
+          "name": "verify-v2",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 45562011319,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Check out the event commit with full history",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pinned requirements",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run the VERIFY v2 writer on the event commit",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Upload the receipt and stored outputs, also after failure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Check out the event commit with full history",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "enforcement_observations": {
+    "repository_rulesets": [],
+    "main_branch_protected": false,
+    "branch_protection_detail": {
+      "http_status": 403,
+      "reason": "Resource not accessible by integration; detailed protection endpoint was not inspected"
+    }
+  },
+  "review_attachment": {
+    "source_uploaded_name": "REVIEW-CLAUDE-R9-R12-DELTA(1).md",
+    "retained_path": "docs/reviews/verify_v2/REVIEW-CLAUDE-R9-R12-DELTA.md",
+    "sha256": "ed38dbc2ebe1dd3a4f208d1394bed90519932096e8010af96dfcbb534ae24c13",
+    "copied_verbatim": true,
+    "declared_reviewer": "Claude (claude-opus-5-5, declared)",
+    "declared_session_date": "2026-11-25",
+    "exact_review_time": null,
+    "review_scope": "68f6f103b1e3cae37c8fb15b7214d10d941aa5a3..e044132a8934136efab0e55317218517ffdaebde",
+    "standing": "executor-separated, epistemically non-independent technical review; user accepted for completion preparation"
+  },
+  "scope_limits": {
+    "origin_verification": "unverified",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_pi_identity_separation": "unresolved",
+    "tree_equality_is_verification_scope_equality": false,
+    "pi_completion_decision": null
+  },
+  "prior_technical_review": {
+    "id": 6043235083,
+    "url": "https://github.com/MustafaAksu/ai-lab/pull/1#pullrequestreview-6043235083",
+    "state": "COMMENTED",
+    "commit_id": "e044132a8934136efab0e55317218517ffdaebde",
+    "submitted_at": "2026-11-24T16:27:13Z",
+    "standing": "technical PASS; explicitly not independent implementation acceptance"
+  }
+}

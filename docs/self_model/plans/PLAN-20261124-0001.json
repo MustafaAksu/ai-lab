@@ -2,7 +2,7 @@
  "schema_version": "v1",
  "plan_id": "PLAN-20261124-0001",
  "title": "Observed-execution verification: VERIFY v2 writer, retained outputs and a pre-merge CI run (GAP-0010 first slice)",
- "status": "admitted",
+ "status": "completed",
  "created_at": "2026-11-24T00:00:00+00:00",
  "created_from": "GAP-0010 recommended first slice; step 2 of the five-step programme recorded in GAP-0005 (working order approved by the operator 2026-11-23, authorizing no step).",
  "repo_commit": "88c9d4540b66a89de5920adade5afe6163a10a2c",
@@ -14,7 +14,15 @@
  "depends_on_capability_ids": [
   "CAP-0010"
  ],
- "evidence_ids": [],
+ "evidence_ids": [
+  "WARR-20261124-0001",
+  "WARR-20261125-0001",
+  "VERIFY-20261124-0004",
+  "VERIFY-20261124-0005",
+  "VERIFY-20261124-0006",
+  "VERIFY-20261125-0001",
+  "VERIFY-20261125-0002"
+ ],
  "objective": "Make it possible for a VERIFY record to state what a mechanism observed rather than what an executor reported: a writer that runs declared commands itself in a clean checkout of one exact commit, retains their output bytes under content addresses, records environment, verifier and input versions and the property each command is declared to establish, and a CI workflow that runs the same writer on the candidate merge commit of a pull request before merge. The plan produces evidence only; it authorizes and automates no decision.",
  "proposed_change": "Add VERIFY schema v2 beside v1 (v1 validator path, writer and 39 records unchanged) as a two-level contract: a writer receipt stored verbatim and a canonical VERIFY record derived from it; add scripts/verify_v2.py, a declared verification profile that audits before it rebuilds, a content-addressed store, an integrity checker and an importer that is the single path from receipt to record; add .github/workflows/verify-v2.yml running the writer on pull requests and on pushes to main with read-only permissions, no secrets and failure-path upload; add falsification and integration tests; document v2 in SELF_MODEL_SCHEMA.md.",
  "scope": [
@@ -73,7 +81,7 @@
  ],
  "risk": "The writer could be mistaken for an independent verifier when the same executor authors it and much of the code it checks; a passing CI run could be read as acceptance; an imported CI receipt could be read as attested origin; a declared property could be read as established when only an exit code is observed; a command could alter the tree under later commands; a truncated or incomplete run could be read as complete; the store grows with every receipt; a receipt for a synthetic merge commit could be cited for a different merged commit; the workflow could be weakened by a later change to its own file.",
  "mitigation": "Lineage is written as self_authored_unreviewed and cannot be raised; origin_verification is written as unverified; the non-goals exclude every decision; declared properties are labelled as declarations; the audit runs first and the build is redirected; any tracked, untracked or ignored change at any command boundary makes the result incomplete, and the boundary-only limit of that observation is stated; termination, timeouts, capture completeness and an 'incomplete' result are explicit and every derived field is recomputed by the validator; an environment allowlist keeps credentials out of commands and receipts; a per-stream limit bounds growth and growth is measured; content_equivalence is named as tracked-content equality and excluded as sufficient coverage; the workflow fetches full history without persisting credentials and its file digest is recorded in every CI receipt. Protecting .github/ is an operator arrangement recorded in GAP-0005 and outside this plan.",
- "next_action": "Implement S1-S9 on a branch under WARR-20261124-0001, including its Conditions 1-3; open a pull request so the CI workflow runs on its merge commit; submit the implementation for reviewing-executor review, where Conditions 1-3 are demonstrated; completion changeset with the S9 records after review.",
+ "next_action": "S1-S9 are complete under WARR-20261125-0001, recording the PI's acceptance of package 86f08b3f9f3192bfe576d5be207752e446af5941. Proceed only to preparation of programme step 3: separate the tool/human equivalence tests, governed cross-kind semantics, the open ExecutorIdentity-superclass decision, and executable C3/C10 evidence conditions into reviewable scope. This completion does not admit that implementation; any implementation or ontology change requires its own review and admission. GAP-0010, GAP-0005 and GAP-0008 remain open, writer-PI identity separation remains unresolved, and no autonomy is activated.",
  "notes": [
   "Drafted outside the tracked tree against HEAD 88c9d45 (clean) by the packaging executor (claude-opus-5-5, declared) and validated with validate_plan_record before submission for review.",
   "Consequence class: plan admission is high under ABS-0004 Section 8; the implementation is a repository mutation adding a workflow, three scripts, a profile, a store and a validator path.",
@@ -86,5 +94,15 @@
  ],
  "admission_warrant_id": "WARR-20261124-0001",
  "admitted_at": "2026-11-24T09:55:00+00:00",
- "admission_summary": "Admitted by the operator after three reviewing-executor rounds (r1 CHANGES_REQUESTED, r2 CHANGES_REQUESTED, r3 PASS_WITH_CONDITIONS); WARR-20261124-0001 authorizes exactly S1-S9 of revision r3 under four conditions: HEAD equality with the subject at every command boundary, receipt completeness against the stored profile, explicit non-secret profile variables with the allowlist stated as a transfer property only, and demonstration of these in the implementation review."
+ "admission_summary": "Admitted by the operator after three reviewing-executor rounds (r1 CHANGES_REQUESTED, r2 CHANGES_REQUESTED, r3 PASS_WITH_CONDITIONS); WARR-20261124-0001 authorizes exactly S1-S9 of revision r3 under four conditions: HEAD equality with the subject at every command boundary, receipt completeness against the stored profile, explicit non-secret profile variables with the allowlist stated as a transfer property only, and demonstration of these in the implementation review.",
+ "completed_at": "2026-11-25T08:49:21+00:00",
+ "completion_verification_id": "VERIFY-20261125-0002",
+ "completion_warrant_id": "WARR-20261125-0001",
+ "completion_package_commit": "86f08b3f9f3192bfe576d5be207752e446af5941",
+ "completion_recorded_by": {
+  "peer_id": "chatgpt",
+  "role": "packaging_executor",
+  "substrate": "conversation"
+ },
+ "completion_summary": "The PI explicitly accepted the proposed package at 86f08b3f9f3192bfe576d5be207752e446af5941 in this conversation and directed canonical completion recording. WARR-20261125-0001 retains the exact statement and completes only admitted S1-S9. completed_at is the actual UTC clock observation when recording began, shared with warrant.created_at, not the unavailable original client-message timestamp; the PI statement was first observed at 2026-11-25T08:45:57+00:00. Review 6053730319 (COMMENTED) recommends COMPLETE_PLAN-20261124-0001 with COMPLETION_PACKAGE_PASS; it remains a technical recommendation, not the operator decision or an independence attestation. The package retains the accepted executor-separated, epistemically non-independent Claude delta review, S9 evidence, final pre-merge and separate post-merge receipts, tracked-content comparisons, store accounting and validation. completion_verification_id VERIFY-20261125-0002 covers only implementation M_main a9800e156b01493b74d952d22dc1f852f291c66e; it does not verify package 86f08b3f9f3192bfe576d5be207752e446af5941 or the later completion bookkeeping. Package CI run 45566443984 is separate evidence, linked by the warrant. Origin remains unverified, lineage remains self_authored_unreviewed, and no C3/C5/C10 independence finding is made. GAP-0010, GAP-0005 and GAP-0008 remain open; writer-PI identity separation remains unresolved. Claude's unavailable raw local-main receipt is not fabricated and does not block this accepted package. This decision does not retroactively authorize the earlier merge and does not activate delegated acceptance or autonomy. Original scope and admission history are preserved."
 }

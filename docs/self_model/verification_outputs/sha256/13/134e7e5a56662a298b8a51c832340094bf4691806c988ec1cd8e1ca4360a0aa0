@@ -1,0 +1,21 @@
+{
+  "findings": [
+    {
+      "class": "other",
+      "code": "SELF_MODEL_INDEX_SOURCE_RECORDS_CHANGED_CONTENT_CURRENT",
+      "message": "Source records changed since stored repo_head, but stored SELF_MODEL.json matches a normalized rebuild: docs/self_model/verifications",
+      "severity": "info",
+      "target": "/tmp/verify-v2-z663xe2q/worktree/docs/self_model/SELF_MODEL.json"
+    },
+    {
+      "class": "other",
+      "code": "SELF_MODEL_INDEX_CONTENT_CURRENT",
+      "message": "Stored SELF_MODEL.json matches a normalized rebuild.",
+      "severity": "info",
+      "target": "/tmp/verify-v2-z663xe2q/worktree/docs/self_model/SELF_MODEL.json"
+    }
+  ],
+  "ok": true,
+  "schema_version": "v1",
+  "verification_outcome": "verified_current"
+}

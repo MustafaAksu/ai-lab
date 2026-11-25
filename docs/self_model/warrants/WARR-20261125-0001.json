@@ -1,0 +1,65 @@
+{
+ "schema_version": "v1",
+ "warrant_id": "WARR-20261125-0001",
+ "target_item_id": "PLAN-20261124-0001",
+ "target_item_type": "plan",
+ "decision": "admit",
+ "warrant_state": "supported",
+ "created_at": "2026-11-25T08:49:21+00:00",
+ "author": "operator",
+ "recorded_by": {
+  "peer_id": "chatgpt",
+  "role": "packaging_executor",
+  "substrate": "conversation"
+ },
+ "substrate": "conversation",
+ "repo_commit": "86f08b3f9f3192bfe576d5be207752e446af5941",
+ "decision_source": {
+  "kind": "conversation",
+  "source": "this conversation",
+  "operator_statement": "önerilen `86f08b3f9f3192bfe576d5be207752e446af5941` paketini kabul ediyorum.",
+  "original_client_message_timestamp": null,
+  "first_observed_at": "2026-11-25T08:45:57+00:00",
+  "recording_time_basis": "created_at is the actual UTC clock observation when materialization of this warrant began. PLAN.completed_at uses the same recording time. Neither is asserted to be the unavailable original client-message timestamp or backdated to review, implementation, merge, or evidence import."
+ },
+ "reason": "The PI accepts the proposed completion package at exactly 86f08b3f9f3192bfe576d5be207752e446af5941 and directs canonical completion recording in this conversation. This warrant materializes that operator decision, completing PLAN-20261124-0001 S1-S9 as admitted by WARR-20261124-0001. The package review 6053730319 supplies COMPLETION_PACKAGE_PASS and the recommendation COMPLETE_PLAN-20261124-0001; its GitHub state is COMMENTED, not APPROVED, and it is not the source of the PI's authority. The accepted package retains the S1-S9/condition mapping, R9-R12 counterexamples and corrected validation, strict 39/39 mutation result, local/CI-pass/deliberate-CI-failure evidence, separate final pre-merge and post-merge receipts, tracked-content comparisons, byte accounting, CAS integrity and index/test results. Claude's review of the ChatGPT-authored R9-R12 delta is accepted as executor-separated, epistemically non-independent technical review; neither that review nor this completion decision establishes qualified independence. The implementation already entered main at a9800e156b01493b74d952d22dc1f852f291c66e through PR #1 on 2026-11-25T06:37:40Z. This later operator completion decision is separate from that merge and grants no retroactive merge authorization.",
+ "scope": "Completion of exactly revision r3 scope items S1-S9 of PLAN-20261124-0001: the evidence-only VERIFY v2 receipt/canonical contract and importer, standalone observed-execution writer and VPROF-0001, retained CAS and integrity checker, read-only pre-merge/post-merge CI with failure upload, falsification/integration coverage, schema documentation and live-use receipts. The accepted completion package is 86f08b3f9f3192bfe576d5be207752e446af5941. This warrant records completion and permits its associated bookkeeping; it admits no further implementation and activates no automated acceptance, merge, warrant issuance, delegated adjudication or self-authorization. Step 3 may proceed only to preparation; implementation requires a separately reviewed and admitted scope.",
+ "conditions": [
+  "GAP-0010, GAP-0005 and GAP-0008 remain open. Completion of the observed-execution slice does not establish an enforced exact-candidate required merge check, a governed implementer/verifier pair, an authorization mechanism or complete evidence ancestry.",
+  "All VERIFY v2 origin_verification values remain unverified and verifier_lineage_status remains self_authored_unreviewed. No IndependenceAssessment, C3/C5 independence finding, independent C10 verifier review or lineage upgrade is asserted. Different sessions, models, providers and executor-role labels do not by themselves establish independence or waive adjudication restrictions.",
+  "Execution attribution remains explicit: ChatGPT performed the R9-R12 implementation and completion packaging; Claude supplied the declared delta review and authored the earlier implementation. Git author/GitHub actor metadata using the PI account does not establish distinct writer identities. Writer-PI identity separation remains unresolved.",
+  "PLAN.completion_verification_id is VERIFY-20261125-0002, whose subject is the actual implementation merge commit a9800e156b01493b74d952d22dc1f852f291c66e. It is post-merge evidence only. It does not verify the accepted package 86f08b3f9f3192bfe576d5be207752e446af5941 or this later decision-recording changeset. Package CI run 45566443984 is cited separately; any validation/CI for the later bookkeeping delta must retain its own subject and observation time.",
+  "Each other receipt retains its exact subject and observation time. Final M_PR 99debb2a551f0f69094f5d3d13fcc1b6ae273300 and M_main share tracked tree f41b71481b2eb1e43de83fb9910337d8b88bf40f; earlier M_PR da523c45f42efdca7605ff70b9b36e18e80379f4 has a different whole tree. Content equality never extends verification scope because the audit also depends on commit history. Import after merge does not change a pre-merge run's actual time; a post-merge run cannot become pre-merge evidence.",
+  "Preserve all historical v1, v2, CAS, review and preparation artifacts without rewriting their historical standing. The unissued warrant draft remains a historical preparation artifact outside the registry; this new canonical warrant records the subsequent actual PI decision. Claude's reported local main receipt 234ef923…6de42c75 remains report-only because its raw bytes were unavailable; no receipt is fabricated, and its absence does not block the accepted package with separately retained main CI evidence.",
+  "Verification remains property-scoped: environment capture is partial; declared properties are declarations; Git-status-reported paths at command boundaries are not byte-level tree immutability; hidden changes and changes restored within a command remain outside that observation. Environment isolation is a transfer property, not a sandbox or a general confidentiality guarantee. The finite mutation/probe envelope is not proof of exhaustive correctness.",
+  "No capability last_verified update, branch protection, ruleset, required check, CODEOWNERS change, ABS-0004 change, equivalence-semantic change or autonomy activation is authorized by this completion warrant. Such work remains subject to its own explicit scope, review and admission."
+ ],
+ "evidence_ids": [
+  "PLAN-20261124-0001",
+  "WARR-20261124-0001",
+  "VERIFY-20261124-0004",
+  "VERIFY-20261124-0005",
+  "VERIFY-20261124-0006",
+  "VERIFY-20261125-0001",
+  "VERIFY-20261125-0002",
+  "GAP-0010",
+  "GAP-0005",
+  "GAP-0008"
+ ],
+ "evidence_files": [
+  "docs/reviews/verify_v2/completion/COMPLETION-PREPARATION.md",
+  "docs/reviews/verify_v2/completion/WARR-PLAN-20261124-0001-COMPLETION-DRAFT.md",
+  "docs/reviews/verify_v2/completion/evidence_manifest.json",
+  "docs/reviews/verify_v2/completion/package_validation.json",
+  "docs/reviews/verify_v2/completion/remote_observations.json",
+  "docs/reviews/verify_v2/REVIEW-CLAUDE-R9-R12-DELTA.md",
+  "docs/reviews/verify_v2/REVIEW-R9-R12-REMEDIATION.md",
+  "docs/reviews/verify_v2/LIVE-R9-R12-VERIFICATION.md"
+ ],
+ "evidence_urls": [
+  "https://github.com/MustafaAksu/ai-lab/commit/86f08b3f9f3192bfe576d5be207752e446af5941",
+  "https://github.com/MustafaAksu/ai-lab/pull/4#pullrequestreview-6053730319",
+  "https://github.com/MustafaAksu/ai-lab/actions/runs/45566443984",
+  "https://github.com/MustafaAksu/ai-lab/pull/1"
+ ]
+}
