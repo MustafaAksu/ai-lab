@@ -256,7 +256,7 @@
       "status": "open"
     }
   ],
-  "generated_at": "2026-11-25T09:38:20+00:00",
+  "generated_at": "2026-11-25T21:10:50+00:00",
   "generation_rule": "aggregation_only",
   "known_risks": [
     {
@@ -882,7 +882,7 @@
       "target": "The observed-execution writer, two-level receipt/canonical-record contract, content-addressed retention, integrity checker, importer, VPROF-0001 and pre-merge/post-merge CI workflow are implemented in main at a9800e156b01493b74d952d22dc1f852f291c66e. The PI has accepted completion of exactly PLAN-20261124-0001 S1-S9 for package 86f08b3f9f3192bfe576d5be207752e446af5941, recorded by WARR-20261125-0001 and docs/reviews/verify_v2/completion/PI-COMPLETION-RECORD.md; neither that implementation nor its completion is pending. GAP-0010 remains open for an explicitly governed operator arrangement requiring verification of the exact candidate before the decision that relies on it. Required checks, protected policy/CI paths and acceptance/admission machinery are separate later work; no such enforcement or automation is activated here. A post-merge receipt is not pre-merge evidence, tree equality is not verification-scope equality, and an import or completion-recording commit is not covered merely because it contains a receipt. C7 implementer/verifier qualification, tool or cross-kind equivalence and C10 lineage/ancestry remain the separate GAP-0005/GAP-0008 programme. Its step 3 is preparation only, with separate review and admission before implementation. No IndependenceAssessment is supplied here."
     }
   ],
-  "repo_head": "5515f55894b10ad70c321340257f67a960dcc382",
+  "repo_head": "8b8e24d133eaa3a585eefa14e76a02a519b73b03",
   "schema_version": "v1",
   "system_label": "AI-Lab",
   "verifications": [

@@ -1,0 +1,2718 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-lab:qualification:r2:1",
+  "title": "AI-Lab proposed qualification assessment r2 — schema only",
+  "$comment": "Proposal, not runtime registration or admission. All references are local. Use a draft-2020-12 validator with format assertion. Reject duplicate JSON keys and nonfinite numbers before schema validation. Validate retained-byte digests, schema IDs, cross-reference equalities, temporal ordering, pinned context and semantic decisions per DETERMINISTIC-RULES.md; schema validity alone is no identity, coverage, independence, authority or origin proof.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Query"
+    },
+    {
+      "$ref": "#/$defs/SourceInventory"
+    },
+    {
+      "$ref": "#/$defs/EvidenceContext"
+    },
+    {
+      "$ref": "#/$defs/CorroborationWitness"
+    },
+    {
+      "$ref": "#/$defs/SyntheticFixtureBindings"
+    },
+    {
+      "$ref": "#/$defs/AssessmentResult"
+    },
+    {
+      "$ref": "#/$defs/AvailabilityEvidence"
+    },
+    {
+      "$ref": "#/$defs/SyntheticDirectedEdge"
+    }
+  ],
+  "$defs": {
+    "Domain": {
+      "enum": [
+        "production",
+        "synthetic"
+      ]
+    },
+    "Text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "pattern": "^[^\u0000]+$"
+    },
+    "Identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/+-]*$"
+    },
+    "Sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "SHA-256 of complete retained bytes; not a schema record ID or a Git SHA-1."
+    },
+    "GitSha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+      "description": "Explicit offset, uppercase T/Z, real calendar date and time, zero to six fractional digits. Naive timestamps and leap-second spellings are unsupported. Duplicate JSON keys and nonfinite numeric tokens are rejected before schema checks. Semantic rules compare instants and validate intervals, not lexicographic strings."
+    },
+    "RelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\u0000\\\\]+$"
+    },
+    "RecordRef": {
+      "type": "object",
+      "properties": {
+        "record_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "sha256": {
+          "$ref": "#/$defs/Sha256"
+        }
+      },
+      "required": [
+        "record_id",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "ArtifactRef": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/RelativePath"
+        },
+        "git_blob_sha1": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/GitSha1"
+            }
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "record_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Identifier"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_sha1",
+        "sha256",
+        "record_id"
+      ],
+      "additionalProperties": false,
+      "description": "The pinned store supplies exact bytes. Every digest and any schema ID must be independently recomputed. A reference is not an existence, kind or truth finding."
+    },
+    "Interval": {
+      "type": "object",
+      "properties": {
+        "valid_from": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "valid_until": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Timestamp"
+            }
+          ]
+        },
+        "revoked_at": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Timestamp"
+            }
+          ]
+        }
+      },
+      "required": [
+        "valid_from",
+        "valid_until",
+        "revoked_at"
+      ],
+      "additionalProperties": false,
+      "description": "Inclusive validity interval. Non-null valid_until before valid_from is INVALID_INTERVAL. Revocation is effective at event >= revoked_at. No caller-established flag."
+    },
+    "ExecutorKind": {
+      "enum": [
+        "model",
+        "tool",
+        "human"
+      ]
+    },
+    "Subject": {
+      "type": "object",
+      "properties": {
+        "invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "kind": {
+          "$ref": "#/$defs/ExecutorKind"
+        },
+        "executor_reference": {
+          "$ref": "#/$defs/Text"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requested_model_name": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "service_endpoint": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        }
+      },
+      "required": [
+        "invocation_ref",
+        "kind",
+        "executor_reference",
+        "occurred_at",
+        "requested_model_name",
+        "service_endpoint"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "model"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "requested_model_name": {
+                "$ref": "#/$defs/Text"
+              },
+              "service_endpoint": {
+                "$ref": "#/$defs/Text"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "requested_model_name": {
+                "const": null
+              },
+              "service_endpoint": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReasonCode": {
+      "enum": [
+        "INVALID_SCHEMA",
+        "INVALID_TIMESTAMP",
+        "INVALID_INTERVAL",
+        "DOMAIN_MISMATCH",
+        "CONTEXT_ANCHOR_MISMATCH",
+        "INVENTORY_PIN_MISMATCH",
+        "ARTIFACT_DIGEST_MISMATCH",
+        "SCHEMA_ID_MISMATCH",
+        "CONFLICTING_ARTIFACT_BYTES",
+        "CAPTURE_SNAPSHOT_MISMATCH",
+        "INVENTORY_OMISSION",
+        "KNOWN_SOURCE_UNAVAILABLE",
+        "COVERAGE_UNDETERMINED",
+        "OUTSIDE_SCOPE_UNASSESSED",
+        "NO_APPLICABLE_SOURCE",
+        "APPLICABILITY_UNDETERMINED",
+        "ENDPOINT_MAPPING_UNRESOLVED",
+        "ENDPOINT_ALIAS_UNRESOLVED",
+        "WRONG_ENDPOINT",
+        "ASSERTION_NAME_ABSENT",
+        "ASSERTION_INTERVAL_INAPPLICABLE",
+        "ASSERTION_SCOPE_UNSUPPORTED",
+        "ASSERTION_TARGET_INVALID",
+        "TARGET_MISSING",
+        "TARGET_WRONG_KIND",
+        "TARGET_RELEASE_UNKNOWN",
+        "CAPTURE_UNSUCCESSFUL",
+        "EVENT_AVAILABILITY_UNPROVEN",
+        "EVIDENCE_AFTER_CUTOFF",
+        "FUTURE_OBSERVATION",
+        "FRESHNESS_EXPIRED",
+        "CAPTURE_CONTRADICTED",
+        "TARGETS_AMBIGUOUS",
+        "TARGETS_CONFLICT",
+        "SUPERSESSION_UNRESOLVED",
+        "WITNESS_MISSING",
+        "WITNESS_SCOPE_MISMATCH",
+        "WITNESS_EVIDENCE_MISMATCH",
+        "PROFILE_UNAVAILABLE",
+        "BINDING_MISSING",
+        "BINDING_CONFLICT",
+        "BINDING_REVOKED",
+        "ACTOR_UNRESOLVED",
+        "CROSS_KIND_UNDEFINED",
+        "EQUIVALENT_IDENTITY",
+        "NON_EQUIVALENT_IDENTITY",
+        "DIRECT_LINEAGE_CONFLICT",
+        "EQUIVALENT_ANCESTOR",
+        "ANCESTRY_UNRESOLVED",
+        "SHARED_ANCESTRY_ESTABLISHED",
+        "REVIEW_LINKAGE_MISMATCH",
+        "REVIEW_INDEPENDENCE_UNRESOLVED",
+        "SYNTHETIC_DOMAIN_ONLY",
+        "CONDITIONS_SATISFIED",
+        "NOT_EVALUATED",
+        "LEGACY_CONTEXT_REQUIRED",
+        "LEGACY_POSITIVE_DISABLED",
+        "ANNOTATION_NOT_QUALIFICATION"
+      ]
+    },
+    "Reason": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "stage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "side": {
+          "enum": [
+            "both",
+            "left",
+            "right",
+            "none"
+          ]
+        },
+        "subject_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RecordRef"
+          },
+          "minItems": 0
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "^[^\u0000]*$"
+        }
+      },
+      "required": [
+        "code",
+        "stage",
+        "side",
+        "subject_refs",
+        "detail"
+      ],
+      "additionalProperties": false,
+      "description": "Safe bounded diagnostic only. Stage order: 0 parsing, 1 integrity, 2 inventory, 3 binding/time, 4 aggregation, 5 witness, 6 identity, 7 C3/C10, 8 adapter/domain. Canonical order is stage, ReasonCode declaration order, side, sorted references; preserve all reasons."
+    },
+    "Reasons": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Reason"
+      },
+      "minItems": 1
+    },
+    "KnownSourceDeclaration": {
+      "type": "object",
+      "properties": {
+        "declaration_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ArtifactRef"
+              },
+              {
+                "$ref": "#/$defs/DeclaredUnavailableSource"
+              }
+            ]
+          },
+          "minItems": 1
+        },
+        "known_at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "declaration_ref",
+        "source_refs",
+        "known_at"
+      ],
+      "additionalProperties": false
+    },
+    "OmissionDeclaration": {
+      "type": "object",
+      "properties": {
+        "declaration_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "unavailable_ref": {
+          "$ref": "#/$defs/DeclaredUnavailableSource"
+        },
+        "known_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "reason": {
+          "$ref": "#/$defs/Text"
+        }
+      },
+      "required": [
+        "declaration_ref",
+        "unavailable_ref",
+        "known_at",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ModelSourceRef": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "capture_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "payload_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/ArtifactRef"
+            }
+          ]
+        },
+        "endpoint_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "target_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "availability_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "source_id",
+        "snapshot_ref",
+        "capture_ref",
+        "payload_ref",
+        "endpoint_refs",
+        "target_refs",
+        "availability_evidence_refs"
+      ],
+      "additionalProperties": false,
+      "description": "Refers to complete bytes; linkage, capture_success, target kind, schema ID, release scope and availability are recomputed from those bytes. Wrong-kind/dangling targets remain representable for typed refusal."
+    },
+    "SourceInventory": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "source_inventory"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "inventory_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "selector_id": {
+          "const": "REPO-CATALOG-ALL-1"
+        },
+        "repository": {
+          "const": "MustafaAksu/ai-lab"
+        },
+        "repository_commit": {
+          "$ref": "#/$defs/GitSha1"
+        },
+        "root_tree_sha1": {
+          "$ref": "#/$defs/GitSha1"
+        },
+        "catalog_roots": {
+          "const": [
+            "docs/catalog/eid/",
+            "docs/catalog/mid/",
+            "docs/catalog/snap/",
+            "docs/catalog/cap/",
+            "docs/catalog/payloads/"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "model_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ModelSourceRef"
+          },
+          "minItems": 0
+        },
+        "known_source_declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnownSourceDeclaration"
+          },
+          "minItems": 0
+        },
+        "omission_declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OmissionDeclaration"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "inventory_id",
+        "selector_id",
+        "repository",
+        "repository_commit",
+        "root_tree_sha1",
+        "catalog_roots",
+        "entries",
+        "model_sources",
+        "known_source_declarations",
+        "omission_declarations"
+      ],
+      "additionalProperties": false,
+      "description": "Immutable inventory pinned by the consumer context anchor. Enumerate every tracked file recursively below all five fixed roots; no caller path glob, subset, complete flag or source-priority rule. Synthetic anchors name the fixed fictional store, not a real Git observation."
+    },
+    "ProductionProfiles": {
+      "type": "object",
+      "properties": {
+        "endpoint_binding": {
+          "const": []
+        },
+        "model_witness": {
+          "const": []
+        },
+        "tool_binding": {
+          "const": []
+        },
+        "human_binding": {
+          "const": []
+        },
+        "ancestry": {
+          "const": []
+        },
+        "availability": {
+          "const": []
+        }
+      },
+      "required": [
+        "endpoint_binding",
+        "model_witness",
+        "tool_binding",
+        "human_binding",
+        "ancestry",
+        "availability"
+      ],
+      "additionalProperties": false,
+      "description": "All production positive profiles are EMPTY in r2. These arrays cannot activate profiles."
+    },
+    "SyntheticProfiles": {
+      "type": "object",
+      "properties": {
+        "model_witness": {
+          "const": [
+            "SYN-MODEL-WITNESS-1"
+          ]
+        },
+        "tool_binding": {
+          "const": [
+            "SYN-TOOL-1"
+          ]
+        },
+        "human_binding": {
+          "const": [
+            "SYN-HUMAN-1"
+          ]
+        },
+        "ancestry": {
+          "const": []
+        }
+      },
+      "required": [
+        "model_witness",
+        "tool_binding",
+        "human_binding",
+        "ancestry"
+      ],
+      "additionalProperties": false
+    },
+    "ContextPolicy": {
+      "type": "object",
+      "properties": {
+        "selector_id": {
+          "const": "REPO-CATALOG-ALL-1"
+        },
+        "mode": {
+          "enum": [
+            "event_time",
+            "retrospective"
+          ]
+        },
+        "knowledge_cutoff": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "freshness_window_days": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 30
+        },
+        "production_profiles": {
+          "$ref": "#/$defs/ProductionProfiles"
+        },
+        "synthetic_profiles": {
+          "$ref": "#/$defs/SyntheticProfiles"
+        }
+      },
+      "required": [
+        "selector_id",
+        "mode",
+        "knowledge_cutoff",
+        "freshness_window_days",
+        "production_profiles",
+        "synthetic_profiles"
+      ],
+      "additionalProperties": false,
+      "description": "Pinned by the consumer, not configurable in Query. The default is 30 days; defaults do not insert missing fields. Other nonnegative values require a separately pinned context. Tool/human profiles use their own interval/revocation rules."
+    },
+    "EdgeClass": {
+      "enum": [
+        "input",
+        "output",
+        "derivation",
+        "subordinate_influence",
+        "inherited_state"
+      ]
+    },
+    "EdgeObligation": {
+      "type": "object",
+      "properties": {
+        "obligation_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "edge_class": {
+          "$ref": "#/$defs/EdgeClass"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "scope_evidence_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "edge_class",
+        "target_ref",
+        "scope_evidence_ref"
+      ],
+      "additionalProperties": false
+    },
+    "DirectionalPath": {
+      "type": "object",
+      "properties": {
+        "path_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "node_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 2
+        },
+        "edge_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "path_id",
+        "node_refs",
+        "edge_evidence_refs"
+      ],
+      "additionalProperties": false,
+      "description": "Declared directional path requiring recomputation against retained evidence. Edge count must equal node count minus one. A spawned or common-input relation alone cannot satisfy an edge."
+    },
+    "C3Context": {
+      "type": "object",
+      "properties": {
+        "adjudicator_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "claim_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "required_edge_classes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EdgeClass"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "edge_obligations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EdgeObligation"
+          },
+          "minItems": 0
+        },
+        "directional_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DirectionalPath"
+          },
+          "minItems": 0
+        },
+        "ancestor_identity_assessment_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "adjudicator_ref",
+        "claim_ref",
+        "required_edge_classes",
+        "edge_obligations",
+        "directional_paths",
+        "ancestor_identity_assessment_refs"
+      ],
+      "additionalProperties": false,
+      "description": "Pinned obligations and references; no complete/independent/established flag. Only a unique matching SYN-C3-CONFLICT-1 context/edge/assessment row can establish a synthetic direct/equivalent violation. Unsupported or production directional evidence stays unresolved. No positive C3 output exists."
+    },
+    "VerificationRunBinding": {
+      "type": "object",
+      "properties": {
+        "verification_run_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "property_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "verifier_executor_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "verifier_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "rule_test_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "inputs_manifest_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "environment_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "subject_output_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "producer_model_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "verification_run_ref",
+        "property_id",
+        "verifier_executor_ref",
+        "verifier_version_ref",
+        "rule_test_version_ref",
+        "inputs_manifest_ref",
+        "environment_ref",
+        "result_ref",
+        "subject_output_ref",
+        "producer_model_ref"
+      ],
+      "additionalProperties": false
+    },
+    "ReviewBinding": {
+      "type": "object",
+      "properties": {
+        "review_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "reviewer_invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "reviewer_executor_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "reviewed_run": {
+          "$ref": "#/$defs/VerificationRunBinding"
+        },
+        "independence_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "outcome_evidence_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "review_ref",
+        "reviewer_invocation_ref",
+        "reviewer_executor_ref",
+        "reviewed_run",
+        "independence_evidence_refs",
+        "outcome_evidence_ref"
+      ],
+      "additionalProperties": false
+    },
+    "C10Context": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "$ref": "#/$defs/VerificationRunBinding"
+        },
+        "verifier_code_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "verifier_schema_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "verifier_test_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "verifier_configuration_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "required_edge_classes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EdgeClass"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "edge_obligations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EdgeObligation"
+          },
+          "minItems": 0
+        },
+        "directional_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DirectionalPath"
+          },
+          "minItems": 0
+        },
+        "review_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReviewBinding"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "run",
+        "verifier_code_refs",
+        "verifier_schema_refs",
+        "verifier_test_refs",
+        "verifier_configuration_refs",
+        "required_edge_classes",
+        "edge_obligations",
+        "directional_paths",
+        "review_bindings"
+      ],
+      "additionalProperties": false,
+      "description": "Exact run/property linkage is checked against retained bytes; producer remains ModelIdentity. No receiving-decision consequence or attempted reliance is bound, and no live review admissibility rule is enabled: C10 always unresolved in r2. Unknown ancestry is not shared ancestry or independent lineage."
+    },
+    "EvidenceContext": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "evidence_context"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "inventory_ref": {
+          "$ref": "#/$defs/RecordRef"
+        },
+        "context_policy": {
+          "$ref": "#/$defs/ContextPolicy"
+        },
+        "subject_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "selected_source_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Identifier"
+          },
+          "minItems": 0
+        },
+        "provided_artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "known_source_declaration_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "omission_declaration_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "corroboration_witness_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "synthetic_fixture_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/RecordRef"
+            }
+          ]
+        },
+        "c3_context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/C3Context"
+            }
+          ]
+        },
+        "c10_context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/C10Context"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "context_id",
+        "inventory_ref",
+        "context_policy",
+        "subject_refs",
+        "selected_source_ids",
+        "provided_artifact_refs",
+        "known_source_declaration_refs",
+        "omission_declaration_refs",
+        "corroboration_witness_refs",
+        "synthetic_fixture_ref",
+        "c3_context",
+        "c10_context"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "domain": {
+                "const": "production"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "synthetic_fixture_ref": {
+                "const": null
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "synthetic_fixture_ref": {
+                "$ref": "#/$defs/RecordRef"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Pinned outside caller authority by the selected consumer entry point. The consumer rejects any other context digest/cutoff/inventory and recomputes selected sources and omissions. Production has no activated live context anchor in r2."
+    },
+    "Query": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "query"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "query_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "entry_point": {
+          "enum": [
+            "evaluate_production_r2",
+            "evaluate_synthetic_r2"
+          ]
+        },
+        "evidence_context_ref": {
+          "$ref": "#/$defs/RecordRef"
+        },
+        "left": {
+          "$ref": "#/$defs/Subject"
+        },
+        "right": {
+          "$ref": "#/$defs/Subject"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "query_id",
+        "entry_point",
+        "evidence_context_ref",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "domain": {
+                "const": "production"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "entry_point": {
+                "const": "evaluate_production_r2"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "entry_point": {
+                "const": "evaluate_synthetic_r2"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Caller domain is checked for mismatch against the entry point, never used to select privilege. Query cannot choose freshness, source roots, profiles, knowledge cutoff, established bindings or coverage."
+    },
+    "WitnessProperty": {
+      "type": "object",
+      "properties": {
+        "endpoint_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "requested_model_name": {
+          "$ref": "#/$defs/Text"
+        },
+        "target_model_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "event_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "property_id": {
+          "const": "model_reference_resolves_to_identity"
+        }
+      },
+      "required": [
+        "endpoint_ref",
+        "requested_model_name",
+        "target_model_ref",
+        "event_at",
+        "property_id"
+      ],
+      "additionalProperties": false
+    },
+    "CorroborationWitness": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "corroboration_witness"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "witness_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "subject": {
+          "$ref": "#/$defs/WitnessProperty"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 1
+        },
+        "verifier_executor_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "verifier_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "rule_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "verification_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "assessed_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "applicable_interval": {
+          "$ref": "#/$defs/Interval"
+        },
+        "assessment_scope_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "witness_id",
+        "profile_id",
+        "subject",
+        "evidence_refs",
+        "verifier_executor_ref",
+        "verifier_version_ref",
+        "rule_version_ref",
+        "verification_ref",
+        "assessed_at",
+        "applicable_interval",
+        "assessment_scope_ref"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "domain": {
+                "const": "synthetic"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "profile_id": {
+                "const": "SYN-MODEL-WITNESS-1"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Candidate evidence shape, never a trusted assertion of success. Synthetic profile checks the pinned fixture proof table and all exact bindings. No production profile is enabled; a production witness-shaped object cannot clear Q_identity."
+    },
+    "ToolIssuerRow": {
+      "type": "object",
+      "properties": {
+        "issuer_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "namespace": {
+          "$ref": "#/$defs/Identifier"
+        }
+      },
+      "required": [
+        "issuer_id",
+        "namespace"
+      ],
+      "additionalProperties": false
+    },
+    "ToolReleaseRow": {
+      "type": "object",
+      "properties": {
+        "tool_identity": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "version_identity": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "namespace": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "issuer_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 1
+        },
+        "interval": {
+          "$ref": "#/$defs/Interval"
+        }
+      },
+      "required": [
+        "tool_identity",
+        "version_identity",
+        "namespace",
+        "issuer_id",
+        "artifact_refs",
+        "interval"
+      ],
+      "additionalProperties": false
+    },
+    "ToolAliasRow": {
+      "type": "object",
+      "properties": {
+        "executor_reference": {
+          "$ref": "#/$defs/Text"
+        },
+        "tool_identity": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "version_identity": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "interval": {
+          "$ref": "#/$defs/Interval"
+        }
+      },
+      "required": [
+        "executor_reference",
+        "tool_identity",
+        "version_identity",
+        "interval"
+      ],
+      "additionalProperties": false
+    },
+    "ToolExecutionRow": {
+      "type": "object",
+      "properties": {
+        "invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "executed_artifact_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "observation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "invocation_ref",
+        "executed_artifact_ref",
+        "occurred_at",
+        "observation_ref"
+      ],
+      "additionalProperties": false
+    },
+    "HumanPrincipalRow": {
+      "type": "object",
+      "properties": {
+        "principal_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "fictional_person_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "namespace": {
+          "const": "fixture:human-persons"
+        }
+      },
+      "required": [
+        "principal_id",
+        "fictional_person_id",
+        "namespace"
+      ],
+      "additionalProperties": false,
+      "description": "SYN-HUMAN-1 maps exactly one immutable fictional person to one principal. Roles, accounts, keys and delegation do not create persons."
+    },
+    "HumanAliasRow": {
+      "type": "object",
+      "properties": {
+        "executor_reference": {
+          "$ref": "#/$defs/Text"
+        },
+        "principal_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "alias_kind": {
+          "enum": [
+            "account",
+            "key",
+            "display_alias"
+          ]
+        },
+        "interval": {
+          "$ref": "#/$defs/Interval"
+        }
+      },
+      "required": [
+        "executor_reference",
+        "principal_id",
+        "alias_kind",
+        "interval"
+      ],
+      "additionalProperties": false
+    },
+    "HumanActorRow": {
+      "type": "object",
+      "properties": {
+        "invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "principal_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "actor_observation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "invocation_ref",
+        "principal_id",
+        "occurred_at",
+        "actor_observation_ref"
+      ],
+      "additionalProperties": false
+    },
+    "SyntheticToolProfile": {
+      "type": "object",
+      "properties": {
+        "profile_id": {
+          "const": "SYN-TOOL-1"
+        },
+        "namespace": {
+          "const": "fixture:tools"
+        },
+        "issuer_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ToolIssuerRow"
+          },
+          "minItems": 0
+        },
+        "release_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ToolReleaseRow"
+          },
+          "minItems": 0
+        },
+        "alias_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ToolAliasRow"
+          },
+          "minItems": 0
+        },
+        "execution_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ToolExecutionRow"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "profile_id",
+        "namespace",
+        "issuer_rows",
+        "release_rows",
+        "alias_rows",
+        "execution_rows"
+      ],
+      "additionalProperties": false
+    },
+    "SyntheticHumanProfile": {
+      "type": "object",
+      "properties": {
+        "profile_id": {
+          "const": "SYN-HUMAN-1"
+        },
+        "namespace": {
+          "const": "fixture:human-persons"
+        },
+        "principal_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HumanPrincipalRow"
+          },
+          "minItems": 0
+        },
+        "alias_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HumanAliasRow"
+          },
+          "minItems": 0
+        },
+        "actor_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HumanActorRow"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "profile_id",
+        "namespace",
+        "principal_rows",
+        "alias_rows",
+        "actor_rows"
+      ],
+      "additionalProperties": false
+    },
+    "SyntheticWitnessRow": {
+      "type": "object",
+      "properties": {
+        "witness_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "subject": {
+          "$ref": "#/$defs/WitnessProperty"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 1
+        },
+        "verifier_executor_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "verifier_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "rule_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "verification_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "assessed_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "applicable_interval": {
+          "$ref": "#/$defs/Interval"
+        },
+        "assessment_scope_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "witness_id",
+        "subject",
+        "evidence_refs",
+        "verifier_executor_ref",
+        "verifier_version_ref",
+        "rule_version_ref",
+        "verification_ref",
+        "assessed_at",
+        "applicable_interval",
+        "assessment_scope_ref"
+      ],
+      "additionalProperties": false
+    },
+    "SyntheticModelWitnessProfile": {
+      "type": "object",
+      "properties": {
+        "profile_id": {
+          "const": "SYN-MODEL-WITNESS-1"
+        },
+        "witness_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SyntheticWitnessRow"
+          },
+          "minItems": 0
+        },
+        "availability_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AvailabilityRow"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "profile_id",
+        "witness_rows",
+        "availability_rows"
+      ],
+      "additionalProperties": false
+    },
+    "SyntheticFixtureBindings": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "synthetic_fixture_bindings"
+        },
+        "domain": {
+          "const": "synthetic"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "fixture_artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "tool_profile": {
+          "$ref": "#/$defs/SyntheticToolProfile"
+        },
+        "human_profile": {
+          "$ref": "#/$defs/SyntheticHumanProfile"
+        },
+        "model_witness_profile": {
+          "$ref": "#/$defs/SyntheticModelWitnessProfile"
+        },
+        "c3_conflict_fixture": {
+          "$ref": "#/$defs/SyntheticC3ConflictFixture"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "fixture_id",
+        "fixture_artifact_refs",
+        "tool_profile",
+        "human_profile",
+        "model_witness_profile",
+        "c3_conflict_fixture"
+      ],
+      "additionalProperties": false,
+      "description": "Entire fixture corpus ID/digest is fixed outside Query by evaluate_synthetic_r2. Identity profiles exercise necessary identity conditions only. The separately named SYN-C3-CONFLICT-1 constructor supplies fictional negative directional premises only; neither it nor any identity profile can establish production binding, positive ancestry coverage, independent qualification or authority."
+    },
+    "CatalogAssertion": {
+      "type": "object",
+      "properties": {
+        "assertion_subject": {
+          "$ref": "#/$defs/Text"
+        },
+        "assertion_predicate": {
+          "enum": [
+            "resolves_to",
+            "context_limit",
+            "price_input_per_mtok",
+            "price_output_per_mtok",
+            "deprecated",
+            "region",
+            "modality"
+          ]
+        },
+        "assertion_value_or_target": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "unit": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "scope": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "valid_from": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "valid_until": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Timestamp"
+            }
+          ]
+        },
+        "superseded_by": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/Text"
+        }
+      },
+      "required": [
+        "assertion_subject",
+        "assertion_predicate",
+        "assertion_value_or_target",
+        "unit",
+        "scope",
+        "valid_from",
+        "valid_until",
+        "superseded_by",
+        "source"
+      ],
+      "additionalProperties": false,
+      "description": "Read-only decoded legacy shape. For resolves_to the semantic stage requires a MID string and extant valid target bytes. Scope=null is supported; non-null scope is retained but unsupported. Invalid intervals are errors; scalar targets and unknown scopes never silently resolve."
+    },
+    "CatalogSnapshot": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "v1"
+        },
+        "record_kind": {
+          "const": "catalog_snapshot"
+        },
+        "record_id": {
+          "type": "string",
+          "pattern": "^SNAP-[0-9a-f]{16}$"
+        },
+        "service_endpoint_id": {
+          "type": "string",
+          "pattern": "^EID-[0-9a-f]{16}$"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "source_set_digest": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CatalogAssertion"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "record_id",
+        "service_endpoint_id",
+        "observed_at",
+        "source_set_digest",
+        "assertions"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogCapture": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "v1"
+        },
+        "record_kind": {
+          "const": "catalog_capture"
+        },
+        "record_id": {
+          "type": "string",
+          "pattern": "^CAP-[0-9a-f]{16}$"
+        },
+        "snapshot_id": {
+          "type": "string",
+          "pattern": "^SNAP-[0-9a-f]{16}$"
+        },
+        "capture_method": {
+          "$ref": "#/$defs/Text"
+        },
+        "source_type": {
+          "enum": [
+            "provider_self_report",
+            "operator_entered",
+            "third_party_record"
+          ]
+        },
+        "captured_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "capture_success": {
+          "type": "boolean"
+        },
+        "capturing_executor": {
+          "$ref": "#/$defs/Text"
+        },
+        "content_digest": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "content_evidence_status": {
+          "enum": [
+            "self_asserted",
+            "independently_corroborated",
+            "contradicted",
+            "unassessed"
+          ]
+        },
+        "channel_authentication_status": {
+          "enum": [
+            "verified_current",
+            "stale",
+            "unverifiable"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "record_id",
+        "snapshot_id",
+        "capture_method",
+        "source_type",
+        "captured_at",
+        "capture_success",
+        "capturing_executor",
+        "content_digest",
+        "content_evidence_status",
+        "channel_authentication_status"
+      ],
+      "additionalProperties": false,
+      "description": "capture_success=false is structurally valid but non-qualifying. Exact snapshot linkage and source-class restrictions are semantic checks; content_digest hashes payload, not this complete capture record.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_type": {
+                "const": "provider_self_report"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "content_evidence_status": {
+                "enum": [
+                  "self_asserted",
+                  "contradicted",
+                  "unassessed"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CatalogMID": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "v1"
+        },
+        "record_kind": {
+          "const": "model_identity"
+        },
+        "record_id": {
+          "type": "string",
+          "pattern": "^MID-[0-9a-f]{16}$"
+        },
+        "originator_id": {
+          "$ref": "#/$defs/Text"
+        },
+        "canonical_name": {
+          "$ref": "#/$defs/Text"
+        },
+        "release_identity": {
+          "$ref": "#/$defs/Text"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "record_id",
+        "originator_id",
+        "canonical_name",
+        "release_identity"
+      ],
+      "additionalProperties": false,
+      "description": "Unknown release remains structurally valid and may support a scoped catalog assertion only; it cannot clear the identity gate. Compute schema ID and full byte digest separately."
+    },
+    "CatalogEID": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "v1"
+        },
+        "record_kind": {
+          "const": "service_endpoint_identity"
+        },
+        "record_id": {
+          "type": "string",
+          "pattern": "^EID-[0-9a-f]{16}$"
+        },
+        "operating_organization": {
+          "$ref": "#/$defs/Text"
+        },
+        "endpoint_identifier": {
+          "$ref": "#/$defs/Text"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "record_id",
+        "operating_organization",
+        "endpoint_identifier"
+      ],
+      "additionalProperties": false
+    },
+    "ResolvedIdentity": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ExecutorKind"
+        },
+        "identity_ref": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "version_identity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "record_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/ArtifactRef"
+            }
+          ]
+        },
+        "basis": {
+          "enum": [
+            "catalog_declared",
+            "synthetic_profile"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "identity_ref",
+        "version_identity",
+        "record_ref",
+        "basis"
+      ],
+      "additionalProperties": false
+    },
+    "RelationFinding": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "enum": [
+            "equivalent",
+            "non_equivalent",
+            "unresolved"
+          ]
+        },
+        "left_identity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/ResolvedIdentity"
+            }
+          ]
+        },
+        "right_identity": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/ResolvedIdentity"
+            }
+          ]
+        },
+        "reasons": {
+          "$ref": "#/$defs/Reasons"
+        }
+      },
+      "required": [
+        "value",
+        "left_identity",
+        "right_identity",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "equivalent",
+                  "non_equivalent"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "left_identity": {
+                "$ref": "#/$defs/ResolvedIdentity"
+              },
+              "right_identity": {
+                "$ref": "#/$defs/ResolvedIdentity"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "IdentityConditionFinding": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "enum": [
+            "withheld",
+            "conditions_satisfied"
+          ]
+        },
+        "reasons": {
+          "$ref": "#/$defs/Reasons"
+        }
+      },
+      "required": [
+        "value",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "ConstraintFinding": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "enum": [
+            "violated",
+            "unresolved"
+          ]
+        },
+        "reasons": {
+          "$ref": "#/$defs/Reasons"
+        }
+      },
+      "required": [
+        "value",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "description": "No conditions_satisfied/independent/authorized value is available for C3/C10 in either r2 domain."
+    },
+    "SourceFinding": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "side": {
+          "enum": [
+            "left",
+            "right",
+            "both"
+          ]
+        },
+        "applicability": {
+          "enum": [
+            "applicable",
+            "inapplicable",
+            "undetermined"
+          ]
+        },
+        "target_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "reasons": {
+          "$ref": "#/$defs/Reasons"
+        }
+      },
+      "required": [
+        "source_id",
+        "side",
+        "applicability",
+        "target_refs",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "CoverageFinding": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "enum": [
+            "pinned_inventory_exhausted",
+            "missing_items",
+            "undetermined"
+          ]
+        },
+        "inventory_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/RecordRef"
+            }
+          ]
+        },
+        "omission_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "reasons": {
+          "$ref": "#/$defs/Reasons"
+        }
+      },
+      "required": [
+        "value",
+        "inventory_ref",
+        "omission_refs",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "description": "Derived finding over the anchored bounded inventory only, never global completeness. It is not a caller input or a qualification flag."
+    },
+    "AssessmentResult": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "assessment_result"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "assessment_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "entry_point": {
+          "enum": [
+            "evaluate_production_r2",
+            "evaluate_synthetic_r2"
+          ]
+        },
+        "query_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/RecordRef"
+            }
+          ]
+        },
+        "evidence_context_ref": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/RecordRef"
+            }
+          ]
+        },
+        "validation_status": {
+          "enum": [
+            "valid",
+            "invalid"
+          ]
+        },
+        "validation_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Reason"
+          },
+          "minItems": 0
+        },
+        "supplied_relation": {
+          "$ref": "#/$defs/RelationFinding"
+        },
+        "R_identity": {
+          "$ref": "#/$defs/RelationFinding"
+        },
+        "Q_identity": {
+          "$ref": "#/$defs/IdentityConditionFinding"
+        },
+        "Q_C3_C10": {
+          "$ref": "#/$defs/ConstraintFinding"
+        },
+        "C3": {
+          "$ref": "#/$defs/ConstraintFinding"
+        },
+        "C10": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConstraintFinding"
+            },
+            {
+              "properties": {
+                "value": {
+                  "const": "unresolved"
+                }
+              }
+            }
+          ]
+        },
+        "coverage": {
+          "$ref": "#/$defs/CoverageFinding"
+        },
+        "source_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceFinding"
+          },
+          "minItems": 0
+        },
+        "corroboration_witness_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        },
+        "shared_ancestry_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "assessment_id",
+        "entry_point",
+        "query_ref",
+        "evidence_context_ref",
+        "validation_status",
+        "validation_reasons",
+        "supplied_relation",
+        "R_identity",
+        "Q_identity",
+        "Q_C3_C10",
+        "C3",
+        "C10",
+        "coverage",
+        "source_findings",
+        "corroboration_witness_refs",
+        "shared_ancestry_evidence_refs"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "domain": {
+                "const": "production"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "entry_point": {
+                "const": "evaluate_production_r2"
+              },
+              "Q_identity": {
+                "properties": {
+                  "value": {
+                    "const": "withheld"
+                  }
+                }
+              },
+              "C3": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "entry_point": {
+                "const": "evaluate_synthetic_r2"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "validation_status": {
+                "const": "invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "validation_reasons": {
+                "minItems": 1
+              },
+              "R_identity": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              },
+              "supplied_relation": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              },
+              "Q_identity": {
+                "properties": {
+                  "value": {
+                    "const": "withheld"
+                  }
+                }
+              },
+              "Q_C3_C10": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              },
+              "C3": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              },
+              "C10": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "query_ref": {
+                "$ref": "#/$defs/RecordRef"
+              },
+              "evidence_context_ref": {
+                "$ref": "#/$defs/RecordRef"
+              },
+              "validation_reasons": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "C3": {
+                "properties": {
+                  "value": {
+                    "const": "violated"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "Q_C3_C10": {
+                "properties": {
+                  "value": {
+                    "const": "violated"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "Q_C3_C10": {
+                "properties": {
+                  "value": {
+                    "const": "unresolved"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Q_identity": {
+                "properties": {
+                  "value": {
+                    "const": "conditions_satisfied"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "domain": {
+                "const": "synthetic"
+              },
+              "validation_status": {
+                "const": "valid"
+              },
+              "R_identity": {
+                "properties": {
+                  "value": {
+                    "const": "non_equivalent"
+                  }
+                }
+              },
+              "coverage": {
+                "properties": {
+                  "value": {
+                    "const": "pinned_inventory_exhausted"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Output domain is derived from the entry point. Only clean governed aggregation may populate R_identity. Production Q_identity is withheld and production C3 unresolved. Synthetic C3 can only be violated under SYN-C3-CONFLICT-1 or unresolved; C10 is unresolved in both domains. Q_C3_C10 mirrors C3; no positive combined result exists. Invalid envelopes remain unresolved/withheld. No lineage or authority status is writable."
+    },
+    "DeclaredUnavailableSource": {
+      "type": "object",
+      "properties": {
+        "source_key": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "locator": {
+          "$ref": "#/$defs/Text"
+        },
+        "expected_record_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Identifier"
+            }
+          ]
+        },
+        "expected_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Sha256"
+            }
+          ]
+        },
+        "endpoint_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        },
+        "requested_name": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Text"
+            }
+          ]
+        }
+      },
+      "required": [
+        "source_key",
+        "locator",
+        "expected_record_id",
+        "expected_sha256",
+        "endpoint_id",
+        "requested_name"
+      ],
+      "additionalProperties": false,
+      "description": "Pinned declaration of a known unavailable source, including unknown bytes/digest/scope. Null digest never acts as an affirmative ArtifactRef; unknown endpoint/name remains potentially relevant until applicability is established."
+    },
+    "AvailabilityEvidence": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "availability_evidence"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "availability_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "subject_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "minItems": 1
+        },
+        "available_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "observation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "observer_executor_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "rule_version_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "availability_id",
+        "subject_refs",
+        "available_at",
+        "observation_ref",
+        "observer_executor_ref",
+        "rule_version_ref"
+      ],
+      "additionalProperties": false,
+      "description": "Retained availability claim, not an established/complete flag. Only an exact harness-pinned synthetic row can establish fictional availability in r2; production availability registry is empty. Exact subject byte/digest coverage, observation and capture lower bounds, and mode-specific event/knowledge upper bound are recomputed. Timestamp declarations alone are insufficient; catalog-declared supplied_relation may survive while R_identity remains unresolved."
+    },
+    "AvailabilityRow": {
+      "$ref": "#/$defs/AvailabilityEvidence"
+    },
+    "SyntheticDirectedEdge": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ai_lab.qualification.r2/1"
+        },
+        "record_kind": {
+          "const": "synthetic_directed_edge"
+        },
+        "domain": {
+          "const": "synthetic"
+        },
+        "rule_id": {
+          "const": "SYN-C3-CONFLICT-1"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "edge_class": {
+          "$ref": "#/$defs/EdgeClass"
+        },
+        "observation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "schema_version",
+        "record_kind",
+        "domain",
+        "rule_id",
+        "source_ref",
+        "target_ref",
+        "edge_class",
+        "observation_ref"
+      ],
+      "additionalProperties": false,
+      "description": "Fictional directional premise only when its complete bytes and every field match an edge row in the harness-pinned SYN-C3-CONFLICT-1 fixture. A hash, this shape, or an unattested edge is not real directional evidence; no spawned-only edge kind exists."
+    },
+    "SyntheticDirectedEdgeRow": {
+      "type": "object",
+      "properties": {
+        "edge_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "edge": {
+          "$ref": "#/$defs/SyntheticDirectedEdge"
+        }
+      },
+      "required": [
+        "edge_ref",
+        "edge"
+      ],
+      "additionalProperties": false,
+      "description": "edge_ref must identify the exact serialized edge bytes; edge is their decoded value. Both must equal the immutable fixture row, including source/target/class/observation."
+    },
+    "SyntheticAncestorAssessmentRow": {
+      "type": "object",
+      "properties": {
+        "assessment_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "ancestor_invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "adjudicator_invocation_ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "assessment_ref",
+        "query_ref",
+        "ancestor_invocation_ref",
+        "adjudicator_invocation_ref"
+      ],
+      "additionalProperties": false,
+      "description": "The exact retained synthetic AssessmentResult and Query must bind this invocation pair. Recompute identity-only R_identity under the same anchored fixture/policy and require equivalent; do not trust the stored label and do not recurse into C3/C10. The ancestor must start a verified path to the claim."
+    },
+    "SyntheticC3ConflictContextRow": {
+      "type": "object",
+      "properties": {
+        "row_id": {
+          "$ref": "#/$defs/Identifier"
+        },
+        "context": {
+          "$ref": "#/$defs/C3Context"
+        },
+        "edge_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SyntheticDirectedEdgeRow"
+          },
+          "minItems": 0
+        },
+        "ancestor_assessment_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SyntheticAncestorAssessmentRow"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "row_id",
+        "context",
+        "edge_rows",
+        "ancestor_assessment_rows"
+      ],
+      "additionalProperties": false,
+      "description": "Full C3Context must equal one unique harness-pinned context row. Check all edge bytes, observation bytes, ordered endpoints and edge count. A supported adjudicator-to-claim path or supported equivalent-ancestor-to-claim path gives only synthetic C3=violated. Missing unrelated coverage cannot erase a proved conflict; unknown/unsupported direction remains unresolved."
+    },
+    "SyntheticC3ConflictFixture": {
+      "type": "object",
+      "properties": {
+        "rule_id": {
+          "const": "SYN-C3-CONFLICT-1"
+        },
+        "context_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SyntheticC3ConflictContextRow"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "rule_id",
+        "context_rows"
+      ],
+      "additionalProperties": false,
+      "description": "Negative-conflict fixture constructor, not an ancestry coverage or positive qualification profile. Query cannot provide/replace the fixture anchor. No production use or positive C3/C10 result exists."
+    }
+  }
+}

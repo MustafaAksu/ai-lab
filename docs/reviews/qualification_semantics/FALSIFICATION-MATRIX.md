@@ -1,13 +1,18 @@
-# Step 3 falsification matrix — proposed r1
+# Step 3 falsification matrix — proposed r2
 
-[ALG] **31 planned scenario families; not an executed mutation score.**
+[ALG] **48 planned scenario families; not an executed mutation score.**
 F01–F13 preserve the [original preparation matrix](STEP-3-PREPARATION.md).
-F14–F31 add the R13/R14 and multi-source cases. A family can contain multiple
+F14–F31 add the R13/R14 and multi-source cases. Those 31 rows are preserved;
+F32–F48 add the r2 review obligations. A family can contain multiple
 parameterized tests; the family count is not a pytest count.
 
 The oracle is the [proposed contract](EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md),
 which requires separate review/admission. Existing-runtime observations are
 reported separately in [SOURCE-REVIEW-BASELINE.md](SOURCE-REVIEW-BASELINE.md).
+The r2 rules below refine the retained r1 oracles: positive tool/human bindings
+are synthetic only; unsupported endpoint aliases remain unresolved; C3/C10 have
+no positive value; production Q_identity is always withheld. The preserved
+rows do not admit a live profile or override the r2 boundary.
 
 ## Original 13 families, retained and made explicit
 
@@ -55,6 +60,38 @@ future-contract tests. In particular, the synthetic corroborated labels in
 F14/F22–F25/F28 exercise the current Boolean helper; they are not independently
 corroborated identity evidence.
 
+## r2 additions and refined oracles
+
+[ALG] The exact oracle is [DETERMINISTIC-RULES.md](r2/DETERMINISTIC-RULES.md)
+plus the [consumer matrix](r2/CONSUMER-COMPATIBILITY.md). The new executed
+baseline is [R2-BASELINE-OBSERVATIONS.md](r2/R2-BASELINE-OBSERVATIONS.md).
+Its 189 operation observations are not 189 successful corrected-behavior tests.
+
+| ID | Fixture / counterexample | Required future result | Current-baseline coverage |
+| --- | --- | --- | --- |
+| F32 | capture_success=false; string false; unsuccessful source with favorable payload; unsuccessful source proven irrelevant | False supplies no positive mapping/name-absence evidence; potentially relevant failure remains unresolved. Wrong type is invalid. Proven irrelevant failure has a named exclusion. | Failed capture acceptance and wrong-type rejection executed |
+| F33 | resolves_to targets true, false, 1, 0, 7, 1.5, empty string, arbitrary string, null, list; true/1 collision and mixed int/string ambiguity | Type/domain checks precede equality, sets and sorting; no truthiness/coercion; invalid target cannot resolve, annotate, clear an adapter or raise an uncontrolled exception | Scalar propagation, truthiness differences and mixed-type exception executed |
+| F34 | Valid MID; dangling MID; existing wrong-kind EID; ID-preserving differing full bytes; identity-field change with stale ID | Recompute named schema ID, check kind, dereference pinned target and hash full bytes. Missing target refuses; wrong kind/invalid ID/byte conflict has its precise typed reason. Exact duplicate bytes are a control. | Target-domain failures executed; direct MID-schema controls executed; old resolver has no target-registry input |
+| F35 | MID release_identity=unknown versus supported nonempty release with exact witness | Unknown release may preserve a clean catalog-record relation but never Q_identity; stronger release finding requires its scoped witness | Unknown release accepted by baseline; 132/132 retained MID records use unknown |
+| F36 | scope=null; unsupported non-null string; object scope; expired unsupported scope | Null has the frozen snapshot/name/property/interval meaning; unsupported string cannot act as wildcard. Wrong shape is invalid; proven time exclusion is distinct from unknown scope. | Null/string/object behaviors executed |
+| F37 | Reversed interval; zero-length interval; missing/invalid timestamp; equal UTC instants at distinct offsets | Reversed interval is invalid; valid equal bounds are inclusive; malformed/naive times rejected; normalized instant comparison deterministic | Reversed/zero-length/malformed controls executed |
+| F38 | Capture after event, capture before observation, availability after cutoff, later import of earlier available bytes, absent availability evidence, changed fixture availability row | Chronology error is invalid; valid but after-bound evidence is excluded; unproved availability unresolved. Retrospective cutoff does not back-project a later observation. Production availability profile remains absent. | Baseline capture/event chronology gaps and future-observation control executed; new availability rule not implemented |
+| F39 | Run identical R13/R14/failed-capture/witness fixtures through every public resolver, equivalence, annotation, graph read and direct Boolean constructor | Same context checks on all paths; old no-context path refuses; legacy resolver never positively projects in r2; blocks_adjudication always true; historical annotations do not establish qualification | Annotation and direct-constructor acceptance/bypass surfaces executed |
+| F40 | Same assessment ID with different bytes; changed reason/outcome under same legacy RES ID; interrupted write; identical replay | New content-bound assessment storage refuses different bytes and writes atomically; identical replay idempotent. Old annotations retained as history; no silent overwrite or promotion. General catalog-writer redesign is outside this slice. | Legacy RES/CAP overwrite and reason-ID collision executed |
+| F41 | Disable new resolver/profile; revert body while consumer remains active; unsupported schema/context; exception path | Refusal shim or disabled consumer remains active. No rollback may reinstate first-success R13/R14 or unchecked Boolean permission. | Proposed |
+| F42 | Remove a relevant source, root, known omission or unavailable unknown-digest declaration; replace pinned commit/tree/selector/cutoff; forge complete=true; genuine out-of-scope control | Consumer anchor and deterministic enumeration reject narrowing. Unknown bytes remain explicit omissions. Supplied agreement cannot become clean R_identity; genuine exclusion carries its reason. | Proposed |
+| F43 | All 3×3 valid/missing/mismatched witness pairs; every endpoint/name/target/event/property/evidence/verifier/rule/verification/scope mismatch; all 4×4 legacy evidence-class pairs | Only two exact accepted synthetic witnesses plus clean non-equivalent R and coverage can satisfy synthetic Q_identity; any relevant conflict, unknown release or mismatch withholds it. Labels alone never substitute. | Baseline label-only path executed; new witness contract not implemented |
+| F44 | Perfect asserted model mapping or fabricated live endpoint/availability/witness/tool/human/ancestry profile | All six production profile registries remain empty and production Q_identity withheld; caller profile registration rejected | Proposed |
+| F45 | Tool issuer/release/alias/execution mismatch; human person/principal non-bijection, role/account/key alias, missing actor; revocation at event; forged test_mode or synthetic result replay | Exact harness-pinned fixture chain and revocation rules; no caller-selected trust anchor, namespace or domain. Synthetic success cannot create real binding. Valid same/distinct fixtures remain controls. | Proposed |
+| F46 | Valid pinned synthetic direct/equivalent C3 conflict plus incomplete unrelated ancestry; opaque/unbound edge references; no conflict with incomplete coverage | Accepted negative-conflict fixture yields violated despite other unknowns; a digest alone never establishes direction. Unsupported/production edge evidence and absent conflict remain unresolved; no positive C3 output. | Proposed |
+| F47 | Exact C10 run versus wrong run/property/verifier/version/input/environment/result/producer/review; known shared ancestry versus merely unknown ancestry; no receiving-decision consequence context | Retain exact mismatch/shared/unknown diagnostics; no lineage upgrade. C10 stays unresolved in r2 because high-consequence reliance and accepted live review conditions are outside its input/accepted-rule scope. | Proposed |
+| F48 | Tool adjudicator with model/human ancestor, model wrapper, swapped cross-kind pairs; attempt Step 5 activation from synthetic Q_identity | Cross-kind unresolved; material influence cannot be erased by wrapper/kind. Q_C3_C10 cannot become positive; Step 5 readiness is not established. | Proposed |
+
+[ALG] F12/F13's retained r1 wording does not authorize an affirmative lineage
+classification from unknown ancestry. F17's hypothetical admitted alias is
+outside r2, whose alias registry is empty. F32–F48 specify the narrower r2
+oracles. The schema corpus checks **syntax**, not any of these behavior families.
+
 ## Common execution requirements for the future admitted slice
 
 - Inspect every selected test's successful unmodified baseline before mutation.
@@ -62,8 +99,10 @@ corroborated identity evidence.
 - Permute the complete evidence sets and swap left/right arguments; compare
   normalized reasons and provenance, not only the relation string.
 - Include positive controls: exact matching endpoint; clean applicable mapping;
-  established same/different tool bindings; established same/distinct principal
-  actors; valid alias interval. A universal-refusal implementation fails.
+  synthetic same/different tool bindings; synthetic same/distinct principal
+  actors; valid fixture alias interval. A universal-refusal implementation fails
+  these synthetic relation/identity controls; the deliberate production gate
+  refusal and non-positive C3/C10 boundary are required outcomes.
 - Do not count collection/selection/usage/internal errors, process launch
   failures or timeout as successful falsification.
 - Preserve synthetic fixture labels. Actual independence/authorization claims
