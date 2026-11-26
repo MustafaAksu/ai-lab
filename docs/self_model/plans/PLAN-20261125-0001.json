@@ -185,7 +185,7 @@
   "Retain a fail-closed refusal shim at every affected public/legacy entry point. A reviewable code revert is allowed only if it cannot reinstate R13/R14 permitting, first-success aggregation or an unchecked adapter; an old accepting implementation is never the rollback target.",
   "Preserve binding assessments, source manifests, prior records, mutation failures and reviews. Revocation/supersession is append-only; never delete or relabel historical evidence to obtain success. Production positive gates stay disabled throughout rollback."
  ],
- "next_action": "Implement only 3A under WARR-20261126-0001 A1–A4 and DECISION-20261126-0001, beginning with unconditional legacy refusal before connecting the full model/source pipeline. Retain scoped test, targeted assertion-falsification and exact-subject VERIFY evidence for review. Do not implement 3B/3C, merge, complete the PLAN, close GAPs or activate autonomy. Separate implementation review and PI completion/next-increment decisions remain required.",
+ "next_action": "Review the implemented 3A slice at 3448f4dd6b873d837841cffe3294c984fe9c859b and its retained exact-subject VERIFY-20261126-0001, separate synthetic-merge VERIFY-20261126-0002 and 20 targeted assertion-falsification results. Assess A1-A4 implementation and the stated limits before any separate PI slice-completion or next-increment decision. PLAN remains admitted for 3A only; 3B/3C are not admitted. No merge, whole-PLAN completion, GAP closure or autonomy activation is authorized.",
  "notes": [
   "created_at is an actual UTC clock observation at preparation start on 2026-11-25, not an inferred client-message timestamp. The proposal baseline is main commit 5515f55894b10ad70c321340257f67a960dcc382.",
   "R13 and R14 in this proposal label the requested endpoint-binding and relevant-conflict-retention findings; they are not a renumbering of ABS-0004 C13/C14.",
@@ -401,5 +401,18 @@
    "SYN-C3-CONFLICT-1"
   ]
  },
- "deferred_before_3c": "Before any separate 3C admission, distinguish catalog-record equality from affirmative executor equivalence. Two invocations resolving to the same MID with release_identity=unknown may conservatively block adjudication, but do not by that fact establish an actual equivalent-executor C3 violation. SYN-C3-CONFLICT-1 is not implemented or relied on in 3A."
+ "deferred_before_3c": "Before any separate 3C admission, distinguish catalog-record equality from affirmative executor equivalence. Two invocations resolving to the same MID with release_identity=unknown may conservatively block adjudication, but do not by that fact establish an actual equivalent-executor C3 violation. SYN-C3-CONFLICT-1 is not implemented or relied on in 3A.",
+ "implementation_evidence_3a": {
+  "recorded_at": "2026-11-26T07:23:49+00:00",
+  "state": "implemented_pending_review",
+  "implementation_commit": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+  "local_verification_id": "VERIFY-20261126-0001",
+  "ci_verification_id": "VERIFY-20261126-0002",
+  "ci_subject_commit": "f1bafd10e35328055b5c68686cc01c3dff219101",
+  "ci_run_id": 45774343203,
+  "validation_report": "docs/reviews/qualification_semantics/3a/VALIDATION.json",
+  "falsification_report": "docs/reviews/qualification_semantics/3a/FALSIFICATION.json",
+  "falsification_sha256": "3f710c5cce2d708d612175e8b555b11ca6a5d40e9bcd58b3268ad637a1c67844",
+  "scope": "Only A1-A4 admitted 3A; evidence import is not implementation acceptance, merge permission, independence or completion."
+ }
 }
