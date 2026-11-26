@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_r16_nullable_proof_artifact_ids_still_retain_exact_availability_records _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-29/test_r16_nullable_proof_artifa0')
+
+    def test_r16_nullable_proof_artifact_ids_still_retain_exact_availability_records(tmp_path):
+        bundle = _timed_fixture(tmp_path)
+        paths = ("fixture/source-availability-0.json", "fixture/witness-availability-0.json")
+        for path in paths:
+            # ID omission is legal on ArtifactRef; it does not erase the checked
+            # AvailabilityEvidence record's required availability_id in its bytes.
+            bundle.refs[path]["record_id"] = None
+            for references in (bundle.context["provided_artifact_refs"],
+                               bundle.fixture["fixture_artifact_refs"],
+                               bundle.source_refs[0]["availability_evidence_refs"]):
+                for reference in references:
+                    if reference["path"] == path:
+                        reference["record_id"] = None
+        bundle.seal()
+        result = bundle.evaluate()
+        assert result["Q_identity"]["value"] == "conditions_satisfied"
+        timing = [r for r in result["Q_identity"]["reasons"]
+                  if r["side"] == "left" and r["detail"].startswith("accepted fictional witness chain timing: ")]
+        assert len(timing) == 1
+        for path in paths:
+            data = bundle.artifacts[path]
+            expected = {"record_id": json.loads(data)["availability_id"], "sha256": digest(data)}
+>           assert expected in timing[0]["subject_refs"]
+E           AssertionError: assert {'record_id': 'AV-source-0', 'sha256': 'sha256:13d5056a409891ab4e4b9b853da85c92bb31f66c3bc3af05cdcc4bfb1fc64c7d'} in [{'record_id': 'CAP-498bc63494abcdcb', 'sha256': 'sha256:4f0ad3ea3e5f507dd430bfaceef6ced53939dbef3e23b70f2f6bebadff6d2...6d38284'}, {'record_id': 'WIT-0', 'sha256': 'sha256:6dbcab5d5df035c9659da7e8729ec594b0155db5f55f822e71c7e9da51e451cc'}]
+
+tests/test_qualification_r16.py:154: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_qualification_r16.py::test_r16_nullable_proof_artifact_ids_still_retain_exact_availability_records
+1 failed, 10 deselected in 0.38s

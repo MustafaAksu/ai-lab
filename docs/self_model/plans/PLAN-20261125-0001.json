@@ -185,7 +185,7 @@
   "Retain a fail-closed refusal shim at every affected public/legacy entry point. A reviewable code revert is allowed only if it cannot reinstate R13/R14 permitting, first-success aggregation or an unchecked adapter; an old accepting implementation is never the rollback target.",
   "Preserve binding assessments, source manifests, prior records, mutation failures and reviews. Revocation/supersession is append-only; never delete or relabel historical evidence to obtain success. Production positive gates stay disabled throughout rollback."
  ],
- "next_action": "Review the implemented 3A slice at 3448f4dd6b873d837841cffe3294c984fe9c859b and its retained exact-subject VERIFY-20261126-0001, separate synthetic-merge VERIFY-20261126-0002 and 20 targeted assertion-falsification results. Assess A1-A4 implementation and the stated limits before any separate PI slice-completion or next-increment decision. PLAN remains admitted for 3A only; 3B/3C are not admitted. No merge, whole-PLAN completion, GAP closure or autonomy activation is authorized.",
+ "next_action": "Review R15-R18 corrections at 6ebe167d0a1465f84e789ab58619af00ef2c6c35, the new review-response/validation package, retained first failed local VERIFY-20261126-0003, successful exact-source repeat VERIFY-20261126-0004, separate synthetic-merge VERIFY-20261126-0005 and 28 targeted guard falsifications. Prior 3448f4dd evidence keeps its historical subject and coverage. Assess A1-A4 before any separate PI slice-completion or next-increment decision. PLAN remains admitted for 3A only; 3B/3C are not admitted. No merge, whole-PLAN completion, GAP closure or autonomy activation.",
  "notes": [
   "created_at is an actual UTC clock observation at preparation start on 2026-11-25, not an inferred client-message timestamp. The proposal baseline is main commit 5515f55894b10ad70c321340257f67a960dcc382.",
   "R13 and R14 in this proposal label the requested endpoint-binding and relevant-conflict-retention findings; they are not a renumbering of ABS-0004 C13/C14.",
@@ -414,5 +414,29 @@
   "falsification_report": "docs/reviews/qualification_semantics/3a/FALSIFICATION.json",
   "falsification_sha256": "3f710c5cce2d708d612175e8b555b11ca6a5d40e9bcd58b3268ad637a1c67844",
   "scope": "Only A1-A4 admitted 3A; evidence import is not implementation acceptance, merge permission, independence or completion."
+ },
+ "implementation_review_corrections_3a": {
+  "recorded_at": "2026-11-26T09:59:22+00:00",
+  "state": "corrected_pending_review",
+  "review_id": 6070899882,
+  "reviewed_commit": "877b94922fc9acf882930cd275d2889038cada33",
+  "implementation_commit": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+  "corrected_findings": [
+   "R15",
+   "R16",
+   "R17",
+   "R18"
+  ],
+  "failed_local_verification_id": "VERIFY-20261126-0003",
+  "local_verification_id": "VERIFY-20261126-0004",
+  "ci_verification_id": "VERIFY-20261126-0005",
+  "ci_subject_commit": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+  "ci_run_id": 45795395979,
+  "contract_delta": "docs/reviews/qualification_semantics/3a/r15-r18/CONTRACT-DELTA.md",
+  "review_response": "docs/reviews/qualification_semantics/3a/r15-r18/REVIEW-RESPONSE.md",
+  "validation_report": "docs/reviews/qualification_semantics/3a/r15-r18/VALIDATION.json",
+  "falsification_report": "docs/reviews/qualification_semantics/3a/r15-r18/FALSIFICATION.json",
+  "falsification_sha256": "ae10fa98d44207dbe7dd68bbeadc27d1108890f2a606968b80095ab057dd2af0",
+  "scope": "Existing 3A admission only; neither corrections/evidence nor same-provider checking confer review acceptance, independence, completion, merge permission or 3B/3C admission."
  }
 }

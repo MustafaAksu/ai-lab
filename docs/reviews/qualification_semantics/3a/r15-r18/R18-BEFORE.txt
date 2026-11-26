@@ -1,0 +1,327 @@
+FFFFFFFF..FFF..                                                          [100%]
+=================================== FAILURES ===================================
+_ test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-missing] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_missing_or_changed_sc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee6e8fb0>
+mode = 'missing', entry = 'synthetic'
+
+    @pytest.mark.parametrize("mode", ["missing", "digest"])
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_missing_or_changed_schema_has_declared_bootstrap_exception(tmp_path, monkeypatch, mode, entry):
+        fixture = build_fixture(tmp_path)
+        anchor = fixture.anchor()
+        query = copy.deepcopy(fixture.query)
+        query["domain"] = entry
+        code = broken_schema(tmp_path, monkeypatch, mode)
+        call = (lambda: evaluate_synthetic_r2(query, anchor=anchor)) if entry == "synthetic" else (lambda: evaluate_production_r2(query))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, FileNotFoundError(2, 'No such file or directory'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed FileNotFoundError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-digest] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_missing_or_changed_sc1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee4878c0>
+mode = 'digest', entry = 'synthetic'
+
+    @pytest.mark.parametrize("mode", ["missing", "digest"])
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_missing_or_changed_schema_has_declared_bootstrap_exception(tmp_path, monkeypatch, mode, entry):
+        fixture = build_fixture(tmp_path)
+        anchor = fixture.anchor()
+        query = copy.deepcopy(fixture.query)
+        query["domain"] = entry
+        code = broken_schema(tmp_path, monkeypatch, mode)
+        call = (lambda: evaluate_synthetic_r2(query, anchor=anchor)) if entry == "synthetic" else (lambda: evaluate_production_r2(query))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, QualificationError('ARTIFACT_DIGEST_MISMATCH: frozen r2 schema bytes changed'))
+code = 'QUALIFICATION_SCHEMA_DIGEST_MISMATCH'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed QualificationError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-missing] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_missing_or_changed_sc2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee487b00>
+mode = 'missing', entry = 'production'
+
+    @pytest.mark.parametrize("mode", ["missing", "digest"])
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_missing_or_changed_schema_has_declared_bootstrap_exception(tmp_path, monkeypatch, mode, entry):
+        fixture = build_fixture(tmp_path)
+        anchor = fixture.anchor()
+        query = copy.deepcopy(fixture.query)
+        query["domain"] = entry
+        code = broken_schema(tmp_path, monkeypatch, mode)
+        call = (lambda: evaluate_synthetic_r2(query, anchor=anchor)) if entry == "synthetic" else (lambda: evaluate_production_r2(query))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, FileNotFoundError(2, 'No such file or directory'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed FileNotFoundError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-digest] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_missing_or_changed_sc3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee486750>
+mode = 'digest', entry = 'production'
+
+    @pytest.mark.parametrize("mode", ["missing", "digest"])
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_missing_or_changed_schema_has_declared_bootstrap_exception(tmp_path, monkeypatch, mode, entry):
+        fixture = build_fixture(tmp_path)
+        anchor = fixture.anchor()
+        query = copy.deepcopy(fixture.query)
+        query["domain"] = entry
+        code = broken_schema(tmp_path, monkeypatch, mode)
+        call = (lambda: evaluate_synthetic_r2(query, anchor=anchor)) if entry == "synthetic" else (lambda: evaluate_production_r2(query))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, QualificationError('ARTIFACT_DIGEST_MISMATCH: frozen r2 schema bytes changed'))
+code = 'QUALIFICATION_SCHEMA_DIGEST_MISMATCH'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed QualificationError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+____ test_r18_bootstrap_failure_precedes_invalid_query_envelope[synthetic] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_bootstrap_failure_pre0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee4bfa70>
+entry = 'synthetic'
+
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_bootstrap_failure_precedes_invalid_query_envelope(tmp_path, monkeypatch, entry):
+        code = broken_schema(tmp_path, monkeypatch, "missing")
+        call = (lambda: evaluate_synthetic_r2(b"invalid-json", anchor=None)) if entry == "synthetic" else (lambda: evaluate_production_r2(b"invalid-json"))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, FileNotFoundError(2, 'No such file or directory'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed FileNotFoundError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+____ test_r18_bootstrap_failure_precedes_invalid_query_envelope[production] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_bootstrap_failure_pre1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee45e1e0>
+entry = 'production'
+
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_bootstrap_failure_precedes_invalid_query_envelope(tmp_path, monkeypatch, entry):
+        code = broken_schema(tmp_path, monkeypatch, "missing")
+        call = (lambda: evaluate_synthetic_r2(b"invalid-json", anchor=None)) if entry == "synthetic" else (lambda: evaluate_production_r2(b"invalid-json"))
+>       assert_bootstrap(observe(call), code)
+
+tests/test_qualification_r18.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, FileNotFoundError(2, 'No such file or directory'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed FileNotFoundError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding[synthetic] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee4863c0>
+entry = 'synthetic'
+
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding(monkeypatch, entry):
+        class UnavailableSchema:
+            reads = 0
+    
+            def read_bytes(self):
+                self.reads += 1
+                raise OSError("unavailable fixture schema")
+    
+        source = UnavailableSchema()
+        monkeypatch.setattr(qr, "SCHEMA_PATH", source)
+        call = (lambda: evaluate_synthetic_r2({}, anchor=None)) if entry == "synthetic" else (lambda: evaluate_production_r2({}))
+>       assert_bootstrap(observe(call), "QUALIFICATION_SCHEMA_UNAVAILABLE")
+
+tests/test_qualification_r18.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, OSError('unavailable fixture schema'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed OSError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding[production] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee486fc0>
+entry = 'production'
+
+    @pytest.mark.parametrize("entry", ["synthetic", "production"])
+    def test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding(monkeypatch, entry):
+        class UnavailableSchema:
+            reads = 0
+    
+            def read_bytes(self):
+                self.reads += 1
+                raise OSError("unavailable fixture schema")
+    
+        source = UnavailableSchema()
+        monkeypatch.setattr(qr, "SCHEMA_PATH", source)
+        call = (lambda: evaluate_synthetic_r2({}, anchor=None)) if entry == "synthetic" else (lambda: evaluate_production_r2({}))
+>       assert_bootstrap(observe(call), "QUALIFICATION_SCHEMA_UNAVAILABLE")
+
+tests/test_qualification_r18.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, OSError('unavailable fixture schema'))
+code = 'QUALIFICATION_SCHEMA_UNAVAILABLE'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed OSError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{not-json] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_unparseable_or_invali0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee487d70>
+content = b'{not-json'
+
+    @pytest.mark.parametrize("content", [b"{not-json", b'{"type":7}'])
+    def test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure(tmp_path, monkeypatch, content):
+        # Fault injection exercises the decoding/metaschema boundary independently
+        # of the immutable production digest; this is not a new accepted schema.
+        path = tmp_path / "invalid-schema.json"
+        path.write_bytes(content)
+        monkeypatch.setattr(qr, "SCHEMA_PATH", path)
+        monkeypatch.setattr(qr, "SCHEMA_SHA256", hashlib.sha256(content).hexdigest())
+>       assert_bootstrap(observe(lambda: evaluate_production_r2({})), "QUALIFICATION_SCHEMA_INVALID")
+
+tests/test_qualification_r18.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, QualificationError('INVALID_SCHEMA: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)'))
+code = 'QUALIFICATION_SCHEMA_INVALID'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed QualificationError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_ test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{"type":7}] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-24/test_r18_unparseable_or_invali1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee4dd220>
+content = b'{"type":7}'
+
+    @pytest.mark.parametrize("content", [b"{not-json", b'{"type":7}'])
+    def test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure(tmp_path, monkeypatch, content):
+        # Fault injection exercises the decoding/metaschema boundary independently
+        # of the immutable production digest; this is not a new accepted schema.
+        path = tmp_path / "invalid-schema.json"
+        path.write_bytes(content)
+        monkeypatch.setattr(qr, "SCHEMA_PATH", path)
+        monkeypatch.setattr(qr, "SCHEMA_SHA256", hashlib.sha256(content).hexdigest())
+>       assert_bootstrap(observe(lambda: evaluate_production_r2({})), "QUALIFICATION_SCHEMA_INVALID")
+
+tests/test_qualification_r18.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+observed = (None, <SchemaError: '7 is not valid under any of the given schemas'>)
+code = 'QUALIFICATION_SCHEMA_INVALID'
+
+    def assert_bootstrap(observed, code):
+        value, error = observed
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None, f"no declared bootstrap type; observed {type(error).__name__}"
+E       AssertionError: no declared bootstrap type; observed SchemaError
+E       assert None is not None
+
+tests/test_qualification_r18.py:36: AssertionError
+_____________ test_r18_bootstrap_exception_itself_needs_no_schema ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe6ee4dc3b0>
+
+    def test_r18_bootstrap_exception_itself_needs_no_schema(monkeypatch):
+        expected = getattr(qr, "QualificationBootstrapError", None)
+>       assert expected is not None
+E       assert None is not None
+
+tests/test_qualification_r18.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-missing]
+FAILED tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-digest]
+FAILED tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-missing]
+FAILED tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-digest]
+FAILED tests/test_qualification_r18.py::test_r18_bootstrap_failure_precedes_invalid_query_envelope[synthetic]
+FAILED tests/test_qualification_r18.py::test_r18_bootstrap_failure_precedes_invalid_query_envelope[production]
+FAILED tests/test_qualification_r18.py::test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding[synthetic]
+FAILED tests/test_qualification_r18.py::test_r18_bootstrap_error_does_not_reload_schema_for_its_own_encoding[production]
+FAILED tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{not-json]
+FAILED tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{"type":7}]
+FAILED tests/test_qualification_r18.py::test_r18_bootstrap_exception_itself_needs_no_schema
+11 failed, 4 passed in 1.47s

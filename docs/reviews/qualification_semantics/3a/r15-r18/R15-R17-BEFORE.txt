@@ -1,0 +1,1168 @@
+FFFFFFFFF...F...FFFFFFFFFFFFFFFFFF.                                      [100%]
+=================================== FAILURES ===================================
+__ test_r15_original_anchor_keeps_adverse_source_despite_replacement[commit] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_original_anchor_keeps0')
+replacement_kind = 'commit'
+
+    @pytest.mark.parametrize("replacement_kind", ["commit", "tree"])
+    def test_r15_original_anchor_keeps_adverse_source_despite_replacement(tmp_path, replacement_kind):
+        original, favorable, a, b, tree_a, tree_b = replacement_fixtures(tmp_path)
+        git(original.root, "replace", *( (a, b) if replacement_kind == "commit" else (tree_a, tree_b) ))
+        assert git(original.root, "rev-parse", "--verify", a + "^{commit}") == a
+        if replacement_kind == "commit":
+            assert git(original.root, "rev-parse", a + "^{tree}") == tree_b
+        result, error = outcome(original.evaluate)
+>       assert error is None, f"replacement changed a genuine pin: {error!r}"
+E       AssertionError: replacement changed a genuine pin: QualificationError('INVENTORY_PIN_MISMATCH: inventory root tree does not match commit')
+E       assert QualificationError('INVENTORY_PIN_MISMATCH: inventory root tree does not match commit') is None
+
+tests/test_qualification_r15_r17.py:66: AssertionError
+___ test_r15_original_anchor_keeps_adverse_source_despite_replacement[tree] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_original_anchor_keeps1')
+replacement_kind = 'tree'
+
+    @pytest.mark.parametrize("replacement_kind", ["commit", "tree"])
+    def test_r15_original_anchor_keeps_adverse_source_despite_replacement(tmp_path, replacement_kind):
+        original, favorable, a, b, tree_a, tree_b = replacement_fixtures(tmp_path)
+        git(original.root, "replace", *( (a, b) if replacement_kind == "commit" else (tree_a, tree_b) ))
+        assert git(original.root, "rev-parse", "--verify", a + "^{commit}") == a
+        if replacement_kind == "commit":
+            assert git(original.root, "rev-parse", a + "^{tree}") == tree_b
+        result, error = outcome(original.evaluate)
+>       assert error is None, f"replacement changed a genuine pin: {error!r}"
+E       AssertionError: replacement changed a genuine pin: QualificationError('INVENTORY_PIN_MISMATCH: untracked catalog artifact: docs/catalog/snap/SNAP-8a1df27faaf54e2b.json')
+E       assert QualificationError('INVENTORY_PIN_MISMATCH: untracked catalog artifact: docs/catalog/snap/SNAP-8a1df27faaf54e2b.json') is None
+
+tests/test_qualification_r15_r17.py:66: AssertionError
+_ test_r15_replacement_cannot_admit_pruned_inventory_claiming_original_commit __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_replacement_cannot_ad0')
+
+    def test_r15_replacement_cannot_admit_pruned_inventory_claiming_original_commit(tmp_path):
+        original, favorable, a, b, tree_a, tree_b = replacement_fixtures(tmp_path)
+        git(original.root, "replace", a, b)
+        favorable.root = original.root
+        favorable.inventory["repository_commit"] = a
+        favorable.seal()
+        result, error = outcome(favorable.evaluate)
+>       assert isinstance(error, qr.QualificationError), (
+            "replacement hid the adverse source and admitted a false commit pin", result, error)
+E       AssertionError: ('replacement hid the adverse source and admitted a false commit pin', {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}, None)
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:82: AssertionError
+__________ test_r15_blob_replacement_does_not_change_retained_payload __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_blob_replacement_does0')
+
+    def test_r15_blob_replacement_does_not_change_retained_payload(tmp_path):
+        fixture = build_fixture(tmp_path)
+        payload_ref = fixture.source_refs[0]["payload_ref"]
+        original_bytes = fixture.artifacts[payload_ref["path"]]
+        replacement_bytes = b"replacement payload is not the committed payload\n"
+        replacement = git(fixture.root, "hash-object", "-w", "--stdin", input=replacement_bytes)
+        git(fixture.root, "replace", payload_ref["git_blob_sha1"], replacement)
+        assert subprocess.check_output(["git", "-C", str(fixture.root), "cat-file", "blob",
+                                        payload_ref["git_blob_sha1"]]) == replacement_bytes
+        anchor, error = outcome(fixture.anchor)
+>       assert error is None, f"blob replacement affected the pinned object read: {error!r}"
+E       AssertionError: blob replacement affected the pinned object read: QualificationError('ARTIFACT_DIGEST_MISMATCH: pinned Git batch object mismatch')
+E       assert QualificationError('ARTIFACT_DIGEST_MISMATCH: pinned Git batch object mismatch') is None
+
+tests/test_qualification_r15_r17.py:98: AssertionError
+_____________ test_r15_malformed_git_batch_is_typed_refusal[empty] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7788f0>
+malformation = 'empty'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('empty', None, "ValueError('subsection not found')")
+E       assert False
+E        +  where False = isinstance(ValueError('subsection not found'), <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+____________ test_r15_malformed_git_batch_is_typed_refusal[missing] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd5302d2060>
+malformation = 'missing'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('missing', None, "ValueError('not enough values to unpack (expected 3, got 2)')")
+E       assert False
+E        +  where False = isinstance(ValueError('not enough values to unpack (expected 3, got 2)'), <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+________ test_r15_malformed_git_batch_is_typed_refusal[partial_header] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f77a150>
+malformation = 'partial_header'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('partial_header', None, "ValueError('subsection not found')")
+E       assert False
+E        +  where False = isinstance(ValueError('subsection not found'), <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+_______ test_r15_malformed_git_batch_is_typed_refusal[non_ascii_header] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7790a0>
+malformation = 'non_ascii_header'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('non_ascii_header', None, "UnicodeDecodeError('ascii', b'\\xff blob 1', 0, 1, 'ordinal not in range(128)')")
+E       assert False
+E        +  where False = isinstance(UnicodeDecodeError('ascii', b'\xff blob 1', 0, 1, 'ordinal not in range(128)'), <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+_________ test_r15_malformed_git_batch_is_typed_refusal[invalid_size] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5de810>
+malformation = 'invalid_size'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('invalid_size', None, 'ValueError("invalid literal for int() with base 10: \'nope\'")')
+E       assert False
+E        +  where False = isinstance(ValueError("invalid literal for int() with base 10: 'nope'"), <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+________ test_r15_malformed_git_batch_is_typed_refusal[trailing_bytes] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r15_malformed_git_batch_i8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5ddc10>
+malformation = 'trailing_bytes'
+
+    @pytest.mark.parametrize("malformation", [
+        "empty", "missing", "partial_header", "non_ascii_header", "invalid_size", "negative_size",
+        "truncated_body", "missing_separator", "trailing_bytes", "wrong_object", "wrong_kind", "body_mismatch",
+    ])
+    def test_r15_malformed_git_batch_is_typed_refusal(tmp_path, monkeypatch, malformation):
+        fixture = build_fixture(tmp_path)
+        original_run = qr.subprocess.run
+    
+        def altered_run(command, **kwargs):
+            result = original_run(command, **kwargs)
+            if command[-2:] != ["cat-file", "--batch"]:
+                return result
+            data = result.stdout
+            header, rest = data.split(b"\n", 1)
+            object_id, kind, size_text = header.split()
+            size = int(size_text)
+            body, after = rest[:size], rest[size + 1:]
+            variants = {
+                "empty": b"", "missing": object_id + b" missing\n",
+                "partial_header": header, "non_ascii_header": b"\xff blob 1\nx\n",
+                "invalid_size": object_id + b" blob nope\n",
+                "negative_size": object_id + b" blob -1\n",
+                "truncated_body": header + b"\n" + body[:-1],
+                "missing_separator": header + b"\n" + body + after,
+                "trailing_bytes": data + b"unexpected trailing bytes",
+                "wrong_object": b"0" * 40 + b" blob " + size_text + b"\n" + rest,
+                "wrong_kind": object_id + b" tree " + size_text + b"\n" + rest,
+                "body_mismatch": header + b"\n" + bytes([body[0] ^ 1]) + body[1:] + b"\n" + after,
+            }
+            result.stdout = variants[malformation]
+            return result
+    
+        monkeypatch.setattr(qr.subprocess, "run", altered_run)
+        value, error = outcome(lambda: qr.load_git_catalog(fixture.root, fixture.inventory["repository_commit"]))
+>       assert isinstance(error, qr.QualificationError), (malformation, value, repr(error))
+E       AssertionError: ('trailing_bytes', GitCatalog(commit='4102638f7ee0a9d935522778e7acb586779ac38d', tree_sha1='4f1a0e8f05f8d97f430671febd99ae3dde91c756'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:137: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-synthetic] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7add30>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='4102638f7ee0a9d935522778e7acb586779ac38d', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'synthetic', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('synthetic', 'checkout', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path0/store/synthetic/sha256/b5/b5df59911ed4a829ff03eb136aba97ba2d1c8e433cd407cd7f32c6ac997ee1e2.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7aed20>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='4102638f7ee0a9d935522778e7acb586779ac38d', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas', 'checkout', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path1/store/synthetic/sha256/b5/b5df59911ed4a829ff03eb136aba97ba2d1c8e433cd407cd7f32c6ac997ee1e2.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_shard] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f768d70>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_shard', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas_shard', 'checkout', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path2/store/synthetic/sha256/a8/a8b3d29226ebcd37dbecadfff1fdc0536f0d2bf07e799e1d6c16077d8aa42a52.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52fc446b0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('by_id', 'checkout', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path3/store/synthetic/sha256/a8/a8b3d29226ebcd37dbecadfff1fdc0536f0d2bf07e799e1d6c16077d8aa42a52.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f769ee0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_leaf', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7aebd0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id_leaf', destination_kind = 'checkout'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-synthetic] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7696d0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'synthetic', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('synthetic', 'outside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path6/store/synthetic/sha256/a8/a8b3d29226ebcd37dbecadfff1fdc0536f0d2bf07e799e1d6c16077d8aa42a52.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5f9910>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='5c5959b3bee72851457833beed96ac8fe41b7642', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas', 'outside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path7/store/synthetic/sha256/a8/a8b3d29226ebcd37dbecadfff1fdc0536f0d2bf07e799e1d6c16077d8aa42a52.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas_shard] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f779190>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='e12237e14e1da1077bf4c6bfc02bf19c5ea5c9f5', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_shard', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas_shard', 'outside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path8/store/synthetic/sha256/e4/e48754ef9f8ebde8a83523480d856eab3517d567f5a9f5c64175438144a02dcc.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-by_id] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52fc17ad0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='e12237e14e1da1077bf4c6bfc02bf19c5ea5c9f5', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('by_id', 'outside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path9/store/synthetic/sha256/e4/e48754ef9f8ebde8a83523480d856eab3517d567f5a9f5c64175438144a02dcc.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7ac380>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='e12237e14e1da1077bf4c6bfc02bf19c5ea5c9f5', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_leaf', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-by_id_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path11')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5faab0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='e12237e14e1da1077bf4c6bfc02bf19c5ea5c9f5', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id_leaf', destination_kind = 'outside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-synthetic] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f769520>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='e12237e14e1da1077bf4c6bfc02bf19c5ea5c9f5', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'synthetic', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('synthetic', 'inside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path12/store/synthetic/sha256/e4/e48754ef9f8ebde8a83523480d856eab3517d567f5a9f5c64175438144a02dcc.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path13')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5f9be0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='d59b85b5bddaf217d335df056c719578e77e56c6', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas', 'inside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path13/store/synthetic/sha256/ee/ee83cceacdd406777250225be1cb51058fef2760a2d8eecf58cc38f907784430.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas_shard] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path14')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f5df7a0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='d59b85b5bddaf217d335df056c719578e77e56c6', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_shard', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('cas_shard', 'inside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path14/store/synthetic/sha256/ee/ee83cceacdd406777250225be1cb51058fef2760a2d8eecf58cc38f907784430.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-by_id] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path15')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f76ae70>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='d59b85b5bddaf217d335df056c719578e77e56c6', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+>       assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+E       AssertionError: ('by_id', 'inside_store', PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path15/store/synthetic/sha256/ee/ee83cceacdd406777250225be1cb51058fef2760a2d8eecf58cc38f907784430.json'), 'None')
+E       assert False
+E        +  where False = isinstance(None, <class 'ai_lab.providers.qualification_records.QualificationError'>)
+E        +    where <class 'ai_lab.providers.qualification_records.QualificationError'> = qr.QualificationError
+
+tests/test_qualification_r15_r17.py:192: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path16')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f7aebd0>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='d59b85b5bddaf217d335df056c719578e77e56c6', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'cas_leaf', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+_ test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-by_id_leaf] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-23/test_r17_both_publication_path17')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd52f69cb60>
+accepted_assessment = (EvidenceAnchor(domain='synthetic', git=GitCatalog(commit='d59b85b5bddaf217d335df056c719578e77e56c6', tree_sha1='4f1a0...ication.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...})
+redirect = 'by_id_leaf', destination_kind = 'inside_store'
+
+    @pytest.mark.parametrize("redirect", ["synthetic", "cas", "cas_shard", "by_id", "cas_leaf", "by_id_leaf"])
+    @pytest.mark.parametrize("destination_kind", ["checkout", "outside_store", "inside_store"])
+    def test_r17_both_publication_paths_refuse_symlink_redirection_before_writes(
+            tmp_path, monkeypatch, accepted_assessment, redirect, destination_kind):
+        anchor, query_bytes, result = accepted_assessment
+        checkout, store = tmp_path / "isolated_checkout", tmp_path / "store"
+        checkout.mkdir(); store.mkdir()
+        monkeypatch.setattr(qr, "__file__", str(checkout / "ai_lab/providers/qualification_records.py"))
+        destinations = {"checkout": checkout, "outside_store": tmp_path / "escaped",
+                        "inside_store": store / "redirected"}
+        destination = destinations[destination_kind]
+        destination.mkdir(exist_ok=True)
+        (destination / "sentinel").write_bytes(b"must remain unchanged")
+        digest = hashlib.sha256(qr.canonical_bytes(result)).hexdigest()
+        display = hashlib.sha256(result["assessment_id"].encode()).hexdigest()
+        paths = {"synthetic": store / "synthetic", "cas": store / "synthetic/sha256",
+                 "cas_shard": store / "synthetic/sha256" / digest[:2],
+                 "by_id": store / "synthetic/by-id",
+                 "cas_leaf": store / "synthetic/sha256" / digest[:2] / (digest + ".json"),
+                 "by_id_leaf": store / "synthetic/by-id" / (display + ".json")}
+        redirected = paths[redirect]
+        redirected.parent.mkdir(parents=True, exist_ok=True)
+        if redirect.endswith("leaf"):
+            destination = destination / "destination.json"
+            destination.write_bytes(qr.canonical_bytes(result))
+        redirected.symlink_to(destination, target_is_directory=not redirect.endswith("leaf"))
+        before = path_state(tmp_path)
+        value, error = outcome(lambda: qr.write_assessment(result, anchor=anchor,
+            query_bytes=query_bytes, output_dir=store))
+        assert isinstance(error, qr.QualificationError), (redirect, destination_kind, value, repr(error))
+>       assert error.code == "DOMAIN_MISMATCH"
+E       AssertionError: assert 'CONFLICTING_ARTIFACT_BYTES' == 'DOMAIN_MISMATCH'
+E         
+E         - DOMAIN_MISMATCH
+E         + CONFLICTING_ARTIFACT_BYTES
+
+tests/test_qualification_r15_r17.py:193: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_qualification_r15_r17.py::test_r15_original_anchor_keeps_adverse_source_despite_replacement[commit]
+FAILED tests/test_qualification_r15_r17.py::test_r15_original_anchor_keeps_adverse_source_despite_replacement[tree]
+FAILED tests/test_qualification_r15_r17.py::test_r15_replacement_cannot_admit_pruned_inventory_claiming_original_commit
+FAILED tests/test_qualification_r15_r17.py::test_r15_blob_replacement_does_not_change_retained_payload
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[empty]
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[missing]
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[partial_header]
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[non_ascii_header]
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[invalid_size]
+FAILED tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[trailing_bytes]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-synthetic]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_shard]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_leaf]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id_leaf]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-synthetic]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas_shard]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-by_id]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-cas_leaf]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[outside_store-by_id_leaf]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-synthetic]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas_shard]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-by_id]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-cas_leaf]
+FAILED tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[inside_store-by_id_leaf]
+28 failed, 7 passed in 5.08s
