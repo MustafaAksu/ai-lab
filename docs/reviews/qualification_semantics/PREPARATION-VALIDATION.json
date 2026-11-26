@@ -1,0 +1,174 @@
+{
+  "artifact_digests": {
+    "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md": {
+      "bytes": 22569,
+      "sha256": "b2e057e794e7b352f98404e16fa2fcf8970dab7c40fc00500ea0a83fd1b08321"
+    },
+    "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md": {
+      "bytes": 7768,
+      "sha256": "82f054037802b47e0a7e9e2545ffbe75b677444fdb77f5794e04a91067b53343"
+    },
+    "docs/reviews/qualification_semantics/SOURCE-REVIEW-BASELINE.md": {
+      "bytes": 6926,
+      "sha256": "6284d9dee45ad5e7139431b3e6e71926bd35d21efb6cf69111138823cd6a832a"
+    },
+    "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md": {
+      "bytes": 10339,
+      "sha256": "32868ba97e9b8935f69e1989451d8c6b0809f7ad9144b18839f6c5d7f969cf45"
+    },
+    "docs/reviews/qualification_semantics/STEP-3-PREPARATION.md": {
+      "bytes": 11898,
+      "sha256": "27b8813658ccbe31b705cfaf6730ca80f9de91bb7a87bc7a18036af280f84548"
+    },
+    "docs/reviews/qualification_semantics/probes/probe_r13_r14.py": {
+      "bytes": 10855,
+      "sha256": "5c1be890715584481898bd4df7cecb33c50b193da4b0c1da9398caa769e11bf7"
+    },
+    "docs/reviews/qualification_semantics/probes/r13_r14_baseline.json": {
+      "bytes": 106637,
+      "sha256": "7f8640d7fa4ccf27865d667a7c7c292aec0b8c341f02193f91fb3f92c7c9a6e1"
+    },
+    "docs/reviews/qualification_semantics/probes/r13_r14_reproduction.json": {
+      "bytes": 106638,
+      "sha256": "3e05154e11e5b08280aa8ff2af7869ce2a17472fc7812c917b982797f6d399b7"
+    },
+    "docs/reviews/qualification_semantics/step3_preparation_pytest.txt": {
+      "bytes": 1632,
+      "sha256": "8532b85ddb67ca6d9e253270668f5a34ba110aaa578576233c590a4f5a162802"
+    },
+    "docs/self_model/plans/PLAN-20261125-0001.json": {
+      "sha256": "da94c291214fc20ca304ca624f594f80bd67e562f90b569ad24421ef699e96f7"
+    }
+  },
+  "baseline_commit": "5515f55894b10ad70c321340257f67a960dcc382",
+  "baseline_probes": {
+    "canonical_VERIFY_created": false,
+    "model_calls": 0,
+    "mutation_suite_run": false,
+    "observation_results_identical": true,
+    "observations_per_run": 88,
+    "only_report_difference": "python_version",
+    "python_versions": [
+      "3.13.5",
+      "3.12.14"
+    ],
+    "synthetic_inputs_only": true
+  },
+  "checks": {
+    "cas": {
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "problems": 0
+      }
+    },
+    "self_model": {
+      "exit_code": 0,
+      "result": {
+        "findings": [
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+            "message": "Stored repo_head matches current HEAD.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-step3/docs/self_model/SELF_MODEL.json"
+          },
+          {
+            "class": "other",
+            "code": "SELF_MODEL_INDEX_CONTENT_CURRENT",
+            "message": "Stored SELF_MODEL.json matches a normalized rebuild.",
+            "severity": "info",
+            "target": "/workspace/scratch/d1746b126aa7/ai-lab-step3/docs/self_model/SELF_MODEL.json"
+          }
+        ],
+        "ok": true,
+        "schema_version": "v1",
+        "verification_outcome": "verified_current"
+      }
+    }
+  },
+  "finalized_at": "2026-11-25T09:41:33.607764+00:00",
+  "fixed_statuses": {
+    "GAP-0005": "open",
+    "GAP-0008": "open",
+    "GAP-0010": "open",
+    "autonomy": "not_activated",
+    "origin_verification": "unverified",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_pi_separation": "unresolved"
+  },
+  "internal_consistency_checks": {
+    "clarifications_applied": [
+      "model freshness scoped only to model/catalog",
+      "known potentially relevant source omission blocks clean aggregate/identity condition",
+      "non_equivalent explicitly required for the model identity gate; equivalent/unresolved always block",
+      "F22 distinguishes executed alternative-target fixture from prospective same-target fixture"
+    ],
+    "standing": "same-provider drafting checks; not independent review or adjudication"
+  },
+  "open_gap_count": 6,
+  "plan": {
+    "id": "PLAN-20261125-0001",
+    "implementation_admission": false,
+    "new_decisions": 0,
+    "new_warrants": 0,
+    "planned_scenario_families": 31,
+    "status": "proposed"
+  },
+  "plan_counts": {
+    "completed": 26,
+    "proposed": 1,
+    "withdrawn": 1
+  },
+  "preservation": {
+    "accepted_preparation_document_unchanged": true,
+    "all_existing_tracked_files_except_generated_index_byte_identical": 1377,
+    "cas_bytes": 83763,
+    "cas_objects": 37,
+    "gap_records": 10,
+    "historical_plans": 27,
+    "historical_verifications": 47,
+    "historical_warrants": 64,
+    "runtime_existing_tests_workflows_profiles_dependencies_unchanged": true
+  },
+  "pytest": {
+    "command": [
+      "/workspace/scratch/d1746b126aa7/ai-lab-test-env/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "duration_seconds_reported": 63.22,
+    "environment": "minimal environment, pinned requirements, PYTHONDONTWRITEBYTECODE=1",
+    "exit_code": 0,
+    "passed": 1398,
+    "python": "3.12.14",
+    "qualification": "Existing implementation tests, not new Step 3 contract tests; final prose/PLAN wording and matrix references were then clarified, revalidated and the index rebuilt. Candidate CI checks the committed preparation.",
+    "stdout_bytes": 1632,
+    "stdout_path": "docs/reviews/qualification_semantics/step3_preparation_pytest.txt",
+    "stdout_sha256": "8532b85ddb67ca6d9e253270668f5a34ba110aaa578576233c590a4f5a162802"
+  },
+  "recorded_at": "2026-11-25T09:39:44.841642+00:00",
+  "recorded_by": {
+    "attribution": "self_declared_unverified",
+    "peer_id": "chatgpt",
+    "role": "preparation_executor"
+  },
+  "schema": "ai-lab/step3-preparation-validation/1",
+  "scope": "Working-tree preparation based on the named baseline. Existing-suite execution and record checks are not verification of the prospective semantics or a canonical VERIFY for any later commit.",
+  "source_inventory": {
+    "endpoint_spellings": {
+      "anthropic.messages": 109,
+      "openai.responses": 109
+    },
+    "identity_status_counts": {
+      "unresolved": 218
+    },
+    "invocation_count": 218,
+    "kind_counts": {
+      "model": 218
+    }
+  }
+}

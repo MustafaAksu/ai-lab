@@ -1,8 +1,9 @@
 """Tests for ABS-0004 v5 Slice B catalog identity resolution.
 
-Covers the catalog record family, every validator rejection class, every
-enumerated non-resolution reason, and each of the nine conditions binding
-PLAN-20260723-0001 under WARR-20260723-0001.
+Catalog record and historical v1 codec coverage is retained. The admitted
+Step 3A successor replaces old positive single-source resolver expectations
+with nonpersistable refusal cases; model applicability now belongs to the
+complete r2 evaluator tests, not this retired entry point.
 """
 
 from __future__ import annotations
@@ -42,6 +43,7 @@ from ai_lab.providers.catalog import (
 )
 from ai_lab.providers.catalog_resolution import (
     NON_RESOLUTION_REASONS,
+    LEGACY_CONTEXT_REQUIRED,
     REASON_AMBIGUOUS_ASSERTIONS,
     REASON_CONTRADICTED_EVIDENCE,
     REASON_EXPIRED_FRESHNESS_WINDOW,
@@ -112,6 +114,24 @@ def make_capture(snapshot, content=EVIDENCE_SELF_ASSERTED, channel=VERIFIED_CURR
     )
 
 
+def historical_outcome(*, invocation, snapshot, capture, reason=None):
+    """Explicit v1 serialization fixture, not execution of a current resolver.
+
+    Tests supply the intended historical outcome. This helper performs no
+    applicability/binding assessment and conveys no current qualification.
+    """
+    if reason is not None:
+        return {"resolved": False, "reason": reason}
+    return {
+        "resolved": True,
+        "resolved_identity": snapshot["assertions"][0]["assertion_value_or_target"],
+        "snapshot_id": snapshot["record_id"],
+        "capture_id": capture["record_id"],
+        "content_evidence_status": capture["content_evidence_status"],
+        "channel_authentication_status": capture["channel_authentication_status"],
+    }
+
+
 # --- record family ------------------------------------------------------
 
 
@@ -175,20 +195,17 @@ def test_canonical_serialization_is_byte_stable():
     assert canonical_catalog_json(capture) == canonical_catalog_json(reordered)
 
 
-def test_repeated_resolution_is_identical_modulo_timestamp():
+def test_repeated_legacy_refusal_is_identical_and_not_a_v1_annotation():
     snapshot = make_snapshot([make_assertion("MID-5555555555555555")])
     capture = make_capture(snapshot)
-
     first = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     second = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     assert first == second
-
-    a = build_resolution_record(invocation=INVOCATION, outcome=first, resolved_at="2026-07-23T00:00:00+00:00")
-    b = build_resolution_record(invocation=INVOCATION, outcome=second, resolved_at="2026-07-24T00:00:00+00:00")
-    a_body = {k: v for k, v in a.items() if k not in {"resolved_at", "record_id"}}
-    b_body = {k: v for k, v in b.items() if k not in {"resolved_at", "record_id"}}
-    assert a_body == b_body
-    assert a["record_id"] != b["record_id"]
+    assert first["resolved"] is False
+    assert first["reason"] == LEGACY_CONTEXT_REQUIRED
+    for moment in ("2026-07-23T00:00:00+00:00", "2026-07-24T00:00:00+00:00"):
+        with pytest.raises(ResolutionError, match="r2 assessment/refusal"):
+            build_resolution_record(invocation=INVOCATION, outcome=first, resolved_at=moment)
 
 
 # --- condition 2: serialization adjacency ------------------------------
@@ -208,7 +225,7 @@ def test_content_evidence_status_serializes_immediately_before_channel():
 def test_resolution_annotation_also_orders_status_fields():
     snapshot = make_snapshot([make_assertion("MID-7777777777777777")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -376,150 +393,55 @@ def test_malformed_content_digest_is_rejected():
         validate_catalog_record(capture)
 
 
-# --- non-resolution reasons (all five) ---------------------------------
+# --- admitted legacy refusal; applicability belongs to r2 ----------------
 
 
-def test_resolution_succeeds_on_an_applicable_assertion():
-    identity = make_identity()
-    snapshot = make_snapshot([make_assertion(identity["record_id"])])
-    capture = make_capture(snapshot)
-
+@pytest.mark.parametrize("case", [
+    "matching", "absent_name", "future", "ambiguous", "stale", "contradicted",
+    "failed_capture", "wrong_endpoint", "dangling_target", "scalar_target",
+    "invalid_interval", "missing_link",
+])
+def test_legacy_sources_cannot_supply_the_missing_governed_context(case):
+    target = make_identity()["record_id"]
+    assertions = [make_assertion(target)]
+    observed = "2026-07-19T00:00:00+00:00"
+    if case == "absent_name": assertions = [make_assertion(target, subject="other-model")]
+    if case == "future": observed = "2026-07-21T00:00:00+00:00"
+    if case == "stale": observed = "2026-05-01T00:00:00+00:00"
+    if case == "ambiguous": assertions.append(make_assertion("MID-2323232323232323"))
+    if case == "dangling_target": assertions = [make_assertion("MID-9999999999999999")]
+    if case == "scalar_target": assertions = [make_assertion(7)]
+    if case == "invalid_interval": assertions = [make_assertion(target, valid_from="2026-07-10T00:00:00+00:00", valid_until="2026-07-01T00:00:00+00:00")]
+    snapshot = make_snapshot(assertions, observed_at=observed)
+    if case == "wrong_endpoint": snapshot["service_endpoint_id"] = "EID-0000000000000000"
+    capture = make_capture(snapshot, content=EVIDENCE_CONTRADICTED if case == "contradicted" else EVIDENCE_SELF_ASSERTED)
+    if case == "failed_capture": capture["capture_success"] = False
+    if case == "missing_link": capture["snapshot_id"] = "SNAP-0000000000000000"
     outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["resolved"] is True
-    assert outcome["resolved_identity"] == identity["record_id"]
-
-
-def test_no_applicable_assertion_is_reported():
-    snapshot = make_snapshot([make_assertion("MID-2020202020202020", subject="other-model")])
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
+    assert outcome["record_kind"] == "legacy_resolution_refusal"
     assert outcome["resolved"] is False
-    assert outcome["reason"] == REASON_NO_APPLICABLE_ASSERTION
+    assert outcome["resolved_identity"] is None
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
+    assert outcome["assessment_ref"] is None
 
 
-def test_snapshot_observed_after_the_invocation_is_reported():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2121212121212121")], observed_at="2026-07-21T00:00:00+00:00"
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_SNAPSHOT_AFTER_INVOCATION
+def test_historical_v1_reason_vocabulary_stays_frozen():
+    assert set(NON_RESOLUTION_REASONS) == {
+        REASON_NO_APPLICABLE_ASSERTION, REASON_SNAPSHOT_AFTER_INVOCATION,
+        REASON_AMBIGUOUS_ASSERTIONS, REASON_EXPIRED_FRESHNESS_WINDOW,
+        REASON_CONTRADICTED_EVIDENCE,
+    }
+    assert LEGACY_CONTEXT_REQUIRED not in NON_RESOLUTION_REASONS
 
 
-def test_ambiguous_assertions_block_resolution():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2222222222222222"), make_assertion("MID-2323232323232323")]
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_AMBIGUOUS_ASSERTIONS
-    assert len(outcome["candidates"]) == 2
-
-
-def test_expired_freshness_window_is_reported():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2424242424242424")], observed_at="2026-05-01T00:00:00+00:00"
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_EXPIRED_FRESHNESS_WINDOW
-    assert outcome["window_days"] == DEFAULT_FRESHNESS_WINDOW_DAYS
-
-
-def test_contradicted_evidence_blocks_resolution():
-    snapshot = make_snapshot([make_assertion("MID-2525252525252525")])
-    capture = make_capture(snapshot, content=EVIDENCE_CONTRADICTED)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_CONTRADICTED_EVIDENCE
-
-
-def test_every_enumerated_reason_is_reachable():
-    assert len(NON_RESOLUTION_REASONS) == 5
-
-
-# --- condition 4: freshness window boundaries --------------------------
-
-
-def test_freshness_boundary_exactly_at_the_window_resolves():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2626262626262626")], observed_at="2026-06-20T12:00:00+00:00"
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["resolved"] is True
-
-
-def test_freshness_boundary_one_second_past_the_window_does_not_resolve():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2727272727272727")], observed_at="2026-06-20T11:59:59+00:00"
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_EXPIRED_FRESHNESS_WINDOW
-
-
-def test_freshness_window_is_configurable():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2828282828282828")], observed_at="2026-05-01T00:00:00+00:00"
-    )
-    capture = make_capture(snapshot)
-
+@pytest.mark.parametrize("window", [-1, 0, 30, 180, True])
+def test_legacy_freshness_argument_cannot_create_or_widen_context(window):
+    snapshot = make_snapshot([make_assertion(make_identity()["record_id"])])
+    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot,
+                               capture=make_capture(snapshot), freshness_window_days=window)
     assert DEFAULT_FRESHNESS_WINDOW_DAYS == 30
-    outcome = resolve_identity(
-        invocation=INVOCATION, snapshot=snapshot, capture=capture, freshness_window_days=180
-    )
-    assert outcome["resolved"] is True
-
-
-# --- condition 9: timestamp precedence at the boundary -----------------
-
-
-def test_snapshot_observed_at_the_exact_invocation_instant_resolves():
-    snapshot = make_snapshot(
-        [make_assertion("MID-2929292929292929")], observed_at=INVOCATION["occurred_at"]
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["resolved"] is True
-
-
-def test_snapshot_one_microsecond_later_does_not_resolve():
-    snapshot = make_snapshot(
-        [make_assertion("MID-3030303030303030")], observed_at="2026-07-20T12:00:00.000001+00:00"
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-
-    assert outcome["reason"] == REASON_SNAPSHOT_AFTER_INVOCATION
-
-
-def test_offsets_are_normalized_before_comparison():
-    snapshot = make_snapshot(
-        [make_assertion("MID-3131313131313131")], observed_at="2026-07-20T13:00:00+02:00"
-    )
-    capture = make_capture(snapshot)
-
-    # 13:00+02:00 is 11:00 UTC, one hour before the invocation.
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
-    assert outcome["resolved"] is True
+    assert outcome["resolved"] is False
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
 
 
 # --- annotations: append-only and evidence inheritance -----------------
@@ -528,7 +450,7 @@ def test_offsets_are_normalized_before_comparison():
 def test_resolution_annotation_validates_and_is_addressable():
     snapshot = make_snapshot([make_assertion("MID-3232323232323232")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
 
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
@@ -541,7 +463,7 @@ def test_resolution_annotation_validates_and_is_addressable():
 def test_condition_6_annotation_inherits_the_capture_evidence_class():
     snapshot = make_snapshot([make_assertion("MID-3333333333333334")])
     capture = make_capture(snapshot, content=EVIDENCE_SELF_ASSERTED, channel=UNVERIFIABLE)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
 
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
@@ -554,7 +476,7 @@ def test_condition_6_annotation_inherits_the_capture_evidence_class():
 def test_unassessed_evidence_class_is_inherited_too():
     snapshot = make_snapshot([make_assertion("MID-3434343434343434")])
     capture = make_capture(snapshot, content=EVIDENCE_UNASSESSED, source=SOURCE_OPERATOR_ENTERED)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -565,7 +487,7 @@ def test_unassessed_evidence_class_is_inherited_too():
 def test_unresolved_annotation_may_not_carry_an_identity():
     snapshot = make_snapshot([make_assertion("MID-3535353535353535", subject="other")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture, reason=REASON_NO_APPLICABLE_ASSERTION)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -582,7 +504,7 @@ def test_unresolved_annotation_may_not_carry_an_identity():
 def test_unresolved_annotation_requires_an_enumerated_reason():
     snapshot = make_snapshot([make_assertion("MID-3636363636363636", subject="other")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture, reason=REASON_NO_APPLICABLE_ASSERTION)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -601,7 +523,7 @@ def test_writing_an_annotation_does_not_touch_the_invocation(tmp_path):
 
     snapshot = make_snapshot([make_assertion("MID-3737373737373737")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -619,7 +541,7 @@ def test_relations_use_graph_relation_shape_and_slice_b_predicates_only():
 
     snapshot = make_snapshot([make_assertion("MID-3838383838383838")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -635,7 +557,7 @@ def test_relations_use_graph_relation_shape_and_slice_b_predicates_only():
 def test_unresolved_annotation_emits_no_resolution_relation():
     snapshot = make_snapshot([make_assertion("MID-3939393939393939", subject="other")])
     capture = make_capture(snapshot)
-    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = historical_outcome(invocation=INVOCATION, snapshot=snapshot, capture=capture, reason=REASON_NO_APPLICABLE_ASSERTION)
     record = build_resolution_record(
         invocation=INVOCATION, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
     )
@@ -690,35 +612,19 @@ def test_stored_slice_a_records_are_untouched_by_slice_b_code():
         assert canonical_invocation_json(record) == raw.decode("utf-8")
 
 
-def test_resolution_of_a_real_captured_invocation(tmp_path):
+def test_real_captured_invocation_needs_an_explicit_r2_context(tmp_path):
     stored = sorted(Path("docs/invocations").glob("INV-*.json"))
     record = json.loads(stored[0].read_text(encoding="utf-8"))
-    identity = build_model_identity(
-        originator_id="unknown", canonical_name=record["requested_model_name"]
-    )
-    snapshot = make_snapshot(
-        [
-            make_assertion(
-                identity["record_id"],
-                subject=record["requested_model_name"],
-                valid_from="2026-01-01T00:00:00+00:00",
-            )
-        ],
-        observed_at="2026-07-22T00:00:00+00:00",
-    )
-    capture = make_capture(snapshot)
-
-    outcome = resolve_identity(
-        invocation=record, snapshot=snapshot, capture=capture, freshness_window_days=365
-    )
-    annotation = build_resolution_record(
-        invocation=record, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00"
-    )
-    write_resolution_record(annotation, tmp_path)
-
-    assert outcome["resolved"] is True
-    assert annotation["resolved_identity"] == identity["record_id"]
-    assert annotation["content_evidence_status"] == EVIDENCE_SELF_ASSERTED
+    before = stored[0].read_bytes()
+    identity = build_model_identity(originator_id="unknown", canonical_name=record["requested_model_name"])
+    snapshot = make_snapshot([make_assertion(identity["record_id"], subject=record["requested_model_name"], valid_from="2026-01-01T00:00:00+00:00")])
+    outcome = resolve_identity(invocation=record, snapshot=snapshot, capture=make_capture(snapshot), freshness_window_days=365)
+    assert outcome["resolved"] is False
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
+    with pytest.raises(ResolutionError, match="r2 assessment/refusal"):
+        build_resolution_record(invocation=record, outcome=outcome, resolved_at="2026-07-23T00:00:00+00:00")
+    assert not (tmp_path / "docs/catalog/resolutions").exists()
+    assert stored[0].read_bytes() == before
 
 
 # --- purity ------------------------------------------------------------
@@ -750,13 +656,12 @@ def test_resolution_does_not_mutate_its_inputs():
     assert json.dumps(capture, sort_keys=True) == capture_before
 
 
-def test_capture_must_describe_the_snapshot_it_is_paired_with():
-    snapshot = make_snapshot([make_assertion("MID-4343434343434343")])
+def test_mismatched_legacy_capture_cannot_construct_a_context():
+    snapshot = make_snapshot([make_assertion(make_identity()["record_id"])])
     other = make_snapshot([make_assertion("MID-4444444444444445")], observed_at="2026-07-18T00:00:00+00:00")
-    capture = make_capture(other)
-
-    with pytest.raises(ResolutionError, match="does not describe this snapshot"):
-        resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=capture)
+    outcome = resolve_identity(invocation=INVOCATION, snapshot=snapshot, capture=make_capture(other))
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
+    assert outcome["resolved"] is False
 
 
 # --- documentation -----------------------------------------------------
@@ -918,7 +823,7 @@ def test_fixture_replay_and_live_capture_share_one_parsing_path():
         assert "snapshot_from_payload" in inspect.getsource(function)
 
 
-def test_stale_fixture_does_not_resolve_a_recent_invocation():
+def test_stale_fixture_does_not_construct_a_context():
     from ai_lab.providers.catalog_capture import capture_from_fixture
 
     _, snapshot, capture, identities = capture_from_fixture("anthropic-models-20260722")
@@ -931,10 +836,12 @@ def test_stale_fixture_does_not_resolve_a_recent_invocation():
 
     outcome = resolve_identity(invocation=invocation, snapshot=snapshot, capture=capture)
 
-    assert outcome["reason"] == REASON_EXPIRED_FRESHNESS_WINDOW
+    assert outcome["resolved"] is False
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
+    assert outcome["assessment_ref"] is None
 
 
-def test_fixture_resolves_an_invocation_inside_the_window():
+def test_fixture_in_window_does_not_construct_a_context():
     from ai_lab.providers.catalog_capture import capture_from_fixture
 
     _, snapshot, capture, identities = capture_from_fixture("anthropic-models-20260722")
@@ -947,9 +854,9 @@ def test_fixture_resolves_an_invocation_inside_the_window():
 
     outcome = resolve_identity(invocation=invocation, snapshot=snapshot, capture=capture)
 
-    assert outcome["resolved"] is True
-    assert outcome["content_evidence_status"] == EVIDENCE_SELF_ASSERTED
-    assert outcome["resolved_identity"] in {i["record_id"] for i in identities}
+    assert outcome["resolved"] is False
+    assert outcome["reason"] == LEGACY_CONTEXT_REQUIRED
+    assert outcome["assessment_ref"] is None
 
 
 def test_catalog_records_write_to_deterministic_paths(tmp_path):

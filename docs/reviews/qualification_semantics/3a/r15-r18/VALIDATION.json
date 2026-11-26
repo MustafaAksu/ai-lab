@@ -1,0 +1,1048 @@
+{
+  "report_schema": "ai_lab.step3a.review_corrections.validation/1",
+  "recorded_at": "2026-11-26T09:59:22+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "substrate": "conversation",
+    "role": "implementation_executor",
+    "standing": "self_declared_unverified; same-provider internal checks are not independent adjudication"
+  },
+  "review": {
+    "id": 6070899882,
+    "url": "https://github.com/MustafaAksu/ai-lab/pull/5#pullrequestreview-6070899882",
+    "reviewed_commit": "877b94922fc9acf882930cd275d2889038cada33",
+    "submitted_at": "2026-11-26T08:44:29Z",
+    "state": "COMMENTED",
+    "disposition": "CHANGES_REQUESTED",
+    "findings": [
+      "R15",
+      "R16",
+      "R17",
+      "R18"
+    ]
+  },
+  "implementation_subject": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+  "implementation_tree": "8831c3043fc329362b2e71981ef0d11a740f398f",
+  "scope": "Corrections within existing WARR-20261126-0001 A1-A4; no new admission, 3B/3C, completion or merge",
+  "source_sha256": {
+    "ai_lab/providers/qualification.py": "e983bd3bb7e97e75f8b7186f32c12b7d867313ce17a9ab8ec9dcee01f22799e7",
+    "ai_lab/providers/qualification_records.py": "a3277979c22bf2ee4ec5b2e06c1fc5aab75e7b0d6d84a82efdd8b08d4fa54ce9",
+    "ai_lab/providers/catalog_resolution.py": "4a9093080e17805f25f12ed1cd421e946960e498b25750b4257f41d0751a765b",
+    "ai_lab/providers/executor_equivalence.py": "f83279be0e07ee54df4c1acc4cc91b815f94eae662f3b8e50da033c1423cebbd",
+    "scripts/falsify_qualification_3a_review.py": "18dc263dc6c2a7a79e939b3456a87da2292f6d225217f814723c06b5582f4cd6",
+    "scripts/falsify_qualification_3a.py": "0b37740be63d9380a9cc047c41d9f184e43a26f221c130edc0cdea3513c20e51",
+    "scripts/falsify_verify_v2.py": "e08363bbe204863262870b1552b8fb68ef8f896c08e222efa1fed8edafb3ce1e",
+    "scripts/verify_v2.py": "60a71e3f6f3769006d84013ed4195a061b6aa5ce2d569c0b19050ee00af79d2b",
+    "tests/test_qualification_r15_r17.py": "bbf8397c85c9fad1993fcdeeb5bc7369914635f64b9ba40b861b17551fbaec6b",
+    "tests/test_qualification_r16.py": "1e285e02efc0aeebc068c20ff168ab58b4aa8411a2ef393756d2159e645c3ae2",
+    "tests/test_qualification_r18.py": "c1e74360622bd11131a67fa3ac21550852a59a1581d85a8e21eab8807d78f0fe",
+    "requirements.txt": "0ec63fbc4b7f7acad226e060789b6b1e5de55dff658c7e8cbce197d7feab3c29",
+    "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json": "72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327",
+    "docs/reviews/qualification_semantics/3a/r15-r18/CONTRACT-DELTA.md": "20b6dd58f4320eab425a649fa736d3ca698b2f7bf5a72c43447e5b882e06e41f"
+  },
+  "unchanged_historical_contracts": [
+    "scripts/falsify_qualification_3a.py",
+    "scripts/falsify_verify_v2.py",
+    "scripts/verify_v2.py",
+    "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json"
+  ],
+  "new_regression_cases": {
+    "R15_R17": 35,
+    "R16": 11,
+    "R18": 15,
+    "total": 61
+  },
+  "verification_runs": [
+    {
+      "verification_id": "VERIFY-20261126-0003",
+      "scope": "First local exact-source run; failed and retained, never replaced by the later pass",
+      "subject": {
+        "candidate_commit": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+        "tree_id": "8831c3043fc329362b2e71981ef0d11a740f398f"
+      },
+      "receipt_sha256": "afe3c2f890a035a2ceb8ab3bc4fe936c4105670f97314fe99e65732171b0c85a",
+      "record_sha256": "56c6f919c290364730b4fbc3837ae16d83c0f833f47d01643ba9ac9b613f24b4",
+      "python": {
+        "implementation": "CPython",
+        "version": "3.12.14"
+      },
+      "started_at": "2026-11-26T09:49:08.750173+00:00",
+      "finished_at": "2026-11-26T09:50:43.387741+00:00",
+      "result": "one_or_more_commands_failed",
+      "output_retention": "complete",
+      "commands": [
+        {
+          "index": 0,
+          "argv_template": [
+            "{python}",
+            "scripts/audit_self_model_index.py"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "5a0a716950fcb7686cc436eb5e8e939299e534071446b3082e840907c3990589",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "}",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 1,
+          "argv_template": [
+            "{python}",
+            "scripts/build_self_model.py",
+            "--output",
+            "{scratch}/SELF_MODEL.rebuilt.json"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "644bc01281899a09aa858b4e75777feb075d7cd71a112ccfae676cd3d75ef3c1",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "open_gaps: 6",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 2,
+          "argv_template": [
+            "{python}",
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 1,
+          "termination": "exited",
+          "stdout_sha256": "b66307bd9c8844cd36c2fd66f8f38453c5d6f75678a4cb1877cfc92c800651ef",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "2 failed, 1696 passed in 92.72s (0:01:32)",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        }
+      ],
+      "tree_observation": {
+        "initial": {
+          "changed_paths": [],
+          "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+          "head_matches_subject": true,
+          "status_clean": true
+        },
+        "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+        "permitted_tree_changes": [],
+        "scope": "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; status-hidden changes (including assume-unchanged) and a path changed and restored within one command are not detected"
+      },
+      "origin_verification": "unverified",
+      "verifier_lineage_status": "self_authored_unreviewed"
+    },
+    {
+      "verification_id": "VERIFY-20261126-0004",
+      "scope": "One sequential local exact-source repeat after the transient Git-copy failure",
+      "subject": {
+        "candidate_commit": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+        "tree_id": "8831c3043fc329362b2e71981ef0d11a740f398f"
+      },
+      "receipt_sha256": "ef58bdb5a5a5b3e6412d5a589e22ff344e243db05a83f8b9dfbc700d2a821e3a",
+      "record_sha256": "5cb121018200d6f13eaacb061fa16fe107e893293426c0c050ebdb896144eace",
+      "python": {
+        "implementation": "CPython",
+        "version": "3.12.14"
+      },
+      "started_at": "2026-11-26T09:52:50.147217+00:00",
+      "finished_at": "2026-11-26T09:54:17.511448+00:00",
+      "result": "all_commands_exit_zero",
+      "output_retention": "complete",
+      "commands": [
+        {
+          "index": 0,
+          "argv_template": [
+            "{python}",
+            "scripts/audit_self_model_index.py"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "b2384114a87232da85a505e91ac5c74ca01c5fbdd9c9263317b4c0d58d09dcd5",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "}",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 1,
+          "argv_template": [
+            "{python}",
+            "scripts/build_self_model.py",
+            "--output",
+            "{scratch}/SELF_MODEL.rebuilt.json"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "ea0a86b689c4e02088b01414124e5961addad3cc98d42af7f9bf21c6b23af083",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "open_gaps: 6",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 2,
+          "argv_template": [
+            "{python}",
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "520e34f86a9110eb8ec021d0b2e62da0cda4fe17c71e87fd4fbbb71f25525ff9",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "1698 passed in 85.39s (0:01:25)",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        }
+      ],
+      "tree_observation": {
+        "initial": {
+          "changed_paths": [],
+          "head": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+          "head_matches_subject": true,
+          "status_clean": true
+        },
+        "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+        "permitted_tree_changes": [],
+        "scope": "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; status-hidden changes (including assume-unchanged) and a path changed and restored within one command are not detected"
+      },
+      "origin_verification": "unverified",
+      "verifier_lineage_status": "self_authored_unreviewed"
+    },
+    {
+      "verification_id": "VERIFY-20261126-0005",
+      "scope": "Separate GitHub pull_request synthetic merge subject",
+      "subject": {
+        "base_sha": "5515f55894b10ad70c321340257f67a960dcc382",
+        "candidate_commit": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+        "head_sha": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+        "pull_request": 5,
+        "tree_id": "8831c3043fc329362b2e71981ef0d11a740f398f"
+      },
+      "receipt_sha256": "be83d3e54bd30140e43cc9c0c9af96f00ac02ef776d841c270d5533da4091e67",
+      "record_sha256": "bfa92849ec5d68a4c0393fde70c9b05a93ffb901a6c69e245e1ec4d24dfc9572",
+      "python": {
+        "implementation": "CPython",
+        "version": "3.12.16"
+      },
+      "started_at": "2026-11-26T09:48:50.066522+00:00",
+      "finished_at": "2026-11-26T09:50:08.803291+00:00",
+      "result": "all_commands_exit_zero",
+      "output_retention": "complete",
+      "commands": [
+        {
+          "index": 0,
+          "argv_template": [
+            "{python}",
+            "scripts/audit_self_model_index.py"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "ffed8704993947b4ac66de97b4744df45a4d6c131310fb61c89c3277a70ea279",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "}",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 1,
+          "argv_template": [
+            "{python}",
+            "scripts/build_self_model.py",
+            "--output",
+            "{scratch}/SELF_MODEL.rebuilt.json"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "7c69fd8c78a0ed0fc6194e74bb0aed1abcd916f680a8c8eb4a422e36176fc9b6",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "open_gaps: 6",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        },
+        {
+          "index": 2,
+          "argv_template": [
+            "{python}",
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "ec9d62c0c2cd94923bfd5560424d93451b708f55b509815f3c9df033d59891e1",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "1698 passed in 76.51s (0:01:16)",
+          "boundary_after": {
+            "changed_paths": [],
+            "head": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+            "head_matches_subject": true,
+            "status_clean": true
+          }
+        }
+      ],
+      "tree_observation": {
+        "initial": {
+          "changed_paths": [],
+          "head": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+          "head_matches_subject": true,
+          "status_clean": true
+        },
+        "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+        "permitted_tree_changes": [],
+        "scope": "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; status-hidden changes (including assume-unchanged) and a path changed and restored within one command are not detected"
+      },
+      "origin_verification": "unverified",
+      "verifier_lineage_status": "self_authored_unreviewed"
+    }
+  ],
+  "ci_transport": {
+    "run_id": 45795395979,
+    "artifact_id": 15103779338,
+    "archive_sha256": "ab7572cae7abc41423f9fe9a73fcd113702991a3c66935deed792bff0c9569a7",
+    "writer": "success",
+    "upload": "success",
+    "job": "success",
+    "receipt_scope": "synthetic merge commit, distinct from branch-head verification"
+  },
+  "content_equivalence": {
+    "left_commit": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+    "right_commit": "c721c65ec5e5a14ce285c0d5ef6274ba066771a0",
+    "tree_id": "8831c3043fc329362b2e71981ef0d11a740f398f",
+    "tree_equal": true,
+    "verification_scope_equal": false
+  },
+  "falsification": {
+    "report_path": "docs/reviews/qualification_semantics/3a/r15-r18/FALSIFICATION.json",
+    "sha256": "ae10fa98d44207dbe7dd68bbeadc27d1108890f2a606968b80095ab057dd2af0",
+    "summary": {
+      "mutations": 28,
+      "caught": 28,
+      "not_caught": 0,
+      "errors": 0,
+      "groups": {
+        "original_3a_20": {
+          "mutations": 20,
+          "caught": 20
+        },
+        "r15_r18_corrections": {
+          "mutations": 8,
+          "caught": 8
+        }
+      }
+    },
+    "audit": {
+      "audit_schema": "ai_lab.qualification_3a_falsification_audit/1",
+      "recorded_at": "2026-11-26T09:59:05+00:00",
+      "auditor": {
+        "peer_id": "chatgpt",
+        "role": "same_provider_internal_report_audit",
+        "independent_adjudication": false
+      },
+      "scope": "Read-only validation of retained R15-R18 falsification report, not a new test or mutation run; no source/docs changed",
+      "report_path": "/workspace/scratch/d1746b126aa7/qualification-3a-review-falsification-final.json",
+      "report_sha256": "ae10fa98d44207dbe7dd68bbeadc27d1108890f2a606968b80095ab057dd2af0",
+      "report_bytes": 758188,
+      "report_schema": "qualification-3a-review-falsification-v1",
+      "source": {
+        "commit": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+        "tree": "8831c3043fc329362b2e71981ef0d11a740f398f",
+        "git_replacement_objects_disabled": true,
+        "raw_commit_hash_checked": true,
+        "raw_tree_and_blob_object_hashes_checked": 1543,
+        "tracked_files": 1433,
+        "content_sha256_matches": 1433,
+        "mode_matches": 1433,
+        "unexpected_or_missing_paths": 0,
+        "snapshot_manifest_sha256": "350293c606ad71c668a24b3c10efc93c008a93d302d5ad03530d1f90c4d807bb",
+        "recorded_source_status": ""
+      },
+      "summary": {
+        "mutations": 28,
+        "valid_baseline_mutant_pairs": 28,
+        "baseline_processes": 28,
+        "baseline_node_executions": 53,
+        "unique_baseline_nodeids": 51,
+        "mutant_node_executions": 53,
+        "unique_mutant_nodeids": 51,
+        "ordinary_mutant_assertion_failures": 49,
+        "unique_failed_nodeids": 49,
+        "retained_streams_length_and_sha256_checked": 112,
+        "infrastructure_or_selection_errors": 0,
+        "groups": {
+          "original_3a_20": {
+            "mutations": 20,
+            "valid_pairs": 20,
+            "baseline_node_executions": 35,
+            "mutant_assertion_failures": 33
+          },
+          "r15_r18_corrections": {
+            "mutations": 8,
+            "valid_pairs": 8,
+            "baseline_node_executions": 18,
+            "mutant_assertion_failures": 16
+          }
+        }
+      },
+      "historical_guard_manifest_sha256": "0b37740be63d9380a9cc047c41d9f184e43a26f221c130edc0cdea3513c20e51",
+      "committed_guard_specifications_match": true,
+      "pairs": [
+        {
+          "name": "F14 snapshot endpoint binding skipped",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-001",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f14_wrong_endpoint_cannot_resolve_same_requested_name"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f14_wrong_endpoint_cannot_resolve_same_requested_name"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F32 failed capture accepted",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-002",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f32_failed_capture_cannot_supply_positive_or_name_absence"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f32_failed_capture_cannot_supply_positive_or_name_absence"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F36/F29 unsupported scope and supersession treated as wildcard",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-003",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f36_null_scope_control_and_unsupported_scope",
+            "tests/test_qualification_model.py::test_f29_supersession_is_not_newest_source_override"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f36_null_scope_control_and_unsupported_scope",
+            "tests/test_qualification_model.py::test_f29_supersession_is_not_newest_source_override"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F22 applicable contradicted capture ignored",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-004",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[self_asserted-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[unassessed-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[independently_corroborated-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-self_asserted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-unassessed]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-independently_corroborated]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-contradicted]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[self_asserted-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[unassessed-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[independently_corroborated-contradicted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-self_asserted]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-unassessed]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-independently_corroborated]",
+            "tests/test_qualification_model.py::test_f02_f24_f43_evidence_class_pair_matrix[contradicted-contradicted]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F24 aggregation stops at first target",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-005",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f24_cross_source_disagreement_survives_corroboration"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f24_cross_source_disagreement_survives_corroboration"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F42 selected source pruning accepted",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-006",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f42_selected_sources_cannot_prune_pinned_inventory"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f42_selected_sources_cannot_prune_pinned_inventory"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F42 source target manifest not checked",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-007",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f42_source_target_manifest_cannot_drop_decoded_target"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f42_source_target_manifest_cannot_drop_decoded_target"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F34 capture payload digest not checked",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-008",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f34_payload_hash_mismatch_is_not_corroboration"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f34_payload_hash_mismatch_is_not_corroboration"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F35 unknown release receives witness qualification",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-009",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases0]",
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases1]",
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases2]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases0]",
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases1]",
+            "tests/test_qualification_model.py::test_f35_unknown_release_blocks_identity_not_catalog_relation[releases2]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F38 availability may refer to other artifacts",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-010",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f38_missing_witness_availability_is_not_assessed_at"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f38_missing_witness_availability_is_not_assessed_at"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F38 late witness availability accepted",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-011",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f38_late_witness_not_cleared_by_early_assessed_at"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f38_late_witness_not_cleared_by_early_assessed_at"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F43 witness accepts wrong source payload",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-012",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_witness_payload_from_other_side_is_rejected"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_witness_payload_from_other_side_is_rejected"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F43 corroborated label borrowed from another source",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-013",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_borrowed_corroboration_label_cannot_qualify_other_chain"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_borrowed_corroboration_label_cannot_qualify_other_chain"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A1/F43 concrete verification premise not checked",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-014",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_verification_premise_is_bound_to_exact_chain"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a1_f43_verification_premise_is_bound_to_exact_chain"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F43 harness proof row binding skipped",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-015",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[verifier_executor_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[verifier_version_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[rule_version_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[assessment_scope_ref]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[verifier_executor_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[verifier_version_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[rule_version_ref]",
+            "tests/test_qualification_model.py::test_f43_proof_row_pins_checker_rule_version_and_scope[assessment_scope_ref]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F43 revocation boundary incorrectly exclusive",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-016",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f43_witness_revocation_boundary[0-False]",
+            "tests/test_qualification_model.py::test_f43_witness_revocation_boundary[1-True]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f43_witness_revocation_boundary[0-False]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A2 successful missing payload accepted without omission",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-017",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f34_missing_chain_never_invents_refs[payload]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f34_missing_chain_never_invents_refs[payload]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "A2 orphan snapshot silently dropped",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-018",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_a2_f42_orphan_snapshot_cannot_be_silently_dropped"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_a2_f42_orphan_snapshot_cannot_be_silently_dropped"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F43 conflicting proof-row identities accepted",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-019",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f43_duplicate_conflicting_fixture_row_identity_is_invalid[witness_rows-assessed_at]",
+            "tests/test_qualification_model.py::test_f43_duplicate_conflicting_fixture_row_identity_is_invalid[availability_rows-available_at]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f43_duplicate_conflicting_fixture_row_identity_is_invalid[witness_rows-assessed_at]",
+            "tests/test_qualification_model.py::test_f43_duplicate_conflicting_fixture_row_identity_is_invalid[availability_rows-available_at]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "F38 malformed availability hidden by endpoint exclusion",
+          "group": "original_3a_20",
+          "baseline_id": "baseline-020",
+          "selected_nodeids": [
+            "tests/test_qualification_model.py::test_f38_availability_chronology_checked_before_endpoint_exclusion[False]",
+            "tests/test_qualification_model.py::test_f38_availability_chronology_checked_before_endpoint_exclusion[True]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_model.py::test_f38_availability_chronology_checked_before_endpoint_exclusion[False]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R15 replacement objects can hide an adverse source",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-021",
+          "selected_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r15_replacement_cannot_admit_pruned_inventory_claiming_original_commit"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r15_replacement_cannot_admit_pruned_inventory_claiming_original_commit"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R15 malformed Git batch trailing bytes accepted",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-022",
+          "selected_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[trailing_bytes]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r15_malformed_git_batch_is_typed_refusal[trailing_bytes]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R16 source need only predate event instead of witness assessment",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-023",
+          "selected_nodeids": [
+            "tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[capture-after-witness]",
+            "tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[availability-after-witness]",
+            "tests/test_qualification_r16.py::test_r16_early_same_mid_alternative_cannot_rescue_late_witnessed_chain"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[capture-after-witness]",
+            "tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[availability-after-witness]",
+            "tests/test_qualification_r16.py::test_r16_early_same_mid_alternative_cannot_rescue_late_witnessed_chain"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R17 CAS destination containment skipped",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-024",
+          "selected_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_shard]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_leaf]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_shard]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-cas_leaf]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R17 display-index destination containment skipped",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-025",
+          "selected_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id_leaf]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id]",
+            "tests/test_qualification_r15_r17.py::test_r17_both_publication_paths_refuse_symlink_redirection_before_writes[checkout-by_id_leaf]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R18 unavailable schema leaks an untyped file error",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-026",
+          "selected_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-missing]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-digest]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-missing]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-digest]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-missing]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-missing]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R18 changed schema digest accepted",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-027",
+          "selected_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-digest]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-digest]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[synthetic-digest]",
+            "tests/test_qualification_r18.py::test_r18_missing_or_changed_schema_has_declared_bootstrap_exception[production-digest]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        },
+        {
+          "name": "R18 malformed schema leaks a schema-dependent error",
+          "group": "r15_r18_corrections",
+          "baseline_id": "baseline-028",
+          "selected_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{not-json]",
+            "tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{\"type\":7}]"
+          ],
+          "failed_nodeids": [
+            "tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{not-json]",
+            "tests/test_qualification_r18.py::test_r18_unparseable_or_invalid_schema_is_typed_bootstrap_failure[{\"type\":7}]"
+          ],
+          "ordinary_failure_types": [
+            "builtins.AssertionError"
+          ],
+          "valid": true
+        }
+      ],
+      "problems": [],
+      "ok": true,
+      "limits": [
+        "Retained process traces and bytes are checked; this audit does not independently establish execution origin or verifier lineage.",
+        "20 historical plus8 review guards are a targeted subset, not all48 planned families.",
+        "Separate VERIFY runs, including the parent-reported maintenance.lock copy race and sequential successful retry, are outside this falsification audit; neither was altered or reclassified."
+      ]
+    },
+    "scope_limit": "28 selected guard mutations (20 historical plus 8 R15-R18); neither all 48 planned scenario families nor the separate historical 39 VERIFY v2 mutations"
+  },
+  "preservation": {
+    "baseline": "877b94922fc9acf882930cd275d2889038cada33",
+    "fixed_subject": "6ebe167d0a1465f84e789ab58619af00ef2c6c35",
+    "also_checked_against_packaging_worktree": true,
+    "checks": [
+      {
+        "root": "docs/self_model/verifications",
+        "historical_files": 49,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/verification_outputs",
+        "historical_files": 47,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/warrants",
+        "historical_files": 65,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/decisions",
+        "historical_files": 17,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/gaps",
+        "historical_files": 10,
+        "changed": []
+      },
+      {
+        "root": "docs/reviews/qualification_semantics",
+        "historical_files": 29,
+        "changed": []
+      }
+    ],
+    "historical_files": 217
+  },
+  "store_validation": {
+    "canonical_verify_records": 52,
+    "v2_records": 13,
+    "CAS_objects": 59,
+    "CAS_bytes": 145983,
+    "new_CAS_objects": 12,
+    "new_CAS_bytes": 41282,
+    "new_CAS_sha256": [
+      "520e34f86a9110eb8ec021d0b2e62da0cda4fe17c71e87fd4fbbb71f25525ff9",
+      "5a0a716950fcb7686cc436eb5e8e939299e534071446b3082e840907c3990589",
+      "644bc01281899a09aa858b4e75777feb075d7cd71a112ccfae676cd3d75ef3c1",
+      "7c69fd8c78a0ed0fc6194e74bb0aed1abcd916f680a8c8eb4a422e36176fc9b6",
+      "afe3c2f890a035a2ceb8ab3bc4fe936c4105670f97314fe99e65732171b0c85a",
+      "b2384114a87232da85a505e91ac5c74ca01c5fbdd9c9263317b4c0d58d09dcd5",
+      "b66307bd9c8844cd36c2fd66f8f38453c5d6f75678a4cb1877cfc92c800651ef",
+      "be83d3e54bd30140e43cc9c0c9af96f00ac02ef776d841c270d5533da4091e67",
+      "ea0a86b689c4e02088b01414124e5961addad3cc98d42af7f9bf21c6b23af083",
+      "ec9d62c0c2cd94923bfd5560424d93451b708f55b509815f3c9df033d59891e1",
+      "ef58bdb5a5a5b3e6412d5a589e22ff344e243db05a83f8b9dfbc700d2a821e3a",
+      "ffed8704993947b4ac66de97b4744df45a4d6c131310fb61c89c3277a70ea279"
+    ],
+    "problems": 0
+  },
+  "development_observations": {
+    "scope": "Working-tree regression runs during implementation, before exact-source commit freeze; not canonical VERIFY evidence for the published subject",
+    "files": [
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R15-R17-BEFORE.txt",
+        "sha256": "1d9de53c22cb33f3e0b80f54c79b4be489cd22f2e63730a85d23a3c897e207a0",
+        "bytes": 81967,
+        "meaning": "New 35 regression cases against the pre-fix record loader/writer: 28 failed, 7 passed."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R15-R17-AFTER.txt",
+        "sha256": "28fc945465f26a7f911a88308f5c410ab46959cfb8f81d229845c05d21c4d483",
+        "bytes": 179,
+        "meaning": "New 35 cases plus 39 existing record tests: 74 passed."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R16-BEFORE.txt",
+        "sha256": "3b9576e90db6a76b116bb19d10b2aa05aebea7c81ce2ac62261dc5d24643be53",
+        "bytes": 8624,
+        "meaning": "Initial ten new witness cases against pre-fix logic: 6 failed, 4 passed."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R16-NULL-PROOF-BEFORE.txt",
+        "sha256": "e2d77d4fd3aeeacc0d7d6991fc6eee027b2c6bbc3b553e0f4cee7d8f7bdd2f03",
+        "bytes": 2419,
+        "meaning": "Additional nullable ArtifactRef.record_id proof-retention case before its narrow correction: 1 failed, 10 deselected."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R16-AFTER.txt",
+        "sha256": "9ecd4e99d32258e88a70c1308a4dc3b4cd1ecc4d3d9a275e53eb66e7bb633221",
+        "bytes": 99,
+        "meaning": "All eleven final witness regression cases: 11 passed."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R16-INTEGRATION.txt",
+        "sha256": "b4936da839b0eb9549bbe67c32e5094fac51a7fe2d0aa0d713323eff75485edc",
+        "bytes": 181,
+        "meaning": "120 existing model cases plus the initial ten witness cases: 130 passed; before the additional proof-retention case."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R18-BEFORE.txt",
+        "sha256": "90a2a787f556f0e26617ccb19c0a991b7bd613fe43cfaa950d6e36fad525dc05",
+        "bytes": 17070,
+        "meaning": "Fifteen bootstrap contract cases against pre-fix logic: 11 failed, 4 passed."
+      },
+      {
+        "path": "docs/reviews/qualification_semantics/3a/r15-r18/R18-AFTER.txt",
+        "sha256": "887f694a5ef0e4731fd2b027dbfbf1b9d330ced5535489d2699edce7923a45ce",
+        "bytes": 99,
+        "meaning": "All fifteen bootstrap contract cases: 15 passed."
+      }
+    ]
+  },
+  "retained_failed_exact_run": {
+    "verification_id": "VERIFY-20261126-0003",
+    "summary": "2 failed, 1696 passed in 92.72s",
+    "failed_nodeids": [
+      "tests/test_falsify_verify_v2.py::test_real_pytest_outcomes_are_not_inferred_from_nonzero_exit[return (-ERROR]",
+      "tests/test_falsify_verify_v2.py::test_each_mutation_starts_fresh_and_caller_flags_cannot_hide_tests"
+    ],
+    "observed_error": "shutil.copytree raised shutil.Error because a temporary snapshot/.git/objects/maintenance.lock disappeared during copying in the unchanged historical falsification harness.",
+    "interpretation": "A transient Git maintenance/copy race in test infrastructure, not an R15-R18 assertion failure or a caught mutation. The source was not changed to suppress it.",
+    "repeat_policy": "One sequential repeat at the same exact commit/profile, after the concurrent targeted mutation run completed; 1698 passed. Separate CI subject with equal tree also passed 1698. The original failed receipt and full output remain canonical.",
+    "remaining_limit": "This correction package does not claim to eliminate the historical harness filesystem-copy race."
+  },
+  "standing": {
+    "plan_status": "admitted_3a_only_review_pending",
+    "3B": "NOT_ADMITTED",
+    "3C": "NOT_ADMITTED",
+    "C3": "unresolved",
+    "C10": "unresolved",
+    "Q_C3_C10": "unresolved",
+    "legacy_blocks_adjudication": true,
+    "production_Q_identity": "withheld",
+    "autonomy": "NOT_ACTIVATED",
+    "merge_authorized": false,
+    "origin_verification": "unverified",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_PI_separation": "unresolved"
+  }
+}

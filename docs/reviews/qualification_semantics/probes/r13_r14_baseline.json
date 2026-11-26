@@ -1,0 +1,3138 @@
+{
+  "fixtures": {
+    "endpoints": {
+      "a": {
+        "endpoint_identifier": "synthetic.a.endpoint",
+        "operating_organization": "synthetic-a",
+        "record_id": "EID-ff333cc85cd5efc9",
+        "record_kind": "service_endpoint_identity",
+        "schema_version": "v1"
+      },
+      "b": {
+        "endpoint_identifier": "synthetic.b.endpoint",
+        "operating_organization": "synthetic-b",
+        "record_id": "EID-18cdb2300b19b6f0",
+        "record_kind": "service_endpoint_identity",
+        "schema_version": "v1"
+      }
+    },
+    "invocations": {
+      "left": {
+        "capture_path": "scripts/compare_providers.py",
+        "effective_input_manifest": {
+          "completeness_attestation": "unknown",
+          "context_manifest_reference": null,
+          "developer_instruction_digest": null,
+          "prior_tool_result_references": [],
+          "rendered_prompt_digest": "sha256:138430fbaccd40dbbf78a9778b42952f26501072dda9f782c9cde473999d3d5f",
+          "session_state_mode": "unknown_state",
+          "system_instruction_digest": null,
+          "tool_schema_digest": null
+        },
+        "execution_profile": {
+          "output_token_limit": null,
+          "provider_request_flags": {},
+          "reasoning_parameters": {},
+          "requested_model_name": "alpha",
+          "runtime_version": null,
+          "sampling_parameters": {},
+          "service_endpoint": "synthetic.a.endpoint"
+        },
+        "executor": {
+          "identity_verification_status": "unresolved",
+          "kind": "model",
+          "reference": "alpha"
+        },
+        "governance_marker": "experimental",
+        "invocation_id": "INV-d96ba953919f5941",
+        "occurred_at": "2026-07-20T12:00:00+00:00",
+        "requested_model_name": "alpha",
+        "schema_version": "v1",
+        "service_endpoint": "synthetic.a.endpoint",
+        "session_id": "synthetic-offline-probe",
+        "spawned": [],
+        "status": "success"
+      },
+      "left_unbound_endpoint": {
+        "capture_path": "scripts/compare_providers.py",
+        "effective_input_manifest": {
+          "completeness_attestation": "unknown",
+          "context_manifest_reference": null,
+          "developer_instruction_digest": null,
+          "prior_tool_result_references": [],
+          "rendered_prompt_digest": "sha256:138430fbaccd40dbbf78a9778b42952f26501072dda9f782c9cde473999d3d5f",
+          "session_state_mode": "unknown_state",
+          "system_instruction_digest": null,
+          "tool_schema_digest": null
+        },
+        "execution_profile": {
+          "output_token_limit": null,
+          "provider_request_flags": {},
+          "reasoning_parameters": {},
+          "requested_model_name": "alpha",
+          "runtime_version": null,
+          "sampling_parameters": {},
+          "service_endpoint": "synthetic.unbound.endpoint"
+        },
+        "executor": {
+          "identity_verification_status": "unresolved",
+          "kind": "model",
+          "reference": "alpha"
+        },
+        "governance_marker": "experimental",
+        "invocation_id": "INV-ee491566e8484d62",
+        "occurred_at": "2026-07-20T12:00:00+00:00",
+        "requested_model_name": "alpha",
+        "schema_version": "v1",
+        "service_endpoint": "synthetic.unbound.endpoint",
+        "session_id": "synthetic-offline-probe",
+        "spawned": [],
+        "status": "success"
+      },
+      "left_wrong_known_endpoint": {
+        "capture_path": "scripts/compare_providers.py",
+        "effective_input_manifest": {
+          "completeness_attestation": "unknown",
+          "context_manifest_reference": null,
+          "developer_instruction_digest": null,
+          "prior_tool_result_references": [],
+          "rendered_prompt_digest": "sha256:138430fbaccd40dbbf78a9778b42952f26501072dda9f782c9cde473999d3d5f",
+          "session_state_mode": "unknown_state",
+          "system_instruction_digest": null,
+          "tool_schema_digest": null
+        },
+        "execution_profile": {
+          "output_token_limit": null,
+          "provider_request_flags": {},
+          "reasoning_parameters": {},
+          "requested_model_name": "alpha",
+          "runtime_version": null,
+          "sampling_parameters": {},
+          "service_endpoint": "synthetic.b.endpoint"
+        },
+        "executor": {
+          "identity_verification_status": "unresolved",
+          "kind": "model",
+          "reference": "alpha"
+        },
+        "governance_marker": "experimental",
+        "invocation_id": "INV-ffe1d66a169287c3",
+        "occurred_at": "2026-07-20T12:00:00+00:00",
+        "requested_model_name": "alpha",
+        "schema_version": "v1",
+        "service_endpoint": "synthetic.b.endpoint",
+        "session_id": "synthetic-offline-probe",
+        "spawned": [],
+        "status": "success"
+      },
+      "right": {
+        "capture_path": "scripts/compare_providers.py",
+        "effective_input_manifest": {
+          "completeness_attestation": "unknown",
+          "context_manifest_reference": null,
+          "developer_instruction_digest": null,
+          "prior_tool_result_references": [],
+          "rendered_prompt_digest": "sha256:138430fbaccd40dbbf78a9778b42952f26501072dda9f782c9cde473999d3d5f",
+          "session_state_mode": "unknown_state",
+          "system_instruction_digest": null,
+          "tool_schema_digest": null
+        },
+        "execution_profile": {
+          "output_token_limit": null,
+          "provider_request_flags": {},
+          "reasoning_parameters": {},
+          "requested_model_name": "beta",
+          "runtime_version": null,
+          "sampling_parameters": {},
+          "service_endpoint": "synthetic.b.endpoint"
+        },
+        "executor": {
+          "identity_verification_status": "unresolved",
+          "kind": "model",
+          "reference": "beta"
+        },
+        "governance_marker": "experimental",
+        "invocation_id": "INV-4a9d41fad33f43ca",
+        "occurred_at": "2026-07-20T12:00:00+00:00",
+        "requested_model_name": "beta",
+        "schema_version": "v1",
+        "service_endpoint": "synthetic.b.endpoint",
+        "session_id": "synthetic-offline-probe",
+        "spawned": [],
+        "status": "success"
+      }
+    },
+    "models": {
+      "a": {
+        "canonical_name": "synthetic-model-a",
+        "originator_id": "synthetic-a",
+        "record_id": "MID-c3ce251d9b434051",
+        "record_kind": "model_identity",
+        "release_identity": "r1",
+        "schema_version": "v1"
+      },
+      "b": {
+        "canonical_name": "synthetic-model-b",
+        "originator_id": "synthetic-b",
+        "record_id": "MID-270d60b2924e4aed",
+        "record_kind": "model_identity",
+        "release_identity": "r1",
+        "schema_version": "v1"
+      }
+    },
+    "snapshot_capture_pairs": {
+      "after_event_clean": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:after_event_clean",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-21T00:00:00+00:00",
+          "record_id": "SNAP-920936f93b017a43",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:8e1a15673f6613782627dd34cf0cd05dc03ff712ff73d04fb44e3427bd1bd8e0"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-21T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:b875ff14e896c9f75a3217ade42a969027a81dc95db8ae31d5c627cdaa3f2029",
+          "content_evidence_status": "self_asserted",
+          "record_id": "CAP-74380c990babbda6",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-920936f93b017a43",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "after_event_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:after_event_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-21T00:00:00+00:00",
+          "record_id": "SNAP-102189c341b3ff36",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:91c2c006cf6cbe01f58eb4b08ba6474352bfd6a4484abfb11a8cc89de5917c67"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-21T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:55e94812ba9a33d90cabcc3f15c8b7dc9ef11f155bbfa7978badd3a6eefb8114",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-2c5e5df9fc968260",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-102189c341b3ff36",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "applicable_ambiguous": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:applicable_ambiguous",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            },
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:applicable_ambiguous",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-1c6952475d7c5e83",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:64609ad4ef97db72a6096c244910f6417db6a0abdede609dc0a3339f9b2f5a60"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:40ebaecb670486c6f2d310e48760ccd3875f7e0afd61fefbe864d70aeac62af1",
+          "content_evidence_status": "self_asserted",
+          "record_id": "CAP-a47d193aaaf77f32",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-1c6952475d7c5e83",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "applicable_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:applicable_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-a74252737bee0889",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:10486118b687a5190e047122a84d064d8dd071fc2877a7e540495a120694e4ed"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:8aaefa2c1ada717c97b9a9521e7f03dc6166534b72e6a51e8083c9a35c25044d",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-f10f1914ecad2921",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-a74252737bee0889",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "expired_clean": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:expired_clean",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-05-01T00:00:00+00:00",
+          "record_id": "SNAP-d56a307943cd62cb",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:ec78c6b52beaa52528db81ace34edb45107e640b4604ba7a91ab92a7d4fc4938"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-05-01T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:70515700390947fdc9ab00d5176c1236d254e9f72c279212b598b01c3921bd7b",
+          "content_evidence_status": "self_asserted",
+          "record_id": "CAP-b3da021f2932351b",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-d56a307943cd62cb",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "expired_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:expired_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-05-01T00:00:00+00:00",
+          "record_id": "SNAP-67d4fe1a92ebc0ad",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:98e8524ca3fa94965f7fff4d95da52e8915d484e1ce02a8a83f4123111dbfcdd"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-05-01T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:0690a75d6f1bf98c017b6b20db1d13e1c9c92fbb76c5e070ae647c3726487ca5",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-6c86c439ec799453",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-67d4fe1a92ebc0ad",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "left_conflicting_corroborated": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:left_conflicting_corroborated",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-b962caad3a3aedbc",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:8cddffaa44e7f2e75cac5e0ec86a80709799379bc375d5c2b13f189af541cd97"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:a5a7ccdee891dde2e1f79a49b12fad4a6d115fd9e4cc8a550f6e707911539805",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-a4d99a11f9165ea5",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-b962caad3a3aedbc",
+          "source_type": "third_party_record"
+        }
+      ],
+      "left_corroborated": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:left_corroborated",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-0468bd4ea79127a5",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:8bd813fd0e70fa7e8503a3951b2d9759b79769f206d401aee1eebdf7f504422d"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:7882c7986899eedf3c5905fbaf5865694a72db00bf5699de81e252502ed01281",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-32b132a8d8ecdffc",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-0468bd4ea79127a5",
+          "source_type": "third_party_record"
+        }
+      ],
+      "left_self": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:left_self",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-8bed7bee8e9b8306",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:7b5c69d8bc20aa9e49039a9fc248d69e5fb3b0f4f9229ffcf7a4b4c92d1bfa41"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:ceb09efd92e2ec3cbd1c90ecd036ebee06f5c9edde9f9efe5386a32a4f9a6b8b",
+          "content_evidence_status": "self_asserted",
+          "record_id": "CAP-1beeda900f3aafb9",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-8bed7bee8e9b8306",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "malformed_snapshot": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:left_corroborated",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-0468bd4ea79127a5",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "",
+          "source_set_digest": "sha256:8bd813fd0e70fa7e8503a3951b2d9759b79769f206d401aee1eebdf7f504422d"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:7882c7986899eedf3c5905fbaf5865694a72db00bf5699de81e252502ed01281",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-32b132a8d8ecdffc",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-0468bd4ea79127a5",
+          "source_type": "third_party_record"
+        }
+      ],
+      "mismatched_capture": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:left_corroborated",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-0468bd4ea79127a5",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:8bd813fd0e70fa7e8503a3951b2d9759b79769f206d401aee1eebdf7f504422d"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:283db9073df34aa8783df6f9f5cea49c261bc17c5d45370748c055b06d29010c",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-1b28d66ef0162eba",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-63138867336651fe",
+          "source_type": "third_party_record"
+        }
+      ],
+      "other_name_clean": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "gamma",
+              "assertion_value_or_target": "MID-c3ce251d9b434051",
+              "scope": null,
+              "source": "synthetic:other_name_clean",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-bf22f189b6f4eb7f",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:19a593bc4bcce77ded74f9834badd999b0aec1aed4ee48bd0fdc79f7e60b03c5"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:10a472f87fa7cda93def3bbc045c865e65a6acec42c8b4545c71a923c7530016",
+          "content_evidence_status": "self_asserted",
+          "record_id": "CAP-ea4e522407d58247",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-bf22f189b6f4eb7f",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "other_name_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "gamma",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:other_name_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-8cdf48637fc06e5a",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:683139ae18988eff6194536105f754400344243219822493d3504df0dad4b3d9"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:0721e8ce2c31a5e2fe1b949279f6e920ec3ce806fe05bf3a41269ab9302283c2",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-2878be7559ae86aa",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-8cdf48637fc06e5a",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "outside_interval_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:outside_interval_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": "2026-07-19T23:59:59+00:00"
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-aa8ca9cba8655631",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-ff333cc85cd5efc9",
+          "source_set_digest": "sha256:7cba0976aa8de63943990d22ddce61d4f8c512f74c39191d7c1bc586b515eb0e"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:bc53ab8edbc58d352800e564bbe32f70fcaa92f9d5291da1a762969924fc068f",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-5133eb195f9d24ad",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-aa8ca9cba8655631",
+          "source_type": "provider_self_report"
+        }
+      ],
+      "right_corroborated": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "beta",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:right_corroborated",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-63138867336651fe",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-18cdb2300b19b6f0",
+          "source_set_digest": "sha256:aff314d62120a7a8eb294e75827b34b810fe81507b2689c299242f24585ef720"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:283db9073df34aa8783df6f9f5cea49c261bc17c5d45370748c055b06d29010c",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-1b28d66ef0162eba",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-63138867336651fe",
+          "source_type": "third_party_record"
+        }
+      ],
+      "wrong_endpoint_conflict": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:wrong_endpoint_conflict",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-3457d69687d46a3a",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-18cdb2300b19b6f0",
+          "source_set_digest": "sha256:1d2fc22e6b78615b23f9f598941fd9ea9daf98bba6e30aafad1067b663612fea"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:b648819b041bf08034ea6a927a52bc4768b7d31aaf0b9f7468a71cc7cee6399d",
+          "content_evidence_status": "independently_corroborated",
+          "record_id": "CAP-cb59868e5decec90",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-3457d69687d46a3a",
+          "source_type": "third_party_record"
+        }
+      ],
+      "wrong_endpoint_contradicted": [
+        {
+          "assertions": [
+            {
+              "assertion_predicate": "resolves_to",
+              "assertion_subject": "alpha",
+              "assertion_value_or_target": "MID-270d60b2924e4aed",
+              "scope": null,
+              "source": "synthetic:wrong_endpoint_contradicted",
+              "superseded_by": null,
+              "unit": null,
+              "valid_from": "2026-05-01T00:00:00+00:00",
+              "valid_until": null
+            }
+          ],
+          "observed_at": "2026-07-19T00:00:00+00:00",
+          "record_id": "SNAP-6db0f1163314cc7e",
+          "record_kind": "catalog_snapshot",
+          "schema_version": "v1",
+          "service_endpoint_id": "EID-18cdb2300b19b6f0",
+          "source_set_digest": "sha256:099bd141173277d056774f67c7934ddfc2649904b3d7a11c003d935ffda8f289"
+        },
+        {
+          "capture_method": "synthetic_offline_fixture",
+          "capture_success": true,
+          "captured_at": "2026-07-19T00:00:00+00:00",
+          "capturing_executor": "tool:synthetic_fixture",
+          "channel_authentication_status": "unverifiable",
+          "content_digest": "sha256:52e61ccfdc9fac303644e6f082e11ab12e687578b33f5c5155bae364beacd39d",
+          "content_evidence_status": "contradicted",
+          "record_id": "CAP-5d10a87c94c3a02d",
+          "record_kind": "catalog_capture",
+          "schema_version": "v1",
+          "snapshot_id": "SNAP-6db0f1163314cc7e",
+          "source_type": "provider_self_report"
+        }
+      ]
+    }
+  },
+  "method": "Unchanged baseline code; synthetic schema-valid records except explicitly marked malformed/mismatched cases; no provider calls or test/mutation suite runs; observations are not qualified verification.",
+  "negative_input_pairs": [
+    "mismatched_capture",
+    "malformed_snapshot"
+  ],
+  "observations": [
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "left_self"
+      },
+      "label": "positive_control_correct_endpoint",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "assertion_subject": "alpha",
+          "capture_id": "CAP-1beeda900f3aafb9",
+          "channel_authentication_status": "unverifiable",
+          "content_evidence_status": "self_asserted",
+          "resolved": true,
+          "resolved_identity": "MID-c3ce251d9b434051",
+          "snapshot_id": "SNAP-8bed7bee8e9b8306"
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left_wrong_known_endpoint",
+        "pair": "left_self"
+      },
+      "label": "R13_known_other_endpoint",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "assertion_subject": "alpha",
+          "capture_id": "CAP-1beeda900f3aafb9",
+          "channel_authentication_status": "unverifiable",
+          "content_evidence_status": "self_asserted",
+          "resolved": true,
+          "resolved_identity": "MID-c3ce251d9b434051",
+          "snapshot_id": "SNAP-8bed7bee8e9b8306"
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left_unbound_endpoint",
+        "pair": "left_self"
+      },
+      "label": "R13_unbound_endpoint",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "assertion_subject": "alpha",
+          "capture_id": "CAP-1beeda900f3aafb9",
+          "channel_authentication_status": "unverifiable",
+          "content_evidence_status": "self_asserted",
+          "resolved": true,
+          "resolved_identity": "MID-c3ce251d9b434051",
+          "snapshot_id": "SNAP-8bed7bee8e9b8306"
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left_wrong_known_endpoint",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "R13_wrong_endpoint_synthetic_permission",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "applicable_contradicted"
+      },
+      "label": "single_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-f10f1914ecad2921",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "applicable_ambiguous"
+      },
+      "label": "single_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "candidates": [
+            "MID-270d60b2924e4aed",
+            "MID-c3ce251d9b434051"
+          ],
+          "reason": "ambiguous_assertions",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "wrong_endpoint_contradicted"
+      },
+      "label": "single_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-5d10a87c94c3a02d",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "expired_contradicted"
+      },
+      "label": "single_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-6c86c439ec799453",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "after_event_contradicted"
+      },
+      "label": "single_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-2c5e5df9fc968260",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "other_name_contradicted"
+      },
+      "label": "single_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-2878be7559ae86aa",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "outside_interval_contradicted"
+      },
+      "label": "single_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "capture_id": "CAP-5133eb195f9d24ad",
+          "reason": "contradicted_evidence",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "expired_clean"
+      },
+      "label": "single_expired_clean",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "age_days": 80,
+          "reason": "expired_freshness_window",
+          "resolved": false,
+          "window_days": 30
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "after_event_clean"
+      },
+      "label": "single_after_event_clean",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "observed_at": "2026-07-21T00:00:00+00:00",
+          "occurred_at": "2026-07-20T12:00:00+00:00",
+          "reason": "snapshot_after_invocation",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "other_name_clean"
+      },
+      "label": "single_other_name_clean",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "reason": "no_applicable_assertion",
+          "requested_model_name": "alpha",
+          "resolved": false
+        }
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "mismatched_capture"
+      },
+      "label": "single_mismatched_capture",
+      "outcome": {
+        "exception_type": "ResolutionError",
+        "kind": "raised",
+        "message": "capture does not describe this snapshot"
+      }
+    },
+    {
+      "api": "resolve_identity",
+      "inputs": {
+        "invocation": "left",
+        "pair": "malformed_snapshot"
+      },
+      "label": "single_malformed_snapshot",
+      "outcome": {
+        "exception_type": "CatalogRecordError",
+        "kind": "raised",
+        "message": "$.service_endpoint_id must be a non-empty string"
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "applicable_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "applicable_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "applicable_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "applicable_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "applicable_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "applicable_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "applicable_ambiguous",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "applicable_ambiguous",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "applicable_ambiguous",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "applicable_ambiguous"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "applicable_ambiguous",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "applicable_ambiguous"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_applicable_ambiguous",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_conflicting_corroborated",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_conflicting_corroborated",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "left_conflicting_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "left_conflicting_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_conflicting_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "left_conflicting_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_conflicting_corroborated",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_self",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": true,
+          "left_evidence_class": "self_asserted",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "content evidence is 'self_asserted' and 'independently_corroborated'; C3 requires non-equivalence to be affirmatively established, and provider self-report does not establish an asserted model mapping",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_self",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": true,
+          "left_evidence_class": "self_asserted",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "content evidence is 'self_asserted' and 'independently_corroborated'; C3 requires non-equivalence to be affirmatively established, and provider self-report does not establish an asserted model mapping",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "left_self",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "left_self"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_self",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": true,
+          "left_evidence_class": "self_asserted",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "content evidence is 'self_asserted' and 'independently_corroborated'; C3 requires non-equivalence to be affirmatively established, and provider self-report does not establish an asserted model mapping",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "left_self"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_left_self",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "wrong_endpoint_conflict",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "wrong_endpoint_conflict",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "wrong_endpoint_conflict",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "wrong_endpoint_conflict"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "wrong_endpoint_conflict",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_equality",
+          "blocks_adjudication": true,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-270d60b2924e4aed",
+          "permits_reason": null,
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "wrong_endpoint_conflict"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_conflict",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "wrong_endpoint_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "wrong_endpoint_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "wrong_endpoint_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "wrong_endpoint_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "wrong_endpoint_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "wrong_endpoint_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_wrong_endpoint_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "expired_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "expired_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "expired_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "expired_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "expired_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "expired_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_expired_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "after_event_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "after_event_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "after_event_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "after_event_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "after_event_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "after_event_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_after_event_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "other_name_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "other_name_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "other_name_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "other_name_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "other_name_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "other_name_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_other_name_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "outside_interval_contradicted",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "outside_interval_contradicted",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "outside_interval_contradicted",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "outside_interval_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "outside_interval_contradicted",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "outside_interval_contradicted"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_outside_interval_contradicted",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "mismatched_capture",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "mismatched_capture",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "mismatched_capture",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "mismatched_capture"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "mismatched_capture",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "mismatched_capture"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_mismatched_capture",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "malformed_snapshot",
+          "left_corroborated",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "exception_type": "CatalogRecordError",
+        "kind": "raised",
+        "message": "$.service_endpoint_id must be a non-empty string"
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "malformed_snapshot",
+          "right_corroborated",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "exception_type": "CatalogRecordError",
+        "kind": "raised",
+        "message": "$.service_endpoint_id must be a non-empty string"
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "malformed_snapshot",
+          "right_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "exception_type": "CatalogRecordError",
+        "kind": "raised",
+        "message": "$.service_endpoint_id must be a non-empty string"
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "left_corroborated",
+          "right_corroborated",
+          "malformed_snapshot"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "malformed_snapshot",
+          "left_corroborated"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "exception_type": "CatalogRecordError",
+        "kind": "raised",
+        "message": "$.service_endpoint_id must be a non-empty string"
+      }
+    },
+    {
+      "api": "equivalence",
+      "inputs": {
+        "left": "left",
+        "pairs": [
+          "right_corroborated",
+          "left_corroborated",
+          "malformed_snapshot"
+        ],
+        "right": "right"
+      },
+      "label": "aggregate_with_malformed_snapshot",
+      "outcome": {
+        "kind": "returned",
+        "value": {
+          "basis": "model_identity_resolution_inequality_asserted_by_catalog",
+          "blocks_adjudication": false,
+          "left_evidence_class": "independently_corroborated",
+          "left_identity": "MID-c3ce251d9b434051",
+          "permits_reason": "both sides independently corroborated",
+          "reason": null,
+          "right_evidence_class": "independently_corroborated",
+          "right_identity": "MID-270d60b2924e4aed",
+          "status": "non_equivalent",
+          "unresolved_side": null
+        }
+      }
+    }
+  ],
+  "python_version": "3.13.5",
+  "schema": "step3_r13_r14_baseline_probe_v1",
+  "schema_valid_snapshot_capture_pairs": 15,
+  "script_sha256": "5c1be890715584481898bd4df7cecb33c50b193da4b0c1da9398caa769e11bf7",
+  "source_commit": "5515f55894b10ad70c321340257f67a960dcc382",
+  "source_hashes": {
+    "ai_lab/documentation/verification_outcome.py": {
+      "bytes": 3187,
+      "sha256": "4ee1511fb1c5e92b3faec7352c3036789b93c555d80a745cd3c3bf79d9104f02"
+    },
+    "ai_lab/providers/catalog.py": {
+      "bytes": 17304,
+      "sha256": "21fd95bd1839ed62b6588555a8cc5df4092a3aa69fd023257a7b51c00629f96c"
+    },
+    "ai_lab/providers/catalog_resolution.py": {
+      "bytes": 12772,
+      "sha256": "4559f65d8aedadfe3fa5a29c982ab5f50140433fa4e3274a4f196f991e6fd146"
+    },
+    "ai_lab/providers/executor_equivalence.py": {
+      "bytes": 10394,
+      "sha256": "49291eb9b9c369b78c30b9b5599a9096da966289e0d9cbd2cc90aed1284bd9c7"
+    },
+    "ai_lab/providers/invocation_record.py": {
+      "bytes": 24323,
+      "sha256": "2c2594154bce9e181328591078e606384d46763dc161a5ee2b2d013bd8dee5be"
+    },
+    "docs/abstractions/ABS-0004-invocation-authorization-ontology.md": {
+      "bytes": 56314,
+      "sha256": "04833eb4fa75e6baa0112626585c35c563b677b3c34c9b6b506105b2c0031023"
+    },
+    "docs/self_model/CATALOG_RECORDS.md": {
+      "bytes": 9577,
+      "sha256": "0345341cf8a606fd3c8931c70b2135d22951ca171e2a3b2994be0519bc218a2c"
+    },
+    "docs/self_model/decisions/DECISION-20260814-0001.json": {
+      "bytes": 10957,
+      "sha256": "871181b387e5aa1f93f38a280799c08c1ec37746366ff8d67dd8306be932ec4f"
+    },
+    "docs/self_model/warrants/WARR-20260723-0001.json": {
+      "bytes": 4852,
+      "sha256": "361d3bb4da9fac380dd7aec67f1c3b720297a2bdc69e2ccaf7eb9854233195ba"
+    },
+    "tests/test_catalog.py": {
+      "bytes": 35672,
+      "sha256": "dca3737a4809ee5547e5b341cbf7bf1a069a0ccab09225b1c061c5beb2740ac0"
+    },
+    "tests/test_executor_equivalence.py": {
+      "bytes": 14129,
+      "sha256": "3947ae2f92a530cd67a4520017d06d0fa0ee729a82e73c632cc1ebcb14a008b6"
+    }
+  }
+}

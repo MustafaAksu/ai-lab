@@ -1,0 +1,308 @@
+{
+  "report_schema": "ai_lab.step3a.validation/1",
+  "recorded_at": "2026-11-26T07:23:49+00:00",
+  "recorded_by": {
+    "peer_id": "chatgpt",
+    "substrate": "conversation",
+    "role": "implementation_executor",
+    "standing": "self_declared_unverified; same-provider review is not independent adjudication"
+  },
+  "accepted_preparation": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+  "admission_commit": "03d67b45964c1642e8ac17ffc569b267a65499a9",
+  "implementation_subject": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+  "scope": "Only admitted 3A under WARR-20261126-0001 A1-A4; no 3B/3C or completion",
+  "source_sha256": {
+    "ai_lab/providers/qualification.py": "2815ba49f94b208879344bbc9531b896fc5db645cf5fde5ba56bc90babd62fc8",
+    "ai_lab/providers/qualification_records.py": "9319c8e8e179cb69458e2ad9012a93731959ee245bcb56bb398a23e98245959a",
+    "ai_lab/providers/catalog_resolution.py": "4a9093080e17805f25f12ed1cd421e946960e498b25750b4257f41d0751a765b",
+    "ai_lab/providers/executor_equivalence.py": "f83279be0e07ee54df4c1acc4cc91b815f94eae662f3b8e50da033c1423cebbd",
+    "scripts/falsify_qualification_3a.py": "0b37740be63d9380a9cc047c41d9f184e43a26f221c130edc0cdea3513c20e51",
+    "scripts/falsify_verify_v2.py": "e08363bbe204863262870b1552b8fb68ef8f896c08e222efa1fed8edafb3ce1e",
+    "tests/qualification_fixtures.py": "47f76d6111e7f1a93aa62ab69912942389b9d230a6f360af9cf51d259ccc8a89",
+    "tests/test_qualification_model.py": "7fe00c40861d4e0cfda97cc0d4b13eb35b8b797b240cf01308b4db56f7d3f83e",
+    "tests/test_qualification_records.py": "f1584a7ccff22ee2a020f4930623d3a4dc1c49e35a915cef22c382094f333383",
+    "tests/test_qualification_legacy.py": "2bc6a668f14cd6855da472c699567fb57ca49b92049e35ff9d02f7aba98d533b",
+    "tests/test_catalog.py": "a964e2a88ece60e3e6d45cc8da715a513911174a960995309721d573ffbc2e39",
+    "tests/test_executor_equivalence.py": "472b7567ccb3d58f04a9f9578c1e4ed3224f67a920509915e9112029b81189ab",
+    "requirements.txt": "0ec63fbc4b7f7acad226e060789b6b1e5de55dff658c7e8cbce197d7feab3c29",
+    "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json": "72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327"
+  },
+  "verification_runs": [
+    {
+      "verification_id": "VERIFY-20261126-0001",
+      "scope": "local exact implementation commit",
+      "subject": {
+        "candidate_commit": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+        "tree_id": "5b2b7068271f7ea5e4ca9bce2ef52013ed06be97"
+      },
+      "receipt_sha256": "f287b70e4b818b196685884729c28c3b8e8cc9a71e63035a4c37972e11fe45d8",
+      "record_sha256": "af7e2a8873070b807101bd4dc5f7429ce3c27d7afc9a81d6518725206b0c798a",
+      "python": {
+        "implementation": "CPython",
+        "version": "3.12.14"
+      },
+      "started_at": "2026-11-26T07:18:49.740301+00:00",
+      "finished_at": "2026-11-26T07:20:12.491533+00:00",
+      "result": "all_commands_exit_zero",
+      "output_retention": "complete",
+      "commands": [
+        {
+          "index": 0,
+          "argv_template": [
+            "{python}",
+            "scripts/audit_self_model_index.py"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "ca51065250fef4c18bd1c4d347c2db79b7b7b07f8c42e12abd271ac3c56c4949",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "}"
+        },
+        {
+          "index": 1,
+          "argv_template": [
+            "{python}",
+            "scripts/build_self_model.py",
+            "--output",
+            "{scratch}/SELF_MODEL.rebuilt.json"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "1a05b1589b9a20b5a51efb3956e24ac47e61513733f0810e7c6b7628fac02ea5",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "open_gaps: 6"
+        },
+        {
+          "index": 2,
+          "argv_template": [
+            "{python}",
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "d497a484cdc50f212e86b8c7e642c549f8b81da77baca31d509cceebd85aeaea",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "1637 passed in 80.68s (0:01:20)"
+        }
+      ],
+      "tree_observation": {
+        "initial": {
+          "changed_paths": [],
+          "head": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+          "head_matches_subject": true,
+          "status_clean": true
+        },
+        "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+        "permitted_tree_changes": [],
+        "scope": "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; status-hidden changes (including assume-unchanged) and a path changed and restored within one command are not detected"
+      },
+      "origin_verification": "unverified",
+      "verifier_lineage_status": "self_authored_unreviewed"
+    },
+    {
+      "verification_id": "VERIFY-20261126-0002",
+      "scope": "GitHub pull_request synthetic merge commit",
+      "subject": {
+        "base_sha": "5515f55894b10ad70c321340257f67a960dcc382",
+        "candidate_commit": "f1bafd10e35328055b5c68686cc01c3dff219101",
+        "head_sha": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+        "pull_request": 5,
+        "tree_id": "5b2b7068271f7ea5e4ca9bce2ef52013ed06be97"
+      },
+      "receipt_sha256": "110f0be78be8effdf27489c8d846c12f194806b4c25f2df002ae08dcb70121b1",
+      "record_sha256": "09bc548c15f7566f0129698de56163be0c5b3fbce7f62dff8425cd6571f50f66",
+      "python": {
+        "implementation": "CPython",
+        "version": "3.12.16"
+      },
+      "started_at": "2026-11-26T07:18:45.178287+00:00",
+      "finished_at": "2026-11-26T07:20:15.518011+00:00",
+      "result": "all_commands_exit_zero",
+      "output_retention": "complete",
+      "commands": [
+        {
+          "index": 0,
+          "argv_template": [
+            "{python}",
+            "scripts/audit_self_model_index.py"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "935469b2b28fcf6a710f53821e1e4f76c6c6a808beb5ede89ee1480ea5ccbea8",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "}"
+        },
+        {
+          "index": 1,
+          "argv_template": [
+            "{python}",
+            "scripts/build_self_model.py",
+            "--output",
+            "{scratch}/SELF_MODEL.rebuilt.json"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "914c132f27238c6e432a398ca767bb7bc1a88994cff7300c5b0844611a409023",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "open_gaps: 6"
+        },
+        {
+          "index": 2,
+          "argv_template": [
+            "{python}",
+            "-m",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "termination": "exited",
+          "stdout_sha256": "cdcd9cc9a48c8a8179387d584454aeef1bbc3c52bddd04ac594a3ed97e40d7bf",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_last_line": "1637 passed in 88.39s (0:01:28)"
+        }
+      ],
+      "tree_observation": {
+        "initial": {
+          "changed_paths": [],
+          "head": "f1bafd10e35328055b5c68686cc01c3dff219101",
+          "head_matches_subject": true,
+          "status_clean": true
+        },
+        "method": "git rev-parse HEAD and git status --porcelain=v1 --untracked-files=all --ignored -z",
+        "permitted_tree_changes": [],
+        "scope": "command_boundaries_only: Git-status-reported paths only, not byte-level tree equality; status-hidden changes (including assume-unchanged) and a path changed and restored within one command are not detected"
+      },
+      "origin_verification": "unverified",
+      "verifier_lineage_status": "self_authored_unreviewed"
+    }
+  ],
+  "ci_transport": {
+    "run_id": 45774343203,
+    "artifact_id": 15095153296,
+    "archive_sha256": "9f8f2f18e7cd426af24a62ae237b2d49be205bc62574bfbd9b1f71f94ce7dc74",
+    "writer": "success",
+    "upload": "success",
+    "job": "success",
+    "receipt_scope": "synthetic merge commit, distinct from branch-head verification"
+  },
+  "content_equivalence": {
+    "left_commit": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+    "right_commit": "f1bafd10e35328055b5c68686cc01c3dff219101",
+    "tree_id": "5b2b7068271f7ea5e4ca9bce2ef52013ed06be97",
+    "tree_equal": true,
+    "verification_scope_equal": false
+  },
+  "falsification": {
+    "report_path": "docs/reviews/qualification_semantics/3a/FALSIFICATION.json",
+    "sha256": "3f710c5cce2d708d612175e8b555b11ca6a5d40e9bcd58b3268ad637a1c67844",
+    "summary": {
+      "mutations": 20,
+      "caught": 20,
+      "not_caught": 0,
+      "errors": 0,
+      "groups": {
+        "qualification_3a": {
+          "mutations": 20,
+          "caught": 20
+        }
+      }
+    },
+    "source_head": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+    "source_status": "",
+    "snapshot_sha256": "8579e7e82811e00371649dd14eadbed4726f6dc89619512737f4183a09e16f58",
+    "baseline_processes": 20,
+    "baseline_node_executions": 35,
+    "baseline_unique_nodeids": 35,
+    "mutant_assertion_failures": 33,
+    "mutant_unique_failed_nodeids": 33,
+    "scope_limit": "20 targeted admitted guards; not all 48 proposed families, not the historical 39 VERIFY v2 mutations",
+    "git_subject_manifest_check": {
+      "tracked_files": 1412,
+      "content_sha256_matches": 1412,
+      "file_mode_matches": 1412,
+      "unexpected_or_missing_files": 0
+    }
+  },
+  "preservation": {
+    "baseline": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+    "subject": "3448f4dd6b873d837841cffe3294c984fe9c859b",
+    "checks": [
+      {
+        "root": "docs/self_model/verifications",
+        "historical_files": 47,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/verification_outputs",
+        "historical_files": 37,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/gaps",
+        "historical_files": 10,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/decisions",
+        "historical_files": 16,
+        "changed": []
+      },
+      {
+        "root": "docs/self_model/warrants",
+        "historical_files": 64,
+        "changed": []
+      },
+      {
+        "root": "docs/reviews/qualification_semantics",
+        "historical_files": 22,
+        "changed": []
+      }
+    ]
+  },
+  "store_validation": {
+    "canonical_verify_records": 49,
+    "v2_records": 10,
+    "CAS_objects": 47,
+    "CAS_bytes": 104701,
+    "new_CAS_objects": 10,
+    "new_CAS_bytes": 20938,
+    "local_tree": "5b2b7068271f7ea5e4ca9bce2ef52013ed06be97",
+    "CI_tree": "5b2b7068271f7ea5e4ca9bce2ef52013ed06be97",
+    "problems": 0
+  },
+  "preflight": {
+    "scope": "noncanonical working-tree run before final source freeze; one additional parsing regression was subsequently added",
+    "direct_ambient_pytest": "3 failed, 1633 passed, 2 warnings in 78.51s",
+    "failures": [
+      "tests/test_claude_provider.py::test_claude_provider_name",
+      "tests/test_claude_provider.py::test_claude_provider_ask_returns_text_blocks",
+      "tests/test_claude_provider.py::test_claude_provider_accepts_custom_max_tokens"
+    ],
+    "cause": "Ambient SOCKS proxy selected by httpx during unchanged provider constructor tests; socksio was absent. No provider/runtime/dependency change was made for this environment-specific issue.",
+    "restricted_offline_control": "4 passed in 1.17s",
+    "control_output": "docs/reviews/qualification_semantics/3a/OFFLINE-PROVIDER-CHECK.txt",
+    "control_sha256": "e7054943d4d40cc8b30b1794dd6c922fb6a085d30701c6e031800de97ab2422f",
+    "canonical_gate": "VPROF-0001 already constructs a limited environment; both exact-subject retained receipts pass all 1637 tests."
+  },
+  "standing": {
+    "plan_status": "admitted_3a_only_implementation_review_pending",
+    "3B": "NOT_ADMITTED",
+    "3C": "NOT_ADMITTED",
+    "C3": "unresolved",
+    "C10": "unresolved",
+    "Q_C3_C10": "unresolved",
+    "legacy_blocks_adjudication": true,
+    "production_Q_identity": "withheld",
+    "autonomy": "NOT_ACTIVATED",
+    "merge_authorized": false,
+    "origin_verification": "unverified",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_PI_separation": "unresolved"
+  }
+}

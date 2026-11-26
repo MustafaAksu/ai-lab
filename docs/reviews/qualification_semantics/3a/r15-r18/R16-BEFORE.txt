@@ -1,0 +1,164 @@
+FF..F.FF.F                                                               [100%]
+=================================== FAILURES ===================================
+_ test_r16_witness_cannot_precede_its_exact_source_availability[capture-after-witness] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_witness_cannot_preced0')
+captured = '2026-11-20T02:00:00+00:00'
+
+    @pytest.mark.parametrize("captured", [AFTER_ASSESSMENT, OBSERVED],
+                             ids=["capture-after-witness", "availability-after-witness"])
+    def test_r16_witness_cannot_precede_its_exact_source_availability(tmp_path, captured):
+        bundle = _timed_fixture(tmp_path, captured=captured, available=AFTER_CAPTURE)
+>       _assert_catalog_only(bundle.evaluate())
+
+tests/test_qualification_r16.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}
+
+    def _assert_catalog_only(result):
+        validate_shape(result, "AssessmentResult")
+        assert result["validation_status"] == "valid"
+        assert result["R_identity"]["value"] == "non_equivalent"
+        assert result["supplied_relation"]["value"] == "non_equivalent"
+>       assert result["Q_identity"]["value"] == "withheld"
+E       AssertionError: assert 'conditions_satisfied' == 'withheld'
+E         
+E         - withheld
+E         + conditions_satisfied
+
+tests/test_qualification_r16.py:66: AssertionError
+_ test_r16_witness_cannot_precede_its_exact_source_availability[availability-after-witness] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_witness_cannot_preced1')
+captured = '2026-11-20T00:00:00+00:00'
+
+    @pytest.mark.parametrize("captured", [AFTER_ASSESSMENT, OBSERVED],
+                             ids=["capture-after-witness", "availability-after-witness"])
+    def test_r16_witness_cannot_precede_its_exact_source_availability(tmp_path, captured):
+        bundle = _timed_fixture(tmp_path, captured=captured, available=AFTER_CAPTURE)
+>       _assert_catalog_only(bundle.evaluate())
+
+tests/test_qualification_r16.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}
+
+    def _assert_catalog_only(result):
+        validate_shape(result, "AssessmentResult")
+        assert result["validation_status"] == "valid"
+        assert result["R_identity"]["value"] == "non_equivalent"
+        assert result["supplied_relation"]["value"] == "non_equivalent"
+>       assert result["Q_identity"]["value"] == "withheld"
+E       AssertionError: assert 'conditions_satisfied' == 'withheld'
+E         
+E         - withheld
+E         + conditions_satisfied
+
+tests/test_qualification_r16.py:66: AssertionError
+____ test_r16_early_same_mid_alternative_cannot_rescue_late_witnessed_chain ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_early_same_mid_altern0')
+
+    def test_r16_early_same_mid_alternative_cannot_rescue_late_witnessed_chain(tmp_path):
+        bundle = _timed_fixture(tmp_path, available=AFTER_CAPTURE, alternative=True)
+>       _assert_catalog_only(bundle.evaluate())
+
+tests/test_qualification_r16.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}
+
+    def _assert_catalog_only(result):
+        validate_shape(result, "AssessmentResult")
+        assert result["validation_status"] == "valid"
+        assert result["R_identity"]["value"] == "non_equivalent"
+        assert result["supplied_relation"]["value"] == "non_equivalent"
+>       assert result["Q_identity"]["value"] == "withheld"
+E       AssertionError: assert 'conditions_satisfied' == 'withheld'
+E         
+E         - withheld
+E         + conditions_satisfied
+
+tests/test_qualification_r16.py:66: AssertionError
+______ test_r16_another_chain_availability_cannot_supply_assessment_time _______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_another_chain_availab0')
+
+    def test_r16_another_chain_availability_cannot_supply_assessment_time(tmp_path):
+        bundle = _timed_fixture(tmp_path, available=AFTER_CAPTURE, alternative=True)
+        # Both sources have the same MID. Retain the late exact proof and also
+        # supply the early other-chain proof; only the exact one can cover the chain.
+        bundle.source_refs[0]["availability_evidence_refs"].extend(
+            copy.deepcopy(bundle.source_refs[2]["availability_evidence_refs"]))
+        bundle.seal()
+>       _assert_catalog_only(bundle.evaluate())
+
+tests/test_qualification_r16.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}
+
+    def _assert_catalog_only(result):
+        validate_shape(result, "AssessmentResult")
+        assert result["validation_status"] == "valid"
+        assert result["R_identity"]["value"] == "non_equivalent"
+        assert result["supplied_relation"]["value"] == "non_equivalent"
+>       assert result["Q_identity"]["value"] == "withheld"
+E       AssertionError: assert 'conditions_satisfied' == 'withheld'
+E         
+E         - withheld
+E         + conditions_satisfied
+
+tests/test_qualification_r16.py:66: AssertionError
+_______ test_r16_timely_chain_and_availability_are_retained_as_evidence ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_timely_chain_and_avai0')
+
+    def test_r16_timely_chain_and_availability_are_retained_as_evidence(tmp_path):
+        bundle = _timed_fixture(tmp_path, available=AFTER_CAPTURE, alternative=True,
+                                witnessed_source=2)
+        result = bundle.evaluate()
+        assert result["Q_identity"]["value"] == "conditions_satisfied"
+        timing = [r for r in result["Q_identity"]["reasons"]
+                  if r["side"] == "left" and r["detail"].startswith("accepted fictional witness chain timing: ")]
+>       assert len(timing) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_qualification_r16.py:120: AssertionError
+________ test_r16_retrospective_bound_does_not_repair_early_assessment _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_r16_retrospective_bound_d0')
+
+    def test_r16_retrospective_bound_does_not_repair_early_assessment(tmp_path):
+        bundle = _timed_fixture(tmp_path, captured=AFTER_ASSESSMENT, available=AFTER_CAPTURE)
+        bundle.context["context_policy"].update(mode="retrospective", knowledge_cutoff=EVENT)
+        bundle.seal()
+>       _assert_catalog_only(bundle.evaluate())
+
+tests/test_qualification_r16.py:153: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema_version': 'ai_lab.qualification.r2/1', 'record_kind': 'assessment_result', 'domain': 'synthetic', 'entry_point': 'evaluate_synthetic_r2', ...}
+
+    def _assert_catalog_only(result):
+        validate_shape(result, "AssessmentResult")
+        assert result["validation_status"] == "valid"
+        assert result["R_identity"]["value"] == "non_equivalent"
+        assert result["supplied_relation"]["value"] == "non_equivalent"
+>       assert result["Q_identity"]["value"] == "withheld"
+E       AssertionError: assert 'conditions_satisfied' == 'withheld'
+E         
+E         - withheld
+E         + conditions_satisfied
+
+tests/test_qualification_r16.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[capture-after-witness]
+FAILED tests/test_qualification_r16.py::test_r16_witness_cannot_precede_its_exact_source_availability[availability-after-witness]
+FAILED tests/test_qualification_r16.py::test_r16_early_same_mid_alternative_cannot_rescue_late_witnessed_chain
+FAILED tests/test_qualification_r16.py::test_r16_another_chain_availability_cannot_supply_assessment_time
+FAILED tests/test_qualification_r16.py::test_r16_timely_chain_and_availability_are_retained_as_evidence
+FAILED tests/test_qualification_r16.py::test_r16_retrospective_bound_does_not_repair_early_assessment
+6 failed, 4 passed in 1.67s

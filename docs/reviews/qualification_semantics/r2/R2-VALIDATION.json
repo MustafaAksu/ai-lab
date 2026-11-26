@@ -1,0 +1,208 @@
+{
+  "artifact_digests": {
+    "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md": {
+      "bytes": 12137,
+      "sha256": "58dbef0baabe1eaa42c2913ddd00a3421d82fac68b8e3ab5a8ea5cc30373b3a2"
+    },
+    "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md": {
+      "bytes": 15807,
+      "sha256": "7e86dc2eed02c999ecd50412fe87acbc3acfdc1e1992f992f49c2489d13770d3"
+    },
+    "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md": {
+      "bytes": 16986,
+      "sha256": "3b3a8ce503c645980bf6be4040a1cf8e05503c145ee601ca8430e311f1d5c458"
+    },
+    "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json": {
+      "bytes": 70884,
+      "sha256": "72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327"
+    },
+    "docs/reviews/qualification_semantics/r2/CONSUMER-COMPATIBILITY.md": {
+      "bytes": 8516,
+      "sha256": "5c4583f3ea4c0a9bd3e7af2547ade799e9f540429496411f4c9000eb18d9c2fc"
+    },
+    "docs/reviews/qualification_semantics/r2/DETERMINISTIC-RULES.md": {
+      "bytes": 28714,
+      "sha256": "bfa22c7a1473d1b0d37a8efe1f4c64b5eb89db43131a4cef0c3570fe258bb77f"
+    },
+    "docs/reviews/qualification_semantics/r2/R2-BASELINE-OBSERVATIONS.md": {
+      "bytes": 10758,
+      "sha256": "6265e579e3e134b770bfc4a79443185da94ca004e2cea85cc6f59fcdaab99b40"
+    },
+    "docs/reviews/qualification_semantics/r2/R2-REVIEW-RESPONSE.md": {
+      "bytes": 9512,
+      "sha256": "d19f28b49180106ddeb7d299cd7b7bbe6b5325c1c74b13bc05b6107d4c7de0f0"
+    },
+    "docs/reviews/qualification_semantics/r2/SCHEMA-EXAMPLES.json": {
+      "bytes": 241082,
+      "sha256": "36f10e0036669b7df811a71e5624307b3927b81164b459450fa2a0cb22bce203"
+    },
+    "docs/reviews/qualification_semantics/r2/SCHEMA-VALIDATION.json": {
+      "bytes": 42232,
+      "sha256": "651d7550099f13eb5cb072f71fb7ef2b774cbf1bd26a52d7fd9c75aad944124c"
+    },
+    "docs/reviews/qualification_semantics/r2/check_schema_examples.py": {
+      "bytes": 7931,
+      "sha256": "40ca221cf49023e35ca9e93795a7ef36f3b53ac1427376b1affaa9a20f3dc74c"
+    },
+    "docs/reviews/qualification_semantics/r2/probes/probe_resolution_contract_r2.py": {
+      "bytes": 17071,
+      "sha256": "65d6d817aa060ed2821698b46b61bd12058e967785a5c7ecbba603b948b581f6"
+    },
+    "docs/reviews/qualification_semantics/r2/probes/resolution_contract_r2_baseline.json": {
+      "bytes": 170794,
+      "sha256": "8ae5d767524e395f3b185f3caface07f696900c09fd24c04ce33e23bbafaca58"
+    },
+    "docs/reviews/qualification_semantics/r2/r2_preparation_pytest.txt": {
+      "bytes": 1622,
+      "sha256": "6fc2447bcc6889362d6e28a3428fbd33a27df64e0d2da50dd1faa1bd7bc5d959"
+    },
+    "docs/self_model/SELF_MODEL.json": {
+      "bytes": 79566,
+      "sha256": "971bc57faee95d312670a6437d2c4e67e04f23789b88c90c210a3e648051ba4f"
+    },
+    "docs/self_model/plans/PLAN-20261125-0001.json": {
+      "bytes": 45097,
+      "sha256": "06877499ea660041da3c5f9f88c619c5a5d5b26c666dc7ddc889cff38215b307"
+    }
+  },
+  "baseline_probe": {
+    "actual_executor": "assisting ChatGPT process; same-provider, not independent",
+    "inspected_checkout": "8b8e24d133eaa3a585eefa14e76a02a519b73b03",
+    "mutation_campaign_run": false,
+    "observations": 189,
+    "provider_calls": 0,
+    "python": "3.13.5",
+    "report_path": "docs/reviews/qualification_semantics/r2/probes/resolution_contract_r2_baseline.json",
+    "report_scope": "Unchanged baseline returned values/exceptions and direct source controls. Documentation pass did not rerun the probe.",
+    "runtime_baseline": "5515f55894b10ad70c321340257f67a960dcc382",
+    "snapshot_capture_pairs": 28,
+    "source_files_checked": 15
+  },
+  "checks": {
+    "broken_relative_links": [],
+    "cas_bytes": 83763,
+    "cas_objects": 37,
+    "historical_gap_records": 10,
+    "historical_main_files_unchanged_except_index": 1377,
+    "historical_warrants": 64,
+    "main_baseline": "5515f55894b10ad70c321340257f67a960dcc382",
+    "original_matrix_rows_unchanged": 31,
+    "plan_counts": {
+      "completed": 26,
+      "proposed": 1,
+      "withdrawn": 1
+    },
+    "planned_families": 48,
+    "r1_historical_artifacts_unchanged": 7,
+    "r1_revision_parent": "8b8e24d133eaa3a585eefa14e76a02a519b73b03",
+    "scope": "Working-tree preparation checks; no prospective evaluator/mutation/admission result",
+    "self_model": {
+      "findings": [
+        {
+          "class": "other",
+          "code": "SELF_MODEL_INDEX_REPO_HEAD_CURRENT",
+          "message": "Stored repo_head matches current HEAD.",
+          "severity": "info",
+          "target": "/workspace/scratch/d1746b126aa7/ai-lab-step3/docs/self_model/SELF_MODEL.json"
+        },
+        {
+          "class": "other",
+          "code": "SELF_MODEL_INDEX_CONTENT_CURRENT",
+          "message": "Stored SELF_MODEL.json matches a normalized rebuild.",
+          "severity": "info",
+          "target": "/workspace/scratch/d1746b126aa7/ai-lab-step3/docs/self_model/SELF_MODEL.json"
+        }
+      ],
+      "ok": true,
+      "schema_version": "v1",
+      "verification_outcome": "verified_current"
+    },
+    "verification_records_validated": 47
+  },
+  "finalized_at": "2026-11-25T21:16:56.425715+00:00",
+  "frozen_boundaries": {
+    "all_domains_C10": "unresolved",
+    "combined_positive_qualification": false,
+    "legacy_blocks_adjudication": true,
+    "production_C3": "unresolved",
+    "production_Q_identity": "withheld",
+    "production_profiles": [],
+    "runtime_tests_workflows_dependencies_ontology_unchanged": true,
+    "synthetic_C3_negative_rule": "SYN-C3-CONFLICT-1"
+  },
+  "internal_consistency_refinement": "Within r2, freeze acyclic prior-context provenance for synthetic C3 ancestor assessments; recompute validated invocation subjects under current context, never reuse prior context/R as authority. This is a schema-description/rule clarification, not runtime implementation.",
+  "limits": [
+    "The 48-family falsification matrix is proposed, not executed.",
+    "The 89 schema/parse examples establish syntax only; example digests are dummy references.",
+    "All three identity-positive profiles and the negative C3 rule are fictional and harness-pinned, not live binding evidence.",
+    "Existing historical r1 reports/hashes refer to r1 and remain unchanged.",
+    "No retrospective lineage/authority upgrade, canonical warrant, new VERIFY or CAS object is created."
+  ],
+  "main_baseline": "5515f55894b10ad70c321340257f67a960dcc382",
+  "plan": {
+    "id": "PLAN-20261125-0001",
+    "implementation_admission": false,
+    "new_decisions": 0,
+    "new_families": 17,
+    "new_warrants": 0,
+    "original_rows_preserved": 31,
+    "planned_scenario_families": 48,
+    "revision": "r2",
+    "status": "proposed"
+  },
+  "preserved_statuses": {
+    "GAP-0005": "open",
+    "GAP-0008": "open",
+    "GAP-0010": "open",
+    "autonomy": "not_activated",
+    "open_gaps": 6,
+    "origin_verification": "unverified",
+    "step5": "not_ready",
+    "verifier_lineage_status": "self_authored_unreviewed",
+    "writer_pi_separation": "unresolved"
+  },
+  "pytest": {
+    "command": [
+      "/workspace/scratch/d1746b126aa7/ai-lab-test-env/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "duration_seconds_reported": 57.29,
+    "environment": "minimal environment, pinned requirements, PYTHONDONTWRITEBYTECODE=1",
+    "exit_code": 0,
+    "passed": 1398,
+    "python": "3.12.14",
+    "qualification": "Existing implementation/preparation tests, not future qualification semantic or mutation tests.",
+    "stdout_path": "docs/reviews/qualification_semantics/r2/r2_preparation_pytest.txt"
+  },
+  "recorded_at": "2026-11-25T21:10:24.625716+00:00",
+  "recorded_by": {
+    "attribution": "self_declared_unverified",
+    "peer_id": "chatgpt",
+    "role": "preparation_executor"
+  },
+  "revision_parent": "8b8e24d133eaa3a585eefa14e76a02a519b73b03",
+  "schema": "ai-lab/step3-r2-preparation-validation/1",
+  "schema_validation": {
+    "checker_sha256": "sha256:40ca221cf49023e35ca9e93795a7ef36f3b53ac1427376b1affaa9a20f3dc74c",
+    "corpus_sha256": "sha256:36f10e0036669b7df811a71e5624307b3927b81164b459450fa2a0cb22bce203",
+    "jsonschema_version": "4.26.0",
+    "meta_schema_valid": true,
+    "observed_at": "2026-11-25T21:16:56.175881+00:00",
+    "passed_cases": 89,
+    "python_version": "3.12.14",
+    "schema_sha256": "sha256:72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327",
+    "scope": "Syntax/parse oracles only. No digest dereference, source selection, identity binding, qualification, independent review or runtime registration.",
+    "status": "pass"
+  },
+  "schema_validation_counts": {
+    "expected_invalid": 48,
+    "expected_valid": 36,
+    "strict_json": 5,
+    "total": 89
+  },
+  "scope": "Working-tree proposal preparation on the exact r1 parent. Tests concern unchanged implementation and PLAN/index compatibility; shape checks do not implement the prospective semantics. Final documentation/digest manifest is finalized after the test output. Committed candidate CI is reported separately in PR metadata. No canonical VERIFY or independent adjudication is created."
+}
