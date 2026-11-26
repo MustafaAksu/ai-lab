@@ -1,0 +1,109 @@
+{
+ "schema_version": "v1",
+ "warrant_id": "WARR-20261126-0001",
+ "target_item_id": "PLAN-20261125-0001",
+ "target_item_type": "plan",
+ "decision": "admit",
+ "warrant_state": "supported",
+ "created_at": "2026-11-26T06:37:07+00:00",
+ "author": "operator",
+ "recorded_by": {
+  "peer_id": "chatgpt",
+  "role": "packaging_executor",
+  "substrate": "conversation",
+  "attribution_status": "self_declared_unverified"
+ },
+ "substrate": "conversation",
+ "repo_commit": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+ "decision_source": {
+  "kind": "conversation",
+  "source": "this conversation",
+  "operator_statement": "3A uygulamasına geçelim.",
+  "original_client_message_timestamp": null,
+  "first_observed_at": "2026-11-26T06:35:50+00:00",
+  "recording_time_basis": "created_at/admitted_at is the actual UTC clock observation when materialization began; the original client-message timestamp is unavailable and not inferred from the review, commit or recording time."
+ },
+ "admission_review": {
+  "url": "https://github.com/MustafaAksu/ai-lab/pull/5#pullrequestreview-6069401816",
+  "review_id": 6069401816,
+  "state": "COMMENTED",
+  "submitted_at": "2026-11-26T06:17:22Z",
+  "reviewed_commit": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+  "disposition": "3A_ADMISSION_RECOMMENDED_WITH_CONDITIONS",
+  "github_actor": "MustafaAksu",
+  "standing": "Technical critique of the ChatGPT-authored proposal; not independent adjudication, an APPROVE review, the PI admission itself or permission to merge. GitHub actor metadata does not establish writer–PI separation."
+ },
+ "reason": "The PI explicitly directs “3A uygulamasına geçelim.” after providing the r2 review and A1–A4 conditions. This warrant materializes that actual session decision for only the bounded 3A increment of PLAN-20261125-0001, accepting revision r2 at the exact recorded commit. The review is a technical recommendation, not the source of PI authority or evidence of independent qualification. This is permission to implement and gather scoped execution evidence, not a finding that the new mechanism works, a completion decision, or permission to merge. The Boolean compatibility successor is separately made explicit in DECISION-20261126-0001 before code.",
+ "scope": "ADMIT_STEP_3A only: PLAN-20261125-0001 revision r2 at a757fd01530fa94fd816b8f8afa87d049c12145d; S1/S4/S8 as needed for D1–D3 endpoint/model checks, fixed source inventory, complete conflict-preserving aggregation, exact synthetic model witness conditions, and immediate D8 legacy/consumer refusal protection. Includes necessary runtime validation, scoped tests, safe new assessment persistence, exact-subject observed-execution VERIFY and strict targeted falsification. 3B tool/human profiles and 3C C3/C10 condition implementation remain not admitted. D6 unresolved and D7 deferred remain constraints; no ontology/activation authority follows.",
+ "conditions": [
+  "A1 — The corroborating witness on each side must bind the exact applicable capture–snapshot–payload–MID chain, its exact property and complete evidence_refs digests. An independently_corroborated label on another source cannot satisfy that chain. The pinned witness/verification bytes must match the same source premise. assessed_at alone does not prove availability: require the pinned availability evidence/fixture rule for the witness and verification bytes by the applicable cutoff, or withhold. Extend F38/F43 with swapped/borrowed-source, payload-mismatch and late-witness controls. Payload hashing alone does not establish semantic derivation of snapshot assertions; the catalog-record relation is attributed, and positive synthetic conditions require the exact stipulated premise. No live witness rule is admitted.",
+  "A2 — Never invent an ArtifactRef, record identity or digest to fill a missing snapshot, payload, MID or declaration link. Use an explicit omission where the closed schema can represent it; otherwise return a named typed invalid/refusal. Keep relevant malformed/unavailable items visible. supplied_relation may relax only governed coverage/availability proof for an attributed observation: it still checks structural/kind validity, capture success, declared endpoint, event applicability and conflicts. A no-anchor production call cannot construct a favorable context from Query. Include dangling snapshot/capture linkage and source-removal controls.",
+  "A3 — DECISION-20261126-0001 explicitly authorizes the bounded compatibility successor before implementation while DECISION-20260814-0001 remains byte-identical history. Install the unconditional blocking Boolean and refusal shims before wiring consumers. LEGACY_CONTEXT_REQUIRED and LEGACY_POSITIVE_DISABLED are not historical v1 IdentityResolution reasons: never coerce or persist these new results as v1 resolution records, and never reuse the historical writer as an r2 positive projection. Historical utilities remain read/history/diagnostic-only and cannot upgrade authority. General catalog-writer hardening remains excluded. Sort diagnostics to a total order: after stage, reason-code declaration order, side and normalized references, compare canonical JSON UTF-8 bytes of the complete normalized diagnostic; same-ID/different-byte conflict reporting cannot depend on insertion order. Test duplicate/collision, builder/writer consumer and rollback refusal behavior.",
+  "A4 — Admit only increment 3A: S1/S4/S8 restricted to D1–D3 and the immediate D8 legacy refusal layer, including synthetic model-witness tests, exact-subject retained VERIFY and targeted falsification with passing baselines and intended ordinary assertion failures. 3B and 3C are NOT_ADMITTED. Production Q_identity remains withheld; C3/C10/Q_C3_C10 remain unresolved throughout the 3A implementation, including synthetic calls, because 3C is not admitted. All six live profile registries remain empty and blocks_adjudication remains true. No live tool/human binding, positive qualification, ontology amendment, merge/completion by implication or authority/autonomy activation is authorized."
+ ],
+ "accepted_contract_digests": {
+  "docs/self_model/plans/PLAN-20261125-0001.json": {
+   "sha256": "06877499ea660041da3c5f9f88c619c5a5d5b26c666dc7ddc889cff38215b307",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  },
+  "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md": {
+   "sha256": "58dbef0baabe1eaa42c2913ddd00a3421d82fac68b8e3ab5a8ea5cc30373b3a2",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  },
+  "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json": {
+   "sha256": "72126b1cb18d529d8ce3f59a573a05c58bc7250963cca37d0db48c25303c8327",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  },
+  "docs/reviews/qualification_semantics/r2/DETERMINISTIC-RULES.md": {
+   "sha256": "bfa22c7a1473d1b0d37a8efe1f4c64b5eb89db43131a4cef0c3570fe258bb77f",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  },
+  "docs/reviews/qualification_semantics/r2/CONSUMER-COMPATIBILITY.md": {
+   "sha256": "5c4583f3ea4c0a9bd3e7af2547ade799e9f540429496411f4c9000eb18d9c2fc",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  },
+  "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md": {
+   "sha256": "7e86dc2eed02c999ecd50412fe87acbc3acfdc1e1992f992f49c2489d13770d3",
+   "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d"
+  }
+ },
+ "evidence_ids": [
+  "PLAN-20261125-0001",
+  "DECISION-20261126-0001",
+  "DECISION-20260814-0001",
+  "GAP-0005",
+  "GAP-0008",
+  "GAP-0010",
+  "CAP-0015",
+  "CAP-0016"
+ ],
+ "evidence_files": [
+  "docs/self_model/plans/PLAN-20261125-0001.json",
+  "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md",
+  "docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json",
+  "docs/reviews/qualification_semantics/r2/DETERMINISTIC-RULES.md",
+  "docs/reviews/qualification_semantics/r2/CONSUMER-COMPATIBILITY.md",
+  "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md",
+  "docs/self_model/decisions/DECISION-20261126-0001.json",
+  "docs/reviews/qualification_semantics/3a/ADMISSION-AND-CONDITIONS.md"
+ ],
+ "preserved_statuses": {
+  "GAP-0005": "open",
+  "GAP-0008": "open",
+  "GAP-0010": "open",
+  "origin_verification": "unverified",
+  "verifier_lineage_status": "self_authored_unreviewed",
+  "writer_pi_separation": "unresolved",
+  "autonomy": "not_activated",
+  "3B": "not_admitted",
+  "3C": "not_admitted",
+  "plan_completion": "not_decided"
+ },
+ "deferred_3c_issue": "Before any separate 3C admission, distinguish catalog-record equality from affirmative executor equivalence. Two invocations resolving to the same MID with release_identity=unknown may conservatively block adjudication, but do not by that fact establish an actual equivalent-executor C3 violation. SYN-C3-CONFLICT-1 is not implemented or relied on in 3A.",
+ "verification_limits": [
+  "Preserve all historical catalog/InvocationRecord/IdentityResolution/VERIFY/CAS/review/decision bytes. New evidence retains its actual subject, time, origin and lineage; equal trees never extend verification scope.",
+  "Same-provider implementation, assisting checks, source review and tests are not independent C3/C5/C7/C10 adjudication. The implementer is not thereby a qualified sole verifier.",
+  "No capability last_verified promotion, gap closure, branch protection/ruleset/CODEOWNERS change, automatic warrant/merge, or Step 4/5 readiness follows.",
+  "A future completion decision is separate from implementation admission. Verification/counterexamples must report actual executed scope; unexecuted families and infrastructure errors cannot be counted as caught mutations."
+ ]
+}

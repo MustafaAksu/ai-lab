@@ -2,7 +2,7 @@
  "schema_version": "v1",
  "plan_id": "PLAN-20261125-0001",
  "title": "Step 3 qualification semantics: per-kind identity evidence, endpoint-bound model aggregation, and C3/C10 evidence conditions",
- "status": "proposed",
+ "status": "admitted",
  "created_at": "2026-11-25T09:20:01+00:00",
  "created_from": "The user's authorization in this conversation to prepare a Step 3 PLAN and proposed equivalence evidence contract after PLAN-20261124-0001 completion. The five-step programme in GAP-0005 fixes the working order, and WARR-20261125-0001 permits Step 3 preparation only; neither admits Step 3 implementation.",
  "repo_commit": "5515f55894b10ad70c321340257f67a960dcc382",
@@ -22,7 +22,9 @@
   "GAP-0010",
   "DECISION-20260814-0001",
   "PLAN-20261124-0001",
-  "WARR-20261125-0001"
+  "WARR-20261125-0001",
+  "WARR-20261126-0001",
+  "DECISION-20261126-0001"
  ],
  "proposed_by": {
   "peer_id": "chatgpt",
@@ -31,9 +33,9 @@
   "attribution_status": "self_declared_unverified",
   "basis": "ChatGPT is the actual proposer and drafting executor in this session. This attribution is not an authenticated ModelIdentity binding, a captured drafting InvocationRecord, an independently established identity, or an independence finding. DRAFTING_EXECUTORS.json is read as a registry of declarations, not as verification; this plan does not modify it."
  },
- "authorization_status": "preparation_only_no_implementation_admission",
- "objective": "Freeze one bounded r2 admission candidate for three sequential prospective increments: 3A endpoint/model/source/corroboration semantics (D1-D3), 3B synthetic-only tool/human contracts (D4-D5), and 3C fail-closed C3/C10 evidence conditions (D8). Keep R_identity, Q_identity and Q_C3_C10 separate. No live tool/human binding, corroboration-witness, ancestry-positive or authorization path is enabled. Cross-kind comparisons remain unresolved and the superclass deferred under separately documented proposal decisions D6/D7; Step 3 completion cannot establish Step 4/5 readiness.",
- "proposed_change": "Current r2 changes only proposal records/documents, proposed closed schemas and synthetic example data, plus the generated self-model index. Preserve the original preparation timestamp, source baseline, r1 probe/test outputs and historical records. No resolver, equivalence helper, consumer, runtime test or policy implementation is changed. Future code/tests require a separate explicit admission of the exact r2 revision and named increment; the frozen contract and schemas constrain that future work.",
+ "authorization_status": "implementation_admitted_3a_only_under_A1_A4",
+ "objective": "Implement and verify only admitted 3A D1–D3 and the immediate D8 legacy refusal boundary under WARR-20261126-0001 A1–A4. Preserve the reviewed r2 contract and history; keep 3B/3C and all live/positive qualification/authority paths unadmitted. The wider Step 3 scopes remain future program context.",
+ "proposed_change": "Materialize the actual PI admission of exact r2 at a757fd01530fa94fd816b8f8afa87d049c12145d, authorize its Boolean-semantic successor through DECISION-20261126-0001, then implement bounded 3A endpoint/model/source/witness checks and refusal consumers, with scoped tests, exact-subject VERIFY and strict falsification. The reviewed r2 artifacts and historical evidence are preserved; no comprehensive r3 proposal revision is made.",
  "scope": [
   "S1. Common contract across 3A/3B/3C: bind the proposed ai_lab.qualification.r2/1 closed tagged union in docs/reviews/qualification_semantics/r2/ASSESSMENT-SCHEMA.json and the detailed r2 evidence contract. Query, SourceInventory, EvidenceContext, CorroborationWitness, SyntheticFixtureBindings and AssessmentResult remain proposal shapes, not installed canonical record kinds. Freeze required fields/nullability, retained-byte checks, applicability, reason precedence, typed invalid outcomes and all consumer boundaries. R_identity reports the identity relation; Q_identity reports only the necessary identity subcondition; Q_C3_C10 reports constraint findings. None is an authorization. Preserve closed InvocationRecord v1 and historical IdentityResolution bytes.",
   "S2. 3B / D4, synthetic-only tool profile: exercise a fixed namespace and issuer-to-release-to-artifact/execution chain under an immutable fixture-policy anchor, with explicit aliases, version identity, event validity and revocation rules. Compare ToolIdentity plus version identity; equal digests alone are not equal identity and configuration changes alone are not identity inequality. Separate missing execution disclosure from an otherwise bound identity relation. No production tool issuer/profile is enabled, and caller-established or synthetic/test_mode flags cannot grant live binding or standing. The exact supported fixture rule is frozen in the r2 contract/schema rather than left to an implementer. The only supported proposed fixture profile is SYN-TOOL-1; its exact rule is specified by r2/DETERMINISTIC-RULES.md and schema examples.",
@@ -45,7 +47,7 @@
   "S8. Verification across 3A/3B/3C only after each separately admitted scope: preserve r1 baseline probes/results, add explicit positive/negative oracles to existing falsifier families, and test source omission/scope narrowing, endpoint/capture/MID validity, full witness matrices, consumer bypasses and fail-closed rollback. Schema/example validation during preparation checks document consistency only. Targeted mutation success requires the intended ordinary assertion failure after a passing baseline, never infrastructure errors; counts are not an adequacy metric."
  ],
  "current_preparation_outputs": [
-  "docs/self_model/plans/PLAN-20261125-0001.json, status proposed, with no admission or completion fields.",
+  "Reviewed r2 proposal at a757fd01530fa94fd816b8f8afa87d049c12145d is preserved in Git history; this canonical PLAN now records only the subsequent 3A admission.",
   "docs/reviews/qualification_semantics/EQUIVALENCE-EVIDENCE-CONTRACT-DRAFT.md.",
   "docs/reviews/qualification_semantics/STEP-3-PLAN-DRAFT.md.",
   "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md.",
@@ -58,15 +60,15 @@
   "docs/reviews/qualification_semantics/r2/R2-REVIEW-RESPONSE.md."
  ],
  "implementation_gates": [
-  "G0 — This is one bounded r2 proposal revision. PLAN remains proposed and PR remains draft. Schema/example validation, baseline CI, technical review and the presence of this record confer no implementation admission. Preserve created_at and record revised_at/review attribution separately.",
-  "G1 — Before 3A code, a separate reviewing-executor review and PI admission must identify the exact r2 contract, schema, noncaller policy/corpus anchors, consumer matrix and scope. D1-D3 changes to historically deferred semantics need an explicit governed successor/admission; neither a reviewer COMMENT nor a parser-valid object supplies it. Freeze defaults, null/error handling, compatibility and rollback; do not let implementers choose a permitting rule.",
+  "G0 — The actual PI instruction “3A uygulamasına geçelim.” is materialized by WARR-20261126-0001 and DECISION-20261126-0001. PLAN admitted means only increment 3A under A1–A4. Review/CI/shape validation alone confer no admission; preserve the original proposal creation/revision times and separate admission time.",
+  "G1 — 3A code is admitted only under exact r2 a757fd01530fa94fd816b8f8afa87d049c12145d plus A1–A4. Record the explicit Boolean successor before implementation and install refusal shims before new consumers. Other increments require separate decisions.",
   "G2 — Sequence 3A, then 3B, then 3C; each requires its named separate review/admission gate. 3A protects every existing resolve_identity/equivalence/annotation/blocks_adjudication route: old ABI without full context refuses, full-context calls delegate the whole pipeline, and blocks_adjudication stays true unconditionally, including synthetic evaluation, even when constructed directly with apparent model classes. 3B remains synthetic-only; 3C adds fail-closed constraint checks. Success of one increment never automatically admits the next.",
   "G3 — D6 cross-kind unresolved and D7 superclass deferred are separately documented proposal choices, not new canonical decisions. Any resolving alternative or superclass introduction requires a later explicit normative decision; it cannot enter through 3A/3B/3C code or this plan admission by implication.",
   "G4 — GAP-0008 composition, coverage and the later governed live evidence producers remain prerequisites for positive C3/C10 qualification. No caller complete flag, empty graph or synthetic proof fills them. A tool adjudicator with model/human ancestry still encounters unresolved cross-kind relations even if its same-kind profile is tested. Step 3 does not establish Step 4/5 readiness; Step 5 is not ready.",
   "G5 — Any future increment completion requires scoped verification/review and explicit operator completion recording. Fixed origin/lineage, record immutability and exact-subject scope remain. No live binding/witness/ancestry positive path, capability promotion, required-check arrangement, authority mechanism or activation is bundled into this slice."
  ],
  "non_goals": [
-  "No implementation, production test rewrite, consumer integration, live profile enablement, policy activation, warrant or decision issuance is authorized in the present r2 preparation changeset.",
+  "No implementation outside admitted 3A S1/S4/S8 D1–D3 and immediate D8 refusal protection. 3B, 3C, live profiles, positive C3/C10, ontology/authority changes, merge and completion are not authorized.",
   "No AuthorizationPolicy, InvocationAuthorization, EvidenceAdmissionDecision, live RoleQualification/IndependenceAssessment issuer, routing change or autonomous acceptance/merge mechanism.",
   "No automatic cross-kind non-equivalence, ExecutorIdentity superclass, ontology amendment, source-ranking convention or new model evidence class.",
   "No transplantation of the model catalog independently_corroborated/self_asserted vocabulary or threshold onto tools or humans; their evidence properties and admission conditions are specified separately.",
@@ -79,7 +81,7 @@
  "constraints": [
   "R_identity, Q_identity and Q_C3_C10 are separate axes with the exact r2 meanings/enums. NON-EQUIVALENCE does not imply identity-evidence sufficiency, INDEPENDENCE or AUTHORIZATION. Q_identity=conditions_satisfied is only a necessary subcondition reachable in the three pinned synthetic profiles; Q_C3_C10 has only violated/unresolved in every domain in this bounded slice.",
   "P2/P5 and C3-C7/C10-C14 remain binding at their existing standing. Direct lineage conflicts cannot be waived, unknown identity/ancestry does not increase independence, and a compensating-control label does not resolve an unknown fact.",
-  "Model catalog evidence retains the existing per-side classifications and admitted threshold from DECISION-20260814-0001. Preserve each source's status and rationale; do not synthesize an ordinal minimum/maximum or infer that a source_type string establishes independent corroboration.",
+  "Preserve each model source’s historical evidence class/rationale and DECISION-20260814-0001 bytes. DECISION-20261126-0001 supersedes its operative permitting selection for admitted 3A: blocks_adjudication is always true, and exact synthetic witnesses are necessary conditions only. No ordinal ranking or label-only corroboration is inferred.",
   "Applicability is evidence-based and event-scoped. Freeze endpoint binding, capture success, exact retained-byte and snapshot/capture/MID linkage, null versus unsupported scope, target release scope, inclusive validity and configurable 30-day freshness. Preserve observation, successful capture, demonstrable availability and retrospective cutoff separately; malformed inputs have typed errors and potentially relevant unknowns cannot be silently excluded.",
   "REPO-CATALOG-ALL-1 selects every retained entry recursively under docs/catalog/{eid,mid,snap,cap,payloads}/ from an anchored Git tree plus pinned known-source/omission declarations. The consumer loads the policy/context anchor independently of query input; callers cannot narrow that inventory, substitute the anchor or claim complete=true. supplied_relation remains a diagnostic of provided assertions; a clean governed R_identity requires the frozen inventory/applicability checks, and unknown evidence outside the bounded inventory is not disproved.",
   "Tool identity/version and human principal identity require their own admitted binding evidence. Digests identify retained bytes and support integrity comparison; signatures can authenticate signing-key use under a named key-binding rule; account metadata reports an account. None alone proves the broader identity claim.",
@@ -92,7 +94,8 @@
   "All consumers, including legacy resolve_identity/equivalence and blocks_adjudication, follow the frozen r2 entry-point/adapter matrix or fail closed; fabricated model classes cannot satisfy tool/human conditions. Read-only historical IdentityResolution annotations remain historical assertions and cannot act as current qualification tokens.",
   "Synthetic evaluation is selected by a separate controlled entry point and pinned fixture corpus, not an established/synthetic/test_mode field in submitted data. Supported issuer/namespace/release/principal/event/time/revocation rules are deterministic and fixture-scoped; production registries remain empty.",
   "Rollback may disable the new path and retain a refusal shim. It may never restore the known R13/R14 permitting behavior, first-success resolution or an unchecked legacy call path, even when an older commit contained that behavior.",
-  "Freeze the old-ABI/full-context/history-only consumer dispositions in r2/CONSUMER-COMPATIBILITY.md. The Boolean adapter is always blocking in production and synthetic evaluation; direct construction from fabricated evidence classes cannot bypass the complete pipeline. No schema-valid object is a qualification token."
+  "Freeze the old-ABI/full-context/history-only consumer dispositions in r2/CONSUMER-COMPATIBILITY.md. The Boolean adapter is always blocking in production and synthetic evaluation; direct construction from fabricated evidence classes cannot bypass the complete pipeline. No schema-valid object is a qualification token.",
+  "Admission A1–A4 governs this implementation. All 3A C3/C10/Q_C3_C10 values remain unresolved even in synthetic mode; implementing SYN-C3-CONFLICT-1 or tool/human comparisons would exceed this admission. The prior r2 full-program result schema is not permission to execute 3B/3C."
  ],
  "falsification_set": [
   "Tool binding: identical established ToolIdentity/version under two aliases returns equivalent; equal executable bytes under unbound identities cannot manufacture equivalence; different build/config bytes alone cannot manufacture non-equivalence.",
@@ -124,9 +127,9 @@
   "R2 synthetic/rollback boundary: inject established, synthetic or test_mode into a production payload or replay synthetic results through a legacy consumer; no live gate may clear. Disabling a faulty new path must leave explicit refusal, never recover an older R13/R14 permitting path. Even a valid synthetic Q_identity=conditions_satisfied leaves Q_C3_C10 unresolved/violated and the legacy blocks_adjudication adapter true."
  ],
  "success_criteria": [
-  "R2 PREPARATION: status proposed, PR draft, original created_at preserved, actual revised_at and review6064341643 attribution retained. New schema/example documents remain proposed and validate as documents. No production behavior, admission, gap status or historical baseline/test/evidence byte is changed.",
+  "ADMISSION RECORDING: preserve original created_at/revised_at and reviewed r2 bytes; record actual admission time/source, exact commit, WARR and Boolean successor. PLAN admitted is scoped only to 3A; no historical/gap/lineage status is upgraded.",
   "FROZEN CONTRACT: schema names/version, required/null fields, evidence integrity/applicability checks, bounded noncaller source policy, deterministic synthetic profiles, exact witness rule, typed errors/reason precedence and complete entry-point/consumer matrix are concrete in the r2 documents. No remaining placeholder can authorize a positive path.",
-  "3A AFTER SEPARATE ADMISSION: endpoint/model/source checks fix R13/R14; all applicable targets and conflicts survive aggregation; omission and scope-narrowing controls hold; complete witness matrices and legacy-entry-point tests pass. Production Q_identity remains withheld without an admitted live rule; no live witness acquisition/promotion is claimed.",
+  "3A IMPLEMENTATION: endpoint/model/source checks fix R13/R14; all relevant adverse targets survive; omission/source-narrowing controls hold; A1 exact source-chain/witness availability and A2 no-invented-reference cases pass; A3 legacy/new-record boundary and total diagnostic order hold. Production Q_identity stays withheld and C3/C10/Q_C3_C10 stay unresolved; no live witness acquisition or profile is introduced.",
   "3B AFTER SEPARATE ADMISSION: the fixed synthetic tool and human profiles demonstrate equality, inequality and refusal under their anchored namespace/issuer/event/time/revocation rules. No model-class shortcut, caller truth flag, live profile or credential/principal enrollment exists.",
   "3C AFTER SEPARATE ADMISSION: R_identity/Q_identity/Q_C3_C10 are not conflated; direct/equivalent C3 conflicts stay blocking under partial coverage; absent conflict over incomplete ancestry stays unresolved. Exact run/property checks and fail-closed consumers operate without live positive ancestry/qualification or lineage promotion. Q_C3_C10 never reports conditions_satisfied, including in synthetic tests; a future full positive evaluator needs a later admitted scope plus applicable GAP-0008 evidence.",
   "FALSIFICATION AFTER ADMISSION: retain passing controls, expected corrected negative oracles, permutation/duplication/argument-swap invariants and targeted guard-mutation assertion failures. Expanded matrix-family counts do not establish adequacy; infrastructure errors/timeouts never count as caught.",
@@ -135,8 +138,8 @@
   "C10 BOUNDARY: every r2 domain returns C10 unresolved. Run/property/digest mismatches remain named refusals; alleged shared ancestry alone cannot establish a high-consequence violation. C3 violations require the exact SYN-C3-CONFLICT-1 pinned fictional directional-edge and equivalent-assessment checks; unsupported/live edges remain unresolved. No digest alone proves direction."
  ],
  "expected_outputs": [
-  "Current r2: proposed PLAN, revised contract/review map/matrix, closed proposed schema and synthetic example corpus, review/source/consumer specifications, and aggregation-only SELF_MODEL rebuild; r1 executed baseline/test artifacts preserved.",
-  "Only after separate exact-revision admission: 3A endpoint/model/source/witness and legacy-consumer checks; 3B deterministic synthetic tool/human contracts; 3C fail-closed condition checks, in that frozen order. No live positive binding/witness/ancestry profile is included.",
+  "Current admission: WARR-20261126-0001, DECISION-20261126-0001, this partially admitted PLAN, bounded conditions record, and later aggregation-only SELF_MODEL rebuild. Preserve reviewed r2 and all historical baseline artifacts.",
+  "Admitted 3A only: endpoint/model/source/synthetic-witness and legacy-consumer checks, scoped positive/negative tests, strict falsification, exact-subject VERIFY and implementation review package. 3B tool/human and 3C ancestry/constraint implementation remain not admitted.",
   "Only after separate admission: scoped tests around tests/test_executor_equivalence.py plus the admitted per-kind/evidence-condition fixtures and retained guard-mutation results.",
   "Only after separate admission: 3C pure fail-closed checks read consumer-pinned context and substantiated conflict/coverage/run/property evidence, refuse unbound completeness claims, and return Q_C3_C10=violated or unresolved in both domains. No traversal, qualification issuance or invocation authorization.",
   "Separate documented D6 cross-kind-unresolved and D7 superclass-deferred proposals; neither is an effective decision, ontology amendment or Step 4/5 readiness finding.",
@@ -161,7 +164,10 @@
   "docs/reviews/qualification_semantics/r2/R2-REVIEW-RESPONSE.md",
   "docs/reviews/qualification_semantics/r2/R2-BASELINE-OBSERVATIONS.md",
   "docs/reviews/qualification_semantics/r2/SCHEMA-VALIDATION.json",
-  "docs/reviews/qualification_semantics/r2/R2-VALIDATION.json"
+  "docs/reviews/qualification_semantics/r2/R2-VALIDATION.json",
+  "docs/self_model/warrants/WARR-20261126-0001.json",
+  "docs/self_model/decisions/DECISION-20261126-0001.json",
+  "docs/reviews/qualification_semantics/3a/ADMISSION-AND-CONDITIONS.md"
  ],
  "rationale": [
   "Step 2 supplies scoped execution evidence, not the identity/lineage conditions needed for governed reliance. Step 3 must make those conditions explicit before any authority mechanism or delegation is considered.",
@@ -174,12 +180,12 @@
  "risk": "A pure identity helper may be mistaken for an adjudicator; a tool digest or human account may be mistaken for established identity; conflicted evidence may disappear through source filtering or ordering; new type labels may launder model-only evidence thresholds; a synthetically complete graph or absent path may be presented as live independence; and proposal acceptance may be mistaken for implementation or autonomy admission. Shared PI/writer account metadata and uncaptured conversational drafting make the identity/ancestry limits concrete.",
  "mitigation": "Freeze the three result axes, typed valid/invalid forms, consumer-loaded bounded source anchors, deterministic synthetic profiles and exact witness conditions; preserve every adverse finding and scope limitation. Protect all legacy consumers, keep Q_identity withheld in production and Q_C3_C10 non-positive in every r2 domain, and make the adapter always blocking. Preserve baseline evidence and use explicit positive/negative/mutation oracles. Sequence separate 3A/3B/3C admissions; rollback disables routes or keeps refusal and never restores R13/R14 permitting. D6/D7, GAP-0008 and later live evidence/governance remain unresolved dependencies.",
  "rollback": [
-  "During this one bounded r2 preparation, preserve PLAN proposed/PR draft and all r1 baseline/test artifacts. Review-requested edits remain proposal revisions; no warrant/decision or false historical result is created.",
+  "During admitted 3A, retain governance/history and restrict work to the exact accepted contract plus A1–A4. A failure withdraws reliance while preserving refusal; no rollback can enlarge scope or restore old permitting.",
   "If a later admitted path loses adverse evidence, bypasses a source/binding/witness check or increases standing on unknown evidence, disable reliance and retain typed diagnostics and the offending inputs/results.",
   "Retain a fail-closed refusal shim at every affected public/legacy entry point. A reviewable code revert is allowed only if it cannot reinstate R13/R14 permitting, first-success aggregation or an unchecked adapter; an old accepting implementation is never the rollback target.",
   "Preserve binding assessments, source manifests, prior records, mutation failures and reviews. Revocation/supersession is append-only; never delete or relabel historical evidence to obtain success. Production positive gates stay disabled throughout rollback."
  ],
- "next_action": "Review this single r2 candidate, including the proposed schema/corpus, detailed D1-D8 contract, source/consumer boundary and expanded falsification oracles. Keep PLAN proposed and PR draft. The next possible implementation decision is a separate exact-revision admission of bounded increment 3A; 3B synthetic contracts and 3C fail-closed conditions follow only through their named review/admission gates. D6 remains unresolved, D7 deferred, and Step 5 is not ready. No implementation is authorized by this revision.",
+ "next_action": "Implement only 3A under WARR-20261126-0001 A1–A4 and DECISION-20261126-0001, beginning with unconditional legacy refusal before connecting the full model/source pipeline. Retain scoped test, targeted assertion-falsification and exact-subject VERIFY evidence for review. Do not implement 3B/3C, merge, complete the PLAN, close GAPs or activate autonomy. Separate implementation review and PI completion/next-increment decisions remain required.",
  "notes": [
   "created_at is an actual UTC clock observation at preparation start on 2026-11-25, not an inferred client-message timestamp. The proposal baseline is main commit 5515f55894b10ad70c321340257f67a960dcc382.",
   "R13 and R14 in this proposal label the requested endpoint-binding and relevant-conflict-retention findings; they are not a renumbering of ABS-0004 C13/C14.",
@@ -187,7 +193,8 @@
   "No new or independent execution evidence is claimed merely by writing these test cases. Reproducible baseline observations belong in SOURCE-REVIEW-BASELINE.md with their own exact subject and result; the future falsification set describes work still gated on admission.",
   "Revision r2 materialized after technical review 6064341643, COMMENTED at 2026-11-25T20:17:10Z on head 8b8e24d133eaa3a585eefa14e76a02a519b73b03. revised_at 2026-11-25T20:32:52+00:00 is the actual UTC clock observation at revision start; created_at and the original main baseline are preserved. The review requests changes before admission and does not itself admit work.",
   "r2 documents freeze recommendations for a later admission: 3A D1-D3, 3B D4-D5 synthetic-only, 3C D8 fail-closed; S5/D6 and S6/D7 are documented unresolved/deferred choices. No canonical DECISION/WARR record is issued, and no live profile/witness/ancestry positive path is enabled.",
-  "Final r2 consistency refinement: C10Context does not bind a receiving decision, consequence or attempted reliance, so C10 stays unresolved. C3 negative cases are made mechanically testable only in the harness-pinned SYN-C3-CONFLICT-1 fixture; it establishes no live or positive ancestry standing. All earlier scope descriptions are subject to this exact result contract."
+  "Final r2 consistency refinement: C10Context does not bind a receiving decision, consequence or attempted reliance, so C10 stays unresolved. C3 negative cases are made mechanically testable only in the harness-pinned SYN-C3-CONFLICT-1 fixture; it establishes no live or positive ancestry standing. All earlier scope descriptions are subject to this exact result contract.",
+  "Subsequent actual PI admission on 2026-11-26 is recorded separately from r2 preparation: WARR-20261126-0001 and DECISION-20261126-0001 admit only 3A under A1–A4. Earlier preparation-only statements are historical context retained at the reviewed commit and in preparation_state_at_admission; they do not erase this later bounded decision, and the broad future program does not expand it."
  ],
  "falsification_matrix": "docs/reviews/qualification_semantics/FALSIFICATION-MATRIX.md",
  "planned_scenario_families": 48,
@@ -224,7 +231,8 @@
     "S4",
     "S8"
    ],
-   "boundary": "First prospective mechanical increment; D1-D3 endpoint/model resolution, REPO-CATALOG-ALL-1 inventory and SYN-MODEL-WITNESS-1 condition validation. Protect every existing resolver/equivalence/adapter route now; no ABI bypass. Production Qs stay non-positive."
+   "boundary": "First prospective mechanical increment; D1-D3 endpoint/model resolution, REPO-CATALOG-ALL-1 inventory and SYN-MODEL-WITNESS-1 condition validation. Protect every existing resolver/equivalence/adapter route now; no ABI bypass. Production Qs stay non-positive.",
+   "admission_status": "admitted"
   },
   {
    "increment": "3B",
@@ -238,7 +246,8 @@
     "S3",
     "S8"
    ],
-   "boundary": "Only fixed synthetic tool/human evidence functions and refusal behavior. No live profiles, principal enrollment or arbitrary test_mode-to-production path."
+   "boundary": "Only fixed synthetic tool/human evidence functions and refusal behavior. No live profiles, principal enrollment or arbitrary test_mode-to-production path.",
+   "admission_status": "not_admitted"
   },
   {
    "increment": "3C",
@@ -250,7 +259,8 @@
     "S7",
     "S8"
    ],
-   "boundary": "Add D8 C3/C10 fail-closed evidence-condition checks and consumer integration on top of the already-protected 3A legacy boundary; no live positive ancestry/qualification, full traversal or authorization grant."
+   "boundary": "Add D8 C3/C10 fail-closed evidence-condition checks and consumer integration on top of the already-protected 3A legacy boundary; no live positive ancestry/qualification, full traversal or authorization grant.",
+   "admission_status": "not_admitted"
   }
  ],
  "deferred_semantic_decisions": [
@@ -312,5 +322,84 @@
   "live_profiles": [],
   "standing": "Proposed schemas, profiles and semantic rules only; no canonical registration, policy activation, live profile, normative decision or implementation admission. SYN-C3-CONFLICT-1 is an anchored fictional negative-conflict rule, not a positive ancestry profile.",
   "synthetic_negative_rule": "SYN-C3-CONFLICT-1"
- }
+ },
+ "preparation_state_at_admission": {
+  "commit": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+  "plan_sha256": "06877499ea660041da3c5f9f88c619c5a5d5b26c666dc7ddc889cff38215b307",
+  "status": "proposed",
+  "authorization_status": "preparation_only_no_implementation_admission",
+  "next_action": "Review this single r2 candidate, including the proposed schema/corpus, detailed D1-D8 contract, source/consumer boundary and expanded falsification oracles. Keep PLAN proposed and PR draft. The next possible implementation decision is a separate exact-revision admission of bounded increment 3A; 3B synthetic contracts and 3C fail-closed conditions follow only through their named review/admission gates. D6 remains unresolved, D7 deferred, and Step 5 is not ready. No implementation is authorized by this revision.",
+  "scope": "Complete original proposal remains byte-addressable in this exact historical commit; no duplicate full proposal is substituted for that source."
+ },
+ "admission_warrant_id": "WARR-20261126-0001",
+ "admitted_at": "2026-11-26T06:37:07+00:00",
+ "admitted_revision": "r2",
+ "admitted_revision_commit": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+ "admitted_increment": "3A",
+ "admitted_scope_ids": [
+  "S1",
+  "S4",
+  "S8"
+ ],
+ "not_admitted_increments": [
+  "3B",
+  "3C"
+ ],
+ "admission_decision_id": "DECISION-20261126-0001",
+ "admission_review": {
+  "url": "https://github.com/MustafaAksu/ai-lab/pull/5#pullrequestreview-6069401816",
+  "review_id": 6069401816,
+  "state": "COMMENTED",
+  "submitted_at": "2026-11-26T06:17:22Z",
+  "reviewed_commit": "a757fd01530fa94fd816b8f8afa87d049c12145d",
+  "disposition": "3A_ADMISSION_RECOMMENDED_WITH_CONDITIONS",
+  "github_actor": "MustafaAksu",
+  "standing": "Technical critique of the ChatGPT-authored proposal; not independent adjudication, an APPROVE review, the PI admission itself or permission to merge. GitHub actor metadata does not establish writer–PI separation."
+ },
+ "admission_source": {
+  "kind": "conversation",
+  "source": "this conversation",
+  "operator_statement": "3A uygulamasına geçelim.",
+  "original_client_message_timestamp": null,
+  "first_observed_at": "2026-11-26T06:35:50+00:00",
+  "recording_time_basis": "created_at/admitted_at is the actual UTC clock observation when materialization began; the original client-message timestamp is unavailable and not inferred from the review, commit or recording time."
+ },
+ "admission_conditions": [
+  "A1 — The corroborating witness on each side must bind the exact applicable capture–snapshot–payload–MID chain, its exact property and complete evidence_refs digests. An independently_corroborated label on another source cannot satisfy that chain. The pinned witness/verification bytes must match the same source premise. assessed_at alone does not prove availability: require the pinned availability evidence/fixture rule for the witness and verification bytes by the applicable cutoff, or withhold. Extend F38/F43 with swapped/borrowed-source, payload-mismatch and late-witness controls. Payload hashing alone does not establish semantic derivation of snapshot assertions; the catalog-record relation is attributed, and positive synthetic conditions require the exact stipulated premise. No live witness rule is admitted.",
+  "A2 — Never invent an ArtifactRef, record identity or digest to fill a missing snapshot, payload, MID or declaration link. Use an explicit omission where the closed schema can represent it; otherwise return a named typed invalid/refusal. Keep relevant malformed/unavailable items visible. supplied_relation may relax only governed coverage/availability proof for an attributed observation: it still checks structural/kind validity, capture success, declared endpoint, event applicability and conflicts. A no-anchor production call cannot construct a favorable context from Query. Include dangling snapshot/capture linkage and source-removal controls.",
+  "A3 — DECISION-20261126-0001 explicitly authorizes the bounded compatibility successor before implementation while DECISION-20260814-0001 remains byte-identical history. Install the unconditional blocking Boolean and refusal shims before wiring consumers. LEGACY_CONTEXT_REQUIRED and LEGACY_POSITIVE_DISABLED are not historical v1 IdentityResolution reasons: never coerce or persist these new results as v1 resolution records, and never reuse the historical writer as an r2 positive projection. Historical utilities remain read/history/diagnostic-only and cannot upgrade authority. General catalog-writer hardening remains excluded. Sort diagnostics to a total order: after stage, reason-code declaration order, side and normalized references, compare canonical JSON UTF-8 bytes of the complete normalized diagnostic; same-ID/different-byte conflict reporting cannot depend on insertion order. Test duplicate/collision, builder/writer consumer and rollback refusal behavior.",
+  "A4 — Admit only increment 3A: S1/S4/S8 restricted to D1–D3 and the immediate D8 legacy refusal layer, including synthetic model-witness tests, exact-subject retained VERIFY and targeted falsification with passing baselines and intended ordinary assertion failures. 3B and 3C are NOT_ADMITTED. Production Q_identity remains withheld; C3/C10/Q_C3_C10 remain unresolved throughout the 3A implementation, including synthetic calls, because 3C is not admitted. All six live profile registries remain empty and blocks_adjudication remains true. No live tool/human binding, positive qualification, ontology amendment, merge/completion by implication or authority/autonomy activation is authorized."
+ ],
+ "admission_boundary": "Only 3A S1/S4/S8 for D1–D3 plus immediate D8 refusal adapters. S2/S3/3B and S7/3C remain not admitted. Broad r2 scope/result descriptions below are prospective program context and cannot enlarge this exact admission. No merge, completion or autonomy activation.",
+ "implementation_result_contract_3a": {
+  "R_identity": [
+   "equivalent",
+   "non_equivalent",
+   "unresolved"
+  ],
+  "Q_identity": [
+   "withheld",
+   "conditions_satisfied"
+  ],
+  "positive_identity_domain": "synthetic model witness only, exact A1 conditions",
+  "production_Q_identity": "withheld",
+  "C3": [
+   "unresolved"
+  ],
+  "C10": [
+   "unresolved"
+  ],
+  "Q_C3_C10": [
+   "unresolved"
+  ],
+  "legacy_blocks_adjudication": true,
+  "live_profiles": [],
+  "synthetic_supported_profile": "SYN-MODEL-WITNESS-1",
+  "not_implemented": [
+   "SYN-TOOL-1",
+   "SYN-HUMAN-1",
+   "SYN-C3-CONFLICT-1"
+  ]
+ },
+ "deferred_before_3c": "Before any separate 3C admission, distinguish catalog-record equality from affirmative executor equivalence. Two invocations resolving to the same MID with release_identity=unknown may conservatively block adjudication, but do not by that fact establish an actual equivalent-executor C3 violation. SYN-C3-CONFLICT-1 is not implemented or relied on in 3A."
 }
