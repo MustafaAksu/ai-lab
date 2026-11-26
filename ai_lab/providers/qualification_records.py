@@ -23,6 +23,7 @@ from types import MappingProxyType
 from typing import Any, Mapping
 
 from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema.exceptions import SchemaError
 
 
 SCHEMA_VERSION = "ai_lab.qualification.r2/1"
@@ -48,6 +49,21 @@ class QualificationError(ValueError):
         self.detail = str(detail).replace("\x00", "")[:1024]
         self.refs = tuple(dict(ref) for ref in refs)
         self.stage = stage
+        super().__init__(f"{code}: {self.detail}")
+
+
+class QualificationBootstrapError(RuntimeError):
+    """No assessment is produced when the pinned schema cannot be loaded.
+
+    This exception is intentionally separate from QualificationError: reporting
+    it must not enter the schema-dependent invalid-AssessmentResult builder.
+    Its code/detail are bootstrap diagnostics, not r2 Reason or v1 RES values.
+    Construction and formatting require no schema, reference or digest lookup.
+    """
+
+    def __init__(self, code: str, detail: str):
+        self.code = code
+        self.detail = str(detail).replace("\x00", "")[:1024]
         super().__init__(f"{code}: {self.detail}")
 
 
@@ -142,12 +158,34 @@ def _valid_timestamp(value):
 
 @lru_cache(maxsize=1)
 def _schema():
-    data = SCHEMA_PATH.read_bytes()
+    try:
+        data = SCHEMA_PATH.read_bytes()
+    except OSError as exc:
+        raise QualificationBootstrapError(
+            "QUALIFICATION_SCHEMA_UNAVAILABLE", "frozen r2 schema bytes are unavailable"
+        ) from exc
     if hashlib.sha256(data).hexdigest() != SCHEMA_SHA256:
-        raise QualificationError("ARTIFACT_DIGEST_MISMATCH", "frozen r2 schema bytes changed")
-    schema = strict_loads(data)
-    Draft202012Validator.check_schema(schema)
+        raise QualificationBootstrapError(
+            "QUALIFICATION_SCHEMA_DIGEST_MISMATCH", "frozen r2 schema bytes changed"
+        )
+    try:
+        schema = strict_loads(data)
+        Draft202012Validator.check_schema(schema)
+    except (QualificationError, SchemaError) as exc:
+        raise QualificationBootstrapError(
+            "QUALIFICATION_SCHEMA_INVALID", "pinned schema cannot be decoded or validated"
+        ) from exc
     return schema
+
+
+def require_qualification_schema() -> None:
+    """Load and pin once, or raise the schema-independent bootstrap exception.
+
+    Successful loads are cached; changing bytes later cannot replace the pinned
+    in-memory schema. A fresh process/cache must establish its own successful
+    bootstrap. No failed load or assessment envelope is cached.
+    """
+    _schema()
 
 
 def reason_codes() -> tuple[str, ...]:
@@ -234,24 +272,30 @@ def load_git_catalog(repo_root: Path | str, commit: str) -> GitCatalog:
 
     def git(*args, input=None):
         try:
-            return subprocess.run(["git", "-C", str(repo_root), *args], input=input,
+            return subprocess.run(["git", "--no-replace-objects", "-C", str(repo_root), *args], input=input,
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
         except (OSError, subprocess.CalledProcessError) as exc:
             raise QualificationError("INVENTORY_PIN_MISMATCH", "pinned Git objects unavailable", stage=2) from exc
 
-    if git("rev-parse", "--verify", commit + "^{commit}").decode().strip() != commit:
-        raise QualificationError("INVENTORY_PIN_MISMATCH", "pin is not a commit", stage=2)
-    tree = git("rev-parse", commit + "^{tree}").decode().strip()
+    try:
+        resolved = git("rev-parse", "--verify", commit + "^{commit}").decode("ascii").strip()
+        tree = git("rev-parse", commit + "^{tree}").decode("ascii").strip()
+    except UnicodeError as exc:
+        raise QualificationError("INVENTORY_PIN_MISMATCH", "malformed pinned Git object identity", stage=2) from exc
+    if resolved != commit or not _SHA1.fullmatch(tree):
+        raise QualificationError("INVENTORY_PIN_MISMATCH", "pin is not a commit with a valid tree identity", stage=2)
     blobs, modes = {}, {}
     for row in git("ls-tree", "-rz", "--full-tree", commit).split(b"\x00"):
         if not row:
             continue
-        header, path_raw = row.split(b"\t", 1)
-        mode, kind, object_id = header.decode("ascii").split()
         try:
+            header, path_raw = row.split(b"\t", 1)
+            mode, kind, object_id = header.decode("ascii").split()
             path = path_raw.decode("utf-8")
-        except UnicodeDecodeError as exc:
-            raise QualificationError("INVENTORY_PIN_MISMATCH", "non-UTF-8 pinned path", stage=2) from exc
+        except (UnicodeError, ValueError) as exc:
+            raise QualificationError("INVENTORY_PIN_MISMATCH", "malformed pinned Git tree entry", stage=2) from exc
+        if not path or not _SHA1.fullmatch(object_id) or path in modes:
+            raise QualificationError("INVENTORY_PIN_MISMATCH", "invalid or duplicate pinned Git tree entry", stage=2)
         modes[path] = mode
         if mode not in ("100644", "100755") or kind != "blob":
             if path.startswith(CATALOG_ROOTS):
@@ -262,14 +306,24 @@ def load_git_catalog(repo_root: Path | str, commit: str) -> GitCatalog:
     data = git("cat-file", "--batch", input=("\n".join(ids) + ("\n" if ids else "")).encode("ascii"))
     offset, objects = 0, {}
     for expected in ids:
-        end = data.index(b"\n", offset)
-        object_id, kind, count = data[offset:end].decode("ascii").split()
-        size = int(count)
+        try:
+            end = data.index(b"\n", offset)
+            object_id, kind, count = data[offset:end].decode("ascii").split()
+            if not count.isdecimal():
+                raise ValueError("nonnegative decimal byte count required")
+            size = int(count)
+        except (UnicodeError, ValueError) as exc:
+            raise QualificationError("INVENTORY_PIN_MISMATCH", "missing or malformed pinned Git batch header", stage=2) from exc
+        body_end = end + 1 + size
+        if body_end >= len(data) or data[body_end:body_end + 1] != b"\n":
+            raise QualificationError("INVENTORY_PIN_MISMATCH", "truncated or malformed pinned Git batch body", stage=2)
         body = data[end + 1:end + 1 + size]
         if object_id != expected or kind != "blob" or len(body) != size or git_blob_sha1(body) != expected:
             raise QualificationError("ARTIFACT_DIGEST_MISMATCH", "pinned Git batch object mismatch")
         objects[expected] = body
-        offset = end + 1 + size + 1
+        offset = body_end + 1
+    if offset != len(data):
+        raise QualificationError("INVENTORY_PIN_MISMATCH", "unexpected trailing pinned Git batch bytes", stage=2)
     files = {path: objects[blob] for path, blob in blobs.items()}
     return GitCatalog(commit, tree, MappingProxyType(files), MappingProxyType(blobs), MappingProxyType(modes))
 
@@ -427,6 +481,29 @@ def load_synthetic_anchor(repo_root: Path | str, *, context_ref: dict,
     return EvidenceAnchor(_key=_ANCHOR_KEY, git=git, artifacts=combined, context_ref=context_ref)
 
 
+def _check_publication_path(base: Path, repository: Path, target: Path) -> None:
+    """Check both destinations before writing; no hostile concurrent renames assumed.
+
+    The designated base is already resolved. Internal symlink components,
+    including final-file links, refuse even if their current target is inside
+    the store. This is containment validation, not an OS namespace sandbox.
+    """
+    try:
+        real_parent = target.parent.resolve()
+        if (not real_parent.is_relative_to(base)
+                or real_parent == repository or repository in real_parent.parents):
+            raise QualificationError("DOMAIN_MISMATCH", "assessment destination escapes the isolated store or enters the checkout", stage=8)
+        component = base
+        for part in target.relative_to(base).parts:
+            component = component / part
+            if component.is_symlink():
+                raise QualificationError("DOMAIN_MISMATCH", "assessment publication path contains a symlink", stage=8)
+    except (OSError, RuntimeError, ValueError) as exc:
+        if isinstance(exc, QualificationError):
+            raise
+        raise QualificationError("DOMAIN_MISMATCH", "cannot establish isolated assessment destination", stage=8) from exc
+
+
 def _publish_no_replace(target: Path, data: bytes) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=".assessment-", dir=target.parent)
@@ -462,7 +539,10 @@ def write_assessment(result: dict, *, anchor: EvidenceAnchor, query_bytes: bytes
     data = canonical_bytes(result)
     if data != canonical_bytes(recomputed):
         raise QualificationError("CONTEXT_ANCHOR_MISMATCH", "result differs from exact-input recomputation", stage=8)
-    base = Path(output_dir).resolve()
+    try:
+        base = Path(output_dir).resolve()
+    except (OSError, RuntimeError, ValueError) as exc:
+        raise QualificationError("DOMAIN_MISMATCH", "cannot establish isolated assessment store", stage=8) from exc
     repository = Path(__file__).resolve().parents[2]
     if base == repository or repository in base.parents:
         raise QualificationError("DOMAIN_MISMATCH", "synthetic outputs require a store outside the production checkout", stage=8)
@@ -470,6 +550,8 @@ def write_assessment(result: dict, *, anchor: EvidenceAnchor, query_bytes: bytes
     target = base / "synthetic" / "sha256" / digest[:2] / (digest + ".json")
     display_key = hashlib.sha256(result["assessment_id"].encode("utf-8")).hexdigest()
     index = base / "synthetic" / "by-id" / (display_key + ".json")
+    _check_publication_path(base, repository, target)
+    _check_publication_path(base, repository, index)
     if index.exists() and index.read_bytes() != data:
         raise QualificationError("CONFLICTING_ARTIFACT_BYTES", "assessment display ID already names different bytes")
     try:

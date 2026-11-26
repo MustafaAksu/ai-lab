@@ -17,7 +17,8 @@ from ai_lab.providers.catalog import catalog_id_for
 from ai_lab.providers.invocation_record import validate_invocation_record
 from ai_lab.providers.qualification_records import (
     SCHEMA_VERSION, EvidenceAnchor, QualificationError, canonical_bytes,
-    parse_timestamp, reason_codes, record_ref, sha256, strict_loads, validate_shape,
+    parse_timestamp, reason_codes, record_ref, require_qualification_schema,
+    sha256, strict_loads, validate_shape,
 )
 
 
@@ -403,7 +404,8 @@ class _Evaluation:
         event = parse_timestamp(side.subject["occurred_at"])
         return min(event, self.cutoff) if self.policy["mode"] == "event_time" else self.cutoff
 
-    def _available(self, required_refs, evidence_refs, lower_bound, bound, side):
+    def _available(self, required_refs, evidence_refs, lower_bound, bound, side,
+                   *, accepted_evidence=None):
         """Exact pinned availability, separate from assessed/observed timestamps."""
         required = {canonical_bytes(x) for x in required_refs}
         accepted, late = False, False
@@ -428,6 +430,8 @@ class _Evaluation:
                 late = True
             else:
                 accepted = True
+                if accepted_evidence is not None:
+                    accepted_evidence.append((ref, value))
         if accepted:
             return "available", findings
         code = "EVIDENCE_AFTER_CUTOFF" if late else "EVENT_AVAILABILITY_UNPROVEN"
@@ -616,7 +620,7 @@ class _Evaluation:
                 if (cap["content_evidence_status"] == "independently_corroborated"
                     and side.clean["identity_ref"] in targets
                     and all(canonical_bytes(x) in evidence for x in chain)):
-                    chain_matches.append(source)
+                    chain_matches.append((source, cap, chain))
             if not chain_matches:
                 findings.append(reason("WITNESS_EVIDENCE_MISMATCH", "witness does not cover this same corroborating capture-snapshot-payload-MID chain", stage=5, side=side.side, refs=[ref]))
                 continue
@@ -636,10 +640,52 @@ class _Evaluation:
             if assessed > bound:
                 findings.append(reason("EVIDENCE_AFTER_CUTOFF", "witness assessment is after the applicable bound", stage=5, side=side.side, refs=[ref]))
                 continue
-            state, availability_reasons = self._available([ref, witness["verification_ref"]], availability_refs, assessed, bound, side.side)
+            # Each candidate was available by the event/knowledge bound, but
+            # this witness can rely only on its own chain available when assessed.
+            timely_chains = []
+            for source, cap, chain in chain_matches:
+                source_proofs = []
+                source_state, source_findings = self._available(
+                    chain[:3], source["availability_evidence_refs"],
+                    parse_timestamp(cap["captured_at"]), assessed, side.side,
+                    accepted_evidence=source_proofs)
+                findings.extend(source_findings)
+                if source_state == "available":
+                    timely_chains.append((source, cap, chain, source_proofs))
+            if not timely_chains:
+                findings.append(reason("WITNESS_EVIDENCE_MISMATCH", "this exact witnessed source chain was not available by assessed_at", stage=5, side=side.side, refs=[ref]))
+                continue
+            witness_proofs = []
+            state, availability_reasons = self._available(
+                [ref, witness["verification_ref"]], availability_refs, assessed,
+                bound, side.side, accepted_evidence=witness_proofs)
             findings.extend(availability_reasons)
             if state == "available":
                 accepted.append(ref)
+                # Retain a real proof pair per accepted chain. Earliest accepted
+                # time, then canonical reference bytes, is a deterministic
+                # diagnostic choice among proofs that all satisfy the rule.
+                def proof_key(item):
+                    return parse_timestamp(item[1]["available_at"]), canonical_bytes(item[0])
+
+                witness_av_ref, witness_av = min(witness_proofs, key=proof_key)
+                witness_av_record = record_ref(
+                    witness_av["availability_id"], self.anchor.read(witness_av_ref))
+                for source, cap, chain, proofs in timely_chains:
+                    source_av_ref, source_av = min(proofs, key=proof_key)
+                    source_av_record = record_ref(
+                        source_av["availability_id"], self.anchor.read(source_av_ref))
+                    timing = {"captured_at": cap["captured_at"],
+                              "source_available_at": source_av["available_at"],
+                              "assessed_at": witness["assessed_at"],
+                              "witness_available_at": witness_av["available_at"],
+                              "bound": bound.isoformat(),
+                              "payload_sha256": source["payload_ref"]["sha256"],
+                              "verification_sha256": witness["verification_ref"]["sha256"]}
+                    findings.append(reason(
+                        "CONDITIONS_SATISFIED", "accepted fictional witness chain timing: " + canonical_bytes(timing).decode("utf-8"),
+                        stage=5, side=side.side,
+                        refs=[ref, *chain, source_av_record, witness_av_record]))
         if not accepted:
             findings.append(reason("WITNESS_MISSING", "no exact and timely same-side corroborating witness", stage=5, side=side.side))
         return _unique(accepted), findings
@@ -696,7 +742,13 @@ def _query(value):
 
 
 def evaluate_synthetic_r2(query: Any, *, anchor: EvidenceAnchor) -> dict:
-    """Evaluate only synthetic model conditions under an out-of-band anchor."""
+    """Evaluate only synthetic model conditions under an out-of-band anchor.
+
+    Raises QualificationBootstrapError if the pinned schema is unavailable or
+    invalid. That boundary produces no AssessmentResult and grants nothing.
+    Ordinary input failures after bootstrap remain typed invalid envelopes.
+    """
+    require_qualification_schema()
     try:
         value, data = _query(query)
         if value["domain"] != "synthetic":
@@ -709,7 +761,13 @@ def evaluate_synthetic_r2(query: Any, *, anchor: EvidenceAnchor) -> dict:
 
 
 def evaluate_production_r2(query: Any, *, anchor=None) -> dict:
-    """No production context/profile is installed; never synthesize one from Query."""
+    """Refuse production qualification; Query cannot construct a live context.
+
+    QualificationBootstrapError propagates without an assessment if the pinned
+    schema cannot load. Bootstrap success enables only the ordinary refusal
+    envelope; no production profile is installed.
+    """
+    require_qualification_schema()
     try:
         value, _ = _query(query)
         if value["domain"] != "production" or anchor is not None:
